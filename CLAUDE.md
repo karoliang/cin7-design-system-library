@@ -45,14 +45,27 @@ The project is configured to deploy the Polaris documentation site to Netlify:
 
 ### Testing Builds Locally
 
-Use the test script to verify builds before deploying:
+Two test scripts are available to verify builds before deploying:
 
+1. **Quick test** - Tests only the documentation site build:
 ```bash
 # From repository root
 ./test-build-local.sh
 ```
 
-This script replicates the Netlify build process and helps catch errors before deployment.
+2. **Comprehensive test** - Tests the full build process matching Netlify:
+```bash
+# From repository root
+./test-full-build.sh
+```
+
+The comprehensive test script:
+- Builds all dependencies in the correct order (polaris-tokens → polaris-icons → polaris-react)
+- Generates documentation assets
+- Performs the full Next.js build
+- Provides color-coded output for easy debugging
+
+Always run the comprehensive test before deploying to catch dependency and build order issues.
 
 ## Development Setup
 
