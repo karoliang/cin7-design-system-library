@@ -187,7 +187,9 @@ const ComponentExamples = ({examples, componentTitle}: Props) => {
         onClick={() => updateSelectedExample(index)}
         aria-controls={`tabpanel-${index}`}
         tabIndex={index === exampleIndex ? 0 : -1}
-        ref={(el) => (buttonRefs.current[index] = el)}
+        ref={(el) => {
+          buttonRefs.current[index] = el;
+        }}
         aria-selected={index === exampleIndex}
       >
         <span>{example.title}</span>
