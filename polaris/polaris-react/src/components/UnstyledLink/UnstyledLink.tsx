@@ -18,7 +18,7 @@ export const UnstyledLink = memo(
   forwardRef<any, UnstyledLinkProps>(function UnstyledLink(props, _ref) {
     const LinkComponent = useLink();
     if (LinkComponent) {
-      return <LinkComponent {...unstyled.props} {...props} ref={_ref} />;
+      return <LinkComponent {...unstyled.props} {...props} ref={_ref} url={props.url || ''} />;
     }
 
     const {external, url, target: targetProp, ...rest} = props;

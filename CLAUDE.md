@@ -35,6 +35,25 @@ pnpm turbo run dev --filter=@shopify/polaris    # Component storybook
 pnpm turbo run dev --filter=polaris.shopify.com  # Documentation site
 ```
 
+### Deployment to Netlify
+
+The project is configured to deploy the Polaris documentation site to Netlify:
+
+- **Build configuration**: `netlify.toml`
+- **Environment variables**: `.env` (contains Netlify credentials - do not commit)
+- **Build command**: Builds required dependencies (polaris-tokens, polaris-icons, polaris-react) before building the documentation site
+
+### Testing Builds Locally
+
+Use the test script to verify builds before deploying:
+
+```bash
+# From repository root
+./test-build-local.sh
+```
+
+This script replicates the Netlify build process and helps catch errors before deployment.
+
 ## Development Setup
 
 Since the project hasn't been implemented yet, there are no specific build, test, or lint commands. When implementing this project, consider:
