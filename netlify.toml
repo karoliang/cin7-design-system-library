@@ -1,0 +1,19 @@
+[build]
+  base = "polaris/polaris.shopify.com"
+  publish = ".next"
+  command = "cd ../.. && pnpm install && cd polaris/polaris.shopify.com && pnpm build"
+
+[build.environment]
+  NODE_VERSION = "20.10.0"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"

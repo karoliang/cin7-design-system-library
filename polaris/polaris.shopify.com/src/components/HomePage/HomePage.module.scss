@@ -1,0 +1,90 @@
+@import '../../styles/fonts.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.HomePage {
+  padding-bottom: var(--header-margin);
+}
+
+.Hero {
+  padding: 6rem 0 3rem;
+  background: url(/images/home-hero.png);
+  background-size: 56% auto;
+  background-repeat: no-repeat;
+  background-position: 58.5% 33%;
+
+  @media screen and (max-width: $breakpointDesktop) {
+    font-size: var(--font-size-1300);
+    background-position: right center;
+  }
+
+  @media screen and (max-width: $breakpointMobile) {
+    padding: 40vw 0 2rem;
+    background-size: 60% auto;
+    background-repeat: no-repeat;
+    background-position: left 1rem;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    color: var(--text-strong);
+    font-size: var(--font-size-1600);
+    font-weight: var(--font-weight-700);
+    letter-spacing: var(--letter-spacing-1000);
+    line-height: 1.1;
+
+    span {
+      display: block;
+    }
+
+    @media screen and (max-width: $breakpointTablet) {
+      font-size: var(--font-size-1300);
+    }
+  }
+
+  p {
+    font-size: var(--font-size-800);
+    letter-spacing: var(--letter-spacing-600);
+    max-width: 20em;
+    color: var(--text-strong);
+
+    @media screen and (max-width: $breakpointMobile) {
+      font-size: var(--font-size-600);
+    }
+  }
+}
+
+.EntryPoints {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+
+  @media screen and (max-width: $breakpointDesktop) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: $breakpointTablet) {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+.EntryPoint {
+  display: block;
+
+  h3 {
+    @include heading-2;
+    margin-bottom: 0.33rem;
+  }
+
+  &:hover {
+    h3 {
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    font-size: var(--font-size-500);
+    color: var(--text);
+  }
+}

@@ -1,0 +1,32 @@
+name: Add untriaged label
+
+on:
+  issues:
+    types:
+      - opened
+      - labeled
+
+jobs:
+  label_issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check labels
+        id: check_labels
+        uses: actions/github-script@211cb3fefb35a799baa5156f9321bb774fe56294 # v5.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const labels = context.payload.issue.labels.map(label => label.name);
+            const hasBugLabel = labels.includes('Bug');
+            const hasUntriagedLabel = labels.includes('untriaged');
+            core.setOutput('hasBugLabel', hasBugLabel);
+            core.setOutput('hasUntriagedLabel', hasUntriagedLabel);
+
+      - name: Label issues
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414 # 1.0.2
+        if: steps.check_labels.outputs.hasBugLabel && !steps.check_labels.outputs.hasUntriagedLabel
+        with:
+          add-labels: 'untriaged'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
