@@ -1,7 +1,7 @@
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
-  command = "npm install -g pnpm && pnpm install && pnpm build"
+  command = "npm install -g pnpm && pnpm install --ignore-scripts && cd ../.. && pnpm install --ignore-scripts && cd polaris/polaris.shopify.com && pnpm build"
 
 [build.environment]
   NODE_VERSION = "20.10.0"
