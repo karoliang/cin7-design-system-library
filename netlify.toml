@@ -1,7 +1,7 @@
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
-  command = "cd ../.. && pnpm install && cd polaris && pnpm turbo run build --filter='@shopify/polaris-tokens' --filter='@shopify/polaris-icons' --filter='@shopify/polaris' && cd polaris.shopify.com && pnpm gen-colors && pnpm gen-assets && pnpm next-build"
+  command = "cd ../.. && pnpm install && cd polaris/polaris-tokens && pnpm build && cd ../polaris-icons && pnpm build && cd ../polaris-react && pnpm build && cd ../polaris.shopify.com && pnpm gen-colors && pnpm gen-assets && pnpm next-build"
 
 [build.environment]
   NODE_VERSION = "20.10.0"
