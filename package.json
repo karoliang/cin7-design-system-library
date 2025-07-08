@@ -1,0 +1,13 @@
+{
+  "name": "cin7dsl",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:all": "npm run build:polaris && npm run copy:files",
+    "build:polaris": "cd polaris && pnpm install && cd polaris.shopify.com && pnpm build",
+    "copy:files": "mkdir -p dist && cp -r polaris/polaris.shopify.com/.next/standalone/* dist/ && cp index.html dist/ && mkdir -p dist/polaris && cp -r polaris/polaris.shopify.com/.next/standalone/* dist/polaris/"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  }
+}

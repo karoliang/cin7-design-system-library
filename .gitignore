@@ -40,3 +40,5 @@ pnpm-debug.log*
 .cache/
 .temp/
 .tmp/
+# Local Netlify folder
+.netlify
