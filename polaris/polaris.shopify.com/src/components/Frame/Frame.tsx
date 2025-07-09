@@ -126,7 +126,7 @@ function Frame({darkMode, children}: Props) {
         <Link href="/" className={styles.Logo}>
           <Image
             alt="Cin7 logo"
-            src="/images/shopify-logo.svg"
+            src="/images/cin7-logo.svg"
             width={24}
             height={24}
           />
