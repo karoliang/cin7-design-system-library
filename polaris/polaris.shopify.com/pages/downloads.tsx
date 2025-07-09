@@ -16,7 +16,7 @@ import {
   ExportIcon,
   CodeIcon,
   BookIcon,
-  TemplateIcon,
+  NoteIcon,
   DesktopIcon,
 } from '@shopify/polaris-icons';
 import PageMeta from '../src/components/PageMeta';
@@ -91,7 +91,7 @@ export default function DownloadsPage() {
     {
       title: 'Style Guide',
       description: 'Design principles, patterns, and best practices',
-      icon: TemplateIcon,
+      icon: NoteIcon,
       size: '1.5 MB',
       format: 'HTML',
       onDownload: () => window.open('/style-guide', '_blank'),
