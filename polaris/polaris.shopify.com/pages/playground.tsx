@@ -1,47 +1,43 @@
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import {
+  AppProvider,
   Page,
   Layout,
   Card,
   Select,
-  TextField,
   Button,
-  Stack,
+  BlockStack,
+  InlineStack,
   Divider,
   Text,
   Box,
   Banner,
 } from '@shopify/polaris';
 import * as Polaris from '@shopify/polaris';
+import translations from '@shopify/polaris/locales/en.json';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { themes } from 'prism-react-renderer';
 import PageMeta from '../src/components/PageMeta';
 import styles from '../src/styles/Playground.module.scss';
 
-// Monaco Editor for better code editing experience
-const MonacoEditor = dynamic(
-  () => import('@monaco-editor/react').then((mod) => mod.default),
-  { ssr: false }
-);
 
-const componentExamples = {
+const componentExamples: Record<string, string> = {
   Button: `function Example() {
   const [count, setCount] = useState(0);
   
   return (
-    <Stack vertical>
-      <Text variant="headingMd">Button Counter Example</Text>
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Button Counter Example</Text>
       <p>You clicked {count} times</p>
-      <Stack>
+      <InlineStack gap="400">
         <Button primary onClick={() => setCount(count + 1)}>
           Increment
         </Button>
         <Button onClick={() => setCount(0)}>
           Reset
         </Button>
-      </Stack>
-    </Stack>
+      </InlineStack>
+    </BlockStack>
   );
 }`,
   Card: `function Example() {
@@ -53,7 +49,7 @@ const componentExamples = {
         { content: 'Save', primary: true }
       ]}
     >
-      <Stack vertical>
+      <BlockStack gap="400">
         <TextField label="Product Name" value="Wireless Headphones" />
         <TextField label="Price" type="number" value="99.99" prefix="$" />
         <Select
@@ -64,7 +60,7 @@ const componentExamples = {
           ]}
           value="electronics"
         />
-      </Stack>
+      </BlockStack>
     </Card>
   );
 }`,
@@ -170,8 +166,8 @@ const componentExamples = {
         ]}
       >
         <Modal.Section>
-          <Stack vertical>
-            <Text variant="bodyMd">
+          <BlockStack gap="400">
+            <Text as="p" variant="bodyMd">
               Join our newsletter to stay updated with the latest news and updates.
             </Text>
             <TextField
@@ -181,7 +177,7 @@ const componentExamples = {
               autoComplete="email"
               type="email"
             />
-          </Stack>
+          </BlockStack>
         </Modal.Section>
       </Modal>
     </>
@@ -194,7 +190,6 @@ const defaultCode = componentExamples.Button;
 function PlaygroundPage() {
   const [code, setCode] = useState(defaultCode);
   const [selectedExample, setSelectedExample] = useState('Button');
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [showCode, setShowCode] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -223,7 +218,7 @@ function PlaygroundPage() {
   };
 
   return (
-    <>
+    <AppProvider i18n={translations}>
       <PageMeta
         title="Component Playground"
         description="Interactive playground for experimenting with Cin7 DSL components"
@@ -236,9 +231,9 @@ function PlaygroundPage() {
         <Layout>
           <Layout.Section>
             <Card>
-              <Stack vertical spacing="loose">
-                <Stack distribution="equalSpacing" alignment="center">
-                  <Stack>
+              <BlockStack gap="500">
+                <InlineStack align="space-between" blockAlign="center">
+                  <InlineStack>
                     <Select
                       label="Choose Example"
                       labelInline
@@ -249,19 +244,19 @@ function PlaygroundPage() {
                       value={selectedExample}
                       onChange={handleExampleChange}
                     />
-                    <Button plain onClick={() => setShowCode(!showCode)}>
+                    <Button variant="plain" onClick={() => setShowCode(!showCode)}>
                       {showCode ? 'Hide Code' : 'Show Code'}
                     </Button>
-                  </Stack>
-                  <Stack>
-                    <Button plain onClick={handleCopyCode}>
+                  </InlineStack>
+                  <InlineStack>
+                    <Button variant="plain" onClick={handleCopyCode}>
                       Copy Code
                     </Button>
-                    <Button plain onClick={handleResetCode}>
+                    <Button variant="plain" onClick={handleResetCode}>
                       Reset
                     </Button>
-                  </Stack>
-                </Stack>
+                  </InlineStack>
+                </InlineStack>
 
                 <Divider />
 
@@ -269,8 +264,7 @@ function PlaygroundPage() {
                   <LiveProvider
                     code={code}
                     scope={scope}
-                    theme={theme === 'dark' ? themes.vsDark : themes.vsLight}
-                    onError={(err) => setError(err.toString())}
+                    theme={themes.vsLight}
                   >
                     <div className={styles.EditorSection}>
                       {showCode && (
@@ -309,14 +303,15 @@ function PlaygroundPage() {
                     {error}
                   </Banner>
                 )}
-              </Stack>
+              </BlockStack>
             </Card>
           </Layout.Section>
 
-          <Layout.Section secondary>
-            <Card title="Available Components">
-              <Stack vertical spacing="tight">
-                <Text variant="bodySm" color="subdued">
+          <Layout.Section variant="oneThird">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="h3" variant="headingMd">Available Components</Text>
+                <Text as="p" variant="bodySm" tone="subdued">
                   All Polaris components are available in the playground:
                 </Text>
                 <ul className={styles.ComponentList}>
@@ -334,37 +329,39 @@ function PlaygroundPage() {
                   <li>Modal</li>
                   <li>Page</li>
                   <li>Select</li>
-                  <li>Stack</li>
+                  <li>BlockStack</li>
+                  <li>InlineStack</li>
                   <li>Text</li>
                   <li>TextField</li>
                   <li>...and many more!</li>
                 </ul>
-              </Stack>
+              </BlockStack>
             </Card>
 
-            <Card title="Tips">
-              <Stack vertical spacing="tight">
-                <Text variant="bodySm">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="h3" variant="headingMd">Tips</Text>
+                <Text as="p" variant="bodySm">
                   • Use React hooks like useState and useEffect
                 </Text>
-                <Text variant="bodySm">
+                <Text as="p" variant="bodySm">
                   • All Polaris components are available
                 </Text>
-                <Text variant="bodySm">
+                <Text as="p" variant="bodySm">
                   • Your component must be named "Example"
                 </Text>
-                <Text variant="bodySm">
+                <Text as="p" variant="bodySm">
                   • Changes are reflected in real-time
                 </Text>
-                <Text variant="bodySm">
+                <Text as="p" variant="bodySm">
                   • Use Cmd/Ctrl + S to format code
                 </Text>
-              </Stack>
+              </BlockStack>
             </Card>
           </Layout.Section>
         </Layout>
       </Page>
-    </>
+    </AppProvider>
   );
 }
 

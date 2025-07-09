@@ -13,8 +13,7 @@ import {className} from '../../utils/various';
 import {useRouter} from 'next/router';
 import StatusBadge from '../StatusBadge';
 import Icon from '../Icon';
-import {ArrowRightIcon, LockIcon} from '@shopify/polaris-icons';
-import icons from '../../icons';
+import {LockIcon} from '@shopify/polaris-icons';
 
 const NAV_ID = 'nav';
 interface Props {

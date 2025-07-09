@@ -24,9 +24,6 @@ These examples show how to use standard Polaris components within the Cin7 DSL f
 
 ### Button Component
 
-<ExampleWrapper>
-  <Example src="/examples/button-default" />
-</ExampleWrapper>
 
 ```tsx
 import { Button } from '@shopify/polaris';
@@ -42,9 +39,6 @@ function SaveButton() {
 
 ### Card with Actions
 
-<ExampleWrapper>
-  <Example src="/examples/card-with-footer-actions" />
-</ExampleWrapper>
 
 ```tsx
 import { Card, Button } from '@shopify/polaris';
@@ -415,42 +409,7 @@ function SalesDashboard() {
 
 ## Live Code Editor
 
-Try editing the code below to see changes in real-time:
-
-<CodePlayground defaultCode={`
-import { Button, Card, Stack, TextField } from '@shopify/polaris';
-import { useState } from 'react';
-
-function InteractiveExample() {
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
-
-  const handleSubmit = () => {
-    setMessage(\`Hello, \${name || 'World'}!\`);
-  };
-
-  return (
-    <Card title="Interactive Demo">
-      <Stack vertical>
-        <TextField
-          label="Your Name"
-          value={name}
-          onChange={setName}
-          placeholder="Enter your name"
-        />
-        <Button primary onClick={handleSubmit}>
-          Say Hello
-        </Button>
-        {message && (
-          <p style={{ marginTop: '1rem', fontSize: '1.2em' }}>
-            {message}
-          </p>
-        )}
-      </Stack>
-    </Card>
-  );
-}
-`} />
+For an interactive code editing experience, visit the [Component Playground](/playground) where you can experiment with Cin7 DSL components in real-time.
 
 ## Component Variations
 
@@ -458,25 +417,47 @@ Explore different variations of components with live previews:
 
 ### Button Variations
 
-<ComponentVariations component="Button" variations={[
-  { name: 'Primary', props: { primary: true, children: 'Primary Button' } },
-  { name: 'Critical', props: { tone: 'critical', children: 'Delete' } },
-  { name: 'Plain', props: { plain: true, children: 'Plain Button' } },
-  { name: 'Loading', props: { loading: true, children: 'Loading...' } },
-  { name: 'Disabled', props: { disabled: true, children: 'Disabled' } },
-  { name: 'Full Width', props: { fullWidth: true, children: 'Full Width' } },
-]} />
+```tsx
+// Primary button
+<Button primary>Primary Button</Button>
+
+// Critical button
+<Button tone="critical">Delete</Button>
+
+// Plain button
+<Button variant="plain">Plain Button</Button>
+
+// Loading button
+<Button loading>Loading...</Button>
+
+// Disabled button
+<Button disabled>Disabled</Button>
+
+// Full width button
+<Button fullWidth>Full Width</Button>
+```
 
 ### Badge Variations
 
-<ComponentVariations component="Badge" variations={[
-  { name: 'Default', props: { children: 'Default' } },
-  { name: 'Success', props: { tone: 'success', children: 'Active' } },
-  { name: 'Warning', props: { tone: 'warning', children: 'Warning' } },
-  { name: 'Critical', props: { tone: 'critical', children: 'Error' } },
-  { name: 'Attention', props: { tone: 'attention', children: 'New' } },
-  { name: 'Info', props: { tone: 'info', children: 'Info' } },
-]} />
+```tsx
+// Default badge
+<Badge>Default</Badge>
+
+// Success badge
+<Badge tone="success">Active</Badge>
+
+// Warning badge
+<Badge tone="warning">Warning</Badge>
+
+// Critical badge
+<Badge tone="critical">Error</Badge>
+
+// Attention badge
+<Badge tone="attention">New</Badge>
+
+// Info badge
+<Badge tone="info">Info</Badge>
+```
 
 ## Best Practices
 

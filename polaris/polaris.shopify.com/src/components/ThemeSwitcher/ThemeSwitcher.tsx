@@ -3,7 +3,7 @@ import { Button, Popover, ActionList, Icon } from '@shopify/polaris';
 import { 
   SunIcon,
   MoonIcon,
-  CircleTickIcon,
+  CheckCircleIcon,
   SettingsIcon
 } from '@shopify/polaris-icons';
 import { useTheme } from '../ThemeProvider/ThemeProvider';
@@ -17,10 +17,10 @@ export function ThemeSwitcher() {
 
   const activator = (
     <Button
-      plain
+      variant="plain"
       icon={resolvedTheme === 'dark' ? MoonIcon : SunIcon}
       onClick={toggleActive}
-      ariaLabel="Theme switcher"
+      aria-label="Theme switcher"
     />
   );
 
@@ -28,7 +28,7 @@ export function ThemeSwitcher() {
     {
       content: 'Light',
       icon: SunIcon,
-      suffix: theme === 'light' ? <Icon source={CircleTickIcon} /> : undefined,
+      suffix: theme === 'light' ? <Icon source={CheckCircleIcon} /> : undefined,
       onAction: () => {
         setTheme('light');
         setActive(false);
@@ -37,7 +37,7 @@ export function ThemeSwitcher() {
     {
       content: 'Dark',
       icon: MoonIcon,
-      suffix: theme === 'dark' ? <Icon source={CircleTickIcon} /> : undefined,
+      suffix: theme === 'dark' ? <Icon source={CheckCircleIcon} /> : undefined,
       onAction: () => {
         setTheme('dark');
         setActive(false);
@@ -46,7 +46,7 @@ export function ThemeSwitcher() {
     {
       content: 'System',
       icon: SettingsIcon,
-      suffix: theme === 'auto' ? <Icon source={CircleTickIcon} /> : undefined,
+      suffix: theme === 'auto' ? <Icon source={CheckCircleIcon} /> : undefined,
       onAction: () => {
         setTheme('auto');
         setActive(false);
