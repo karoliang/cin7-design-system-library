@@ -32,10 +32,10 @@ function Layout({
   const [tocItems] = useTOC(children);
   const {asPath} = useRouter();
 
-  const githubIssueSubject = `[polaris.shopify.com] Feedback (on ${asPath})`;
-  const feedbackUrl = `https://github.com/shopify/polaris/issues/new?title=${encodeURIComponent(
-    githubIssueSubject,
-  )}&amp;labels=polaris.shopify.com`;
+  const feedbackSubject = `Cin7 DSL Feedback (on ${asPath})`;
+  const feedbackUrl = `mailto:karo.liang@cin7.com?subject=${encodeURIComponent(
+    feedbackSubject,
+  )}`;
   const editOnGithubUrl = editPageLinkPath
     ? `https://github.com/Shopify/polaris/tree/main${editPageLinkPath}`
     : '';
