@@ -8,7 +8,6 @@ import {
   Text,
   Button,
   Badge,
-  Divider,
   Icon,
   List,
 } from '@shopify/polaris';
