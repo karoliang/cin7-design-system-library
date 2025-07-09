@@ -24,6 +24,14 @@ function HomePage({}: Props) {
         </div>
 
         <div className={styles.EntryPoints}>
+          <Link href="/foundations" className={styles.EntryPoint}>
+            <h3>Shopify Polaris</h3>
+            <p>
+              Modern design system providing beautiful, accessible UI components
+              for consistent user experiences
+            </p>
+          </Link>
+
           <Link href="/getting-started/extjs" className={styles.EntryPoint}>
             <h3>ExtJS</h3>
             <p>
@@ -45,14 +53,6 @@ function HomePage({}: Props) {
             <p>
               Type-safe business logic with enhanced developer experience
               and code maintainability
-            </p>
-          </Link>
-
-          <Link href="/foundations" className={styles.EntryPoint}>
-            <h3>Shopify Polaris</h3>
-            <p>
-              Modern design system providing beautiful, accessible UI components
-              for consistent user experiences
             </p>
           </Link>
 

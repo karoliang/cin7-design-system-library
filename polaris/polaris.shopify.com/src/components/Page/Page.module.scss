@@ -34,10 +34,7 @@
 }
 
 .PostContent {
-  @media screen and (max-width: $breakpointDesktop) {
-    /* Ensure the page width doesn't become too wide when TOC is hidden */
-    max-width: 776px;
-  }
+  /* Remove width constraint to maintain consistency with homepage */
 }
 
 .Footer {
