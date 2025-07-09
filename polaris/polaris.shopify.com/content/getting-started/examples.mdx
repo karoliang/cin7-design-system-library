@@ -1,0 +1,573 @@
+---
+title: Interactive Examples
+description: 'Explore interactive examples of Cin7 DSL components, including Polaris components enhanced with ExtJS functionality.'
+showTOC: true
+keywords:
+  - examples
+  - interactive
+  - components
+  - extjs
+  - polaris
+  - code
+  - playground
+order: 6
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Basic Components
+
+These examples show how to use standard Polaris components within the Cin7 DSL framework.
+
+### Button Component
+
+<ExampleWrapper>
+  <Example src="/examples/button-default" />
+</ExampleWrapper>
+
+```tsx
+import { Button } from '@shopify/polaris';
+
+function SaveButton() {
+  return (
+    <Button primary onClick={() => console.log('Saved!')}>
+      Save Changes
+    </Button>
+  );
+}
+```
+
+### Card with Actions
+
+<ExampleWrapper>
+  <Example src="/examples/card-with-footer-actions" />
+</ExampleWrapper>
+
+```tsx
+import { Card, Button } from '@shopify/polaris';
+
+function UserCard() {
+  return (
+    <Card
+      title="User Profile"
+      footerActions={[
+        { content: 'Cancel' },
+        { content: 'Save', primary: true }
+      ]}
+    >
+      <p>Edit user information below</p>
+    </Card>
+  );
+}
+```
+
+## Enhanced Components with ExtJS
+
+These examples demonstrate how Cin7 DSL enhances Polaris components with ExtJS functionality.
+
+### Advanced Data Grid
+
+```tsx
+import { Card } from '@shopify/polaris';
+import { ExtDataGrid } from '@cin7/dsl-extjs-adapters';
+
+function UserManagementGrid() {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' },
+  ];
+
+  return (
+    <Card title="User Management">
+      <ExtDataGrid
+        data={users}
+        columns={[
+          { text: 'ID', dataIndex: 'id', width: 60 },
+          { text: 'Name', dataIndex: 'name', flex: 1 },
+          { text: 'Email', dataIndex: 'email', flex: 1 },
+          { text: 'Role', dataIndex: 'role', width: 100 }
+        ]}
+        features={['sorting', 'filtering', 'export']}
+        onRowDoubleClick={(user) => console.log('Edit user:', user)}
+      />
+    </Card>
+  );
+}
+```
+
+### Advanced Form with Validation
+
+```tsx
+import { Card } from '@shopify/polaris';
+import { ExtFormPanel } from '@cin7/dsl-extjs-adapters';
+
+function UserRegistrationForm() {
+  const handleSubmit = (values) => {
+    console.log('Form submitted:', values);
+  };
+
+  return (
+    <Card title="User Registration">
+      <ExtFormPanel
+        config={{
+          items: [
+            {
+              xtype: 'textfield',
+              name: 'fullName',
+              fieldLabel: 'Full Name',
+              allowBlank: false,
+              minLength: 3,
+              maxLength: 50
+            },
+            {
+              xtype: 'emailfield',
+              name: 'email',
+              fieldLabel: 'Email Address',
+              allowBlank: false,
+              vtype: 'email'
+            },
+            {
+              xtype: 'passwordfield',
+              name: 'password',
+              fieldLabel: 'Password',
+              allowBlank: false,
+              minLength: 8,
+              regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+              regexText: 'Password must contain uppercase, lowercase, and numbers'
+            },
+            {
+              xtype: 'combobox',
+              name: 'role',
+              fieldLabel: 'User Role',
+              store: ['admin', 'manager', 'user', 'guest'],
+              allowBlank: false,
+              editable: false
+            },
+            {
+              xtype: 'datefield',
+              name: 'startDate',
+              fieldLabel: 'Start Date',
+              minValue: new Date(),
+              value: new Date()
+            }
+          ],
+          buttons: [
+            {
+              text: 'Reset',
+              handler: function() {
+                this.up('form').reset();
+              }
+            },
+            {
+              text: 'Submit',
+              formBind: true,
+              handler: function() {
+                const form = this.up('form').getForm();
+                if (form.isValid()) {
+                  handleSubmit(form.getValues());
+                }
+              }
+            }
+          ]
+        }}
+      />
+    </Card>
+  );
+}
+```
+
+## Interactive State Management
+
+Examples showing state management patterns in Cin7 DSL.
+
+### Zustand Store Example
+
+```tsx
+import { create } from 'zustand';
+import { Card, Button, TextField, Stack } from '@shopify/polaris';
+import { useState } from 'react';
+
+// Define the store
+const useTaskStore = create((set) => ({
+  tasks: [],
+  addTask: (task) => set((state) => ({ 
+    tasks: [...state.tasks, { id: Date.now(), text: task, completed: false }] 
+  })),
+  toggleTask: (id) => set((state) => ({
+    tasks: state.tasks.map(task => 
+      task.id === id ? { ...task, completed: !task.completed } : task
+    )
+  })),
+  removeTask: (id) => set((state) => ({
+    tasks: state.tasks.filter(task => task.id !== id)
+  }))
+}));
+
+// Component using the store
+function TaskManager() {
+  const [newTask, setNewTask] = useState('');
+  const { tasks, addTask, toggleTask, removeTask } = useTaskStore();
+
+  const handleAddTask = () => {
+    if (newTask.trim()) {
+      addTask(newTask);
+      setNewTask('');
+    }
+  };
+
+  return (
+    <Card title="Task Manager">
+      <Stack vertical>
+        <Stack>
+          <TextField
+            value={newTask}
+            onChange={setNewTask}
+            placeholder="Add a new task"
+            onSubmit={handleAddTask}
+          />
+          <Button primary onClick={handleAddTask}>Add Task</Button>
+        </Stack>
+        
+        <Stack vertical>
+          {tasks.map(task => (
+            <Stack key={task.id} alignment="center">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTask(task.id)}
+              />
+              <span style={{ 
+                textDecoration: task.completed ? 'line-through' : 'none',
+                flex: 1 
+              }}>
+                {task.text}
+              </span>
+              <Button plain destructive onClick={() => removeTask(task.id)}>
+                Remove
+              </Button>
+            </Stack>
+          ))}
+        </Stack>
+      </Stack>
+    </Card>
+  );
+}
+```
+
+### React Query Data Fetching
+
+```tsx
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Card, DataTable, Button, Banner, Spinner } from '@shopify/polaris';
+
+// API functions
+const fetchProducts = async () => {
+  const response = await fetch('/api/products');
+  return response.json();
+};
+
+const updateProduct = async ({ id, data }) => {
+  const response = await fetch(`/api/products/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  return response.json();
+};
+
+function ProductList() {
+  const queryClient = useQueryClient();
+  
+  const { data: products, isLoading, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+    staleTime: 5 * 60 * 1000 // 5 minutes
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: updateProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+    }
+  });
+
+  if (isLoading) return <Spinner />;
+  if (error) return <Banner tone="critical">Error loading products</Banner>;
+
+  const rows = products.map(product => [
+    product.name,
+    product.price,
+    product.stock,
+    <Button 
+      onClick={() => updateMutation.mutate({ 
+        id: product.id, 
+        data: { stock: product.stock + 10 } 
+      })}
+    >
+      Add Stock
+    </Button>
+  ]);
+
+  return (
+    <Card title="Product Inventory">
+      <DataTable
+        columnContentTypes={['text', 'numeric', 'numeric', 'text']}
+        headings={['Product', 'Price', 'Stock', 'Actions']}
+        rows={rows}
+      />
+    </Card>
+  );
+}
+```
+
+## Complex Integration Examples
+
+### Polaris + ExtJS Chart Integration
+
+```tsx
+import { Page, Layout, Card } from '@shopify/polaris';
+import { ExtChart } from '@cin7/dsl-extjs-adapters';
+import { useQuery } from '@tanstack/react-query';
+
+function SalesDashboard() {
+  const { data: salesData } = useQuery({
+    queryKey: ['sales', 'monthly'],
+    queryFn: () => fetch('/api/sales/monthly').then(res => res.json())
+  });
+
+  return (
+    <Page title="Sales Dashboard">
+      <Layout>
+        <Layout.Section>
+          <Card title="Monthly Sales Trend">
+            <ExtChart
+              config={{
+                xtype: 'cartesian',
+                height: 400,
+                store: {
+                  fields: ['month', 'revenue', 'profit'],
+                  data: salesData || []
+                },
+                axes: [
+                  {
+                    type: 'numeric',
+                    position: 'left',
+                    title: 'Revenue ($)',
+                    grid: true,
+                    minimum: 0
+                  },
+                  {
+                    type: 'category',
+                    position: 'bottom',
+                    title: 'Month'
+                  }
+                ],
+                series: [
+                  {
+                    type: 'line',
+                    xField: 'month',
+                    yField: 'revenue',
+                    title: 'Revenue',
+                    marker: {
+                      type: 'circle',
+                      size: 4,
+                      lineWidth: 2
+                    },
+                    style: {
+                      stroke: 'var(--p-color-text-brand)',
+                      lineWidth: 3
+                    }
+                  },
+                  {
+                    type: 'bar',
+                    xField: 'month',
+                    yField: 'profit',
+                    title: 'Profit',
+                    style: {
+                      fill: 'var(--p-color-bg-success)',
+                      opacity: 0.7
+                    }
+                  }
+                ],
+                legend: {
+                  docked: 'bottom'
+                }
+              }}
+            />
+          </Card>
+        </Layout.Section>
+        
+        <Layout.Section oneThird>
+          <Card title="Summary">
+            <p>Total Revenue: ${salesData?.reduce((sum, item) => sum + item.revenue, 0).toLocaleString()}</p>
+            <p>Total Profit: ${salesData?.reduce((sum, item) => sum + item.profit, 0).toLocaleString()}</p>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+```
+
+## Live Code Editor
+
+Try editing the code below to see changes in real-time:
+
+<CodePlayground defaultCode={`
+import { Button, Card, Stack, TextField } from '@shopify/polaris';
+import { useState } from 'react';
+
+function InteractiveExample() {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = () => {
+    setMessage(\`Hello, \${name || 'World'}!\`);
+  };
+
+  return (
+    <Card title="Interactive Demo">
+      <Stack vertical>
+        <TextField
+          label="Your Name"
+          value={name}
+          onChange={setName}
+          placeholder="Enter your name"
+        />
+        <Button primary onClick={handleSubmit}>
+          Say Hello
+        </Button>
+        {message && (
+          <p style={{ marginTop: '1rem', fontSize: '1.2em' }}>
+            {message}
+          </p>
+        )}
+      </Stack>
+    </Card>
+  );
+}
+`} />
+
+## Component Variations
+
+Explore different variations of components with live previews:
+
+### Button Variations
+
+<ComponentVariations component="Button" variations={[
+  { name: 'Primary', props: { primary: true, children: 'Primary Button' } },
+  { name: 'Critical', props: { tone: 'critical', children: 'Delete' } },
+  { name: 'Plain', props: { plain: true, children: 'Plain Button' } },
+  { name: 'Loading', props: { loading: true, children: 'Loading...' } },
+  { name: 'Disabled', props: { disabled: true, children: 'Disabled' } },
+  { name: 'Full Width', props: { fullWidth: true, children: 'Full Width' } },
+]} />
+
+### Badge Variations
+
+<ComponentVariations component="Badge" variations={[
+  { name: 'Default', props: { children: 'Default' } },
+  { name: 'Success', props: { tone: 'success', children: 'Active' } },
+  { name: 'Warning', props: { tone: 'warning', children: 'Warning' } },
+  { name: 'Critical', props: { tone: 'critical', children: 'Error' } },
+  { name: 'Attention', props: { tone: 'attention', children: 'New' } },
+  { name: 'Info', props: { tone: 'info', children: 'Info' } },
+]} />
+
+## Best Practices
+
+### Component Composition
+
+```tsx
+// Good: Compose components for reusability
+function UserCard({ user, onEdit, onDelete }) {
+  return (
+    <Card
+      title={user.name}
+      footerActions={[
+        { content: 'Edit', onAction: onEdit },
+        { content: 'Delete', onAction: onDelete, destructive: true }
+      ]}
+    >
+      <Stack vertical>
+        <p>Email: {user.email}</p>
+        <p>Role: {user.role}</p>
+        <Badge tone={user.isActive ? 'success' : 'critical'}>
+          {user.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      </Stack>
+    </Card>
+  );
+}
+
+// Usage
+function UserList() {
+  const users = useUserStore(state => state.users);
+  
+  return (
+    <Stack vertical>
+      {users.map(user => (
+        <UserCard
+          key={user.id}
+          user={user}
+          onEdit={() => handleEdit(user.id)}
+          onDelete={() => handleDelete(user.id)}
+        />
+      ))}
+    </Stack>
+  );
+}
+```
+
+### Error Handling
+
+```tsx
+// Good: Comprehensive error handling
+function DataComponent() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['data'],
+    queryFn: fetchData,
+    retry: 3,
+    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
+  });
+
+  if (isLoading) {
+    return (
+      <Card>
+        <Stack vertical>
+          <Spinner size="small" />
+          <p>Loading data...</p>
+        </Stack>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Banner
+        title="Error loading data"
+        tone="critical"
+        action={{
+          content: 'Retry',
+          onAction: () => queryClient.invalidateQueries(['data'])
+        }}
+      >
+        <p>{error.message}</p>
+      </Banner>
+    );
+  }
+
+  return <DataDisplay data={data} />;
+}
+```
+
+## Resources
+
+- [Component API Reference](/api/components)
+- [Design Tokens Reference](/tokens/color)
+- [GitHub Repository](https://github.com/karoliang/cin7dsl)
+- [Live Playground](/playground)

@@ -1,0 +1,72 @@
+.PlaygroundContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--p-space-400);
+  min-height: 500px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.EditorSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-200);
+}
+
+.Editor {
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  overflow: hidden;
+  background: var(--p-color-bg-surface);
+}
+
+.LiveEditor {
+  min-height: 400px;
+  max-height: 600px;
+  overflow: auto !important;
+  padding: var(--p-space-400) !important;
+  
+  textarea {
+    outline: none !important;
+  }
+
+  pre {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}
+
+.PreviewSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-200);
+}
+
+.Error {
+  color: var(--p-color-text-critical);
+  background: var(--p-color-bg-critical-subdued);
+  padding: var(--p-space-300);
+  border-radius: var(--p-border-radius-200);
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ComponentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--p-space-100);
+
+  li {
+    padding: var(--p-space-100) 0;
+    color: var(--p-color-text-subdued);
+    font-size: var(--p-font-size-75);
+  }
+}

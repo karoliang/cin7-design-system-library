@@ -1,0 +1,117 @@
+---
+title: API Reference
+navTitle: API Reference
+description: 'Complete API reference for Cin7 DSL, including components, hooks, utilities, and TypeScript definitions.'
+showTOC: true
+keywords:
+  - api
+  - reference
+  - documentation
+  - typescript
+  - components
+  - hooks
+order: 1
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Overview
+
+The Cin7 DSL API reference provides comprehensive documentation for all components, hooks, utilities, and TypeScript types available in the framework. This reference is automatically generated from the TypeScript definitions to ensure accuracy and completeness.
+
+## Quick Links
+
+- [Component API](/api/components) - Complete component reference with props and examples
+- [Hooks API](/api/hooks) - Custom React hooks for common patterns
+- [Utilities API](/api/utilities) - Helper functions and utilities
+- [TypeScript Types](/api/types) - Type definitions and interfaces
+
+## Using the API Reference
+
+### Component Documentation
+
+Each component includes:
+- **Props Interface**: Complete TypeScript interface with descriptions
+- **Usage Examples**: Real-world code examples
+- **Default Values**: Default prop values
+- **Required Props**: Clearly marked required properties
+- **Event Handlers**: Callback signatures and usage
+
+### Type Safety
+
+All components are fully typed with TypeScript:
+
+```typescript
+import { Button, ButtonProps } from '@cin7/dsl-components';
+
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button {...props} />;
+};
+```
+
+### IntelliSense Support
+
+When using Cin7 DSL in VS Code or other TypeScript-aware editors, you'll get:
+- Auto-completion for all props
+- Inline documentation
+- Type checking
+- Quick fixes and refactoring support
+
+## API Versioning
+
+The Cin7 DSL API follows semantic versioning:
+
+- **Major**: Breaking changes to existing APIs
+- **Minor**: New features and backwards-compatible changes
+- **Patch**: Bug fixes and documentation updates
+
+Current version: **1.0.0**
+
+## ExtJS Integration
+
+The API reference includes documentation for ExtJS component adapters:
+
+```typescript
+import { ExtDataGrid, ExtFormPanel } from '@cin7/dsl-extjs-adapters';
+```
+
+These components provide advanced functionality while maintaining consistency with the Polaris design system.
+
+## Contributing to API Docs
+
+The API documentation is generated from:
+- TypeScript interfaces and types
+- JSDoc comments in the source code
+- MDX files for additional examples
+
+To contribute:
+1. Add JSDoc comments to your components
+2. Include `@example` tags for usage examples
+3. Run `pnpm generate-api-docs` to update the reference
+
+## API Stability
+
+### Stable APIs
+- All Polaris components
+- Core hooks (useDebounce, useAsync, etc.)
+- Utility functions
+
+### Beta APIs
+- ExtJS component adapters
+- Advanced form validation
+- Real-time collaboration features
+
+### Experimental APIs
+- AI-powered components
+- Advanced data visualization
+- WebAssembly integrations
+
+## Support
+
+For API-related questions:
+- Check the [examples](/getting-started/examples)
+- Review the [TypeScript guide](/api/typescript)
+- Ask in the [GitHub discussions](https://github.com/karoliang/cin7dsl/discussions)

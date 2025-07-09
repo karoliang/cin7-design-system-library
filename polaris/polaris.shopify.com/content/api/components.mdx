@@ -1,0 +1,637 @@
+---
+title: Component API Reference
+description: 'Complete API reference for all Cin7 DSL components, including props, types, and usage examples.'
+showTOC: true
+keywords:
+  - api
+  - reference
+  - components
+  - props
+  - types
+  - typescript
+order: 1
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Core Components
+
+### Button
+
+A button triggers an action when clicked.
+
+```typescript
+interface ButtonProps {
+  /** The content to display inside the button */
+  children?: React.ReactNode;
+  /** Makes button primary (filled) */
+  primary?: boolean;
+  /** Changes the tone of the button */
+  tone?: 'critical' | 'success';
+  /** Makes the button a plain text button */
+  plain?: boolean;
+  /** Shows a loading spinner */
+  loading?: boolean;
+  /** Disables the button */
+  disabled?: boolean;
+  /** Makes button take full width */
+  fullWidth?: boolean;
+  /** Button size */
+  size?: 'slim' | 'medium' | 'large';
+  /** Icon to display */
+  icon?: React.ComponentType<{className?: string}>;
+  /** Callback when clicked */
+  onClick?: () => void;
+  /** URL to link to */
+  url?: string;
+  /** Opens URL in new tab */
+  external?: boolean;
+  /** Accessibility label */
+  ariaLabel?: string;
+}
+```
+
+#### Examples
+
+```tsx
+// Primary button
+<Button primary onClick={handleSave}>Save</Button>
+
+// Critical button
+<Button tone="critical" onClick={handleDelete}>Delete</Button>
+
+// Loading state
+<Button loading>Processing...</Button>
+
+// With icon
+<Button icon={PlusIcon}>Add Product</Button>
+```
+
+### Card
+
+Cards are used to group similar concepts and tasks together.
+
+```typescript
+interface CardProps {
+  /** Title content for the card */
+  title?: React.ReactNode;
+  /** Card sections */
+  children?: React.ReactNode;
+  /** Actions in the card header */
+  actions?: ActionListItemDescriptor[];
+  /** Footer actions */
+  footerActions?: ComplexAction[];
+  /** Remove outer padding */
+  flush?: boolean;
+  /** Subdued background color */
+  subdued?: boolean;
+  /** Section dividers */
+  sectioned?: boolean;
+  /** Round the corners */
+  roundedAbove?: 'sm' | 'md' | 'lg' | 'xl';
+}
+```
+
+#### Examples
+
+```tsx
+// Basic card
+<Card title="Customer details">
+  <p>John Doe</p>
+</Card>
+
+// Card with actions
+<Card
+  title="Product"
+  actions={[{content: 'Edit', onAction: handleEdit}]}
+  footerActions={[{content: 'Delete', destructive: true}]}
+>
+  <p>Product information</p>
+</Card>
+```
+
+### TextField
+
+Text fields allow users to input text.
+
+```typescript
+interface TextFieldProps {
+  /** Label for the input */
+  label?: string;
+  /** Additional hint text */
+  helpText?: React.ReactNode;
+  /** Current value */
+  value?: string;
+  /** Change handler */
+  onChange?: (value: string) => void;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Input type */
+  type?: 'text' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'url';
+  /** Error message */
+  error?: string | boolean;
+  /** Disable input */
+  disabled?: boolean;
+  /** Required field */
+  requiredIndicator?: boolean;
+  /** Character count */
+  showCharacterCount?: boolean;
+  /** Max length */
+  maxLength?: number;
+  /** Auto complete */
+  autoComplete?: string;
+  /** Multi-line */
+  multiline?: boolean | number;
+  /** Prefix */
+  prefix?: React.ReactNode;
+  /** Suffix */
+  suffix?: React.ReactNode;
+}
+```
+
+#### Examples
+
+```tsx
+// Basic text field
+<TextField
+  label="Email"
+  type="email"
+  value={email}
+  onChange={setEmail}
+  autoComplete="email"
+/>
+
+// With validation
+<TextField
+  label="Password"
+  type="password"
+  value={password}
+  onChange={setPassword}
+  error={password.length < 8 ? "Password must be at least 8 characters" : undefined}
+  helpText="Use 8 or more characters"
+/>
+
+// With prefix/suffix
+<TextField
+  label="Price"
+  type="number"
+  prefix="$"
+  suffix="USD"
+  value={price}
+  onChange={setPrice}
+/>
+```
+
+### Select
+
+Select lets users choose one option from a list.
+
+```typescript
+interface SelectProps {
+  /** Label for the select */
+  label?: string;
+  /** Options to choose from */
+  options?: SelectOption[];
+  /** Selected value */
+  value?: string;
+  /** Change handler */
+  onChange?: (value: string) => void;
+  /** Placeholder */
+  placeholder?: string;
+  /** Error state */
+  error?: string | boolean;
+  /** Disabled state */
+  disabled?: boolean;
+  /** Help text */
+  helpText?: React.ReactNode;
+}
+
+interface SelectOption {
+  /** Option label */
+  label: string;
+  /** Option value */
+  value: string;
+  /** Disabled option */
+  disabled?: boolean;
+  /** Option group */
+  group?: string;
+}
+```
+
+### DataTable
+
+DataTable displays tabular data.
+
+```typescript
+interface DataTableProps {
+  /** Column content types */
+  columnContentTypes: ColumnContentType[];
+  /** Table headings */
+  headings: React.ReactNode[];
+  /** Table data rows */
+  rows: DataTableRow[];
+  /** Footer data */
+  totals?: DataTableRow;
+  /** Show totals in footer */
+  showTotalsInFooter?: boolean;
+  /** Sortable columns */
+  sortable?: number[];
+  /** Default sort */
+  defaultSortDirection?: 'ascending' | 'descending';
+  /** Initial column to sort */
+  initialSortColumnIndex?: number;
+  /** Sort callback */
+  onSort?: (index: number, direction: 'ascending' | 'descending') => void;
+  /** Footer content */
+  footerContent?: React.ReactNode;
+  /** Hoverable rows */
+  hoverable?: boolean;
+  /** Has fixed first column */
+  hasFixedFirstColumn?: boolean;
+  /** Increased density */
+  increasedTableDensity?: boolean;
+  /** Zebra striping */
+  zebraStriping?: boolean;
+  /** Sticky header */
+  stickyHeader?: boolean;
+}
+
+type ColumnContentType = 'text' | 'numeric' | 'end';
+type DataTableRow = React.ReactNode[];
+```
+
+## ExtJS Component Adapters
+
+### ExtDataGrid
+
+Advanced data grid with ExtJS functionality.
+
+```typescript
+interface ExtDataGridProps {
+  /** Grid data */
+  data: any[];
+  /** Column configuration */
+  columns: ExtColumnConfig[];
+  /** Grid features */
+  features?: ExtGridFeature[];
+  /** Selection mode */
+  selectionMode?: 'single' | 'multi' | 'checkbox';
+  /** Row selection handler */
+  onSelectionChange?: (selected: any[]) => void;
+  /** Row double-click handler */
+  onRowDoubleClick?: (record: any) => void;
+  /** Grid height */
+  height?: number | string;
+  /** Enable pagination */
+  paginate?: boolean;
+  /** Page size */
+  pageSize?: number;
+  /** Loading state */
+  loading?: boolean;
+}
+
+interface ExtColumnConfig {
+  /** Column header text */
+  text: string;
+  /** Data field */
+  dataIndex: string;
+  /** Column width */
+  width?: number;
+  /** Flexible width */
+  flex?: number;
+  /** Column type */
+  xtype?: 'gridcolumn' | 'numbercolumn' | 'datecolumn' | 'booleancolumn';
+  /** Renderer function */
+  renderer?: (value: any, record: any) => React.ReactNode;
+  /** Sortable */
+  sortable?: boolean;
+  /** Filterable */
+  filter?: boolean | FilterConfig;
+  /** Editable */
+  editor?: EditorConfig;
+}
+
+type ExtGridFeature = 'sorting' | 'filtering' | 'grouping' | 'export' | 'summary';
+```
+
+#### Example
+
+```tsx
+<ExtDataGrid
+  data={products}
+  columns={[
+    { text: 'Product', dataIndex: 'name', flex: 1 },
+    { text: 'Price', dataIndex: 'price', xtype: 'numbercolumn', width: 100 },
+    { text: 'Stock', dataIndex: 'stock', xtype: 'numbercolumn', width: 80 },
+    { 
+      text: 'Status', 
+      dataIndex: 'active',
+      renderer: (value) => (
+        <Badge tone={value ? 'success' : 'critical'}>
+          {value ? 'Active' : 'Inactive'}
+        </Badge>
+      )
+    }
+  ]}
+  features={['sorting', 'filtering', 'export']}
+  selectionMode="multi"
+  onSelectionChange={handleSelection}
+  paginate
+  pageSize={25}
+/>
+```
+
+### ExtFormPanel
+
+Advanced form with ExtJS validation and controls.
+
+```typescript
+interface ExtFormPanelProps {
+  /** Form configuration */
+  config: ExtFormConfig;
+  /** Form submit handler */
+  onSubmit?: (values: Record<string, any>) => void;
+  /** Validation rules */
+  validationRules?: ValidationRule[];
+  /** Loading state */
+  loading?: boolean;
+  /** Form values */
+  values?: Record<string, any>;
+  /** Change handler */
+  onChange?: (field: string, value: any) => void;
+}
+
+interface ExtFormConfig {
+  /** Form items */
+  items: ExtFormField[];
+  /** Form layout */
+  layout?: 'form' | 'column' | 'hbox' | 'vbox';
+  /** Form buttons */
+  buttons?: ExtButton[];
+  /** Label width */
+  labelWidth?: number;
+  /** Label alignment */
+  labelAlign?: 'left' | 'right' | 'top';
+}
+
+interface ExtFormField {
+  /** Field type */
+  xtype: 'textfield' | 'numberfield' | 'emailfield' | 'passwordfield' | 
+         'datefield' | 'combobox' | 'checkbox' | 'radio' | 'textarea';
+  /** Field name */
+  name: string;
+  /** Field label */
+  fieldLabel?: string;
+  /** Required field */
+  allowBlank?: boolean;
+  /** Default value */
+  value?: any;
+  /** Validation */
+  validator?: (value: any) => string | boolean;
+  /** Min length */
+  minLength?: number;
+  /** Max length */
+  maxLength?: number;
+  /** Regex validation */
+  regex?: RegExp;
+  /** Regex error text */
+  regexText?: string;
+  /** Combo store */
+  store?: any[] | Store;
+  /** Date format */
+  format?: string;
+}
+```
+
+## Hooks
+
+### useDebounce
+
+Debounce a value or function.
+
+```typescript
+function useDebounce<T>(value: T, delay: number): T;
+```
+
+#### Example
+
+```tsx
+function SearchComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      // Perform search
+      performSearch(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
+
+  return (
+    <TextField
+      label="Search"
+      value={searchTerm}
+      onChange={setSearchTerm}
+    />
+  );
+}
+```
+
+### useMediaQuery
+
+Respond to media query changes.
+
+```typescript
+function useMediaQuery(query: string): boolean;
+```
+
+#### Example
+
+```tsx
+function ResponsiveComponent() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+
+  return (
+    <Layout>
+      {isMobile ? (
+        <MobileView />
+      ) : isTablet ? (
+        <TabletView />
+      ) : (
+        <DesktopView />
+      )}
+    </Layout>
+  );
+}
+```
+
+### useAsync
+
+Handle async operations with loading and error states.
+
+```typescript
+interface UseAsyncReturn<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  execute: (...args: any[]) => Promise<T>;
+  reset: () => void;
+}
+
+function useAsync<T>(
+  asyncFunction: (...args: any[]) => Promise<T>
+): UseAsyncReturn<T>;
+```
+
+#### Example
+
+```tsx
+function UserProfile({ userId }) {
+  const {
+    data: user,
+    loading,
+    error,
+    execute: loadUser
+  } = useAsync(() => fetchUser(userId));
+
+  useEffect(() => {
+    loadUser();
+  }, [userId]);
+
+  if (loading) return <Spinner />;
+  if (error) return <Banner tone="critical">{error.message}</Banner>;
+  if (!user) return null;
+
+  return <UserCard user={user} />;
+}
+```
+
+## Utilities
+
+### classNames
+
+Conditionally join class names.
+
+```typescript
+function classNames(
+  ...args: (string | undefined | null | false | {[key: string]: boolean})[]
+): string;
+```
+
+#### Example
+
+```tsx
+const buttonClass = classNames(
+  'btn',
+  primary && 'btn-primary',
+  disabled && 'btn-disabled',
+  {
+    'btn-large': size === 'large',
+    'btn-small': size === 'small',
+  }
+);
+```
+
+### formatCurrency
+
+Format numbers as currency.
+
+```typescript
+function formatCurrency(
+  amount: number,
+  currency?: string,
+  locale?: string
+): string;
+```
+
+#### Example
+
+```tsx
+formatCurrency(1234.56); // "$1,234.56"
+formatCurrency(1234.56, 'EUR'); // "€1,234.56"
+formatCurrency(1234.56, 'JPY', 'ja-JP'); // "¥1,235"
+```
+
+## TypeScript Types
+
+### Common Types
+
+```typescript
+// Action descriptor
+interface ActionListItemDescriptor {
+  content?: string;
+  icon?: React.ComponentType;
+  onAction?: () => void;
+  destructive?: boolean;
+  disabled?: boolean;
+}
+
+// Complex action
+interface ComplexAction {
+  content?: string;
+  onAction?: () => void;
+  primary?: boolean;
+  destructive?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+// Breadcrumb
+interface BreadcrumbProps {
+  content: string;
+  url?: string;
+  onAction?: () => void;
+}
+
+// Filter
+interface Filter {
+  key: string;
+  label: string;
+  filter: React.ReactNode;
+  shortcut?: boolean;
+  pinned?: boolean;
+  disabled?: boolean;
+}
+```
+
+## ExtJS Type Definitions
+
+```typescript
+// Store configuration
+interface StoreConfig {
+  fields: string[] | FieldConfig[];
+  data?: any[];
+  proxy?: ProxyConfig;
+  autoLoad?: boolean;
+  pageSize?: number;
+  remoteSort?: boolean;
+  remoteFilter?: boolean;
+}
+
+// Field configuration
+interface FieldConfig {
+  name: string;
+  type?: 'string' | 'int' | 'float' | 'boolean' | 'date';
+  defaultValue?: any;
+  convert?: (value: any, record: any) => any;
+  mapping?: string;
+}
+
+// Proxy configuration
+interface ProxyConfig {
+  type: 'ajax' | 'rest' | 'memory';
+  url?: string;
+  api?: {
+    create?: string;
+    read?: string;
+    update?: string;
+    destroy?: string;
+  };
+  reader?: ReaderConfig;
+  writer?: WriterConfig;
+}
+```

@@ -1,0 +1,595 @@
+---
+title: Hooks API Reference
+description: 'Custom React hooks provided by Cin7 DSL for common patterns and functionality.'
+showTOC: true
+keywords:
+  - hooks
+  - react
+  - api
+  - reference
+  - custom hooks
+order: 2
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## State Management Hooks
+
+### useLocalStorage
+
+Persist state to localStorage with automatic synchronization.
+
+```typescript
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T | ((val: T) => T)) => void];
+```
+
+#### Parameters
+
+- `key`: Storage key
+- `initialValue`: Default value if key doesn't exist
+
+#### Returns
+
+- `[value, setValue]`: Current value and setter function
+
+#### Example
+
+```tsx
+function Settings() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
+  const [fontSize, setFontSize] = useLocalStorage('fontSize', 16);
+
+  return (
+    <Card title="Settings">
+      <Select
+        label="Theme"
+        options={[
+          { label: 'Light', value: 'light' },
+          { label: 'Dark', value: 'dark' },
+        ]}
+        value={theme}
+        onChange={setTheme}
+      />
+      <RangeSlider
+        label="Font Size"
+        value={fontSize}
+        min={12}
+        max={24}
+        onChange={setFontSize}
+      />
+    </Card>
+  );
+}
+```
+
+### useSessionStorage
+
+Similar to useLocalStorage but uses sessionStorage.
+
+```typescript
+function useSessionStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T | ((val: T) => T)) => void];
+```
+
+### usePrevious
+
+Get the previous value of a prop or state.
+
+```typescript
+function usePrevious<T>(value: T): T | undefined;
+```
+
+#### Example
+
+```tsx
+function PriceTracker({ price }) {
+  const previousPrice = usePrevious(price);
+
+  const priceChange = previousPrice ? price - previousPrice : 0;
+  const percentChange = previousPrice 
+    ? ((price - previousPrice) / previousPrice) * 100 
+    : 0;
+
+  return (
+    <Card>
+      <Text variant="headingMd">${price}</Text>
+      {previousPrice && (
+        <Badge tone={priceChange >= 0 ? 'success' : 'critical'}>
+          {priceChange >= 0 ? '+' : ''}{percentChange.toFixed(2)}%
+        </Badge>
+      )}
+    </Card>
+  );
+}
+```
+
+## Effect Hooks
+
+### useDebounce
+
+Debounce a value with a specified delay.
+
+```typescript
+function useDebounce<T>(value: T, delay: number): T;
+```
+
+#### Parameters
+
+- `value`: Value to debounce
+- `delay`: Delay in milliseconds
+
+#### Example
+
+```tsx
+function SearchProducts() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  
+  const { data: products, loading } = useQuery({
+    queryKey: ['products', debouncedSearchTerm],
+    queryFn: () => searchProducts(debouncedSearchTerm),
+    enabled: !!debouncedSearchTerm,
+  });
+
+  return (
+    <>
+      <TextField
+        label="Search products"
+        value={searchTerm}
+        onChange={setSearchTerm}
+        placeholder="Type to search..."
+      />
+      {loading && <Spinner />}
+      {products && <ProductList products={products} />}
+    </>
+  );
+}
+```
+
+### useThrottle
+
+Throttle a value with a specified delay.
+
+```typescript
+function useThrottle<T>(value: T, delay: number): T;
+```
+
+### useInterval
+
+Set up an interval that properly cleans up.
+
+```typescript
+function useInterval(callback: () => void, delay: number | null): void;
+```
+
+#### Example
+
+```tsx
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useInterval(
+    () => setSeconds(s => s + 1),
+    isRunning ? 1000 : null
+  );
+
+  return (
+    <Card>
+      <Stack vertical>
+        <Text variant="headingLg">{seconds}s</Text>
+        <ButtonGroup>
+          <Button onClick={() => setIsRunning(!isRunning)}>
+            {isRunning ? 'Pause' : 'Start'}
+          </Button>
+          <Button onClick={() => setSeconds(0)}>Reset</Button>
+        </ButtonGroup>
+      </Stack>
+    </Card>
+  );
+}
+```
+
+### useTimeout
+
+Set up a timeout that properly cleans up.
+
+```typescript
+function useTimeout(callback: () => void, delay: number | null): void;
+```
+
+## DOM Hooks
+
+### useOnClickOutside
+
+Detect clicks outside of a component.
+
+```typescript
+function useOnClickOutside<T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T>,
+  handler: (event: MouseEvent | TouchEvent) => void
+): void;
+```
+
+#### Example
+
+```tsx
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside(dropdownRef, () => setIsOpen(false));
+
+  return (
+    <div ref={dropdownRef}>
+      <Button onClick={() => setIsOpen(!isOpen)}>
+        Toggle Dropdown
+      </Button>
+      {isOpen && (
+        <Card>
+          <ActionList
+            items={[
+              { content: 'Option 1' },
+              { content: 'Option 2' },
+              { content: 'Option 3' },
+            ]}
+          />
+        </Card>
+      )}
+    </div>
+  );
+}
+```
+
+### useEventListener
+
+Add event listeners with automatic cleanup.
+
+```typescript
+function useEventListener<K extends keyof WindowEventMap>(
+  eventName: K,
+  handler: (event: WindowEventMap[K]) => void,
+  element?: HTMLElement | Window
+): void;
+```
+
+### useMediaQuery
+
+Check if a media query matches.
+
+```typescript
+function useMediaQuery(query: string): boolean;
+```
+
+#### Example
+
+```tsx
+function ResponsiveLayout() {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isTablet = useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+  const isDesktop = useMediaQuery('(min-width: 1025px)');
+
+  return (
+    <Page>
+      <Text variant="headingMd">
+        Current view: {
+          isMobile ? 'Mobile' : 
+          isTablet ? 'Tablet' : 
+          'Desktop'
+        }
+      </Text>
+      <Layout>
+        {isDesktop ? (
+          <>
+            <Layout.Section oneThird>
+              <Sidebar />
+            </Layout.Section>
+            <Layout.Section>
+              <MainContent />
+            </Layout.Section>
+          </>
+        ) : (
+          <Layout.Section>
+            <MainContent />
+            {!isMobile && <Sidebar />}
+          </Layout.Section>
+        )}
+      </Layout>
+    </Page>
+  );
+}
+```
+
+### useWindowSize
+
+Get current window dimensions.
+
+```typescript
+interface WindowSize {
+  width: number | undefined;
+  height: number | undefined;
+}
+
+function useWindowSize(): WindowSize;
+```
+
+### useScrollPosition
+
+Track scroll position.
+
+```typescript
+interface ScrollPosition {
+  x: number;
+  y: number;
+}
+
+function useScrollPosition(): ScrollPosition;
+```
+
+## Async Hooks
+
+### useAsync
+
+Handle async operations with loading and error states.
+
+```typescript
+interface UseAsyncReturn<T> {
+  execute: (...args: any[]) => Promise<T>;
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  reset: () => void;
+}
+
+function useAsync<T>(
+  asyncFunction: (...args: any[]) => Promise<T>,
+  immediate?: boolean
+): UseAsyncReturn<T>;
+```
+
+#### Example
+
+```tsx
+function UserProfile({ userId }) {
+  const {
+    execute: loadUser,
+    data: user,
+    loading,
+    error
+  } = useAsync(
+    () => fetchUserById(userId),
+    true // Load immediately
+  );
+
+  if (loading) return <SkeletonBodyText />;
+  if (error) return <Banner tone="critical">{error.message}</Banner>;
+  if (!user) return null;
+
+  return (
+    <Card title={user.name}>
+      <Stack vertical>
+        <Text>Email: {user.email}</Text>
+        <Text>Role: {user.role}</Text>
+        <Button onClick={() => loadUser()}>Refresh</Button>
+      </Stack>
+    </Card>
+  );
+}
+```
+
+### useFetch
+
+Simple data fetching hook.
+
+```typescript
+interface UseFetchReturn<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => void;
+}
+
+function useFetch<T>(url: string, options?: RequestInit): UseFetchReturn<T>;
+```
+
+## Form Hooks
+
+### useForm
+
+Manage form state and validation.
+
+```typescript
+interface UseFormConfig<T> {
+  initialValues: T;
+  validate?: (values: T) => Record<string, string>;
+  onSubmit: (values: T) => void | Promise<void>;
+}
+
+interface UseFormReturn<T> {
+  values: T;
+  errors: Record<string, string>;
+  touched: Record<string, boolean>;
+  isSubmitting: boolean;
+  handleChange: (field: keyof T) => (value: any) => void;
+  handleBlur: (field: keyof T) => () => void;
+  handleSubmit: (e?: React.FormEvent) => void;
+  reset: () => void;
+  setFieldValue: (field: keyof T, value: any) => void;
+  setFieldError: (field: keyof T, error: string) => void;
+}
+
+function useForm<T extends Record<string, any>>(
+  config: UseFormConfig<T>
+): UseFormReturn<T>;
+```
+
+#### Example
+
+```tsx
+function ContactForm() {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      message: '',
+    },
+    validate: (values) => {
+      const errors: Record<string, string> = {};
+      if (!values.name) errors.name = 'Name is required';
+      if (!values.email) errors.email = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(values.email)) {
+        errors.email = 'Email is invalid';
+      }
+      if (!values.message) errors.message = 'Message is required';
+      return errors;
+    },
+    onSubmit: async (values) => {
+      await sendContactForm(values);
+      showToast('Message sent successfully!');
+    },
+  });
+
+  return (
+    <Form onSubmit={form.handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Name"
+          value={form.values.name}
+          onChange={form.handleChange('name')}
+          onBlur={form.handleBlur('name')}
+          error={form.touched.name && form.errors.name}
+          requiredIndicator
+        />
+        <TextField
+          label="Email"
+          type="email"
+          value={form.values.email}
+          onChange={form.handleChange('email')}
+          onBlur={form.handleBlur('email')}
+          error={form.touched.email && form.errors.email}
+          requiredIndicator
+        />
+        <TextField
+          label="Message"
+          multiline={4}
+          value={form.values.message}
+          onChange={form.handleChange('message')}
+          onBlur={form.handleBlur('message')}
+          error={form.touched.message && form.errors.message}
+          requiredIndicator
+        />
+        <Button
+          primary
+          submit
+          loading={form.isSubmitting}
+        >
+          Send Message
+        </Button>
+      </FormLayout>
+    </Form>
+  );
+}
+```
+
+## Animation Hooks
+
+### useSpring
+
+Create spring animations.
+
+```typescript
+interface SpringConfig {
+  from: number;
+  to: number;
+  config?: {
+    tension?: number;
+    friction?: number;
+    mass?: number;
+  };
+}
+
+function useSpring(config: SpringConfig): number;
+```
+
+### useTransition
+
+Manage transition states.
+
+```typescript
+interface UseTransitionReturn {
+  state: 'entering' | 'entered' | 'exiting' | 'exited';
+  shouldMount: boolean;
+}
+
+function useTransition(
+  show: boolean,
+  duration?: number
+): UseTransitionReturn;
+```
+
+## Utility Hooks
+
+### useToggle
+
+Toggle boolean state.
+
+```typescript
+function useToggle(
+  initialValue?: boolean
+): [boolean, () => void, (value: boolean) => void];
+```
+
+### useCounter
+
+Manage counter state.
+
+```typescript
+interface UseCounterReturn {
+  count: number;
+  increment: () => void;
+  decrement: () => void;
+  reset: () => void;
+  setCount: (value: number) => void;
+}
+
+function useCounter(initialValue?: number): UseCounterReturn;
+```
+
+### useCopyToClipboard
+
+Copy text to clipboard.
+
+```typescript
+interface UseCopyToClipboardReturn {
+  copy: (text: string) => Promise<boolean>;
+  copied: boolean;
+  error: Error | null;
+}
+
+function useCopyToClipboard(): UseCopyToClipboardReturn;
+```
+
+#### Example
+
+```tsx
+function ShareButton({ url }) {
+  const { copy, copied } = useCopyToClipboard();
+
+  return (
+    <Button
+      onClick={() => copy(url)}
+      icon={copied ? CheckIcon : ClipboardIcon}
+    >
+      {copied ? 'Copied!' : 'Copy Link'}
+    </Button>
+  );
+}
+```
