@@ -1,0 +1,63 @@
+.DownloadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--p-space-400);
+  margin-top: var(--p-space-400);
+}
+
+.TemplateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--p-space-400);
+  margin-top: var(--p-space-400);
+}
+
+.ToolsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--p-space-400);
+  margin-top: var(--p-space-400);
+}
+
+.InstructionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--p-space-600);
+  margin-top: var(--p-space-400);
+}
+
+.DownloadItem {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--p-shadow-300);
+  }
+}
+
+.TechBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--p-space-100);
+  margin-top: var(--p-space-200);
+}
+
+.Badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: var(--p-border-radius-100);
+  background: var(--p-color-bg-fill-info);
+  color: var(--p-color-text-on-color);
+}
+
+@media (max-width: 768px) {
+  .DownloadGrid,
+  .TemplateGrid,
+  .ToolsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .InstructionsGrid {
+    grid-template-columns: 1fr;
+  }
+}

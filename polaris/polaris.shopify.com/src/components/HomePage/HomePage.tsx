@@ -115,6 +115,14 @@ function HomePage({}: Props) {
               Cin7 DSL applications
             </p>
           </Link>
+
+          <Link href="/downloads" className={styles.EntryPoint}>
+            <h3>Downloads</h3>
+            <p>
+              Guides, templates, and resources for offline development and 
+              quick reference
+            </p>
+          </Link>
         </div>
       </div>
     </Page>

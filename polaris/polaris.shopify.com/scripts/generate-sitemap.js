@@ -36,6 +36,8 @@ function generateSitemap() {
     { path: '/tokens', priority: '0.7', changefreq: 'monthly' },
     { path: '/icons', priority: '0.7', changefreq: 'monthly' },
     { path: '/playground', priority: '0.7', changefreq: 'weekly' },
+    { path: '/style-guide', priority: '0.8', changefreq: 'monthly' },
+    { path: '/downloads', priority: '0.6', changefreq: 'monthly' },
   ];
   
   // Map to URL entries
