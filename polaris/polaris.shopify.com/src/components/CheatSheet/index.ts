@@ -1,1 +1,1 @@
-export { CheatSheet, commonPatternsCheatSheet, typescriptPatternsCheatSheet, hooksPatternsCheatSheet } from './CheatSheet';
+export { CheatSheet, commonPatternsCheatSheet, typescriptPatternsCheatSheet, hooksPatternsCheatSheet, type CheatSheetItem } from './CheatSheet';

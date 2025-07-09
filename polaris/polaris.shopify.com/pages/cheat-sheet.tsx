@@ -14,12 +14,17 @@ import {
   CheatSheet, 
   commonPatternsCheatSheet, 
   typescriptPatternsCheatSheet, 
-  hooksPatternsCheatSheet 
+  hooksPatternsCheatSheet,
+  type CheatSheetItem
 } from '../src/components/CheatSheet';
 import { usePageTracking } from '../src/utils/usePageTracking';
 import { trackDownload } from '../src/utils/analytics';
 
-const cheatSheets = {
+const cheatSheets: Record<string, {
+  title: string;
+  data: CheatSheetItem[];
+  description: string;
+}> = {
   'common-patterns': {
     title: 'Common Patterns',
     data: commonPatternsCheatSheet,

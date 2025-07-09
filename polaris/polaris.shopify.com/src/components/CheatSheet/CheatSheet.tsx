@@ -11,7 +11,7 @@ import {
 import { CopyButton } from '../Code/Code';
 import styles from './CheatSheet.module.scss';
 
-interface CheatSheetItem {
+export interface CheatSheetItem {
   title: string;
   description: string;
   code: string;
