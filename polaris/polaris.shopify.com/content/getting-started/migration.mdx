@@ -612,9 +612,378 @@ const withCin7Migration = (Component) => {
 5. **Performance**: Monitor bundle size and performance
 6. **Rollback Plan**: Have a rollback strategy ready
 
+## Framework-Specific Migration Guides
+
+### From Material-UI to Cin7 DSL
+
+Material-UI users can migrate to Cin7 DSL while maintaining familiar patterns:
+
+```tsx
+// Before (Material-UI)
+import { Button, Card, CardContent, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  card: {
+    minWidth: 275,
+    marginBottom: 12,
+  },
+  title: {
+    fontSize: 14,
+  },
+});
+
+const UserCard = ({ user }) => {
+  const classes = useStyles();
+  
+  return (
+    <Card className={classes.card}>
+      <CardContent>
+        <Typography className={classes.title} color="textSecondary">
+          {user.role}
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {user.name}
+        </Typography>
+        <Button size="small" color="primary">
+          Edit User
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
+// After (Cin7 DSL)
+import { Button, Card, Text, Stack } from '@shopify/polaris';
+import styled from 'styled-components';
+import { tokens } from '@cin7/dsl-core';
+
+const StyledCard = styled(Card)`
+  min-width: 275px;
+  margin-bottom: ${tokens.space.sm};
+`;
+
+const UserCard = ({ user }) => {
+  return (
+    <StyledCard>
+      <Stack vertical>
+        <Text color="subdued" variant="bodySm">
+          {user.role}
+        </Text>
+        <Text variant="headingMd" as="h2">
+          {user.name}
+        </Text>
+        <Button size="slim" onClick={() => editUser(user)}>
+          Edit User
+        </Button>
+      </Stack>
+    </StyledCard>
+  );
+};
+```
+
+**Key Migration Points:**
+- Replace `makeStyles` with `styled-components` and Cin7 DSL tokens
+- Map Material-UI typography variants to Polaris text variants
+- Use Polaris spacing and color tokens instead of custom CSS
+- Leverage Cin7 DSL's ExtJS components for complex data operations
+
+### From Ant Design to Cin7 DSL
+
+Ant Design users can migrate while preserving enterprise-focused functionality:
+
+```tsx
+// Before (Ant Design)
+import { Table, Button, Card, Typography } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
+const { Title, Text } = Typography;
+
+const UserTable = ({ users }) => {
+  const columns = [
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
+    { title: 'Role', dataIndex: 'role', key: 'role' },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, user) => (
+        <>
+          <Button icon={<EditOutlined />} onClick={() => editUser(user)} />
+          <Button icon={<DeleteOutlined />} onClick={() => deleteUser(user)} />
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <Card>
+      <Title level={3}>User Management</Title>
+      <Table columns={columns} dataSource={users} />
+    </Card>
+  );
+};
+
+// After (Cin7 DSL with ExtJS)
+import { Card, Text, Button, Stack } from '@shopify/polaris';
+import { ExtDataGrid } from '@cin7/dsl-extjs-adapters';
+import { EditIcon, DeleteIcon } from '@shopify/polaris-icons';
+
+const UserTable = ({ users }) => {
+  const columns = [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Email', dataIndex: 'email', flex: 1 },
+    { text: 'Role', dataIndex: 'role', width: 120 },
+    {
+      text: 'Actions',
+      dataIndex: 'actions',
+      width: 120,
+      renderer: (value, record) => (
+        <Stack distribution="fillEvenly">
+          <Button 
+            icon={EditIcon} 
+            onClick={() => editUser(record)}
+            accessibilityLabel="Edit user"
+          />
+          <Button 
+            icon={DeleteIcon} 
+            onClick={() => deleteUser(record)}
+            accessibilityLabel="Delete user"
+          />
+        </Stack>
+      ),
+    },
+  ];
+
+  return (
+    <Card>
+      <Text variant="headingMd" as="h3">User Management</Text>
+      <ExtDataGrid
+        data={users}
+        columns={columns}
+        features={['sorting', 'filtering', 'pagination']}
+        onRowDoubleClick={(user) => editUser(user)}
+      />
+    </Card>
+  );
+};
+```
+
+**Key Migration Points:**
+- Replace Ant Design Table with ExtJS DataGrid for advanced features
+- Use Polaris icons instead of Ant Design icons
+- Map Ant Design typography to Polaris text variants
+- Leverage ExtJS adapters for complex enterprise components
+
+### From Chakra UI to Cin7 DSL
+
+Chakra UI users can migrate while maintaining component composability:
+
+```tsx
+// Before (Chakra UI)
+import { 
+  Box, 
+  Button, 
+  Card, 
+  CardBody, 
+  CardHeader, 
+  Heading, 
+  Text,
+  Stack 
+} from '@chakra-ui/react';
+
+const UserCard = ({ user }) => {
+  return (
+    <Card>
+      <CardHeader>
+        <Heading size='md'>{user.name}</Heading>
+      </CardHeader>
+      <CardBody>
+        <Stack spacing={3}>
+          <Text color='gray.600'>{user.email}</Text>
+          <Text fontSize='sm'>{user.role}</Text>
+          <Button colorScheme='blue' size='sm'>
+            Edit User
+          </Button>
+        </Stack>
+      </CardBody>
+    </Card>
+  );
+};
+
+// After (Cin7 DSL)
+import { Card, Text, Button, Stack } from '@shopify/polaris';
+import { Box } from '@cin7/dsl-components';
+import { tokens } from '@cin7/dsl-core';
+
+const UserCard = ({ user }) => {
+  return (
+    <Card>
+      <Box padding={tokens.space.md}>
+        <Text variant="headingMd" as="h3">
+          {user.name}
+        </Text>
+      </Box>
+      <Box padding={tokens.space.md}>
+        <Stack vertical spacing="tight">
+          <Text color="subdued">{user.email}</Text>
+          <Text variant="bodySm">{user.role}</Text>
+          <Button size="slim" onClick={() => editUser(user)}>
+            Edit User
+          </Button>
+        </Stack>
+      </Box>
+    </Card>
+  );
+};
+```
+
+**Key Migration Points:**
+- Replace Chakra UI Box with Cin7 DSL Box component
+- Map Chakra UI color props to Polaris color tokens
+- Use Polaris spacing system instead of Chakra's spacing props
+- Leverage Cin7 DSL tokens for consistent design
+
+### From React Bootstrap to Cin7 DSL
+
+React Bootstrap users can migrate to a more modern design system:
+
+```tsx
+// Before (React Bootstrap)
+import { Card, Button, Row, Col } from 'react-bootstrap';
+
+const UserGrid = ({ users }) => {
+  return (
+    <Row>
+      {users.map(user => (
+        <Col key={user.id} md={6} lg={4}>
+          <Card className="mb-3">
+            <Card.Body>
+              <Card.Title>{user.name}</Card.Title>
+              <Card.Text>{user.email}</Card.Text>
+              <Button variant="primary" size="sm">
+                Edit
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  );
+};
+
+// After (Cin7 DSL)
+import { Card, Text, Button, Layout } from '@shopify/polaris';
+import { Grid, GridItem } from '@cin7/dsl-components';
+
+const UserGrid = ({ users }) => {
+  return (
+    <Grid columns={{ xs: 1, md: 2, lg: 3 }} gap={tokens.space.md}>
+      {users.map(user => (
+        <GridItem key={user.id}>
+          <Card>
+            <Layout>
+              <Layout.Section>
+                <Text variant="headingMd" as="h3">
+                  {user.name}
+                </Text>
+                <Text color="subdued">{user.email}</Text>
+                <Button size="slim" onClick={() => editUser(user)}>
+                  Edit
+                </Button>
+              </Layout.Section>
+            </Layout>
+          </Card>
+        </GridItem>
+      ))}
+    </Grid>
+  );
+};
+```
+
+**Key Migration Points:**
+- Replace Bootstrap grid with Cin7 DSL Grid component
+- Use Polaris Layout components for card structure
+- Map Bootstrap button variants to Polaris button props
+- Leverage responsive design tokens
+
+## Legacy System Integration
+
+### Integrating with Existing jQuery Applications
+
+For applications with existing jQuery components:
+
+```typescript
+// Wrapper component for jQuery widgets
+import { useEffect, useRef } from 'react';
+import { Card } from '@shopify/polaris';
+import $ from 'jquery';
+
+const LegacyWidget = ({ data, onUpdate }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    if (containerRef.current) {
+      // Initialize jQuery widget
+      $(containerRef.current).legacyWidget({
+        data: data,
+        onUpdate: onUpdate,
+      });
+      
+      // Cleanup
+      return () => {
+        $(containerRef.current).legacyWidget('destroy');
+      };
+    }
+  }, [data, onUpdate]);
+  
+  return (
+    <Card>
+      <div ref={containerRef} />
+    </Card>
+  );
+};
+
+// Gradual migration strategy
+const HybridComponent = ({ useNewImplementation, ...props }) => {
+  if (useNewImplementation) {
+    return <ModernCin7Component {...props} />;
+  }
+  
+  return <LegacyWidget {...props} />;
+};
+```
+
+### Migrating from Custom CSS Frameworks
+
+For teams with custom CSS frameworks:
+
+```scss
+// Create compatibility layer
+@import '@cin7/dsl-core/tokens';
+
+// Map existing variables to Cin7 DSL tokens
+:root {
+  --legacy-primary: #{$cin7-color-primary};
+  --legacy-spacing-sm: #{$cin7-space-sm};
+  --legacy-spacing-md: #{$cin7-space-md};
+  --legacy-border-radius: #{$cin7-border-radius-base};
+}
+
+// Gradual migration classes
+.legacy-card {
+  @extend .cin7-card;
+  
+  // Override specific properties as needed
+  border-radius: var(--legacy-border-radius);
+}
+```
+
 ## Support and Resources
 
 - **Migration Support**: Contact the Cin7 DSL team for migration assistance
 - **Documentation**: Comprehensive guides and API references
 - **Community**: Join the Cin7 DSL community for tips and best practices
 - **Training**: Schedule team training sessions for the new patterns
+- **Migration Tools**: Use automated tools to speed up common migration tasks
+- **Code Reviews**: Request migration code reviews from the Cin7 DSL team

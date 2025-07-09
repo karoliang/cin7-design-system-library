@@ -17,6 +17,7 @@ import FoundationsThumbnail from '../FoundationsThumbnail';
 import PatternThumbnailPreview from '../ThumbnailPreview';
 import ComponentThumbnail from '../ComponentThumbnail';
 const CATEGORY_NAMES: {[key in SearchResultCategory]: string} = {
+  guides: 'Guides',
   components: 'Components',
   foundations: 'Foundations',
   patterns: 'Patterns',
@@ -344,6 +345,46 @@ function SearchResults({
                           renderPreview={() => (
                             <FoundationsThumbnail
                               icon={icon}
+                              category={category}
+                            />
+                          )}
+                        />
+                      </SearchContext.Provider>
+                    );
+                  })}
+                </Grid>
+              </ResultsGroup>
+            );
+
+          case 'guides':
+            return (
+              <ResultsGroup category={category} key={category}>
+                <Grid>
+                  {results.map(({id, url, meta}) => {
+                    if (!meta.guides) return null;
+                    const {title, description, icon, category} = meta.guides;
+                    const resultIndex = resultsInRenderedOrder.findIndex(
+                      (r) => {
+                        return r.id === id;
+                      },
+                    );
+                    const rank = resultIndex + 1; // zero-indexed
+                    return (
+                      <SearchContext.Provider
+                        key={title}
+                        value={{currentItemId, id}}
+                      >
+                        <GridItem
+                          title={title}
+                          description={description}
+                          url={url}
+                          customOnClick={() =>
+                            searchTerm &&
+                            captureSearchClick(uuid, searchTerm, rank, id, url)
+                          }
+                          renderPreview={() => (
+                            <FoundationsThumbnail
+                              icon={icon || 'BookOpenIcon'}
                               category={category}
                             />
                           )}

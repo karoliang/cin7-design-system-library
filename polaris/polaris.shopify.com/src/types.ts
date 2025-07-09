@@ -116,6 +116,7 @@ export const foundationsCategories = [
 export type FoundationsCategory = typeof foundationsCategories[number];
 
 export const searchResultCategories = [
+  'guides',
   'foundations',
   'components',
   'patterns',
@@ -131,6 +132,13 @@ export interface SearchResult {
   url: string;
   score: number;
   meta: Partial<{
+    guides: {
+      title: string;
+      description: string;
+      icon?: string;
+      keywords?: string[];
+      category: string;
+    };
     components: {
       title: string;
       description: string;

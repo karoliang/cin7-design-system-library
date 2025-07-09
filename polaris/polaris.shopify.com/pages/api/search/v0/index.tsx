@@ -50,7 +50,14 @@ const foundationSlugs = Object.keys(searchablePages).filter(
     slug.startsWith('/content/'),
 ) as StartsWith<Slugs, '/foundations/' | '/design/' | '/content/'>[];
 
+const guideSlugs = Object.keys(searchablePages).filter(
+  (slug) =>
+    slug.startsWith('/getting-started/') ||
+    slug.startsWith('/api/'),
+) as StartsWith<Slugs, '/getting-started/' | '/api/'>[];
+
 const MAX_RESULTS: {[key in SearchResultCategory]: number} = {
+  guides: 8,
   foundations: 8,
   components: 6,
   patterns: 6,
@@ -146,6 +153,33 @@ const getSearchResults = (query?: string) => {
     });
   });
 
+  // Add guides (getting-started and api)
+  guideSlugs.forEach((slug) => {
+    const {
+      title,
+      icon = '',
+      description = '',
+      keywords = [],
+    } = searchablePages[slug].frontMatter as FrontMatter;
+    const category = slug.split('/')[1];
+
+    results.push({
+      id: slugify(`guides ${title}`),
+      category: 'guides',
+      score: 0,
+      url: slug,
+      meta: {
+        guides: {
+          title,
+          icon,
+          description: stripMarkdownLinks(description),
+          keywords: keywords.map(String),
+          category,
+        },
+      },
+    });
+  });
+
   // Add foundations
   foundationSlugs.forEach((slug) => {
     const {
@@ -195,6 +229,11 @@ const getSearchResults = (query?: string) => {
 
   const fuse = new Fuse(results, {
     keys: [
+      // Guides (Getting Started & API)
+      {name: 'meta.guides.title', weight: 120},
+      {name: 'meta.guides.description', weight: 60},
+      {name: 'meta.guides.keywords', weight: 150},
+
       // Foundations
       {name: 'meta.foundations.title', weight: 100},
       {name: 'meta.foundations.description', weight: 50},
