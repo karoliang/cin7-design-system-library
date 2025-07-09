@@ -14,6 +14,56 @@ const nextConfig = {
     // this includes files from the monorepo base one directory up
     outputFileTracingRoot: path.join(__dirname, '../'),
   },
+  // Image optimization
+  images: {
+    domains: ['cin7.com', 'shopify.com'],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  // Webpack optimization for code splitting
+  webpack: (config, { dev, isServer }) => {
+    // Enable tree shaking
+    config.optimization = {
+      ...config.optimization,
+      usedExports: true,
+      sideEffects: false,
+    };
+    
+    // Code splitting for better performance
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Polaris components chunk
+          polaris: {
+            name: 'polaris',
+            test: /[\\/]node_modules[\\/]@shopify[\\/]polaris[\\/]/,
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          // React and related libraries
+          framework: {
+            name: 'framework',
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router)[\\/]/,
+            priority: 20,
+            reuseExistingChunk: true,
+          },
+          // Common modules
+          commons: {
+            name: 'commons',
+            minChunks: 2,
+            priority: 5,
+            reuseExistingChunk: true,
+          },
+        },
+      };
+    }
+    
+    return config;
+  },
   async headers() {
     return [
       {

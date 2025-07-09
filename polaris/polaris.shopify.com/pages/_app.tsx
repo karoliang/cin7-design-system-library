@@ -11,6 +11,7 @@ import {className} from '../src/utils/various';
 import Frame from '../src/components/Frame';
 import '../src/styles/globals.scss';
 import ViewTransition from '../src/components/ViewTransition';
+import { preloadCriticalResources, reportWebVitals } from '../src/utils/performance';
 
 const PUBLIC_GA_ID = 'UA-49178120-32';
 
@@ -39,6 +40,9 @@ function MyApp({Component, pageProps}: AppProps) {
   // see https://stackoverflow.com/questions/61040790/userouter-withrouter-receive-undefined-on-query-in-first-render
 
   useEffect(() => {
+    // Preload critical resources on app load
+    preloadCriticalResources();
+    
     if (!isProd) return;
 
     const handleRouteChange = (url: string) => {
@@ -131,3 +135,6 @@ function MyApp({Component, pageProps}: AppProps) {
 }
 
 export default MyApp;
+
+// Report web vitals for performance monitoring
+export { reportWebVitals };

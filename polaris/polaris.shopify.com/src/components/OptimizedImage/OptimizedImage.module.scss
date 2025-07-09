@@ -1,0 +1,22 @@
+.ImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  
+  // Ensure images don't exceed their container
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.Image {
+  // Smooth transitions for lazy loading
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  
+  &[data-loading="lazy"] {
+    opacity: 0;
+  }
+}
