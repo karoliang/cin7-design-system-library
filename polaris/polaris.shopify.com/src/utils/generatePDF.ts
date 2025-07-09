@@ -424,10 +424,11 @@ function escapeHtml(text: string): string {
 /**
  * Generate and download PDF
  */
-export function downloadPDF(content: PDFContent, filename: string) {
+export function downloadPDF(content: PDFContent, _filename: string) {
   const htmlContent = generatePDFHTML(content);
   
   // Create a new window for printing
+  // Note: filename parameter is kept for API consistency but not used in print dialog
   const printWindow = window.open('', '_blank');
   if (printWindow) {
     printWindow.document.write(htmlContent);
