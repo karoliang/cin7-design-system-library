@@ -7,8 +7,6 @@ import {
   InlineStack,
   Text,
   Select,
-  Button,
-  Divider,
 } from '@shopify/polaris';
 import { ExportIcon } from '@shopify/polaris-icons';
 import PageMeta from '../src/components/PageMeta';
