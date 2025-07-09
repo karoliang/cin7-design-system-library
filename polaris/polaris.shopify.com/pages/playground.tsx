@@ -348,7 +348,7 @@ function PlaygroundPage() {
                   • All Polaris components are available
                 </Text>
                 <Text as="p" variant="bodySm">
-                  • Your component must be named "Example"
+                  • Your component must be named &quot;Example&quot;
                 </Text>
                 <Text as="p" variant="bodySm">
                   • Changes are reflected in real-time
