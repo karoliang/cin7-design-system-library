@@ -12,6 +12,7 @@ import Frame from '../src/components/Frame';
 import '../src/styles/globals.scss';
 import ViewTransition from '../src/components/ViewTransition';
 import { preloadCriticalResources, reportWebVitals } from '../src/utils/performance';
+import { initializeAnalytics } from '../src/utils/analytics';
 
 const PUBLIC_GA_ID = 'UA-49178120-32';
 
@@ -42,6 +43,11 @@ function MyApp({Component, pageProps}: AppProps) {
   useEffect(() => {
     // Preload critical resources on app load
     preloadCriticalResources();
+    
+    // Initialize analytics
+    if (isProd) {
+      initializeAnalytics();
+    }
     
     if (!isProd) return;
 

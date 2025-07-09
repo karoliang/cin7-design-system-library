@@ -8,6 +8,7 @@ import {
 import {useThrottle} from '../../utils/hooks';
 import styles from './GlobalSearch.module.scss';
 import {useRouter} from 'next/router';
+import { trackEnhancedSearch } from '../../utils/analytics';
 import IconGrid from '../IconGrid';
 import {Grid, GridItem} from '../Grid';
 import TokenList from '../TokenList';
@@ -159,6 +160,10 @@ function GlobalSearch() {
       .then((json) => {
         const {results} = json;
         setSearchResults(results);
+        
+        // Track search with enhanced analytics
+        const flatResults = results.flatMap(group => group.results);
+        trackEnhancedSearch(searchTerm, flatResults);
       });
 
     captureSearchQuery(uuid, searchTerm, resultsInRenderedOrder);

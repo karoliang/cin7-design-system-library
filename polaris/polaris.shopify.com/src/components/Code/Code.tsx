@@ -9,6 +9,7 @@ import {useCopyToClipboard} from '../../utils/hooks';
 import Icon from '../Icon';
 import styles from './Code.module.scss';
 import Tooltip from '../Tooltip';
+import { trackCodeCopy } from '../../utils/analytics';
 
 interface Props {
   code:
@@ -88,8 +89,15 @@ function HighlightedCode({
   );
 }
 
-export function CopyButton({code}: {code: string}) {
+export function CopyButton({code, codeType = 'snippet'}: {code: string; codeType?: string}) {
   const [copy, didJustCopy] = useCopyToClipboard(code);
+
+  const handleCopy = () => {
+    copy();
+    // Track code copy event
+    const language = detectLanguage(code);
+    trackCodeCopy(codeType, undefined, language);
+  };
 
   return (
     <div className={styles.CopyButtonWrapper}>
@@ -100,7 +108,7 @@ export function CopyButton({code}: {code: string}) {
         <button
           type="button"
           className={styles.CopyButton}
-          onClick={copy}
+          onClick={handleCopy}
           aria-label="Copy to clipboard"
         >
           <Icon source={ClipboardIcon} width={16} height={16} />
@@ -108,6 +116,17 @@ export function CopyButton({code}: {code: string}) {
       </Tooltip>
     </div>
   );
+}
+
+// Simple language detection based on code patterns
+function detectLanguage(code: string): string {
+  if (code.includes('import React') || code.includes('jsx')) return 'jsx';
+  if (code.includes('import') || code.includes('export')) return 'javascript';
+  if (code.includes('interface') || code.includes(': string')) return 'typescript';
+  if (code.includes('<?php')) return 'php';
+  if (code.includes('def ') || code.includes('import ')) return 'python';
+  if (code.includes('.css') || code.includes('{') && code.includes('}')) return 'css';
+  return 'unknown';
 }
 
 export interface InlineCodeProps {}

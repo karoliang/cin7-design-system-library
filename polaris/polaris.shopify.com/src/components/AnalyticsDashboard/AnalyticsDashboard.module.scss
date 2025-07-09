@@ -1,0 +1,38 @@
+.MetricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--p-space-400);
+  margin-bottom: var(--p-space-600);
+}
+
+.MetricCard {
+  padding: var(--p-space-400);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  background: var(--p-color-bg-surface);
+}
+
+.MetricValue {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--p-color-text-brand);
+}
+
+.MetricLabel {
+  font-size: 0.875rem;
+  color: var(--p-color-text-subdued);
+  margin-bottom: var(--p-space-200);
+}
+
+.MetricChange {
+  font-size: 0.75rem;
+  font-weight: 500;
+  
+  &.positive {
+    color: var(--p-color-text-success);
+  }
+  
+  &.negative {
+    color: var(--p-color-text-critical);
+  }
+}

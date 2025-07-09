@@ -29,6 +29,8 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { themes } from 'prism-react-renderer';
 import PageMeta from '../src/components/PageMeta';
 import styles from '../src/styles/Playground.module.scss';
+import { trackPlaygroundUsage, trackCodeCopy } from '../src/utils/analytics';
+import { usePageTracking } from '../src/utils/usePageTracking';
 
 
 const componentExamples: Record<string, string> = {
@@ -997,6 +999,12 @@ function PlaygroundPage() {
   const [selectedExample, setSelectedExample] = useState('Button');
   const [showCode, setShowCode] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Track page engagement
+  usePageTracking({
+    trackScrollDepth: true,
+    trackTimeOnPage: true,
+  });
 
   const scope = {
     ...React,
@@ -1012,15 +1020,22 @@ function PlaygroundPage() {
     setSelectedExample(value);
     setCode(componentExamples[value] || defaultCode);
     setError(null);
+    // Track example selection
+    trackPlaygroundUsage('example_selected', value);
   };
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code);
+    // Track code copy
+    trackCodeCopy('playground', selectedExample, 'jsx');
+    trackPlaygroundUsage('copy', selectedExample);
   };
 
   const handleResetCode = () => {
     setCode(componentExamples[selectedExample] || defaultCode);
     setError(null);
+    // Track reset action
+    trackPlaygroundUsage('reset', selectedExample);
   };
 
   return (
