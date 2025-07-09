@@ -1,7 +1,8 @@
 {
-  "name": "polaris.shopify.com",
+  "name": "cin7-dsl-docs",
   "version": "1.1.4",
   "private": true,
+  "description": "Cin7 Design System Language documentation site",
   "engines": {
     "node": ">=20.10.0"
   },
