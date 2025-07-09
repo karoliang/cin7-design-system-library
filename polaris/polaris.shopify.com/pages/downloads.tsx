@@ -11,6 +11,7 @@ import {
   Icon,
   List,
   Box,
+  IconSource,
 } from '@shopify/polaris';
 import {
   FileIcon,
@@ -35,7 +36,7 @@ import styles from '../src/styles/Downloads.module.scss';
 interface DownloadItem {
   title: string;
   description: string;
-  icon: React.ComponentType;
+  icon: IconSource;
   size: string;
   format: string;
   badge?: string;
