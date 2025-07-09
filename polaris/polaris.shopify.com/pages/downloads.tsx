@@ -181,11 +181,11 @@ export default function DownloadsPage() {
                       Documentation
                     </Text>
                     <Badge tone="info">
-                      {downloadItems.length} items
+                      {`${downloadItems.length} items`}
                     </Badge>
                   </InlineStack>
                   
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" as="p" tone="subdued">
                     Comprehensive guides and references for offline reading and printing
                   </Text>
                   
@@ -196,7 +196,7 @@ export default function DownloadsPage() {
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={item.icon} />
-                              <Text variant="headingMd">{item.title}</Text>
+                              <Text variant="headingMd" as="h3">{item.title}</Text>
                             </InlineStack>
                             {item.badge && (
                               <Badge tone={item.badge === 'Popular' ? 'success' : 'info'}>
@@ -205,14 +205,14 @@ export default function DownloadsPage() {
                             )}
                           </InlineStack>
                           
-                          <Text variant="bodyMd">{item.description}</Text>
+                          <Text variant="bodyMd" as="p">{item.description}</Text>
                           
                           <InlineStack align="space-between" blockAlign="center">
                             <InlineStack gap="400">
-                              <Text variant="bodySm" tone="subdued">
+                              <Text variant="bodySm" as="p" tone="subdued">
                                 {item.format}
                               </Text>
-                              <Text variant="bodySm" tone="subdued">
+                              <Text variant="bodySm" as="p" tone="subdued">
                                 {item.size}
                               </Text>
                             </InlineStack>
@@ -239,11 +239,11 @@ export default function DownloadsPage() {
                       Project Templates
                     </Text>
                     <Badge tone="info">
-                      {templateItems.length} templates
+                      {`${templateItems.length} templates`}
                     </Badge>
                   </InlineStack>
                   
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" as="p" tone="subdued">
                     Pre-configured project templates to get started quickly
                   </Text>
                   
@@ -254,11 +254,11 @@ export default function DownloadsPage() {
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={FileIcon} />
-                              <Text variant="headingMd">{template.title}</Text>
+                              <Text variant="headingMd" as="h3">{template.title}</Text>
                             </InlineStack>
                           </InlineStack>
                           
-                          <Text variant="bodyMd">{template.description}</Text>
+                          <Text variant="bodyMd" as="p">{template.description}</Text>
                           
                           <InlineStack gap="100" wrap={false}>
                             {template.technologies.map((tech, techIndex) => (
@@ -288,11 +288,11 @@ export default function DownloadsPage() {
                       Design & Development Tools
                     </Text>
                     <Badge tone="info">
-                      {toolsItems.length} tools
+                      {`${toolsItems.length} tools`}
                     </Badge>
                   </InlineStack>
                   
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" as="p" tone="subdued">
                     Design assets and development tools for streamlined workflow
                   </Text>
                   
@@ -303,12 +303,12 @@ export default function DownloadsPage() {
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={DesktopIcon} />
-                              <Text variant="headingMd">{tool.title}</Text>
+                              <Text variant="headingMd" as="h3">{tool.title}</Text>
                             </InlineStack>
                             <Badge>{tool.format}</Badge>
                           </InlineStack>
                           
-                          <Text variant="bodyMd">{tool.description}</Text>
+                          <Text variant="bodyMd" as="p">{tool.description}</Text>
                           
                           <Button
                             onClick={tool.onDownload}
@@ -331,7 +331,7 @@ export default function DownloadsPage() {
                     Using Downloaded Resources
                   </Text>
                   
-                  <Text variant="bodyMd">
+                  <Text variant="bodyMd" as="p">
                     Here's how to make the most of your downloaded resources:
                   </Text>
                   
