@@ -54,9 +54,91 @@
   }
 }
 
+.TechStack {
+  padding: 4rem 0;
+  text-align: center;
+
+  h2 {
+    @include heading-1;
+    margin-bottom: 3rem;
+    color: var(--text-strong);
+  }
+}
+
+.Technologies {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  margin-bottom: 4rem;
+
+  @media screen and (max-width: $breakpointTablet) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.Technology {
+  text-align: left;
+
+  h3 {
+    @include heading-2;
+    margin-bottom: 0.75rem;
+    color: var(--text-strong);
+  }
+
+  p {
+    font-size: var(--font-size-500);
+    color: var(--text);
+    line-height: 1.6;
+  }
+}
+
+.Features {
+  padding: 4rem 0;
+  background-color: var(--surface-background);
+  border-radius: var(--border-radius-400);
+  margin-bottom: 4rem;
+
+  h2 {
+    @include heading-1;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-strong);
+  }
+}
+
+.FeatureList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media screen and (max-width: $breakpointTablet) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.Feature {
+  h3 {
+    @include heading-3;
+    margin-bottom: 0.75rem;
+    color: var(--text-strong);
+    font-size: var(--font-size-600);
+  }
+
+  p {
+    font-size: var(--font-size-500);
+    color: var(--text);
+    line-height: 1.6;
+  }
+}
+
 .EntryPoints {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 
   @media screen and (max-width: $breakpointDesktop) {
