@@ -1,0 +1,64 @@
+.ColorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--p-space-400);
+  margin-top: var(--p-space-400);
+}
+
+.ColorSwatch {
+  text-align: center;
+}
+
+.ColorPreview {
+  width: 100%;
+  height: 80px;
+  border-radius: var(--p-border-radius-200);
+  margin-bottom: var(--p-space-200);
+  box-shadow: var(--p-shadow-100);
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.SpacingBar {
+  height: 24px;
+  background: linear-gradient(
+    90deg,
+    var(--p-color-bg-fill-brand) 0%,
+    var(--p-color-bg-fill-brand-hover) 100%
+  );
+  border-radius: var(--p-border-radius-100);
+  transition: width 0.3s ease;
+}
+
+.IconGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--p-space-400);
+  margin-top: var(--p-space-400);
+}
+
+.IconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--p-space-200);
+  padding: var(--p-space-300);
+  border-radius: var(--p-border-radius-200);
+  background: var(--p-color-bg-surface-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: var(--p-color-bg-surface-secondary-hover);
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    color: var(--p-color-icon);
+  }
+}

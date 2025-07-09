@@ -107,6 +107,14 @@ function HomePage({}: Props) {
               real-time
             </p>
           </Link>
+
+          <Link href="/style-guide" className={styles.EntryPoint}>
+            <h3>Style Guide</h3>
+            <p>
+              Visual reference and best practices for building consistent 
+              Cin7 DSL applications
+            </p>
+          </Link>
         </div>
       </div>
     </Page>

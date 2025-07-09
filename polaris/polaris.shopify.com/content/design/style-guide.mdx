@@ -1,0 +1,752 @@
+---
+title: Cin7 DSL Style Guide
+description: Comprehensive style guide for building consistent, accessible applications with Cin7 DSL components and patterns.
+showTOC: true
+keywords:
+  - style guide
+  - design patterns
+  - best practices
+  - coding standards
+  - component guidelines
+  - accessibility
+order: 1
+icon: StyleGuideIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Overview
+
+The Cin7 DSL Style Guide provides comprehensive guidelines for creating consistent, maintainable, and accessible applications. This guide covers design principles, component usage patterns, coding standards, and best practices that ensure a unified experience across all Cin7 DSL applications.
+
+## Design Principles
+
+### 1. Clarity First
+
+Every interface element should have a clear purpose and be immediately understandable.
+
+```tsx
+// ✅ Good: Clear, descriptive labels
+<Button onClick={handleSave}>Save Changes</Button>
+<TextField label="Email Address" type="email" />
+
+// ❌ Bad: Vague or confusing labels
+<Button onClick={handleSave}>OK</Button>
+<TextField label="Input" />
+```
+
+### 2. Consistency
+
+Maintain consistent patterns throughout your application.
+
+```tsx
+// ✅ Good: Consistent naming and structure
+const UserCard = ({ user }) => (
+  <Card title={user.name}>
+    <Text>{user.email}</Text>
+  </Card>
+);
+
+const ProductCard = ({ product }) => (
+  <Card title={product.name}>
+    <Text>{product.price}</Text>
+  </Card>
+);
+
+// ❌ Bad: Inconsistent patterns
+const UserDisplay = ({ data }) => (
+  <div className="user-box">
+    <h3>{data.fullName}</h3>
+  </div>
+);
+
+const Product = ({ item }) => (
+  <Card>
+    <span>{item.productName}</span>
+  </Card>
+);
+```
+
+### 3. Accessibility
+
+Design for everyone, including users with disabilities.
+
+```tsx
+// ✅ Good: Accessible components
+<Button
+  onClick={handleDelete}
+  accessibilityLabel="Delete product"
+  tone="critical"
+>
+  <Icon source={DeleteIcon} />
+</Button>
+
+<Image
+  source="/product.jpg"
+  alt="Blue wireless headphones on white background"
+/>
+
+// ❌ Bad: Missing accessibility features
+<Button onClick={handleDelete}>
+  <Icon source={DeleteIcon} />
+</Button>
+
+<img src="/product.jpg" />
+```
+
+## Component Usage Guidelines
+
+### Layout Components
+
+Use Cin7 DSL layout components for consistent spacing and alignment:
+
+```tsx
+// Page Structure
+<Page title="Products" primaryAction={{ content: 'Add product' }}>
+  <Layout>
+    <Layout.Section>
+      <Card>
+        <BlockStack gap="400">
+          {/* Content */}
+        </BlockStack>
+      </Card>
+    </Layout.Section>
+    <Layout.Section variant="oneThird">
+      <Card title="Filters">
+        {/* Sidebar content */}
+      </Card>
+    </Layout.Section>
+  </Layout>
+</Page>
+
+// Spacing with Stacks
+<BlockStack gap="400"> {/* Vertical spacing */}
+  <Text variant="headingMd">Settings</Text>
+  <InlineStack gap="200" align="space-between"> {/* Horizontal spacing */}
+    <Text>Dark mode</Text>
+    <Switch />
+  </InlineStack>
+</BlockStack>
+```
+
+### Form Patterns
+
+Consistent form design improves user experience:
+
+```tsx
+// Form with validation
+function ProductForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    price: '',
+    category: '',
+  });
+  
+  const [errors, setErrors] = useState({});
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    
+    if (Object.keys(validationErrors).length === 0) {
+      // Submit form
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+  
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Product Name"
+          value={formData.name}
+          onChange={(value) => setFormData({ ...formData, name: value })}
+          error={errors.name}
+          requiredIndicator
+        />
+        
+        <TextField
+          label="Price"
+          type="number"
+          prefix="$"
+          value={formData.price}
+          onChange={(value) => setFormData({ ...formData, price: value })}
+          error={errors.price}
+          requiredIndicator
+        />
+        
+        <Select
+          label="Category"
+          options={categoryOptions}
+          value={formData.category}
+          onChange={(value) => setFormData({ ...formData, category: value })}
+          error={errors.category}
+        />
+        
+        <Button submit primary>
+          Create Product
+        </Button>
+      </FormLayout>
+    </Form>
+  );
+}
+```
+
+### Data Display Patterns
+
+#### Tables for Complex Data
+
+Use ExtJS DataGrid for advanced features:
+
+```tsx
+// ExtJS DataGrid with sorting and filtering
+<ExtDataGrid
+  data={products}
+  columns={[
+    { text: 'Name', dataIndex: 'name', flex: 1, filter: 'string' },
+    { text: 'Price', dataIndex: 'price', width: 100, filter: 'number' },
+    { text: 'Stock', dataIndex: 'stock', width: 80, filter: 'number' },
+    {
+      text: 'Status',
+      dataIndex: 'status',
+      width: 120,
+      renderer: (value) => (
+        <Badge tone={value === 'active' ? 'success' : 'critical'}>
+          {value}
+        </Badge>
+      ),
+    },
+  ]}
+  features={['sorting', 'filtering', 'export', 'grouping']}
+  onRowDoubleClick={(record) => handleEdit(record)}
+/>
+```
+
+#### Cards for Visual Data
+
+Use cards for visual organization:
+
+```tsx
+// Product card with actions
+<Card
+  title="Wireless Headphones"
+  actions={[
+    { content: 'View', onAction: handleView },
+    { content: 'Edit', onAction: handleEdit },
+  ]}
+>
+  <BlockStack gap="300">
+    <div style={{ aspectRatio: '16/9', overflow: 'hidden' }}>
+      <OptimizedImage
+        src="/products/headphones.jpg"
+        alt="Blue wireless headphones"
+        objectFit="cover"
+      />
+    </div>
+    <InlineStack align="space-between">
+      <Text variant="bodyMd" fontWeight="semibold">
+        $99.99
+      </Text>
+      <Badge tone="success">In Stock</Badge>
+    </InlineStack>
+  </BlockStack>
+</Card>
+```
+
+### Feedback Patterns
+
+Provide clear feedback for user actions:
+
+```tsx
+// Toast notifications
+import { useToast } from '@cin7/dsl-core';
+
+function ProductActions() {
+  const toast = useToast();
+  
+  const handleSave = async () => {
+    try {
+      await saveProduct();
+      toast.success('Product saved successfully');
+    } catch (error) {
+      toast.error('Failed to save product');
+    }
+  };
+  
+  return <Button onClick={handleSave}>Save</Button>;
+}
+
+// Loading states
+function ProductList() {
+  const { data, isLoading, error } = useProducts();
+  
+  if (isLoading) {
+    return (
+      <Card>
+        <BlockStack gap="400" align="center">
+          <Spinner accessibilityLabel="Loading products" />
+          <Text>Loading products...</Text>
+        </BlockStack>
+      </Card>
+    );
+  }
+  
+  if (error) {
+    return (
+      <Banner tone="critical" title="Error loading products">
+        <p>{error.message}</p>
+      </Banner>
+    );
+  }
+  
+  return <ProductGrid products={data} />;
+}
+```
+
+## Typography Guidelines
+
+### Text Hierarchy
+
+Use consistent text styles for clear hierarchy:
+
+```tsx
+// Page title
+<Text variant="headingXl" as="h1">
+  Product Management
+</Text>
+
+// Section heading
+<Text variant="headingLg" as="h2">
+  Active Products
+</Text>
+
+// Subsection
+<Text variant="headingMd" as="h3">
+  Electronics
+</Text>
+
+// Body text
+<Text variant="bodyMd">
+  Manage your product inventory and pricing.
+</Text>
+
+// Supporting text
+<Text variant="bodySm" tone="subdued">
+  Last updated 2 hours ago
+</Text>
+```
+
+### Text Formatting
+
+```tsx
+// Emphasis
+<Text variant="bodyMd">
+  Total: <Text fontWeight="semibold">$1,234.56</Text>
+</Text>
+
+// Status indicators
+<Text tone="success">Published</Text>
+<Text tone="critical">Out of stock</Text>
+<Text tone="warning">Low inventory</Text>
+
+// Links
+<Link url="/help">
+  Learn more about inventory management
+</Link>
+```
+
+## Color Usage
+
+### Semantic Colors
+
+Use colors that convey meaning:
+
+```tsx
+// Status colors
+<Badge tone="success">Active</Badge>      // Green
+<Badge tone="warning">Pending</Badge>     // Yellow
+<Badge tone="critical">Inactive</Badge>   // Red
+<Badge tone="info">New</Badge>           // Blue
+
+// Action colors
+<Button primary>Primary Action</Button>   // Brand color
+<Button>Secondary Action</Button>         // Default
+<Button destructive>Delete</Button>       // Red
+<Button plain>Cancel</Button>             // Minimal
+
+// Background colors
+<Banner tone="info">Information</Banner>
+<Banner tone="success">Success message</Banner>
+<Banner tone="warning">Warning message</Banner>
+<Banner tone="critical">Error message</Banner>
+```
+
+## Spacing System
+
+Use consistent spacing tokens:
+
+```tsx
+// Component spacing
+<BlockStack gap="400">  // 16px
+  <InlineStack gap="200">  // 8px
+    <Button>Action 1</Button>
+    <Button>Action 2</Button>
+  </InlineStack>
+</BlockStack>
+
+// Custom spacing with Box
+<Box padding="400">  // 16px all sides
+  <Box paddingBlockEnd="800">  // 32px bottom
+    <Text>Content with custom spacing</Text>
+  </Box>
+</Box>
+
+// Spacing scale
+// 0: 0px
+// 050: 2px
+// 100: 4px
+// 200: 8px
+// 300: 12px
+// 400: 16px
+// 500: 20px
+// 600: 24px
+// 800: 32px
+// 1000: 40px
+// 1200: 48px
+// 1600: 64px
+```
+
+## Interaction Patterns
+
+### Hover States
+
+Provide visual feedback on hover:
+
+```css
+/* Card hover effect */
+.ProductCard {
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: var(--p-shadow-300);
+  }
+}
+
+/* Button hover (handled by Polaris) */
+/* Custom interactive elements */
+.InteractiveElement {
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: var(--p-color-bg-surface-hover);
+  }
+}
+```
+
+### Focus States
+
+Ensure keyboard navigation is clear:
+
+```tsx
+// Custom focus styles
+const InteractiveCard = styled.div`
+  &:focus {
+    outline: 2px solid var(--p-color-border-emphasis);
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+`;
+
+// Using Polaris focus management
+<Button
+  onClick={handleAction}
+  onFocus={() => console.log('Focused')}
+  onBlur={() => console.log('Blurred')}
+>
+  Action
+</Button>
+```
+
+## Responsive Design
+
+### Breakpoints
+
+Design for all screen sizes:
+
+```tsx
+// Responsive grid
+<Grid
+  columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+  gap={{ xs: '200', md: '400' }}
+>
+  {products.map(product => (
+    <GridItem key={product.id}>
+      <ProductCard product={product} />
+    </GridItem>
+  ))}
+</Grid>
+
+// Conditional rendering
+const isMobile = useMediaQuery('(max-width: 768px)');
+
+return (
+  <Layout>
+    {!isMobile && (
+      <Layout.Section variant="oneThird">
+        <Filters />
+      </Layout.Section>
+    )}
+    <Layout.Section>
+      <ProductList />
+    </Layout.Section>
+  </Layout>
+);
+```
+
+### Mobile Patterns
+
+Optimize for touch interactions:
+
+```tsx
+// Mobile-friendly navigation
+<Sheet
+  open={mobileMenuOpen}
+  onClose={() => setMobileMenuOpen(false)}
+  accessibilityLabel="Mobile menu"
+>
+  <BlockStack gap="400">
+    <Button fullWidth onClick={() => navigate('/products')}>
+      Products
+    </Button>
+    <Button fullWidth onClick={() => navigate('/orders')}>
+      Orders
+    </Button>
+    <Button fullWidth onClick={() => navigate('/customers')}>
+      Customers
+    </Button>
+  </BlockStack>
+</Sheet>
+
+// Touch-friendly targets (min 44x44px)
+<Button size="large">
+  Large touch target
+</Button>
+```
+
+## Error Handling
+
+### Form Validation
+
+Provide clear, actionable error messages:
+
+```tsx
+// Field-level validation
+<TextField
+  label="Email"
+  type="email"
+  value={email}
+  onChange={setEmail}
+  error={errors.email}
+  helpText="We'll use this to send order confirmations"
+/>
+
+// Error messages
+const validateEmail = (email) => {
+  if (!email) {
+    return 'Email is required';
+  }
+  if (!email.includes('@')) {
+    return 'Please enter a valid email address';
+  }
+  return null;
+};
+
+// Summary errors
+{Object.keys(errors).length > 0 && (
+  <Banner tone="critical" title="Please fix the following errors:">
+    <List>
+      {Object.entries(errors).map(([field, error]) => (
+        <List.Item key={field}>{error}</List.Item>
+      ))}
+    </List>
+  </Banner>
+)}
+```
+
+### Error Recovery
+
+Help users recover from errors:
+
+```tsx
+// Retry mechanism
+function DataLoader() {
+  const [retryCount, setRetryCount] = useState(0);
+  const { data, error, refetch } = useQuery(
+    ['products', retryCount],
+    fetchProducts,
+    {
+      retry: false,
+    }
+  );
+  
+  if (error) {
+    return (
+      <EmptyState
+        heading="Failed to load products"
+        image="/error-illustration.svg"
+        action={{
+          content: 'Try again',
+          onAction: () => {
+            setRetryCount(retryCount + 1);
+            refetch();
+          },
+        }}
+      >
+        <p>We couldn't load your products. Please try again.</p>
+      </EmptyState>
+    );
+  }
+  
+  return <ProductList products={data} />;
+}
+```
+
+## Performance Guidelines
+
+### Code Splitting
+
+Split code for better performance:
+
+```tsx
+// Lazy load heavy components
+const ExtDataGrid = lazy(() => import('@cin7/dsl-extjs/DataGrid'));
+const Analytics = lazy(() => import('./components/Analytics'));
+
+// Use with Suspense
+<Suspense fallback={<LazyLoad loadingText="Loading analytics..." />}>
+  <Analytics data={analyticsData} />
+</Suspense>
+```
+
+### Memoization
+
+Optimize re-renders:
+
+```tsx
+// Memoize expensive calculations
+const sortedProducts = useMemo(() => {
+  return products.sort((a, b) => b.sales - a.sales);
+}, [products]);
+
+// Memoize components
+const ProductCard = memo(({ product }) => {
+  return (
+    <Card title={product.name}>
+      {/* Card content */}
+    </Card>
+  );
+}, (prevProps, nextProps) => {
+  return prevProps.product.id === nextProps.product.id;
+});
+```
+
+## Testing Guidelines
+
+### Component Testing
+
+Write tests for reliability:
+
+```tsx
+// Component test example
+describe('ProductCard', () => {
+  it('displays product information', () => {
+    const product = {
+      id: '1',
+      name: 'Wireless Headphones',
+      price: 99.99,
+      inStock: true,
+    };
+    
+    render(<ProductCard product={product} />);
+    
+    expect(screen.getByText('Wireless Headphones')).toBeInTheDocument();
+    expect(screen.getByText('$99.99')).toBeInTheDocument();
+    expect(screen.getByText('In Stock')).toBeInTheDocument();
+  });
+  
+  it('handles out of stock products', () => {
+    const product = {
+      id: '2',
+      name: 'Laptop',
+      price: 1299.99,
+      inStock: false,
+    };
+    
+    render(<ProductCard product={product} />);
+    
+    expect(screen.getByText('Out of Stock')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add to Cart' })).toBeDisabled();
+  });
+});
+```
+
+## Documentation Standards
+
+### Component Documentation
+
+Document your components clearly:
+
+```tsx
+/**
+ * ProductCard displays a product with its image, name, price, and actions.
+ * 
+ * @example
+ * <ProductCard
+ *   product={{
+ *     id: '1',
+ *     name: 'Wireless Headphones',
+ *     price: 99.99,
+ *     image: '/products/headphones.jpg',
+ *   }}
+ *   onEdit={(product) => console.log('Edit', product)}
+ *   onDelete={(product) => console.log('Delete', product)}
+ * />
+ */
+interface ProductCardProps {
+  /** The product to display */
+  product: Product;
+  /** Called when the edit button is clicked */
+  onEdit?: (product: Product) => void;
+  /** Called when the delete button is clicked */
+  onDelete?: (product: Product) => void;
+  /** Whether to show the actions menu */
+  showActions?: boolean;
+}
+
+export function ProductCard({
+  product,
+  onEdit,
+  onDelete,
+  showActions = true,
+}: ProductCardProps) {
+  // Component implementation
+}
+```
+
+## Conclusion
+
+Following this style guide ensures that Cin7 DSL applications are:
+- **Consistent**: Users can learn once and apply everywhere
+- **Accessible**: Everyone can use your application
+- **Maintainable**: Developers can easily understand and modify code
+- **Performant**: Applications load quickly and respond smoothly
+- **Professional**: The final product reflects quality and attention to detail
+
+Remember that this guide is a living document. As Cin7 DSL evolves, so will these guidelines. Always prioritize user needs and collaborate with your team to create the best possible experience.
