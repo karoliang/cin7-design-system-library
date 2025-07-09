@@ -10,6 +10,7 @@ import {
   Badge,
   Icon,
   List,
+  Box,
 } from '@shopify/polaris';
 import {
   FileIcon,
@@ -191,8 +192,9 @@ export default function DownloadsPage() {
                   
                   <div className={styles.DownloadGrid}>
                     {downloadItems.map((item, index) => (
-                      <Card key={index} sectioned>
-                        <BlockStack gap="300">
+                      <Card key={index}>
+                        <Box padding="400">
+                          <BlockStack gap="300">
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={item.icon} />
@@ -224,7 +226,8 @@ export default function DownloadsPage() {
                               Download
                             </Button>
                           </InlineStack>
-                        </BlockStack>
+                          </BlockStack>
+                        </Box>
                       </Card>
                     ))}
                   </div>
@@ -249,8 +252,9 @@ export default function DownloadsPage() {
                   
                   <div className={styles.TemplateGrid}>
                     {templateItems.map((template, index) => (
-                      <Card key={index} sectioned>
-                        <BlockStack gap="300">
+                      <Card key={index}>
+                        <Box padding="400">
+                          <BlockStack gap="300">
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={FileIcon} />
@@ -273,7 +277,8 @@ export default function DownloadsPage() {
                           >
                             Download Template
                           </Button>
-                        </BlockStack>
+                          </BlockStack>
+                        </Box>
                       </Card>
                     ))}
                   </div>
@@ -298,8 +303,9 @@ export default function DownloadsPage() {
                   
                   <div className={styles.ToolsGrid}>
                     {toolsItems.map((tool, index) => (
-                      <Card key={index} sectioned>
-                        <BlockStack gap="300">
+                      <Card key={index}>
+                        <Box padding="400">
+                          <BlockStack gap="300">
                           <InlineStack align="space-between">
                             <InlineStack gap="200" blockAlign="center">
                               <Icon source={DesktopIcon} />
@@ -317,7 +323,8 @@ export default function DownloadsPage() {
                           >
                             Get Tool
                           </Button>
-                        </BlockStack>
+                          </BlockStack>
+                        </Box>
                       </Card>
                     ))}
                   </div>
