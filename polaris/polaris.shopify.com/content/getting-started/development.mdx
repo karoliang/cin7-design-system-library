@@ -710,6 +710,714 @@ pnpm build --analyze
 pnpm build --report
 ```
 
+## Vanilla JavaScript
+
+For lightweight UI interactions and general functionality, Cin7 DSL provides utilities and patterns for incorporating vanilla JavaScript alongside React and Polaris components.
+
+### When to Use Vanilla JavaScript
+
+- **Performance-critical animations**: Direct DOM manipulation for smooth animations
+- **Legacy system integration**: Bridging with existing non-React codebases
+- **Simple interactions**: Basic event handling and DOM updates
+- **Third-party library integration**: Wrapping vanilla JS libraries
+
+### Setup and Configuration
+
+```typescript
+// src/utils/domUtils.ts
+export class DOMUtils {
+  static addClass(element: HTMLElement, className: string): void {
+    element.classList.add(className);
+  }
+
+  static removeClass(element: HTMLElement, className: string): void {
+    element.classList.remove(className);
+  }
+
+  static toggleClass(element: HTMLElement, className: string): void {
+    element.classList.toggle(className);
+  }
+
+  static animate(element: HTMLElement, keyframes: Keyframe[], options: KeyframeAnimationOptions): Animation {
+    return element.animate(keyframes, options);
+  }
+
+  static debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number
+  ): (...args: Parameters<T>) => void {
+    let timeout: NodeJS.Timeout;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  }
+}
+```
+
+### Integration with React Components
+
+```tsx
+// src/components/AnimatedCard/AnimatedCard.tsx
+import React, { useRef, useEffect } from 'react';
+import { Card } from '@shopify/polaris';
+import { DOMUtils } from '@utils/domUtils';
+
+interface AnimatedCardProps {
+  children: React.ReactNode;
+  animateOnMount?: boolean;
+}
+
+export const AnimatedCard: React.FC<AnimatedCardProps> = ({ 
+  children, 
+  animateOnMount = true 
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (animateOnMount && cardRef.current) {
+      const animation = DOMUtils.animate(cardRef.current, [
+        { opacity: 0, transform: 'translateY(20px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], {
+        duration: 300,
+        easing: 'ease-out'
+      });
+
+      return () => animation.cancel();
+    }
+  }, [animateOnMount]);
+
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      DOMUtils.addClass(cardRef.current, 'card-hover');
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (cardRef.current) {
+      DOMUtils.removeClass(cardRef.current, 'card-hover');
+    }
+  };
+
+  return (
+    <div 
+      ref={cardRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Card>{children}</Card>
+    </div>
+  );
+};
+```
+
+### Event Handling Utilities
+
+```typescript
+// src/utils/eventUtils.ts
+export class EventUtils {
+  static on<K extends keyof HTMLElementEventMap>(
+    element: HTMLElement,
+    event: K,
+    handler: (event: HTMLElementEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions
+  ): () => void {
+    element.addEventListener(event, handler, options);
+    return () => element.removeEventListener(event, handler, options);
+  }
+
+  static once<K extends keyof HTMLElementEventMap>(
+    element: HTMLElement,
+    event: K,
+    handler: (event: HTMLElementEventMap[K]) => void
+  ): void {
+    const onceHandler = (e: HTMLElementEventMap[K]) => {
+      handler(e);
+      element.removeEventListener(event, onceHandler);
+    };
+    element.addEventListener(event, onceHandler);
+  }
+
+  static delegate<K extends keyof HTMLElementEventMap>(
+    container: HTMLElement,
+    selector: string,
+    event: K,
+    handler: (event: HTMLElementEventMap[K], target: HTMLElement) => void
+  ): () => void {
+    const delegateHandler = (e: HTMLElementEventMap[K]) => {
+      const target = (e.target as HTMLElement).closest(selector);
+      if (target && container.contains(target)) {
+        handler(e, target as HTMLElement);
+      }
+    };
+
+    container.addEventListener(event, delegateHandler);
+    return () => container.removeEventListener(event, delegateHandler);
+  }
+}
+```
+
+### Custom Hooks for Vanilla JS Integration
+
+```typescript
+// src/hooks/useVanillaJS.ts
+import { useEffect, useRef } from 'react';
+import { EventUtils } from '@utils/eventUtils';
+
+export const useVanillaJS = (
+  initFn: (element: HTMLElement) => void | (() => void),
+  deps: React.DependencyList = []
+) => {
+  const ref = useRef<HTMLElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      cleanupRef.current = initFn(ref.current) || null;
+    }
+
+    return () => {
+      if (cleanupRef.current) {
+        cleanupRef.current();
+      }
+    };
+  }, deps);
+
+  return ref;
+};
+
+export const useEventListener = <K extends keyof HTMLElementEventMap>(
+  eventName: K,
+  handler: (event: HTMLElementEventMap[K]) => void,
+  element?: HTMLElement | null,
+  options?: boolean | AddEventListenerOptions
+) => {
+  const savedHandler = useRef(handler);
+
+  useEffect(() => {
+    savedHandler.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    const targetElement = element || document;
+    if (!targetElement?.addEventListener) return;
+
+    const eventListener = (event: HTMLElementEventMap[K]) => {
+      savedHandler.current(event);
+    };
+
+    targetElement.addEventListener(eventName, eventListener, options);
+
+    return () => {
+      targetElement.removeEventListener(eventName, eventListener, options);
+    };
+  }, [eventName, element, options]);
+};
+```
+
+## TypeScript
+
+TypeScript provides type safety and enhanced developer experience for business logic in Cin7 DSL applications.
+
+### Project Configuration
+
+```typescript
+// tsconfig.json (Extended configuration)
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@services/*": ["src/services/*"],
+      "@stores/*": ["src/stores/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  },
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "dist", "build"]
+}
+```
+
+### Type Definitions
+
+```typescript
+// src/types/common.ts
+export interface BaseEntity {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;
+  updatedBy: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  errors?: Record<string, string[]>;
+}
+
+export interface FilterCriteria {
+  field: string;
+  operator: 'eq' | 'ne' | 'gt' | 'gte' | 'lt' | 'lte' | 'like' | 'in' | 'nin';
+  value: any;
+}
+
+export interface SortCriteria {
+  field: string;
+  direction: 'asc' | 'desc';
+}
+
+export interface QueryParams {
+  page?: number;
+  pageSize?: number;
+  filters?: FilterCriteria[];
+  sort?: SortCriteria[];
+  search?: string;
+}
+```
+
+### Domain Types
+
+```typescript
+// src/types/user.ts
+import { BaseEntity } from './common';
+
+export interface User extends BaseEntity {
+  name: string;
+  email: string;
+  avatar?: string;
+  isActive: boolean;
+  roles: UserRole[];
+  profile: UserProfile;
+  preferences: UserPreferences;
+}
+
+export interface UserRole {
+  id: string;
+  name: string;
+  permissions: Permission[];
+}
+
+export interface Permission {
+  id: string;
+  name: string;
+  resource: string;
+  action: string;
+}
+
+export interface UserProfile {
+  firstName: string;
+  lastName: string;
+  phoneNumber?: string;
+  address?: Address;
+  dateOfBirth?: Date;
+  timezone: string;
+  locale: string;
+}
+
+export interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
+export interface UserPreferences {
+  theme: 'light' | 'dark' | 'system';
+  notifications: NotificationPreferences;
+  language: string;
+}
+
+export interface NotificationPreferences {
+  email: boolean;
+  push: boolean;
+  sms: boolean;
+  categories: {
+    security: boolean;
+    updates: boolean;
+    marketing: boolean;
+  };
+}
+
+// Request/Response types
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  password: string;
+  profile: Omit<UserProfile, 'dateOfBirth'> & { dateOfBirth?: string };
+  roles: string[];
+}
+
+export interface UpdateUserRequest {
+  name?: string;
+  email?: string;
+  isActive?: boolean;
+  profile?: Partial<UserProfile>;
+  roles?: string[];
+}
+
+export interface UserListResponse extends PaginatedResponse<User> {}
+
+export interface UserResponse extends ApiResponse<User> {}
+```
+
+### Advanced Type Patterns
+
+```typescript
+// src/types/utilities.ts
+
+// Utility types for API responses
+export type AsyncState<T> = {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+};
+
+// Form state types
+export type FormState<T> = {
+  values: T;
+  errors: Partial<Record<keyof T, string>>;
+  touched: Partial<Record<keyof T, boolean>>;
+  isValid: boolean;
+  isSubmitting: boolean;
+};
+
+// Event handler types
+export type EventHandler<T = HTMLElement> = (event: React.SyntheticEvent<T>) => void;
+export type ChangeHandler<T = HTMLInputElement> = (event: React.ChangeEvent<T>) => void;
+export type SubmitHandler<T = HTMLFormElement> = (event: React.FormEvent<T>) => void;
+
+// Component prop types
+export type ComponentProps<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>;
+export type PolymorphicProps<T extends React.ElementType> = ComponentProps<T> & {
+  as?: T;
+};
+
+// Validation types
+export type ValidationRule<T> = {
+  required?: boolean;
+  min?: number;
+  max?: number;
+  pattern?: RegExp;
+  custom?: (value: T) => string | null;
+};
+
+export type ValidationSchema<T> = {
+  [K in keyof T]?: ValidationRule<T[K]>;
+};
+
+// Generic CRUD operations
+export type CRUDOperations<T, CreateDTO = Omit<T, keyof BaseEntity>, UpdateDTO = Partial<CreateDTO>> = {
+  create: (data: CreateDTO) => Promise<T>;
+  read: (id: string) => Promise<T>;
+  update: (id: string, data: UpdateDTO) => Promise<T>;
+  delete: (id: string) => Promise<void>;
+  list: (params?: QueryParams) => Promise<PaginatedResponse<T>>;
+};
+```
+
+### Type-Safe API Client
+
+```typescript
+// src/services/apiClient.ts
+import { ApiResponse, PaginatedResponse, QueryParams } from '@types/common';
+
+export class TypedApiClient {
+  private baseUrl: string;
+  private defaultHeaders: Record<string, string>;
+
+  constructor(baseUrl: string, defaultHeaders: Record<string, string> = {}) {
+    this.baseUrl = baseUrl;
+    this.defaultHeaders = {
+      'Content-Type': 'application/json',
+      ...defaultHeaders,
+    };
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<ApiResponse<T>> {
+    const url = `${this.baseUrl}${endpoint}`;
+    const config: RequestInit = {
+      ...options,
+      headers: {
+        ...this.defaultHeaders,
+        ...options.headers,
+      },
+    };
+
+    try {
+      const response = await fetch(url, config);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data as ApiResponse<T>;
+    } catch (error) {
+      throw new Error(`API request failed: ${error}`);
+    }
+  }
+
+  async get<T>(endpoint: string, params?: QueryParams): Promise<ApiResponse<T>> {
+    const searchParams = new URLSearchParams();
+    
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) {
+          searchParams.append(key, String(value));
+        }
+      });
+    }
+
+    const url = searchParams.toString() ? `${endpoint}?${searchParams}` : endpoint;
+    return this.request<T>(url);
+  }
+
+  async post<T, U = any>(endpoint: string, data: U): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async put<T, U = any>(endpoint: string, data: U): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'DELETE',
+    });
+  }
+
+  async getPaginated<T>(endpoint: string, params?: QueryParams): Promise<PaginatedResponse<T>> {
+    const response = await this.get<PaginatedResponse<T>>(endpoint, params);
+    return response.data;
+  }
+}
+
+// Usage example
+const apiClient = new TypedApiClient('/api/v1');
+
+// Type-safe service methods
+export const userApiClient = {
+  getUsers: (params?: QueryParams) => 
+    apiClient.getPaginated<User>('/users', params),
+  
+  getUser: (id: string) => 
+    apiClient.get<User>(`/users/${id}`),
+  
+  createUser: (data: CreateUserRequest) => 
+    apiClient.post<User, CreateUserRequest>('/users', data),
+  
+  updateUser: (id: string, data: UpdateUserRequest) => 
+    apiClient.put<User, UpdateUserRequest>(`/users/${id}`, data),
+  
+  deleteUser: (id: string) => 
+    apiClient.delete<void>(`/users/${id}`),
+};
+```
+
+### Type-Safe Form Handling
+
+```typescript
+// src/hooks/useTypedForm.ts
+import { useState, useCallback } from 'react';
+import { ValidationSchema, FormState } from '@types/utilities';
+
+export function useTypedForm<T extends Record<string, any>>(
+  initialValues: T,
+  validationSchema?: ValidationSchema<T>
+) {
+  const [formState, setFormState] = useState<FormState<T>>({
+    values: initialValues,
+    errors: {},
+    touched: {},
+    isValid: true,
+    isSubmitting: false,
+  });
+
+  const validateField = useCallback((name: keyof T, value: any): string | null => {
+    const rules = validationSchema?.[name];
+    if (!rules) return null;
+
+    if (rules.required && (!value || value === '')) {
+      return 'This field is required';
+    }
+
+    if (rules.min && value.length < rules.min) {
+      return `Minimum length is ${rules.min}`;
+    }
+
+    if (rules.max && value.length > rules.max) {
+      return `Maximum length is ${rules.max}`;
+    }
+
+    if (rules.pattern && !rules.pattern.test(value)) {
+      return 'Invalid format';
+    }
+
+    if (rules.custom) {
+      return rules.custom(value);
+    }
+
+    return null;
+  }, [validationSchema]);
+
+  const setFieldValue = useCallback((name: keyof T, value: any) => {
+    setFormState(prev => {
+      const error = validateField(name, value);
+      const newErrors = { ...prev.errors };
+      
+      if (error) {
+        newErrors[name] = error;
+      } else {
+        delete newErrors[name];
+      }
+
+      return {
+        ...prev,
+        values: { ...prev.values, [name]: value },
+        errors: newErrors,
+        isValid: Object.keys(newErrors).length === 0,
+      };
+    });
+  }, [validateField]);
+
+  const setFieldTouched = useCallback((name: keyof T, touched = true) => {
+    setFormState(prev => ({
+      ...prev,
+      touched: { ...prev.touched, [name]: touched },
+    }));
+  }, []);
+
+  const handleSubmit = useCallback(async (
+    onSubmit: (values: T) => Promise<void> | void
+  ) => {
+    setFormState(prev => ({ ...prev, isSubmitting: true }));
+
+    try {
+      await onSubmit(formState.values);
+    } finally {
+      setFormState(prev => ({ ...prev, isSubmitting: false }));
+    }
+  }, [formState.values]);
+
+  return {
+    values: formState.values,
+    errors: formState.errors,
+    touched: formState.touched,
+    isValid: formState.isValid,
+    isSubmitting: formState.isSubmitting,
+    setFieldValue,
+    setFieldTouched,
+    handleSubmit,
+  };
+}
+```
+
+### Testing with TypeScript
+
+```typescript
+// src/types/testing.ts
+import { render, RenderOptions } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactElement } from 'react';
+
+// Custom render function with providers
+export interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+  queryClient?: QueryClient;
+}
+
+export function renderWithProviders(
+  ui: ReactElement,
+  options: CustomRenderOptions = {}
+) {
+  const { queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  }), ...renderOptions } = options;
+
+  function Wrapper({ children }: { children: React.ReactNode }) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    );
+  }
+
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+}
+
+// Mock type utilities
+export type MockedFunction<T extends (...args: any[]) => any> = jest.MockedFunction<T>;
+
+export type MockedClass<T> = {
+  [K in keyof T]: T[K] extends (...args: any[]) => any
+    ? MockedFunction<T[K]>
+    : T[K];
+};
+
+// Test data factories
+export interface TestDataFactory<T> {
+  build: (overrides?: Partial<T>) => T;
+  buildList: (count: number, overrides?: Partial<T>) => T[];
+}
+
+export function createTestFactory<T>(defaults: T): TestDataFactory<T> {
+  return {
+    build: (overrides = {}) => ({ ...defaults, ...overrides }),
+    buildList: (count, overrides = {}) => 
+      Array.from({ length: count }, (_, i) => ({ 
+        ...defaults, 
+        ...overrides, 
+        id: `${defaults.id || 'test'}-${i}` 
+      })),
+  };
+}
+```
+
 ## Troubleshooting
 
 ### Common Issues
