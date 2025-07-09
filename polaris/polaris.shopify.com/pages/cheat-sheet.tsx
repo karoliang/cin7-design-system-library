@@ -80,10 +80,10 @@ export default function CheatSheetPage() {
               <Card>
                 <InlineStack align="space-between" blockAlign="center">
                   <BlockStack gap="200">
-                    <Text variant="headingMd">
+                    <Text variant="headingMd" as="h2">
                       {currentSheet.title}
                     </Text>
-                    <Text variant="bodyMd" tone="subdued">
+                    <Text variant="bodyMd" as="p" tone="subdued">
                       {currentSheet.description}
                     </Text>
                   </BlockStack>
@@ -108,7 +108,7 @@ export default function CheatSheetPage() {
               
               <Card>
                 <BlockStack gap="400">
-                  <Text variant="headingMd">
+                  <Text variant="headingMd" as="h3">
                     Using This Cheat Sheet
                   </Text>
                   
@@ -117,7 +117,7 @@ export default function CheatSheetPage() {
                       <Text variant="headingSm" as="h4">
                         Copy Code
                       </Text>
-                      <Text variant="bodyMd">
+                      <Text variant="bodyMd" as="p">
                         Click the copy button on any code snippet to copy it to your clipboard.
                       </Text>
                     </div>
@@ -126,7 +126,7 @@ export default function CheatSheetPage() {
                       <Text variant="headingSm" as="h4">
                         Print Reference
                       </Text>
-                      <Text variant="bodyMd">
+                      <Text variant="bodyMd" as="p">
                         Use the print button to create a PDF for offline reference.
                       </Text>
                     </div>
@@ -135,7 +135,7 @@ export default function CheatSheetPage() {
                       <Text variant="headingSm" as="h4">
                         Search & Filter
                       </Text>
-                      <Text variant="bodyMd">
+                      <Text variant="bodyMd" as="p">
                         Use browser search (Ctrl+F) to quickly find specific components.
                       </Text>
                     </div>
