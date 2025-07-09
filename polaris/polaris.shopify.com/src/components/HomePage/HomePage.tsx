@@ -23,64 +23,36 @@ function HomePage({}: Props) {
           </div>
         </div>
 
-        <div className={styles.TechStack}>
-          <h2>Powered by Modern Technologies</h2>
-          <div className={styles.Technologies}>
-            <div className={styles.Technology}>
+        <div className={styles.Features}>
+          <div className={styles.FeatureList}>
+            <Link href="/getting-started/extjs" className={styles.Feature}>
               <h3>ExtJS</h3>
               <p>
                 Enterprise-grade form controls and data grids with advanced features
                 like filtering, sorting, and inline editing
               </p>
-            </div>
-            <div className={styles.Technology}>
+            </Link>
+            <Link href="/getting-started/development#vanilla-javascript" className={styles.Feature}>
               <h3>Vanilla JavaScript</h3>
               <p>
                 Lightweight UI interactions and general functionality without
                 framework overhead
               </p>
-            </div>
-            <div className={styles.Technology}>
+            </Link>
+            <Link href="/getting-started/development#typescript" className={styles.Feature}>
               <h3>TypeScript</h3>
               <p>
                 Type-safe business logic with enhanced developer experience
                 and code maintainability
               </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.Features}>
-          <h2>Why Choose Cin7 DSL?</h2>
-          <div className={styles.FeatureList}>
-            <div className={styles.Feature}>
-              <h3>🚀 Enterprise Ready</h3>
+            </Link>
+            <Link href="/foundations" className={styles.Feature}>
+              <h3>Shopify Polaris</h3>
               <p>
-                Built for complex business applications with advanced data grids,
-                form validation, and state management
+                Modern design system providing beautiful, accessible UI components
+                for consistent user experiences
               </p>
-            </div>
-            <div className={styles.Feature}>
-              <h3>🎨 Beautiful by Default</h3>
-              <p>
-                Leverages Shopify Polaris design principles for consistent,
-                accessible, and modern interfaces
-              </p>
-            </div>
-            <div className={styles.Feature}>
-              <h3>🔧 Developer Friendly</h3>
-              <p>
-                TypeScript support, comprehensive documentation, and live
-                playground for rapid development
-              </p>
-            </div>
-            <div className={styles.Feature}>
-              <h3>📊 Data-Driven</h3>
-              <p>
-                ExtJS grids with built-in sorting, filtering, pagination,
-                and export capabilities
-              </p>
-            </div>
+            </Link>
           </div>
         </div>
 
