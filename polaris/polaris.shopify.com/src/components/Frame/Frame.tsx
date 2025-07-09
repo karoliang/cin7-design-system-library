@@ -94,16 +94,6 @@ function Frame({darkMode, children}: Props) {
 
   return (
     <>
-      <div className={styles.PolarisUnifiedCta}>
-        <div>
-          <a href="https://shopify.dev/beta/next-gen-dev-platform/polaris">
-            {icons.Polaris()}
-            <strong>Introducing Cin7 DSL</strong> - Design System Language for modern applications.{' '}
-            <span className={styles.ReleaseCandidate}>Beta</span>
-            <Icon source={ArrowRightIcon} />
-          </a>
-        </div>
-      </div>
       <div className={styles.Header}>
         {showSkipToContentLink && (
           <a className={styles.SkipToContentLink} href="#main">
