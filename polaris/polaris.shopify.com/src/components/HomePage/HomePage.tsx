@@ -23,40 +23,39 @@ function HomePage({}: Props) {
           </div>
         </div>
 
-        <div className={styles.Features}>
-          <div className={styles.FeatureList}>
-            <Link href="/getting-started/extjs" className={styles.Feature}>
-              <h3>ExtJS</h3>
-              <p>
-                Enterprise-grade form controls and data grids with advanced features
-                like filtering, sorting, and inline editing
-              </p>
-            </Link>
-            <Link href="/getting-started/development#vanilla-javascript" className={styles.Feature}>
-              <h3>Vanilla JavaScript</h3>
-              <p>
-                Lightweight UI interactions and general functionality without
-                framework overhead
-              </p>
-            </Link>
-            <Link href="/getting-started/development#typescript" className={styles.Feature}>
-              <h3>TypeScript</h3>
-              <p>
-                Type-safe business logic with enhanced developer experience
-                and code maintainability
-              </p>
-            </Link>
-            <Link href="/foundations" className={styles.Feature}>
-              <h3>Shopify Polaris</h3>
-              <p>
-                Modern design system providing beautiful, accessible UI components
-                for consistent user experiences
-              </p>
-            </Link>
-          </div>
-        </div>
-
         <div className={styles.EntryPoints}>
+          <Link href="/getting-started/extjs" className={styles.EntryPoint}>
+            <h3>ExtJS</h3>
+            <p>
+              Enterprise-grade form controls and data grids with advanced features
+              like filtering, sorting, and inline editing
+            </p>
+          </Link>
+
+          <Link href="/getting-started/development#vanilla-javascript" className={styles.EntryPoint}>
+            <h3>Vanilla JavaScript</h3>
+            <p>
+              Lightweight UI interactions and general functionality without
+              framework overhead
+            </p>
+          </Link>
+
+          <Link href="/getting-started/development#typescript" className={styles.EntryPoint}>
+            <h3>TypeScript</h3>
+            <p>
+              Type-safe business logic with enhanced developer experience
+              and code maintainability
+            </p>
+          </Link>
+
+          <Link href="/foundations" className={styles.EntryPoint}>
+            <h3>Shopify Polaris</h3>
+            <p>
+              Modern design system providing beautiful, accessible UI components
+              for consistent user experiences
+            </p>
+          </Link>
+
           <Link href="/foundations" className={styles.EntryPoint}>
             <h3>Foundations</h3>
             <p>

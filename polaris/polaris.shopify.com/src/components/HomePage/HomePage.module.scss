@@ -93,56 +93,11 @@
   }
 }
 
-.Features {
-  margin-bottom: 4rem;
-}
-
-.FeatureList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-
-  @media screen and (max-width: $breakpointTablet) {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
-  }
-}
-
-.Feature {
-  display: block;
-  padding: 2rem;
-  background-color: var(--surface-background);
-  border-radius: var(--border-radius-400);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    h3 {
-      color: var(--interactive);
-    }
-  }
-
-  h3 {
-    @include heading-2;
-    margin-bottom: 0.75rem;
-    color: var(--text-strong);
-  }
-
-  p {
-    font-size: var(--font-size-500);
-    color: var(--text);
-    line-height: 1.6;
-  }
-}
 
 .EntryPoints {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-
-  @media screen and (max-width: $breakpointDesktop) {
-    grid-template-columns: 1fr 1fr;
-  }
 
   @media screen and (max-width: $breakpointTablet) {
     grid-template-columns: 1fr;
