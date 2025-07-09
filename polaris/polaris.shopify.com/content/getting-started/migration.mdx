@@ -1,0 +1,620 @@
+---
+title: Migration Guide
+description: 'Step-by-step guide to migrate existing Polaris React applications to Cin7 DSL, including best practices and common migration patterns.'
+showTOC: true
+keywords:
+  - migration
+  - upgrade
+  - polaris
+  - conversion
+  - refactoring
+  - compatibility
+order: 5
+icon: TransferIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Migration Overview
+
+Migrating from Polaris React to Cin7 DSL is designed to be incremental and non-disruptive. Since Cin7 DSL builds on top of Polaris, most of your existing components will continue to work with minimal changes.
+
+## Migration Strategy
+
+### 1. Assessment Phase
+
+Before starting migration, assess your current application:
+
+```bash
+# Analyze your current Polaris usage
+npx @cin7/migration-analyzer analyze
+
+# This will generate a report showing:
+# - Components being used
+# - Custom styling patterns
+# - Potential compatibility issues
+# - Recommended migration order
+```
+
+### 2. Preparation Phase
+
+```bash
+# Create migration branch
+git checkout -b migration/cin7-dsl
+
+# Backup current state
+git tag pre-migration-backup
+
+# Document current functionality
+npm run test:coverage
+```
+
+### 3. Incremental Migration
+
+Migrate components in this recommended order:
+
+1. **Foundation layer** (tokens, themes)
+2. **Basic components** (Layout, Card, Stack)
+3. **Form components** (TextField, Select, Button)
+4. **Complex components** (DataTable, Navigation)
+5. **Custom components** (business-specific components)
+
+## Step-by-Step Migration
+
+### Step 1: Install Cin7 DSL
+
+```bash
+# Install Cin7 DSL packages
+npm install @cin7/dsl-core @cin7/dsl-components @cin7/dsl-extjs-adapters
+
+# Update build configuration
+npm install --save-dev @cin7/dsl-build-tools
+```
+
+### Step 2: Update Build Configuration
+
+```typescript
+// Before (Polaris only)
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+});
+
+// After (Cin7 DSL)
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { cin7DslPlugin } from '@cin7/dsl-build-tools';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    cin7DslPlugin({
+      extjsSupport: true,
+      polarisFallback: true,
+    }),
+  ],
+});
+```
+
+### Step 3: Update Package.json
+
+```json
+{
+  "dependencies": {
+    "@shopify/polaris": "^12.0.0",
+    "@cin7/dsl-core": "^1.0.0",
+    "@cin7/dsl-components": "^1.0.0",
+    "@cin7/dsl-extjs-adapters": "^1.0.0"
+  },
+  "devDependencies": {
+    "@cin7/dsl-build-tools": "^1.0.0",
+    "@cin7/migration-tools": "^1.0.0"
+  }
+}
+```
+
+### Step 4: Update App Root
+
+```tsx
+// Before
+import { AppProvider } from '@shopify/polaris';
+import '@shopify/polaris/build/esm/styles.css';
+
+function App() {
+  return (
+    <AppProvider>
+      <Router>
+        <Routes>
+          {/* Your routes */}
+        </Routes>
+      </Router>
+    </AppProvider>
+  );
+}
+
+// After
+import { Cin7DslProvider } from '@cin7/dsl-core';
+import { PolarisProvider } from '@shopify/polaris';
+import '@cin7/dsl-core/styles.css';
+
+function App() {
+  return (
+    <Cin7DslProvider config={{ extjsSupport: true }}>
+      <PolarisProvider>
+        <Router>
+          <Routes>
+            {/* Your routes */}
+          </Routes>
+        </Router>
+      </PolarisProvider>
+    </Cin7DslProvider>
+  );
+}
+```
+
+## Component Migration Patterns
+
+### Basic Components (No Changes Required)
+
+Most basic Polaris components work unchanged:
+
+```tsx
+// These components continue to work as-is
+import { Card, Stack, Text, Button } from '@shopify/polaris';
+
+const UserCard = ({ user }) => (
+  <Card>
+    <Stack vertical>
+      <Text variant="headingMd">{user.name}</Text>
+      <Text color="subdued">{user.email}</Text>
+      <Button onClick={() => editUser(user)}>Edit</Button>
+    </Stack>
+  </Card>
+);
+```
+
+### Enhanced Components (Gradual Migration)
+
+Some components can be enhanced with Cin7 DSL features:
+
+```tsx
+// Before (Polaris only)
+import { DataTable } from '@shopify/polaris';
+
+const UserList = ({ users }) => (
+  <DataTable
+    columnContentTypes={['text', 'text', 'text']}
+    headings={['Name', 'Email', 'Role']}
+    rows={users.map(user => [user.name, user.email, user.role])}
+  />
+);
+
+// After (Cin7 DSL with ExtJS option)
+import { DataTable } from '@shopify/polaris';
+import { ExtDataGrid } from '@cin7/dsl-extjs-adapters';
+import { useFeatureFlag } from '@cin7/dsl-core';
+
+const UserList = ({ users }) => {
+  const useExtJsGrid = useFeatureFlag('extjs-grids');
+  
+  if (useExtJsGrid) {
+    return (
+      <ExtDataGrid
+        data={users}
+        columns={[
+          { text: 'Name', dataIndex: 'name', flex: 1 },
+          { text: 'Email', dataIndex: 'email', flex: 1 },
+          { text: 'Role', dataIndex: 'role', width: 120 },
+        ]}
+        features={['sorting', 'filtering', 'export']}
+      />
+    );
+  }
+  
+  // Fallback to original Polaris component
+  return (
+    <DataTable
+      columnContentTypes={['text', 'text', 'text']}
+      headings={['Name', 'Email', 'Role']}
+      rows={users.map(user => [user.name, user.email, user.role])}
+    />
+  );
+};
+```
+
+### Custom Components (Refactoring Required)
+
+Components with custom styling need updates:
+
+```tsx
+// Before (Custom CSS)
+import { Card } from '@shopify/polaris';
+import './UserCard.css';
+
+const UserCard = ({ user }) => (
+  <Card>
+    <div className="user-card-header">
+      <h3 className="user-name">{user.name}</h3>
+    </div>
+  </Card>
+);
+
+// After (Cin7 DSL tokens)
+import { Card, Text } from '@shopify/polaris';
+import { useCin7Tokens } from '@cin7/dsl-core';
+import styled from 'styled-components';
+
+const StyledHeader = styled.div`
+  padding: ${({ theme }) => theme.space.md};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+`;
+
+const UserCard = ({ user }) => {
+  const tokens = useCin7Tokens();
+  
+  return (
+    <Card>
+      <StyledHeader>
+        <Text variant="headingMd">{user.name}</Text>
+      </StyledHeader>
+    </Card>
+  );
+};
+```
+
+## State Management Migration
+
+### From React Context to Zustand
+
+```tsx
+// Before (React Context)
+const UserContext = createContext();
+
+const UserProvider = ({ children }) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  return (
+    <UserContext.Provider value={{ users, setUsers, loading, setLoading }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+// After (Zustand)
+import { create } from 'zustand';
+
+const useUserStore = create((set) => ({
+  users: [],
+  loading: false,
+  setUsers: (users) => set({ users }),
+  setLoading: (loading) => set({ loading }),
+}));
+```
+
+### From Manual Data Fetching to React Query
+
+```tsx
+// Before (Manual fetch)
+const UserList = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(setUsers)
+      .finally(() => setLoading(false));
+  }, []);
+  
+  if (loading) return <Spinner />;
+  
+  return <UserTable users={users} />;
+};
+
+// After (React Query)
+import { useQuery } from '@tanstack/react-query';
+
+const UserList = () => {
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => fetch('/api/users').then(res => res.json()),
+  });
+  
+  if (isLoading) return <Spinner />;
+  
+  return <UserTable users={users} />;
+};
+```
+
+## Styling Migration
+
+### From Custom CSS to Design Tokens
+
+```scss
+// Before (Custom CSS)
+.user-card {
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  background: white;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 4px;
+}
+```
+
+```tsx
+// After (Cin7 DSL tokens)
+import styled from 'styled-components';
+import { tokens } from '@cin7/dsl-core';
+
+const UserCard = styled.div`
+  padding: ${tokens.space.md};
+  margin-bottom: ${tokens.space.sm};
+  border: 1px solid ${tokens.colors.border};
+  border-radius: ${tokens.borderRadius.base};
+  background: ${tokens.colors.surface};
+`;
+
+const UserName = styled.h3`
+  font-size: ${tokens.fontSize.md};
+  font-weight: ${tokens.fontWeight.medium};
+  color: ${tokens.colors.text};
+  margin-bottom: ${tokens.space.xs};
+`;
+```
+
+### Theme Migration
+
+```tsx
+// Before (Custom theme)
+const theme = {
+  colors: {
+    primary: '#007ace',
+    surface: '#ffffff',
+    text: '#212529',
+  },
+  spacing: {
+    small: '8px',
+    medium: '16px',
+    large: '24px',
+  },
+};
+
+// After (Cin7 DSL theme)
+import { createCin7Theme } from '@cin7/dsl-core';
+
+const customTheme = createCin7Theme({
+  colors: {
+    primary: '#007ace',
+    // Other colors inherit from Polaris
+  },
+  spacing: {
+    // Spacing values inherit from Polaris
+  },
+  // Add custom extensions
+  extensions: {
+    shadows: {
+      card: '0 2px 4px rgba(0,0,0,0.1)',
+    },
+  },
+});
+```
+
+## Testing Migration
+
+### Update Test Setup
+
+```typescript
+// Before (Polaris test setup)
+import { AppProvider } from '@shopify/polaris';
+
+const TestWrapper = ({ children }) => (
+  <AppProvider>{children}</AppProvider>
+);
+
+// After (Cin7 DSL test setup)
+import { Cin7DslProvider } from '@cin7/dsl-core';
+import { AppProvider } from '@shopify/polaris';
+
+const TestWrapper = ({ children }) => (
+  <Cin7DslProvider config={{ extjsSupport: false }}>
+    <AppProvider>{children}</AppProvider>
+  </Cin7DslProvider>
+);
+```
+
+### Update Test Cases
+
+```typescript
+// Before
+import { render, screen } from '@testing-library/react';
+import { UserCard } from './UserCard';
+
+test('renders user information', () => {
+  render(<UserCard user={mockUser} />);
+  expect(screen.getByText('John Doe')).toBeInTheDocument();
+});
+
+// After (with Cin7 DSL testing utilities)
+import { render, screen } from '@testing-library/react';
+import { renderWithCin7Dsl } from '@cin7/dsl-testing-utils';
+import { UserCard } from './UserCard';
+
+test('renders user information', () => {
+  renderWithCin7Dsl(<UserCard user={mockUser} />);
+  expect(screen.getByText('John Doe')).toBeInTheDocument();
+});
+```
+
+## Performance Optimization During Migration
+
+### Bundle Size Management
+
+```typescript
+// Use dynamic imports for ExtJS components
+const ExtDataGrid = lazy(() => import('@cin7/dsl-extjs-adapters/DataGrid'));
+
+// Conditional loading
+const DataGridComponent = useMemo(() => {
+  if (requiresAdvancedGrid) {
+    return <ExtDataGrid {...props} />;
+  }
+  return <DataTable {...props} />;
+}, [requiresAdvancedGrid, props]);
+```
+
+### Code Splitting Strategy
+
+```typescript
+// Split by feature during migration
+const UserManagement = lazy(() => import('./features/UserManagement'));
+const ProductCatalog = lazy(() => import('./features/ProductCatalog'));
+
+// Gradually migrate each feature
+const App = () => (
+  <Suspense fallback={<Spinner />}>
+    <Routes>
+      <Route path="/users/*" element={<UserManagement />} />
+      <Route path="/products/*" element={<ProductCatalog />} />
+    </Routes>
+  </Suspense>
+);
+```
+
+## Migration Checklist
+
+### Pre-Migration
+
+- [ ] Audit current Polaris usage
+- [ ] Document custom components and styling
+- [ ] Set up testing environment
+- [ ] Create migration branch
+- [ ] Back up current state
+
+### During Migration
+
+- [ ] Install Cin7 DSL packages
+- [ ] Update build configuration
+- [ ] Migrate app root and providers
+- [ ] Update basic components
+- [ ] Migrate state management
+- [ ] Update styling to use tokens
+- [ ] Test each migrated component
+- [ ] Update documentation
+
+### Post-Migration
+
+- [ ] Run full test suite
+- [ ] Performance testing
+- [ ] Update deployment scripts
+- [ ] Team training on new patterns
+- [ ] Monitor for issues
+
+## Common Migration Issues
+
+### 1. Import Conflicts
+
+```typescript
+// Problem: Conflicting imports
+import { Button } from '@shopify/polaris';
+import { Button } from '@cin7/dsl-components';
+
+// Solution: Use aliases
+import { Button as PolarisButton } from '@shopify/polaris';
+import { Button as Cin7Button } from '@cin7/dsl-components';
+```
+
+### 2. CSS Specificity Issues
+
+```scss
+// Problem: Existing styles override Cin7 DSL
+.user-card .polaris-button {
+  background: red !important;
+}
+
+// Solution: Use CSS custom properties
+.user-card {
+  --cin7-button-background: red;
+}
+```
+
+### 3. TypeScript Errors
+
+```typescript
+// Problem: Type conflicts
+interface User extends PolarisUser, Cin7User {}
+
+// Solution: Create unified types
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  // Cin7 specific fields
+  extjsConfig?: ExtJSConfig;
+}
+```
+
+## Migration Tools
+
+### Automated Migration Scripts
+
+```bash
+# Run migration analyzer
+npx @cin7/migration-analyzer analyze
+
+# Auto-migrate imports
+npx @cin7/migration-tools migrate-imports
+
+# Update component patterns
+npx @cin7/migration-tools update-patterns
+
+# Validate migration
+npx @cin7/migration-tools validate
+```
+
+### Manual Migration Helpers
+
+```typescript
+// Component wrapper for gradual migration
+const withCin7Migration = (Component) => {
+  return (props) => {
+    const isMigrated = useFeatureFlag(`${Component.name}-migrated`);
+    
+    if (isMigrated) {
+      return <Component {...props} />;
+    }
+    
+    // Fallback to original implementation
+    return <OriginalComponent {...props} />;
+  };
+};
+```
+
+## Best Practices
+
+1. **Incremental Migration**: Migrate one component at a time
+2. **Feature Flags**: Use feature flags to control migration rollout
+3. **Testing**: Test thoroughly at each step
+4. **Documentation**: Update documentation as you migrate
+5. **Performance**: Monitor bundle size and performance
+6. **Rollback Plan**: Have a rollback strategy ready
+
+## Support and Resources
+
+- **Migration Support**: Contact the Cin7 DSL team for migration assistance
+- **Documentation**: Comprehensive guides and API references
+- **Community**: Join the Cin7 DSL community for tips and best practices
+- **Training**: Schedule team training sessions for the new patterns

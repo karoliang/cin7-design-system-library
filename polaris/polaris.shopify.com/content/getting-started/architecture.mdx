@@ -1,0 +1,346 @@
+---
+title: Architecture
+description: 'Understand the modular architecture of Cin7 DSL and how different layers work together to create scalable, maintainable applications.'
+showTOC: true
+keywords:
+  - architecture
+  - modular
+  - layers
+  - separation of concerns
+  - design system
+  - extjs
+  - typescript
+  - components
+order: 2
+icon: TemplateIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## System Overview
+
+Cin7 DSL follows a layered architecture with clear separation of concerns. Each layer has specific responsibilities and well-defined interfaces, ensuring maintainability and scalability.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Application Layer                        │
+│                  (Business Logic)                          │
+│                    TypeScript                               │
+├─────────────────────────────────────────────────────────────┤
+│                  UI Interaction Layer                       │
+│                    Vanilla JS                               │
+├─────────────────────────────────────────────────────────────┤
+│                  Component Layer                            │
+│              React + Ext JS + Polaris                      │
+├─────────────────────────────────────────────────────────────┤
+│                  Design System Layer                        │
+│                 Polaris Foundation                          │
+│              (Tokens, Themes, Patterns)                    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Layer Responsibilities
+
+### 1. Design System Layer (Foundation)
+
+**Technology**: Shopify Polaris
+**Purpose**: Provides the foundational design language and visual consistency
+
+**Components**:
+- **Design Tokens**: Colors, spacing, typography, elevation, motion
+- **Component Patterns**: Layout, navigation, feedback, data display
+- **Accessibility**: WCAG compliance and keyboard navigation
+- **Theming**: Light/dark mode and custom theme support
+
+**Key Files**:
+- `/tokens/` - Design token definitions
+- `/foundations/` - Design principles and guidelines
+- `/themes/` - Theme configuration and customization
+
+### 2. Component Layer (UI Building Blocks)
+
+**Technology**: React + Ext JS + Polaris Components
+**Purpose**: Provides reusable UI components with consistent behavior
+
+**React Components** (Based on Polaris):
+- Layout components (Page, Layout, Stack, Card)
+- Navigation components (Navigation, Breadcrumbs, Tabs)
+- Form components (TextField, Select, Checkbox, Radio)
+- Feedback components (Toast, Banner, Modal)
+
+**Ext JS Components** (For Advanced Functionality):
+- Data grids with sorting, filtering, and pagination
+- Advanced form controls (date pickers, combo boxes)
+- Complex layouts and panels
+- Charts and data visualization
+
+**Component Adapters**:
+- Bridge between Polaris design tokens and Ext JS components
+- Ensure consistent styling across both component libraries
+- Handle theme switching and customization
+
+### 3. UI Interaction Layer (User Interactions)
+
+**Technology**: Vanilla JavaScript
+**Purpose**: Handles user interactions, DOM manipulation, and UI state
+
+**Responsibilities**:
+- Event handling and user input processing
+- DOM manipulation and dynamic content updates
+- UI state management (show/hide, enable/disable)
+- Client-side validation and feedback
+- Progressive enhancement
+
+**Key Patterns**:
+- Event delegation for efficient event handling
+- Observer pattern for component communication
+- State machines for complex UI interactions
+- Intersection observers for performance optimization
+
+### 4. Application Layer (Business Logic)
+
+**Technology**: TypeScript
+**Purpose**: Contains business logic, data management, and application state
+
+**Responsibilities**:
+- Business rules and validation
+- Data transformation and processing
+- API communication and data fetching
+- Application state management
+- Error handling and logging
+
+**Key Components**:
+- **Services**: API communication and data services
+- **Models**: Data structures and business entities
+- **Utilities**: Helper functions and common logic
+- **State Management**: Application state using Zustand + React Query
+
+## Build System Architecture
+
+### Development Environment
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Vite (Build Tool)                     │
+├─────────────────────────────────────────────────────────────┤
+│  TypeScript Compiler  │  Sass Processing  │  Asset Pipeline │
+├─────────────────────────────────────────────────────────────┤
+│           Hot Module Replacement (HMR)                     │
+├─────────────────────────────────────────────────────────────┤
+│  Dev Server  │  Proxy Config  │  Source Maps  │  Debugging │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Production Build
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Code Splitting                          │
+│           (Lazy Loading + Dynamic Imports)                 │
+├─────────────────────────────────────────────────────────────┤
+│                   Tree Shaking                             │
+│              (Dead Code Elimination)                       │
+├─────────────────────────────────────────────────────────────┤
+│                  Minification                              │
+│              (JavaScript + CSS)                            │
+├─────────────────────────────────────────────────────────────┤
+│                 Asset Optimization                         │
+│            (Images, Fonts, Static Assets)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Monorepo Structure
+
+```
+cin7dsl/
+├── packages/
+│   ├── design-tokens/          # Design token definitions
+│   ├── components/             # React component library
+│   ├── extjs-adapters/         # Ext JS integration layer
+│   ├── theme/                  # Theme configuration
+│   └── utilities/              # Common utilities and helpers
+├── apps/
+│   ├── documentation/          # Documentation site
+│   ├── playground/             # Component playground
+│   └── example-app/            # Example application
+├── tools/
+│   ├── build-tools/            # Build configuration
+│   ├── linting/                # ESLint and Prettier config
+│   └── testing/                # Testing utilities
+└── docs/                       # Architecture and guides
+```
+
+## State Management Architecture
+
+### Global State (Zustand)
+
+```typescript
+// Application-wide state
+interface AppState {
+  user: User | null;
+  theme: 'light' | 'dark';
+  locale: string;
+  permissions: Permission[];
+}
+
+// Feature-specific state
+interface DataGridState {
+  filters: Filter[];
+  sort: SortConfig;
+  selection: string[];
+  pagination: PaginationState;
+}
+```
+
+### Server State (React Query)
+
+```typescript
+// API data caching and synchronization
+const useUsers = () => useQuery({
+  queryKey: ['users'],
+  queryFn: fetchUsers,
+  staleTime: 5 * 60 * 1000, // 5 minutes
+});
+
+// Mutations with optimistic updates
+const useUpdateUser = () => useMutation({
+  mutationFn: updateUser,
+  onMutate: async (user) => {
+    // Optimistic update
+    await queryClient.cancelQueries(['users']);
+    const previous = queryClient.getQueryData(['users']);
+    queryClient.setQueryData(['users'], (old) => updateUserInList(old, user));
+    return { previous };
+  },
+});
+```
+
+## Component Communication Patterns
+
+### 1. Props Down, Events Up (React)
+```tsx
+// Parent component
+const UserManagement = () => {
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  
+  return (
+    <div>
+      <UserList onUserSelect={setSelectedUser} />
+      <UserDetails user={selectedUser} />
+    </div>
+  );
+};
+```
+
+### 2. Context for Cross-Component State
+```tsx
+// Theme context
+const ThemeContext = createContext<{
+  theme: Theme;
+  toggleTheme: () => void;
+}>();
+
+// Usage in components
+const Button = () => {
+  const { theme } = useContext(ThemeContext);
+  return <button className={`btn-${theme}`}>Click me</button>;
+};
+```
+
+### 3. Event System for Loose Coupling
+```typescript
+// Event-driven communication
+const eventBus = new EventBus();
+
+// Publisher
+eventBus.emit('user:updated', { userId: '123', data: userData });
+
+// Subscriber
+eventBus.on('user:updated', (event) => {
+  // Update UI components
+  refreshUserList();
+  showNotification('User updated successfully');
+});
+```
+
+## Performance Optimization
+
+### Code Splitting Strategy
+
+```typescript
+// Route-based splitting
+const UserManagement = lazy(() => import('./pages/UserManagement'));
+const Reports = lazy(() => import('./pages/Reports'));
+
+// Component-based splitting
+const DataGrid = lazy(() => import('./components/DataGrid'));
+const Chart = lazy(() => import('./components/Chart'));
+```
+
+### Resource Loading
+
+```typescript
+// Preload critical resources
+const preloadCriticalResources = () => {
+  preloadComponent('./components/Navigation');
+  preloadComponent('./components/Header');
+  preloadAssets(['/fonts/primary.woff2', '/icons/sprite.svg']);
+};
+```
+
+## Testing Architecture
+
+### Unit Tests
+- Component testing with React Testing Library
+- Business logic testing with Jest
+- Utility function testing
+
+### Integration Tests
+- API integration testing
+- Component interaction testing
+- State management testing
+
+### End-to-End Tests
+- User workflow testing with Playwright
+- Cross-browser compatibility testing
+- Performance regression testing
+
+## Deployment Strategy
+
+### Development
+- Hot module replacement for fast development
+- Source maps for debugging
+- Development-specific configurations
+
+### Staging
+- Production-like build with debugging enabled
+- Performance monitoring
+- Feature flag testing
+
+### Production
+- Optimized build with minification
+- CDN deployment for static assets
+- Progressive web app (PWA) support
+- Analytics and error tracking
+
+## Best Practices
+
+### Code Organization
+- Feature-based folder structure
+- Consistent naming conventions
+- Clear import/export patterns
+- Proper TypeScript usage
+
+### Performance
+- Lazy loading for non-critical components
+- Memoization for expensive computations
+- Efficient re-rendering strategies
+- Bundle size optimization
+
+### Maintenance
+- Automated testing and CI/CD
+- Code review processes
+- Documentation standards
+- Version management strategy

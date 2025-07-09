@@ -67,6 +67,28 @@ The comprehensive test script:
 
 Always run the comprehensive test before deploying to catch dependency and build order issues.
 
+## Keeping Polaris Up-to-Date
+
+### Check for Updates
+```bash
+./check-upstream-updates.sh
+```
+
+### Update Process
+```bash
+./update-polaris.sh
+```
+
+This will:
+1. Fetch latest from Shopify/polaris
+2. Create an update branch
+3. Merge upstream changes
+4. Apply our custom patches
+5. Run tests
+
+### Custom Patches
+All TypeScript and React fixes are maintained as patches in the `/patches` directory. These are automatically applied during updates.
+
 ## Development Setup
 
 Since the project hasn't been implemented yet, there are no specific build, test, or lint commands. When implementing this project, consider:

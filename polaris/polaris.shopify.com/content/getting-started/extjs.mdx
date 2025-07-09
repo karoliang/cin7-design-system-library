@@ -1,0 +1,591 @@
+---
+title: Ext JS Integration
+description: 'Learn how to integrate Ext JS components with Cin7 DSL while maintaining design consistency and optimal performance.'
+showTOC: true
+keywords:
+  - extjs
+  - integration
+  - components
+  - grids
+  - forms
+  - data
+  - performance
+order: 3
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Why Ext JS?
+
+Ext JS provides enterprise-grade components that complement Polaris's design system foundation. While Polaris excels at providing consistent UI patterns and basic components, Ext JS offers:
+
+- **Advanced Data Grids**: Complex data visualization with sorting, filtering, grouping, and editing
+- **Sophisticated Forms**: Rich form controls with validation, data binding, and complex layouts
+- **Enterprise Widgets**: Charts, trees, calendars, and other specialized components
+- **Data Management**: Built-in data stores, models, and CRUD operations
+
+## Integration Strategy
+
+### Component Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    React Application                        │
+├─────────────────────────────────────────────────────────────┤
+│              Cin7 DSL Adapter Layer                        │
+│           (Bridges Polaris ↔ Ext JS)                      │
+├─────────────────────────────────────────────────────────────┤
+│    Polaris Components     │      Ext JS Components         │
+│   (UI, Navigation, etc.)  │   (Grids, Forms, Charts)       │
+├─────────────────────────────────────────────────────────────┤
+│              Shared Design Tokens                           │
+│             (Colors, Spacing, Typography)                  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Adapter Pattern
+
+The adapter layer ensures that Ext JS components follow Polaris design tokens and integrate seamlessly with React components.
+
+```typescript
+// Ext JS Component Adapter
+class ExtJSAdapter {
+  private static applyPolarisTheme(config: any) {
+    return {
+      ...config,
+      style: {
+        ...config.style,
+        backgroundColor: 'var(--p-color-bg)',
+        color: 'var(--p-color-text)',
+        fontFamily: 'var(--p-font-family-sans)',
+        fontSize: 'var(--p-font-size-325)',
+      },
+      cls: `polaris-theme ${config.cls || ''}`,
+    };
+  }
+
+  static createGrid(config: GridConfig): Ext.grid.Panel {
+    const themedConfig = this.applyPolarisTheme(config);
+    return new Ext.grid.Panel(themedConfig);
+  }
+}
+```
+
+## Setting Up Ext JS
+
+### Installation
+
+```bash
+# Install Ext JS (requires license)
+npm install @sencha/ext-react @sencha/ext-react-webpack-plugin
+
+# Install Cin7 DSL Ext JS adapters
+npm install @cin7/dsl-extjs-adapters
+```
+
+### Configuration
+
+```typescript
+// webpack.config.js
+const ExtReactWebpackPlugin = require('@sencha/ext-react-webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new ExtReactWebpackPlugin({
+      toolkit: 'modern',
+      theme: 'theme-triton',
+      packages: ['charts', 'pivot', 'calendar'],
+      output: './ext-react',
+    }),
+  ],
+};
+```
+
+### Theme Integration
+
+```scss
+// ext-js-theme.scss
+@import '~@shopify/polaris-tokens/dist/scss/base.scss';
+
+// Override Ext JS theme with Polaris tokens
+.x-panel {
+  background-color: var(--p-color-bg);
+  border-color: var(--p-color-border);
+  
+  .x-panel-header {
+    background-color: var(--p-color-bg-surface);
+    border-bottom-color: var(--p-color-border);
+    
+    .x-panel-header-text {
+      color: var(--p-color-text);
+      font-family: var(--p-font-family-sans);
+      font-size: var(--p-font-size-325);
+      font-weight: var(--p-font-weight-medium);
+    }
+  }
+}
+```
+
+## Core Components
+
+### Data Grid Integration
+
+```tsx
+import { ExtDataGrid } from '@cin7/dsl-extjs-adapters';
+import { Card, Page } from '@shopify/polaris';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  lastLogin: Date;
+}
+
+const UserManagement = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  
+  const gridConfig = {
+    store: {
+      data: users,
+      fields: ['id', 'name', 'email', 'role', 'lastLogin'],
+    },
+    columns: [
+      { text: 'Name', dataIndex: 'name', flex: 1 },
+      { text: 'Email', dataIndex: 'email', flex: 1 },
+      { text: 'Role', dataIndex: 'role', width: 120 },
+      { text: 'Last Login', dataIndex: 'lastLogin', width: 150, xtype: 'datecolumn' },
+    ],
+    selType: 'checkboxmodel',
+    plugins: ['gridfilters', 'gridexporter'],
+    features: ['grouping', 'summary'],
+  };
+
+  return (
+    <Page title="User Management">
+      <Card>
+        <ExtDataGrid
+          config={gridConfig}
+          onSelectionChange={(selected) => setSelectedUsers(selected)}
+          onRowDoubleClick={(user) => handleEditUser(user)}
+          height={400}
+        />
+      </Card>
+    </Page>
+  );
+};
+```
+
+### Advanced Form Components
+
+```tsx
+import { ExtFormPanel } from '@cin7/dsl-extjs-adapters';
+import { Card, Page, Layout } from '@shopify/polaris';
+
+const UserForm = ({ user, onSave }) => {
+  const formConfig = {
+    items: [
+      {
+        xtype: 'textfield',
+        name: 'name',
+        fieldLabel: 'Full Name',
+        allowBlank: false,
+        value: user?.name,
+      },
+      {
+        xtype: 'emailfield',
+        name: 'email',
+        fieldLabel: 'Email Address',
+        allowBlank: false,
+        value: user?.email,
+      },
+      {
+        xtype: 'combobox',
+        name: 'role',
+        fieldLabel: 'Role',
+        store: ['admin', 'user', 'manager'],
+        value: user?.role,
+      },
+      {
+        xtype: 'datefield',
+        name: 'startDate',
+        fieldLabel: 'Start Date',
+        value: user?.startDate,
+      },
+      {
+        xtype: 'numberfield',
+        name: 'salary',
+        fieldLabel: 'Salary',
+        minValue: 0,
+        value: user?.salary,
+      },
+    ],
+    buttons: [
+      {
+        text: 'Save',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            onSave(form.getValues());
+          }
+        },
+      },
+      {
+        text: 'Cancel',
+        handler: () => onCancel(),
+      },
+    ],
+  };
+
+  return (
+    <Page title="Edit User">
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <ExtFormPanel
+              config={formConfig}
+              onSubmit={handleSubmit}
+              validationRules={userValidationRules}
+            />
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+};
+```
+
+### Chart Integration
+
+```tsx
+import { ExtChart } from '@cin7/dsl-extjs-adapters';
+import { Card, Page } from '@shopify/polaris';
+
+const SalesChart = ({ data }) => {
+  const chartConfig = {
+    xtype: 'cartesian',
+    store: {
+      fields: ['month', 'sales', 'profit'],
+      data: data,
+    },
+    axes: [
+      {
+        type: 'numeric',
+        position: 'left',
+        title: 'Sales ($)',
+        grid: true,
+      },
+      {
+        type: 'category',
+        position: 'bottom',
+        title: 'Month',
+      },
+    ],
+    series: [
+      {
+        type: 'line',
+        xField: 'month',
+        yField: 'sales',
+        marker: {
+          type: 'circle',
+          size: 4,
+        },
+        style: {
+          stroke: 'var(--p-color-text-brand)',
+          lineWidth: 2,
+        },
+      },
+      {
+        type: 'bar',
+        xField: 'month',
+        yField: 'profit',
+        style: {
+          fill: 'var(--p-color-bg-success)',
+        },
+      },
+    ],
+    legend: {
+      docked: 'bottom',
+    },
+  };
+
+  return (
+    <Page title="Sales Analytics">
+      <Card>
+        <ExtChart
+          config={chartConfig}
+          responsive={true}
+          height={400}
+        />
+      </Card>
+    </Page>
+  );
+};
+```
+
+## State Management Integration
+
+### React Query with Ext JS Stores
+
+```typescript
+// Custom hook for Ext JS store integration
+const useExtJSStore = (queryKey: string[], queryFn: () => Promise<any[]>) => {
+  const { data, isLoading, error } = useQuery(queryKey, queryFn);
+  
+  const store = useMemo(() => {
+    if (!data) return null;
+    
+    return new Ext.data.Store({
+      data: data,
+      autoLoad: false,
+      proxy: {
+        type: 'memory',
+        reader: {
+          type: 'json',
+        },
+      },
+    });
+  }, [data]);
+
+  return { store, isLoading, error };
+};
+
+// Usage in component
+const UserGrid = () => {
+  const { store, isLoading } = useExtJSStore(
+    ['users'],
+    () => apiClient.getUsers()
+  );
+
+  if (isLoading) return <Spinner />;
+
+  return (
+    <ExtDataGrid
+      store={store}
+      columns={userColumns}
+      onSelectionChange={handleSelectionChange}
+    />
+  );
+};
+```
+
+### Zustand State with Ext JS
+
+```typescript
+// Zustand store with Ext JS integration
+interface GridState {
+  selectedRows: any[];
+  filters: Record<string, any>;
+  sortConfig: { field: string; direction: 'ASC' | 'DESC' } | null;
+  setSelectedRows: (rows: any[]) => void;
+  setFilters: (filters: Record<string, any>) => void;
+  setSortConfig: (config: { field: string; direction: 'ASC' | 'DESC' }) => void;
+}
+
+const useGridStore = create<GridState>((set) => ({
+  selectedRows: [],
+  filters: {},
+  sortConfig: null,
+  setSelectedRows: (rows) => set({ selectedRows: rows }),
+  setFilters: (filters) => set({ filters }),
+  setSortConfig: (config) => set({ sortConfig: config }),
+}));
+
+// Integration with Ext JS grid
+const DataGrid = () => {
+  const { selectedRows, filters, setSelectedRows, setFilters } = useGridStore();
+
+  const handleGridReady = (grid: Ext.grid.Panel) => {
+    // Sync Ext JS selection with Zustand
+    grid.getSelectionModel().on('selectionchange', (model, selected) => {
+      setSelectedRows(selected.map(record => record.data));
+    });
+
+    // Sync Ext JS filters with Zustand
+    grid.getStore().on('filterchange', (store, filters) => {
+      setFilters(filters.reduce((acc, filter) => ({
+        ...acc,
+        [filter.getProperty()]: filter.getValue(),
+      }), {}));
+    });
+  };
+
+  return (
+    <ExtDataGrid
+      config={gridConfig}
+      onGridReady={handleGridReady}
+      selectedRows={selectedRows}
+      filters={filters}
+    />
+  );
+};
+```
+
+## Performance Optimization
+
+### Lazy Loading
+
+```typescript
+// Lazy load Ext JS components
+const LazyExtDataGrid = lazy(() => import('@cin7/dsl-extjs-adapters/DataGrid'));
+
+const UserManagement = () => {
+  const [showGrid, setShowGrid] = useState(false);
+
+  return (
+    <Page title="Users">
+      <Button onClick={() => setShowGrid(true)}>
+        Show Data Grid
+      </Button>
+      
+      {showGrid && (
+        <Suspense fallback={<Spinner />}>
+          <LazyExtDataGrid config={gridConfig} />
+        </Suspense>
+      )}
+    </Page>
+  );
+};
+```
+
+### Virtual Scrolling
+
+```typescript
+// Configure virtual scrolling for large datasets
+const largeDataGridConfig = {
+  store: {
+    buffered: true,
+    pageSize: 100,
+    leadingBufferZone: 50,
+    trailingBufferZone: 50,
+  },
+  plugins: ['bufferedrenderer'],
+  viewConfig: {
+    enableTextSelection: true,
+    preserveScrollOnReload: true,
+  },
+};
+```
+
+### Memory Management
+
+```typescript
+// Proper cleanup for Ext JS components
+useEffect(() => {
+  return () => {
+    // Cleanup Ext JS components to prevent memory leaks
+    if (gridRef.current) {
+      gridRef.current.destroy();
+    }
+  };
+}, []);
+```
+
+## Best Practices
+
+### Component Lifecycle
+
+```typescript
+// Ext JS component wrapper with proper lifecycle management
+const ExtJSComponent = ({ config, onReady }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const componentRef = useRef<Ext.Component | null>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const component = new Ext.panel.Panel({
+        ...config,
+        renderTo: containerRef.current,
+      });
+      
+      componentRef.current = component;
+      onReady?.(component);
+      
+      return () => {
+        component.destroy();
+      };
+    }
+  }, [config]);
+
+  return <div ref={containerRef} />;
+};
+```
+
+### Error Handling
+
+```typescript
+// Error boundary for Ext JS components
+class ExtJSErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('Ext JS Component Error:', error, errorInfo);
+    // Log to error tracking service
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Card>
+          <p>Something went wrong with the Ext JS component.</p>
+          <Button onClick={() => this.setState({ hasError: false })}>
+            Try Again
+          </Button>
+        </Card>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+### Testing
+
+```typescript
+// Testing Ext JS components
+describe('UserGrid', () => {
+  it('should render with proper data', async () => {
+    const mockData = [
+      { id: 1, name: 'John Doe', email: 'john@example.com' },
+    ];
+
+    render(
+      <ExtJSErrorBoundary>
+        <UserGrid data={mockData} />
+      </ExtJSErrorBoundary>
+    );
+
+    // Wait for Ext JS component to initialize
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+    });
+  });
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Theme Conflicts**: Ensure Ext JS theme variables don't conflict with Polaris CSS custom properties
+2. **Memory Leaks**: Always call `destroy()` on Ext JS components in cleanup functions
+3. **Event Handling**: Use proper event delegation to avoid memory leaks
+4. **Data Binding**: Ensure data flow is unidirectional (React → Ext JS)
+
+### Performance Tips
+
+- Use virtual scrolling for large datasets
+- Implement lazy loading for heavy components
+- Optimize re-renders with proper memoization
+- Use Ext JS buffered stores for server-side pagination

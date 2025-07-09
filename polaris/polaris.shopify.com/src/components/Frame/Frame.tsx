@@ -98,8 +98,8 @@ function Frame({darkMode, children}: Props) {
         <div>
           <a href="https://shopify.dev/beta/next-gen-dev-platform/polaris">
             {icons.Polaris()}
-            <strong>Introducing Polaris</strong> - Unified and for the web.{' '}
-            <span className={styles.ReleaseCandidate}>Release Candidate</span>
+            <strong>Introducing Cin7 DSL</strong> - Design System Language for modern applications.{' '}
+            <span className={styles.ReleaseCandidate}>Beta</span>
             <Icon source={ArrowRightIcon} />
           </a>
         </div>
@@ -125,12 +125,12 @@ function Frame({darkMode, children}: Props) {
 
         <Link href="/" className={styles.Logo}>
           <Image
-            alt="Shopify logo"
+            alt="Cin7 logo"
             src="/images/shopify-logo.svg"
             width={24}
             height={24}
           />
-          Polaris React
+          Cin7 DSL
         </Link>
 
         {isMounted && (

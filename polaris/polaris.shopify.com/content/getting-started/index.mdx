@@ -1,20 +1,18 @@
 ---
 title: Getting Started
 navTitle: Getting started
-description: 'Polaris is the design system for the Shopify admin. If you’re just starting out with Polaris, here’s a list of recommended resources and guidance to get you started.'
+description: 'Cin7 DSL is a comprehensive design system language built on Shopify Polaris. If you're just starting out with Cin7 DSL, here's a list of recommended resources and guidance to get you started.'
 showTOC: true
 keywords:
   - about
-  - polaris
+  - cin7 dsl
   - design system
   - system
   - getting started
   - get started
-  - downloads
-  - begin
-  - figma
-  - ui kits
-  - plugins
+  - polaris
+  - extjs
+  - architecture
 order: 1
 icon: HintIcon
 ---
@@ -23,34 +21,148 @@ icon: HintIcon
 
 <Lede>{frontmatter.description}</Lede>
 
-## Design resources
+## Quick Start Guide
 
-Shopify provides [Figma community resources](https://www.figma.com/@Shopify) for Polaris components, styles, and icons. If you are new to Figma, check out our [onboarding guide](https://www.figma.com/community/file/994263185745279952), or open Figma and start designing with the Polaris:
+New to Cin7 DSL? Start with these essential resources:
 
-- [Component UI kit](https://www.figma.com/community/file/1293611962331823010/polaris-components)
-- [Style Library](https://www.figma.com/community/file/1293614121185734569/polaris-styles)
-- [Icon Library](https://www.figma.com/community/file/1293614863849914283/polaris-icons)
+- [Overview](/getting-started/overview) - Understand what Cin7 DSL is and its key features
+- [Architecture](/getting-started/architecture) - Learn about the modular architecture and system design
+- [Development Setup](/getting-started/development) - Set up your development environment
+- [ExtJS Integration](/getting-started/extjs) - Learn how to use advanced ExtJS components
+- [Migration Guide](/getting-started/migration) - Migrate from existing Polaris projects
 
-## Development resources
+## Design Foundation
 
-The [Shopify/polaris GitHub repo](https://github.com/Shopify/polaris) is an open-source monorepo made up of NPM packages, VS Code extensions, and this website. To get started, learn how to install and use the Polaris:
+Cin7 DSL builds on the proven design principles of Shopify Polaris. Access these design resources:
 
-- [React components](https://github.com/Shopify/polaris/tree/main/polaris-react#using-the-react-components)
-- [Design tokens](https://github.com/Shopify/polaris/tree/main/polaris-tokens#installation)
-- [VS Code extension](/tools/polaris-for-vscode)
+- [Component UI kit](https://www.figma.com/community/file/1293611962331823010/polaris-components) - Polaris components in Figma
+- [Style Library](https://www.figma.com/community/file/1293614121185734569/polaris-styles) - Design tokens and styles
+- [Icon Library](https://www.figma.com/community/file/1293614863849914283/polaris-icons) - 400+ enterprise-focused icons
 
-## Tutorials
+## Development Resources
 
-#### [Build a Shopify app](https://shopify.dev/apps/getting-started/create)
+The Cin7 DSL framework provides multiple layers of functionality:
 
-In this tutorial, you'll create an app that merchants can access in the Shopify admin. You'll use an app initialization command that generates starter code for building your app, and sets up your development environment so that you can work with your app using [Shopify CLI](https://shopify.dev/apps/tools/cli).
+### Core Components
+- **Polaris Foundation**: Base components, design tokens, and accessibility
+- **React Components**: Modern component library with TypeScript support
+- **ExtJS Integration**: Advanced form controls, data grids, and visualization
+- **Build Tools**: Optimized development and production workflows
 
-Your app will use Polaris and [App Bridge](https://shopify.dev/apps/tools/app-bridge) while following the [App Design Guidelines](https://shopify.dev/apps/design-guidelines).
+### Quick Installation
 
-## Expand your knowledge
+```bash
+# Create new Cin7 DSL project
+npx @cin7/create-dsl-app my-app
 
-Polaris provides foundational design guidance for creating good merchant experiences. Here are some recommended resources to:
+# Or add to existing project
+npm install @cin7/dsl-core @cin7/dsl-components
+```
 
-- [Experience values](/foundations/experience-values)
-- [Design guidelines](/design)
-- [Content fundamentals](/content/fundamentals)
+### Key Features
+
+- **Modular Architecture**: Clear separation of concerns with layered architecture
+- **TypeScript First**: Full TypeScript support with comprehensive type definitions
+- **Performance Optimized**: Code splitting, lazy loading, and efficient bundling
+- **Enterprise Ready**: Advanced data handling with ExtJS integration
+- **Accessibility**: Built-in WCAG compliance and keyboard navigation
+
+## Development Workflow
+
+### 1. Set Up Environment
+Start with our [development setup guide](/getting-started/development) to configure your local environment with all necessary tools and dependencies.
+
+### 2. Understand Architecture
+Review the [architecture documentation](/getting-started/architecture) to understand how different layers work together and follow established patterns.
+
+### 3. Build Components
+Use Polaris components as your foundation, then enhance with ExtJS components for advanced functionality like data grids and complex forms.
+
+### 4. State Management
+Implement state management using Zustand for application state and React Query for server state management.
+
+## Integration Patterns
+
+### Basic UI Components
+```tsx
+import { Card, Stack, Text, Button } from '@shopify/polaris';
+
+const UserCard = ({ user }) => (
+  <Card>
+    <Stack vertical>
+      <Text variant="headingMd">{user.name}</Text>
+      <Text color="subdued">{user.email}</Text>
+      <Button onClick={() => editUser(user)}>Edit</Button>
+    </Stack>
+  </Card>
+);
+```
+
+### Advanced Data Components
+```tsx
+import { ExtDataGrid } from '@cin7/dsl-extjs-adapters';
+
+const UserGrid = ({ users }) => (
+  <ExtDataGrid
+    data={users}
+    columns={[
+      { text: 'Name', dataIndex: 'name', flex: 1 },
+      { text: 'Email', dataIndex: 'email', flex: 1 },
+      { text: 'Role', dataIndex: 'role', width: 120 }
+    ]}
+    features={['sorting', 'filtering', 'export']}
+  />
+);
+```
+
+## Learning Path
+
+### For Beginners
+1. **Start with Overview**: Understand the framework's purpose and benefits
+2. **Review Architecture**: Learn the layered approach and separation of concerns
+3. **Follow Development Guide**: Set up your environment and create your first component
+4. **Explore Examples**: Study the provided examples and patterns
+
+### For Polaris Users
+1. **Migration Guide**: Learn how to migrate existing Polaris applications
+2. **ExtJS Integration**: Understand how to enhance components with ExtJS
+3. **Performance**: Optimize your application with advanced patterns
+4. **Best Practices**: Follow established conventions and patterns
+
+### For Enterprise Developers
+1. **Architecture Deep Dive**: Understand the full system architecture
+2. **Advanced Components**: Master ExtJS integration for complex UI requirements
+3. **State Management**: Implement scalable state management patterns
+4. **Testing Strategy**: Comprehensive testing approaches for enterprise applications
+
+## Community and Support
+
+### Documentation
+- **API Reference**: Comprehensive API documentation for all components
+- **Examples**: Real-world examples and code samples
+- **Best Practices**: Established patterns and conventions
+
+### Development Tools
+- **TypeScript Support**: Full type definitions and IntelliSense
+- **VS Code Extension**: Enhanced development experience
+- **Build Tools**: Optimized build and development workflows
+- **Testing Utilities**: Comprehensive testing support
+
+## Next Steps
+
+Ready to start building? Here's what to do next:
+
+1. **Create Your First Project**: Use `npx @cin7/create-dsl-app` to scaffold a new application
+2. **Follow the Development Guide**: Set up your environment and workflow
+3. **Study the Architecture**: Understand the system design and patterns
+4. **Build Your First Component**: Create a simple component following our patterns
+5. **Explore Advanced Features**: Learn about ExtJS integration and state management
+
+## Expand Your Knowledge
+
+Cin7 DSL provides comprehensive design guidance for creating quality user experiences:
+
+- [Experience values](/foundations/experience-values) - Design principles and user experience guidelines
+- [Design guidelines](/design) - Visual design patterns and best practices
+- [Content fundamentals](/content/fundamentals) - Writing and content strategy
+- [Accessibility](/foundations/accessibility) - Building inclusive user interfaces

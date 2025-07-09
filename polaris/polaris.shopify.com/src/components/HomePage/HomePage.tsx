@@ -9,7 +9,7 @@ function HomePage({}: Props) {
   return (
     <Page>
       <div className={styles.HomePage}>
-        <PageMeta description="A starter kit for reimagining commerce." />
+        <PageMeta description="A design system language for modern web applications." />
 
         <div className={styles.Hero}>
           <div className={styles.Text}>
@@ -17,8 +17,8 @@ function HomePage({}: Props) {
               <span>Build.</span> <span>Contribute.</span> <span>Evolve.</span>
             </h1>
             <p>
-              Shape the merchant experience for Shopify’s core product, the
-              admin.
+              Build consistent, scalable user interfaces with our comprehensive
+              design system language.
             </p>
           </div>
         </div>
@@ -27,7 +27,7 @@ function HomePage({}: Props) {
           <Link href="/foundations" className={styles.EntryPoint}>
             <h3>Foundations</h3>
             <p>
-              Fundamental design guidance for creating quality admin experiences
+              Fundamental design guidance for creating quality user experiences
             </p>
           </Link>
 
@@ -35,7 +35,7 @@ function HomePage({}: Props) {
             <h3>Components</h3>
             <p>
               Reusable elements and styles, packaged through code, for building
-              admin interfaces
+              modern interfaces
             </p>
           </Link>
 
@@ -50,8 +50,8 @@ function HomePage({}: Props) {
           <Link href="/icons" className={styles.EntryPoint}>
             <h3>Icons</h3>
             <p>
-              Over 400 carefully designed icons focused on commerce and
-              entrepreneurship
+              Over 400 carefully designed icons focused on business and
+              enterprise applications
             </p>
           </Link>
         </div>

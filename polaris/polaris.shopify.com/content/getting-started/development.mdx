@@ -1,0 +1,738 @@
+---
+title: Development Workflow
+description: 'Set up your development environment and learn the recommended workflow for building applications with Cin7 DSL.'
+showTOC: true
+keywords:
+  - development
+  - workflow
+  - setup
+  - environment
+  - tooling
+  - build
+  - testing
+  - deployment
+order: 4
+icon: DevelopmentIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Prerequisites
+
+Before starting development with Cin7 DSL, ensure you have the following tools installed:
+
+### Required Tools
+
+- **Node.js** (v18 or higher)
+- **pnpm** (v8 or higher) - Package manager
+- **Git** - Version control
+- **VS Code** - Recommended IDE with extensions
+
+### Recommended VS Code Extensions
+
+```json
+{
+  "recommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-json",
+    "shopify.polaris-for-vscode"
+  ]
+}
+```
+
+## Project Setup
+
+### 1. Initialize New Project
+
+```bash
+# Create new Cin7 DSL project
+npx @cin7/create-dsl-app my-app
+cd my-app
+
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+```
+
+### 2. Project Structure
+
+```
+my-app/
+├── src/
+│   ├── components/          # React components
+│   │   ├── common/         # Shared components
+│   │   ├── forms/          # Form components
+│   │   └── grids/          # Data grid components
+│   ├── pages/              # Page components
+│   ├── services/           # API services
+│   ├── stores/             # State management
+│   ├── styles/             # Global styles
+│   ├── types/              # TypeScript types
+│   └── utils/              # Utility functions
+├── public/                 # Static assets
+├── tests/                  # Test files
+├── docs/                   # Project documentation
+└── tools/                  # Build and development tools
+```
+
+### 3. Configuration Files
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@services': resolve(__dirname, 'src/services'),
+      '@stores': resolve(__dirname, 'src/stores'),
+      '@types': resolve(__dirname, 'src/types'),
+      '@utils': resolve(__dirname, 'src/utils'),
+    },
+  },
+  server: {
+    port: 3000,
+    open: true,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+});
+```
+
+```typescript
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@services/*": ["src/services/*"],
+      "@stores/*": ["src/stores/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+## Development Workflow
+
+### 1. Component Development
+
+```tsx
+// src/components/UserCard/UserCard.tsx
+import React from 'react';
+import { Card, Avatar, Text, Stack, Badge } from '@shopify/polaris';
+import { User } from '@types/user';
+
+interface UserCardProps {
+  user: User;
+  onEdit?: (user: User) => void;
+  onDelete?: (user: User) => void;
+}
+
+export const UserCard: React.FC<UserCardProps> = ({ 
+  user, 
+  onEdit, 
+  onDelete 
+}) => {
+  const handleEdit = () => onEdit?.(user);
+  const handleDelete = () => onDelete?.(user);
+
+  return (
+    <Card>
+      <Stack alignment="center" spacing="tight">
+        <Avatar name={user.name} />
+        <Stack.Item fill>
+          <Text variant="headingMd">{user.name}</Text>
+          <Text color="subdued">{user.email}</Text>
+        </Stack.Item>
+        <Badge status={user.isActive ? 'success' : 'critical'}>
+          {user.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      </Stack>
+    </Card>
+  );
+};
+```
+
+### 2. Service Layer Development
+
+```typescript
+// src/services/userService.ts
+import { apiClient } from './apiClient';
+import { User, CreateUserRequest, UpdateUserRequest } from '@types/user';
+
+export class UserService {
+  async getUsers(): Promise<User[]> {
+    const response = await apiClient.get<User[]>('/users');
+    return response.data;
+  }
+
+  async getUser(id: string): Promise<User> {
+    const response = await apiClient.get<User>(`/users/${id}`);
+    return response.data;
+  }
+
+  async createUser(userData: CreateUserRequest): Promise<User> {
+    const response = await apiClient.post<User>('/users', userData);
+    return response.data;
+  }
+
+  async updateUser(id: string, userData: UpdateUserRequest): Promise<User> {
+    const response = await apiClient.put<User>(`/users/${id}`, userData);
+    return response.data;
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await apiClient.delete(`/users/${id}`);
+  }
+}
+
+export const userService = new UserService();
+```
+
+### 3. State Management
+
+```typescript
+// src/stores/userStore.ts
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { User } from '@types/user';
+
+interface UserState {
+  users: User[];
+  selectedUser: User | null;
+  isLoading: boolean;
+  error: string | null;
+  setUsers: (users: User[]) => void;
+  setSelectedUser: (user: User | null) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  addUser: (user: User) => void;
+  updateUser: (user: User) => void;
+  removeUser: (id: string) => void;
+}
+
+export const useUserStore = create<UserState>()(
+  devtools(
+    (set) => ({
+      users: [],
+      selectedUser: null,
+      isLoading: false,
+      error: null,
+      setUsers: (users) => set({ users }),
+      setSelectedUser: (user) => set({ selectedUser: user }),
+      setLoading: (loading) => set({ isLoading: loading }),
+      setError: (error) => set({ error }),
+      addUser: (user) => set((state) => ({ 
+        users: [...state.users, user] 
+      })),
+      updateUser: (user) => set((state) => ({
+        users: state.users.map(u => u.id === user.id ? user : u)
+      })),
+      removeUser: (id) => set((state) => ({
+        users: state.users.filter(u => u.id !== id)
+      })),
+    }),
+    { name: 'user-store' }
+  )
+);
+```
+
+### 4. React Query Integration
+
+```typescript
+// src/hooks/useUsers.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { userService } from '@services/userService';
+import { User, CreateUserRequest, UpdateUserRequest } from '@types/user';
+
+export const useUsers = () => {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: () => userService.getUsers(),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+};
+
+export const useUser = (id: string) => {
+  return useQuery({
+    queryKey: ['user', id],
+    queryFn: () => userService.getUser(id),
+    enabled: !!id,
+  });
+};
+
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (userData: CreateUserRequest) => 
+      userService.createUser(userData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, userData }: { id: string; userData: UpdateUserRequest }) =>
+      userService.updateUser(id, userData),
+    onSuccess: (updatedUser) => {
+      queryClient.setQueryData(['user', updatedUser.id], updatedUser);
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+};
+```
+
+## Build and Development Scripts
+
+### Package.json Scripts
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  }
+}
+```
+
+### Development Commands
+
+```bash
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
+
+# Run tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run E2E tests
+pnpm e2e
+
+# Lint and format code
+pnpm lint
+pnpm format
+
+# Type checking
+pnpm type-check
+```
+
+## Testing Strategy
+
+### Unit Tests with Vitest
+
+```typescript
+// src/components/UserCard/UserCard.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { UserCard } from './UserCard';
+import { User } from '@types/user';
+
+const mockUser: User = {
+  id: '1',
+  name: 'John Doe',
+  email: 'john@example.com',
+  isActive: true,
+  createdAt: new Date(),
+};
+
+describe('UserCard', () => {
+  it('renders user information correctly', () => {
+    render(<UserCard user={mockUser} />);
+    
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('john@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Active')).toBeInTheDocument();
+  });
+
+  it('calls onEdit when edit button is clicked', () => {
+    const handleEdit = vi.fn();
+    render(<UserCard user={mockUser} onEdit={handleEdit} />);
+    
+    fireEvent.click(screen.getByText('Edit'));
+    expect(handleEdit).toHaveBeenCalledWith(mockUser);
+  });
+});
+```
+
+### Integration Tests
+
+```typescript
+// src/pages/UserManagement/UserManagement.test.tsx
+import { render, screen, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserManagement } from './UserManagement';
+import { userService } from '@services/userService';
+
+vi.mock('@services/userService');
+
+describe('UserManagement', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+      },
+    });
+  });
+
+  it('loads and displays users', async () => {
+    const mockUsers = [
+      { id: '1', name: 'John Doe', email: 'john@example.com' },
+      { id: '2', name: 'Jane Smith', email: 'jane@example.com' },
+    ];
+
+    vi.mocked(userService.getUsers).mockResolvedValue(mockUsers);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <UserManagement />
+      </QueryClientProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+      expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+    });
+  });
+});
+```
+
+### End-to-End Tests with Playwright
+
+```typescript
+// tests/e2e/user-management.spec.ts
+import { test, expect } from '@playwright/test';
+
+test.describe('User Management', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/users');
+  });
+
+  test('should create a new user', async ({ page }) => {
+    await page.click('[data-testid="create-user-button"]');
+    await page.fill('[data-testid="name-input"]', 'John Doe');
+    await page.fill('[data-testid="email-input"]', 'john@example.com');
+    await page.click('[data-testid="save-button"]');
+
+    await expect(page.locator('[data-testid="user-list"]')).toContainText('John Doe');
+  });
+
+  test('should edit an existing user', async ({ page }) => {
+    await page.click('[data-testid="edit-user-button"]');
+    await page.fill('[data-testid="name-input"]', 'Updated Name');
+    await page.click('[data-testid="save-button"]');
+
+    await expect(page.locator('[data-testid="user-list"]')).toContainText('Updated Name');
+  });
+});
+```
+
+## Code Quality
+
+### ESLint Configuration
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  root: true,
+  env: { browser: true, es2020: true },
+  extends: [
+    'eslint:recommended',
+    '@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    '@shopify/eslint-plugin',
+  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['react-refresh'],
+  rules: {
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    'jsx-a11y/no-autofocus': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};
+```
+
+### Prettier Configuration
+
+```javascript
+// .prettierrc.js
+module.exports = {
+  semi: true,
+  trailingComma: 'es5',
+  singleQuote: true,
+  printWidth: 80,
+  tabWidth: 2,
+  useTabs: false,
+  endOfLine: 'lf',
+  arrowParens: 'avoid',
+  bracketSpacing: true,
+  jsxBracketSameLine: false,
+  jsxSingleQuote: false,
+  quoteProps: 'as-needed',
+};
+```
+
+## Git Workflow
+
+### Branching Strategy
+
+```bash
+# Feature development
+git checkout -b feature/user-management
+git commit -m "feat: add user management functionality"
+git push origin feature/user-management
+
+# Bug fixes
+git checkout -b bugfix/user-validation
+git commit -m "fix: resolve user validation issues"
+git push origin bugfix/user-validation
+
+# Hotfixes
+git checkout -b hotfix/critical-bug
+git commit -m "hotfix: resolve critical authentication bug"
+git push origin hotfix/critical-bug
+```
+
+### Commit Convention
+
+```bash
+# Format: type(scope): description
+feat(users): add user creation functionality
+fix(auth): resolve login validation issue
+docs(readme): update installation instructions
+style(header): improve responsive design
+refactor(api): optimize user service performance
+test(users): add comprehensive unit tests
+chore(deps): update dependencies
+```
+
+### Pre-commit Hooks
+
+```json
+// .husky/pre-commit
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+pnpm lint-staged
+```
+
+```json
+// package.json
+{
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+}
+```
+
+## Deployment
+
+### Production Build
+
+```bash
+# Build for production
+pnpm build
+
+# Preview production build locally
+pnpm preview
+
+# Analyze bundle size
+pnpm build --analyze
+```
+
+### Environment Configuration
+
+```typescript
+// src/config/environment.ts
+export const config = {
+  apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3001',
+  environment: import.meta.env.MODE,
+  isDevelopment: import.meta.env.DEV,
+  isProduction: import.meta.env.PROD,
+  version: import.meta.env.PACKAGE_VERSION,
+};
+```
+
+### CI/CD Pipeline
+
+```yaml
+# .github/workflows/ci.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+      
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm type-check
+      - run: pnpm lint
+      - run: pnpm test:coverage
+      - run: pnpm e2e
+      - run: pnpm build
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - run: pnpm build
+      - uses: actions/deploy-pages@v2
+        with:
+          artifact: dist
+```
+
+## Performance Optimization
+
+### Code Splitting
+
+```typescript
+// Lazy load components
+const UserManagement = lazy(() => import('./pages/UserManagement'));
+const Reports = lazy(() => import('./pages/Reports'));
+
+// Route-based code splitting
+const AppRoutes = () => (
+  <Routes>
+    <Route path="/users" element={
+      <Suspense fallback={<Spinner />}>
+        <UserManagement />
+      </Suspense>
+    } />
+    <Route path="/reports" element={
+      <Suspense fallback={<Spinner />}>
+        <Reports />
+      </Suspense>
+    } />
+  </Routes>
+);
+```
+
+### Bundle Analysis
+
+```bash
+# Analyze bundle size
+pnpm build --analyze
+
+# Generate bundle report
+pnpm build --report
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Build failures**: Check TypeScript errors and dependency versions
+2. **Hot reload issues**: Clear cache and restart development server
+3. **Import errors**: Verify path aliases and module resolution
+4. **Test failures**: Check test environment configuration
+
+### Debug Configuration
+
+```json
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src"
+    }
+  ]
+}
+```
