@@ -1027,7 +1027,9 @@ function PlaygroundPage() {
     <AppProvider i18n={translations}>
       <PageMeta
         title="Component Playground"
-        description="Interactive playground for experimenting with Cin7 DSL components"
+        description="Interactive playground for experimenting with Cin7 DSL components. Test React components, ExtJS integration, TypeScript patterns, and Vanilla JavaScript in real-time with live preview."
+        keywords={['playground', 'interactive', 'live coding', 'components', 'testing', 'examples', 'ExtJS', 'React', 'TypeScript']}
+        ogType="website"
       />
       <Page
         title="Component Playground"

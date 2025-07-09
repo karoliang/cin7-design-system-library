@@ -9,7 +9,12 @@ function HomePage({}: Props) {
   return (
     <Page>
       <div className={styles.HomePage}>
-        <PageMeta description="Cin7 Design System Language - Combining Shopify Polaris with ExtJS for enterprise applications." />
+        <PageMeta 
+          title="Home"
+          description="Cin7 DSL: Enterprise design system combining Shopify Polaris with ExtJS. Build powerful, accessible applications with TypeScript, Vanilla JS, and comprehensive component libraries."
+          keywords={['home', 'overview', 'getting started', 'introduction']}
+          ogType="website"
+        />
 
         <div className={styles.Hero}>
           <div className={styles.Text}>
