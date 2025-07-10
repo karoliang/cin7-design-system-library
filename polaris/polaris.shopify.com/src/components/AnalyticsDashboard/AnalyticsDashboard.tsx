@@ -105,7 +105,7 @@ export function AnalyticsDashboard() {
     component.usage.toLocaleString(),
     component.copyCount.toLocaleString(),
     <Badge tone="success">
-      {((component.copyCount / component.usage) * 100).toFixed(1)}%
+      {`${((component.copyCount / component.usage) * 100).toFixed(1)}%`}
     </Badge>,
   ]);
 
@@ -124,7 +124,7 @@ export function AnalyticsDashboard() {
     example.copies.toLocaleString(),
     example.resets.toLocaleString(),
     <Badge tone="info">
-      {((example.copies / example.selections) * 100).toFixed(1)}%
+      {`${((example.copies / example.selections) * 100).toFixed(1)}%`}
     </Badge>,
   ]);
 
