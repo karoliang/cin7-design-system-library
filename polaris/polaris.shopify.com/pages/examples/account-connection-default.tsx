@@ -4,7 +4,7 @@ import {withPolarisExample} from '../../src/components/PolarisExampleWrapper';
 
 function AccountConnectionExample() {
   const [connected, setConnected] = useState(false);
-  const accountName = connected ? 'Jane Appleseed' : '';
+  const accountName = connected ? 'john.smith@merchantstore.com' : '';
 
   const handleAction = useCallback(() => {
     setConnected((connected) => !connected);
@@ -14,9 +14,9 @@ function AccountConnectionExample() {
   const details = connected ? 'Account connected' : 'No account connected';
   const terms = connected ? null : (
     <p>
-      By clicking <strong>Connect</strong>, you agree to accept Sample App’s{' '}
-      <Link url="Example App">terms and conditions</Link>. You’ll pay a
-      commission rate of 15% on sales made through Sample App.
+      By clicking <strong>Connect</strong>, you agree to accept Merchant Hub's{' '}
+      <Link url="https://merchanthub.com/terms">terms and conditions</Link>. You'll pay a
+      commission rate of 2.9% on sales made through Merchant Hub.
     </p>
   );
 
@@ -24,7 +24,7 @@ function AccountConnectionExample() {
     <AccountConnection
       accountName={accountName}
       connected={connected}
-      title="Example App"
+      title="Merchant Hub"
       action={{
         content: buttonText,
         onAction: handleAction,

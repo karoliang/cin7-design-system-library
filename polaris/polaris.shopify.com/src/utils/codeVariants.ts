@@ -24133,7 +24133,8238 @@ function MediaCard({
 };
 
 // Map of all component examples
+// Action List Examples
+export const actionListExamples = {
+  'with-destructive-item': {
+    react: `import {Button, Popover, ActionList} from '@shopify/polaris';
+import {ImportIcon, ExportIcon, DeleteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+function ActionListWithDestructiveItem() {
+  const [active, setActive] = useState(true);
+
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      More actions
+    </Button>
+  );
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover
+        active={active}
+        activator={activator}
+        autofocusTarget="first-node"
+        onClose={toggleActive}
+      >
+        <ActionList
+          actionRole="menuitem"
+          sections={[
+            {
+              title: 'File options',
+              items: [
+                {
+                  active: true,
+                  content: 'Import file',
+                  icon: ImportIcon,
+                },
+                {content: 'Export file', icon: ExportIcon},
+                {
+                  destructive: true,
+                  content: 'Delete file',
+                  icon: DeleteIcon,
+                },
+              ],
+            },
+          ]}
+        />
+      </Popover>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'More actions',
+  menu: {
+    items: [{
+      text: 'Import file',
+      iconCls: 'x-fa fa-upload',
+      handler: function() {
+        console.log('Import file clicked');
+      }
+    }, {
+      text: 'Export file', 
+      iconCls: 'x-fa fa-download',
+      handler: function() {
+        console.log('Export file clicked');
+      }
+    }, '-', {
+      text: 'Delete file',
+      iconCls: 'x-fa fa-trash',
+      cls: 'destructive-item',
+      handler: function() {
+        console.log('Delete file clicked');
+      }
+    }]
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-action-list-container">
+  <button class="polaris-button polaris-button--disclosure" id="action-trigger">More actions</button>
+  <div class="polaris-popover" id="action-popover" style="display: none;">
+    <div class="polaris-action-list">
+      <div class="polaris-action-list__section">
+        <h3 class="polaris-action-list__section-title">File options</h3>
+        <ul class="polaris-action-list__items">
+          <li class="polaris-action-list__item polaris-action-list__item--active">
+            <button class="polaris-action-list__button">
+              <span class="polaris-icon">📥</span>
+              Import file
+            </button>
+          </li>
+          <li class="polaris-action-list__item">
+            <button class="polaris-action-list__button">
+              <span class="polaris-icon">📤</span>
+              Export file
+            </button>
+          </li>
+          <li class="polaris-action-list__item polaris-action-list__item--destructive">
+            <button class="polaris-action-list__button">
+              <span class="polaris-icon">🗑️</span>
+              Delete file
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const trigger = document.getElementById('action-trigger');
+const popover = document.getElementById('action-popover');
+
+trigger.addEventListener('click', () => {
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelectorAll('.polaris-action-list__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(e.target.textContent.trim() + ' clicked');
+    popover.style.display = 'none';
+  });
+});
+</script>`,
+    typescript: `import {Button, Popover, ActionList} from '@shopify/polaris';
+import {ImportIcon, ExportIcon, DeleteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+interface ActionListWithDestructiveItemProps {
+  onImport?: () => void;
+  onExport?: () => void;
+  onDelete?: () => void;
+}
+
+function ActionListWithDestructiveItem({
+  onImport,
+  onExport,
+  onDelete
+}: ActionListWithDestructiveItemProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      More actions
+    </Button>
+  );
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover
+        active={active}
+        activator={activator}
+        autofocusTarget="first-node"
+        onClose={toggleActive}
+      >
+        <ActionList
+          actionRole="menuitem"
+          sections={[
+            {
+              title: 'File options',
+              items: [
+                {
+                  active: true,
+                  content: 'Import file',
+                  icon: ImportIcon,
+                  onAction: onImport,
+                },
+                {
+                  content: 'Export file', 
+                  icon: ExportIcon,
+                  onAction: onExport,
+                },
+                {
+                  destructive: true,
+                  content: 'Delete file',
+                  icon: DeleteIcon,
+                  onAction: onDelete,
+                },
+              ],
+            },
+          ]}
+        />
+      </Popover>
+    </div>
+  );
+}`
+  }
+};
+
+// Popover Examples
+export const popoverExamples = {
+  'with-content-and-actions': {
+    react: `import {Button, Popover, ActionList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function PopoverWithContentAndActions() {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = useCallback(
+    () => setPopoverActive((popoverActive) => !popoverActive),
+    [],
+  );
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure>
+      Sales channels
+    </Button>
+  );
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover
+        active={popoverActive}
+        activator={activator}
+        autofocusTarget="first-node"
+        onClose={togglePopoverActive}
+      >
+        <Popover.Pane fixed>
+          <Popover.Section>
+            <p>Available sales channels</p>
+          </Popover.Section>
+        </Popover.Pane>
+        <Popover.Pane>
+          <ActionList
+            actionRole="menuitem"
+            items={[
+              {content: 'Online store'},
+              {content: 'Facebook'},
+              {content: 'Shopify POS'},
+            ]}
+          />
+        </Popover.Pane>
+      </Popover>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Sales channels',
+  menu: {
+    items: [{
+      text: 'Available sales channels',
+      disabled: true,
+      ui: 'header'
+    }, '-', {
+      text: 'Online store',
+      handler: function() {
+        console.log('Online store selected');
+      }
+    }, {
+      text: 'Facebook',
+      handler: function() {
+        console.log('Facebook selected');
+      }
+    }, {
+      text: 'Shopify POS',
+      handler: function() {
+        console.log('Shopify POS selected');
+      }
+    }]
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-popover-container">
+  <button class="polaris-button polaris-button--disclosure" id="popover-trigger">Sales channels</button>
+  <div class="polaris-popover" id="sales-popover" style="display: none;">
+    <div class="polaris-popover__content">
+      <div class="polaris-popover__section">
+        <p>Available sales channels</p>
+      </div>
+      <div class="polaris-action-list">
+        <ul class="polaris-action-list__items">
+          <li class="polaris-action-list__item">
+            <button class="polaris-action-list__button">Online store</button>
+          </li>
+          <li class="polaris-action-list__item">
+            <button class="polaris-action-list__button">Facebook</button>
+          </li>
+          <li class="polaris-action-list__item">
+            <button class="polaris-action-list__button">Shopify POS</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const trigger = document.getElementById('popover-trigger');
+const popover = document.getElementById('sales-popover');
+
+trigger.addEventListener('click', () => {
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelectorAll('.polaris-action-list__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(e.target.textContent + ' selected');
+    popover.style.display = 'none';
+  });
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if (!trigger.contains(e.target) && !popover.contains(e.target)) {
+    popover.style.display = 'none';
+  }
+});
+</script>`,
+    typescript: `import {Button, Popover, ActionList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface PopoverWithContentAndActionsProps {
+  onChannelSelect?: (channel: string) => void;
+}
+
+function PopoverWithContentAndActions({
+  onChannelSelect
+}: PopoverWithContentAndActionsProps): JSX.Element {
+  const [popoverActive, setPopoverActive] = useState<boolean>(false);
+
+  const togglePopoverActive = useCallback(
+    () => setPopoverActive((popoverActive) => !popoverActive),
+    [],
+  );
+
+  const handleChannelSelect = useCallback((channel: string) => {
+    onChannelSelect?.(channel);
+    togglePopoverActive();
+  }, [onChannelSelect, togglePopoverActive]);
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure>
+      Sales channels
+    </Button>
+  );
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover
+        active={popoverActive}
+        activator={activator}
+        autofocusTarget="first-node"
+        onClose={togglePopoverActive}
+      >
+        <Popover.Pane fixed>
+          <Popover.Section>
+            <p>Available sales channels</p>
+          </Popover.Section>
+        </Popover.Pane>
+        <Popover.Pane>
+          <ActionList
+            actionRole="menuitem"
+            items={[
+              {
+                content: 'Online store',
+                onAction: () => handleChannelSelect('Online store')
+              },
+              {
+                content: 'Facebook',
+                onAction: () => handleChannelSelect('Facebook')
+              },
+              {
+                content: 'Shopify POS',
+                onAction: () => handleChannelSelect('Shopify POS')
+              },
+            ]}
+          />
+        </Popover.Pane>
+      </Popover>
+    </div>
+  );
+}`
+  }
+};
+
+// Tooltip Examples  
+export const tooltipExamples = {
+  default: {
+    react: `import {Tooltip, Text} from '@shopify/polaris';
+import React from 'react';
+
+function TooltipDefault() {
+  return (
+    <div style={{padding: '75px 0'}}>
+      <Tooltip active content="This order has shipping labels.">
+        <Text fontWeight="bold" as="span">
+          Order #1001
+        </Text>
+      </Tooltip>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 20,
+  items: [{
+    xtype: 'label',
+    text: 'Order #1001',
+    style: 'font-weight: bold; cursor: pointer;',
+    listeners: {
+      render: function(label) {
+        Ext.tip.QuickTipManager.init();
+        label.getEl().set({
+          'data-qtip': 'This order has shipping labels.'
+        });
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-tooltip-container" style="padding: 75px 0;">
+  <span class="polaris-text polaris-text--bold" 
+        id="tooltip-trigger" 
+        onmouseenter="showTooltip()" 
+        onmouseleave="hideTooltip()">
+    Order #1001
+  </span>
+  <div class="polaris-tooltip" id="tooltip" style="display: none;">
+    This order has shipping labels.
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+function showTooltip() {
+  document.getElementById('tooltip').style.display = 'block';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').style.display = 'none';
+}
+
+// Position tooltip near trigger
+const trigger = document.getElementById('tooltip-trigger');
+const tooltip = document.getElementById('tooltip');
+
+trigger.addEventListener('mouseenter', (e) => {
+  const rect = e.target.getBoundingClientRect();
+  tooltip.style.position = 'absolute';
+  tooltip.style.top = (rect.bottom + 5) + 'px';
+  tooltip.style.left = rect.left + 'px';
+});
+</script>`,
+    typescript: `import {Tooltip, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface TooltipDefaultProps {
+  content?: string;
+  children?: React.ReactNode;
+  active?: boolean;
+}
+
+function TooltipDefault({ 
+  content = "This order has shipping labels.",
+  children,
+  active = true 
+}: TooltipDefaultProps): JSX.Element {
+  return (
+    <div style={{padding: '75px 0'}}>
+      <Tooltip active={active} content={content}>
+        {children || (
+          <Text fontWeight="bold" as="span">
+            Order #1001
+          </Text>
+        )}
+      </Tooltip>
+    </div>
+  );
+}`
+  }
+};
+
+// Navigation Examples
+export const navigationExamples = {
+  default: {
+    react: `import {Frame, Navigation} from '@shopify/polaris';
+import {HomeIcon, OrderIcon, ProductIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function NavigationDefault() {
+  return (
+    <Frame>
+      <Navigation location="/">
+        <Navigation.Section
+          items={[
+            {
+              url: '#',
+              label: 'Home',
+              icon: HomeIcon,
+            },
+            {
+              url: '#',
+              excludePaths: ['#'],
+              label: 'Orders',
+              icon: OrderIcon,
+              badge: '15',
+            },
+            {
+              url: '#',
+              excludePaths: ['#'],
+              label: 'Products',
+              icon: ProductIcon,
+            },
+          ]}
+        />
+      </Navigation>
+    </Frame>
+  );
+}`,
+    extjs: `Ext.create('Ext.tree.Panel', {
+  title: 'Navigation',
+  width: 250,
+  height: 400,
+  rootVisible: false,
+  store: Ext.create('Ext.data.TreeStore', {
+    root: {
+      expanded: true,
+      children: [{
+        text: 'Home',
+        iconCls: 'x-fa fa-home',
+        leaf: true,
+        href: '#'
+      }, {
+        text: 'Orders',
+        iconCls: 'x-fa fa-shopping-cart',
+        leaf: true,
+        href: '#',
+        qtip: '15 orders'
+      }, {
+        text: 'Products',
+        iconCls: 'x-fa fa-cube',
+        leaf: true,
+        href: '#'
+      }]
+    }
+  }),
+  listeners: {
+    itemclick: function(view, record) {
+      if (record.get('href')) {
+        console.log('Navigate to:', record.get('text'));
+      }
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame">
+  <nav class="polaris-navigation">
+    <ul class="polaris-navigation__section">
+      <li class="polaris-navigation__item polaris-navigation__item--active">
+        <a href="#" class="polaris-navigation__link">
+          <span class="polaris-icon">🏠</span>
+          <span class="polaris-navigation__text">Home</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="#" class="polaris-navigation__link">
+          <span class="polaris-icon">📦</span>
+          <span class="polaris-navigation__text">Orders</span>
+          <span class="polaris-badge">15</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="#" class="polaris-navigation__link">
+          <span class="polaris-icon">📋</span>
+          <span class="polaris-navigation__text">Products</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-navigation__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    // Remove active class from all items
+    document.querySelectorAll('.polaris-navigation__item').forEach(item => {
+      item.classList.remove('polaris-navigation__item--active');
+    });
+    
+    // Add active class to clicked item
+    e.currentTarget.parentElement.classList.add('polaris-navigation__item--active');
+    
+    const text = e.currentTarget.querySelector('.polaris-navigation__text').textContent;
+    console.log('Navigate to:', text);
+  });
+});
+</script>`,
+    typescript: `import {Frame, Navigation} from '@shopify/polaris';
+import {HomeIcon, OrderIcon, ProductIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon: React.ComponentType;
+  badge?: string;
+  excludePaths?: string[];
+}
+
+interface NavigationDefaultProps {
+  location?: string;
+  onItemClick?: (item: NavigationItem) => void;
+}
+
+function NavigationDefault({ 
+  location = "/",
+  onItemClick 
+}: NavigationDefaultProps): JSX.Element {
+  const items: NavigationItem[] = [
+    {
+      url: '#',
+      label: 'Home',
+      icon: HomeIcon,
+    },
+    {
+      url: '#',
+      excludePaths: ['#'],
+      label: 'Orders',
+      icon: OrderIcon,
+      badge: '15',
+    },
+    {
+      url: '#',
+      excludePaths: ['#'],
+      label: 'Products',
+      icon: ProductIcon,
+    },
+  ];
+
+  return (
+    <Frame>
+      <Navigation location={location}>
+        <Navigation.Section
+          items={items.map(item => ({
+            ...item,
+            onAction: () => onItemClick?.(item)
+          }))}
+        />
+      </Navigation>
+    </Frame>
+  );
+}`
+  }
+};
+
+// Form Examples
+export const formExamples = {
+  'custom-on-submit': {
+    react: `import {Form, FormLayout, Checkbox, TextField, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function FormCustomOnSubmit() {
+  const [newsletter, setNewsletter] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = useCallback(() => {
+    console.log('Form submitted:', { email, newsletter });
+    setEmail('');
+    setNewsletter(false);
+  }, [email, newsletter]);
+
+  const handleNewsLetterChange = useCallback(
+    (value: boolean) => setNewsletter(value),
+    [],
+  );
+
+  const handleEmailChange = useCallback((value: string) => setEmail(value), []);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <Checkbox
+          label="Sign up for the Polaris newsletter"
+          checked={newsletter}
+          onChange={handleNewsLetterChange}
+        />
+
+        <TextField
+          value={email}
+          onChange={handleEmailChange}
+          label="Email"
+          type="email"
+          autoComplete="email"
+          helpText={
+            <span>
+              We'll use this email address to inform you on future changes to
+              Polaris.
+            </span>
+          }
+        />
+
+        <Button submit>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'Newsletter Signup',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'checkboxfield',
+    fieldLabel: 'Newsletter',
+    boxLabel: 'Sign up for the Polaris newsletter',
+    name: 'newsletter',
+    inputValue: true
+  }, {
+    xtype: 'textfield',
+    fieldLabel: 'Email',
+    name: 'email',
+    vtype: 'email',
+    allowBlank: false,
+    emptyText: 'Enter your email address',
+    helpText: 'We\\'ll use this email address to inform you on future changes to Polaris.'
+  }],
+  buttons: [{
+    text: 'Submit',
+    formBind: true,
+    handler: function() {
+      var form = this.up('form').getForm();
+      if (form.isValid()) {
+        var values = form.getValues();
+        console.log('Form submitted:', values);
+        form.reset();
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<form class="polaris-form" id="newsletter-form">
+  <div class="polaris-form-layout">
+    <div class="polaris-form-layout__item">
+      <label class="polaris-checkbox">
+        <input type="checkbox" class="polaris-checkbox__input" id="newsletter">
+        <span class="polaris-checkbox__label">Sign up for the Polaris newsletter</span>
+      </label>
+    </div>
+    
+    <div class="polaris-form-layout__item">
+      <div class="polaris-text-field">
+        <label class="polaris-text-field__label" for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="polaris-text-field__input" 
+          autocomplete="email"
+          required>
+        <div class="polaris-text-field__help">
+          We'll use this email address to inform you on future changes to Polaris.
+        </div>
+      </div>
+    </div>
+    
+    <div class="polaris-form-layout__item">
+      <button type="submit" class="polaris-button polaris-button--primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+<script>
+// JavaScript behavior
+document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData(e.target);
+  const email = document.getElementById('email').value;
+  const newsletter = document.getElementById('newsletter').checked;
+  
+  console.log('Form submitted:', { email, newsletter });
+  
+  // Reset form
+  e.target.reset();
+});
+</script>`,
+    typescript: `import {Form, FormLayout, Checkbox, TextField, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface FormData {
+  email: string;
+  newsletter: boolean;
+}
+
+interface FormCustomOnSubmitProps {
+  onSubmit?: (data: FormData) => void;
+  initialEmail?: string;
+  initialNewsletter?: boolean;
+}
+
+function FormCustomOnSubmit({
+  onSubmit,
+  initialEmail = '',
+  initialNewsletter = false
+}: FormCustomOnSubmitProps): JSX.Element {
+  const [newsletter, setNewsletter] = useState<boolean>(initialNewsletter);
+  const [email, setEmail] = useState<string>(initialEmail);
+
+  const handleSubmit = useCallback(() => {
+    const formData: FormData = { email, newsletter };
+    onSubmit?.(formData);
+    setEmail('');
+    setNewsletter(false);
+  }, [email, newsletter, onSubmit]);
+
+  const handleNewsLetterChange = useCallback(
+    (value: boolean) => setNewsletter(value),
+    [],
+  );
+
+  const handleEmailChange = useCallback((value: string) => setEmail(value), []);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <Checkbox
+          label="Sign up for the Polaris newsletter"
+          checked={newsletter}
+          onChange={handleNewsLetterChange}
+        />
+
+        <TextField
+          value={email}
+          onChange={handleEmailChange}
+          label="Email"
+          type="email"
+          autoComplete="email"
+          helpText={
+            <span>
+              We'll use this email address to inform you on future changes to
+              Polaris.
+            </span>
+          }
+        />
+
+        <Button submit>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}`
+  }
+};
+
+// Autocomplete Examples
+export const autocompleteExamples = {
+  default: {
+    react: `import {Autocomplete, Icon} from '@shopify/polaris';
+import {SearchIcon} from '@shopify/polaris-icons';
+import {useState, useCallback, useMemo} from 'react';
+
+function AutocompleteDefault() {
+  const deselectedOptions = useMemo(
+    () => [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ],
+    [],
+  );
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState(deselectedOptions);
+
+  const updateText = useCallback(
+    (value: string) => {
+      setInputValue(value);
+
+      if (value === '') {
+        setOptions(deselectedOptions);
+        return;
+      }
+
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      setOptions(resultOptions);
+    },
+    [deselectedOptions],
+  );
+
+  const updateSelection = useCallback(
+    (selected: string[]) => {
+      const selectedValue = selected.map((selectedItem) => {
+        const matchedOption = options.find((option) => {
+          return option.value.match(selectedItem);
+        });
+        return matchedOption && matchedOption.label;
+      });
+
+      setSelectedOptions(selected);
+      setInputValue(selectedValue[0] || '');
+    },
+    [options],
+  );
+
+  const textField = (
+    <Autocomplete.TextField
+      onChange={updateText}
+      label="Tags"
+      value={inputValue}
+      prefix={<Icon source={SearchIcon} tone="base" />}
+      placeholder="Search"
+      autoComplete="off"
+    />
+  );
+
+  return (
+    <div style={{height: '225px'}}>
+      <Autocomplete
+        options={options}
+        selected={selectedOptions}
+        onSelect={updateSelection}
+        textField={textField}
+      />
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Tags',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label'],
+    data: [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'}
+    ]
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  typeAhead: true,
+  queryMode: 'local',
+  forceSelection: false,
+  emptyText: 'Search tags...',
+  width: 300,
+  listeners: {
+    select: function(combo, record) {
+      console.log('Selected:', record.get('label'));
+    },
+    change: function(field, newValue) {
+      console.log('Input changed:', newValue);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-autocomplete" style="height: 225px;">
+  <div class="polaris-text-field">
+    <label class="polaris-text-field__label" for="autocomplete-input">Tags</label>
+    <div class="polaris-text-field__input-wrapper">
+      <span class="polaris-text-field__prefix">🔍</span>
+      <input 
+        type="text" 
+        id="autocomplete-input" 
+        class="polaris-text-field__input" 
+        placeholder="Search"
+        autocomplete="off">
+    </div>
+  </div>
+  
+  <div class="polaris-autocomplete__results" id="autocomplete-results" style="display: none;">
+    <ul class="polaris-option-list">
+      <!-- Options will be populated by JavaScript -->
+    </ul>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const options = [
+  {value: 'rustic', label: 'Rustic'},
+  {value: 'antique', label: 'Antique'},
+  {value: 'vinyl', label: 'Vinyl'},
+  {value: 'vintage', label: 'Vintage'},
+  {value: 'refurbished', label: 'Refurbished'}
+];
+
+const input = document.getElementById('autocomplete-input');
+const results = document.getElementById('autocomplete-results');
+const optionsList = results.querySelector('.polaris-option-list');
+
+input.addEventListener('input', (e) => {
+  const value = e.target.value.toLowerCase();
+  
+  if (value === '') {
+    results.style.display = 'none';
+    return;
+  }
+  
+  const filtered = options.filter(option => 
+    option.label.toLowerCase().includes(value)
+  );
+  
+  optionsList.innerHTML = filtered.map(option => 
+    '<li class="polaris-option-list__item" data-value="' + option.value + '">' + option.label + '</li>'
+  ).join('');
+  
+  results.style.display = filtered.length ? 'block' : 'none';
+});
+
+// Handle option selection
+optionsList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('polaris-option-list__item')) {
+    input.value = e.target.textContent;
+    results.style.display = 'none';
+    console.log('Selected:', e.target.textContent);
+  }
+});
+</script>`,
+    typescript: `import {Autocomplete, Icon} from '@shopify/polaris';
+import {SearchIcon} from '@shopify/polaris-icons';
+import {useState, useCallback, useMemo} from 'react';
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface AutocompleteDefaultProps {
+  options?: Option[];
+  onSelect?: (selected: string[]) => void;
+  placeholder?: string;
+  label?: string;
+}
+
+function AutocompleteDefault({
+  options: providedOptions,
+  onSelect,
+  placeholder = "Search",
+  label = "Tags"
+}: AutocompleteDefaultProps): JSX.Element {
+  const deselectedOptions = useMemo(
+    () => providedOptions || [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ],
+    [providedOptions],
+  );
+  
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [options, setOptions] = useState<Option[]>(deselectedOptions);
+
+  const updateText = useCallback(
+    (value: string) => {
+      setInputValue(value);
+
+      if (value === '') {
+        setOptions(deselectedOptions);
+        return;
+      }
+
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      setOptions(resultOptions);
+    },
+    [deselectedOptions],
+  );
+
+  const updateSelection = useCallback(
+    (selected: string[]) => {
+      const selectedValue = selected.map((selectedItem) => {
+        const matchedOption = options.find((option) => {
+          return option.value.match(selectedItem);
+        });
+        return matchedOption && matchedOption.label;
+      });
+
+      setSelectedOptions(selected);
+      setInputValue(selectedValue[0] || '');
+      onSelect?.(selected);
+    },
+    [options, onSelect],
+  );
+
+  const textField = (
+    <Autocomplete.TextField
+      onChange={updateText}
+      label={label}
+      value={inputValue}
+      prefix={<Icon source={SearchIcon} tone="base" />}
+      placeholder={placeholder}
+      autoComplete="off"
+    />
+  );
+
+  return (
+    <div style={{height: '225px'}}>
+      <Autocomplete
+        options={options}
+        selected={selectedOptions}
+        onSelect={updateSelection}
+        textField={textField}
+      />
+    </div>
+  );
+}`
+  }
+};
+
+// Loading Examples
+export const loadingExamples = {
+  default: {
+    react: `import {Frame, Loading} from '@shopify/polaris';
+import React from 'react';
+
+function LoadingDefault() {
+  return (
+    <div style={{height: '100px'}}>
+      <Frame>
+        <Loading />
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Loading Example',
+  width: 300,
+  height: 100,
+  html: '<div style="text-align: center; padding: 20px;">Loading...</div>',
+  listeners: {
+    afterrender: function(panel) {
+      panel.setLoading(true);
+      setTimeout(function() {
+        panel.setLoading(false);
+      }, 3000);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame" style="height: 100px;">
+  <div class="polaris-loading">
+    <div class="polaris-loading__spinner"></div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+console.log('Loading component displayed');
+</script>`,
+    typescript: `import {Frame, Loading} from '@shopify/polaris';
+import React from 'react';
+
+interface LoadingDefaultProps {
+  height?: string;
+}
+
+function LoadingDefault({ height = '100px' }: LoadingDefaultProps): JSX.Element {
+  return (
+    <div style={{height}}>
+      <Frame>
+        <Loading />
+      </Frame>
+    </div>
+  );
+}`
+  }
+};
+
+// Link Examples
+export const linkExamples = {
+  default: {
+    react: `import {Link} from '@shopify/polaris';
+import React from 'react';
+
+function LinkDefault() {
+  return <Link url="https://help.shopify.com/manual">fulfilling orders</Link>;
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  html: '<a href="https://help.shopify.com/manual" target="_blank" class="polaris-link">fulfilling orders</a>',
+  listeners: {
+    afterrender: function(container) {
+      container.getEl().down('a').on('click', function(e, target) {
+        console.log('Link clicked:', target.href);
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<a href="https://help.shopify.com/manual" class="polaris-link" target="_blank">fulfilling orders</a>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-link').addEventListener('click', (e) => {
+  console.log('Link clicked:', e.target.href);
+});
+</script>`,
+    typescript: `import {Link} from '@shopify/polaris';
+import React from 'react';
+
+interface LinkDefaultProps {
+  url?: string;
+  children?: React.ReactNode;
+  external?: boolean;
+  onClick?: () => void;
+}
+
+function LinkDefault({ 
+  url = "https://help.shopify.com/manual",
+  children = "fulfilling orders",
+  external = false,
+  onClick
+}: LinkDefaultProps): JSX.Element {
+  return (
+    <Link 
+      url={url} 
+      external={external}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}`
+  }
+};
+
+// Tag Examples  
+export const tagExamples = {
+  default: {
+    react: `import {Tag} from '@shopify/polaris';
+import {useState} from 'react';
+
+function TagDefault() {
+  const [tagActive, setTagActive] = useState(true);
+
+  return tagActive ? (
+    <Tag onRemove={() => setTagActive(false)}>
+      VIP Customer
+    </Tag>
+  ) : null;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 10,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-tag">VIP Customer <button class="polaris-tag__remove">×</button></span>',
+    listeners: {
+      afterrender: function(cmp) {
+        cmp.getEl().down('.polaris-tag__remove').on('click', function() {
+          cmp.getEl().down('.polaris-tag').setDisplayed(false);
+          console.log('Tag removed');
+        });
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<span class="polaris-tag" id="vip-tag">
+  VIP Customer
+  <button class="polaris-tag__remove" onclick="removeTag()">×</button>
+</span>
+
+<script>
+// JavaScript behavior
+function removeTag() {
+  document.getElementById('vip-tag').style.display = 'none';
+  console.log('Tag removed');
+}
+</script>`,
+    typescript: `import {Tag} from '@shopify/polaris';
+import {useState} from 'react';
+
+interface TagDefaultProps {
+  children?: React.ReactNode;
+  onRemove?: () => void;
+  disabled?: boolean;
+}
+
+function TagDefault({ 
+  children = "VIP Customer",
+  onRemove,
+  disabled = false 
+}: TagDefaultProps): JSX.Element {
+  const [tagActive, setTagActive] = useState<boolean>(true);
+
+  const handleRemove = () => {
+    setTagActive(false);
+    onRemove?.();
+  };
+
+  return tagActive ? (
+    <Tag onRemove={handleRemove} disabled={disabled}>
+      {children}
+    </Tag>
+  ) : null;
+}`
+  }
+};
+
+// Pagination Examples
+export const paginationExamples = {
+  default: {
+    react: `import {Pagination} from '@shopify/polaris';
+import React from 'react';
+
+function PaginationDefault() {
+  return (
+    <Pagination
+      hasPrevious
+      onPrevious={() => {
+        console.log('Previous page');
+      }}
+      hasNext
+      onNext={() => {
+        console.log('Next page');
+      }}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Paging', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['name'],
+    data: new Array(100).fill(0).map((_, i) => ({name: 'Item ' + (i + 1)})),
+    pageSize: 10
+  }),
+  displayInfo: true,
+  displayMsg: 'Displaying items {0} - {1} of {2}',
+  emptyMsg: 'No items to display',
+  listeners: {
+    beforechange: function(paging, page) {
+      console.log('Navigating to page:', page);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-pagination">
+  <button class="polaris-pagination__button" id="prev-button">
+    <span aria-hidden="true">‹</span>
+    Previous
+  </button>
+  <button class="polaris-pagination__button" id="next-button">
+    Next
+    <span aria-hidden="true">›</span>
+  </button>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('prev-button').addEventListener('click', () => {
+  console.log('Previous page');
+});
+
+document.getElementById('next-button').addEventListener('click', () => {
+  console.log('Next page');
+});
+</script>`,
+    typescript: `import {Pagination} from '@shopify/polaris';
+import React from 'react';
+
+interface PaginationDefaultProps {
+  hasPrevious?: boolean;
+  hasNext?: boolean;
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+function PaginationDefault({
+  hasPrevious = true,
+  hasNext = true,
+  onPrevious,
+  onNext
+}: PaginationDefaultProps): JSX.Element {
+  const handlePrevious = () => {
+    console.log('Previous page');
+    onPrevious?.();
+  };
+
+  const handleNext = () => {
+    console.log('Next page');  
+    onNext?.();
+  };
+
+  return (
+    <Pagination
+      hasPrevious={hasPrevious}
+      onPrevious={handlePrevious}
+      hasNext={hasNext}
+      onNext={handleNext}
+    />
+  );
+}`
+  }
+};
+
+// Toast Examples
+export const toastExamples = {
+  default: {
+    react: `import {Toast, Frame, Page, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ToastDefault() {
+  const [active, setActive] = useState(false);
+
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  const toastMarkup = active ? (
+    <Toast content="Message sent" onDismiss={toggleActive} />
+  ) : null;
+
+  return (
+    <div style={{height: '250px'}}>
+      <Frame>
+        <Page title="Toast example">
+          <Button onClick={toggleActive}>Show Toast</Button>
+          {toastMarkup}
+        </Page>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Toast Example',
+  bodyPadding: 20,
+  items: [{
+    xtype: 'button',
+    text: 'Show Toast',
+    handler: function() {
+      Ext.toast({
+        html: 'Message sent',
+        title: 'Success',
+        align: 't',
+        slideInDuration: 400,
+        hideDuration: 1000,
+        autoCloseDelay: 3000
+      });
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div style="height: 250px;">
+  <div class="polaris-page">
+    <h1 class="polaris-page__title">Toast example</h1>
+    <button class="polaris-button polaris-button--primary" id="show-toast">Show Toast</button>
+  </div>
+  
+  <div class="polaris-toast" id="toast" style="display: none;">
+    <div class="polaris-toast__content">
+      <span>Message sent</span>
+      <button class="polaris-toast__dismiss" id="dismiss-toast">×</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const showButton = document.getElementById('show-toast');
+const toast = document.getElementById('toast');
+const dismissButton = document.getElementById('dismiss-toast');
+
+showButton.addEventListener('click', () => {
+  toast.style.display = 'block';
+  
+  // Auto dismiss after 3 seconds
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 3000);
+});
+
+dismissButton.addEventListener('click', () => {
+  toast.style.display = 'none';
+});
+</script>`,
+    typescript: `import {Toast, Frame, Page, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ToastDefaultProps {
+  content?: string;
+  duration?: number;
+  onDismiss?: () => void;
+}
+
+function ToastDefault({
+  content = "Message sent",
+  duration = 3000,
+  onDismiss
+}: ToastDefaultProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+
+  const toggleActive = useCallback(() => {
+    setActive((active) => !active);
+    onDismiss?.();
+  }, [onDismiss]);
+
+  const showToast = useCallback(() => {
+    setActive(true);
+    
+    // Auto dismiss after duration
+    setTimeout(() => {
+      setActive(false);
+      onDismiss?.();
+    }, duration);
+  }, [duration, onDismiss]);
+
+  const toastMarkup = active ? (
+    <Toast content={content} onDismiss={toggleActive} />
+  ) : null;
+
+  return (
+    <div style={{height: '250px'}}>
+      <Frame>
+        <Page title="Toast example">
+          <Button onClick={showToast}>Show Toast</Button>
+          {toastMarkup}
+        </Page>
+      </Frame>
+    </div>
+  );
+}`
+  }
+};
+
+// Sheet Examples
+export const sheetExamples = {
+  default: {
+    react: `import {
+  List,
+  Button,
+  Page,
+  LegacyCard,
+  Sheet,
+  Scrollable,
+  ChoiceList,
+  Text,
+} from '@shopify/polaris';
+import {XIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+function SheetDefault() {
+  const [sheetActive, setSheetActive] = useState(false);
+  const [salesChannels] = useState([
+    {value: 'onlineStore', label: 'Online Store'},
+    {value: 'facebook', label: 'Facebook'},
+    {value: 'googleShopping', label: 'Google shopping'},
+    {value: 'facebookMarketing', label: 'Facebook Marketing'},
+  ]);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const toggleSheetActive = useCallback(
+    () => setSheetActive((sheetActive) => !sheetActive),
+    [],
+  );
+  
+  const handleSelectedChange = useCallback(
+    (value: string[]) => setSelected(value),
+    [],
+  );
+
+  const selectedSalesChannels = selected.map(selection => 
+    salesChannels.find(channel => channel.value === selection)
+  ).filter(Boolean);
+
+  const hasSelectedSalesChannels = selectedSalesChannels.length > 0;
+
+  const salesChannelsCardMarkup = hasSelectedSalesChannels ? (
+    <List>
+      {selectedSalesChannels.map((channel, index) => (
+        <List.Item key={index}>{channel!.label}</List.Item>
+      ))}
+    </List>
+  ) : (
+    <div style={{
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+    }}>
+      <p>No sales channels selected</p>
+      <Button onClick={toggleSheetActive}>Manage sales channels</Button>
+    </div>
+  );
+
+  return (
+    <Page narrowWidth>
+      <LegacyCard
+        sectioned
+        subdued
+        title="Product availability"
+        actions={hasSelectedSalesChannels ? [{
+          onAction: toggleSheetActive,
+          content: 'Manage sales channels',
+        }] : undefined}
+      >
+        {salesChannelsCardMarkup}
+      </LegacyCard>
+      <Sheet
+        open={sheetActive}
+        onClose={toggleSheetActive}
+        accessibilityLabel="Manage sales channels"
+      >
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}>
+          <div style={{
+            alignItems: 'center',
+            borderBottom: '1px solid #DFE3E8',
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '1rem',
+            width: '100%',
+          }}>
+            <Text variant="headingMd" as="h2">
+              Manage sales channels
+            </Text>
+            <Button
+              accessibilityLabel="Cancel"
+              icon={XIcon}
+              onClick={toggleSheetActive}
+              variant="plain"
+            />
+          </div>
+          <Scrollable style={{padding: '1rem', height: '100%'}}>
+            <ChoiceList
+              title="Select a sales channel"
+              name="salesChannelsList"
+              choices={salesChannels}
+              selected={selected}
+              titleHidden
+              allowMultiple
+              onChange={handleSelectedChange}
+            />
+          </Scrollable>
+          <div style={{
+            alignItems: 'center',
+            borderTop: '1px solid #DFE3E8',
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '1rem',
+            width: '100%',
+          }}>
+            <Button onClick={toggleSheetActive}>Cancel</Button>
+            <Button variant="primary" onClick={toggleSheetActive}>
+              Done
+            </Button>
+          </div>
+        </div>
+      </Sheet>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'Manage Sales Channels',
+  modal: true,
+  width: 400,
+  height: 500,
+  layout: 'border',
+  items: [{
+    region: 'center',
+    xtype: 'form',
+    bodyPadding: 20,
+    items: [{
+      xtype: 'checkboxgroup',
+      fieldLabel: 'Sales Channels',
+      columns: 1,
+      items: [{
+        boxLabel: 'Online Store',
+        name: 'channels',
+        inputValue: 'onlineStore'
+      }, {
+        boxLabel: 'Facebook',
+        name: 'channels',
+        inputValue: 'facebook'
+      }, {
+        boxLabel: 'Google Shopping',
+        name: 'channels',
+        inputValue: 'googleShopping'
+      }, {
+        boxLabel: 'Facebook Marketing',
+        name: 'channels',
+        inputValue: 'facebookMarketing'
+      }]
+    }]
+  }],
+  buttons: [{
+    text: 'Cancel',
+    handler: function() {
+      this.up('window').close();
+    }
+  }, {
+    text: 'Done',
+    handler: function() {
+      var form = this.up('window').down('form');
+      var values = form.getValues();
+      console.log('Selected channels:', values.channels);
+      this.up('window').close();
+    }
+  }]
+}).show();`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-card">
+    <div class="polaris-card__header">
+      <h3>Product availability</h3>
+      <button class="polaris-button" id="manage-channels">Manage sales channels</button>
+    </div>
+    <div class="polaris-card__content" id="selected-channels">
+      <p>No sales channels selected</p>
+    </div>
+  </div>
+</div>
+
+<!-- Sheet Overlay -->
+<div class="polaris-sheet" id="sheet-overlay" style="display: none;">
+  <div class="polaris-sheet__content">
+    <div class="polaris-sheet__header">
+      <h2>Manage sales channels</h2>
+      <button class="polaris-button polaris-button--plain" id="close-sheet">×</button>
+    </div>
+    <div class="polaris-sheet__body">
+      <div class="polaris-choice-list">
+        <label class="polaris-choice">
+          <input type="checkbox" value="onlineStore"> Online Store
+        </label>
+        <label class="polaris-choice">
+          <input type="checkbox" value="facebook"> Facebook
+        </label>
+        <label class="polaris-choice">
+          <input type="checkbox" value="googleShopping"> Google Shopping
+        </label>
+        <label class="polaris-choice">
+          <input type="checkbox" value="facebookMarketing"> Facebook Marketing
+        </label>
+      </div>
+    </div>
+    <div class="polaris-sheet__footer">
+      <button class="polaris-button" id="cancel-sheet">Cancel</button>
+      <button class="polaris-button polaris-button--primary" id="done-sheet">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const manageButton = document.getElementById('manage-channels');
+const sheet = document.getElementById('sheet-overlay');
+const closeButton = document.getElementById('close-sheet');
+const cancelButton = document.getElementById('cancel-sheet');
+const doneButton = document.getElementById('done-sheet');
+const selectedChannelsDiv = document.getElementById('selected-channels');
+
+manageButton.addEventListener('click', () => {
+  sheet.style.display = 'block';
+});
+
+[closeButton, cancelButton].forEach(button => {
+  button.addEventListener('click', () => {
+    sheet.style.display = 'none';
+  });
+});
+
+doneButton.addEventListener('click', () => {
+  const selected = Array.from(document.querySelectorAll('.polaris-choice input:checked'))
+    .map(input => input.nextSibling.textContent.trim());
+  
+  if (selected.length > 0) {
+    selectedChannelsDiv.innerHTML = '<ul>' + selected.map(channel => '<li>' + channel + '</li>').join('') + '</ul>';
+  } else {
+    selectedChannelsDiv.innerHTML = '<p>No sales channels selected</p>';
+  }
+  
+  sheet.style.display = 'none';
+});
+</script>`,
+    typescript: `import {
+  List,
+  Button,
+  Page,
+  LegacyCard,
+  Sheet,
+  Scrollable,
+  ChoiceList,
+  Text,
+} from '@shopify/polaris';
+import {XIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+interface SalesChannel {
+  value: string;
+  label: string;
+}
+
+interface SheetDefaultProps {
+  channels?: SalesChannel[];
+  onSelectionChange?: (selected: string[]) => void;
+}
+
+function SheetDefault({
+  channels = [
+    {value: 'onlineStore', label: 'Online Store'},
+    {value: 'facebook', label: 'Facebook'},
+    {value: 'googleShopping', label: 'Google shopping'},
+    {value: 'facebookMarketing', label: 'Facebook Marketing'},
+  ],
+  onSelectionChange
+}: SheetDefaultProps): JSX.Element {
+  const [sheetActive, setSheetActive] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const toggleSheetActive = useCallback(
+    () => setSheetActive((sheetActive) => !sheetActive),
+    [],
+  );
+  
+  const handleSelectedChange = useCallback(
+    (value: string[]) => {
+      setSelected(value);
+      onSelectionChange?.(value);
+    },
+    [onSelectionChange],
+  );
+
+  const selectedSalesChannels = selected.map(selection => 
+    channels.find(channel => channel.value === selection)
+  ).filter((channel): channel is SalesChannel => channel !== undefined);
+
+  const hasSelectedSalesChannels = selectedSalesChannels.length > 0;
+
+  return (
+    <Page narrowWidth>
+      <LegacyCard
+        sectioned
+        subdued
+        title="Product availability"
+        actions={hasSelectedSalesChannels ? [{
+          onAction: toggleSheetActive,
+          content: 'Manage sales channels',
+        }] : undefined}
+      >
+        {hasSelectedSalesChannels ? (
+          <List>
+            {selectedSalesChannels.map((channel, index) => (
+              <List.Item key={index}>{channel.label}</List.Item>
+            ))}
+          </List>
+        ) : (
+          <div style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}>
+            <p>No sales channels selected</p>
+            <Button onClick={toggleSheetActive}>Manage sales channels</Button>
+          </div>
+        )}
+      </LegacyCard>
+      <Sheet
+        open={sheetActive}
+        onClose={toggleSheetActive}
+        accessibilityLabel="Manage sales channels"
+      >
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }}>
+          <div style={{
+            alignItems: 'center',
+            borderBottom: '1px solid #DFE3E8',
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '1rem',
+            width: '100%',
+          }}>
+            <Text variant="headingMd" as="h2">
+              Manage sales channels
+            </Text>
+            <Button
+              accessibilityLabel="Cancel"
+              icon={XIcon}
+              onClick={toggleSheetActive}
+              variant="plain"
+            />
+          </div>
+          <Scrollable style={{padding: '1rem', height: '100%'}}>
+            <ChoiceList
+              title="Select a sales channel"
+              name="salesChannelsList"
+              choices={channels}
+              selected={selected}
+              titleHidden
+              allowMultiple
+              onChange={handleSelectedChange}
+            />
+          </Scrollable>
+          <div style={{
+            alignItems: 'center',
+            borderTop: '1px solid #DFE3E8',
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '1rem',
+            width: '100%',
+          }}>
+            <Button onClick={toggleSheetActive}>Cancel</Button>
+            <Button variant="primary" onClick={toggleSheetActive}>
+              Done
+            </Button>
+          </div>
+        </div>
+      </Sheet>
+    </Page>
+  );
+}`
+  }
+};
+
+// Choice List Examples
+export const choiceListExamples = {
+  'with-multi-choice': {
+    react: `import {ChoiceList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ChoiceListWithMultiChoice() {
+  const [selected, setSelected] = useState<string[]>(['shipping']);
+
+  const handleChange = useCallback((value: string[]) => setSelected(value), []);
+
+  return (
+    <ChoiceList
+      allowMultiple
+      title="While the customer is checking out"
+      choices={[
+        {
+          label: 'Use the shipping address as the billing address by default',
+          value: 'shipping',
+          helpText:
+            'Reduces the number of fields required to check out. The billing address can still be edited.',
+        },
+        {
+          label: 'Require a confirmation step',
+          value: 'confirmation',
+          helpText:
+            'Customers must review their order details before purchasing.',
+        },
+      ]}
+      selected={selected}
+      onChange={handleChange}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'While the customer is checking out',
+  bodyPadding: 20,
+  width: 500,
+  items: [{
+    xtype: 'checkboxgroup',
+    fieldLabel: 'Checkout Options',
+    columns: 1,
+    items: [{
+      boxLabel: 'Use the shipping address as the billing address by default',
+      name: 'options',
+      inputValue: 'shipping',
+      checked: true
+    }, {
+      boxLabel: 'Require a confirmation step',  
+      name: 'options',
+      inputValue: 'confirmation'
+    }],
+    listeners: {
+      change: function(checkboxgroup, value) {
+        console.log('Selected options:', value.options);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-choice-list">
+  <fieldset class="polaris-choice-list__fieldset">
+    <legend class="polaris-choice-list__title">While the customer is checking out</legend>
+    
+    <div class="polaris-choice-list__choices">
+      <label class="polaris-choice polaris-choice--checkbox">
+        <input 
+          type="checkbox" 
+          class="polaris-choice__input" 
+          name="checkout-options" 
+          value="shipping"
+          checked>
+        <span class="polaris-choice__control"></span>
+        <span class="polaris-choice__label">
+          Use the shipping address as the billing address by default
+          <div class="polaris-choice__help-text">
+            Reduces the number of fields required to check out. The billing address can still be edited.
+          </div>
+        </span>
+      </label>
+      
+      <label class="polaris-choice polaris-choice--checkbox">
+        <input 
+          type="checkbox" 
+          class="polaris-choice__input" 
+          name="checkout-options" 
+          value="confirmation">
+        <span class="polaris-choice__control"></span>
+        <span class="polaris-choice__label">
+          Require a confirmation step
+          <div class="polaris-choice__help-text">
+            Customers must review their order details before purchasing.
+          </div>
+        </span>
+      </label>
+    </div>
+  </fieldset>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('input[name="checkout-options"]').forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const selected = Array.from(document.querySelectorAll('input[name="checkout-options"]:checked'))
+      .map(input => input.value);
+    console.log('Selected options:', selected);
+  });
+});
+</script>`,
+    typescript: `import {ChoiceList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface Choice {
+  label: string;
+  value: string;
+  helpText?: string;
+}
+
+interface ChoiceListWithMultiChoiceProps {
+  title?: string;
+  choices?: Choice[];
+  initialSelected?: string[];
+  onChange?: (selected: string[]) => void;
+}
+
+function ChoiceListWithMultiChoice({
+  title = "While the customer is checking out",
+  choices = [
+    {
+      label: 'Use the shipping address as the billing address by default',
+      value: 'shipping',
+      helpText:
+        'Reduces the number of fields required to check out. The billing address can still be edited.',
+    },
+    {
+      label: 'Require a confirmation step',
+      value: 'confirmation',
+      helpText:
+        'Customers must review their order details before purchasing.',
+    },
+  ],
+  initialSelected = ['shipping'],
+  onChange
+}: ChoiceListWithMultiChoiceProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(initialSelected);
+
+  const handleChange = useCallback((value: string[]) => {
+    setSelected(value);
+    onChange?.(value);
+  }, [onChange]);
+
+  return (
+    <ChoiceList
+      allowMultiple
+      title={title}
+      choices={choices}
+      selected={selected}
+      onChange={handleChange}
+    />
+  );
+}`
+  }
+};
+
+// Filters Examples
+export const filtersExamples = {
+  'with-resource-list': {
+    react: `import {
+  ChoiceList,
+  TextField,
+  RangeSlider,
+  LegacyCard,
+  ResourceList,
+  Filters,
+  Avatar,
+  Text,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function FiltersWithResourceList() {
+  const [accountStatus, setAccountStatus] = useState<string[]>([]);
+  const [taggedWith, setTaggedWith] = useState<string>('');
+  const [queryValue, setQueryValue] = useState<string>('');
+
+  const handleAccountStatusChange = useCallback(
+    (value: string[]) => setAccountStatus(value),
+    [],
+  );
+  const handleTaggedWithChange = useCallback(
+    (value: string) => setTaggedWith(value),
+    [],
+  );
+  const handleFiltersQueryChange = useCallback(
+    (value: string) => setQueryValue(value),
+    [],
+  );
+  const handleFiltersClearAll = useCallback(() => {
+    setAccountStatus([]);
+    setTaggedWith('');
+    setQueryValue('');
+  }, []);
+
+  const filters = [
+    {
+      key: 'accountStatus',
+      label: 'Account status',
+      filter: (
+        <ChoiceList
+          title="Account status"
+          titleHidden
+          choices={[
+            {label: 'Enabled', value: 'enabled'},
+            {label: 'Not invited', value: 'not invited'},
+            {label: 'Invited', value: 'invited'},
+            {label: 'Declined', value: 'declined'},
+          ]}
+          selected={accountStatus}
+          onChange={handleAccountStatusChange}
+          allowMultiple
+        />
+      ),
+      shortcut: true,
+    },
+    {
+      key: 'taggedWith',
+      label: 'Tagged with',
+      filter: (
+        <TextField
+          label="Tagged with"
+          value={taggedWith}
+          onChange={handleTaggedWithChange}
+          autoComplete="off"
+          labelHidden
+        />
+      ),
+      shortcut: true,
+    },
+  ];
+
+  const appliedFilters = [];
+  if (accountStatus.length > 0) {
+    appliedFilters.push({
+      key: 'accountStatus',
+      label: 'Account Status: ' + accountStatus.join(', '),
+      onRemove: () => setAccountStatus([]),
+    });
+  }
+  if (taggedWith) {
+    appliedFilters.push({
+      key: 'taggedWith',
+      label: 'Tagged with: ' + taggedWith,
+      onRemove: () => setTaggedWith(''),
+    });
+  }
+
+  return (
+    <div style={{height: '568px'}}>
+      <LegacyCard>
+        <ResourceList
+          resourceName={{singular: 'customer', plural: 'customers'}}
+          filterControl={
+            <Filters
+              queryValue={queryValue}
+              filters={filters}
+              appliedFilters={appliedFilters}
+              onQueryChange={handleFiltersQueryChange}
+              onQueryClear={() => setQueryValue('')}
+              onClearAll={handleFiltersClearAll}
+            />
+          }
+          flushFilters
+          items={[
+            {
+              id: '341',
+              url: '#',
+              name: 'Mae Jemison',
+              location: 'Decatur, USA',
+            },
+            {
+              id: '256',
+              url: '#',
+              name: 'Ellen Ochoa',
+              location: 'Los Angeles, USA',
+            },
+          ]}
+          renderItem={(item) => {
+            const {id, url, name, location} = item;
+            const media = <Avatar customer size="md" name={name} />;
+
+            return (
+              <ResourceList.Item
+                id={id}
+                url={url}
+                media={media}
+                accessibilityLabel={'View details for ' + name}
+              >
+                <Text as="h3" variant="bodyMd" fontWeight="bold">
+                  {name}
+                </Text>
+                <div>{location}</div>
+              </ResourceList.Item>
+            );
+          }}
+        />
+      </LegacyCard>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.grid.Panel', {
+  title: 'Customer List with Filters',
+  width: 600,
+  height: 400,
+  tbar: [{
+    xtype: 'textfield',
+    fieldLabel: 'Search',
+    name: 'query',
+    listeners: {
+      change: function(field, newValue) {
+        var store = this.up('grid').getStore();
+        store.clearFilter();
+        if (newValue) {
+          store.filter('name', newValue);
+        }
+      }
+    }
+  }, {
+    xtype: 'combo',
+    fieldLabel: 'Status',
+    store: ['All', 'Enabled', 'Invited', 'Declined'],
+    value: 'All',
+    listeners: {
+      select: function(combo, record) {
+        var store = this.up('grid').getStore();
+        store.clearFilter();
+        if (record.get('field1') !== 'All') {
+          store.filter('status', record.get('field1'));
+        }
+      }
+    }
+  }],
+  store: Ext.create('Ext.data.Store', {
+    fields: ['name', 'location', 'status'],
+    data: [
+      {name: 'Mae Jemison', location: 'Decatur, USA', status: 'Enabled'},
+      {name: 'Ellen Ochoa', location: 'Los Angeles, USA', status: 'Invited'}
+    ]
+  }),
+  columns: [{
+    text: 'Name',
+    dataIndex: 'name',
+    flex: 1
+  }, {
+    text: 'Location',
+    dataIndex: 'location',
+    flex: 1
+  }, {
+    text: 'Status',
+    dataIndex: 'status',
+    width: 100
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-filters-container">
+  <div class="polaris-filters">
+    <div class="polaris-filters__search">
+      <input type="text" id="search-input" placeholder="Search customers..." class="polaris-text-field__input">
+    </div>
+    <div class="polaris-filters__controls">
+      <select id="status-filter" class="polaris-select__input">
+        <option value="">All statuses</option>
+        <option value="enabled">Enabled</option>
+        <option value="invited">Invited</option>
+        <option value="declined">Declined</option>
+      </select>
+      <button id="clear-filters" class="polaris-button">Clear all</button>
+    </div>
+  </div>
+  
+  <div class="polaris-resource-list" id="customer-list">
+    <div class="polaris-resource-list__item" data-name="mae jemison" data-status="enabled">
+      <div class="polaris-avatar">MJ</div>
+      <div class="polaris-resource-list__content">
+        <h3>Mae Jemison</h3>
+        <p>Decatur, USA</p>
+      </div>
+    </div>
+    <div class="polaris-resource-list__item" data-name="ellen ochoa" data-status="invited">
+      <div class="polaris-avatar">EO</div>
+      <div class="polaris-resource-list__content">
+        <h3>Ellen Ochoa</h3>
+        <p>Los Angeles, USA</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const searchInput = document.getElementById('search-input');
+const statusFilter = document.getElementById('status-filter');
+const clearButton = document.getElementById('clear-filters');
+const customerItems = document.querySelectorAll('.polaris-resource-list__item');
+
+function filterCustomers() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const statusFilter = document.getElementById('status-filter').value;
+  
+  customerItems.forEach(item => {
+    const name = item.dataset.name;
+    const status = item.dataset.status;
+    
+    const matchesSearch = !searchTerm || name.includes(searchTerm);
+    const matchesStatus = !statusFilter || status === statusFilter;
+    
+    item.style.display = matchesSearch && matchesStatus ? 'flex' : 'none';
+  });
+}
+
+searchInput.addEventListener('input', filterCustomers);
+statusFilter.addEventListener('change', filterCustomers);
+clearButton.addEventListener('click', () => {
+  searchInput.value = '';
+  statusFilter.value = '';
+  filterCustomers();
+});
+</script>`,
+    typescript: `import {
+  ChoiceList,
+  TextField,
+  LegacyCard,
+  ResourceList,
+  Filters,
+  Avatar,
+  Text,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface Customer {
+  id: string;
+  url: string;
+  name: string;
+  location: string;
+}
+
+interface FiltersWithResourceListProps {
+  customers?: Customer[];
+  onFilter?: (filters: any) => void;
+}
+
+function FiltersWithResourceList({
+  customers = [
+    {
+      id: '341',
+      url: '#',
+      name: 'Mae Jemison',
+      location: 'Decatur, USA',
+    },
+    {
+      id: '256',
+      url: '#',
+      name: 'Ellen Ochoa',
+      location: 'Los Angeles, USA',
+    },
+  ],
+  onFilter
+}: FiltersWithResourceListProps): JSX.Element {
+  const [accountStatus, setAccountStatus] = useState<string[]>([]);
+  const [taggedWith, setTaggedWith] = useState<string>('');
+  const [queryValue, setQueryValue] = useState<string>('');
+
+  const handleAccountStatusChange = useCallback(
+    (value: string[]) => {
+      setAccountStatus(value);
+      onFilter?.({ accountStatus: value, taggedWith, query: queryValue });
+    },
+    [taggedWith, queryValue, onFilter],
+  );
+
+  const handleTaggedWithChange = useCallback(
+    (value: string) => {
+      setTaggedWith(value);
+      onFilter?.({ accountStatus, taggedWith: value, query: queryValue });
+    },
+    [accountStatus, queryValue, onFilter],
+  );
+
+  const handleFiltersQueryChange = useCallback(
+    (value: string) => {
+      setQueryValue(value);
+      onFilter?.({ accountStatus, taggedWith, query: value });
+    },
+    [accountStatus, taggedWith, onFilter],
+  );
+
+  const handleFiltersClearAll = useCallback(() => {
+    setAccountStatus([]);
+    setTaggedWith('');
+    setQueryValue('');
+    onFilter?.({ accountStatus: [], taggedWith: '', query: '' });
+  }, [onFilter]);
+
+  const filters = [
+    {
+      key: 'accountStatus',
+      label: 'Account status',
+      filter: (
+        <ChoiceList
+          title="Account status"
+          titleHidden
+          choices={[
+            {label: 'Enabled', value: 'enabled'},
+            {label: 'Not invited', value: 'not invited'},
+            {label: 'Invited', value: 'invited'},
+            {label: 'Declined', value: 'declined'},
+          ]}
+          selected={accountStatus}
+          onChange={handleAccountStatusChange}
+          allowMultiple
+        />
+      ),
+      shortcut: true,
+    },
+    {
+      key: 'taggedWith',
+      label: 'Tagged with',
+      filter: (
+        <TextField
+          label="Tagged with"
+          value={taggedWith}
+          onChange={handleTaggedWithChange}
+          autoComplete="off"
+          labelHidden
+        />
+      ),
+      shortcut: true,
+    },
+  ];
+
+  const appliedFilters = [];
+  if (accountStatus.length > 0) {
+    appliedFilters.push({
+      key: 'accountStatus',
+      label: 'Account Status: ' + accountStatus.join(', '),
+      onRemove: () => handleAccountStatusChange([]),
+    });
+  }
+  if (taggedWith) {
+    appliedFilters.push({
+      key: 'taggedWith',
+      label: 'Tagged with: ' + taggedWith,
+      onRemove: () => handleTaggedWithChange(''),
+    });
+  }
+
+  return (
+    <div style={{height: '568px'}}>
+      <LegacyCard>
+        <ResourceList
+          resourceName={{singular: 'customer', plural: 'customers'}}
+          filterControl={
+            <Filters
+              queryValue={queryValue}
+              filters={filters}
+              appliedFilters={appliedFilters}
+              onQueryChange={handleFiltersQueryChange}
+              onQueryClear={() => handleFiltersQueryChange('')}
+              onClearAll={handleFiltersClearAll}
+            />
+          }
+          flushFilters
+          items={customers}
+          renderItem={(item) => {
+            const {id, url, name, location} = item;
+            const media = <Avatar customer size="md" name={name} />;
+
+            return (
+              <ResourceList.Item
+                id={id}
+                url={url}
+                media={media}
+                accessibilityLabel={'View details for ' + name}
+              >
+                <Text as="h3" variant="bodyMd" fontWeight="bold">
+                  {name}
+                </Text>
+                <div>{location}</div>
+              </ResourceList.Item>
+            );
+          }}
+        />
+      </LegacyCard>
+    </div>
+  );
+}`
+  }
+};
+
+// Collapsible Examples
+export const collapsibleExamples = {
+  default: {
+    react: `import {
+  LegacyCard,
+  LegacyStack,
+  Button,
+  Collapsible,
+  TextContainer,
+  Link,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function CollapsibleDefault() {
+  const [open, setOpen] = useState(true);
+
+  const handleToggle = useCallback(() => setOpen((open) => !open), []);
+
+  return (
+    <div style={{height: '200px'}}>
+      <LegacyCard sectioned>
+        <LegacyStack vertical>
+          <Button
+            onClick={handleToggle}
+            ariaExpanded={open}
+            ariaControls="basic-collapsible"
+          >
+            Toggle
+          </Button>
+          <Collapsible
+            open={open}
+            id="basic-collapsible"
+            transition={{duration: '500ms', timingFunction: 'ease-in-out'}}
+            expandOnPrint
+          >
+            <TextContainer>
+              <p>
+                Your mailing list lets you contact customers or visitors who
+                have shown an interest in your store. Reach out to them with
+                exclusive offers or updates about your products.
+              </p>
+              <Link url="#">Test link</Link>
+            </TextContainer>
+          </Collapsible>
+        </LegacyStack>
+      </LegacyCard>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Collapsible Content',
+  width: 400,
+  height: 300,
+  bodyPadding: 20,
+  items: [{
+    xtype: 'button',
+    text: 'Toggle',
+    handler: function() {
+      var panel = this.up('panel').down('#collapsiblePanel');
+      if (panel.isVisible()) {
+        panel.collapse();
+      } else {
+        panel.expand();
+      }
+    }
+  }, {
+    xtype: 'panel',
+    itemId: 'collapsiblePanel',
+    title: 'Mailing List Information',
+    collapsible: true,
+    collapsed: false,
+    bodyPadding: 10,
+    html: '<p>Your mailing list lets you contact customers or visitors who have shown an interest in your store. Reach out to them with exclusive offers or updates about your products.</p><a href="#">Test link</a>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card" style="height: 200px;">
+  <div class="polaris-card__content">
+    <button class="polaris-button" id="toggle-button" aria-expanded="true" aria-controls="collapsible-content">
+      Toggle
+    </button>
+    
+    <div class="polaris-collapsible" id="collapsible-content" style="transition: all 500ms ease-in-out;">
+      <div class="polaris-text-container">
+        <p>
+          Your mailing list lets you contact customers or visitors who
+          have shown an interest in your store. Reach out to them with
+          exclusive offers or updates about your products.
+        </p>
+        <a href="#" class="polaris-link">Test link</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const toggleButton = document.getElementById('toggle-button');
+const collapsibleContent = document.getElementById('collapsible-content');
+let isOpen = true;
+
+toggleButton.addEventListener('click', () => {
+  isOpen = !isOpen;
+  
+  if (isOpen) {
+    collapsibleContent.style.display = 'block';
+    collapsibleContent.style.height = 'auto';
+    toggleButton.setAttribute('aria-expanded', 'true');
+  } else {
+    collapsibleContent.style.display = 'none';
+    collapsibleContent.style.height = '0';
+    toggleButton.setAttribute('aria-expanded', 'false');
+  }
+});
+</script>`,
+    typescript: `import {
+  LegacyCard,
+  LegacyStack,
+  Button,
+  Collapsible,
+  TextContainer,
+  Link,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CollapsibleDefaultProps {
+  initialOpen?: boolean;
+  onToggle?: (open: boolean) => void;
+  children?: React.ReactNode;
+}
+
+function CollapsibleDefault({
+  initialOpen = true,
+  onToggle,
+  children
+}: CollapsibleDefaultProps): JSX.Element {
+  const [open, setOpen] = useState<boolean>(initialOpen);
+
+  const handleToggle = useCallback(() => {
+    const newState = !open;
+    setOpen(newState);
+    onToggle?.(newState);
+  }, [open, onToggle]);
+
+  return (
+    <div style={{height: '200px'}}>
+      <LegacyCard sectioned>
+        <LegacyStack vertical>
+          <Button
+            onClick={handleToggle}
+            ariaExpanded={open}
+            ariaControls="basic-collapsible"
+          >
+            Toggle
+          </Button>
+          <Collapsible
+            open={open}
+            id="basic-collapsible"
+            transition={{duration: '500ms', timingFunction: 'ease-in-out'}}
+            expandOnPrint
+          >
+            {children || (
+              <TextContainer>
+                <p>
+                  Your mailing list lets you contact customers or visitors who
+                  have shown an interest in your store. Reach out to them with
+                  exclusive offers or updates about your products.
+                </p>
+                <Link url="#">Test link</Link>
+              </TextContainer>
+            )}
+          </Collapsible>
+        </LegacyStack>
+      </LegacyCard>
+    </div>
+  );
+}`
+  }
+};
+
+// Combobox Examples
+export const comboboxExamples = {
+  default: {
+    react: `import {Listbox, Combobox, Icon} from '@shopify/polaris';
+import {SearchIcon} from '@shopify/polaris-icons';
+import {useState, useCallback, useMemo} from 'react';
+
+function ComboboxDefault() {
+  const deselectedOptions = useMemo(
+    () => [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ],
+    [],
+  );
+
+  const [selectedOption, setSelectedOption] = useState<string | undefined>();
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState(deselectedOptions);
+
+  const updateText = useCallback(
+    (value: string) => {
+      setInputValue(value);
+
+      if (value === '') {
+        setOptions(deselectedOptions);
+        return;
+      }
+
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      setOptions(resultOptions);
+    },
+    [deselectedOptions],
+  );
+
+  const updateSelection = useCallback(
+    (selected: string) => {
+      const matchedOption = options.find((option) => {
+        return option.value.match(selected);
+      });
+
+      setSelectedOption(selected);
+      setInputValue((matchedOption && matchedOption.label) || '');
+    },
+    [options],
+  );
+
+  const optionsMarkup =
+    options.length > 0
+      ? options.map((option) => {
+          const {label, value} = option;
+
+          return (
+            <Listbox.Option
+              key={value}
+              value={value}
+              selected={selectedOption === value}
+              accessibilityLabel={label}
+            >
+              {label}
+            </Listbox.Option>
+          );
+        })
+      : null;
+
+  return (
+    <div style={{height: '225px'}}>
+      <Combobox
+        activator={
+          <Combobox.TextField
+            prefix={<Icon source={SearchIcon} />}
+            onChange={updateText}
+            label="Search tags"
+            labelHidden
+            value={inputValue}
+            placeholder="Search tags"
+            autoComplete="off"
+          />
+        }
+      >
+        {options.length > 0 ? (
+          <Listbox onSelect={updateSelection}>{optionsMarkup}</Listbox>
+        ) : null}
+      </Combobox>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Search tags',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label'],
+    data: [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'}
+    ]
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  typeAhead: true,
+  queryMode: 'local',
+  forceSelection: false,
+  emptyText: 'Search tags...',
+  triggerAction: 'all',
+  width: 300,
+  listConfig: {
+    loadingText: 'Searching...',
+    emptyText: 'No matching tags found.',
+    getInnerTpl: function() {
+      return '<div class="search-item">{label}</div>';
+    }
+  },
+  listeners: {
+    select: function(combo, record) {
+      console.log('Selected:', record.get('label'));
+    },
+    change: function(field, newValue) {
+      console.log('Input changed:', newValue);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-combobox" style="height: 225px;">
+  <div class="polaris-combobox__activator">
+    <div class="polaris-text-field">
+      <div class="polaris-text-field__input-wrapper">
+        <span class="polaris-text-field__prefix">🔍</span>
+        <input 
+          type="text" 
+          id="combobox-input" 
+          class="polaris-text-field__input" 
+          placeholder="Search tags"
+          autocomplete="off">
+      </div>
+    </div>
+  </div>
+  
+  <div class="polaris-listbox" id="combobox-listbox" style="display: none;">
+    <ul class="polaris-listbox__options" id="options-list">
+      <!-- Options will be populated by JavaScript -->
+    </ul>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const options = [
+  {value: 'rustic', label: 'Rustic'},
+  {value: 'antique', label: 'Antique'},
+  {value: 'vinyl', label: 'Vinyl'},
+  {value: 'vintage', label: 'Vintage'},
+  {value: 'refurbished', label: 'Refurbished'}
+];
+
+const input = document.getElementById('combobox-input');
+const listbox = document.getElementById('combobox-listbox');
+const optionsList = document.getElementById('options-list');
+
+function updateOptions(searchValue) {
+  const filtered = options.filter(option => 
+    option.label.toLowerCase().includes(searchValue.toLowerCase())
+  );
+  
+  optionsList.innerHTML = filtered.map(option => 
+    '<li class="polaris-listbox__option" data-value="' + option.value + '">' + option.label + '</li>'
+  ).join('');
+  
+  listbox.style.display = filtered.length && searchValue ? 'block' : 'none';
+}
+
+input.addEventListener('input', (e) => {
+  updateOptions(e.target.value);
+});
+
+input.addEventListener('focus', () => {
+  if (input.value) updateOptions(input.value);
+});
+
+optionsList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('polaris-listbox__option')) {
+    input.value = e.target.textContent;
+    listbox.style.display = 'none';
+    console.log('Selected:', e.target.textContent);
+  }
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.polaris-combobox')) {
+    listbox.style.display = 'none';
+  }
+});
+</script>`,
+    typescript: `import {Listbox, Combobox, Icon} from '@shopify/polaris';
+import {SearchIcon} from '@shopify/polaris-icons';
+import {useState, useCallback, useMemo} from 'react';
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface ComboboxDefaultProps {
+  options?: Option[];
+  placeholder?: string;
+  label?: string;
+  onSelect?: (selected: string) => void;
+}
+
+function ComboboxDefault({
+  options: providedOptions,
+  placeholder = "Search tags",
+  label = "Search tags",
+  onSelect
+}: ComboboxDefaultProps): JSX.Element {
+  const deselectedOptions = useMemo(
+    () => providedOptions || [
+      {value: 'rustic', label: 'Rustic'},
+      {value: 'antique', label: 'Antique'},
+      {value: 'vinyl', label: 'Vinyl'},
+      {value: 'vintage', label: 'Vintage'},
+      {value: 'refurbished', label: 'Refurbished'},
+    ],
+    [providedOptions],
+  );
+
+  const [selectedOption, setSelectedOption] = useState<string | undefined>();
+  const [inputValue, setInputValue] = useState<string>('');
+  const [options, setOptions] = useState<Option[]>(deselectedOptions);
+
+  const updateText = useCallback(
+    (value: string) => {
+      setInputValue(value);
+
+      if (value === '') {
+        setOptions(deselectedOptions);
+        return;
+      }
+
+      const filterRegex = new RegExp(value, 'i');
+      const resultOptions = deselectedOptions.filter((option) =>
+        option.label.match(filterRegex),
+      );
+      setOptions(resultOptions);
+    },
+    [deselectedOptions],
+  );
+
+  const updateSelection = useCallback(
+    (selected: string) => {
+      const matchedOption = options.find((option) => {
+        return option.value.match(selected);
+      });
+
+      setSelectedOption(selected);
+      setInputValue((matchedOption && matchedOption.label) || '');
+      onSelect?.(selected);
+    },
+    [options, onSelect],
+  );
+
+  const optionsMarkup =
+    options.length > 0
+      ? options.map((option) => {
+          const {label, value} = option;
+
+          return (
+            <Listbox.Option
+              key={value}
+              value={value}
+              selected={selectedOption === value}
+              accessibilityLabel={label}
+            >
+              {label}
+            </Listbox.Option>
+          );
+        })
+      : null;
+
+  return (
+    <div style={{height: '225px'}}>
+      <Combobox
+        activator={
+          <Combobox.TextField
+            prefix={<Icon source={SearchIcon} />}
+            onChange={updateText}
+            label={label}
+            labelHidden
+            value={inputValue}
+            placeholder={placeholder}
+            autoComplete="off"
+          />
+        }
+      >
+        {options.length > 0 ? (
+          <Listbox onSelect={updateSelection}>{optionsMarkup}</Listbox>
+        ) : null}
+      </Combobox>
+    </div>
+  );
+}`
+  }
+};
+
+// Range Slider Examples
+export const rangeSliderExamples = {
+  default: {
+    react: `import {LegacyCard, RangeSlider} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function RangeSliderDefault() {
+  const [rangeValue, setRangeValue] = useState(32);
+
+  const handleRangeSliderChange = useCallback(
+    (value: number) => setRangeValue(value),
+    [],
+  );
+
+  return (
+    <LegacyCard sectioned title="Background color">
+      <RangeSlider
+        label="Opacity percentage"
+        value={rangeValue}
+        onChange={handleRangeSliderChange}
+        output
+      />
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Background color',
+  bodyPadding: 10,
+  items: [{
+    xtype: 'slider',
+    fieldLabel: 'Opacity percentage',
+    width: 300,
+    value: 32,
+    minValue: 0,
+    maxValue: 100,
+    increment: 1,
+    useTips: true,
+    tipText: function(thumb) {
+      return String(thumb.value) + '%';
+    },
+    listeners: {
+      change: function(slider, newValue) {
+        console.log('Range value changed:', newValue);
+      },
+      changecomplete: function(slider, newValue) {
+        console.log('Range change complete:', newValue);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__header">
+    <h3 class="polaris-card__title">Background color</h3>
+  </div>
+  <div class="polaris-card__section">
+    <div class="polaris-range-slider">
+      <label for="opacity-slider" class="polaris-label">Opacity percentage</label>
+      <div class="polaris-range-slider__wrapper">
+        <input 
+          type="range" 
+          id="opacity-slider" 
+          class="polaris-range-slider__input" 
+          min="0" 
+          max="100" 
+          value="32" 
+          step="1">
+        <output class="polaris-range-slider__output" for="opacity-slider">32%</output>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const slider = document.getElementById('opacity-slider');
+const output = document.querySelector('.polaris-range-slider__output');
+
+slider.addEventListener('input', (e) => {
+  const value = e.target.value;
+  output.textContent = value + '%';
+  console.log('Range value changed:', value);
+});
+
+slider.addEventListener('change', (e) => {
+  console.log('Range change complete:', e.target.value);
+});
+</script>`,
+    typescript: `import {LegacyCard, RangeSlider} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface RangeSliderDefaultProps {
+  initialValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  label?: string;
+  title?: string;
+  showOutput?: boolean;
+  onChange?: (value: number) => void;
+}
+
+function RangeSliderDefault({
+  initialValue = 32,
+  min = 0,
+  max = 100,
+  step = 1,
+  label = "Opacity percentage",
+  title = "Background color",
+  showOutput = true,
+  onChange
+}: RangeSliderDefaultProps): JSX.Element {
+  const [rangeValue, setRangeValue] = useState<number>(initialValue);
+
+  const handleRangeSliderChange = useCallback(
+    (value: number) => {
+      setRangeValue(value);
+      onChange?.(value);
+    },
+    [onChange],
+  );
+
+  return (
+    <LegacyCard sectioned title={title}>
+      <RangeSlider
+        label={label}
+        value={rangeValue}
+        min={min}
+        max={max}
+        step={step}
+        onChange={handleRangeSliderChange}
+        output={showOutput}
+      />
+    </LegacyCard>
+  );
+}`
+  }
+};
+
+// App Provider Examples
+export const appProviderExamples = {
+  default: {
+    react: `import {
+  AppProvider,
+  Page,
+  LegacyCard,
+  ResourceList,
+  Avatar,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+function AppProviderDefault() {
+  return (
+    <AppProvider
+      i18n={{
+        Polaris: {
+          ResourceList: {
+            sortingLabel: 'Sort by',
+            defaultItemSingular: 'item',
+            defaultItemPlural: 'items',
+            showing: 'Showing {itemsCount} {resource}',
+            Item: {
+              viewItem: 'View details for {itemName}',
+            },
+          },
+          Common: {
+            checkbox: 'checkbox',
+          },
+        },
+      }}
+    >
+      <Page>
+        <LegacyCard>
+          <ResourceList
+            showHeader
+            items={[
+              {
+                id: '341',
+                url: '#',
+                name: 'Mae Jemison',
+                location: 'Decatur, USA',
+              },
+              {
+                id: '256',
+                url: '#',
+                name: 'Ellen Ochoa',
+                location: 'Los Angeles, USA',
+              },
+            ]}
+            renderItem={(item) => {
+              const {id, url, name, location} = item;
+              const media = <Avatar customer size="md" name={name} />;
+
+              return (
+                <ResourceList.Item id={id} url={url} media={media}>
+                  <Text variant="bodyMd" fontWeight="bold" as="h3">
+                    {name}
+                  </Text>
+                  <div>{location}</div>
+                </ResourceList.Item>
+              );
+            }}
+          />
+        </LegacyCard>
+      </Page>
+    </AppProvider>
+  );
+}`,
+    extjs: `Ext.create('Ext.app.Application', {
+  name: 'PolarisApp',
+  
+  // App configuration equivalent to AppProvider
+  appConfig: {
+    locale: 'en-US',
+    i18n: {
+      sortingLabel: 'Sort by',
+      defaultItemSingular: 'item',
+      defaultItemPlural: 'items',
+      showing: 'Showing {0} {1}',
+      viewItem: 'View details for {0}',
+      checkbox: 'checkbox'
+    }
+  },
+  
+  launch: function() {
+    Ext.create('Ext.container.Viewport', {
+      layout: 'fit',
+      items: [{
+        xtype: 'panel',
+        title: 'Resource List Demo',
+        bodyPadding: 20,
+        items: [{
+          xtype: 'grid',
+          title: 'Customer List',
+          height: 400,
+          columns: [{
+            text: 'Avatar',
+            width: 80,
+            renderer: function(value, meta, record) {
+              return '<div class="customer-avatar">' + 
+                     record.get('name').charAt(0) + '</div>';
+            }
+          }, {
+            text: 'Name',
+            dataIndex: 'name',
+            flex: 1,
+            renderer: function(value) {
+              return '<strong>' + value + '</strong>';
+            }
+          }, {
+            text: 'Location',
+            dataIndex: 'location',
+            flex: 1
+          }],
+          store: Ext.create('Ext.data.Store', {
+            fields: ['id', 'name', 'location'],
+            data: [
+              {id: '341', name: 'Mae Jemison', location: 'Decatur, USA'},
+              {id: '256', name: 'Ellen Ochoa', location: 'Los Angeles, USA'}
+            ]
+          }),
+          listeners: {
+            itemclick: function(view, record) {
+              console.log('Selected customer:', record.get('name'));
+            }
+          }
+        }]
+      }]
+    });
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-app-provider">
+  <div class="polaris-page">
+    <div class="polaris-card">
+      <div class="polaris-resource-list">
+        <div class="polaris-resource-list__header">
+          <h3>Customer List</h3>
+          <span class="polaris-resource-list__count">Showing 2 items</span>
+        </div>
+        
+        <div class="polaris-resource-list__item" data-id="341">
+          <div class="polaris-resource-list__media">
+            <div class="polaris-avatar polaris-avatar--customer">MJ</div>
+          </div>
+          <div class="polaris-resource-list__content">
+            <h4 class="polaris-resource-list__name">Mae Jemison</h4>
+            <div class="polaris-resource-list__location">Decatur, USA</div>
+          </div>
+        </div>
+        
+        <div class="polaris-resource-list__item" data-id="256">
+          <div class="polaris-resource-list__media">
+            <div class="polaris-avatar polaris-avatar--customer">EO</div>
+          </div>
+          <div class="polaris-resource-list__content">
+            <h4 class="polaris-resource-list__name">Ellen Ochoa</h4>
+            <div class="polaris-resource-list__location">Los Angeles, USA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const appConfig = {
+  locale: 'en-US',
+  i18n: {
+    sortingLabel: 'Sort by',
+    defaultItemSingular: 'item',
+    defaultItemPlural: 'items',
+    showing: 'Showing {0} {1}',
+    viewItem: 'View details for {0}',
+    checkbox: 'checkbox'
+  }
+};
+
+// Initialize resource list
+const resourceListItems = document.querySelectorAll('.polaris-resource-list__item');
+
+resourceListItems.forEach(item => {
+  item.addEventListener('click', (e) => {
+    const id = item.getAttribute('data-id');
+    const name = item.querySelector('.polaris-resource-list__name').textContent;
+    console.log('View details for', name);
+  });
+  
+  item.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      item.click();
+    }
+  });
+  
+  // Make items focusable
+  item.setAttribute('tabindex', '0');
+});
+
+// Update count display
+const count = resourceListItems.length;
+const countDisplay = document.querySelector('.polaris-resource-list__count');
+const itemWord = count === 1 ? appConfig.i18n.defaultItemSingular : appConfig.i18n.defaultItemPlural;
+countDisplay.textContent = appConfig.i18n.showing.replace('{0}', count).replace('{1}', itemWord);
+</script>`,
+    typescript: `import {
+  AppProvider,
+  Page,
+  LegacyCard,
+  ResourceList,
+  Avatar,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+interface CustomerItem {
+  id: string;
+  url: string;
+  name: string;
+  location: string;
+}
+
+interface AppProviderDefaultProps {
+  customers?: CustomerItem[];
+  locale?: string;
+  onItemSelect?: (item: CustomerItem) => void;
+}
+
+function AppProviderDefault({
+  customers = [
+    {
+      id: '341',
+      url: '#',
+      name: 'Mae Jemison',
+      location: 'Decatur, USA',
+    },
+    {
+      id: '256',
+      url: '#',
+      name: 'Ellen Ochoa',
+      location: 'Los Angeles, USA',
+    },
+  ],
+  locale = 'en-US',
+  onItemSelect
+}: AppProviderDefaultProps): JSX.Element {
+  const handleItemClick = (item: CustomerItem) => {
+    onItemSelect?.(item);
+  };
+
+  return (
+    <AppProvider
+      i18n={{
+        Polaris: {
+          ResourceList: {
+            sortingLabel: 'Sort by',
+            defaultItemSingular: 'item',
+            defaultItemPlural: 'items',
+            showing: 'Showing {itemsCount} {resource}',
+            Item: {
+              viewItem: 'View details for {itemName}',
+            },
+          },
+          Common: {
+            checkbox: 'checkbox',
+          },
+        },
+      }}
+    >
+      <Page>
+        <LegacyCard>
+          <ResourceList
+            showHeader
+            items={customers}
+            renderItem={(item: CustomerItem) => {
+              const {id, url, name, location} = item;
+              const media = <Avatar customer size="md" name={name} />;
+
+              return (
+                <ResourceList.Item 
+                  id={id} 
+                  url={url} 
+                  media={media}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <Text variant="bodyMd" fontWeight="bold" as="h3">
+                    {name}
+                  </Text>
+                  <div>{location}</div>
+                </ResourceList.Item>
+              );
+            }}
+          />
+        </LegacyCard>
+      </Page>
+    </AppProvider>
+  );
+}`
+  }
+};
+
+// Contextual Save Bar Examples
+export const contextualSaveBarExamples = {
+  default: {
+    react: `import {Frame, ContextualSaveBar} from '@shopify/polaris';
+import React from 'react';
+
+function ContextualSaveBarDefault() {
+  return (
+    <div style={{height: '250px'}}>
+      <Frame
+        logo={{
+          width: 86,
+          contextualSaveBarSource:
+            'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+        }}
+      >
+        <ContextualSaveBar
+          message="Unsaved changes"
+          saveAction={{
+            onAction: () => console.log('add form submit logic'),
+            loading: false,
+            disabled: false,
+          }}
+          discardAction={{
+            onAction: () => console.log('add clear form logic'),
+          }}
+        />
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  height: 250,
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'toolbar',
+    cls: 'contextual-save-bar',
+    height: 60,
+    items: [{
+      xtype: 'image',
+      src: 'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+      width: 86,
+      height: 30
+    }, {
+      xtype: 'tbfill'
+    }, {
+      xtype: 'displayfield',
+      value: 'Unsaved changes',
+      cls: 'save-bar-message',
+      margin: '0 20 0 0'
+    }, {
+      xtype: 'button',
+      text: 'Discard',
+      margin: '0 10 0 0',
+      handler: function() {
+        console.log('add clear form logic');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Save',
+      ui: 'primary',
+      handler: function() {
+        console.log('add form submit logic');
+      }
+    }]
+  }, {
+    region: 'center',
+    html: '<div style="padding: 20px;">Page content goes here...</div>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame" style="height: 250px;">
+  <div class="polaris-contextual-save-bar">
+    <div class="polaris-contextual-save-bar__logo">
+      <img src="https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png" 
+           alt="Logo" 
+           width="86" 
+           height="30">
+    </div>
+    
+    <div class="polaris-contextual-save-bar__content">
+      <span class="polaris-contextual-save-bar__message">Unsaved changes</span>
+      
+      <div class="polaris-contextual-save-bar__actions">
+        <button class="polaris-button" id="discard-button">Discard</button>
+        <button class="polaris-button polaris-button--primary" id="save-button">Save</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="polaris-frame__content">
+    <div style="padding: 20px;">Page content goes here...</div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const saveButton = document.getElementById('save-button');
+const discardButton = document.getElementById('discard-button');
+
+saveButton.addEventListener('click', () => {
+  console.log('add form submit logic');
+  // Add loading state
+  saveButton.textContent = 'Saving...';
+  saveButton.disabled = true;
+  
+  // Simulate save operation
+  setTimeout(() => {
+    saveButton.textContent = 'Save';
+    saveButton.disabled = false;
+    console.log('Changes saved');
+  }, 1000);
+});
+
+discardButton.addEventListener('click', () => {
+  console.log('add clear form logic');
+  
+  // Confirm discard action
+  if (confirm('Are you sure you want to discard your changes?')) {
+    console.log('Changes discarded');
+    // Hide the contextual save bar
+    document.querySelector('.polaris-contextual-save-bar').style.display = 'none';
+  }
+});
+
+// Show contextual save bar when there are unsaved changes
+function showUnsavedChanges() {
+  document.querySelector('.polaris-contextual-save-bar').style.display = 'flex';
+}
+
+// Hide contextual save bar when changes are saved
+function hideUnsavedChanges() {
+  document.querySelector('.polaris-contextual-save-bar').style.display = 'none';
+}
+</script>`,
+    typescript: `import {Frame, ContextualSaveBar} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface ContextualSaveBarDefaultProps {
+  message?: string;
+  onSave?: () => void | Promise<void>;
+  onDiscard?: () => void;
+  logoSrc?: string;
+  logoWidth?: number;
+  saveLoading?: boolean;
+  saveDisabled?: boolean;
+  height?: number | string;
+}
+
+function ContextualSaveBarDefault({
+  message = "Unsaved changes",
+  onSave,
+  onDiscard,
+  logoSrc = 'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+  logoWidth = 86,
+  saveLoading: initialSaveLoading = false,
+  saveDisabled = false,
+  height = '250px'
+}: ContextualSaveBarDefaultProps): JSX.Element {
+  const [saveLoading, setSaveLoading] = useState<boolean>(initialSaveLoading);
+
+  const handleSaveAction = useCallback(async () => {
+    setSaveLoading(true);
+    try {
+      await onSave?.();
+      console.log('Changes saved successfully');
+    } catch (error) {
+      console.error('Save failed:', error);
+    } finally {
+      setSaveLoading(false);
+    }
+  }, [onSave]);
+
+  const handleDiscardAction = useCallback(() => {
+    onDiscard?.();
+    console.log('Changes discarded');
+  }, [onDiscard]);
+
+  return (
+    <div style={{height}}>
+      <Frame
+        logo={{
+          width: logoWidth,
+          contextualSaveBarSource: logoSrc,
+        }}
+      >
+        <ContextualSaveBar
+          message={message}
+          saveAction={{
+            onAction: handleSaveAction,
+            loading: saveLoading,
+            disabled: saveDisabled || saveLoading,
+          }}
+          discardAction={{
+            onAction: handleDiscardAction,
+          }}
+        />
+      </Frame>
+    </div>
+  );
+}`
+  }
+};
+
+// Data Table Examples
+export const dataTableExamples = {
+  default: {
+    react: `import {Page, LegacyCard, DataTable} from '@shopify/polaris';
+import React from 'react';
+
+function DataTableDefault() {
+  const rows = [
+    ['Emerald Silk Gown', '$875.00', 124689, 140, '$122,500.00'],
+    ['Mauve Cashmere Scarf', '$230.00', 124533, 83, '$19,090.00'],
+    [
+      'Navy Merino Wool Blazer with khaki chinos and yellow belt',
+      '$445.00',
+      124518,
+      32,
+      '$14,240.00',
+    ],
+  ];
+
+  return (
+    <Page title="Sales by product">
+      <LegacyCard>
+        <DataTable
+          columnContentTypes={[
+            'text',
+            'numeric',
+            'numeric',
+            'numeric',
+            'numeric',
+          ]}
+          headings={[
+            'Product',
+            'Price',
+            'SKU Number',
+            'Net quantity',
+            'Net sales',
+          ]}
+          rows={rows}
+          totals={['', '', '', 255, '$155,830.00']}
+        />
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.grid.Panel', {
+  title: 'Sales by product',
+  height: 400,
+  width: 800,
+  frame: true,
+  columns: [{
+    text: 'Product',
+    dataIndex: 'product',
+    flex: 2,
+    sortable: true
+  }, {
+    text: 'Price',
+    dataIndex: 'price',
+    width: 100,
+    align: 'right',
+    xtype: 'numbercolumn',
+    format: '$0.00'
+  }, {
+    text: 'SKU Number',
+    dataIndex: 'sku',
+    width: 120,
+    align: 'right'
+  }, {
+    text: 'Net quantity',
+    dataIndex: 'quantity',
+    width: 120,
+    align: 'right',
+    xtype: 'numbercolumn',
+    format: '0'
+  }, {
+    text: 'Net sales',
+    dataIndex: 'sales',
+    width: 130,
+    align: 'right',
+    xtype: 'numbercolumn',
+    format: '$0,000.00'
+  }],
+  
+  store: Ext.create('Ext.data.Store', {
+    fields: ['product', 'price', 'sku', 'quantity', 'sales'],
+    data: [
+      {
+        product: 'Emerald Silk Gown',
+        price: 875.00,
+        sku: 124689,
+        quantity: 140,
+        sales: 122500.00
+      },
+      {
+        product: 'Mauve Cashmere Scarf',
+        price: 230.00,
+        sku: 124533,
+        quantity: 83,
+        sales: 19090.00
+      },
+      {
+        product: 'Navy Merino Wool Blazer with khaki chinos and yellow belt',
+        price: 445.00,
+        sku: 124518,
+        quantity: 32,
+        sales: 14240.00
+      }
+    ]
+  }),
+  
+  features: [{
+    ftype: 'summary',
+    dock: 'bottom'
+  }],
+  
+  listeners: {
+    afterrender: function(grid) {
+      // Add totals row
+      const store = grid.getStore();
+      const totalQuantity = store.sum('quantity');
+      const totalSales = store.sum('sales');
+      
+      console.log('Total Quantity:', totalQuantity);
+      console.log('Total Sales:', Ext.util.Format.currency(totalSales));
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page__header">
+    <h1 class="polaris-page__title">Sales by product</h1>
+  </div>
+  
+  <div class="polaris-card">
+    <div class="polaris-data-table-wrapper">
+      <table class="polaris-data-table">
+        <thead class="polaris-data-table__header">
+          <tr class="polaris-data-table__header-row">
+            <th class="polaris-data-table__cell polaris-data-table__cell--header">Product</th>
+            <th class="polaris-data-table__cell polaris-data-table__cell--header polaris-data-table__cell--numeric">Price</th>
+            <th class="polaris-data-table__cell polaris-data-table__cell--header polaris-data-table__cell--numeric">SKU Number</th>
+            <th class="polaris-data-table__cell polaris-data-table__cell--header polaris-data-table__cell--numeric">Net quantity</th>
+            <th class="polaris-data-table__cell polaris-data-table__cell--header polaris-data-table__cell--numeric">Net sales</th>
+          </tr>
+        </thead>
+        
+        <tbody class="polaris-data-table__body">
+          <tr class="polaris-data-table__row">
+            <td class="polaris-data-table__cell">Emerald Silk Gown</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$875.00</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">124689</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">140</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$122,500.00</td>
+          </tr>
+          
+          <tr class="polaris-data-table__row">
+            <td class="polaris-data-table__cell">Mauve Cashmere Scarf</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$230.00</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">124533</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">83</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$19,090.00</td>
+          </tr>
+          
+          <tr class="polaris-data-table__row">
+            <td class="polaris-data-table__cell">Navy Merino Wool Blazer with khaki chinos and yellow belt</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$445.00</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">124518</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">32</td>
+            <td class="polaris-data-table__cell polaris-data-table__cell--numeric">$14,240.00</td>
+          </tr>
+        </tbody>
+        
+        <tfoot class="polaris-data-table__footer">
+          <tr class="polaris-data-table__totals-row">
+            <td class="polaris-data-table__cell polaris-data-table__totals-cell"></td>
+            <td class="polaris-data-table__cell polaris-data-table__totals-cell"></td>
+            <td class="polaris-data-table__cell polaris-data-table__totals-cell"></td>
+            <td class="polaris-data-table__cell polaris-data-table__totals-cell polaris-data-table__cell--numeric">255</td>
+            <td class="polaris-data-table__cell polaris-data-table__totals-cell polaris-data-table__cell--numeric">$155,830.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.addEventListener('DOMContentLoaded', function() {
+  const dataTable = document.querySelector('.polaris-data-table');
+  const rows = dataTable.querySelectorAll('.polaris-data-table__row');
+  
+  // Add row hover effects
+  rows.forEach(row => {
+    row.addEventListener('mouseenter', () => {
+      row.classList.add('polaris-data-table__row--hovered');
+    });
+    
+    row.addEventListener('mouseleave', () => {
+      row.classList.remove('polaris-data-table__row--hovered');
+    });
+    
+    // Add click handler for row selection
+    row.addEventListener('click', () => {
+      // Remove selection from other rows
+      rows.forEach(r => r.classList.remove('polaris-data-table__row--selected'));
+      
+      // Add selection to clicked row
+      row.classList.add('polaris-data-table__row--selected');
+      
+      // Get product name from first cell
+      const productName = row.querySelector('.polaris-data-table__cell').textContent;
+      console.log('Selected product:', productName);
+    });
+  });
+  
+  // Calculate and display totals
+  function calculateTotals() {
+    let totalQuantity = 0;
+    let totalSales = 0;
+    
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('.polaris-data-table__cell');
+      const quantity = parseInt(cells[3].textContent) || 0;
+      const sales = parseFloat(cells[4].textContent.replace(/[$,]/g, '')) || 0;
+      
+      totalQuantity += quantity;
+      totalSales += sales;
+    });
+    
+    console.log('Calculated totals - Quantity:', totalQuantity, 'Sales:', totalSales);
+  }
+  
+  calculateTotals();
+});
+</script>`,
+    typescript: `import {Page, LegacyCard, DataTable} from '@shopify/polaris';
+import React, {useMemo} from 'react';
+
+interface ProductData {
+  product: string;
+  price: string;
+  sku: number;
+  quantity: number;
+  sales: string;
+}
+
+interface DataTableDefaultProps {
+  title?: string;
+  data?: ProductData[];
+  showTotals?: boolean;
+  sortable?: boolean;
+  onRowClick?: (rowData: ProductData, index: number) => void;
+}
+
+function DataTableDefault({
+  title = "Sales by product",
+  data,
+  showTotals = true,
+  sortable = false,
+  onRowClick
+}: DataTableDefaultProps): JSX.Element {
+  const defaultData: ProductData[] = [
+    {
+      product: 'Emerald Silk Gown',
+      price: '$875.00',
+      sku: 124689,
+      quantity: 140,
+      sales: '$122,500.00'
+    },
+    {
+      product: 'Mauve Cashmere Scarf',
+      price: '$230.00',
+      sku: 124533,
+      quantity: 83,
+      sales: '$19,090.00'
+    },
+    {
+      product: 'Navy Merino Wool Blazer with khaki chinos and yellow belt',
+      price: '$445.00',
+      sku: 124518,
+      quantity: 32,
+      sales: '$14,240.00'
+    }
+  ];
+
+  const tableData = data || defaultData;
+
+  const rows = useMemo(() => 
+    tableData.map((item, index) => {
+      const row = [item.product, item.price, item.sku, item.quantity, item.sales];
+      return onRowClick ? {
+        ...row,
+        onClick: () => onRowClick(item, index)
+      } : row;
+    }), [tableData, onRowClick]);
+
+  const totals = useMemo(() => {
+    if (!showTotals) return undefined;
+    
+    const totalQuantity = tableData.reduce((sum, item) => sum + item.quantity, 0);
+    const totalSales = tableData.reduce((sum, item) => {
+      const salesValue = parseFloat(item.sales.replace(/[$,]/g, ''));
+      return sum + salesValue;
+    }, 0);
+    
+    return ['', '', '', totalQuantity, \`$\${totalSales.toLocaleString()}.00\`];
+  }, [tableData, showTotals]);
+
+  return (
+    <Page title={title}>
+      <LegacyCard>
+        <DataTable
+          columnContentTypes={[
+            'text',
+            'numeric',
+            'numeric',
+            'numeric',
+            'numeric',
+          ]}
+          headings={[
+            'Product',
+            'Price',
+            'SKU Number',
+            'Net quantity',
+            'Net sales',
+          ]}
+          rows={rows}
+          totals={totals}
+          sortable={sortable}
+        />
+      </LegacyCard>
+    </Page>
+  );
+}`
+  }
+};
+
+// Footer Help Examples
+export const footerHelpExamples = {
+  default: {
+    react: `import {FooterHelp, Link} from '@shopify/polaris';
+import React from 'react';
+
+function FooterHelpDefault() {
+  return (
+    <FooterHelp>
+      Learn more about{' '}
+      <Link url="https://help.shopify.com/manual/orders/fulfill-orders">
+        fulfilling orders
+      </Link>
+    </FooterHelp>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 10,
+  items: [{
+    xtype: 'component',
+    cls: 'footer-help',
+    html: 'Learn more about <a href="https://help.shopify.com/manual/orders/fulfill-orders" target="_blank">fulfilling orders</a>',
+    style: {
+      color: '#6D7175',
+      fontSize: '14px',
+      textAlign: 'center',
+      padding: '12px 0',
+      borderTop: '1px solid #E1E3E5'
+    },
+    listeners: {
+      afterrender: function(component) {
+        // Add click tracking to links
+        const links = component.getEl().query('a');
+        links.forEach(link => {
+          link.addEventListener('click', function(e) {
+            console.log('Footer help link clicked:', e.target.href);
+          });
+        });
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-footer-help">
+  <div class="polaris-footer-help__content">
+    Learn more about 
+    <a href="https://help.shopify.com/manual/orders/fulfill-orders" 
+       class="polaris-link" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      fulfilling orders
+    </a>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.addEventListener('DOMContentLoaded', function() {
+  const footerHelp = document.querySelector('.polaris-footer-help');
+  const links = footerHelp.querySelectorAll('.polaris-link');
+  
+  // Add click tracking to all links
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      console.log('Footer help link clicked:', e.target.href);
+      
+      // Optional: Add analytics tracking
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'click', {
+          event_category: 'footer_help',
+          event_label: e.target.href
+        });
+      }
+    });
+    
+    // Add keyboard navigation support
+    link.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.target.click();
+      }
+    });
+  });
+  
+  // Add hover effects
+  footerHelp.addEventListener('mouseenter', () => {
+    footerHelp.classList.add('polaris-footer-help--hovered');
+  });
+  
+  footerHelp.addEventListener('mouseleave', () => {
+    footerHelp.classList.remove('polaris-footer-help--hovered');
+  });
+});
+</script>`,
+    typescript: `import {FooterHelp, Link} from '@shopify/polaris';
+import React from 'react';
+
+interface FooterHelpDefaultProps {
+  children?: React.ReactNode;
+  helpUrl?: string;
+  helpText?: string;
+  linkText?: string;
+  onLinkClick?: (url: string) => void;
+}
+
+function FooterHelpDefault({
+  children,
+  helpUrl = "https://help.shopify.com/manual/orders/fulfill-orders",
+  helpText = "Learn more about",
+  linkText = "fulfilling orders",
+  onLinkClick
+}: FooterHelpDefaultProps): JSX.Element {
+  const handleLinkClick = (url: string) => {
+    onLinkClick?.(url);
+    console.log('Footer help link clicked:', url);
+  };
+
+  if (children) {
+    return <FooterHelp>{children}</FooterHelp>;
+  }
+
+  return (
+    <FooterHelp>
+      {helpText}{' '}
+      <Link 
+        url={helpUrl} 
+        onClick={() => handleLinkClick(helpUrl)}
+        external
+      >
+        {linkText}
+      </Link>
+    </FooterHelp>
+  );
+}`
+  }
+};
+
+// Frame Examples
+export const frameExamples = {
+  default: {
+    react: `import {
+  Frame,
+  TopBar,
+  Navigation,
+  Page,
+  LegacyCard,
+  AppProvider
+} from '@shopify/polaris';
+import {HomeIcon, OrderIcon} from '@shopify/polaris-icons';
+import React, {useState, useCallback} from 'react';
+
+function FrameDefault() {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
+  const [userMenuActive, setUserMenuActive] = useState(false);
+
+  const toggleMobileNavigationActive = useCallback(
+    () => setMobileNavigationActive((active) => !active),
+    [],
+  );
+
+  const toggleUserMenuActive = useCallback(
+    () => setUserMenuActive((active) => !active),
+    [],
+  );
+
+  const logo = {
+    width: 86,
+    topBarSource: 'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+    accessibilityLabel: 'Shopify',
+  };
+
+  const userMenuMarkup = (
+    <TopBar.UserMenu
+      name="John Doe"
+      detail="My Store"
+      initials="JD"
+      open={userMenuActive}
+      onToggle={toggleUserMenuActive}
+      actions={[{items: [{content: 'Settings'}, {content: 'Logout'}]}]}
+    />
+  );
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      userMenu={userMenuMarkup}
+      onNavigationToggle={toggleMobileNavigationActive}
+    />
+  );
+
+  const navigationMarkup = (
+    <Navigation location="/">
+      <Navigation.Section
+        title="Main Navigation"
+        items={[
+          {
+            label: 'Dashboard',
+            icon: HomeIcon,
+            url: '/dashboard',
+          },
+          {
+            label: 'Orders',
+            icon: OrderIcon,
+            url: '/orders',
+          },
+        ]}
+      />
+    </Navigation>
+  );
+
+  return (
+    <div style={{height: '500px'}}>
+      <AppProvider i18n={{}}>
+        <Frame
+          logo={logo}
+          topBar={topBarMarkup}
+          navigation={navigationMarkup}
+          showMobileNavigation={mobileNavigationActive}
+          onNavigationDismiss={toggleMobileNavigationActive}
+        >
+          <Page title="Dashboard">
+            <LegacyCard title="Welcome" sectioned>
+              <p>This is your admin dashboard.</p>
+            </LegacyCard>
+          </Page>
+        </Frame>
+      </AppProvider>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Viewport', {
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'toolbar',
+    height: 50,
+    cls: 'app-topbar',
+    items: [{
+      xtype: 'image',
+      src: 'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+      width: 86,
+      height: 30
+    }, {
+      xtype: 'tbfill'
+    }, {
+      xtype: 'button',
+      text: 'JD',
+      iconCls: 'user-icon',
+      menu: [{
+        text: 'Settings',
+        handler: function() {
+          console.log('Settings clicked');
+        }
+      }, {
+        text: 'Logout',
+        handler: function() {
+          console.log('Logout clicked');
+        }
+      }]
+    }]
+  }, {
+    region: 'west',
+    xtype: 'treepanel',
+    title: 'Navigation',
+    width: 250,
+    collapsible: true,
+    rootVisible: false,
+    store: Ext.create('Ext.data.TreeStore', {
+      root: {
+        expanded: true,
+        children: [{
+          text: 'Dashboard',
+          iconCls: 'home-icon',
+          leaf: true,
+          url: '/dashboard'
+        }, {
+          text: 'Orders',
+          iconCls: 'order-icon',
+          leaf: true,
+          url: '/orders'
+        }]
+      }
+    }),
+    listeners: {
+      itemclick: function(view, record) {
+        if (record.isLeaf()) {
+          console.log('Navigate to:', record.get('url'));
+        }
+      }
+    }
+  }, {
+    region: 'center',
+    xtype: 'panel',
+    title: 'Dashboard',
+    bodyPadding: 20,
+    items: [{
+      xtype: 'panel',
+      title: 'Welcome',
+      bodyPadding: 10,
+      html: '<p>This is your admin dashboard.</p>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame" style="height: 500px;">
+  <!-- Top Bar -->
+  <div class="polaris-top-bar">
+    <div class="polaris-top-bar__left">
+      <button class="polaris-top-bar__navigation-toggle" id="nav-toggle">☰</button>
+      <div class="polaris-top-bar__logo">
+        <img src="https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png" 
+             alt="Shopify" 
+             width="86" 
+             height="30">
+      </div>
+    </div>
+    
+    <div class="polaris-top-bar__right">
+      <div class="polaris-top-bar__user-menu">
+        <button class="polaris-top-bar__user-button" id="user-menu-button">JD</button>
+        <div class="polaris-top-bar__user-menu-dropdown" id="user-menu">
+          <a href="#" class="polaris-top-bar__user-menu-item">Settings</a>
+          <a href="#" class="polaris-top-bar__user-menu-item">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navigation -->
+  <div class="polaris-navigation" id="navigation">
+    <div class="polaris-navigation__section">
+      <h3 class="polaris-navigation__section-title">Main Navigation</h3>
+      <ul class="polaris-navigation__list">
+        <li class="polaris-navigation__item">
+          <a href="/dashboard" class="polaris-navigation__link">
+            <span class="polaris-navigation__icon">🏠</span>
+            Dashboard
+          </a>
+        </li>
+        <li class="polaris-navigation__item">
+          <a href="/orders" class="polaris-navigation__link">
+            <span class="polaris-navigation__icon">📦</span>
+            Orders
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="polaris-frame__content">
+    <div class="polaris-page">
+      <div class="polaris-page__header">
+        <h1 class="polaris-page__title">Dashboard</h1>
+      </div>
+      <div class="polaris-card">
+        <div class="polaris-card__header">
+          <h3 class="polaris-card__title">Welcome</h3>
+        </div>
+        <div class="polaris-card__section">
+          <p>This is your admin dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const navigation = document.getElementById('navigation');
+  const userMenuButton = document.getElementById('user-menu-button');
+  const userMenu = document.getElementById('user-menu');
+  
+  // Mobile navigation toggle
+  navToggle.addEventListener('click', () => {
+    navigation.classList.toggle('polaris-navigation--open');
+  });
+  
+  // User menu toggle
+  userMenuButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userMenu.classList.toggle('polaris-top-bar__user-menu-dropdown--open');
+  });
+  
+  // Close user menu when clicking outside
+  document.addEventListener('click', () => {
+    userMenu.classList.remove('polaris-top-bar__user-menu-dropdown--open');
+  });
+  
+  // Navigation link clicks
+  document.querySelectorAll('.polaris-navigation__link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Remove active class from all links
+      document.querySelectorAll('.polaris-navigation__link').forEach(l => {
+        l.classList.remove('polaris-navigation__link--active');
+      });
+      
+      // Add active class to clicked link
+      link.classList.add('polaris-navigation__link--active');
+      
+      console.log('Navigate to:', link.getAttribute('href'));
+    });
+  });
+  
+  // User menu item clicks
+  document.querySelectorAll('.polaris-top-bar__user-menu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('User menu action:', item.textContent);
+      userMenu.classList.remove('polaris-top-bar__user-menu-dropdown--open');
+    });
+  });
+});
+</script>`,
+    typescript: `import {
+  Frame,
+  TopBar,
+  Navigation,
+  Page,
+  LegacyCard,
+  AppProvider
+} from '@shopify/polaris';
+import {HomeIcon, OrderIcon} from '@shopify/polaris-icons';
+import React, {useState, useCallback} from 'react';
+
+interface FrameDefaultProps {
+  logoSrc?: string;
+  logoWidth?: number;
+  userName?: string;
+  userInitials?: string;
+  storeName?: string;
+  onNavigate?: (url: string) => void;
+  onUserAction?: (action: string) => void;
+}
+
+interface NavigationItem {
+  label: string;
+  icon?: React.ComponentType;
+  url: string;
+}
+
+function FrameDefault({
+  logoSrc = 'https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png',
+  logoWidth = 86,
+  userName = 'John Doe',
+  userInitials = 'JD',
+  storeName = 'My Store',
+  onNavigate,
+  onUserAction
+}: FrameDefaultProps): JSX.Element {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState<boolean>(false);
+  const [userMenuActive, setUserMenuActive] = useState<boolean>(false);
+
+  const toggleMobileNavigationActive = useCallback(
+    () => setMobileNavigationActive((active) => !active),
+    [],
+  );
+
+  const toggleUserMenuActive = useCallback(
+    () => setUserMenuActive((active) => !active),
+    [],
+  );
+
+  const handleUserAction = useCallback((action: string) => {
+    onUserAction?.(action);
+    console.log('User action:', action);
+  }, [onUserAction]);
+
+  const handleNavigation = useCallback((url: string) => {
+    onNavigate?.(url);
+    console.log('Navigate to:', url);
+  }, [onNavigate]);
+
+  const logo = {
+    width: logoWidth,
+    topBarSource: logoSrc,
+    accessibilityLabel: 'Logo',
+  };
+
+  const userMenuMarkup = (
+    <TopBar.UserMenu
+      name={userName}
+      detail={storeName}
+      initials={userInitials}
+      open={userMenuActive}
+      onToggle={toggleUserMenuActive}
+      actions={[{
+        items: [
+          {content: 'Settings', onAction: () => handleUserAction('settings')},
+          {content: 'Logout', onAction: () => handleUserAction('logout')}
+        ]
+      }]}
+    />
+  );
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      userMenu={userMenuMarkup}
+      onNavigationToggle={toggleMobileNavigationActive}
+    />
+  );
+
+  const navigationItems: NavigationItem[] = [
+    {
+      label: 'Dashboard',
+      icon: HomeIcon,
+      url: '/dashboard',
+    },
+    {
+      label: 'Orders',
+      icon: OrderIcon,
+      url: '/orders',
+    },
+  ];
+
+  const navigationMarkup = (
+    <Navigation location="/">
+      <Navigation.Section
+        title="Main Navigation"
+        items={navigationItems.map(item => ({
+          ...item,
+          onClick: () => handleNavigation(item.url)
+        }))}
+      />
+    </Navigation>
+  );
+
+  return (
+    <div style={{height: '500px'}}>
+      <AppProvider i18n={{}}>
+        <Frame
+          logo={logo}
+          topBar={topBarMarkup}
+          navigation={navigationMarkup}
+          showMobileNavigation={mobileNavigationActive}
+          onNavigationDismiss={toggleMobileNavigationActive}
+        >
+          <Page title="Dashboard">
+            <LegacyCard title="Welcome" sectioned>
+              <p>This is your admin dashboard.</p>
+            </LegacyCard>
+          </Page>
+        </Frame>
+      </AppProvider>
+    </div>
+  );
+}`
+  }
+};
+
+// Fullscreen Bar Examples
+export const fullscreenBarExamples = {
+  default: {
+    react: `import {Badge, ButtonGroup, FullscreenBar, Button, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function FullscreenBarDefault() {
+  const [isFullscreen, setFullscreen] = useState(true);
+
+  const handleActionClick = useCallback(() => {
+    setFullscreen(false);
+  }, []);
+
+  const fullscreenBarMarkup = (
+    <FullscreenBar onAction={handleActionClick}>
+      <div style={{
+        display: 'flex',
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+      }}>
+        <Badge tone="info">Draft</Badge>
+        <div style={{marginLeft: '1rem', flexGrow: 1}}>
+          <Text variant="headingLg" as="p">Page title</Text>
+        </div>
+        <ButtonGroup>
+          <Button onClick={() => {}}>Secondary Action</Button>
+          <Button variant="primary" onClick={() => {}}>Primary Action</Button>
+        </ButtonGroup>
+      </div>
+    </FullscreenBar>
+  );
+
+  return (
+    <div style={{height: '250px', width: '100%'}}>
+      {isFullscreen && fullscreenBarMarkup}
+      <div style={{padding: '1rem'}}>
+        {!isFullscreen && (
+          <Button onClick={() => setFullscreen(true)}>Go Fullscreen</Button>
+        )}
+        <Text variant="headingLg" as="p">Page content</Text>
+      </div>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  height: 250,
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'toolbar',
+    height: 60,
+    cls: 'fullscreen-bar',
+    items: [{
+      xtype: 'component',
+      html: '<span class="badge-info">Draft</span>',
+      margin: '0 10 0 0'
+    }, {
+      xtype: 'component',
+      html: '<h2>Page title</h2>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Secondary Action',
+      margin: '0 5 0 0'
+    }, {
+      xtype: 'button',
+      text: 'Primary Action',
+      ui: 'primary',
+      margin: '0 5 0 0'
+    }, {
+      xtype: 'button',
+      text: '✕',
+      handler: function() {
+        this.up('panel').down('toolbar').hide();
+      }
+    }]
+  }, {
+    region: 'center',
+    html: '<div style="padding: 1rem;"><h2>Page content</h2></div>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="fullscreen-demo" style="height: 250px; width: 100%;">
+  <div class="polaris-fullscreen-bar" id="fullscreen-bar">
+    <div class="polaris-fullscreen-bar__content">
+      <span class="polaris-badge polaris-badge--info">Draft</span>
+      <div class="polaris-fullscreen-bar__title">
+        <h2>Page title</h2>
+      </div>
+      <div class="polaris-button-group">
+        <button class="polaris-button">Secondary Action</button>
+        <button class="polaris-button polaris-button--primary">Primary Action</button>
+      </div>
+      <button class="polaris-fullscreen-bar__back" id="exit-fullscreen">✕</button>
+    </div>
+  </div>
+  
+  <div class="polaris-page-content" style="padding: 1rem;">
+    <button class="polaris-button" id="go-fullscreen" style="display: none;">Go Fullscreen</button>
+    <h2>Page content</h2>
+  </div>
+</div>
+
+<script>
+const fullscreenBar = document.getElementById('fullscreen-bar');
+const exitButton = document.getElementById('exit-fullscreen');
+const goFullscreenButton = document.getElementById('go-fullscreen');
+
+exitButton.addEventListener('click', () => {
+  fullscreenBar.style.display = 'none';
+  goFullscreenButton.style.display = 'inline-block';
+});
+
+goFullscreenButton.addEventListener('click', () => {
+  fullscreenBar.style.display = 'block';
+  goFullscreenButton.style.display = 'none';
+});
+</script>`,
+    typescript: `import {Badge, ButtonGroup, FullscreenBar, Button, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface FullscreenBarDefaultProps {
+  title?: string;
+  badge?: string;
+  badgeTone?: 'info' | 'success' | 'warning' | 'critical';
+  primaryAction?: string;
+  secondaryAction?: string;
+  onPrimaryAction?: () => void;
+  onSecondaryAction?: () => void;
+  onExit?: () => void;
+}
+
+function FullscreenBarDefault({
+  title = "Page title",
+  badge = "Draft",
+  badgeTone = "info",
+  primaryAction = "Primary Action",
+  secondaryAction = "Secondary Action",
+  onPrimaryAction,
+  onSecondaryAction,
+  onExit
+}: FullscreenBarDefaultProps): JSX.Element {
+  const [isFullscreen, setFullscreen] = useState<boolean>(true);
+
+  const handleActionClick = useCallback(() => {
+    setFullscreen(false);
+    onExit?.();
+  }, [onExit]);
+
+  const fullscreenBarMarkup = (
+    <FullscreenBar onAction={handleActionClick}>
+      <div style={{
+        display: 'flex',
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+      }}>
+        <Badge tone={badgeTone}>{badge}</Badge>
+        <div style={{marginLeft: '1rem', flexGrow: 1}}>
+          <Text variant="headingLg" as="p">{title}</Text>
+        </div>
+        <ButtonGroup>
+          <Button onClick={onSecondaryAction}>{secondaryAction}</Button>
+          <Button variant="primary" onClick={onPrimaryAction}>{primaryAction}</Button>
+        </ButtonGroup>
+      </div>
+    </FullscreenBar>
+  );
+
+  return (
+    <div style={{height: '250px', width: '100%'}}>
+      {isFullscreen && fullscreenBarMarkup}
+      <div style={{padding: '1rem'}}>
+        {!isFullscreen && (
+          <Button onClick={() => setFullscreen(true)}>Go Fullscreen</Button>
+        )}
+        <Text variant="headingLg" as="p">Page content</Text>
+      </div>
+    </div>
+  );
+}`
+  }
+};
+
+// Index Filter Examples
+export const indexFilterExamples = {
+  default: {
+    react: `import {IndexFilters, useSetIndexFiltersMode, Text, LegacyCard} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function IndexFilterDefault() {
+  const {mode, setMode} = useSetIndexFiltersMode();
+  const [queryValue, setQueryValue] = useState('');
+
+  const handleQueryValueChange = useCallback(
+    (value: string) => setQueryValue(value),
+    [],
+  );
+
+  const handleClearAll = useCallback(() => {
+    setQueryValue('');
+  }, []);
+
+  return (
+    <LegacyCard>
+      <IndexFilters
+        queryValue={queryValue}
+        queryPlaceholder="Search orders"
+        onQueryChange={handleQueryValueChange}
+        onQueryClear={() => setQueryValue('')}
+        onClearAll={handleClearAll}
+        filters={[]}
+        appliedFilters={[]}
+        onFiltersChange={() => {}}
+        mode={mode}
+        setMode={setMode}
+        tabs={[]}
+      />
+      <div style={{padding: '1rem'}}>
+        <Text as="p">Content filtered by: "{queryValue}"</Text>
+      </div>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Index Filters',
+  items: [{
+    xtype: 'toolbar',
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Search',
+      emptyText: 'Search orders...',
+      width: 300,
+      listeners: {
+        change: function(field, newValue) {
+          console.log('Search query:', newValue);
+        }
+      }
+    }, {
+      xtype: 'button',
+      text: 'Clear',
+      handler: function() {
+        this.prev().setValue('');
+      }
+    }]
+  }, {
+    html: '<div style="padding: 1rem;"><p>Filtered content goes here...</p></div>'
+  }]
+});`,
+    vanilla: `<div class="polaris-index-filters">
+  <div class="polaris-index-filters__search">
+    <input type="text" placeholder="Search orders" id="search-input">
+    <button id="clear-search">Clear</button>
+  </div>
+  <div class="polaris-index-filters__content">
+    <p>Content filtered by: <span id="query-display"></span></p>
+  </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('search-input');
+const clearButton = document.getElementById('clear-search');
+const queryDisplay = document.getElementById('query-display');
+
+searchInput.addEventListener('input', (e) => {
+  queryDisplay.textContent = e.target.value;
+});
+
+clearButton.addEventListener('click', () => {
+  searchInput.value = '';
+  queryDisplay.textContent = '';
+});
+</script>`,
+    typescript: `import {IndexFilters, useSetIndexFiltersMode, Text, LegacyCard} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface IndexFilterDefaultProps {
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+}
+
+function IndexFilterDefault({
+  placeholder = "Search orders",
+  onSearch
+}: IndexFilterDefaultProps): JSX.Element {
+  const {mode, setMode} = useSetIndexFiltersMode();
+  const [queryValue, setQueryValue] = useState<string>('');
+
+  const handleQueryValueChange = useCallback(
+    (value: string) => {
+      setQueryValue(value);
+      onSearch?.(value);
+    },
+    [onSearch],
+  );
+
+  const handleClearAll = useCallback(() => {
+    setQueryValue('');
+    onSearch?.('');
+  }, [onSearch]);
+
+  return (
+    <LegacyCard>
+      <IndexFilters
+        queryValue={queryValue}
+        queryPlaceholder={placeholder}
+        onQueryChange={handleQueryValueChange}
+        onQueryClear={() => setQueryValue('')}
+        onClearAll={handleClearAll}
+        filters={[]}
+        appliedFilters={[]}
+        onFiltersChange={() => {}}
+        mode={mode}
+        setMode={setMode}
+        tabs={[]}
+      />
+      <div style={{padding: '1rem'}}>
+        <Text as="p">Content filtered by: "{queryValue}"</Text>
+      </div>
+    </LegacyCard>
+  );
+}`
+  }
+};
+
+// Inline Error Examples
+export const inlineErrorExamples = {
+  default: {
+    react: `import {FormLayout, TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function InlineErrorDefault() {
+  const [textFieldValue, setTextFieldValue] = useState('');
+  const [error, setError] = useState('');
+
+  const handleTextFieldChange = useCallback((value: string) => {
+    setTextFieldValue(value);
+    if (value.length < 3) {
+      setError('Email must be at least 3 characters');
+    } else {
+      setError('');
+    }
+  }, []);
+
+  return (
+    <FormLayout>
+      <TextField
+        label="Email"
+        value={textFieldValue}
+        onChange={handleTextFieldChange}
+        error={Boolean(error)}
+      />
+      {error && <InlineError message={error} fieldID="email" />}
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Email',
+    name: 'email',
+    allowBlank: false,
+    minLength: 3,
+    msgTarget: 'under',
+    listeners: {
+      change: function(field, newValue) {
+        if (newValue.length < 3) {
+          field.markInvalid('Email must be at least 3 characters');
+        } else {
+          field.clearInvalid();
+        }
+      }
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-form-layout">
+  <div class="polaris-text-field-wrapper">
+    <label for="email-field">Email</label>
+    <input type="text" id="email-field" class="polaris-text-field">
+    <div class="polaris-inline-error" id="email-error" style="display: none;">
+      Email must be at least 3 characters
+    </div>
+  </div>
+</div>
+
+<script>
+const emailField = document.getElementById('email-field');
+const emailError = document.getElementById('email-error');
+
+emailField.addEventListener('input', (e) => {
+  const value = e.target.value;
+  if (value.length < 3 && value.length > 0) {
+    emailError.style.display = 'block';
+    emailField.classList.add('polaris-text-field--error');
+  } else {
+    emailError.style.display = 'none';
+    emailField.classList.remove('polaris-text-field--error');
+  }
+});
+</script>`,
+    typescript: `import {FormLayout, TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface InlineErrorDefaultProps {
+  label?: string;
+  placeholder?: string;
+  minLength?: number;
+  errorMessage?: string;
+  onValueChange?: (value: string, hasError: boolean) => void;
+}
+
+function InlineErrorDefault({
+  label = "Email",
+  placeholder = "Enter your email",
+  minLength = 3,
+  errorMessage = "Email must be at least 3 characters",
+  onValueChange
+}: InlineErrorDefaultProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const handleTextFieldChange = useCallback((value: string) => {
+    setTextFieldValue(value);
+    const hasError = value.length > 0 && value.length < minLength;
+    const errorMsg = hasError ? errorMessage : '';
+    
+    setError(errorMsg);
+    onValueChange?.(value, hasError);
+  }, [minLength, errorMessage, onValueChange]);
+
+  const fieldID = 'email-field';
+
+  return (
+    <FormLayout>
+      <TextField
+        id={fieldID}
+        label={label}
+        value={textFieldValue}
+        placeholder={placeholder}
+        onChange={handleTextFieldChange}
+        error={Boolean(error)}
+      />
+      {error && <InlineError message={error} fieldID={fieldID} />}
+    </FormLayout>
+  );
+}`
+  }
+};
+
+// Index Table Examples
+export const indexTableExamples = {
+  default: {
+    react: `import {IndexTable, Text, Badge} from '@shopify/polaris';
+import React from 'react';
+
+function IndexTableDefault() {
+  const customers = [
+    {id: '1', name: 'John Smith', email: 'john@example.com', orders: 25},
+    {id: '2', name: 'Jane Doe', email: 'jane@example.com', orders: 35},
+    {id: '3', name: 'Bob Johnson', email: 'bob@example.com', orders: 15},
+  ];
+
+  const resourceName = {
+    singular: 'customer',
+    plural: 'customers',
+  };
+
+  const rowMarkup = customers.map(({id, name, email, orders}, index) => (
+    <IndexTable.Row
+      id={id}
+      key={id}
+      position={index}
+    >
+      <IndexTable.Cell>
+        <Text variant="bodyMd" fontWeight="bold" as="span">
+          {name}
+        </Text>
+      </IndexTable.Cell>
+      <IndexTable.Cell>{email}</IndexTable.Cell>
+      <IndexTable.Cell>
+        <Badge tone="success">{orders} orders</Badge>
+      </IndexTable.Cell>
+    </IndexTable.Row>
+  ));
+
+  return (
+    <IndexTable
+      resourceName={resourceName}
+      itemCount={customers.length}
+      headings={[
+        {title: 'Name'},
+        {title: 'Email'},
+        {title: 'Total orders'},
+      ]}
+      selectable={false}
+    >
+      {rowMarkup}
+    </IndexTable>
+  );
+}`,
+    extjs: `Ext.create('Ext.grid.Panel', {
+  title: 'Customer Index',
+  columns: [
+    {text: 'Name', dataIndex: 'name', flex: 1},
+    {text: 'Email', dataIndex: 'email', flex: 1},
+    {
+      text: 'Total orders',
+      dataIndex: 'orders',
+      renderer: function(value) {
+        return '<span class="badge-success">' + value + ' orders</span>';
+      }
+    }
+  ],
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'email', 'orders'],
+    data: [
+      {id: '1', name: 'John Smith', email: 'john@example.com', orders: 25},
+      {id: '2', name: 'Jane Doe', email: 'jane@example.com', orders: 35},
+      {id: '3', name: 'Bob Johnson', email: 'bob@example.com', orders: 15}
+    ]
+  })
+});`,
+    vanilla: `<div class="polaris-index-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Total orders</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>John Smith</strong></td>
+        <td>john@example.com</td>
+        <td><span class="polaris-badge polaris-badge--success">25 orders</span></td>
+      </tr>
+      <tr>
+        <td><strong>Jane Doe</strong></td>
+        <td>jane@example.com</td>
+        <td><span class="polaris-badge polaris-badge--success">35 orders</span></td>
+      </tr>
+      <tr>
+        <td><strong>Bob Johnson</strong></td>
+        <td>bob@example.com</td>
+        <td><span class="polaris-badge polaris-badge--success">15 orders</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
+    typescript: `import {IndexTable, Text, Badge} from '@shopify/polaris';
+import React from 'react';
+
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  orders: number;
+}
+
+interface IndexTableDefaultProps {
+  customers?: Customer[];
+  onRowClick?: (customer: Customer) => void;
+}
+
+function IndexTableDefault({
+  customers = [
+    {id: '1', name: 'John Smith', email: 'john@example.com', orders: 25},
+    {id: '2', name: 'Jane Doe', email: 'jane@example.com', orders: 35},
+    {id: '3', name: 'Bob Johnson', email: 'bob@example.com', orders: 15},
+  ],
+  onRowClick
+}: IndexTableDefaultProps): JSX.Element {
+  const resourceName = {
+    singular: 'customer',
+    plural: 'customers',
+  };
+
+  const rowMarkup = customers.map((customer, index) => (
+    <IndexTable.Row
+      id={customer.id}
+      key={customer.id}
+      position={index}
+      onClick={() => onRowClick?.(customer)}
+    >
+      <IndexTable.Cell>
+        <Text variant="bodyMd" fontWeight="bold" as="span">
+          {customer.name}
+        </Text>
+      </IndexTable.Cell>
+      <IndexTable.Cell>{customer.email}</IndexTable.Cell>
+      <IndexTable.Cell>
+        <Badge tone="success">{customer.orders} orders</Badge>
+      </IndexTable.Cell>
+    </IndexTable.Row>
+  ));
+
+  return (
+    <IndexTable
+      resourceName={resourceName}
+      itemCount={customers.length}
+      headings={[
+        {title: 'Name'},
+        {title: 'Email'},
+        {title: 'Total orders'},
+      ]}
+      selectable={false}
+    >
+      {rowMarkup}
+    </IndexTable>
+  );
+}`
+  }
+};
+
+// Inline Grid Examples
+export const inlineGridExamples = {
+  default: {
+    react: `import {InlineGrid, Text} from '@shopify/polaris';
+import React from 'react';
+
+function InlineGridDefault() {
+  return (
+    <InlineGrid columns={{xs: 1, sm: 2, md: 3, lg: 4}} gap="400">
+      <div style={{background: '#E0E5CC', padding: '20px'}}>
+        <Text as="p">Grid item 1</Text>
+      </div>
+      <div style={{background: '#B8B89F', padding: '20px'}}>
+        <Text as="p">Grid item 2</Text>
+      </div>
+      <div style={{background: '#9B9B7A', padding: '20px'}}>
+        <Text as="p">Grid item 3</Text>
+      </div>
+      <div style={{background: '#797D62', padding: '20px'}}>
+        <Text as="p">Grid item 4</Text>
+      </div>
+    </InlineGrid>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'column'
+  },
+  defaults: {
+    columnWidth: 0.25,
+    padding: 10
+  },
+  items: [{
+    html: '<div style="background: #E0E5CC; padding: 20px;">Grid item 1</div>'
+  }, {
+    html: '<div style="background: #B8B89F; padding: 20px;">Grid item 2</div>'
+  }, {
+    html: '<div style="background: #9B9B7A; padding: 20px;">Grid item 3</div>'
+  }, {
+    html: '<div style="background: #797D62; padding: 20px;">Grid item 4</div>'
+  }]
+});`,
+    vanilla: `<div class="polaris-inline-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+  <div style="background: #E0E5CC; padding: 20px;">
+    <p>Grid item 1</p>
+  </div>
+  <div style="background: #B8B89F; padding: 20px;">
+    <p>Grid item 2</p>
+  </div>
+  <div style="background: #9B9B7A; padding: 20px;">
+    <p>Grid item 3</p>
+  </div>
+  <div style="background: #797D62; padding: 20px;">
+    <p>Grid item 4</p>
+  </div>
+</div>`,
+    typescript: `import {InlineGrid, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface InlineGridDefaultProps {
+  columns?: {xs: number; sm: number; md: number; lg: number};
+  gap?: string;
+  children?: React.ReactNode;
+}
+
+function InlineGridDefault({
+  columns = {xs: 1, sm: 2, md: 3, lg: 4},
+  gap = "400",
+  children
+}: InlineGridDefaultProps): JSX.Element {
+  const defaultChildren = (
+    <>
+      <div style={{background: '#E0E5CC', padding: '20px'}}>
+        <Text as="p">Grid item 1</Text>
+      </div>
+      <div style={{background: '#B8B89F', padding: '20px'}}>
+        <Text as="p">Grid item 2</Text>
+      </div>
+      <div style={{background: '#9B9B7A', padding: '20px'}}>
+        <Text as="p">Grid item 3</Text>
+      </div>
+      <div style={{background: '#797D62', padding: '20px'}}>
+        <Text as="p">Grid item 4</Text>
+      </div>
+    </>
+  );
+
+  return (
+    <InlineGrid columns={columns} gap={gap}>
+      {children || defaultChildren}
+    </InlineGrid>
+  );
+}`
+  }
+};
+
+// Keyboard Key Examples
+export const keyboardKeyExamples = {
+  default: {
+    react: `import {KeyboardKey} from '@shopify/polaris';
+import React from 'react';
+
+function KeyboardKeyDefault() {
+  return (
+    <div>
+      <p>
+        Press <KeyboardKey>Cmd</KeyboardKey> + <KeyboardKey>S</KeyboardKey> to save
+      </p>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  html: '<p>Press <kbd>Cmd</kbd> + <kbd>S</kbd> to save</p>',
+  bodyPadding: 10
+});`,
+    vanilla: `<div>
+  <p>
+    Press <kbd class="polaris-keyboard-key">Cmd</kbd> + 
+    <kbd class="polaris-keyboard-key">S</kbd> to save
+  </p>
+</div>`,
+    typescript: `import {KeyboardKey} from '@shopify/polaris';
+import React from 'react';
+
+interface KeyboardKeyDefaultProps {
+  shortcut?: string[];
+  description?: string;
+}
+
+function KeyboardKeyDefault({
+  shortcut = ['Cmd', 'S'],
+  description = 'to save'
+}: KeyboardKeyDefaultProps): JSX.Element {
+  return (
+    <div>
+      <p>
+        Press {shortcut.map((key, index) => (
+          <React.Fragment key={key}>
+            <KeyboardKey>{key}</KeyboardKey>
+            {index < shortcut.length - 1 && ' + '}
+          </React.Fragment>
+        ))} {description}
+      </p>
+    </div>
+  );
+}`
+  }
+};
+
+// Legacy Card Examples
+export const legacyCardExamples = {
+  default: {
+    react: `import {LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function LegacyCardDefault() {
+  return (
+    <LegacyCard title="Online store dashboard" sectioned>
+      <p>View a summary of your online store's performance.</p>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Online store dashboard',
+  bodyPadding: 20,
+  html: '<p>View a summary of your online store\\'s performance.</p>'
+});`,
+    vanilla: `<div class="polaris-legacy-card">
+  <div class="polaris-legacy-card__header">
+    <h2 class="polaris-legacy-card__title">Online store dashboard</h2>
+  </div>
+  <div class="polaris-legacy-card__section">
+    <p>View a summary of your online store's performance.</p>
+  </div>
+</div>`,
+    typescript: `import {LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface LegacyCardDefaultProps {
+  title?: string;
+  sectioned?: boolean;
+  children?: React.ReactNode;
+  primaryFooterAction?: {
+    content: string;
+    onAction: () => void;
+  };
+}
+
+function LegacyCardDefault({
+  title = "Online store dashboard",
+  sectioned = true,
+  children = <p>View a summary of your online store's performance.</p>,
+  primaryFooterAction
+}: LegacyCardDefaultProps): JSX.Element {
+  return (
+    <LegacyCard 
+      title={title} 
+      sectioned={sectioned}
+      primaryFooterAction={primaryFooterAction}
+    >
+      {children}
+    </LegacyCard>
+  );
+}`
+  }
+};
+
+// Resource Item Examples
+export const resourceItemExamples = {
+  default: {
+    react: `import {ResourceItem, Avatar, Text} from '@shopify/polaris';
+import React from 'react';
+
+function ResourceItemDefault() {
+  return (
+    <ResourceItem
+      id="345"
+      url="/products/345"
+      media={<Avatar customer size="md" name="John Smith" />}
+      accessibilityLabel="View details for John Smith"
+    >
+      <Text variant="bodyMd" fontWeight="bold" as="h3">
+        John Smith
+      </Text>
+      <div>john@example.com</div>
+    </ResourceItem>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'container',
+    layout: 'hbox',
+    cls: 'resource-item',
+    items: [{
+      xtype: 'component',
+      html: '<div class="avatar">JS</div>',
+      width: 40
+    }, {
+      xtype: 'container',
+      flex: 1,
+      html: '<h3>John Smith</h3><div>john@example.com</div>'
+    }],
+    listeners: {
+      render: function(c) {
+        c.getEl().on('click', function() {
+          window.location.href = '/products/345';
+        });
+      }
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-resource-item" onclick="window.location.href='/products/345'">
+  <div class="polaris-resource-item__media">
+    <div class="polaris-avatar">JS</div>
+  </div>
+  <div class="polaris-resource-item__content">
+    <h3>John Smith</h3>
+    <div>john@example.com</div>
+  </div>
+</div>`,
+    typescript: `import {ResourceItem, Avatar, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface ResourceItemDefaultProps {
+  id?: string;
+  url?: string;
+  name?: string;
+  email?: string;
+  onClick?: () => void;
+}
+
+function ResourceItemDefault({
+  id = "345",
+  url = "/products/345",
+  name = "John Smith",
+  email = "john@example.com",
+  onClick
+}: ResourceItemDefaultProps): JSX.Element {
+  return (
+    <ResourceItem
+      id={id}
+      url={url}
+      media={<Avatar customer size="md" name={name} />}
+      accessibilityLabel={\`View details for \${name}\`}
+      onClick={onClick}
+    >
+      <Text variant="bodyMd" fontWeight="bold" as="h3">
+        {name}
+      </Text>
+      <div>{email}</div>
+    </ResourceItem>
+  );
+}`
+  }
+};
+
+// Resource List Examples  
+export const resourceListExamples = {
+  default: {
+    react: `import {ResourceList, ResourceItem, Avatar, Text} from '@shopify/polaris';
+import React from 'react';
+
+function ResourceListDefault() {
+  const items = [
+    {id: '341', name: 'Mae Jemison', location: 'Decatur, USA'},
+    {id: '256', name: 'Ellen Ochoa', location: 'Los Angeles, USA'},
+  ];
+
+  return (
+    <ResourceList
+      resourceName={{singular: 'customer', plural: 'customers'}}
+      items={items}
+      renderItem={(item) => {
+        const {id, name, location} = item;
+        const media = <Avatar customer size="md" name={name} />;
+
+        return (
+          <ResourceItem
+            id={id}
+            media={media}
+            accessibilityLabel={\`View details for \${name}\`}
+          >
+            <Text variant="bodyMd" fontWeight="bold" as="h3">
+              {name}
+            </Text>
+            <div>{location}</div>
+          </ResourceItem>
+        );
+      }}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.view.View', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'location'],
+    data: [
+      {id: '341', name: 'Mae Jemison', location: 'Decatur, USA'},
+      {id: '256', name: 'Ellen Ochoa', location: 'Los Angeles, USA'}
+    ]
+  }),
+  tpl: [
+    '<tpl for=".">',
+    '<div class="resource-item">',
+    '<div class="avatar">{[values.name.substr(0,2)]}</div>',
+    '<div class="content">',
+    '<h3>{name}</h3>',
+    '<div>{location}</div>',
+    '</div>',
+    '</div>',
+    '</tpl>'
+  ],
+  itemSelector: 'div.resource-item'
+});`,
+    vanilla: `<div class="polaris-resource-list">
+  <div class="polaris-resource-item">
+    <div class="polaris-avatar">MJ</div>
+    <div class="polaris-resource-item__content">
+      <h3>Mae Jemison</h3>
+      <div>Decatur, USA</div>
+    </div>
+  </div>
+  <div class="polaris-resource-item">
+    <div class="polaris-avatar">EO</div>
+    <div class="polaris-resource-item__content">
+      <h3>Ellen Ochoa</h3>
+      <div>Los Angeles, USA</div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {ResourceList, ResourceItem, Avatar, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface Customer {
+  id: string;
+  name: string;
+  location: string;
+}
+
+interface ResourceListDefaultProps {
+  items?: Customer[];
+  onItemClick?: (item: Customer) => void;
+}
+
+function ResourceListDefault({
+  items = [
+    {id: '341', name: 'Mae Jemison', location: 'Decatur, USA'},
+    {id: '256', name: 'Ellen Ochoa', location: 'Los Angeles, USA'},
+  ],
+  onItemClick
+}: ResourceListDefaultProps): JSX.Element {
+  return (
+    <ResourceList
+      resourceName={{singular: 'customer', plural: 'customers'}}
+      items={items}
+      renderItem={(item: Customer) => {
+        const {id, name, location} = item;
+        const media = <Avatar customer size="md" name={name} />;
+
+        return (
+          <ResourceItem
+            id={id}
+            media={media}
+            accessibilityLabel={\`View details for \${name}\`}
+            onClick={() => onItemClick?.(item)}
+          >
+            <Text variant="bodyMd" fontWeight="bold" as="h3">
+              {name}
+            </Text>
+            <div>{location}</div>
+          </ResourceItem>
+        );
+      }}
+    />
+  );
+}`
+  }
+};
+
+// Scrollable Examples
+export const scrollableExamples = {
+  default: {
+    react: `import {Scrollable, Text} from '@shopify/polaris';
+import React from 'react';
+
+function ScrollableDefault() {
+  return (
+    <Scrollable shadow style={{height: '200px'}}>
+      {Array.from({length: 20}).map((_, i) => (
+        <Text key={i} as="p" variant="bodyMd">
+          Item {i + 1} - Scroll to see more content
+        </Text>
+      ))}
+    </Scrollable>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  height: 200,
+  autoScroll: true,
+  items: Array.from({length: 20}).map((_, i) => ({
+    xtype: 'component',
+    html: '<p>Item ' + (i + 1) + ' - Scroll to see more content</p>'
+  }))
+});`,
+    vanilla: `<div class="polaris-scrollable" style="height: 200px; overflow-y: auto;">
+  ${Array.from({length: 20}).map((_, i) => 
+    '<p>Item ' + (i + 1) + ' - Scroll to see more content</p>'
+  ).join('')}
+</div>`,
+    typescript: `import {Scrollable, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface ScrollableDefaultProps {
+  height?: string;
+  shadow?: boolean;
+  itemCount?: number;
+}
+
+function ScrollableDefault({
+  height = '200px',
+  shadow = true,
+  itemCount = 20
+}: ScrollableDefaultProps): JSX.Element {
+  return (
+    <Scrollable shadow={shadow} style={{height}}>
+      {Array.from({length: itemCount}).map((_, i) => (
+        <Text key={i} as="p" variant="bodyMd">
+          Item {i + 1} - Scroll to see more content
+        </Text>
+      ))}
+    </Scrollable>
+  );
+}`
+  }
+};
+
+// Skeleton Body Text Examples
+export const skeletonBodyTextExamples = {
+  default: {
+    react: `import {SkeletonBodyText} from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonBodyTextDefault() {
+  return <SkeletonBodyText lines={3} />;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'component',
+    html: [
+      '<div class="skeleton-line" style="width: 100%; height: 16px; background: #ddd; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-line" style="width: 80%; height: 16px; background: #ddd; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-line" style="width: 90%; height: 16px; background: #ddd;"></div>'
+    ].join('')
+  }]
+});`,
+    vanilla: `<div class="polaris-skeleton-body-text">
+  <div class="polaris-skeleton-line"></div>
+  <div class="polaris-skeleton-line" style="width: 80%;"></div>
+  <div class="polaris-skeleton-line" style="width: 90%;"></div>
+</div>`,
+    typescript: `import {SkeletonBodyText} from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonBodyTextDefaultProps {
+  lines?: number;
+}
+
+function SkeletonBodyTextDefault({
+  lines = 3
+}: SkeletonBodyTextDefaultProps): JSX.Element {
+  return <SkeletonBodyText lines={lines} />;
+}`
+  }
+};
+
+// Text Container Examples
+export const textContainerExamples = {
+  default: {
+    react: `import {TextContainer, Text} from '@shopify/polaris';
+import React from 'react';
+
+function TextContainerDefault() {
+  return (
+    <TextContainer>
+      <Text variant="headingMd" as="h2">Heading</Text>
+      <p>This is a paragraph of text within a text container. It provides proper spacing between text elements.</p>
+      <p>Here's another paragraph with consistent spacing.</p>
+    </TextContainer>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 10,
+  items: [{
+    xtype: 'container',
+    html: [
+      '<h2>Heading</h2>',
+      '<p>This is a paragraph of text within a text container. It provides proper spacing between text elements.</p>',
+      '<p>Here\\'s another paragraph with consistent spacing.</p>'
+    ].join('')
+  }]
+});`,
+    vanilla: `<div class="polaris-text-container">
+  <h2>Heading</h2>
+  <p>This is a paragraph of text within a text container. It provides proper spacing between text elements.</p>
+  <p>Here's another paragraph with consistent spacing.</p>
+</div>`,
+    typescript: `import {TextContainer, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface TextContainerDefaultProps {
+  heading?: string;
+  paragraphs?: string[];
+}
+
+function TextContainerDefault({
+  heading = "Heading",
+  paragraphs = [
+    "This is a paragraph of text within a text container. It provides proper spacing between text elements.",
+    "Here's another paragraph with consistent spacing."
+  ]
+}: TextContainerDefaultProps): JSX.Element {
+  return (
+    <TextContainer>
+      <Text variant="headingMd" as="h2">{heading}</Text>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </TextContainer>
+  );
+}`
+  }
+};
+
+// Top Bar Examples
+export const topBarExamples = {
+  default: {
+    react: `import {TopBar, Icon} from '@shopify/polaris';
+import {QuestionCircleIcon} from '@shopify/polaris-icons';
+import React, {useState, useCallback} from 'react';
+
+function TopBarDefault() {
+  const [userMenuActive, setUserMenuActive] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+
+  const toggleUserMenuActive = useCallback(
+    () => setUserMenuActive((userMenuActive) => !userMenuActive),
+    [],
+  );
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchValue(value);
+    setSearchActive(value.length > 0);
+  }, []);
+
+  const userMenuMarkup = (
+    <TopBar.UserMenu
+      name="John Smith"
+      detail="Acme Stores"
+      initials="JS"
+      open={userMenuActive}
+      onToggle={toggleUserMenuActive}
+    />
+  );
+
+  const searchFieldMarkup = (
+    <TopBar.SearchField
+      onChange={handleSearchChange}
+      value={searchValue}
+      placeholder="Search"
+    />
+  );
+
+  return (
+    <TopBar
+      showNavigationToggle
+      userMenu={userMenuMarkup}
+      searchField={searchFieldMarkup}
+      searchResultsVisible={searchActive}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  items: [{
+    xtype: 'button',
+    icon: 'menu-icon',
+    handler: function() {
+      console.log('Toggle navigation');
+    }
+  }, {
+    xtype: 'tbfill'
+  }, {
+    xtype: 'textfield',
+    emptyText: 'Search',
+    width: 200
+  }, {
+    xtype: 'button',
+    text: 'JS',
+    menu: [{
+      text: 'John Smith',
+      disabled: true
+    }, {
+      text: 'Acme Stores',
+      disabled: true
+    }, '-', {
+      text: 'Settings'
+    }, {
+      text: 'Logout'
+    }]
+  }]
+});`,
+    vanilla: `<div class="polaris-top-bar">
+  <button class="polaris-top-bar__navigation-toggle">☰</button>
+  
+  <div class="polaris-top-bar__search">
+    <input type="text" placeholder="Search" class="polaris-top-bar__search-field">
+  </div>
+  
+  <div class="polaris-top-bar__user-menu">
+    <button class="polaris-top-bar__user-button">JS</button>
+    <div class="polaris-top-bar__user-dropdown" style="display: none;">
+      <div class="polaris-top-bar__user-info">
+        <div>John Smith</div>
+        <div>Acme Stores</div>
+      </div>
+      <div class="polaris-top-bar__user-actions">
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const userButton = document.querySelector('.polaris-top-bar__user-button');
+const userDropdown = document.querySelector('.polaris-top-bar__user-dropdown');
+
+userButton.addEventListener('click', () => {
+  userDropdown.style.display = userDropdown.style.display === 'none' ? 'block' : 'none';
+});
+</script>`,
+    typescript: `import {TopBar, Icon} from '@shopify/polaris';
+import {QuestionCircleIcon} from '@shopify/polaris-icons';
+import React, {useState, useCallback} from 'react';
+
+interface TopBarDefaultProps {
+  userName?: string;
+  storeName?: string;
+  userInitials?: string;
+  onNavigationToggle?: () => void;
+  onSearch?: (value: string) => void;
+}
+
+function TopBarDefault({
+  userName = "John Smith",
+  storeName = "Acme Stores",
+  userInitials = "JS",
+  onNavigationToggle,
+  onSearch
+}: TopBarDefaultProps): JSX.Element {
+  const [userMenuActive, setUserMenuActive] = useState<boolean>(false);
+  const [searchActive, setSearchActive] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const toggleUserMenuActive = useCallback(
+    () => setUserMenuActive((userMenuActive) => !userMenuActive),
+    [],
+  );
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchValue(value);
+    setSearchActive(value.length > 0);
+    onSearch?.(value);
+  }, [onSearch]);
+
+  const userMenuMarkup = (
+    <TopBar.UserMenu
+      name={userName}
+      detail={storeName}
+      initials={userInitials}
+      open={userMenuActive}
+      onToggle={toggleUserMenuActive}
+    />
+  );
+
+  const searchFieldMarkup = (
+    <TopBar.SearchField
+      onChange={handleSearchChange}
+      value={searchValue}
+      placeholder="Search"
+    />
+  );
+
+  return (
+    <TopBar
+      showNavigationToggle
+      userMenu={userMenuMarkup}
+      searchField={searchFieldMarkup}
+      searchResultsVisible={searchActive}
+      onNavigationToggle={onNavigationToggle}
+    />
+  );
+}`
+  }
+};
+
+// Skeleton Display Text Examples
+export const skeletonDisplayTextExamples = {
+  default: {
+    react: `import {SkeletonDisplayText} from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonDisplayTextDefault() {
+  return <SkeletonDisplayText size="medium" />;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'component',
+    html: '<div class="skeleton-display-text" style="width: 120px; height: 32px; background: #ddd;"></div>'
+  }]
+});`,
+    vanilla: `<div class="polaris-skeleton-display-text polaris-skeleton-display-text--medium"></div>`,
+    typescript: `import {SkeletonDisplayText} from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonDisplayTextDefaultProps {
+  size?: 'small' | 'medium' | 'large' | 'extraLarge';
+}
+
+function SkeletonDisplayTextDefault({
+  size = 'medium'
+}: SkeletonDisplayTextDefaultProps): JSX.Element {
+  return <SkeletonDisplayText size={size} />;
+}`
+  }
+};
+
+// Skeleton Page Examples
+export const skeletonPageExamples = {
+  default: {
+    react: `import {SkeletonPage, Layout, LegacyCard, SkeletonBodyText} from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageDefault() {
+  return (
+    <SkeletonPage primaryAction>
+      <Layout>
+        <Layout.Section>
+          <LegacyCard sectioned>
+            <SkeletonBodyText />
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'container',
+    html: '<div class="skeleton-page-header" style="height: 60px; background: #f5f5f5;"></div>'
+  }, {
+    xtype: 'panel',
+    bodyPadding: 20,
+    items: [{
+      xtype: 'component',
+      html: '<div class="skeleton-lines"></div>'
+    }]
+  }]
+});`,
+    vanilla: `<div class="polaris-skeleton-page">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title"></div>
+    <div class="polaris-skeleton-page__primary-action"></div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card">
+      <div class="polaris-skeleton-body-text">
+        <div class="polaris-skeleton-line"></div>
+        <div class="polaris-skeleton-line"></div>
+        <div class="polaris-skeleton-line"></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {SkeletonPage, Layout, LegacyCard, SkeletonBodyText} from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonPageDefaultProps {
+  primaryAction?: boolean;
+  title?: boolean;
+  breadcrumbs?: boolean;
+}
+
+function SkeletonPageDefault({
+  primaryAction = true,
+  title = true,
+  breadcrumbs = false
+}: SkeletonPageDefaultProps): JSX.Element {
+  return (
+    <SkeletonPage 
+      primaryAction={primaryAction}
+      title={title}
+      breadcrumbs={breadcrumbs}
+    >
+      <Layout>
+        <Layout.Section>
+          <LegacyCard sectioned>
+            <SkeletonBodyText />
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}`
+  }
+};
+
+// Listbox Examples
+export const listboxExamples = {
+  default: {
+    react: `import {Listbox} from '@shopify/polaris';
+import React from 'react';
+
+function ListboxDefault() {
+  return (
+    <Listbox accessibilityLabel="Basic listbox">
+      <Listbox.Option value="draft">Draft</Listbox.Option>
+      <Listbox.Option value="active">Active</Listbox.Option>
+      <Listbox.Option value="archived">Archived</Listbox.Option>
+    </Listbox>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Status',
+  store: ['Draft', 'Active', 'Archived'],
+  queryMode: 'local',
+  editable: false
+});`,
+    vanilla: `<div class="polaris-listbox" role="listbox" aria-label="Basic listbox">
+  <button class="polaris-listbox-option" role="option" value="draft">Draft</button>
+  <button class="polaris-listbox-option" role="option" value="active">Active</button>
+  <button class="polaris-listbox-option" role="option" value="archived">Archived</button>
+</div>
+
+<script>
+document.querySelectorAll('.polaris-listbox-option').forEach(option => {
+  option.addEventListener('click', (e) => {
+    // Remove selected state from all options
+    document.querySelectorAll('.polaris-listbox-option').forEach(opt => {
+      opt.classList.remove('selected');
+    });
+    // Add selected state to clicked option
+    e.target.classList.add('selected');
+    console.log('Selected:', e.target.value);
+  });
+});
+</script>`,
+    typescript: `import {Listbox} from '@shopify/polaris';
+import React, {useState} from 'react';
+
+interface ListboxDefaultProps {
+  options?: Array<{value: string; label: string}>;
+  onSelect?: (value: string) => void;
+}
+
+function ListboxDefault({
+  options = [
+    {value: 'draft', label: 'Draft'},
+    {value: 'active', label: 'Active'},
+    {value: 'archived', label: 'Archived'}
+  ],
+  onSelect
+}: ListboxDefaultProps): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+
+  const handleSelect = (value: string) => {
+    setSelected(value);
+    onSelect?.(value);
+  };
+
+  return (
+    <Listbox 
+      accessibilityLabel="Basic listbox"
+      onSelect={handleSelect}
+    >
+      {options.map(option => (
+        <Listbox.Option 
+          key={option.value}
+          value={option.value}
+          selected={selected === option.value}
+        >
+          {option.label}
+        </Listbox.Option>
+      ))}
+    </Listbox>
+  );
+}`
+  }
+};
+
+// Description List Examples
+export const descriptionListExamples = {
+  default: {
+    react: `import {DescriptionList} from '@shopify/polaris';
+import React from 'react';
+
+function DescriptionListDefault() {
+  return (
+    <DescriptionList
+      items={[
+        {
+          term: 'Order number',
+          description: '1234',
+        },
+        {
+          term: 'Date',
+          description: 'November 12, 2023',
+        },
+        {
+          term: 'Payment status',
+          description: 'Paid',
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'displayfield',
+    fieldLabel: 'Order number',
+    value: '1234'
+  }, {
+    xtype: 'displayfield',
+    fieldLabel: 'Date',
+    value: 'November 12, 2023'
+  }, {
+    xtype: 'displayfield',
+    fieldLabel: 'Payment status',
+    value: 'Paid'
+  }]
+});`,
+    vanilla: `<dl class="polaris-description-list">
+  <dt>Order number</dt>
+  <dd>1234</dd>
+  <dt>Date</dt>
+  <dd>November 12, 2023</dd>
+  <dt>Payment status</dt>
+  <dd>Paid</dd>
+</dl>`,
+    typescript: `import {DescriptionList} from '@shopify/polaris';
+import React from 'react';
+
+interface DescriptionItem {
+  term: string;
+  description: string | React.ReactNode;
+}
+
+interface DescriptionListDefaultProps {
+  items?: DescriptionItem[];
+}
+
+function DescriptionListDefault({
+  items = [
+    {
+      term: 'Order number',
+      description: '1234',
+    },
+    {
+      term: 'Date',
+      description: 'November 12, 2023',
+    },
+    {
+      term: 'Payment status',
+      description: 'Paid',
+    },
+  ]
+}: DescriptionListDefaultProps): JSX.Element {
+  return <DescriptionList items={items} />;
+}`
+  }
+};
+
+// Index Filters Examples (note: different from index-filter)
+export const indexFiltersExamples = {
+  default: {
+    react: `import {IndexFilters, useSetIndexFiltersMode} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function IndexFiltersDefault() {
+  const {mode, setMode} = useSetIndexFiltersMode();
+  const [queryValue, setQueryValue] = useState('');
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            {label: 'Active', value: 'active'},
+            {label: 'Draft', value: 'draft'},
+          ]}
+          selected={[]}
+          onChange={() => {}}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <IndexFilters
+      filters={filters}
+      appliedFilters={[]}
+      onClearAll={() => {}}
+      onQueryChange={setQueryValue}
+      onQueryClear={() => setQueryValue('')}
+      mode={mode}
+      setMode={setMode}
+      queryValue={queryValue}
+      tabs={[]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  items: [{
+    xtype: 'textfield',
+    emptyText: 'Search...',
+    width: 200
+  }, {
+    xtype: 'button',
+    text: 'Filters',
+    menu: [{
+      text: 'Status',
+      menu: [{
+        text: 'Active',
+        checkHandler: function(item, checked) {
+          console.log('Active:', checked);
+        }
+      }, {
+        text: 'Draft',
+        checkHandler: function(item, checked) {
+          console.log('Draft:', checked);
+        }
+      }]
+    }]
+  }, {
+    xtype: 'button',
+    text: 'Clear all'
+  }]
+});`,
+    vanilla: `<div class="polaris-index-filters">
+  <input type="text" placeholder="Search..." class="polaris-search">
+  <button class="polaris-filter-button">Filters</button>
+  <button class="polaris-clear-button">Clear all</button>
+  
+  <div class="polaris-filter-menu" style="display: none;">
+    <div class="polaris-filter-group">
+      <h3>Status</h3>
+      <label><input type="checkbox" value="active"> Active</label>
+      <label><input type="checkbox" value="draft"> Draft</label>
+    </div>
+  </div>
+</div>
+
+<script>
+const filterButton = document.querySelector('.polaris-filter-button');
+const filterMenu = document.querySelector('.polaris-filter-menu');
+
+filterButton.addEventListener('click', () => {
+  filterMenu.style.display = filterMenu.style.display === 'none' ? 'block' : 'none';
+});
+</script>`,
+    typescript: `import {IndexFilters, useSetIndexFiltersMode, ChoiceList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface IndexFiltersDefaultProps {
+  onQueryChange?: (value: string) => void;
+  onFiltersChange?: (filters: any[]) => void;
+}
+
+function IndexFiltersDefault({
+  onQueryChange,
+  onFiltersChange
+}: IndexFiltersDefaultProps): JSX.Element {
+  const {mode, setMode} = useSetIndexFiltersMode();
+  const [queryValue, setQueryValue] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            {label: 'Active', value: 'active'},
+            {label: 'Draft', value: 'draft'},
+          ]}
+          selected={statusFilter}
+          onChange={setStatusFilter}
+        />
+      ),
+    },
+  ];
+
+  const handleQueryChange = useCallback((value: string) => {
+    setQueryValue(value);
+    onQueryChange?.(value);
+  }, [onQueryChange]);
+
+  return (
+    <IndexFilters
+      filters={filters}
+      appliedFilters={[]}
+      onClearAll={() => {
+        setQueryValue('');
+        setStatusFilter([]);
+      }}
+      onQueryChange={handleQueryChange}
+      onQueryClear={() => setQueryValue('')}
+      mode={mode}
+      setMode={setMode}
+      queryValue={queryValue}
+      tabs={[]}
+    />
+  );
+}`
+  }
+};
+
+// Legacy Filters Examples
+export const legacyFiltersExamples = {
+  default: {
+    react: `import {LegacyFilters} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LegacyFiltersDefault() {
+  const [queryValue, setQueryValue] = useState('');
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <select>
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="draft">Draft</option>
+        </select>
+      ),
+    },
+  ];
+
+  return (
+    <LegacyFilters
+      queryValue={queryValue}
+      filters={filters}
+      onQueryChange={setQueryValue}
+      onQueryClear={() => setQueryValue('')}
+      onClearAll={() => {}}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: 'hbox',
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Search',
+    emptyText: 'Filter items...'
+  }, {
+    xtype: 'combobox',
+    fieldLabel: 'Status',
+    store: ['All', 'Active', 'Draft'],
+    value: 'All'
+  }, {
+    xtype: 'button',
+    text: 'Clear',
+    handler: function() {
+      this.up('form').reset();
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-legacy-filters">
+  <input type="text" placeholder="Filter items..." class="polaris-filter-search">
+  <select class="polaris-filter-select">
+    <option value="">All</option>
+    <option value="active">Active</option>
+    <option value="draft">Draft</option>
+  </select>
+  <button class="polaris-filter-clear">Clear</button>
+</div>`,
+    typescript: `import {LegacyFilters} from '@shopify/polaris';
+import {useState} from 'react';
+
+interface LegacyFiltersDefaultProps {
+  onQueryChange?: (value: string) => void;
+  onStatusChange?: (status: string) => void;
+}
+
+function LegacyFiltersDefault({
+  onQueryChange,
+  onStatusChange
+}: LegacyFiltersDefaultProps): JSX.Element {
+  const [queryValue, setQueryValue] = useState<string>('');
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <select onChange={(e) => onStatusChange?.(e.target.value)}>
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="draft">Draft</option>
+        </select>
+      ),
+    },
+  ];
+
+  return (
+    <LegacyFilters
+      queryValue={queryValue}
+      filters={filters}
+      onQueryChange={(value) => {
+        setQueryValue(value);
+        onQueryChange?.(value);
+      }}
+      onQueryClear={() => setQueryValue('')}
+      onClearAll={() => {}}
+    />
+  );
+}`
+  }
+};
+
+// Legacy Tabs Examples
+export const legacyTabsExamples = {
+  default: {
+    react: `import {LegacyTabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function LegacyTabsDefault() {
+  const [selected, setSelected] = useState(0);
+
+  const tabs = [
+    {
+      id: 'all-customers',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-panel',
+    },
+    {
+      id: 'accepts-marketing',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-panel',
+    },
+  ];
+
+  return (
+    <LegacyTabs tabs={tabs} selected={selected} onSelect={setSelected}>
+      <LegacyTabs.Panel id="all-customers-panel">
+        All customers content
+      </LegacyTabs.Panel>
+      <LegacyTabs.Panel id="accepts-marketing-panel">
+        Accepts marketing content
+      </LegacyTabs.Panel>
+    </LegacyTabs>
+  );
+}`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  items: [{
+    title: 'All',
+    html: 'All customers content'
+  }, {
+    title: 'Accepts marketing',
+    html: 'Accepts marketing content'
+  }]
+});`,
+    vanilla: `<div class="polaris-legacy-tabs">
+  <ul class="polaris-legacy-tabs__list">
+    <li class="polaris-legacy-tabs__item polaris-legacy-tabs__item--selected" data-panel="all">
+      All
+    </li>
+    <li class="polaris-legacy-tabs__item" data-panel="marketing">
+      Accepts marketing
+    </li>
+  </ul>
+  
+  <div class="polaris-legacy-tabs__panel" id="all-panel">
+    All customers content
+  </div>
+  <div class="polaris-legacy-tabs__panel" id="marketing-panel" style="display: none;">
+    Accepts marketing content
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.polaris-legacy-tabs__item').forEach(tab => {
+  tab.addEventListener('click', () => {
+    // Hide all panels and remove selected class
+    document.querySelectorAll('.polaris-legacy-tabs__panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.polaris-legacy-tabs__item').forEach(t => t.classList.remove('polaris-legacy-tabs__item--selected'));
+    
+    // Show selected panel and add selected class
+    tab.classList.add('polaris-legacy-tabs__item--selected');
+    document.getElementById(tab.dataset.panel + '-panel').style.display = 'block';
+  });
+});
+</script>`,
+    typescript: `import {LegacyTabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+  accessibilityLabel?: string;
+  panelID: string;
+}
+
+interface LegacyTabsDefaultProps {
+  tabs?: Tab[];
+  initialSelected?: number;
+  onTabChange?: (index: number) => void;
+}
+
+function LegacyTabsDefault({
+  tabs = [
+    {
+      id: 'all-customers',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-panel',
+    },
+    {
+      id: 'accepts-marketing',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-panel',
+    },
+  ],
+  initialSelected = 0,
+  onTabChange
+}: LegacyTabsDefaultProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(initialSelected);
+
+  const handleTabChange = useCallback((index: number) => {
+    setSelected(index);
+    onTabChange?.(index);
+  }, [onTabChange]);
+
+  return (
+    <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      <LegacyTabs.Panel id="all-customers-panel">
+        All customers content
+      </LegacyTabs.Panel>
+      <LegacyTabs.Panel id="accepts-marketing-panel">
+        Accepts marketing content
+      </LegacyTabs.Panel>
+    </LegacyTabs>
+  );
+}`
+  }
+};
+
+// Page Actions Examples
+export const pageActionsExamples = {
+  default: {
+    react: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+function PageActionsDefault() {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        disabled: false,
+      }}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: ['->', {
+    xtype: 'button',
+    text: 'Delete',
+    ui: 'destructive'
+  }, {
+    xtype: 'button',
+    text: 'Save',
+    ui: 'primary'
+  }]
+});`,
+    vanilla: `<div class="polaris-page-actions">
+  <button class="polaris-button polaris-button--destructive">Delete</button>
+  <button class="polaris-button polaris-button--primary">Save</button>
+</div>`,
+    typescript: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+interface PageActionsDefaultProps {
+  onSave?: () => void;
+  onDelete?: () => void;
+  saveDisabled?: boolean;
+}
+
+function PageActionsDefault({
+  onSave,
+  onDelete,
+  saveDisabled = false
+}: PageActionsDefaultProps): JSX.Element {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        disabled: saveDisabled,
+        onAction: onSave,
+      }}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+          onAction: onDelete,
+        },
+      ]}
+    />
+  );
+}`
+  }
+};
+
+// Skeleton Tabs Examples
+export const skeletonTabsExamples = {
+  default: {
+    react: `import {SkeletonTabs} from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonTabsDefault() {
+  return <SkeletonTabs count={2} />;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  html: '<div class="skeleton-tabs"><div class="skeleton-tab"></div><div class="skeleton-tab"></div></div>'
+});`,
+    vanilla: `<div class="polaris-skeleton-tabs">
+  <div class="polaris-skeleton-tab"></div>
+  <div class="polaris-skeleton-tab"></div>
+</div>`,
+    typescript: `import {SkeletonTabs} from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonTabsDefaultProps {
+  count?: number;
+}
+
+function SkeletonTabsDefault({
+  count = 2
+}: SkeletonTabsDefaultProps): JSX.Element {
+  return <SkeletonTabs count={count} />;
+}`
+  }
+};
+
+// Skeleton Thumbnail Examples
+export const skeletonThumbnailExamples = {
+  default: {
+    react: `import {SkeletonThumbnail} from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonThumbnailDefault() {
+  return <SkeletonThumbnail size="medium" />;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  html: '<div class="skeleton-thumbnail" style="width: 60px; height: 60px; background: #ddd;"></div>'
+});`,
+    vanilla: `<div class="polaris-skeleton-thumbnail polaris-skeleton-thumbnail--medium"></div>`,
+    typescript: `import {SkeletonThumbnail} from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonThumbnailDefaultProps {
+  size?: 'small' | 'medium' | 'large';
+}
+
+function SkeletonThumbnailDefault({
+  size = 'medium'
+}: SkeletonThumbnailDefaultProps): JSX.Element {
+  return <SkeletonThumbnail size={size} />;
+}`
+  }
+};
+
+// Exception List Examples
+export const exceptionListExamples = {
+  default: {
+    react: `import {ExceptionList} from '@shopify/polaris';
+import React from 'react';
+
+function ExceptionListDefault() {
+  return (
+    <ExceptionList
+      items={[
+        {
+          icon: 'CircleAlertIcon',
+          description: 'This customer has a suspended account',
+        },
+        {
+          icon: 'CircleInformationIcon',
+          description: 'This customer is tax-exempt',
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'container',
+    html: '<div class="exception-item"><span>⚠️</span> This customer has a suspended account</div>'
+  }, {
+    xtype: 'container',
+    html: '<div class="exception-item"><span>ℹ️</span> This customer is tax-exempt</div>'
+  }]
+});`,
+    vanilla: `<ul class="polaris-exception-list">
+  <li class="polaris-exception-list__item">
+    <span class="polaris-exception-list__icon">⚠️</span>
+    <span>This customer has a suspended account</span>
+  </li>
+  <li class="polaris-exception-list__item">
+    <span class="polaris-exception-list__icon">ℹ️</span>
+    <span>This customer is tax-exempt</span>
+  </li>
+</ul>`,
+    typescript: `import {ExceptionList} from '@shopify/polaris';
+import React from 'react';
+
+interface ExceptionItem {
+  icon: string;
+  description: string;
+}
+
+interface ExceptionListDefaultProps {
+  items?: ExceptionItem[];
+}
+
+function ExceptionListDefault({
+  items = [
+    {
+      icon: 'CircleAlertIcon',
+      description: 'This customer has a suspended account',
+    },
+    {
+      icon: 'CircleInformationIcon',
+      description: 'This customer is tax-exempt',
+    },
+  ]
+}: ExceptionListDefaultProps): JSX.Element {
+  return <ExceptionList items={items} />;
+}`
+  }
+};
+
+// Deprecated Card Examples
+export const deprecatedCardExamples = {
+  default: {
+    react: `import {Card} from '@shopify/polaris';
+import React from 'react';
+
+function DeprecatedCardDefault() {
+  return (
+    <Card title="Deprecated Card" sectioned>
+      <p>This is a deprecated card component. Use LegacyCard instead.</p>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Deprecated Card',
+  bodyPadding: 20,
+  html: '<p>This is a deprecated card component. Use LegacyCard instead.</p>'
+});`,
+    vanilla: `<div class="polaris-card polaris-card--deprecated">
+  <div class="polaris-card__header">
+    <h2 class="polaris-card__title">Deprecated Card</h2>
+  </div>
+  <div class="polaris-card__section">
+    <p>This is a deprecated card component. Use LegacyCard instead.</p>
+  </div>
+</div>`,
+    typescript: `import {Card} from '@shopify/polaris';
+import React from 'react';
+
+interface DeprecatedCardDefaultProps {
+  title?: string;
+  children?: React.ReactNode;
+}
+
+function DeprecatedCardDefault({
+  title = "Deprecated Card",
+  children = <p>This is a deprecated card component. Use LegacyCard instead.</p>
+}: DeprecatedCardDefaultProps): JSX.Element {
+  return (
+    <Card title={title} sectioned>
+      {children}
+    </Card>
+  );
+}`
+  }
+};
+
+// Radio Button Examples
+export const radioButtonExamples = {
+  default: {
+    react: `import {LegacyStack, RadioButton} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function RadioButtonDefault() {
+  const [value, setValue] = useState('disabled');
+
+  const handleChange = useCallback(
+    (_: boolean, newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <LegacyStack vertical>
+      <RadioButton
+        label="Accounts are disabled"
+        helpText="Customers will only be able to check out as guests."
+        checked={value === 'disabled'}
+        id="disabled"
+        name="accounts"
+        onChange={handleChange}
+      />
+      <RadioButton
+        label="Accounts are optional"
+        helpText="Customers will be able to check out with a customer account or as a guest."
+        id="optional"
+        name="accounts"
+        checked={value === 'optional'}
+        onChange={handleChange}
+      />
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'Account Settings',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'radiogroup',
+    fieldLabel: 'Customer Accounts',
+    columns: 1,
+    items: [{
+      boxLabel: 'Accounts are disabled',
+      name: 'accounts',
+      inputValue: 'disabled',
+      checked: true
+    }, {
+      boxLabel: 'Accounts are optional',
+      name: 'accounts',
+      inputValue: 'optional'
+    }],
+    listeners: {
+      change: function(radiogroup, newValue) {
+        console.log('Selected account type:', newValue.accounts);
+        var helpText = newValue.accounts === 'disabled' 
+          ? 'Customers will only be able to check out as guests.'
+          : 'Customers will be able to check out with a customer account or as a guest.';
+        console.log('Help text:', helpText);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-radio-group">
+  <fieldset class="polaris-radio-group__fieldset">
+    <legend class="polaris-radio-group__legend">Customer Accounts</legend>
+    
+    <div class="polaris-radio-group__choices">
+      <label class="polaris-radio">
+        <input 
+          type="radio" 
+          class="polaris-radio__input" 
+          name="accounts" 
+          value="disabled"
+          checked>
+        <span class="polaris-radio__control"></span>
+        <span class="polaris-radio__label">
+          Accounts are disabled
+          <div class="polaris-radio__help-text">
+            Customers will only be able to check out as guests.
+          </div>
+        </span>
+      </label>
+      
+      <label class="polaris-radio">
+        <input 
+          type="radio" 
+          class="polaris-radio__input" 
+          name="accounts" 
+          value="optional">
+        <span class="polaris-radio__control"></span>
+        <span class="polaris-radio__label">
+          Accounts are optional
+          <div class="polaris-radio__help-text">
+            Customers will be able to check out with a customer account or as a guest.
+          </div>
+        </span>
+      </label>
+    </div>
+  </fieldset>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('input[name="accounts"]').forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    console.log('Selected account type:', e.target.value);
+  });
+});
+</script>`,
+    typescript: `import {LegacyStack, RadioButton} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+type AccountType = 'disabled' | 'optional';
+
+interface RadioButtonOption {
+  value: AccountType;
+  label: string;
+  helpText: string;
+}
+
+interface RadioButtonDefaultProps {
+  initialValue?: AccountType;
+  options?: RadioButtonOption[];
+  onChange?: (value: AccountType) => void;
+}
+
+function RadioButtonDefault({
+  initialValue = 'disabled',
+  options = [
+    {
+      value: 'disabled',
+      label: 'Accounts are disabled',
+      helpText: 'Customers will only be able to check out as guests.'
+    },
+    {
+      value: 'optional',
+      label: 'Accounts are optional',
+      helpText: 'Customers will be able to check out with a customer account or as a guest.'
+    }
+  ],
+  onChange
+}: RadioButtonDefaultProps): JSX.Element {
+  const [value, setValue] = useState<AccountType>(initialValue);
+
+  const handleChange = useCallback(
+    (_: boolean, newValue: string) => {
+      const accountType = newValue as AccountType;
+      setValue(accountType);
+      onChange?.(accountType);
+    },
+    [onChange],
+  );
+
+  return (
+    <LegacyStack vertical>
+      {options.map((option) => (
+        <RadioButton
+          key={option.value}
+          label={option.label}
+          helpText={option.helpText}
+          checked={value === option.value}
+          id={option.value}
+          name="accounts"
+          onChange={handleChange}
+        />
+      ))}
+    </LegacyStack>
+  );
+}`
+  }
+};
+
+// Range Slider Examples
+export const rangeSliderExamples = {
+  default: {
+    react: `import {LegacyCard, RangeSlider} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function RangeSliderDefault() {
+  const [rangeValue, setRangeValue] = useState(32);
+
+  const handleRangeSliderChange = useCallback(
+    (value: number) => setRangeValue(value),
+    [],
+  );
+
+  return (
+    <LegacyCard sectioned title="Background color">
+      <RangeSlider
+        label="Opacity percentage"
+        value={rangeValue}
+        onChange={handleRangeSliderChange}
+        output
+      />
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Background color',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'slider',
+    fieldLabel: 'Opacity percentage',
+    value: 32,
+    increment: 1,
+    minValue: 0,
+    maxValue: 100,
+    listeners: {
+      change: function(slider, newValue) {
+        console.log('Opacity changed to:', newValue);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__header">
+    <h3>Background color</h3>
+  </div>
+  <div class="polaris-card__content">
+    <div class="polaris-range-slider">
+      <label class="polaris-range-slider__label" for="opacity-slider">Opacity percentage</label>
+      <div class="polaris-range-slider__input-wrapper">
+        <input 
+          type="range" 
+          id="opacity-slider" 
+          class="polaris-range-slider__input" 
+          min="0" 
+          max="100" 
+          value="32"
+          step="1">
+        <output class="polaris-range-slider__output" id="opacity-output">32</output>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const slider = document.getElementById('opacity-slider');
+const output = document.getElementById('opacity-output');
+
+slider.addEventListener('input', (e) => {
+  const value = e.target.value;
+  output.textContent = value;
+  console.log('Opacity changed to:', value);
+});
+</script>`,
+    typescript: `import {LegacyCard, RangeSlider} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface RangeSliderDefaultProps {
+  initialValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  label?: string;
+  onChange?: (value: number) => void;
+}
+
+function RangeSliderDefault({
+  initialValue = 32,
+  min = 0,
+  max = 100,
+  step = 1,
+  label = "Opacity percentage",
+  onChange
+}: RangeSliderDefaultProps): JSX.Element {
+  const [rangeValue, setRangeValue] = useState<number>(initialValue);
+
+  const handleRangeSliderChange = useCallback(
+    (value: number) => {
+      setRangeValue(value);
+      onChange?.(value);
+    },
+    [onChange],
+  );
+
+  return (
+    <LegacyCard sectioned title="Background color">
+      <RangeSlider
+        label={label}
+        value={rangeValue}
+        onChange={handleRangeSliderChange}
+        min={min}
+        max={max}
+        step={step}
+        output
+      />
+    </LegacyCard>
+  );
+}`
+  }
+};
+
+// Progress Bar Examples
+export const progressBarExamples = {
+  default: {
+    react: `import {ProgressBar} from '@shopify/polaris';
+import React from 'react';
+
+function ProgressBarDefault() {
+  return <ProgressBar progress={75} />;
+}`,
+    extjs: `Ext.create('Ext.ProgressBar', {
+  value: 0.75,
+  text: '75% completed',
+  width: 300,
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-progress-bar">
+  <div class="polaris-progress-bar__track">
+    <div class="polaris-progress-bar__fill" style="width: 75%"></div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior for updating progress
+function updateProgress(percentage) {
+  const fill = document.querySelector('.polaris-progress-bar__fill');
+  fill.style.width = percentage + '%';
+  console.log('Progress updated to:', percentage + '%');
+}
+
+// Example usage
+updateProgress(75);
+</script>`,
+    typescript: `import {ProgressBar} from '@shopify/polaris';
+import React from 'react';
+
+interface ProgressBarDefaultProps {
+  progress?: number;
+  size?: 'small' | 'medium' | 'large';
+  color?: 'primary' | 'success' | 'warning' | 'critical';
+}
+
+function ProgressBarDefault({
+  progress = 75,
+  size = 'medium',
+  color = 'primary'
+}: ProgressBarDefaultProps): JSX.Element {
+  return (
+    <ProgressBar 
+      progress={progress} 
+      size={size}
+      color={color}
+    />
+  );
+}`
+  }
+};
+
+// Option List Examples
+export const optionListExamples = {
+  default: {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function OptionListDefault() {
+  const [selected, setSelected] = useState([]);
+
+  const options = [
+    {value: 'byward_market', label: 'Byward Market'},
+    {value: 'centretown', label: 'Centretown'},
+    {value: 'hintonburg', label: 'Hintonburg'},
+    {value: 'westboro', label: 'Westboro'},
+    {value: 'downtown', label: 'Downtown'},
+  ];
+
+  return (
+    <OptionList
+      title="Inventory Location"
+      onChange={setSelected}
+      options={options}
+      selected={selected}
+      allowMultiple
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Inventory Location',
+  columns: 1,
+  items: [{
+    boxLabel: 'Byward Market',
+    name: 'location',
+    inputValue: 'byward_market'
+  }, {
+    boxLabel: 'Centretown',
+    name: 'location',
+    inputValue: 'centretown'
+  }, {
+    boxLabel: 'Hintonburg',
+    name: 'location',
+    inputValue: 'hintonburg'
+  }, {
+    boxLabel: 'Westboro',
+    name: 'location',
+    inputValue: 'westboro'
+  }, {
+    boxLabel: 'Downtown',
+    name: 'location',
+    inputValue: 'downtown'
+  }],
+  listeners: {
+    change: function(checkboxgroup, newValue) {
+      console.log('Selected locations:', newValue.location);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-option-list">
+  <h3 class="polaris-option-list__title">Inventory Location</h3>
+  <ul class="polaris-option-list__options">
+    <li class="polaris-option-list__option">
+      <label class="polaris-option-list__label">
+        <input type="checkbox" class="polaris-option-list__checkbox" value="byward_market">
+        <span class="polaris-option-list__text">Byward Market</span>
+      </label>
+    </li>
+    <li class="polaris-option-list__option">
+      <label class="polaris-option-list__label">
+        <input type="checkbox" class="polaris-option-list__checkbox" value="centretown">
+        <span class="polaris-option-list__text">Centretown</span>
+      </label>
+    </li>
+    <li class="polaris-option-list__option">
+      <label class="polaris-option-list__label">
+        <input type="checkbox" class="polaris-option-list__checkbox" value="hintonburg">
+        <span class="polaris-option-list__text">Hintonburg</span>
+      </label>
+    </li>
+    <li class="polaris-option-list__option">
+      <label class="polaris-option-list__label">
+        <input type="checkbox" class="polaris-option-list__checkbox" value="westboro">
+        <span class="polaris-option-list__text">Westboro</span>
+      </label>
+    </li>
+    <li class="polaris-option-list__option">
+      <label class="polaris-option-list__label">
+        <input type="checkbox" class="polaris-option-list__checkbox" value="downtown">
+        <span class="polaris-option-list__text">Downtown</span>
+      </label>
+    </li>
+  </ul>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-option-list__checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const selected = Array.from(document.querySelectorAll('.polaris-option-list__checkbox:checked'))
+      .map(input => input.value);
+    console.log('Selected locations:', selected);
+  });
+});
+</script>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface OptionListDefaultProps {
+  title?: string;
+  options?: Option[];
+  allowMultiple?: boolean;
+  onChange?: (selected: string[]) => void;
+}
+
+function OptionListDefault({
+  title = "Inventory Location",
+  options = [
+    {value: 'byward_market', label: 'Byward Market'},
+    {value: 'centretown', label: 'Centretown'},
+    {value: 'hintonburg', label: 'Hintonburg'},
+    {value: 'westboro', label: 'Westboro'},
+    {value: 'downtown', label: 'Downtown'},
+  ],
+  allowMultiple = true,
+  onChange
+}: OptionListDefaultProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleChange = (newSelected: string[]) => {
+    setSelected(newSelected);
+    onChange?.(newSelected);
+  };
+
+  return (
+    <OptionList
+      title={title}
+      onChange={handleChange}
+      options={options}
+      selected={selected}
+      allowMultiple={allowMultiple}
+    />
+  );
+}`
+  }
+};
+
+// Color Picker Examples
+export const colorPickerExamples = {
+  default: {
+    react: `import {ColorPicker} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ColorPickerDefault() {
+  const [color, setColor] = useState({
+    hue: 120,
+    brightness: 1,
+    saturation: 1,
+  });
+
+  return (
+    <ColorPicker onChange={setColor} color={color} />
+  );
+}`,
+    extjs: `Ext.create('Ext.picker.Color', {
+  value: '008000',
+  listeners: {
+    select: function(picker, selColor) {
+      console.log('Color selected:', '#' + selColor);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-color-picker">
+  <input type="color" id="color-input" class="polaris-color-picker__input" value="#008000">
+  <div class="polaris-color-picker__display">
+    <div class="polaris-color-picker__swatch" id="color-swatch"></div>
+    <span class="polaris-color-picker__value" id="color-value">#008000</span>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const colorInput = document.getElementById('color-input');
+const colorSwatch = document.getElementById('color-swatch');
+const colorValue = document.getElementById('color-value');
+
+function updateColor(hex) {
+  colorSwatch.style.backgroundColor = hex;
+  colorValue.textContent = hex;
+}
+
+colorInput.addEventListener('input', (e) => {
+  updateColor(e.target.value);
+  console.log('Color changed to:', e.target.value);
+});
+
+// Initialize
+updateColor('#008000');
+</script>`,
+    typescript: `import {ColorPicker} from '@shopify/polaris';
+import {useState} from 'react';
+
+interface HSBColor {
+  hue: number;
+  saturation: number;
+  brightness: number;
+}
+
+interface ColorPickerDefaultProps {
+  initialColor?: HSBColor;
+  onChange?: (color: HSBColor) => void;
+}
+
+function ColorPickerDefault({
+  initialColor = {
+    hue: 120,
+    brightness: 1,
+    saturation: 1,
+  },
+  onChange
+}: ColorPickerDefaultProps): JSX.Element {
+  const [color, setColor] = useState<HSBColor>(initialColor);
+
+  const handleChange = (newColor: HSBColor) => {
+    setColor(newColor);
+    onChange?.(newColor);
+  };
+
+  return (
+    <ColorPicker onChange={handleChange} color={color} />
+  );
+}`
+  }
+};
+
+// Date Picker Examples
+export const datePickerExamples = {
+  default: {
+    react: `import {DatePicker} from '@shopify/polaris';
+import {useState} from 'react';
+
+function DatePickerDefault() {
+  const [{month, year}, setDate] = useState({month: 1, year: 2018});
+  const [selectedDates, setSelectedDates] = useState({
+    start: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
+    end: new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)'),
+  });
+
+  const handleMonthChange = (month, year) => setDate({month, year});
+
+  return (
+    <DatePicker
+      month={month}
+      year={year}
+      onChange={setSelectedDates}
+      onMonthChange={handleMonthChange}
+      selected={selectedDates}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Date', {
+  fieldLabel: 'Select Date',
+  value: new Date(),
+  format: 'Y-m-d',
+  listeners: {
+    select: function(datefield, date) {
+      console.log('Date selected:', Ext.Date.format(date, 'Y-m-d'));
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-date-picker">
+  <input type="date" id="date-input" class="polaris-date-picker__input" value="2018-02-07">
+  <div class="polaris-date-picker__display" id="selected-date">
+    Selected: February 7, 2018
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const dateInput = document.getElementById('date-input');
+const dateDisplay = document.getElementById('selected-date');
+
+dateInput.addEventListener('change', (e) => {
+  const date = new Date(e.target.value);
+  const formatted = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  dateDisplay.textContent = 'Selected: ' + formatted;
+  console.log('Date selected:', e.target.value);
+});
+</script>`,
+    typescript: `import {DatePicker} from '@shopify/polaris';
+import {useState} from 'react';
+
+interface DateRange {
+  start: Date;
+  end: Date;
+}
+
+interface DatePickerDefaultProps {
+  initialMonth?: number;
+  initialYear?: number;
+  initialSelected?: DateRange;
+  onChange?: (selected: DateRange) => void;
+}
+
+function DatePickerDefault({
+  initialMonth = 1,
+  initialYear = 2018,
+  initialSelected = {
+    start: new Date('Wed Feb 07 2018 00:00:00 GMT-0500 (EST)'),
+    end: new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)'),
+  },
+  onChange
+}: DatePickerDefaultProps): JSX.Element {
+  const [{month, year}, setDate] = useState({month: initialMonth, year: initialYear});
+  const [selectedDates, setSelectedDates] = useState<DateRange>(initialSelected);
+
+  const handleMonthChange = (month: number, year: number) => setDate({month, year});
+  
+  const handleChange = (selected: DateRange) => {
+    setSelectedDates(selected);
+    onChange?.(selected);
+  };
+
+  return (
+    <DatePicker
+      month={month}
+      year={year}
+      onChange={handleChange}
+      onMonthChange={handleMonthChange}
+      selected={selectedDates}
+    />
+  );
+}`
+  }
+};
+
+// Drop Zone Examples
+export const dropZoneExamples = {
+  default: {
+    react: `import {DropZone, LegacyStack, Thumbnail, Text} from '@shopify/polaris';
+import {NoteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+function DropZoneDefault() {
+  const [files, setFiles] = useState([]);
+
+  const handleDropZoneDrop = useCallback(
+    (_dropFiles, acceptedFiles, _rejectedFiles) =>
+      setFiles((files) => [...files, ...acceptedFiles]),
+    [],
+  );
+
+  const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
+  const fileUpload = !files.length && <DropZone.FileUpload />;
+  const uploadedFiles = files.length > 0 && (
+    <LegacyStack vertical>
+      {files.map((file, index) => (
+        <LegacyStack alignment="center" key={index}>
+          <Thumbnail
+            size="small"
+            alt={file.name}
+            source={
+              validImageTypes.includes(file.type)
+                ? window.URL.createObjectURL(file)
+                : NoteIcon
+            }
+          />
+          <div>
+            {file.name}{' '}
+            <Text variant="bodySm" as="p">
+              {file.size} bytes
+            </Text>
+          </div>
+        </LegacyStack>
+      ))}
+    </LegacyStack>
+  );
+
+  return (
+    <DropZone onDrop={handleDropZoneDrop}>
+      {uploadedFiles}
+      {fileUpload}
+    </DropZone>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'File Upload',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'filefield',
+    name: 'uploadFile',
+    fieldLabel: 'Upload File',
+    labelWidth: 100,
+    msgTarget: 'side',
+    allowBlank: false,
+    anchor: '100%',
+    buttonText: 'Select File...'
+  }],
+  buttons: [{
+    text: 'Upload',
+    handler: function() {
+      var form = this.up('form').getForm();
+      if(form.isValid()){
+        form.submit({
+          url: '/upload',
+          waitMsg: 'Uploading your file...',
+          success: function(fp, o) {
+            console.log('File uploaded successfully');
+          }
+        });
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-drop-zone" id="drop-zone">
+  <div class="polaris-drop-zone__content">
+    <input type="file" id="file-input" multiple style="display: none;">
+    <div class="polaris-drop-zone__text">
+      <p>Drop files here or <button type="button" id="browse-button">browse</button></p>
+    </div>
+  </div>
+  <div class="polaris-drop-zone__files" id="file-list"></div>
+</div>
+
+<script>
+// JavaScript behavior
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const browseButton = document.getElementById('browse-button');
+const fileList = document.getElementById('file-list');
+
+browseButton.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+  handleFiles(e.target.files);
+});
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('polaris-drop-zone--hovered');
+});
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('polaris-drop-zone--hovered');
+});
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('polaris-drop-zone--hovered');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    const fileItem = document.createElement('div');
+    fileItem.className = 'polaris-file-item';
+    fileItem.innerHTML = file.name + ' (' + file.size + ' bytes)';
+    fileList.appendChild(fileItem);
+  });
+  console.log('Files uploaded:', files.length);
+}
+</script>`,
+    typescript: `import {DropZone, LegacyStack, Thumbnail, Text} from '@shopify/polaris';
+import {NoteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+interface DropZoneDefaultProps {
+  onFilesUploaded?: (files: File[]) => void;
+  acceptedFileTypes?: string[];
+  maxFiles?: number;
+}
+
+function DropZoneDefault({
+  onFilesUploaded,
+  acceptedFileTypes = ['image/gif', 'image/jpeg', 'image/png'],
+  maxFiles = 10
+}: DropZoneDefaultProps): JSX.Element {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleDropZoneDrop = useCallback(
+    (_dropFiles: File[], acceptedFiles: File[], _rejectedFiles: File[]) => {
+      const newFiles = [...files, ...acceptedFiles].slice(0, maxFiles);
+      setFiles(newFiles);
+      onFilesUploaded?.(newFiles);
+    },
+    [files, maxFiles, onFilesUploaded],
+  );
+
+  const validImageTypes = acceptedFileTypes;
+
+  const fileUpload = !files.length && <DropZone.FileUpload />;
+  const uploadedFiles = files.length > 0 && (
+    <LegacyStack vertical>
+      {files.map((file, index) => (
+        <LegacyStack alignment="center" key={index}>
+          <Thumbnail
+            size="small"
+            alt={file.name}
+            source={
+              validImageTypes.includes(file.type)
+                ? window.URL.createObjectURL(file)
+                : NoteIcon
+            }
+          />
+          <div>
+            {file.name}{' '}
+            <Text variant="bodySm" as="p">
+              {file.size} bytes
+            </Text>
+          </div>
+        </LegacyStack>
+      ))}
+    </LegacyStack>
+  );
+
+  return (
+    <DropZone onDrop={handleDropZoneDrop}>
+      {uploadedFiles}
+      {fileUpload}
+    </DropZone>
+  );
+}`
+  }
+};
+
+// Setting Toggle Examples
+export const settingToggleExamples = {
+  default: {
+    react: `import {SettingToggle, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function SettingToggleDefault() {
+  const [enabled, setEnabled] = useState(false);
+
+  const handleToggle = useCallback(() => setEnabled((enabled) => !enabled), []);
+
+  const contentStatus = enabled ? 'Disable' : 'Enable';
+  const textStatus = enabled ? 'enabled' : 'disabled';
+
+  return (
+    <SettingToggle
+      action={{
+        content: contentStatus,
+        onAction: handleToggle,
+      }}
+      enabled={enabled}
+    >
+      This setting is{' '}
+      <Text as="span" fontWeight="bold">
+        {textStatus}
+      </Text>
+    </SettingToggle>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Setting Toggle',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'container',
+    layout: 'hbox',
+    items: [{
+      xtype: 'component',
+      html: 'This setting is <strong>disabled</strong>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Enable',
+      handler: function() {
+        var button = this;
+        var label = button.prev();
+        if (button.getText() === 'Enable') {
+          button.setText('Disable');
+          label.update('This setting is <strong>enabled</strong>');
+        } else {
+          button.setText('Enable');
+          label.update('This setting is <strong>disabled</strong>');
+        }
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-setting-toggle">
+  <div class="polaris-setting-toggle__content">
+    <span id="setting-status">This setting is <strong>disabled</strong></span>
+  </div>
+  <div class="polaris-setting-toggle__action">
+    <button class="polaris-button" id="toggle-button">Enable</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const toggleButton = document.getElementById('toggle-button');
+const statusText = document.getElementById('setting-status');
+let isEnabled = false;
+
+toggleButton.addEventListener('click', () => {
+  isEnabled = !isEnabled;
+  
+  if (isEnabled) {
+    toggleButton.textContent = 'Disable';
+    statusText.innerHTML = 'This setting is <strong>enabled</strong>';
+  } else {
+    toggleButton.textContent = 'Enable';
+    statusText.innerHTML = 'This setting is <strong>disabled</strong>';
+  }
+  
+  console.log('Setting toggled:', isEnabled ? 'enabled' : 'disabled');
+});
+</script>`,
+    typescript: `import {SettingToggle, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface SettingToggleDefaultProps {
+  initialEnabled?: boolean;
+  onToggle?: (enabled: boolean) => void;
+  children?: React.ReactNode;
+}
+
+function SettingToggleDefault({
+  initialEnabled = false,
+  onToggle,
+  children
+}: SettingToggleDefaultProps): JSX.Element {
+  const [enabled, setEnabled] = useState<boolean>(initialEnabled);
+
+  const handleToggle = useCallback(() => {
+    const newState = !enabled;
+    setEnabled(newState);
+    onToggle?.(newState);
+  }, [enabled, onToggle]);
+
+  const contentStatus = enabled ? 'Disable' : 'Enable';
+  const textStatus = enabled ? 'enabled' : 'disabled';
+
+  return (
+    <SettingToggle
+      action={{
+        content: contentStatus,
+        onAction: handleToggle,
+      }}
+      enabled={enabled}
+    >
+      {children || (
+        <>
+          This setting is{' '}
+          <Text as="span" fontWeight="bold">
+            {textStatus}
+          </Text>
+        </>
+      )}
+    </SettingToggle>
+  );
+}`
+  }
+};
+
+// Thumbnail Examples
+export const thumbnailExamples = {
+  default: {
+    react: `import {Thumbnail} from '@shopify/polaris';
+import {NoteIcon} from '@shopify/polaris-icons';
+
+function ThumbnailDefault() {
+  return (
+    <Thumbnail
+      source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+      alt="Black leather choker necklace"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.Img', {
+  src: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+  alt: 'Black leather choker necklace',
+  width: 50,
+  height: 50,
+  style: {
+    borderRadius: '4px'
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-thumbnail">
+  <img 
+    class="polaris-thumbnail__image" 
+    src="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg" 
+    alt="Black leather choker necklace">
+</div>
+
+<script>
+// JavaScript behavior for error handling
+document.querySelector('.polaris-thumbnail__image').addEventListener('error', (e) => {
+  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjZGNkY3Ii8+CjxwYXRoIGQ9Ik0xMiAxNkwyMCAyNEwyOCAxNiIgc3Ryb2tlPSIjOUM5Q0E2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K';
+  console.log('Thumbnail failed to load, using fallback');
+});
+</script>`,
+    typescript: `import {Thumbnail} from '@shopify/polaris';
+import {NoteIcon} from '@shopify/polaris-icons';
+
+interface ThumbnailDefaultProps {
+  source?: string;
+  alt?: string;
+  size?: 'small' | 'medium' | 'large';
+}
+
+function ThumbnailDefault({
+  source = "https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg",
+  alt = "Black leather choker necklace",
+  size = "medium"
+}: ThumbnailDefaultProps): JSX.Element {
+  return (
+    <Thumbnail
+      source={source}
+      alt={alt}
+      size={size}
+    />
+  );
+}`
+  }
+};
+
+// Video Thumbnail Examples
+export const videoThumbnailExamples = {
+  default: {
+    react: `import {VideoThumbnail} from '@shopify/polaris';
+
+function VideoThumbnailDefault() {
+  return (
+    <VideoThumbnail
+      videoLength={80}
+      thumbnailUrl="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office_373x@2x.jpg"
+      onClick={() => console.log('Video clicked')}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<div class="video-thumbnail" style="position: relative; display: inline-block;"><img src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office_373x@2x.jpg" style="width: 160px; height: 90px; border-radius: 4px;"><div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; padding: 2px 6px; border-radius: 2px; font-size: 12px;">1:20</div><div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer;">▶</div></div>',
+  listeners: {
+    afterrender: function(cmp) {
+      cmp.getEl().on('click', function() {
+        console.log('Video clicked');
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-video-thumbnail" onclick="playVideo()">
+  <img 
+    class="polaris-video-thumbnail__image" 
+    src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office_373x@2x.jpg" 
+    alt="Video thumbnail">
+  <div class="polaris-video-thumbnail__play-button">▶</div>
+  <div class="polaris-video-thumbnail__duration">1:20</div>
+</div>
+
+<script>
+// JavaScript behavior
+function playVideo() {
+  console.log('Video clicked - would play video');
+  // In a real implementation, this would trigger video playback
+}
+
+// Format video duration
+function formatDuration(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
+}
+
+// Example: Update duration display
+document.querySelector('.polaris-video-thumbnail__duration').textContent = formatDuration(80);
+</script>`,
+    typescript: `import {VideoThumbnail} from '@shopify/polaris';
+
+interface VideoThumbnailDefaultProps {
+  videoLength?: number;
+  thumbnailUrl?: string;
+  onClick?: () => void;
+}
+
+function VideoThumbnailDefault({
+  videoLength = 80,
+  thumbnailUrl = "https://burst.shopifycdn.com/photos/business-woman-smiling-in-office_373x@2x.jpg",
+  onClick
+}: VideoThumbnailDefaultProps): JSX.Element {
+  const handleClick = () => {
+    console.log('Video clicked');
+    onClick?.();
+  };
+
+  return (
+    <VideoThumbnail
+      videoLength={videoLength}
+      thumbnailUrl={thumbnailUrl}
+      onClick={handleClick}
+    />
+  );
+}`
+  }
+};
+
+// Account Connection Examples
+export const accountConnectionExamples = {
+  default: {
+    react: `import {Link, AccountConnection} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function AccountConnectionDefault() {
+  const [connected, setConnected] = useState(false);
+  const accountName = connected ? 'john.smith@merchantstore.com' : '';
+
+  const handleAction = useCallback(() => {
+    setConnected((connected) => !connected);
+  }, []);
+
+  const buttonText = connected ? 'Disconnect' : 'Connect';
+  const details = connected ? 'Account connected' : 'No account connected';
+  const terms = connected ? null : (
+    <p>
+      By clicking <strong>Connect</strong>, you agree to accept Merchant Hub's{' '}
+      <Link url="https://merchanthub.com/terms">terms and conditions</Link>. You'll pay a
+      commission rate of 2.9% on sales made through Merchant Hub.
+    </p>
+  );
+
+  return (
+    <AccountConnection
+      accountName={accountName}
+      connected={connected}
+      title="Merchant Hub"
+      action={{
+        content: buttonText,
+        onAction: handleAction,
+      }}
+      details={details}
+      termsOfService={terms}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Account Connection',
+  bodyPadding: 20,
+  width: 400,
+  items: [{
+    xtype: 'container',
+    layout: 'vbox',
+    items: [{
+      xtype: 'label',
+      text: 'Merchant Hub',
+      style: 'font-weight: bold; font-size: 16px; margin-bottom: 10px;'
+    }, {
+      xtype: 'label',
+      itemId: 'statusLabel',
+      text: 'No account connected',
+      style: 'color: #666; margin-bottom: 15px;'
+    }, {
+      xtype: 'button',
+      itemId: 'actionButton',
+      text: 'Connect',
+      ui: 'primary',
+      handler: function() {
+        var panel = this.up('panel');
+        var statusLabel = panel.down('#statusLabel');
+        var isConnected = this.getText() === 'Disconnect';
+        
+        if (isConnected) {
+          this.setText('Connect');
+          statusLabel.setText('No account connected');
+        } else {
+          this.setText('Disconnect');
+          statusLabel.setText('Account connected (john.smith@merchantstore.com)');
+        }
+      }
+    }, {
+      xtype: 'label',
+      itemId: 'termsLabel',
+      text: 'By clicking Connect, you agree to accept Merchant Hub\\'s terms and conditions. You\\'ll pay a commission rate of 2.9% on sales made through Merchant Hub.',
+      style: 'color: #666; font-size: 12px; margin-top: 15px; line-height: 1.4;'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-account-connection">
+  <div class="polaris-account-connection__content">
+    <h3 class="polaris-account-connection__title">Merchant Hub</h3>
+    <p class="polaris-account-connection__details" id="connection-status">No account connected</p>
+  </div>
+  <div class="polaris-account-connection__actions">
+    <button class="polaris-button polaris-button--primary" id="connection-button">Connect</button>
+  </div>
+  <div class="polaris-account-connection__terms" id="terms-section">
+    <p>By clicking <strong>Connect</strong>, you agree to accept Merchant Hub's 
+    <a href="https://merchanthub.com/terms">terms and conditions</a>. 
+    You'll pay a commission rate of 2.9% on sales made through Merchant Hub.</p>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+let isConnected = false;
+const button = document.getElementById('connection-button');
+const status = document.getElementById('connection-status');
+const terms = document.getElementById('terms-section');
+
+button.addEventListener('click', () => {
+  isConnected = !isConnected;
+  
+  if (isConnected) {
+    button.textContent = 'Disconnect';
+    status.textContent = 'Account connected';
+    terms.style.display = 'none';
+  } else {
+    button.textContent = 'Connect';
+    status.textContent = 'No account connected';
+    terms.style.display = 'block';
+  }
+});
+</script>`,
+    typescript: `import {Link, AccountConnection} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface AccountConnectionDefaultProps {
+  onConnect?: (connected: boolean) => void;
+  initialConnected?: boolean;
+}
+
+interface ConnectionState {
+  connected: boolean;
+  accountName: string;
+}
+
+function AccountConnectionDefault({ 
+  onConnect,
+  initialConnected = false 
+}: AccountConnectionDefaultProps): JSX.Element {
+  const [state, setState] = useState<ConnectionState>({
+    connected: initialConnected,
+    accountName: initialConnected ? 'john.smith@merchantstore.com' : ''
+  });
+
+  const handleAction = useCallback(() => {
+    setState(prevState => {
+      const newConnected = !prevState.connected;
+      const newState = {
+        connected: newConnected,
+        accountName: newConnected ? 'john.smith@merchantstore.com' : ''
+      };
+      
+      onConnect?.(newConnected);
+      return newState;
+    });
+  }, [onConnect]);
+
+  const buttonText: string = state.connected ? 'Disconnect' : 'Connect';
+  const details: string = state.connected ? 'Account connected' : 'No account connected';
+  const terms: JSX.Element | null = state.connected ? null : (
+    <p>
+      By clicking <strong>Connect</strong>, you agree to accept Merchant Hub's{' '}
+      <Link url="https://merchanthub.com/terms">terms and conditions</Link>. You'll pay a
+      commission rate of 2.9% on sales made through Merchant Hub.
+    </p>
+  );
+
+  return (
+    <AccountConnection
+      accountName={state.accountName}
+      connected={state.connected}
+      title="Merchant Hub"
+      action={{
+        content: buttonText,
+        onAction: handleAction,
+      }}
+      details={details}
+      termsOfService={terms}
+    />
+  );
+}`
+  }
+};
+
 const componentExamples: Record<string, any> = {
+  'account-connection': accountConnectionExamples,
+  'action-list': actionListExamples,
+  'app-provider': appProviderExamples,
+  'autocomplete': autocompleteExamples,
+  'choice-list': choiceListExamples,
+  'collapsible': collapsibleExamples,
+  'color-picker': colorPickerExamples,
+  'combobox': comboboxExamples,
+  'contextual-save-bar': contextualSaveBarExamples,
+  'data-table': dataTableExamples,
+  'date-picker': datePickerExamples,
+  'deprecated-card': deprecatedCardExamples,
+  'description-list': descriptionListExamples,
+  'drop-zone': dropZoneExamples,
+  'exception-list': exceptionListExamples,
+  'filters': filtersExamples,
+  'footer-help': footerHelpExamples,
+  'form': formExamples,
+  'frame': frameExamples,
+  'fullscreen-bar': fullscreenBarExamples,
+  'index-filter': indexFilterExamples,
+  'index-filters': indexFiltersExamples,
+  'index-table': indexTableExamples,
+  'inline-error': inlineErrorExamples,
+  'inline-grid': inlineGridExamples,
+  'keyboard-key': keyboardKeyExamples,
+  'legacy-card': legacyCardExamples,
+  'legacy-filters': legacyFiltersExamples,
+  'legacy-tabs': legacyTabsExamples,
+  'link': linkExamples,
+  'listbox': listboxExamples,
+  'loading': loadingExamples,
+  'navigation': navigationExamples,
+  'option-list': optionListExamples,
+  'page-actions': pageActionsExamples,
+  'pagination': paginationExamples,
+  'popover': popoverExamples,
+  'progress-bar': progressBarExamples,
+  'radio-button': radioButtonExamples,
+  'range-slider': rangeSliderExamples,
+  'resource-item': resourceItemExamples,
+  'resource-list': resourceListExamples,
+  'scrollable': scrollableExamples,
+  'setting-toggle': settingToggleExamples,
+  'sheet': sheetExamples,
+  'skeleton-body-text': skeletonBodyTextExamples,
+  'skeleton-display-text': skeletonDisplayTextExamples,
+  'skeleton-page': skeletonPageExamples,
+  'skeleton-tabs': skeletonTabsExamples,
+  'skeleton-thumbnail': skeletonThumbnailExamples,
+  'tag': tagExamples,
+  'text-container': textContainerExamples,
+  'thumbnail': thumbnailExamples,
+  'toast': toastExamples,
+  'tooltip': tooltipExamples,
+  'top-bar': topBarExamples,
+  'video-thumbnail': videoThumbnailExamples,
   'button-group': buttonGroupExamples,
   'button': buttonExamples,
   'card': cardExamples,
@@ -24162,8 +32393,7 @@ const componentExamples: Record<string, any> = {
   'empty-state': emptyStateExamples,
   'callout-card': calloutCards,
   'media-card': mediaCards,
-  // All primary components implemented above
-  // Additional components can be added as needed
+  // All 56 missing components have been implemented
 };
 
 // Helper function to generate examples for a component
