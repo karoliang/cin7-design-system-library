@@ -480,16 +480,914 @@ function PlainButtonExample({
   }
 };
 
+// Card Examples
+export const cardExamples = {
+  default: {
+    react: `import {Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+function CardDefault() {
+  return (
+    <Card>
+      <Text as="h2" variant="bodyMd">
+        Content inside a card
+      </Text>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: null,
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<h2 class="Polaris-Text--bodyMd">Content inside a card</h2>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <h2 class="text-body-md">Content inside a card</h2>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.text-body-md {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-regular);
+  line-height: var(--p-font-line-height-400);
+}`,
+    typescript: `import {Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface CardDefaultProps {
+  children?: React.ReactNode;
+}
+
+function CardDefault({ children }: CardDefaultProps): JSX.Element {
+  return (
+    <Card>
+      <Text as="h2" variant="bodyMd">
+        {children || "Content inside a card"}
+      </Text>
+    </Card>
+  );
+}`
+  },
+  'with-subdued-background': {
+    react: `import {BlockStack, Card, List, Text} from '@shopify/polaris';
+import React from 'react';
+
+function CardWithSubduedBackground() {
+  return (
+    <Card background="bg-surface-secondary">
+      <BlockStack gap="200">
+        <Text as="h3" variant="headingSm" fontWeight="medium">
+          Deactivated staff accounts
+        </Text>
+        <List>
+          <List.Item>Felix Crafford</List.Item>
+          <List.Item>Ezequiel Manno</List.Item>
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: null,
+  bodyPadding: 16,
+  cls: 'polaris-card polaris-card--subdued',
+  shadow: true,
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    defaults: {
+      margin: '0 0 8 0'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="Polaris-Text--headingSm">Deactivated staff accounts</h3>'
+    }, {
+      xtype: 'component',
+      html: '<ul class="Polaris-List"><li>Felix Crafford</li><li>Ezequiel Manno</li></ul>'
+    }]
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card card--subdued">
+  <div class="stack">
+    <h3 class="text-heading-sm">Deactivated staff accounts</h3>
+    <ul class="list">
+      <li>Felix Crafford</li>
+      <li>Ezequiel Manno</li>
+    </ul>
+  </div>
+</div>
+
+// CSS
+.card {
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.card--subdued {
+  background: var(--p-color-bg-surface-secondary);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-200);
+}
+
+.text-heading-sm {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  line-height: var(--p-font-line-height-400);
+}
+
+.list {
+  list-style: disc;
+  padding-left: var(--p-space-500);
+}`,
+    typescript: `import {BlockStack, Card, List, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface StaffAccount {
+  name: string;
+  id: string;
+}
+
+interface CardWithSubduedBackgroundProps {
+  title?: string;
+  accounts?: StaffAccount[];
+}
+
+function CardWithSubduedBackground({ 
+  title = "Deactivated staff accounts",
+  accounts = [
+    { id: '1', name: 'Felix Crafford' },
+    { id: '2', name: 'Ezequiel Manno' }
+  ]
+}: CardWithSubduedBackgroundProps): JSX.Element {
+  return (
+    <Card background="bg-surface-secondary">
+      <BlockStack gap="200">
+        <Text as="h3" variant="headingSm" fontWeight="medium">
+          {title}
+        </Text>
+        <List>
+          {accounts.map((account) => (
+            <List.Item key={account.id}>{account.name}</List.Item>
+          ))}
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-section': {
+    react: `import React from 'react';
+import {Box, Card, Text} from '@shopify/polaris';
+
+function CardWithSection() {
+  return (
+    <Card roundedAbove="sm">
+      <Text as="h2" variant="headingSm">
+        Online store dashboard
+      </Text>
+      <Box paddingBlockStart="200">
+        <Text as="p" variant="bodyMd">
+          View a summary of your online store's performance.
+        </Text>
+      </Box>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Online store dashboard',
+  headerCfg: {
+    style: {
+      fontSize: '14px',
+      fontWeight: '500'
+    }
+  },
+  bodyPadding: '0 16 16 16',
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<p class="Polaris-Text--bodyMd">View a summary of your online store\\'s performance.</p>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <h2 class="card__title">Online store dashboard</h2>
+  <div class="card__content">
+    <p class="text-body-md">View a summary of your online store's performance.</p>
+  </div>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.card__title {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  line-height: var(--p-font-line-height-400);
+  margin: 0;
+}
+
+.card__content {
+  padding-top: var(--p-space-200);
+}
+
+.text-body-md {
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  margin: 0;
+}`,
+    typescript: `import React from 'react';
+import {Box, Card, Text} from '@shopify/polaris';
+
+interface CardWithSectionProps {
+  title: string;
+  description: string;
+  roundedAbove?: 'xs' | 'sm' | 'md' | 'lg';
+}
+
+function CardWithSection({ 
+  title,
+  description,
+  roundedAbove = 'sm'
+}: CardWithSectionProps): JSX.Element {
+  return (
+    <Card roundedAbove={roundedAbove}>
+      <Text as="h2" variant="headingSm">
+        {title}
+      </Text>
+      <Box paddingBlockStart="200">
+        <Text as="p" variant="bodyMd">
+          {description}
+        </Text>
+      </Box>
+    </Card>
+  );
+}`
+  },
+  'with-footer-actions': {
+    react: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+
+function CardWithFooterActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment 1234
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            <List.Item>1 × Oasis Glass, 4-Pack</List.Item>
+            <List.Item>1 × Anubis Cup, 2-Pack</List.Item>
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button onClick={() => {}} accessibilityLabel="Fulfill items">
+              Fulfill items
+            </Button>
+            <Button
+              icon={PlusIcon}
+              variant="primary"
+              onClick={() => {}}
+              accessibilityLabel="Create shipping label"
+            >
+              Create shipping label
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Shipment 1234',
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    html: '<h3 class="Polaris-Text--headingSm">Items</h3>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'component',
+    html: '<ul class="Polaris-List"><li>1 × Oasis Glass, 4-Pack</li><li>1 × Anubis Cup, 2-Pack</li></ul>',
+    margin: '0 0 16 0'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    ui: 'footer',
+    items: ['->', {
+      xtype: 'button',
+      text: 'Fulfill items',
+      handler: function() {
+        console.log('Fulfill clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Create shipping label',
+      iconCls: 'x-fa fa-plus',
+      ui: 'primary',
+      handler: function() {
+        console.log('Create label clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <div class="card__content">
+    <h2 class="text-heading-sm">Shipment 1234</h2>
+    <div class="items-section">
+      <h3 class="text-heading-sm text-medium">Items</h3>
+      <ul class="list">
+        <li>1 × Oasis Glass, 4-Pack</li>
+        <li>1 × Anubis Cup, 2-Pack</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card__footer">
+    <div class="button-group button-group--end">
+      <button class="button" aria-label="Fulfill items">
+        Fulfill items
+      </button>
+      <button class="button button--primary" aria-label="Create shipping label">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M10 6v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2z"/>
+        </svg>
+        Create shipping label
+      </button>
+    </div>
+  </div>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  overflow: hidden;
+}
+
+.card__content {
+  padding: var(--p-space-400);
+}
+
+.card__footer {
+  padding: var(--p-space-400);
+  border-top: 1px solid var(--p-color-border);
+}
+
+.text-heading-sm {
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  margin: 0;
+}
+
+.text-medium {
+  font-weight: var(--p-font-weight-medium);
+}
+
+.items-section {
+  margin-top: var(--p-space-200);
+}
+
+.list {
+  list-style: disc;
+  padding-left: var(--p-space-500);
+  margin: var(--p-space-200) 0 0 0;
+}
+
+.button-group {
+  display: flex;
+  gap: var(--p-space-200);
+}
+
+.button-group--end {
+  justify-content: flex-end;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  padding: 8px 16px;
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  background: white;
+  cursor: pointer;
+}
+
+.button--primary {
+  background: var(--p-color-bg-fill-brand);
+  color: white;
+  border-color: var(--p-color-bg-fill-brand);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+// JavaScript
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', () => {
+    const label = button.getAttribute('aria-label');
+    console.log(\`\${label} clicked\`);
+  });
+});`,
+    typescript: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+
+interface ShipmentItem {
+  id: string;
+  quantity: number;
+  name: string;
+}
+
+interface CardWithFooterActionsProps {
+  shipmentId: string;
+  items: ShipmentItem[];
+  onFulfill: () => void;
+  onCreateLabel: () => void;
+}
+
+function CardWithFooterActions({
+  shipmentId,
+  items,
+  onFulfill,
+  onCreateLabel
+}: CardWithFooterActionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment {shipmentId}
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            {items.map((item) => (
+              <List.Item key={item.id}>
+                {item.quantity} × {item.name}
+              </List.Item>
+            ))}
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button onClick={onFulfill} accessibilityLabel="Fulfill items">
+              Fulfill items
+            </Button>
+            <Button
+              icon={PlusIcon}
+              variant="primary"
+              onClick={onCreateLabel}
+              accessibilityLabel="Create shipping label"
+            >
+              Create shipping label
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-header-actions': {
+    react: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+
+function CardWithHeaderActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            Variants
+          </Text>
+          <Button
+            onClick={() => {}}
+            accessibilityLabel="Add variant"
+            icon={PlusIcon}
+          >
+            Add variant
+          </Button>
+        </InlineGrid>
+        <Text as="p" variant="bodyMd">
+          Add variants if this product comes in multiple versions, like
+          different sizes or colors.
+        </Text>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  tbar: [{
+    xtype: 'component',
+    html: '<h2 class="Polaris-Text--headingSm">Variants</h2>',
+    flex: 1
+  }, {
+    xtype: 'button',
+    text: 'Add variant',
+    iconCls: 'x-fa fa-plus',
+    handler: function() {
+      console.log('Add variant clicked');
+    }
+  }],
+  items: [{
+    xtype: 'component',
+    html: '<p class="Polaris-Text--bodyMd">Add variants if this product comes in multiple versions, like different sizes or colors.</p>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <div class="card__header">
+    <h2 class="text-heading-sm">Variants</h2>
+    <button class="button button--icon-text" aria-label="Add variant">
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M10 6v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2z"/>
+      </svg>
+      Add variant
+    </button>
+  </div>
+  <p class="card__description">
+    Add variants if this product comes in multiple versions, like
+    different sizes or colors.
+  </p>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--p-space-200);
+}
+
+.text-heading-sm {
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  margin: 0;
+}
+
+.card__description {
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  margin: 0;
+  color: var(--p-color-text);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  padding: 8px 16px;
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  background: white;
+  cursor: pointer;
+}
+
+.button--icon-text {
+  gap: var(--p-space-100);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+// JavaScript
+document.querySelector('.button').addEventListener('click', () => {
+  console.log('Add variant clicked');
+});`,
+    typescript: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+
+interface CardWithHeaderActionsProps {
+  title: string;
+  description: string;
+  actionText: string;
+  onAction: () => void;
+  actionIcon?: React.ComponentType;
+}
+
+function CardWithHeaderActions({
+  title,
+  description,
+  actionText,
+  onAction,
+  actionIcon = PlusIcon
+}: CardWithHeaderActionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            {title}
+          </Text>
+          <Button
+            onClick={onAction}
+            accessibilityLabel={\`\${actionText} \${title.toLowerCase()}\`}
+            icon={actionIcon}
+          >
+            {actionText}
+          </Button>
+        </InlineGrid>
+        <Text as="p" variant="bodyMd">
+          {description}
+        </Text>
+      </BlockStack>
+    </Card>
+  );
+}`
+  }
+};
+
+// Badge Examples
+export const badgeExamples = {
+  default: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge>Fulfilled</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge">Fulfilled</span>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <span class="badge">Fulfilled</span>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--p-space-200);
+  min-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-fill-secondary);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-200);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+interface BadgeExampleProps {
+  status?: string;
+}
+
+function BadgeExample({ status = "Fulfilled" }: BadgeExampleProps): JSX.Element {
+  return (
+    <Card>
+      <Badge>{status}</Badge>
+    </Card>
+  );
+}`
+  },
+  critical: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge tone="critical">Action required</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--critical">Action required</span>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <span class="badge badge--critical">Action required</span>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--p-space-200);
+  min-height: var(--p-font-line-height-400);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-200);
+  font-weight: var(--p-font-weight-medium);
+}
+
+.badge--critical {
+  background: var(--p-color-bg-fill-critical);
+  color: var(--p-color-text-on-color);
+}`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'info' | 'success' | 'warning' | 'critical' | 'attention' | undefined;
+
+interface CriticalBadgeProps {
+  message?: string;
+  tone?: BadgeTone;
+}
+
+function CriticalBadge({ 
+  message = "Action required",
+  tone = "critical" 
+}: CriticalBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge tone={tone}>{message}</Badge>
+    </Card>
+  );
+}`
+  },
+  success: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge tone="success">Active</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--success">Active</span>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card">
+  <span class="badge badge--success">Active</span>
+</div>
+
+// CSS
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+  padding: var(--p-space-400);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--p-space-200);
+  min-height: var(--p-font-line-height-400);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-200);
+  font-weight: var(--p-font-weight-medium);
+}
+
+.badge--success {
+  background: var(--p-color-bg-fill-success);
+  color: var(--p-color-text-on-color);
+}`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+interface SuccessBadgeProps {
+  isActive?: boolean;
+  activeText?: string;
+  inactiveText?: string;
+}
+
+function SuccessBadge({ 
+  isActive = true,
+  activeText = "Active",
+  inactiveText = "Inactive"
+}: SuccessBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge tone={isActive ? "success" : undefined}>
+        {isActive ? activeText : inactiveText}
+      </Badge>
+    </Card>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
   'button': buttonExamples,
+  'card': cardExamples,
+  'badge': badgeExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
-  // 'badge': badgeExamples,
   // 'banner': bannerExamples,
-  // 'card': cardExamples,
   // etc...
 };
 
