@@ -39,33 +39,38 @@ export function ColorPalette() {
   ];
 
   return (
-    <Card title="Color Palette">
-      <BlockStack gap="300">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Semantic colors for consistent communication
-        </Text>
-        <div className={styles.ColorGrid}>
-          {colors.map((color) => (
-            <div key={color.name} className={styles.ColorSwatch}>
-              <div
-                className={styles.ColorPreview}
-                style={{ backgroundColor: `var(${color.token})` }}
-              />
-              <BlockStack gap="100">
-                <Text variant="bodySm" fontWeight="semibold" as="p">
-                  {color.name}
-                </Text>
-                <Text variant="bodySm" tone="subdued" as="p">
-                  {color.token}
-                </Text>
-                <Text variant="bodySm" tone="subdued" as="p">
-                  {color.hex}
-                </Text>
-              </BlockStack>
-            </div>
-          ))}
-        </div>
-      </BlockStack>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Color Palette</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="300">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Semantic colors for consistent communication
+          </Text>
+          <div className={styles.ColorGrid}>
+            {colors.map((color) => (
+              <div key={color.name} className={styles.ColorSwatch}>
+                <div
+                  className={styles.ColorPreview}
+                  style={{ backgroundColor: `var(${color.token})` }}
+                />
+                <BlockStack gap="100">
+                  <Text variant="bodySm" fontWeight="semibold" as="p">
+                    {color.name}
+                  </Text>
+                  <Text variant="bodySm" tone="subdued" as="p">
+                    {color.token}
+                  </Text>
+                  <Text variant="bodySm" tone="subdued" as="p">
+                    {color.hex}
+                  </Text>
+                </BlockStack>
+              </div>
+            ))}
+          </div>
+        </BlockStack>
+      </Box>
     </Card>
   );
 }
@@ -82,124 +87,139 @@ export function TypographyScale() {
   ];
 
   return (
-    <Card title="Typography Scale">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Consistent text hierarchy for clear communication
-        </Text>
-        {textVariants.map((item) => (
-          <BlockStack key={item.variant} gap="100">
-            <InlineStack align="space-between" blockAlign="center">
-              <Text variant={item.variant as any} as="p">
-                {item.label} - The quick brown fox jumps over the lazy dog
-              </Text>
-              <Text variant="bodySm" tone="subdued" as="p">
-                {item.size}
-              </Text>
-            </InlineStack>
-            <Divider />
-          </BlockStack>
-        ))}
-      </BlockStack>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Typography Scale</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Consistent text hierarchy for clear communication
+          </Text>
+          {textVariants.map((item) => (
+            <BlockStack key={item.variant} gap="100">
+              <InlineStack align="space-between" blockAlign="center">
+                <Text variant={item.variant as any} as="p">
+                  {item.label} - The quick brown fox jumps over the lazy dog
+                </Text>
+                <Text variant="bodySm" tone="subdued" as="p">
+                  {item.size}
+                </Text>
+              </InlineStack>
+              <Divider />
+            </BlockStack>
+          ))}
+        </BlockStack>
+      </Box>
     </Card>
   );
 }
 
 export function ButtonVariants() {
   return (
-    <Card title="Button Variants">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Different button styles for various actions
-        </Text>
-        
-        <BlockStack gap="300">
-          <div>
-            <Text variant="headingSm" as="h4">Primary Actions</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Button primary>Save Changes</Button>
-                <Button primary icon={PlusIcon}>Add Product</Button>
-                <Button primary loading>Processing</Button>
-                <Button primary disabled>Disabled</Button>
-              </InlineStack>
-            </Box>
-          </div>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Button Variants</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Different button styles for various actions
+          </Text>
+          
+          <BlockStack gap="300">
+            <div>
+              <Text variant="headingSm" as="h4">Primary Actions</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Button variant="primary">Save Changes</Button>
+                  <Button variant="primary" icon={PlusIcon}>Add Product</Button>
+                  <Button variant="primary" loading>Processing</Button>
+                  <Button variant="primary" disabled>Disabled</Button>
+                </InlineStack>
+              </Box>
+            </div>
 
-          <div>
-            <Text variant="headingSm" as="h4">Secondary Actions</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Button>Cancel</Button>
-                <Button icon={EditIcon}>Edit</Button>
-                <Button loading>Loading</Button>
-                <Button disabled>Disabled</Button>
-              </InlineStack>
-            </Box>
-          </div>
+            <div>
+              <Text variant="headingSm" as="h4">Secondary Actions</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Button>Cancel</Button>
+                  <Button icon={EditIcon}>Edit</Button>
+                  <Button loading>Loading</Button>
+                  <Button disabled>Disabled</Button>
+                </InlineStack>
+              </Box>
+            </div>
 
-          <div>
-            <Text variant="headingSm" as="h4">Destructive Actions</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Button destructive>Delete</Button>
-                <Button destructive icon={DeleteIcon}>Remove</Button>
-                <Button destructive loading>Deleting</Button>
-                <Button destructive disabled>Disabled</Button>
-              </InlineStack>
-            </Box>
-          </div>
+            <div>
+              <Text variant="headingSm" as="h4">Destructive Actions</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Button tone="critical">Delete</Button>
+                  <Button tone="critical" icon={DeleteIcon}>Remove</Button>
+                  <Button tone="critical" loading>Deleting</Button>
+                  <Button tone="critical" disabled>Disabled</Button>
+                </InlineStack>
+              </Box>
+            </div>
 
-          <div>
-            <Text variant="headingSm" as="h4">Plain Actions</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Button plain>Learn more</Button>
-                <Button plain icon={ViewIcon}>View details</Button>
-                <Button plain destructive>Remove</Button>
-              </InlineStack>
-            </Box>
-          </div>
+            <div>
+              <Text variant="headingSm" as="h4">Plain Actions</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Button variant="plain">Learn more</Button>
+                  <Button variant="plain" icon={ViewIcon}>View details</Button>
+                  <Button variant="plain" tone="critical">Remove</Button>
+                </InlineStack>
+              </Box>
+            </div>
+          </BlockStack>
         </BlockStack>
-      </BlockStack>
+      </Box>
     </Card>
   );
 }
 
 export function BadgeExamples() {
   return (
-    <Card title="Badge States">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Status indicators and labels
-        </Text>
-        
-        <BlockStack gap="300">
-          <div>
-            <Text variant="headingSm" as="h4">Status Badges</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Badge tone="success">Active</Badge>
-                <Badge tone="info">New</Badge>
-                <Badge tone="warning">Pending</Badge>
-                <Badge tone="critical">Expired</Badge>
-                <Badge>Default</Badge>
-              </InlineStack>
-            </Box>
-          </div>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Badge States</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Status indicators and labels
+          </Text>
+          
+          <BlockStack gap="300">
+            <div>
+              <Text variant="headingSm" as="h4">Status Badges</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Badge tone="success">Active</Badge>
+                  <Badge tone="info">New</Badge>
+                  <Badge tone="warning">Pending</Badge>
+                  <Badge tone="critical">Expired</Badge>
+                  <Badge>Default</Badge>
+                </InlineStack>
+              </Box>
+            </div>
 
-          <div>
-            <Text variant="headingSm" as="h4">With Status</Text>
-            <Box paddingBlockStart="200">
-              <InlineStack gap="200">
-                <Badge tone="success" progress="complete">Published</Badge>
-                <Badge tone="warning" progress="partiallyComplete">In Progress</Badge>
-                <Badge tone="critical" progress="incomplete">Draft</Badge>
-              </InlineStack>
-            </Box>
-          </div>
+            <div>
+              <Text variant="headingSm" as="h4">With Status</Text>
+              <Box paddingBlockStart="200">
+                <InlineStack gap="200">
+                  <Badge tone="success" progress="complete">Published</Badge>
+                  <Badge tone="warning" progress="partiallyComplete">In Progress</Badge>
+                  <Badge tone="critical" progress="incomplete">Draft</Badge>
+                </InlineStack>
+              </Box>
+            </div>
+          </BlockStack>
         </BlockStack>
-      </BlockStack>
+      </Box>
     </Card>
   );
 }
@@ -211,64 +231,71 @@ export function FormElements() {
   const [radioValue, setRadioValue] = React.useState('option1');
 
   return (
-    <Card title="Form Elements">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Common form patterns and states
-        </Text>
-        
-        <TextField
-          label="Text Field"
-          value={textValue}
-          onChange={setTextValue}
-          helpText="Helper text provides additional context"
-          placeholder="Enter text..."
-        />
-
-        <TextField
-          label="Required Field"
-          value=""
-          onChange={() => {}}
-          requiredIndicator
-          error="This field is required"
-        />
-
-        <Select
-          label="Select Field"
-          options={[
-            { label: 'Option 1', value: 'option1' },
-            { label: 'Option 2', value: 'option2' },
-            { label: 'Option 3', value: 'option3' },
-          ]}
-          value={selectValue}
-          onChange={setSelectValue}
-        />
-
-        <Checkbox
-          label="Checkbox option"
-          checked={checked}
-          onChange={setChecked}
-          helpText="Additional information about this option"
-        />
-
-        <BlockStack gap="200">
-          <Text variant="headingSm" as="h4">Radio Options</Text>
-          <RadioButton
-            label="Option 1"
-            id="radio1"
-            name="radioGroup"
-            checked={radioValue === 'option1'}
-            onChange={() => setRadioValue('option1')}
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Form Elements</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Common form patterns and states
+          </Text>
+          
+          <TextField
+            label="Text Field"
+            value={textValue}
+            onChange={setTextValue}
+            helpText="Helper text provides additional context"
+            placeholder="Enter text..."
+            autoComplete="off"
           />
-          <RadioButton
-            label="Option 2"
-            id="radio2"
-            name="radioGroup"
-            checked={radioValue === 'option2'}
-            onChange={() => setRadioValue('option2')}
+
+          <TextField
+            label="Required Field"
+            value=""
+            onChange={() => {}}
+            requiredIndicator
+            error="This field is required"
+            autoComplete="off"
           />
+
+          <Select
+            label="Select Field"
+            options={[
+              { label: 'Option 1', value: 'option1' },
+              { label: 'Option 2', value: 'option2' },
+              { label: 'Option 3', value: 'option3' },
+            ]}
+            value={selectValue}
+            onChange={setSelectValue}
+          />
+
+          <Checkbox
+            label="Checkbox option"
+            checked={checked}
+            onChange={setChecked}
+            helpText="Additional information about this option"
+          />
+
+          <BlockStack gap="200">
+            <Text variant="headingSm" as="h4">Radio Options</Text>
+            <RadioButton
+              label="Option 1"
+              id="radio1"
+              name="radioGroup"
+              checked={radioValue === 'option1'}
+              onChange={() => setRadioValue('option1')}
+            />
+            <RadioButton
+              label="Option 2"
+              id="radio2"
+              name="radioGroup"
+              checked={radioValue === 'option2'}
+              onChange={() => setRadioValue('option2')}
+            />
+          </BlockStack>
         </BlockStack>
-      </BlockStack>
+      </Box>
     </Card>
   );
 }
@@ -286,11 +313,15 @@ export function SpacingExamples() {
   ];
 
   return (
-    <Card title="Spacing Scale">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Consistent spacing for layouts
-        </Text>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Spacing Scale</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Consistent spacing for layouts
+          </Text>
         
         <BlockStack gap="300">
           {spacingScale.map((space) => (
@@ -308,7 +339,8 @@ export function SpacingExamples() {
             </InlineStack>
           ))}
         </BlockStack>
-      </BlockStack>
+        </BlockStack>
+      </Box>
     </Card>
   );
 }
@@ -326,11 +358,15 @@ export function IconLibrary() {
   ];
 
   return (
-    <Card title="Common Icons">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          Frequently used icons in Cin7 DSL
-        </Text>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Common Icons</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            Frequently used icons in Cin7 DSL
+          </Text>
         
         <div className={styles.IconGrid}>
           {commonIcons.map(({ icon, name }) => (
@@ -342,18 +378,23 @@ export function IconLibrary() {
             </Tooltip>
           ))}
         </div>
-      </BlockStack>
+        </BlockStack>
+      </Box>
     </Card>
   );
 }
 
 export function FeedbackPatterns() {
   return (
-    <Card title="Feedback Patterns">
-      <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued" as="p">
-          User feedback and messaging patterns
-        </Text>
+    <Card>
+      <Box padding="400">
+        <Text variant="headingMd" as="h3">Feedback Patterns</Text>
+      </Box>
+      <Box padding="400">
+        <BlockStack gap="400">
+          <Text variant="bodyMd" tone="subdued" as="p">
+            User feedback and messaging patterns
+          </Text>
         
         <Banner title="Information" tone="info">
           <p>This is an informational message to guide users.</p>
@@ -370,7 +411,8 @@ export function FeedbackPatterns() {
         <Banner title="Error" tone="critical">
           <p>An error occurred. Please try again.</p>
         </Banner>
-      </BlockStack>
+        </BlockStack>
+      </Box>
     </Card>
   );
 }

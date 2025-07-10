@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Banner,
+  Box,
 } from '@shopify/polaris';
 import { BarChart, TrendingUpIcon, EyeIcon, ClickIcon } from '@shopify/polaris-icons';
 import styles from './AnalyticsDashboard.module.scss';
@@ -213,23 +214,33 @@ export function AnalyticsDashboard() {
             </div>
 
             {/* Page Views */}
-            <Card title="Most Visited Pages" sectioned>
-              <DataTable
+            <Card>
+              <Box padding="400">
+                <Text variant="headingMd" as="h3">Most Visited Pages</Text>
+              </Box>
+              <Box padding="400">
+                <DataTable
                 columnContentTypes={['text', 'numeric', 'text', 'numeric']}
                 headings={['Page', 'Views', 'Avg. Time', 'Relative Traffic']}
                 rows={pageViewsRows}
                 showTotalsInFooter={false}
               />
+              </Box>
             </Card>
 
             {/* Component Usage */}
-            <Card title="Popular Components" sectioned>
-              <DataTable
+            <Card>
+              <Box padding="400">
+                <Text variant="headingMd" as="h3">Popular Components</Text>
+              </Box>
+              <Box padding="400">
+                <DataTable
                 columnContentTypes={['text', 'numeric', 'numeric', 'text']}
                 headings={['Component', 'Page Views', 'Code Copies', 'Copy Rate']}
                 rows={componentUsageRows}
                 showTotalsInFooter={false}
               />
+              </Box>
             </Card>
           </BlockStack>
         </Layout.Section>
@@ -237,28 +248,42 @@ export function AnalyticsDashboard() {
         <Layout.Section variant="oneThird">
           <BlockStack gap="500">
             {/* Search Analytics */}
-            <Card title="Search Queries" sectioned>
-              <DataTable
+            <Card>
+              <Box padding="400">
+                <Text variant="headingMd" as="h3">Search Queries</Text>
+              </Box>
+              <Box padding="400">
+                <DataTable
                 columnContentTypes={['text', 'numeric', 'numeric', 'text']}
                 headings={['Query', 'Count', 'Results', 'Quality']}
                 rows={searchRows}
                 showTotalsInFooter={false}
               />
+              </Box>
             </Card>
 
             {/* Playground Usage */}
-            <Card title="Playground Activity" sectioned>
-              <DataTable
+            <Card>
+              <Box padding="400">
+                <Text variant="headingMd" as="h3">Playground Activity</Text>
+              </Box>
+              <Box padding="400">
+                <DataTable
                 columnContentTypes={['text', 'numeric', 'numeric', 'numeric', 'text']}
                 headings={['Example', 'Views', 'Copies', 'Resets', 'Engagement']}
                 rows={playgroundRows}
                 showTotalsInFooter={false}
               />
+              </Box>
             </Card>
 
             {/* Insights */}
-            <Card title="Insights" sectioned>
-              <BlockStack gap="300">
+            <Card>
+              <Box padding="400">
+                <Text variant="headingMd" as="h3">Insights</Text>
+              </Box>
+              <Box padding="400">
+                <BlockStack gap="300">
                 <Banner tone="success">
                   <p>
                     <strong>ExtJS components</strong> are gaining popularity with 
@@ -280,6 +305,7 @@ export function AnalyticsDashboard() {
                   </p>
                 </Banner>
               </BlockStack>
+              </Box>
             </Card>
           </BlockStack>
         </Layout.Section>

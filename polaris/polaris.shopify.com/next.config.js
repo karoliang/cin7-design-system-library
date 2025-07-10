@@ -11,9 +11,9 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
-    // this includes files from the monorepo base one directory up
-    outputFileTracingRoot: path.join(__dirname, '../'),
   },
+  // this includes files from the monorepo base one directory up
+  outputFileTracingRoot: path.join(__dirname, '../'),
   // Image optimization
   images: {
     domains: ['cin7.com', 'shopify.com'],

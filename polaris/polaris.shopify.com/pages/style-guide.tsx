@@ -110,7 +110,7 @@ export default function StyleGuidePage() {
                     <Button url="/design/style-guide">
                       Read Full Documentation
                     </Button>
-                    <Button plain url="/playground">
+                    <Button variant="plain" url="/playground">
                       Try in Playground
                     </Button>
                   </InlineStack>
