@@ -78,12 +78,12 @@ const getMultiLanguageCode = (
         `// ExtJS implementation coming soon\n// This example will demonstrate how to implement this component using ExtJS\n\n// Placeholder for: ${fileName}`
     },
     {
-      title: 'Vanilla JS', 
+      title: 'Vanilla', 
       code: codeVariants?.vanilla?.trim() || 
         `<!-- Vanilla JS implementation coming soon -->\n<!-- This example will show pure HTML/CSS/JavaScript implementation -->\n\n<!-- Placeholder for: ${fileName} -->`
     },
     {
-      title: 'TypeScript', 
+      title: 'TS', 
       code: codeVariants?.typescript?.trim() || 
         `// TypeScript implementation coming soon\n// This example will include proper type definitions and interfaces\n\n// Placeholder for: ${fileName}`
     }
