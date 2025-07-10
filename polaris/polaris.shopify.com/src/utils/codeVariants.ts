@@ -2241,6 +2241,147 @@ function SuccessBadge({
     </Card>
   );
 }`
+  },
+  attention: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge tone="attention">Open</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--attention">Open</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--attention">Open</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'critical' | 'warning' | 'attention' | 'new' | 'info';
+
+interface AttentionBadgeProps {
+  children: React.ReactNode;
+  tone?: BadgeTone;
+}
+
+function AttentionBadge({ 
+  children, 
+  tone = "attention" 
+}: AttentionBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge tone={tone}>{children}</Badge>
+    </Card>
+  );
+}`
+  },
+  complete: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge progress="complete">Fulfilled</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--complete">Fulfilled</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--complete">Fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete';
+
+interface CompleteBadgeProps {
+  children: React.ReactNode;
+  progress?: BadgeProgress;
+}
+
+function CompleteBadge({ 
+  children, 
+  progress = "complete" 
+}: CompleteBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge progress={progress}>{children}</Badge>
+    </Card>
+  );
+}`
+  },
+  small: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge size="small">Fulfilled</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--small">Fulfilled</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--small">Fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeSize = 'small' | 'medium';
+
+interface SmallBadgeProps {
+  children: React.ReactNode;
+  size?: BadgeSize;
+}
+
+function SmallBadge({ 
+  children, 
+  size = "small" 
+}: SmallBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge size={size}>{children}</Badge>
+    </Card>
+  );
+}`
   }
 };
 
