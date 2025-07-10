@@ -7271,6 +7271,918 @@ function TextAlignExample({
   }
 };
 
+// Stack Examples (BlockStack and InlineStack)
+export const blockStackExamples = {
+  'with-gap': {
+    react: `import {BlockStack} from '@shopify/polaris';
+import React from 'react';
+
+function BlockStackExample() {
+  return (
+    <BlockStack gap="500">
+      <Placeholder height="48px" />
+      <Placeholder height="48px" />
+      <Placeholder height="48px" />
+    </BlockStack>
+  );
+}
+
+const Placeholder = ({height = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: '14px var(--p-space-200)',
+        height: height,
+      }}
+    />
+  );
+};`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 8px 0'
+  },
+  items: [{
+    xtype: 'component',
+    height: 48,
+    style: {
+      backgroundColor: '#1976d2',
+      padding: '14px 8px'
+    }
+  }, {
+    xtype: 'component',
+    height: 48,
+    style: {
+      backgroundColor: '#1976d2',
+      padding: '14px 8px'
+    }
+  }, {
+    xtype: 'component',
+    height: 48,
+    style: {
+      backgroundColor: '#1976d2',
+      padding: '14px 8px'
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-block-stack polaris-block-stack--gap-500">
+  <div class="polaris-block-stack__item">
+    <div class="placeholder" style="height: 48px;"></div>
+  </div>
+  <div class="polaris-block-stack__item">
+    <div class="placeholder" style="height: 48px;"></div>
+  </div>
+  <div class="polaris-block-stack__item">
+    <div class="placeholder" style="height: 48px;"></div>
+  </div>
+</div>`,
+    typescript: `import {BlockStack} from '@shopify/polaris';
+import React from 'react';
+
+interface PlaceholderProps {
+  height?: string;
+  content?: string;
+}
+
+interface BlockStackExampleProps {
+  gap?: string;
+  items?: PlaceholderProps[];
+}
+
+function BlockStackExample({ 
+  gap = "500",
+  items = [
+    { height: "48px" },
+    { height: "48px" },
+    { height: "48px" }
+  ]
+}: BlockStackExampleProps): JSX.Element {
+  return (
+    <BlockStack gap={gap}>
+      {items.map((item, index) => (
+        <Placeholder key={index} height={item.height} />
+      ))}
+    </BlockStack>
+  );
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({height = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: '14px var(--p-space-200)',
+        height: height,
+      }}
+    />
+  );
+};`
+  },
+  'with-align': {
+    react: `import {BlockStack, Divider} from '@shopify/polaris';
+import React from 'react';
+
+function BlockStackExample() {
+  return (
+    <>
+      <div style={{display: 'flex', height: '200px'}}>
+        <BlockStack align="start">
+          <Placeholder height="48px" width="320px" label="Start" />
+          <Placeholder height="48px" width="320px" />
+          <Placeholder height="48px" width="320px" />
+        </BlockStack>
+      </div>
+      <Divider />
+      <div style={{display: 'flex', height: '200px'}}>
+        <BlockStack align="center">
+          <Placeholder height="48px" width="320px" label="Center" />
+          <Placeholder height="48px" width="320px" />
+          <Placeholder height="48px" width="320px" />
+        </BlockStack>
+      </div>
+      <Divider />
+      <div style={{display: 'flex', height: '200px'}}>
+        <BlockStack align="end">
+          <Placeholder height="48px" width="320px" label="End" />
+          <Placeholder height="48px" width="320px" />
+          <Placeholder height="48px" width="320px" />
+        </BlockStack>
+      </div>
+    </>
+  );
+}
+
+const Placeholder = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: '14px var(--p-space-200)',
+        height: height,
+        width: width,
+        color: 'white',
+        textAlign: 'center',
+      }}
+    >
+      {label}
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [{
+    xtype: 'container',
+    height: 200,
+    layout: {
+      type: 'vbox',
+      align: 'left'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'Start',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }]
+  }, {
+    xtype: 'splitter'
+  }, {
+    xtype: 'container',
+    height: 200,
+    layout: {
+      type: 'vbox',
+      align: 'center'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'Center',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }]
+  }, {
+    xtype: 'splitter'
+  }, {
+    xtype: 'container',
+    height: 200,
+    layout: {
+      type: 'vbox',
+      align: 'right'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'End',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }, {
+      xtype: 'component',
+      height: 48,
+      width: 320,
+      style: {
+        backgroundColor: '#1976d2',
+        padding: '14px 8px'
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="block-stack-examples">
+  <div class="example-container" style="display: flex; height: 200px;">
+    <div class="polaris-block-stack polaris-block-stack--align-start">
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;">Start</div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+    </div>
+  </div>
+  <hr class="polaris-divider">
+  <div class="example-container" style="display: flex; height: 200px;">
+    <div class="polaris-block-stack polaris-block-stack--align-center">
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;">Center</div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+    </div>
+  </div>
+  <hr class="polaris-divider">
+  <div class="example-container" style="display: flex; height: 200px;">
+    <div class="polaris-block-stack polaris-block-stack--align-end">
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;">End</div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+      <div class="polaris-block-stack__item">
+        <div class="placeholder" style="height: 48px; width: 320px;"></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {BlockStack, Divider} from '@shopify/polaris';
+import React from 'react';
+
+type BlockAlign = 'start' | 'center' | 'end';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string;
+  width?: string;
+}
+
+interface AlignmentExample {
+  align: BlockAlign;
+  label: string;
+}
+
+interface BlockStackExampleProps {
+  alignmentExamples?: AlignmentExample[];
+}
+
+function BlockStackExample({ 
+  alignmentExamples = [
+    { align: 'start', label: 'Start' },
+    { align: 'center', label: 'Center' },
+    { align: 'end', label: 'End' }
+  ]
+}: BlockStackExampleProps): JSX.Element {
+  return (
+    <>
+      {alignmentExamples.map((example, index) => (
+        <React.Fragment key={index}>
+          <div style={{display: 'flex', height: '200px'}}>
+            <BlockStack align={example.align}>
+              <Placeholder height="48px" width="320px" label={example.label} />
+              <Placeholder height="48px" width="320px" />
+              <Placeholder height="48px" width="320px" />
+            </BlockStack>
+          </div>
+          {index < alignmentExamples.length - 1 && <Divider />}
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: '14px var(--p-space-200)',
+        height: height,
+        width: width,
+        color: 'white',
+        textAlign: 'center',
+      }}
+    >
+      {label}
+    </div>
+  );
+};`
+  }
+};
+
+export const inlineStackExamples = {
+  'with-gap': {
+    react: `import {InlineStack, BlockStack} from '@shopify/polaris';
+import React from 'react';
+
+function InlineStackExample() {
+  return (
+    <BlockStack>
+      <InlineStack gap="400" wrap={false} blockAlign="center">
+        <Placeholder width="106px" height="36px" />
+        <Placeholder width="106px" height="20px" />
+        <Placeholder width="106px" height="20px" />
+        <Placeholder width="106px" height="20px" />
+      </InlineStack>
+      <InlineStack gap="400" wrap={false} blockAlign="end">
+        <Placeholder width="106px" height="20px" />
+        <Placeholder width="106px" height="20px" />
+      </InlineStack>
+    </BlockStack>
+  );
+}
+
+const Placeholder = ({height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+      }}
+    />
+  );
+};`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'middle'
+    },
+    defaults: {
+      margin: '0 8px 0 0'
+    },
+    items: [{
+      xtype: 'component',
+      width: 106,
+      height: 36,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }]
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'bottom'
+    },
+    defaults: {
+      margin: '0 8px 0 0'
+    },
+    items: [{
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-block-stack">
+  <div class="polaris-block-stack__item">
+    <div class="polaris-inline-stack polaris-inline-stack--gap-400 polaris-inline-stack--block-align-center polaris-inline-stack--no-wrap">
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 36px;"></div>
+      </div>
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 20px;"></div>
+      </div>
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 20px;"></div>
+      </div>
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 20px;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="polaris-block-stack__item">
+    <div class="polaris-inline-stack polaris-inline-stack--gap-400 polaris-inline-stack--block-align-end polaris-inline-stack--no-wrap">
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 20px;"></div>
+      </div>
+      <div class="polaris-inline-stack__item">
+        <div class="placeholder" style="width: 106px; height: 20px;"></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {InlineStack, BlockStack} from '@shopify/polaris';
+import React from 'react';
+
+interface PlaceholderProps {
+  height?: string;
+  width?: string;
+}
+
+interface StackRow {
+  gap?: string;
+  blockAlign?: 'start' | 'center' | 'end';
+  items: PlaceholderProps[];
+}
+
+interface InlineStackExampleProps {
+  rows?: StackRow[];
+}
+
+function InlineStackExample({ 
+  rows = [
+    {
+      gap: "400",
+      blockAlign: "center",
+      items: [
+        { width: "106px", height: "36px" },
+        { width: "106px", height: "20px" },
+        { width: "106px", height: "20px" },
+        { width: "106px", height: "20px" }
+      ]
+    },
+    {
+      gap: "400",
+      blockAlign: "end",
+      items: [
+        { width: "106px", height: "20px" },
+        { width: "106px", height: "20px" }
+      ]
+    }
+  ]
+}: InlineStackExampleProps): JSX.Element {
+  return (
+    <BlockStack>
+      {rows.map((row, rowIndex) => (
+        <InlineStack key={rowIndex} gap={row.gap} wrap={false} blockAlign={row.blockAlign}>
+          {row.items.map((item, itemIndex) => (
+            <Placeholder key={itemIndex} width={item.width} height={item.height} />
+          ))}
+        </InlineStack>
+      ))}
+    </BlockStack>
+  );
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+      }}
+    />
+  );
+};`
+  },
+  'with-align': {
+    react: `import {BlockStack, InlineStack, Text, Page, Divider} from '@shopify/polaris';
+import React from 'react';
+
+function InlineStackExample() {
+  return (
+    <Page narrowWidth>
+      <BlockStack gap="1600">
+        <InlineStack align="start">
+          <Placeholder width="106px" label="Start" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+        </InlineStack>
+        <Divider />
+        <InlineStack align="center">
+          <Placeholder width="106px" label="Center" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+        </InlineStack>
+        <Divider />
+        <InlineStack align="end">
+          <Placeholder width="106px" label="End" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+          <Placeholder width="106px" height="20px" />
+        </InlineStack>
+      </BlockStack>
+    </Page>
+  );
+}
+
+const Placeholder = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+}) => {
+  return (
+    <div
+      style={{
+        padding: '6px 0',
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+        color: 'white',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      {label && (
+        <Text as="span" variant="bodyMd" fontWeight="medium" tone="text-inverse">
+          {label}
+        </Text>
+      )}
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  width: 600,
+  layout: 'vbox',
+  bodyPadding: 10,
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'start'
+    },
+    defaults: {
+      margin: '0 4px 0 0'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'Start',
+      width: 106,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '6px 0'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }]
+  }, {
+    xtype: 'splitter'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'center'
+    },
+    defaults: {
+      margin: '0 4px 0 0'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'Center',
+      width: 106,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '6px 0'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }]
+  }, {
+    xtype: 'splitter'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'end'
+    },
+    defaults: {
+      margin: '0 4px 0 0'
+    },
+    items: [{
+      xtype: 'component',
+      html: 'End',
+      width: 106,
+      style: {
+        backgroundColor: '#1976d2',
+        color: 'white',
+        textAlign: 'center',
+        padding: '6px 0'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }, {
+      xtype: 'component',
+      width: 106,
+      height: 20,
+      style: {
+        backgroundColor: '#1976d2'
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page polaris-page--narrow-width">
+  <div class="polaris-block-stack polaris-block-stack--gap-1600">
+    <div class="polaris-block-stack__item">
+      <div class="polaris-inline-stack polaris-inline-stack--align-start">
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px;">Start</div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-block-stack__item">
+      <hr class="polaris-divider">
+    </div>
+    <div class="polaris-block-stack__item">
+      <div class="polaris-inline-stack polaris-inline-stack--align-center">
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px;">Center</div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-block-stack__item">
+      <hr class="polaris-divider">
+    </div>
+    <div class="polaris-block-stack__item">
+      <div class="polaris-inline-stack polaris-inline-stack--align-end">
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px;">End</div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+        <div class="polaris-inline-stack__item">
+          <div class="placeholder" style="width: 106px; height: 20px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {BlockStack, InlineStack, Text, Page, Divider} from '@shopify/polaris';
+import React from 'react';
+
+type InlineAlign = 'start' | 'center' | 'end';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string;
+  width?: string;
+}
+
+interface AlignmentExample {
+  align: InlineAlign;
+  label: string;
+}
+
+interface InlineStackExampleProps {
+  alignmentExamples?: AlignmentExample[];
+}
+
+function InlineStackExample({ 
+  alignmentExamples = [
+    { align: 'start', label: 'Start' },
+    { align: 'center', label: 'Center' },
+    { align: 'end', label: 'End' }
+  ]
+}: InlineStackExampleProps): JSX.Element {
+  return (
+    <Page narrowWidth>
+      <BlockStack gap="1600">
+        {alignmentExamples.map((example, index) => (
+          <React.Fragment key={index}>
+            <InlineStack align={example.align}>
+              <Placeholder width="106px" label={example.label} />
+              <Placeholder width="106px" height="20px" />
+              <Placeholder width="106px" height="20px" />
+              <Placeholder width="106px" height="20px" />
+            </InlineStack>
+            {index < alignmentExamples.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </BlockStack>
+    </Page>
+  );
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+}) => {
+  return (
+    <div
+      style={{
+        padding: '6px 0',
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+        color: 'white',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      {label && (
+        <Text as="span" variant="bodyMd" fontWeight="medium" tone="text-inverse">
+          {label}
+        </Text>
+      )}
+    </div>
+  );
+};`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -7295,6 +8207,8 @@ const componentExamples: Record<string, any> = {
   'grid': gridExamples,
   'spinner': spinnerExamples,
   'text': textExamples,
+  'block-stack': blockStackExamples,
+  'inline-stack': inlineStackExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
