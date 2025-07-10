@@ -4,7 +4,9 @@ import Script from 'next/script';
 import {useEffect, StrictMode} from 'react';
 import {useRouter} from 'next/router';
 import useDarkMode from 'use-dark-mode';
+import {AppProvider} from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
+import enTranslations from '@shopify/polaris/locales/en.json';
 import pkg from '../package.json';
 
 import {className} from '../src/utils/various';
@@ -113,29 +115,31 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta property="og:image" content={ogImagePath} />
       </Head>
 
-      <div
-        style={
-          {
-            background: isPolarisExample ? '#fafafa' : 'unset',
-            '--polaris-shopify-com-version': pkg.version,
-          } as React.CSSProperties
-        }
-        className={className(
-          !isPolarisExample && 'styles-for-site-but-not-polaris-examples',
-        )}
-      >
-        {isPolarisExample || isPolarisSandbox ? (
-          <Component {...pageProps} />
-        ) : (
-          <Frame darkMode={darkMode}>
-            <ViewTransition>
-              <StrictMode>
-                <Component {...pageProps} />
-              </StrictMode>
-            </ViewTransition>
-          </Frame>
-        )}
-      </div>
+      <AppProvider i18n={enTranslations}>
+        <div
+          style={
+            {
+              background: isPolarisExample ? '#fafafa' : 'unset',
+              '--polaris-shopify-com-version': pkg.version,
+            } as React.CSSProperties
+          }
+          className={className(
+            !isPolarisExample && 'styles-for-site-but-not-polaris-examples',
+          )}
+        >
+          {isPolarisExample || isPolarisSandbox ? (
+            <Component {...pageProps} />
+          ) : (
+            <Frame darkMode={darkMode}>
+              <ViewTransition>
+                <StrictMode>
+                  <Component {...pageProps} />
+                </StrictMode>
+              </ViewTransition>
+            </Frame>
+          )}
+        </div>
+      </AppProvider>
     </>
   );
 }
