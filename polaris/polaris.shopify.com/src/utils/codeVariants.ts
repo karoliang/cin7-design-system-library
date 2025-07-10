@@ -5146,6 +5146,710 @@ function ValidationErrorExample({
     />
   );
 }`
+  },
+  disabled: {
+    react: `import {Select} from '@shopify/polaris';
+import React from 'react';
+
+function SelectExample() {
+  return (
+    <Select
+      label="Date range"
+      disabled
+      options={[
+        {label: 'Today', value: 'today'},
+        {label: 'Yesterday', value: 'yesterday'},
+        {label: 'Last 7 days', value: 'lastWeek'},
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Date range',
+  disabled: true,
+  store: {
+    fields: ['label', 'value'],
+    data: [
+      { label: 'Today', value: 'today' },
+      { label: 'Yesterday', value: 'yesterday' },
+      { label: 'Last 7 days', value: 'lastWeek' }
+    ]
+  },
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  cls: 'polaris-select',
+  labelAlign: 'top',
+  labelCls: 'polaris-label',
+  width: 300
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-select">
+    <label class="polaris-label" for="date-range-select">Date range</label>
+    <select 
+      id="date-range-select"
+      class="polaris-select__input" 
+      disabled
+      aria-describedby="date-range-help"
+    >
+      <option value="">Select date range</option>
+      <option value="today">Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="lastWeek">Last 7 days</option>
+    </select>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior (minimal for disabled select)
+const select = document.getElementById('date-range-select');
+console.log('Select is disabled:', select.disabled);
+</script>`,
+    typescript: `import {Select} from '@shopify/polaris';
+import React from 'react';
+
+interface SelectOption {
+  label: string;
+  value: string;
+}
+
+interface DisabledSelectProps {
+  label?: string;
+  options?: SelectOption[];
+  placeholder?: string;
+}
+
+function DisabledSelect({ 
+  label = "Date range",
+  options = [
+    {label: 'Today', value: 'today'},
+    {label: 'Yesterday', value: 'yesterday'},
+    {label: 'Last 7 days', value: 'lastWeek'},
+  ],
+  placeholder = "Select date range"
+}: DisabledSelectProps): JSX.Element {
+  return (
+    <Select
+      label={label}
+      disabled
+      options={options}
+      placeholder={placeholder}
+    />
+  );
+}`
+  },
+  'with-inline-label': {
+    react: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function InlineLabelExample() {
+  const [selected, setSelected] = useState('newestUpdate');
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelected(value),
+    [],
+  );
+
+  const options = [
+    {label: 'Newest update', value: 'newestUpdate'},
+    {label: 'Oldest update', value: 'oldestUpdate'},
+    {label: 'Most spent', value: 'mostSpent'},
+    {label: 'Most orders', value: 'mostOrders'},
+    {label: 'Last name A–Z', value: 'lastNameAlpha'},
+    {label: 'Last name Z–A', value: 'lastNameReverseAlpha'},
+  ];
+
+  return (
+    <Select
+      label="Sort by"
+      labelInline
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Sort by',
+  labelAlign: 'left',
+  labelWidth: 60,
+  value: 'newestUpdate',
+  store: {
+    fields: ['label', 'value'],
+    data: [
+      { label: 'Newest update', value: 'newestUpdate' },
+      { label: 'Oldest update', value: 'oldestUpdate' },
+      { label: 'Most spent', value: 'mostSpent' },
+      { label: 'Most orders', value: 'mostOrders' },
+      { label: 'Last name A–Z', value: 'lastNameAlpha' },
+      { label: 'Last name Z–A', value: 'lastNameReverseAlpha' }
+    ]
+  },
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  cls: 'polaris-select polaris-select--inline-label',
+  width: 300,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Sort order changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-select polaris-select--inline-label">
+    <label class="polaris-label polaris-label--inline" for="sort-select">Sort by</label>
+    <select 
+      id="sort-select"
+      class="polaris-select__input" 
+      aria-describedby="sort-select-help"
+    >
+      <option value="newestUpdate" selected>Newest update</option>
+      <option value="oldestUpdate">Oldest update</option>
+      <option value="mostSpent">Most spent</option>
+      <option value="mostOrders">Most orders</option>
+      <option value="lastNameAlpha">Last name A–Z</option>
+      <option value="lastNameReverseAlpha">Last name Z–A</option>
+    </select>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const sortSelect = document.getElementById('sort-select');
+
+sortSelect.addEventListener('change', (event) => {
+  const value = event.target.value;
+  console.log('Sort order changed to:', value);
+});
+</script>`,
+    typescript: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface SortOption {
+  label: string;
+  value: string;
+}
+
+interface InlineLabelSelectProps {
+  label?: string;
+  initialValue?: string;
+  options?: SortOption[];
+  onSelectionChange?: (value: string) => void;
+}
+
+function InlineLabelSelect({
+  label = "Sort by",
+  initialValue = "newestUpdate",
+  options = [
+    {label: 'Newest update', value: 'newestUpdate'},
+    {label: 'Oldest update', value: 'oldestUpdate'},
+    {label: 'Most spent', value: 'mostSpent'},
+    {label: 'Most orders', value: 'mostOrders'},
+    {label: 'Last name A–Z', value: 'lastNameAlpha'},
+    {label: 'Last name Z–A', value: 'lastNameReverseAlpha'},
+  ],
+  onSelectionChange
+}: InlineLabelSelectProps): JSX.Element {
+  const [selected, setSelected] = useState<string>(initialValue);
+
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setSelected(value);
+      onSelectionChange?.(value);
+    },
+    [onSelectionChange],
+  );
+
+  return (
+    <Select
+      label={label}
+      labelInline
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`
+  },
+  'with-prefix': {
+    react: `import {Icon, Select} from '@shopify/polaris';
+import {CaretUpIcon, CaretDownIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+function PrefixExample() {
+  const [selected, setSelected] = useState('enabled');
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelected(value),
+    [],
+  );
+
+  const options = [
+    {
+      label: 'Increase',
+      value: 'Increase',
+      prefix: <Icon source={CaretUpIcon} />,
+    },
+    {
+      label: 'Decrease',
+      value: 'Decrease',
+      prefix: <Icon source={CaretDownIcon} />,
+    },
+  ];
+
+  return (
+    <Select
+      label="Permission"
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Permission',
+  value: 'enabled',
+  store: {
+    fields: ['label', 'value', 'icon'],
+    data: [
+      { label: 'Increase', value: 'Increase', icon: '↑' },
+      { label: 'Decrease', value: 'Decrease', icon: '↓' }
+    ]
+  },
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  cls: 'polaris-select polaris-select--with-prefix',
+  labelAlign: 'top',
+  labelCls: 'polaris-label',
+  width: 300,
+  listConfig: {
+    itemTpl: '<div class="option-with-icon"><span class="option-icon">{icon}</span> {label}</div>'
+  },
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Permission changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-select">
+    <label class="polaris-label" for="permission-select">Permission</label>
+    <select 
+      id="permission-select"
+      class="polaris-select__input polaris-select__input--with-prefix" 
+      aria-describedby="permission-select-help"
+    >
+      <option value="">Select permission</option>
+      <option value="Increase" data-prefix="↑">Increase</option>
+      <option value="Decrease" data-prefix="↓">Decrease</option>
+    </select>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const permissionSelect = document.getElementById('permission-select');
+
+permissionSelect.addEventListener('change', (event) => {
+  const value = event.target.value;
+  const selectedOption = event.target.options[event.target.selectedIndex];
+  const prefix = selectedOption.getAttribute('data-prefix');
+  
+  console.log('Permission changed to:', value);
+  console.log('With prefix:', prefix);
+});
+
+// Set initial value
+permissionSelect.value = 'enabled';
+</script>`,
+    typescript: `import {Icon, Select} from '@shopify/polaris';
+import {CaretUpIcon, CaretDownIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+interface PrefixOption {
+  label: string;
+  value: string;
+  prefix?: React.ReactNode;
+}
+
+interface PrefixSelectProps {
+  label?: string;
+  initialValue?: string;
+  options?: PrefixOption[];
+  onSelectionChange?: (value: string) => void;
+}
+
+function PrefixSelect({
+  label = "Permission",
+  initialValue = "enabled",
+  options = [
+    {
+      label: 'Increase',
+      value: 'Increase',
+      prefix: <Icon source={CaretUpIcon} />,
+    },
+    {
+      label: 'Decrease',
+      value: 'Decrease',
+      prefix: <Icon source={CaretDownIcon} />,
+    },
+  ],
+  onSelectionChange
+}: PrefixSelectProps): JSX.Element {
+  const [selected, setSelected] = useState<string>(initialValue);
+
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setSelected(value);
+      onSelectionChange?.(value);
+    },
+    [onSelectionChange],
+  );
+
+  return (
+    <Select
+      label={label}
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`
+  },
+  'with-separate-validation-error': {
+    react: `import {
+  LegacyStack,
+  FormLayout,
+  TextField,
+  Select,
+  InlineError,
+  LegacyCard,
+  Link,
+  Text,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function SeparateValidationErrorExample() {
+  const [weight, setWeight] = useState('12');
+  const [unit, setUnit] = useState('');
+
+  const handleWeightChange = useCallback(
+    (value: string) => setWeight(value),
+    [],
+  );
+  const handleUnitChange = useCallback((value: string) => setUnit(value), []);
+
+  const unitSelectID = 'unit';
+  const errorMessage = generateErrorMessage();
+  const formGroupMarkup = (
+    <LegacyStack vertical spacing="extraTight">
+      <FormLayout>
+        <FormLayout.Group condensed>
+          <TextField
+            label="Product weight"
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+            error={Boolean(!weight && unit)}
+            autoComplete="off"
+          />
+          <Select
+            id={unitSelectID}
+            label="Unit of measure"
+            placeholder="Select"
+            options={['oz', 'g', 'kg', 'lb']}
+            value={unit}
+            onChange={handleUnitChange}
+            error={Boolean(!unit && weight)}
+          />
+        </FormLayout.Group>
+      </FormLayout>
+      <InlineError message={errorMessage} fieldID={unitSelectID} />
+    </LegacyStack>
+  );
+
+  return <LegacyCard sectioned>{formGroupMarkup}</LegacyCard>;
+
+  function generateErrorMessage() {
+    const weightError =
+      !weight && unit ? 'The numeric weight of the product ' : '';
+    const unitError =
+      !unit && weight ? 'The unit of measure for the product weight' : '';
+
+    if (!weightError && !unitError) {
+      return '';
+    }
+
+    return (
+      <span>
+        <Text tone="critical" as="span">
+          <p>
+            {\`\${weightError}\${unitError} is required when weight based shipping rates are enabled. \`}
+            <Link>Manage shipping</Link>
+          </p>
+        </Text>
+      </span>
+    );
+  }
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product Weight',
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    defaults: {
+      margin: '0 8 0 0'
+    },
+    items: [{
+      xtype: 'numberfield',
+      fieldLabel: 'Product weight',
+      name: 'weight',
+      value: 12,
+      flex: 1,
+      labelAlign: 'top',
+      labelCls: 'polaris-label',
+      cls: 'polaris-text-field',
+      listeners: {
+        change: function(field, newValue) {
+          var unitField = field.up('panel').down('[name=unit]');
+          var errorField = field.up('panel').down('[name=errorMessage]');
+          
+          if (!newValue && unitField.getValue()) {
+            field.markInvalid('Weight is required when unit is selected');
+            errorField.update('The numeric weight of the product is required when weight based shipping rates are enabled.');
+          } else {
+            field.clearInvalid();
+            errorField.update('');
+          }
+        }
+      }
+    }, {
+      xtype: 'combobox',
+      fieldLabel: 'Unit of measure',
+      name: 'unit',
+      emptyText: 'Select',
+      store: ['oz', 'g', 'kg', 'lb'],
+      flex: 1,
+      labelAlign: 'top',
+      labelCls: 'polaris-label',
+      cls: 'polaris-select',
+      listeners: {
+        change: function(field, newValue) {
+          var weightField = field.up('panel').down('[name=weight]');
+          var errorField = field.up('panel').down('[name=errorMessage]');
+          
+          if (!weightField.getValue() && newValue) {
+            field.markInvalid('Unit requires weight');
+            errorField.update('The numeric weight of the product is required when weight based shipping rates are enabled.');
+          } else if (weightField.getValue() && !newValue) {
+            field.markInvalid('Weight requires unit');
+            errorField.update('The unit of measure for the product weight is required when weight based shipping rates are enabled.');
+          } else {
+            field.clearInvalid();
+            errorField.update('');
+          }
+        }
+      }
+    }]
+  }, {
+    xtype: 'component',
+    name: 'errorMessage',
+    cls: 'polaris-inline-error',
+    html: ''
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <div class="polaris-form-layout">
+      <div class="polaris-form-layout__group polaris-form-layout__group--condensed">
+        <div class="polaris-text-field">
+          <label class="polaris-label" for="product-weight">Product weight</label>
+          <input 
+            id="product-weight"
+            class="polaris-text-field__input" 
+            type="number" 
+            value="12"
+            aria-describedby="weight-error"
+          />
+        </div>
+        
+        <div class="polaris-select">
+          <label class="polaris-label" for="unit-select">Unit of measure</label>
+          <select 
+            id="unit-select"
+            class="polaris-select__input"
+            aria-describedby="unit-error"
+          >
+            <option value="">Select</option>
+            <option value="oz">oz</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="polaris-inline-error" id="validation-error" style="display: none;">
+        <span class="polaris-text--critical">
+          <p id="error-message">
+            <a href="#" class="polaris-link">Manage shipping</a>
+          </p>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const weightInput = document.getElementById('product-weight');
+const unitSelect = document.getElementById('unit-select');
+const errorDiv = document.getElementById('validation-error');
+const errorMessage = document.getElementById('error-message');
+
+function validateFields() {
+  const weight = weightInput.value;
+  const unit = unitSelect.value;
+  
+  let error = '';
+  
+  if (!weight && unit) {
+    error = 'The numeric weight of the product is required when weight based shipping rates are enabled. ';
+  } else if (!unit && weight) {
+    error = 'The unit of measure for the product weight is required when weight based shipping rates are enabled. ';
+  }
+  
+  if (error) {
+    errorMessage.innerHTML = error + '<a href="#" class="polaris-link">Manage shipping</a>';
+    errorDiv.style.display = 'block';
+  } else {
+    errorDiv.style.display = 'none';
+  }
+}
+
+weightInput.addEventListener('input', validateFields);
+unitSelect.addEventListener('change', validateFields);
+</script>`,
+    typescript: `import {
+  LegacyStack,
+  FormLayout,
+  TextField,
+  Select,
+  InlineError,
+  LegacyCard,
+  Link,
+  Text,
+} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ValidationError {
+  weightError: string;
+  unitError: string;
+}
+
+interface SeparateValidationProps {
+  initialWeight?: string;
+  initialUnit?: string;
+  onWeightChange?: (weight: string) => void;
+  onUnitChange?: (unit: string) => void;
+}
+
+function SeparateValidationErrorExample({
+  initialWeight = '12',
+  initialUnit = '',
+  onWeightChange,
+  onUnitChange
+}: SeparateValidationProps): JSX.Element {
+  const [weight, setWeight] = useState<string>(initialWeight);
+  const [unit, setUnit] = useState<string>(initialUnit);
+
+  const handleWeightChange = useCallback(
+    (value: string) => {
+      setWeight(value);
+      onWeightChange?.(value);
+    },
+    [onWeightChange],
+  );
+
+  const handleUnitChange = useCallback(
+    (value: string) => {
+      setUnit(value);
+      onUnitChange?.(value);
+    }, 
+    [onUnitChange]
+  );
+
+  const unitSelectID = 'unit';
+  
+  const generateErrorMessage = (): React.ReactNode => {
+    const weightError =
+      !weight && unit ? 'The numeric weight of the product ' : '';
+    const unitError =
+      !unit && weight ? 'The unit of measure for the product weight' : '';
+
+    if (!weightError && !unitError) {
+      return '';
+    }
+
+    return (
+      <span>
+        <Text tone="critical" as="span">
+          <p>
+            {\`\${weightError}\${unitError} is required when weight based shipping rates are enabled. \`}
+            <Link>Manage shipping</Link>
+          </p>
+        </Text>
+      </span>
+    );
+  };
+
+  const errorMessage = generateErrorMessage();
+  
+  const formGroupMarkup = (
+    <LegacyStack vertical spacing="extraTight">
+      <FormLayout>
+        <FormLayout.Group condensed>
+          <TextField
+            label="Product weight"
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+            error={Boolean(!weight && unit)}
+            autoComplete="off"
+          />
+          <Select
+            id={unitSelectID}
+            label="Unit of measure"
+            placeholder="Select"
+            options={['oz', 'g', 'kg', 'lb']}
+            value={unit}
+            onChange={handleUnitChange}
+            error={Boolean(!unit && weight)}
+          />
+        </FormLayout.Group>
+      </FormLayout>
+      <InlineError message={errorMessage} fieldID={unitSelectID} />
+    </LegacyStack>
+  );
+
+  return <LegacyCard sectioned>{formGroupMarkup}</LegacyCard>;
+}`
   }
 };
 
