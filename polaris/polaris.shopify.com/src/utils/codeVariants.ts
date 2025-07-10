@@ -6771,6 +6771,506 @@ function SpinnerWithFocusManagementExample({
   }
 };
 
+// Text Examples
+export const textExamples = {
+  body: {
+    react: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+function TextBodyExample() {
+  return (
+    <LegacyStack vertical>
+      <Text variant="bodyLg" as="p">
+        Shopify POS is the easiest way to sell your products in person.
+        Available for iPad, iPhone, and Android.
+      </Text>
+      <Text variant="bodyMd" as="p">
+        Shopify POS is the easiest way to sell your products in person.
+        Available for iPad, iPhone, and Android.
+      </Text>
+      <Text variant="bodySm" as="p">
+        Shopify POS is the easiest way to sell your products in person.
+        Available for iPad, iPhone, and Android.
+      </Text>
+      <Text variant="bodyXs" as="p">
+        Shopify POS is the easiest way to sell your products in person.
+        Available for iPad, iPhone, and Android.
+      </Text>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--body-lg">Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--body-md">Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--body-sm">Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--body-xs">Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android.</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <p class="polaris-text polaris-text--body-lg">
+    Shopify POS is the easiest way to sell your products in person.
+    Available for iPad, iPhone, and Android.
+  </p>
+  <p class="polaris-text polaris-text--body-md">
+    Shopify POS is the easiest way to sell your products in person.
+    Available for iPad, iPhone, and Android.
+  </p>
+  <p class="polaris-text polaris-text--body-sm">
+    Shopify POS is the easiest way to sell your products in person.
+    Available for iPad, iPhone, and Android.
+  </p>
+  <p class="polaris-text polaris-text--body-xs">
+    Shopify POS is the easiest way to sell your products in person.
+    Available for iPad, iPhone, and Android.
+  </p>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+type BodyVariant = 'bodyLg' | 'bodyMd' | 'bodySm' | 'bodyXs';
+
+interface TextBodyExampleProps {
+  content?: string;
+}
+
+function TextBodyExample({ 
+  content = "Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android."
+}: TextBodyExampleProps): JSX.Element {
+  const bodyVariants: BodyVariant[] = ['bodyLg', 'bodyMd', 'bodySm', 'bodyXs'];
+
+  return (
+    <LegacyStack vertical>
+      {bodyVariants.map((variant) => (
+        <Text key={variant} variant={variant} as="p">
+          {content}
+        </Text>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  heading: {
+    react: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+function TextHeadingExample() {
+  return (
+    <LegacyStack vertical>
+      <Text variant="heading3xl" as="h2">
+        Online store dashboard
+      </Text>
+      <Text variant="heading2xl" as="h3">
+        Online store dashboard
+      </Text>
+      <Text variant="headingXl" as="h4">
+        Online store dashboard
+      </Text>
+      <Text variant="headingLg" as="h4">
+        Online store dashboard
+      </Text>
+      <Text variant="headingMd" as="h5">
+        Online store dashboard
+      </Text>
+      <Text variant="headingSm" as="h6">
+        Online store dashboard
+      </Text>
+      <Text variant="headingXs" as="h6">
+        Online store dashboard
+      </Text>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<h2 class="polaris-text polaris-text--heading-3xl">Online store dashboard</h2>'
+  }, {
+    xtype: 'component',
+    html: '<h3 class="polaris-text polaris-text--heading-2xl">Online store dashboard</h3>'
+  }, {
+    xtype: 'component',
+    html: '<h4 class="polaris-text polaris-text--heading-xl">Online store dashboard</h4>'
+  }, {
+    xtype: 'component',
+    html: '<h4 class="polaris-text polaris-text--heading-lg">Online store dashboard</h4>'
+  }, {
+    xtype: 'component',
+    html: '<h5 class="polaris-text polaris-text--heading-md">Online store dashboard</h5>'
+  }, {
+    xtype: 'component',
+    html: '<h6 class="polaris-text polaris-text--heading-sm">Online store dashboard</h6>'
+  }, {
+    xtype: 'component',
+    html: '<h6 class="polaris-text polaris-text--heading-xs">Online store dashboard</h6>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <h2 class="polaris-text polaris-text--heading-3xl">Online store dashboard</h2>
+  <h3 class="polaris-text polaris-text--heading-2xl">Online store dashboard</h3>
+  <h4 class="polaris-text polaris-text--heading-xl">Online store dashboard</h4>
+  <h4 class="polaris-text polaris-text--heading-lg">Online store dashboard</h4>
+  <h5 class="polaris-text polaris-text--heading-md">Online store dashboard</h5>
+  <h6 class="polaris-text polaris-text--heading-sm">Online store dashboard</h6>
+  <h6 class="polaris-text polaris-text--heading-xs">Online store dashboard</h6>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+type HeadingVariant = 'heading3xl' | 'heading2xl' | 'headingXl' | 'headingLg' | 'headingMd' | 'headingSm' | 'headingXs';
+type HeadingElement = 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+interface HeadingConfig {
+  variant: HeadingVariant;
+  element: HeadingElement;
+}
+
+interface TextHeadingExampleProps {
+  title?: string;
+}
+
+function TextHeadingExample({ 
+  title = "Online store dashboard"
+}: TextHeadingExampleProps): JSX.Element {
+  const headingConfigs: HeadingConfig[] = [
+    { variant: 'heading3xl', element: 'h2' },
+    { variant: 'heading2xl', element: 'h3' },
+    { variant: 'headingXl', element: 'h4' },
+    { variant: 'headingLg', element: 'h4' },
+    { variant: 'headingMd', element: 'h5' },
+    { variant: 'headingSm', element: 'h6' },
+    { variant: 'headingXs', element: 'h6' },
+  ];
+
+  return (
+    <LegacyStack vertical>
+      {headingConfigs.map(({ variant, element }) => (
+        <Text key={variant} variant={variant} as={element}>
+          {title}
+        </Text>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  tone: {
+    react: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+function TextToneExample() {
+  return (
+    <LegacyStack vertical>
+      <Text tone="subdued" as="p">
+        Use subdued text to de-emphasize when you need to provide
+        supplementary, non-critical information.
+      </Text>
+      <Text tone="success" as="p">
+        Use success text to indicate success states, like when something
+        was saved successfully.
+      </Text>
+      <Text tone="caution" as="p">
+        Use caution text to indicate something needs attention, or that
+        next steps are required.
+      </Text>
+      <Text tone="critical" as="p">
+        Use critical text to indicate problems that have to be resolved
+        immediately.
+      </Text>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--subdued">Use subdued text to de-emphasize when you need to provide supplementary, non-critical information.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--success">Use success text to indicate success states, like when something was saved successfully.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--caution">Use caution text to indicate something needs attention, or that next steps are required.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--critical">Use critical text to indicate problems that have to be resolved immediately.</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <p class="polaris-text polaris-text--subdued">
+    Use subdued text to de-emphasize when you need to provide
+    supplementary, non-critical information.
+  </p>
+  <p class="polaris-text polaris-text--success">
+    Use success text to indicate success states, like when something
+    was saved successfully.
+  </p>
+  <p class="polaris-text polaris-text--caution">
+    Use caution text to indicate something needs attention, or that
+    next steps are required.
+  </p>
+  <p class="polaris-text polaris-text--critical">
+    Use critical text to indicate problems that have to be resolved
+    immediately.
+  </p>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+type TextTone = 'subdued' | 'success' | 'caution' | 'critical';
+
+interface ToneExample {
+  tone: TextTone;
+  content: string;
+}
+
+interface TextToneExampleProps {
+  examples?: ToneExample[];
+}
+
+function TextToneExample({ 
+  examples = [
+    {
+      tone: 'subdued',
+      content: 'Use subdued text to de-emphasize when you need to provide supplementary, non-critical information.'
+    },
+    {
+      tone: 'success',
+      content: 'Use success text to indicate success states, like when something was saved successfully.'
+    },
+    {
+      tone: 'caution',
+      content: 'Use caution text to indicate something needs attention, or that next steps are required.'
+    },
+    {
+      tone: 'critical',
+      content: 'Use critical text to indicate problems that have to be resolved immediately.'
+    }
+  ]
+}: TextToneExampleProps): JSX.Element {
+  return (
+    <LegacyStack vertical>
+      {examples.map(({ tone, content }) => (
+        <Text key={tone} tone={tone} as="p">
+          {content}
+        </Text>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  weight: {
+    react: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+function TextWeightExample() {
+  return (
+    <LegacyStack vertical>
+      <Text fontWeight="bold" as="p">
+        Sales this year
+      </Text>
+      <Text fontWeight="semibold" as="p">
+        Sales this year
+      </Text>
+      <Text fontWeight="medium" as="p">
+        Sales this year
+      </Text>
+      <Text fontWeight="regular" as="p">
+        Sales this year
+      </Text>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--bold">Sales this year</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--semibold">Sales this year</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--medium">Sales this year</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--regular">Sales this year</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <p class="polaris-text polaris-text--bold">Sales this year</p>
+  <p class="polaris-text polaris-text--semibold">Sales this year</p>
+  <p class="polaris-text polaris-text--medium">Sales this year</p>
+  <p class="polaris-text polaris-text--regular">Sales this year</p>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+type FontWeight = 'bold' | 'semibold' | 'medium' | 'regular';
+
+interface TextWeightExampleProps {
+  content?: string;
+}
+
+function TextWeightExample({ 
+  content = "Sales this year"
+}: TextWeightExampleProps): JSX.Element {
+  const fontWeights: FontWeight[] = ['bold', 'semibold', 'medium', 'regular'];
+
+  return (
+    <LegacyStack vertical>
+      {fontWeights.map((weight) => (
+        <Text key={weight} fontWeight={weight} as="p">
+          {content}
+        </Text>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  align: {
+    react: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+function TextAlignExample() {
+  return (
+    <LegacyStack vertical>
+      <Text variant="bodyLg" as="p" alignment="start">
+        You can use sales reports to see information about your customers'
+        orders based on criteria such as sales over time, by product, or by
+        staff.
+      </Text>
+      <Text variant="bodyLg" as="p" alignment="center">
+        You can use sales reports to see information about your customers'
+        orders based on criteria such as sales over time, by product, or by
+        staff.
+      </Text>
+      <Text variant="bodyLg" as="p" alignment="end">
+        You can use sales reports to see information about your customers'
+        orders based on criteria such as sales over time, by product, or by
+        staff.
+      </Text>
+      <Text variant="bodyLg" as="p" alignment="justify">
+        You can use sales reports to see information about your customers'
+        orders based on criteria such as sales over time, by product, or by
+        staff.
+      </Text>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--align-start">You can use sales reports to see information about your customers\\' orders based on criteria such as sales over time, by product, or by staff.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--align-center">You can use sales reports to see information about your customers\\' orders based on criteria such as sales over time, by product, or by staff.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--align-end">You can use sales reports to see information about your customers\\' orders based on criteria such as sales over time, by product, or by staff.</p>'
+  }, {
+    xtype: 'component',
+    html: '<p class="polaris-text polaris-text--align-justify">You can use sales reports to see information about your customers\\' orders based on criteria such as sales over time, by product, or by staff.</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <p class="polaris-text polaris-text--body-lg polaris-text--align-start">
+    You can use sales reports to see information about your customers'
+    orders based on criteria such as sales over time, by product, or by
+    staff.
+  </p>
+  <p class="polaris-text polaris-text--body-lg polaris-text--align-center">
+    You can use sales reports to see information about your customers'
+    orders based on criteria such as sales over time, by product, or by
+    staff.
+  </p>
+  <p class="polaris-text polaris-text--body-lg polaris-text--align-end">
+    You can use sales reports to see information about your customers'
+    orders based on criteria such as sales over time, by product, or by
+    staff.
+  </p>
+  <p class="polaris-text polaris-text--body-lg polaris-text--align-justify">
+    You can use sales reports to see information about your customers'
+    orders based on criteria such as sales over time, by product, or by
+    staff.
+  </p>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyStack, Text} from '@shopify/polaris';
+
+type TextAlignment = 'start' | 'center' | 'end' | 'justify';
+
+interface TextAlignExampleProps {
+  content?: string;
+}
+
+function TextAlignExample({ 
+  content = "You can use sales reports to see information about your customers' orders based on criteria such as sales over time, by product, or by staff."
+}: TextAlignExampleProps): JSX.Element {
+  const alignments: TextAlignment[] = ['start', 'center', 'end', 'justify'];
+
+  return (
+    <LegacyStack vertical>
+      {alignments.map((alignment) => (
+        <Text 
+          key={alignment} 
+          variant="bodyLg" 
+          as="p" 
+          alignment={alignment}
+        >
+          {content}
+        </Text>
+      ))}
+    </LegacyStack>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -6794,6 +7294,7 @@ const componentExamples: Record<string, any> = {
   'divider': dividerExamples,
   'grid': gridExamples,
   'spinner': spinnerExamples,
+  'text': textExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
