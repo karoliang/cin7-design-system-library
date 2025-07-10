@@ -225,40 +225,16 @@ function PressedWithSegmentedButtonsExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="button-group button-group--segmented" role="group">
-  <button class="button-segment" aria-pressed="true" data-value="bold">Bold</button>
-  <button class="button-segment" aria-pressed="false" data-value="italic">Italic</button>
-  <button class="button-segment" aria-pressed="false" data-value="underline">Underline</button>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-button-group button-group--segmented" role="group">
+  <button class="polaris-button-segment" aria-pressed="true" data-value="bold">Bold</button>
+  <button class="polaris-button-segment" aria-pressed="false" data-value="italic">Italic</button>
+  <button class="polaris-button-segment" aria-pressed="false" data-value="underline">Underline</button>
 </div>
 
-// CSS
-.button-group--segmented {
-  display: inline-flex;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden;
-}
 
-.button-segment {
-  padding: 8px 16px;
-  border: none;
-  border-right: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-}
-
-.button-segment:last-child {
-  border-right: none;
-}
-
-.button-segment[aria-pressed="true"] {
-  background: #e0e0e0;
-  font-weight: 600;
-}
-
-// JavaScript
-const buttons = document.querySelectorAll('.button-segment');
+<script>
+const buttons = document.querySelectorAll('.polaris-button-segment');
 
 buttons.forEach(button => {
   button.addEventListener('click', () => {
@@ -269,7 +245,8 @@ buttons.forEach(button => {
     
     console.log('Active style:', button.dataset.value);
   });
-});`,
+});
+</script>`,
     typescript: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React, {useState} from 'react';
 
@@ -333,27 +310,15 @@ function PrimaryButtonExample() {
     console.log('Save clicked');
   }
 });`,
-    vanilla: `// HTML
-<button class="button button--primary">Save</button>
+    vanilla: `<!-- HTML Structure -->
+<button class="polaris-button polaris-button--primary">Save</button>
 
-// CSS
-.button--primary {
-  background: #008060;
-  color: white;
-  border: 1px solid #008060;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.button--primary:hover {
-  background: #006e52;
-}
-
-// JavaScript
-document.querySelector('.button--primary').addEventListener('click', () => {
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
   console.log('Save clicked');
-});`,
+});
+</script>`,
     typescript: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
@@ -394,27 +359,15 @@ function PlainButtonExample() {
     console.log('View details clicked');
   }
 });`,
-    vanilla: `// HTML
-<button class="button button--plain">View details</button>
+    vanilla: `<!-- HTML Structure -->
+<button class="polaris-button polaris-button--plain">View details</button>
 
-// CSS
-.button--plain {
-  background: none;
-  border: none;
-  color: #006fbb;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-}
-
-.button--plain:hover {
-  color: #004c8c;
-}
-
-// JavaScript
-document.querySelector('.button--plain').addEventListener('click', () => {
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--plain').addEventListener('click', () => {
   console.log('View details clicked');
-});`,
+});
+</script>`,
     typescript: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
@@ -434,6 +387,1444 @@ function PlainButtonExample({
       accessibilityLabel={accessibilityLabel}
     >
       View details
+    </Button>
+  );
+}`
+  },
+  'disabled-state': {
+    react: `import {ButtonGroup, Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return (
+    <ButtonGroup>
+      <Button disabled>Buy shipping label</Button>
+      <Button variant="primary" disabled>
+        Buy shipping label
+      </Button>
+      <Button tone="critical" disabled>
+        Buy shipping label
+      </Button>
+      <span style={{color: '#bf0711'}}>
+        <Button variant="monochromePlain" disabled>
+          Buy shipping label
+        </Button>
+      </span>
+      <Button variant="plain" disabled>
+        Buy shipping label
+      </Button>
+      <Button variant="plain" tone="critical" disabled>
+        Buy shipping label
+      </Button>
+    </ButtonGroup>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'button',
+    text: 'Buy shipping label',
+    disabled: true,
+    margin: '0 5 0 0'
+  }, {
+    xtype: 'button',
+    text: 'Buy shipping label',
+    ui: 'primary',
+    disabled: true,
+    margin: '0 5 0 0'
+  }, {
+    xtype: 'button',
+    text: 'Buy shipping label',
+    ui: 'critical',
+    disabled: true,
+    margin: '0 5 0 0'
+  }, {
+    xtype: 'button',
+    text: 'Buy shipping label',
+    ui: 'monochrome-plain',
+    disabled: true,
+    margin: '0 5 0 0'
+  }, {
+    xtype: 'button',
+    text: 'Buy shipping label',
+    ui: 'plain',
+    disabled: true,
+    margin: '0 5 0 0'
+  }, {
+    xtype: 'button',
+    text: 'Buy shipping label',
+    ui: 'plain-critical',
+    disabled: true
+  }]
+});`,
+    vanilla: `<div class="polaris-button-group">
+  <button class="polaris-button polaris-button--default" disabled>Buy shipping label</button>
+  <button class="polaris-button polaris-button--primary" disabled>Buy shipping label</button>
+  <button class="polaris-button polaris-button--critical" disabled>Buy shipping label</button>
+  <button class="polaris-button polaris-button--monochrome-plain" disabled style="color: #bf0711;">Buy shipping label</button>
+  <button class="polaris-button polaris-button--plain" disabled>Buy shipping label</button>
+  <button class="polaris-button polaris-button--plain polaris-button--critical" disabled>Buy shipping label</button>
+</div>
+
+<script>
+// Disabled buttons don't need event handlers, but we can demonstrate state management
+const buttons = document.querySelectorAll('.polaris-button[disabled]');
+buttons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    // This won't fire due to disabled state, but shows structure
+    console.log('Disabled button clicked (this should not happen)');
+  });
+});
+</script>`,
+    typescript: `import {ButtonGroup, Button} from '@shopify/polaris';
+import React from 'react';
+
+interface DisabledButtonState {
+  label: string;
+  variant?: 'primary' | 'plain' | 'monochromePlain';
+  tone?: 'critical';
+  style?: React.CSSProperties;
+}
+
+interface DisabledButtonExampleProps {
+  buttons?: DisabledButtonState[];
+  onButtonClick?: (buttonIndex: number) => void;
+}
+
+function ButtonExample({
+  buttons = [
+    { label: 'Buy shipping label' },
+    { label: 'Buy shipping label', variant: 'primary' },
+    { label: 'Buy shipping label', tone: 'critical' },
+    { label: 'Buy shipping label', variant: 'monochromePlain', style: { color: '#bf0711' } },
+    { label: 'Buy shipping label', variant: 'plain' },
+    { label: 'Buy shipping label', variant: 'plain', tone: 'critical' }
+  ],
+  onButtonClick
+}: DisabledButtonExampleProps): JSX.Element {
+  return (
+    <ButtonGroup>
+      {buttons.map((button, index) => (
+        <span key={index} style={button.style}>
+          <Button 
+            variant={button.variant}
+            tone={button.tone}
+            disabled
+            onClick={() => onButtonClick?.(index)}
+          >
+            {button.label}
+          </Button>
+        </span>
+      ))}
+    </ButtonGroup>
+  );
+}`
+  },
+  'full-width': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button fullWidth>Add customer</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Add customer',
+  width: '100%',
+  handler: function() {
+    console.log('Add customer clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--full-width">Add customer</button>
+
+<script>
+const fullWidthButton = document.querySelector('.polaris-button--full-width');
+
+fullWidthButton.addEventListener('click', () => {
+  console.log('Add customer clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface FullWidthButtonProps {
+  label?: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+}
+
+function ButtonExample({
+  label = 'Add customer',
+  onClick,
+  variant,
+  disabled = false
+}: FullWidthButtonProps): JSX.Element {
+  return (
+    <Button 
+      fullWidth
+      variant={variant}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'icon-only': {
+    react: `import {Button} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button icon={PlusIcon} accessibilityLabel="Add theme" />;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  iconCls: 'plus-icon',
+  tooltip: 'Add theme',
+  handler: function() {
+    console.log('Add theme clicked');
+  },
+  listeners: {
+    afterrender: function(btn) {
+      // Add custom icon styling
+      btn.el.down('.plus-icon').setHtml('➕');
+    }
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--icon-only" aria-label="Add theme">
+  <svg class="polaris-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+  </svg>
+</button>
+
+<script>
+const iconButton = document.querySelector('.polaris-button--icon-only');
+
+iconButton.addEventListener('click', () => {
+  console.log('Add theme clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface IconOnlyButtonProps {
+  icon?: React.ComponentType;
+  accessibilityLabel: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  tone?: 'critical' | 'success';
+  disabled?: boolean;
+  size?: 'micro' | 'slim' | 'medium' | 'large';
+}
+
+function ButtonExample({
+  icon: IconComponent = PlusIcon,
+  accessibilityLabel,
+  onClick,
+  variant,
+  tone,
+  disabled = false,
+  size = 'medium'
+}: IconOnlyButtonProps): JSX.Element {
+  return (
+    <Button 
+      icon={IconComponent}
+      accessibilityLabel={accessibilityLabel}
+      onClick={onClick}
+      variant={variant}
+      tone={tone}
+      disabled={disabled}
+      size={size}
+    />
+  );
+}`
+  },
+  'large': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button size="large">Create store</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Create store',
+  scale: 'large',
+  height: 48,
+  padding: '12 24',
+  handler: function() {
+    console.log('Create store clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--large">Create store</button>
+
+<script>
+const largeButton = document.querySelector('.polaris-button--large');
+
+largeButton.addEventListener('click', () => {
+  console.log('Create store clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface LargeButtonProps {
+  label?: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+  loading?: boolean;
+  icon?: React.ComponentType;
+}
+
+function ButtonExample({
+  label = 'Create store',
+  onClick,
+  variant,
+  disabled = false,
+  loading = false,
+  icon
+}: LargeButtonProps): JSX.Element {
+  return (
+    <Button 
+      size="large"
+      variant={variant}
+      disabled={disabled}
+      loading={loading}
+      icon={icon}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'loading-state': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button loading>Save product</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Save product',
+  iconCls: 'loading-icon',
+  disabled: true,
+  handler: function() {
+    console.log('Save product clicked');
+  },
+  listeners: {
+    afterrender: function(btn) {
+      // Simulate loading state
+      btn.setText('Saving...');
+      btn.setIconCls('spinner-icon');
+    }
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--loading">
+  <span class="polaris-button__spinner">
+    <svg class="polaris-spinner" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 3v3c0 .55-.45 1-1 1s-1-.45-1-1V3c0-.55.45-1 1-1s1 .45 1 1z"/>
+    </svg>
+  </span>
+  <span class="polaris-button__text">Save product</span>
+</button>
+
+<script>
+const loadingButton = document.querySelector('.polaris-button--loading');
+
+// Simulate loading completion
+setTimeout(() => {
+  loadingButton.classList.remove('polaris-button--loading');
+  loadingButton.querySelector('.polaris-button__spinner').style.display = 'none';
+  loadingButton.querySelector('.polaris-button__text').textContent = 'Saved!';
+}, 3000);
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface LoadingButtonProps {
+  label?: string;
+  isLoading?: boolean;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+}
+
+function ButtonExample({
+  label = 'Save product',
+  isLoading = true,
+  onClick,
+  variant,
+  disabled = false
+}: LoadingButtonProps): JSX.Element {
+  return (
+    <Button 
+      loading={isLoading}
+      variant={variant}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'plain-critical': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return (
+    <Button variant="plain" tone="critical">
+      Remove
+    </Button>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Remove',
+  ui: 'plain-critical',
+  style: {
+    color: '#d72c0d'
+  },
+  handler: function() {
+    console.log('Remove clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--plain polaris-button--critical">Remove</button>
+
+<script>
+const criticalButton = document.querySelector('.polaris-button--critical');
+
+criticalButton.addEventListener('click', () => {
+  console.log('Remove clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface PlainCriticalButtonProps {
+  label?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  accessibilityLabel?: string;
+}
+
+function ButtonExample({
+  label = 'Remove',
+  onClick,
+  disabled = false,
+  accessibilityLabel
+}: PlainCriticalButtonProps): JSX.Element {
+  return (
+    <Button 
+      variant="plain" 
+      tone="critical"
+      disabled={disabled}
+      onClick={onClick}
+      accessibilityLabel={accessibilityLabel}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'plain-disclosure': {
+    react: `import {Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function DisclosureButton() {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <Button
+      variant="plain"
+      disclosure={expanded ? 'up' : 'down'}
+      onClick={() => {
+        setExpanded(!expanded);
+      }}
+    >
+      {expanded ? 'Show less' : 'Show more'}
+    </Button>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Show more',
+  ui: 'plain',
+  iconCls: 'arrow-down',
+  iconAlign: 'right',
+  toggleGroup: 'disclosure',
+  enableToggle: true,
+  handler: function(btn) {
+    const isExpanded = btn.pressed;
+    btn.setText(isExpanded ? 'Show less' : 'Show more');
+    btn.setIconCls(isExpanded ? 'arrow-up' : 'arrow-down');
+    console.log(isExpanded ? 'Expanded' : 'Collapsed');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--plain polaris-button--disclosure" id="disclosure-btn">
+  <span class="polaris-button__text">Show more</span>
+  <svg class="polaris-button__icon polaris-button__icon--down" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 14l-4-4h8l-4 4z"/>
+  </svg>
+</button>
+
+<script>
+const disclosureBtn = document.getElementById('disclosure-btn');
+const btnText = disclosureBtn.querySelector('.polaris-button__text');
+const btnIcon = disclosureBtn.querySelector('.polaris-button__icon');
+let expanded = false;
+
+disclosureBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  
+  if (expanded) {
+    btnText.textContent = 'Show less';
+    btnIcon.classList.remove('polaris-button__icon--down');
+    btnIcon.classList.add('polaris-button__icon--up');
+    btnIcon.innerHTML = '<path d="M10 6l4 4H6l4-4z"/>';
+  } else {
+    btnText.textContent = 'Show more';
+    btnIcon.classList.remove('polaris-button__icon--up');
+    btnIcon.classList.add('polaris-button__icon--down');
+    btnIcon.innerHTML = '<path d="M10 14l-4-4h8l-4 4z"/>';
+  }
+  
+  console.log(expanded ? 'Expanded' : 'Collapsed');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface DisclosureButtonProps {
+  initialExpanded?: boolean;
+  expandedText?: string;
+  collapsedText?: string;
+  onToggle?: (expanded: boolean) => void;
+}
+
+function DisclosureButton({
+  initialExpanded = false,
+  expandedText = 'Show less',
+  collapsedText = 'Show more',
+  onToggle
+}: DisclosureButtonProps): JSX.Element {
+  const [expanded, setExpanded] = useState<boolean>(initialExpanded);
+
+  const handleToggle = useCallback(() => {
+    const newExpanded = !expanded;
+    setExpanded(newExpanded);
+    onToggle?.(newExpanded);
+  }, [expanded, onToggle]);
+
+  return (
+    <Button
+      variant="plain"
+      disclosure={expanded ? 'up' : 'down'}
+      onClick={handleToggle}
+    >
+      {expanded ? expandedText : collapsedText}
+    </Button>
+  );
+}`
+  },
+  'pressed': {
+    react: `import {ButtonGroup, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function PressedButton() {
+  const [isFirstButtonActive, setIsFirstButtonActive] = useState(true);
+
+  const handleFirstButtonClick = useCallback(() => {
+    if (isFirstButtonActive) return;
+    setIsFirstButtonActive(true);
+  }, [isFirstButtonActive]);
+
+  const handleSecondButtonClick = useCallback(() => {
+    if (!isFirstButtonActive) return;
+    setIsFirstButtonActive(false);
+  }, [isFirstButtonActive]);
+
+  return (
+    <ButtonGroup variant="segmented">
+      <Button pressed={isFirstButtonActive} onClick={handleFirstButtonClick}>
+        First button
+      </Button>
+      <Button pressed={!isFirstButtonActive} onClick={handleSecondButtonClick}>
+        Second button
+      </Button>
+    </ButtonGroup>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'button',
+    text: 'First button',
+    toggleGroup: 'pressed-group',
+    pressed: true,
+    enableToggle: true,
+    allowDepress: false,
+    flex: 1,
+    margin: '0 1 0 0',
+    handler: function(btn) {
+      console.log('First button clicked, pressed:', btn.pressed);
+    }
+  }, {
+    xtype: 'button',
+    text: 'Second button',
+    toggleGroup: 'pressed-group',
+    pressed: false,
+    enableToggle: true,
+    allowDepress: false,
+    flex: 1,
+    margin: '0 0 0 1',
+    handler: function(btn) {
+      console.log('Second button clicked, pressed:', btn.pressed);
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-button-group polaris-button-group--segmented">
+  <button class="polaris-button polaris-button--pressed" id="first-btn">First button</button>
+  <button class="polaris-button" id="second-btn">Second button</button>
+</div>
+
+<script>
+const firstBtn = document.getElementById('first-btn');
+const secondBtn = document.getElementById('second-btn');
+let isFirstButtonActive = true;
+
+function updateButtonStates() {
+  if (isFirstButtonActive) {
+    firstBtn.classList.add('polaris-button--pressed');
+    secondBtn.classList.remove('polaris-button--pressed');
+  } else {
+    firstBtn.classList.remove('polaris-button--pressed');
+    secondBtn.classList.add('polaris-button--pressed');
+  }
+}
+
+firstBtn.addEventListener('click', () => {
+  if (isFirstButtonActive) return;
+  isFirstButtonActive = true;
+  updateButtonStates();
+  console.log('First button clicked, pressed:', isFirstButtonActive);
+});
+
+secondBtn.addEventListener('click', () => {
+  if (!isFirstButtonActive) return;
+  isFirstButtonActive = false;
+  updateButtonStates();
+  console.log('Second button clicked, pressed:', !isFirstButtonActive);
+});
+</script>`,
+    typescript: `import {ButtonGroup, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ButtonOption {
+  id: string;
+  label: string;
+}
+
+interface PressedButtonProps {
+  options?: ButtonOption[];
+  initialActiveId?: string;
+  onSelectionChange?: (activeId: string) => void;
+}
+
+function PressedButton({
+  options = [
+    { id: 'first', label: 'First button' },
+    { id: 'second', label: 'Second button' }
+  ],
+  initialActiveId = 'first',
+  onSelectionChange
+}: PressedButtonProps): JSX.Element {
+  const [activeButtonId, setActiveButtonId] = useState<string>(initialActiveId);
+
+  const handleButtonClick = useCallback((buttonId: string) => {
+    if (activeButtonId === buttonId) return;
+    setActiveButtonId(buttonId);
+    onSelectionChange?.(buttonId);
+  }, [activeButtonId, onSelectionChange]);
+
+  return (
+    <ButtonGroup variant="segmented">
+      {options.map((option) => (
+        <Button 
+          key={option.id}
+          pressed={activeButtonId === option.id} 
+          onClick={() => handleButtonClick(option.id)}
+        >
+          {option.label}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}`
+  },
+  'primary-critical': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return (
+    <Button variant="primary" tone="critical">
+      View shipping settings
+    </Button>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'View shipping settings',
+  ui: 'primary-critical',
+  style: {
+    backgroundColor: '#d72c0d',
+    borderColor: '#d72c0d',
+    color: 'white'
+  },
+  handler: function() {
+    console.log('View shipping settings clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--primary polaris-button--critical">View shipping settings</button>
+
+<script>
+const primaryCriticalButton = document.querySelector('.polaris-button--primary.polaris-button--critical');
+
+primaryCriticalButton.addEventListener('click', () => {
+  console.log('View shipping settings clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface PrimaryCriticalButtonProps {
+  label?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+function ButtonExample({
+  label = 'View shipping settings',
+  onClick,
+  disabled = false,
+  loading = false
+}: PrimaryCriticalButtonProps): JSX.Element {
+  return (
+    <Button 
+      variant="primary" 
+      tone="critical"
+      disabled={disabled}
+      loading={loading}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'right-aligned-disclosure': {
+    react: `import {Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function RightAlignedDisclosureButton() {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div style={{width: '200px'}}>
+      <Button
+        fullWidth
+        textAlign="left"
+        disclosure={expanded ? 'up' : 'down'}
+        onClick={() => setExpanded(!expanded)}
+      >
+        {expanded ? 'Show less' : 'Show more'}
+      </Button>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  width: 200,
+  items: [{
+    xtype: 'button',
+    text: 'Show more',
+    width: '100%',
+    textAlign: 'left',
+    iconCls: 'arrow-down',
+    iconAlign: 'right',
+    enableToggle: true,
+    handler: function(btn) {
+      const isExpanded = btn.pressed;
+      btn.setText(isExpanded ? 'Show less' : 'Show more');
+      btn.setIconCls(isExpanded ? 'arrow-up' : 'arrow-down');
+      console.log(isExpanded ? 'Expanded' : 'Collapsed');
+    }
+  }]
+});`,
+    vanilla: `<div style="width: 200px;">
+  <button class="polaris-button polaris-button--full-width polaris-button--text-left polaris-button--disclosure" id="right-aligned-disclosure">
+    <span class="polaris-button__text">Show more</span>
+    <svg class="polaris-button__icon polaris-button__icon--right polaris-button__icon--down" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 14l-4-4h8l-4 4z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+const rightAlignedBtn = document.getElementById('right-aligned-disclosure');
+const btnText = rightAlignedBtn.querySelector('.polaris-button__text');
+const btnIcon = rightAlignedBtn.querySelector('.polaris-button__icon');
+let expanded = false;
+
+rightAlignedBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  
+  if (expanded) {
+    btnText.textContent = 'Show less';
+    btnIcon.classList.remove('polaris-button__icon--down');
+    btnIcon.classList.add('polaris-button__icon--up');
+    btnIcon.innerHTML = '<path d="M10 6l4 4H6l4-4z"/>';
+  } else {
+    btnText.textContent = 'Show more';
+    btnIcon.classList.remove('polaris-button__icon--up');
+    btnIcon.classList.add('polaris-button__icon--down');
+    btnIcon.innerHTML = '<path d="M10 14l-4-4h8l-4 4z"/>';
+  }
+  
+  console.log(expanded ? 'Expanded' : 'Collapsed');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface RightAlignedDisclosureProps {
+  width?: string | number;
+  expandedText?: string;
+  collapsedText?: string;
+  onToggle?: (expanded: boolean) => void;
+}
+
+function RightAlignedDisclosureButton({
+  width = '200px',
+  expandedText = 'Show less',
+  collapsedText = 'Show more',
+  onToggle
+}: RightAlignedDisclosureProps): JSX.Element {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const handleClick = useCallback(() => {
+    const newExpanded = !expanded;
+    setExpanded(newExpanded);
+    onToggle?.(newExpanded);
+  }, [expanded, onToggle]);
+
+  return (
+    <div style={{width}}>
+      <Button
+        fullWidth
+        textAlign="left"
+        disclosure={expanded ? 'up' : 'down'}
+        onClick={handleClick}
+      >
+        {expanded ? expandedText : collapsedText}
+      </Button>
+    </div>
+  );
+}`
+  },
+  'select-disclosure': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return (
+    <div style={{height: '100px'}}>
+      <Button disclosure="select" onClick={() => console.log('Open Popover')}>
+        Select options
+      </Button>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Select options',
+  iconCls: 'select-arrow',
+  iconAlign: 'right',
+  arrowCls: 'select-disclosure',
+  handler: function() {
+    console.log('Open Popover');
+    // Simulate popover opening
+    Ext.Msg.show({
+      title: 'Options Menu',
+      msg: 'Select an option...',
+      buttons: Ext.Msg.OK
+    });
+  }
+});`,
+    vanilla: `<div style="height: 100px;">
+  <button class="polaris-button polaris-button--select-disclosure" id="select-disclosure-btn">
+    <span class="polaris-button__text">Select options</span>
+    <svg class="polaris-button__icon polaris-button__icon--select" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 10l3 3 3-3H7z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+const selectDisclosureBtn = document.getElementById('select-disclosure-btn');
+
+selectDisclosureBtn.addEventListener('click', () => {
+  console.log('Open Popover');
+  // Simulate popover opening
+  alert('Options menu would open here');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface SelectDisclosureButtonProps {
+  label?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  variant?: 'primary' | 'secondary' | 'plain';
+}
+
+function ButtonExample({
+  label = 'Select options',
+  onClick,
+  disabled = false,
+  variant
+}: SelectDisclosureButtonProps): JSX.Element {
+  const handleClick = () => {
+    console.log('Open Popover');
+    onClick?.();
+  };
+
+  return (
+    <div style={{height: '100px'}}>
+      <Button 
+        disclosure="select" 
+        onClick={handleClick}
+        disabled={disabled}
+        variant={variant}
+      >
+        {label}
+      </Button>
+    </div>
+  );
+}`
+  },
+  'split': {
+    react: `import {
+  ActionList,
+  InlineStack,
+  Button,
+  ButtonGroup,
+  Popover,
+} from '@shopify/polaris';
+import React from 'react';
+import {ChevronDownIcon} from '@shopify/polaris-icons';
+
+function ButtonExample() {
+  const [active, setActive] = React.useState<string | null>(null);
+
+  const toggleActive = (id: string) => () => {
+    setActive((activeId) => (activeId !== id ? id : null));
+  };
+  return (
+    <div style={{height: '100px'}}>
+      <InlineStack gap="500">
+        <ButtonGroup variant="segmented">
+          <Button variant="primary">Save</Button>
+
+          <Popover
+            active={active === 'popover1'}
+            preferredAlignment="right"
+            activator={
+              <Button
+                variant="primary"
+                onClick={toggleActive('popover1')}
+                icon={ChevronDownIcon}
+                accessibilityLabel="Other save actions"
+              />
+            }
+            autofocusTarget="first-node"
+            onClose={toggleActive('popover1')}
+          >
+            <ActionList
+              actionRole="menuitem"
+              items={[{content: 'Save as draft'}]}
+            />
+          </Popover>
+        </ButtonGroup>
+
+        <ButtonGroup variant="segmented">
+          <Button>Save</Button>
+
+          <Popover
+            active={active === 'popover2'}
+            preferredAlignment="right"
+            activator={
+              <Button
+                onClick={toggleActive('popover2')}
+                icon={ChevronDownIcon}
+                accessibilityLabel="Other save actions"
+              />
+            }
+            autofocusTarget="first-node"
+            onClose={toggleActive('popover2')}
+          >
+            <ActionList
+              actionRole="menuitem"
+              items={[{content: 'Save as draft'}]}
+            />
+          </Popover>
+        </ButtonGroup>
+      </InlineStack>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save',
+      ui: 'primary',
+      margin: '0 0 0 0',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }, {
+      xtype: 'button',
+      iconCls: 'chevron-down',
+      ui: 'primary',
+      width: 30,
+      menu: [{
+        text: 'Save as draft',
+        handler: function() {
+          console.log('Save as draft clicked');
+        }
+      }]
+    }],
+    margin: '0 20 0 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save',
+      margin: '0 0 0 0',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }, {
+      xtype: 'button',
+      iconCls: 'chevron-down',
+      width: 30,
+      menu: [{
+        text: 'Save as draft',
+        handler: function() {
+          console.log('Save as draft clicked');
+        }
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<div style="height: 100px;">
+  <div class="polaris-inline-stack polaris-inline-stack--gap-500">
+    <div class="polaris-button-group polaris-button-group--segmented">
+      <button class="polaris-button polaris-button--primary" id="save-primary">Save</button>
+      <button class="polaris-button polaris-button--primary polaris-button--split" id="dropdown-primary" aria-label="Other save actions">
+        <svg class="polaris-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 14l-4-4h8l-4 4z"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="polaris-button-group polaris-button-group--segmented">
+      <button class="polaris-button" id="save-secondary">Save</button>
+      <button class="polaris-button polaris-button--split" id="dropdown-secondary" aria-label="Other save actions">
+        <svg class="polaris-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 14l-4-4h8l-4 4z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const savePrimary = document.getElementById('save-primary');
+const saveSecondary = document.getElementById('save-secondary');
+const dropdownPrimary = document.getElementById('dropdown-primary');
+const dropdownSecondary = document.getElementById('dropdown-secondary');
+
+savePrimary.addEventListener('click', () => {
+  console.log('Primary Save clicked');
+});
+
+saveSecondary.addEventListener('click', () => {
+  console.log('Secondary Save clicked');
+});
+
+dropdownPrimary.addEventListener('click', () => {
+  console.log('Primary dropdown clicked');
+  alert('Primary menu: Save as draft');
+});
+
+dropdownSecondary.addEventListener('click', () => {
+  console.log('Secondary dropdown clicked');
+  alert('Secondary menu: Save as draft');
+});
+</script>`,
+    typescript: `import {
+  ActionList,
+  InlineStack,
+  Button,
+  ButtonGroup,
+  Popover,
+} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+import {ChevronDownIcon} from '@shopify/polaris-icons';
+
+interface SplitButtonAction {
+  content: string;
+  onAction?: () => void;
+}
+
+interface SplitButtonProps {
+  primaryAction?: string;
+  actions?: SplitButtonAction[];
+  variant?: 'primary' | 'secondary';
+  onPrimaryAction?: () => void;
+}
+
+function ButtonExample({
+  primaryAction = 'Save',
+  actions = [{content: 'Save as draft'}],
+  variant,
+  onPrimaryAction
+}: SplitButtonProps = {}): JSX.Element {
+  const [active, setActive] = useState<string | null>(null);
+
+  const toggleActive = useCallback((id: string) => () => {
+    setActive((activeId) => (activeId !== id ? id : null));
+  }, []);
+
+  const handlePrimaryAction = useCallback(() => {
+    onPrimaryAction?.();
+  }, [onPrimaryAction]);
+
+  return (
+    <div style={{height: '100px'}}>
+      <InlineStack gap="500">
+        <ButtonGroup variant="segmented">
+          <Button variant="primary" onClick={handlePrimaryAction}>
+            {primaryAction}
+          </Button>
+
+          <Popover
+            active={active === 'popover1'}
+            preferredAlignment="right"
+            activator={
+              <Button
+                variant="primary"
+                onClick={toggleActive('popover1')}
+                icon={ChevronDownIcon}
+                accessibilityLabel="Other save actions"
+              />
+            }
+            autofocusTarget="first-node"
+            onClose={toggleActive('popover1')}
+          >
+            <ActionList
+              actionRole="menuitem"
+              items={actions}
+            />
+          </Popover>
+        </ButtonGroup>
+
+        <ButtonGroup variant="segmented">
+          <Button onClick={handlePrimaryAction}>{primaryAction}</Button>
+
+          <Popover
+            active={active === 'popover2'}
+            preferredAlignment="right"
+            activator={
+              <Button
+                onClick={toggleActive('popover2')}
+                icon={ChevronDownIcon}
+                accessibilityLabel="Other save actions"
+              />
+            }
+            autofocusTarget="first-node"
+            onClose={toggleActive('popover2')}
+          >
+            <ActionList
+              actionRole="menuitem"
+              items={actions}
+            />
+          </Popover>
+        </ButtonGroup>
+      </InlineStack>
+    </div>
+  );
+}`
+  },
+  'tertiary': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button variant="tertiary">View shipping settings</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'View shipping settings',
+  ui: 'tertiary',
+  handler: function() {
+    console.log('View shipping settings clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--tertiary">View shipping settings</button>
+
+<script>
+const tertiaryButton = document.querySelector('.polaris-button--tertiary');
+
+tertiaryButton.addEventListener('click', () => {
+  console.log('View shipping settings clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface TertiaryButtonProps {
+  label?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  icon?: React.ComponentType;
+}
+
+function ButtonExample({
+  label = 'View shipping settings',
+  onClick,
+  disabled = false,
+  icon
+}: TertiaryButtonProps): JSX.Element {
+  return (
+    <Button 
+      variant="tertiary"
+      onClick={onClick}
+      disabled={disabled}
+      icon={icon}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+  'text-aligned': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return (
+    <Button variant="plain" textAlign="left">
+      This is a really long string of text that overflows onto the next line we
+      need to put in a lot of words now you can see the alignment. It is very
+      long but a customer could potentially name something this long.
+    </Button>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'This is a really long string of text that overflows onto the next line we need to put in a lot of words now you can see the alignment. It is very long but a customer could potentially name something this long.',
+  ui: 'plain',
+  textAlign: 'left',
+  width: 300,
+  height: 80,
+  handler: function() {
+    console.log('Text aligned button clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--plain polaris-button--text-left" style="width: 300px; height: auto; white-space: normal;">
+  This is a really long string of text that overflows onto the next line we
+  need to put in a lot of words now you can see the alignment. It is very
+  long but a customer could potentially name something this long.
+</button>
+
+<script>
+const textAlignedButton = document.querySelector('.polaris-button--text-left');
+
+textAlignedButton.addEventListener('click', () => {
+  console.log('Text aligned button clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface TextAlignedButtonProps {
+  children: React.ReactNode;
+  textAlign?: 'left' | 'center' | 'right';
+  variant?: 'primary' | 'secondary' | 'plain';
+  onClick?: () => void;
+  maxWidth?: string | number;
+}
+
+function ButtonExample({
+  children = 'This is a really long string of text that overflows onto the next line we need to put in a lot of words now you can see the alignment. It is very long but a customer could potentially name something this long.',
+  textAlign = 'left',
+  variant = 'plain',
+  onClick,
+  maxWidth = '300px'
+}: TextAlignedButtonProps): JSX.Element {
+  return (
+    <div style={{maxWidth}}>
+      <Button 
+        variant={variant} 
+        textAlign={textAlign}
+        onClick={onClick}
+      >
+        {children}
+      </Button>
+    </div>
+  );
+}`
+  },
+  'with-icon': {
+    react: `import {Button} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button icon={PlusIcon}>Add theme</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Add theme',
+  iconCls: 'plus-icon',
+  iconAlign: 'left',
+  handler: function() {
+    console.log('Add theme clicked');
+  },
+  listeners: {
+    afterrender: function(btn) {
+      // Add custom icon styling
+      const iconEl = btn.el.down('.plus-icon');
+      if (iconEl) {
+        iconEl.setHtml('➕');
+      }
+    }
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--with-icon">
+  <svg class="polaris-button__icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+  </svg>
+  <span class="polaris-button__text">Add theme</span>
+</button>
+
+<script>
+const iconButton = document.querySelector('.polaris-button--with-icon');
+
+iconButton.addEventListener('click', () => {
+  console.log('Add theme clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import {PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface ButtonWithIconProps {
+  icon?: React.ComponentType;
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+  size?: 'micro' | 'slim' | 'medium' | 'large';
+}
+
+function ButtonExample({
+  icon: IconComponent = PlusIcon,
+  children = 'Add theme',
+  onClick,
+  variant,
+  disabled = false,
+  size = 'medium'
+}: ButtonWithIconProps): JSX.Element {
+  return (
+    <Button 
+      icon={IconComponent}
+      onClick={onClick}
+      variant={variant}
+      disabled={disabled}
+      size={size}
+    >
+      {children}
+    </Button>
+  );
+}`
+  },
+  'default': {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExample() {
+  return <Button>Add product</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Add product',
+  handler: function() {
+    console.log('Add product clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button">Add product</button>
+
+<script>
+const defaultButton = document.querySelector('.polaris-button');
+
+defaultButton.addEventListener('click', () => {
+  console.log('Add product clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface DefaultButtonProps {
+  children?: React.ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+function ButtonExample({
+  children = 'Add product',
+  onClick,
+  disabled = false,
+  loading = false
+}: DefaultButtonProps): JSX.Element {
+  return (
+    <Button 
+      onClick={onClick}
+      disabled={disabled}
+      loading={loading}
+    >
+      {children}
     </Button>
   );
 }`
@@ -465,24 +1856,11 @@ function CardDefault() {
     html: '<h2 class="Polaris-Text--bodyMd">Content inside a card</h2>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <h2 class="text-body-md">Content inside a card</h2>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <h2 class="polaris-text-body-md">Content inside a card</h2>
 </div>
-
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.text-body-md {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-regular);
-  line-height: var(--p-font-line-height-400);
-}`,
+`,
     typescript: `import {Card, Text} from '@shopify/polaris';
 import React from 'react';
 
@@ -542,44 +1920,17 @@ function CardWithSubduedBackground() {
     }]
   }]
 });`,
-    vanilla: `// HTML
-<div class="card card--subdued">
-  <div class="stack">
-    <h3 class="text-heading-sm">Deactivated staff accounts</h3>
-    <ul class="list">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card card--subdued">
+  <div class="polaris-stack">
+    <h3 class="polaris-text-heading-sm">Deactivated staff accounts</h3>
+    <ul class="polaris-list">
       <li>Felix Crafford</li>
       <li>Ezequiel Manno</li>
     </ul>
   </div>
 </div>
-
-// CSS
-.card {
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.card--subdued {
-  background: var(--p-color-bg-surface-secondary);
-}
-
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-200);
-}
-
-.text-heading-sm {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  line-height: var(--p-font-line-height-400);
-}
-
-.list {
-  list-style: disc;
-  padding-left: var(--p-space-500);
-}`,
+`,
     typescript: `import {BlockStack, Card, List, Text} from '@shopify/polaris';
 import React from 'react';
 
@@ -650,38 +2001,14 @@ function CardWithSection() {
     html: '<p class="Polaris-Text--bodyMd">View a summary of your online store\\'s performance.</p>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <h2 class="card__title">Online store dashboard</h2>
-  <div class="card__content">
-    <p class="text-body-md">View a summary of your online store's performance.</p>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <h2 class="polaris-card__title">Online store dashboard</h2>
+  <div class="polaris-card__content">
+    <p class="polaris-text-body-md">View a summary of your online store's performance.</p>
   </div>
 </div>
-
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-200);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.card__title {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  line-height: var(--p-font-line-height-400);
-  margin: 0;
-}
-
-.card__content {
-  padding-top: var(--p-space-200);
-}
-
-.text-body-md {
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  margin: 0;
-}`,
+`,
     typescript: `import React from 'react';
 import {Box, Card, Text} from '@shopify/polaris';
 
@@ -797,25 +2124,25 @@ function CardWithFooterActions() {
     }]
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <div class="card__content">
-    <h2 class="text-heading-sm">Shipment 1234</h2>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__content">
+    <h2 class="polaris-text-heading-sm">Shipment 1234</h2>
     <div class="items-section">
-      <h3 class="text-heading-sm text-medium">Items</h3>
-      <ul class="list">
+      <h3 class="polaris-text-heading-sm text-medium">Items</h3>
+      <ul class="polaris-list">
         <li>1 × Oasis Glass, 4-Pack</li>
         <li>1 × Anubis Cup, 2-Pack</li>
       </ul>
     </div>
   </div>
-  <div class="card__footer">
-    <div class="button-group button-group--end">
-      <button class="button" aria-label="Fulfill items">
+  <div class="polaris-card__footer">
+    <div class="polaris-button-group button-group--end">
+      <button class="polaris-button" aria-label="Fulfill items">
         Fulfill items
       </button>
-      <button class="button button--primary" aria-label="Create shipping label">
-        <svg class="icon" viewBox="0 0 20 20">
+      <button class="polaris-button button--primary" aria-label="Create shipping label">
+        <svg class="polaris-icon" viewBox="0 0 20 20">
           <path d="M10 6v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2z"/>
         </svg>
         Create shipping label
@@ -824,82 +2151,15 @@ function CardWithFooterActions() {
   </div>
 </div>
 
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  overflow: hidden;
-}
 
-.card__content {
-  padding: var(--p-space-400);
-}
-
-.card__footer {
-  padding: var(--p-space-400);
-  border-top: 1px solid var(--p-color-border);
-}
-
-.text-heading-sm {
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  margin: 0;
-}
-
-.text-medium {
-  font-weight: var(--p-font-weight-medium);
-}
-
-.items-section {
-  margin-top: var(--p-space-200);
-}
-
-.list {
-  list-style: disc;
-  padding-left: var(--p-space-500);
-  margin: var(--p-space-200) 0 0 0;
-}
-
-.button-group {
-  display: flex;
-  gap: var(--p-space-200);
-}
-
-.button-group--end {
-  justify-content: flex-end;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--p-space-100);
-  padding: 8px 16px;
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  background: white;
-  cursor: pointer;
-}
-
-.button--primary {
-  background: var(--p-color-bg-fill-brand);
-  color: white;
-  border-color: var(--p-color-bg-fill-brand);
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-// JavaScript
-document.querySelectorAll('.button').forEach(button => {
+<script>
+document.querySelectorAll('.polaris-button').forEach(button => {
   button.addEventListener('click', () => {
     const label = button.getAttribute('aria-label');
     console.log(\`\${label} clicked\`);
   });
-});`,
+});
+</script>`,
     typescript: `import React from 'react';
 import {
   BlockStack,
@@ -1023,76 +2283,29 @@ function CardWithHeaderActions() {
     html: '<p class="Polaris-Text--bodyMd">Add variants if this product comes in multiple versions, like different sizes or colors.</p>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <div class="card__header">
-    <h2 class="text-heading-sm">Variants</h2>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__header">
+    <h2 class="polaris-text-heading-sm">Variants</h2>
     <button class="button button--icon-text" aria-label="Add variant">
-      <svg class="icon" viewBox="0 0 20 20">
+      <svg class="polaris-icon" viewBox="0 0 20 20">
         <path d="M10 6v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2z"/>
       </svg>
       Add variant
     </button>
   </div>
-  <p class="card__description">
+  <p class="polaris-card__description">
     Add variants if this product comes in multiple versions, like
     different sizes or colors.
   </p>
 </div>
 
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
 
-.card__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--p-space-200);
-}
-
-.text-heading-sm {
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  margin: 0;
-}
-
-.card__description {
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  margin: 0;
-  color: var(--p-color-text);
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--p-space-100);
-  padding: 8px 16px;
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  background: white;
-  cursor: pointer;
-}
-
-.button--icon-text {
-  gap: var(--p-space-100);
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-  fill: currentColor;
-}
-
-// JavaScript
+<script>
 document.querySelector('.button').addEventListener('click', () => {
   console.log('Add variant clicked');
-});`,
+});
+</script>`,
     typescript: `import React from 'react';
 import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
 import {PlusIcon} from '@shopify/polaris-icons';
@@ -4333,33 +5546,11 @@ function BadgeExample() {
     html: '<span class="polaris-badge polaris-badge--critical">Action required</span>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <span class="badge badge--critical">Action required</span>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <span class="polaris-badge badge--critical">Action required</span>
 </div>
-
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 var(--p-space-200);
-  min-height: var(--p-font-line-height-400);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-200);
-  font-weight: var(--p-font-weight-medium);
-}
-
-.badge--critical {
-  background: var(--p-color-bg-fill-critical);
-  color: var(--p-color-text-on-color);
-}`,
+`,
     typescript: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
@@ -4401,33 +5592,11 @@ function BadgeExample() {
     html: '<span class="polaris-badge polaris-badge--success">Active</span>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <span class="badge badge--success">Active</span>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <span class="polaris-badge badge--success">Active</span>
 </div>
-
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 var(--p-space-200);
-  min-height: var(--p-font-line-height-400);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-200);
-  font-weight: var(--p-font-weight-medium);
-}
-
-.badge--success {
-  background: var(--p-color-bg-fill-success);
-  color: var(--p-color-text-on-color);
-}`,
+`,
     typescript: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
@@ -4830,58 +5999,27 @@ function TextFieldExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="text-field">
-  <label for="store-name" class="text-field__label">Store name</label>
-  <div class="text-field__input-wrapper">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field">
+  <label for="store-name" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
     <input 
       type="text" 
       id="store-name" 
-      class="text-field__input" 
+      class="polaris-text-field__input" 
       value="Jaded Pixel"
       autocomplete="off"
     />
   </div>
 </div>
 
-// CSS
-.text-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.text-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.text-field__input-wrapper {
-  position: relative;
-}
-
-.text-field__input {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-}
-
-.text-field__input:focus {
-  outline: none;
-  border-color: var(--p-color-border-emphasis);
-  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
-}
-
-// JavaScript
+<script>
 const input = document.getElementById('store-name');
 input.addEventListener('input', (event) => {
   console.log('Value changed to:', event.target.value);
-});`,
+});
+</script>`,
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -4960,68 +6098,27 @@ function ValidationErrorExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="text-field text-field--error">
-  <label for="store-name" class="text-field__label">Store name</label>
-  <div class="text-field__input-wrapper">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field text-field--error">
+  <label for="store-name" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
     <input 
       type="text" 
       id="store-name" 
-      class="text-field__input text-field__input--error" 
+      class="polaris-text-field__input text-field__input--error" 
       value=""
       autocomplete="off"
       aria-invalid="true"
       aria-describedby="store-name-error"
     />
   </div>
-  <div id="store-name-error" class="text-field__error">
+  <div id="store-name-error" class="polaris-text-field__error">
     Store name is required
   </div>
 </div>
 
-// CSS
-.text-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.text-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.text-field__input-wrapper {
-  position: relative;
-}
-
-.text-field__input {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-}
-
-.text-field__input--error {
-  border-color: var(--p-color-border-critical);
-}
-
-.text-field__input--error:focus {
-  border-color: var(--p-color-border-critical);
-  box-shadow: 0 0 0 1px var(--p-color-border-critical);
-}
-
-.text-field__error {
-  color: var(--p-color-text-critical);
-  font-size: var(--p-font-size-200);
-  margin-top: var(--p-space-100);
-}
-
-// JavaScript
+<script>
 const input = document.getElementById('store-name');
 const errorDiv = document.getElementById('store-name-error');
 
@@ -5035,7 +6132,8 @@ input.addEventListener('input', (event) => {
     input.setAttribute('aria-invalid', 'true');
     errorDiv.style.display = 'block';
   }
-});`,
+});
+</script>`,
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -5114,69 +6212,31 @@ function HelpTextExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="text-field">
-  <label for="account-email" class="text-field__label">Account email</label>
-  <div class="text-field__input-wrapper">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field">
+  <label for="account-email" class="polaris-text-field__label">Account email</label>
+  <div class="polaris-text-field__input-wrapper">
     <input 
       type="email" 
       id="account-email" 
-      class="text-field__input" 
+      class="polaris-text-field__input" 
       value="bernadette.lapresse@jadedpixel.com"
       autocomplete="email"
       aria-describedby="account-email-help"
     />
   </div>
-  <div id="account-email-help" class="text-field__help-text">
+  <div id="account-email-help" class="polaris-text-field__help-text">
     We'll use this address if we need to contact you about your account.
   </div>
 </div>
 
-// CSS
-.text-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.text-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.text-field__input-wrapper {
-  position: relative;
-}
-
-.text-field__input {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-}
-
-.text-field__input:focus {
-  outline: none;
-  border-color: var(--p-color-border-emphasis);
-  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
-}
-
-.text-field__help-text {
-  color: var(--p-color-text-secondary);
-  font-size: var(--p-font-size-200);
-  line-height: var(--p-font-line-height-300);
-  margin-top: var(--p-space-100);
-}
-
-// JavaScript
+<script>
 const emailInput = document.getElementById('account-email');
 emailInput.addEventListener('input', (event) => {
   console.log('Email changed to:', event.target.value);
-});`,
+});
+</script>`,
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -5247,14 +6307,14 @@ function NumberFieldExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="text-field">
-  <label for="quantity" class="text-field__label">Quantity</label>
-  <div class="text-field__input-wrapper">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field">
+  <label for="quantity" class="polaris-text-field__label">Quantity</label>
+  <div class="polaris-text-field__input-wrapper">
     <input 
       type="number" 
       id="quantity" 
-      class="text-field__input" 
+      class="polaris-text-field__input" 
       value="1"
       min="0"
       autocomplete="off"
@@ -5262,57 +6322,16 @@ function NumberFieldExample() {
   </div>
 </div>
 
-// CSS
-.text-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.text-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.text-field__input-wrapper {
-  position: relative;
-}
-
-.text-field__input {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-}
-
-.text-field__input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-.text-field__input[type="number"]::-webkit-inner-spin-button,
-.text-field__input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.text-field__input:focus {
-  outline: none;
-  border-color: var(--p-color-border-emphasis);
-  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
-}
-
-// JavaScript
+<script>
 const quantityInput = document.getElementById('quantity');
 quantityInput.addEventListener('input', (event) => {
   const value = event.target.value;
   if (value && !isNaN(value) && parseInt(value) >= 0) {
     console.log('Quantity changed to:', value);
   }
-});`,
+});
+</script>`,
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -5683,6 +6702,2627 @@ function MultilineTextField({
     />
   );
 }`
+  },
+  'with-auto-size': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function AutoSizeExample() {
+  const [value, setValue] = useState('Jaded Pixel');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      autoSize
+      suffix="in: Your stores"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  autoSize: true,
+  suffix: 'in: Your stores',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-auto" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name-auto" 
+      class="polaris-text-field__input polaris-text-field__input--auto-size" 
+      value="Jaded Pixel"
+      autocomplete="off"
+    />
+    <span class="polaris-text-field__suffix">in: Your stores</span>
+  </div>
+</div>
+
+<script>
+const autoSizeInput = document.getElementById('store-name-auto');
+autoSizeInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  // Auto-resize logic
+  event.target.style.width = Math.max(150, value.length * 8 + 40) + 'px';
+  console.log('Value changed to:', value);
+});
+
+// Initialize auto-size
+autoSizeInput.style.width = Math.max(150, autoSizeInput.value.length * 8 + 40) + 'px';
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface AutoSizeTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  suffix?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function AutoSizeExample({ 
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  suffix = 'in: Your stores',
+  onValueChange
+}: AutoSizeTextFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onValueChange?.(newValue);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      autoSize
+      suffix={suffix}
+    />
+  );
+}`
+  },
+  'with-auto-size-and-dynamic-suffix': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function AutoSizeExample() {
+  const [value, setValue] = useState('');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  const suffix = value ? 'in: Unfulfilled orders' : null;
+
+  return (
+    <TextField
+      label="Search view"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      autoSize
+      placeholder="Searching in Unfulfilled orders"
+      suffix={suffix}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Search view',
+  value: '',
+  labelWidth: 100,
+  autoSize: true,
+  emptyText: 'Searching in Unfulfilled orders',
+  listeners: {
+    change: function(field, newValue) {
+      const suffix = newValue ? 'in: Unfulfilled orders' : null;
+      if (suffix) {
+        field.setFieldStyle('padding-right: 140px;');
+        if (!field.suffixEl) {
+          field.suffixEl = Ext.DomHelper.append(field.inputWrap, {
+            tag: 'span',
+            cls: 'field-suffix',
+            html: suffix
+          });
+        } else {
+          field.suffixEl.innerHTML = suffix;
+        }
+      } else if (field.suffixEl) {
+        Ext.removeNode(field.suffixEl);
+        field.suffixEl = null;
+        field.setFieldStyle('');
+      }
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="search-view" class="polaris-text-field__label">Search view</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="search-view" 
+      class="polaris-text-field__input polaris-text-field__input--auto-size" 
+      value=""
+      autocomplete="off"
+      placeholder="Searching in Unfulfilled orders"
+    />
+    <span id="search-suffix" class="polaris-text-field__suffix" style="display: none;">in: Unfulfilled orders</span>
+  </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('search-view');
+const suffixEl = document.getElementById('search-suffix');
+
+searchInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  
+  // Show/hide suffix based on value
+  if (value) {
+    suffixEl.style.display = 'inline';
+  } else {
+    suffixEl.style.display = 'none';
+  }
+  
+  // Auto-resize logic
+  event.target.style.width = Math.max(150, value.length * 8 + 40) + 'px';
+  console.log('Value changed to:', value);
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface DynamicSuffixTextFieldProps {
+  label?: string;
+  placeholder?: string;
+  suffixText?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function AutoSizeExample({ 
+  label = 'Search view',
+  placeholder = 'Searching in Unfulfilled orders',
+  suffixText = 'in: Unfulfilled orders',
+  onValueChange
+}: DynamicSuffixTextFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onValueChange?.(newValue);
+    },
+    [onValueChange],
+  );
+
+  const suffix: string | null = value ? suffixText : null;
+
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      autoSize
+      placeholder={placeholder}
+      suffix={suffix}
+    />
+  );
+}`
+  },
+  'with-character-count': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TextFieldWithCharacterCountExample() {
+  const [textFieldValue, setTextFieldValue] = useState('Jaded Pixel');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      maxLength={20}
+      autoComplete="off"
+      showCharacterCount
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  width: 320,
+  maxLength: 20,
+  enforceMaxLength: true,
+  listeners: {
+    change: function(field, newValue) {
+      const count = newValue.length;
+      const maxLength = field.maxLength;
+      
+      if (!field.characterCountEl) {
+        field.characterCountEl = Ext.DomHelper.append(field.bodyEl, {
+          tag: 'div',
+          cls: 'character-count',
+          html: count + '/' + maxLength
+        });
+      } else {
+        field.characterCountEl.innerHTML = count + '/' + maxLength;
+      }
+    },
+    afterrender: function(field) {
+      // Initialize character count
+      field.fireEvent('change', field, field.getValue());
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-count" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name-count" 
+      class="polaris-text-field__input" 
+      value="Jaded Pixel"
+      autocomplete="off"
+      maxlength="20"
+    />
+  </div>
+  <div class="polaris-text-field__character-count">
+    <span id="char-count">11</span>/<span id="max-length">20</span>
+  </div>
+</div>
+
+<script>
+const countInput = document.getElementById('store-name-count');
+const charCountEl = document.getElementById('char-count');
+const maxLengthEl = document.getElementById('max-length');
+
+function updateCharacterCount() {
+  const currentLength = countInput.value.length;
+  const maxLength = parseInt(countInput.getAttribute('maxlength'));
+  
+  charCountEl.textContent = currentLength;
+  maxLengthEl.textContent = maxLength;
+  
+  // Visual feedback when approaching limit
+  const countContainer = charCountEl.parentElement;
+  if (currentLength >= maxLength * 0.8) {
+    countContainer.style.color = '#d72c0d';
+  } else {
+    countContainer.style.color = '#6d7175';
+  }
+}
+
+countInput.addEventListener('input', updateCharacterCount);
+// Initialize count
+updateCharacterCount();
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CharacterCountTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  maxLength?: number;
+  onValueChange?: (value: string) => void;
+}
+
+function TextFieldWithCharacterCountExample({ 
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  maxLength = 20,
+  onValueChange
+}: CharacterCountTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      maxLength={maxLength}
+      autoComplete="off"
+      showCharacterCount
+    />
+  );
+}`
+  },
+  'with-clear-button': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TextFieldWithClearButtonExample() {
+  const [textFieldValue, setTextFieldValue] = useState('Jaded Pixel');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  const handleClearButtonClick = useCallback(() => setTextFieldValue(''), []);
+
+  return (
+    <TextField
+      label="Store name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      clearButton
+      onClearButtonClick={handleClearButtonClick}
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  width: 320,
+  triggers: {
+    clear: {
+      cls: 'clear-trigger',
+      handler: function() {
+        this.setValue('');
+        this.focus();
+      },
+      hidden: false
+    }
+  },
+  listeners: {
+    change: function(field, newValue) {
+      // Show/hide clear button based on value
+      const clearTrigger = field.getTrigger('clear');
+      if (newValue) {
+        clearTrigger.show();
+      } else {
+        clearTrigger.hide();
+      }
+    },
+    afterrender: function(field) {
+      // Initialize clear button visibility
+      field.fireEvent('change', field, field.getValue());
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-clear" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name-clear" 
+      class="polaris-text-field__input polaris-text-field__input--with-clear" 
+      value="Jaded Pixel"
+      autocomplete="off"
+    />
+    <button 
+      type="button" 
+      id="clear-button" 
+      class="polaris-text-field__clear-button"
+      aria-label="Clear field"
+    >
+      ×
+    </button>
+  </div>
+</div>
+
+<script>
+const clearInput = document.getElementById('store-name-clear');
+const clearButton = document.getElementById('clear-button');
+
+function updateClearButtonVisibility() {
+  if (clearInput.value) {
+    clearButton.style.display = 'block';
+  } else {
+    clearButton.style.display = 'none';
+  }
+}
+
+clearButton.addEventListener('click', () => {
+  clearInput.value = '';
+  clearInput.focus();
+  updateClearButtonVisibility();
+  console.log('Field cleared');
+});
+
+clearInput.addEventListener('input', updateClearButtonVisibility);
+
+// Initialize clear button visibility
+updateClearButtonVisibility();
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ClearableTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  onValueChange?: (value: string) => void;
+  onClear?: () => void;
+}
+
+function TextFieldWithClearButtonExample({ 
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  onValueChange,
+  onClear
+}: ClearableTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  const handleClearButtonClick = useCallback(() => {
+    setTextFieldValue('');
+    onClear?.();
+  }, [onClear]);
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      clearButton
+      onClearButtonClick={handleClearButtonClick}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-connected-fields': {
+    react: `import {TextField, Select, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ConnectedFieldsExample() {
+  const [textFieldValue, setTextFieldValue] = useState('10.6');
+  const [selectValue, setSelectValue] = useState('kg');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelectValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Weight"
+      type="number"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      autoComplete="off"
+      connectedLeft={
+        <Select
+          value={selectValue}
+          label="Weight unit"
+          onChange={handleSelectChange}
+          labelHidden
+          options={['kg', 'lb']}
+        />
+      }
+      connectedRight={<Button>Submit</Button>}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'combobox',
+    store: ['kg', 'lb'],
+    value: 'kg',
+    width: 80,
+    editable: false,
+    listeners: {
+      change: function(combo, newValue) {
+        console.log('Weight unit changed to:', newValue);
+      }
+    }
+  }, {
+    xtype: 'numberfield',
+    fieldLabel: 'Weight',
+    value: 10.6,
+    width: 200,
+    flex: 1,
+    listeners: {
+      change: function(field, newValue) {
+        console.log('Weight changed to:', newValue);
+      }
+    }
+  }, {
+    xtype: 'button',
+    text: 'Submit',
+    width: 80,
+    handler: function() {
+      console.log('Submit clicked');
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-connected-fields">
+  <label for="weight-field" class="polaris-text-field__label">Weight</label>
+  <div class="polaris-connected-fields__wrapper">
+    <select id="weight-unit" class="polaris-select__input polaris-connected-fields__left">
+      <option value="kg" selected>kg</option>
+      <option value="lb">lb</option>
+    </select>
+    <input 
+      type="number" 
+      id="weight-field" 
+      class="polaris-text-field__input polaris-connected-fields__center" 
+      value="10.6"
+      autocomplete="off"
+    />
+    <button 
+      type="button" 
+      id="submit-button" 
+      class="polaris-button polaris-connected-fields__right"
+    >
+      Submit
+    </button>
+  </div>
+</div>
+
+<script>
+const weightField = document.getElementById('weight-field');
+const unitSelect = document.getElementById('weight-unit');
+const submitButton = document.getElementById('submit-button');
+
+weightField.addEventListener('input', (event) => {
+  console.log('Weight changed to:', event.target.value);
+});
+
+unitSelect.addEventListener('change', (event) => {
+  console.log('Weight unit changed to:', event.target.value);
+});
+
+submitButton.addEventListener('click', () => {
+  const weight = weightField.value;
+  const unit = unitSelect.value;
+  console.log(\`Submit clicked with weight: \${weight} \${unit}\`);
+});
+</script>`,
+    typescript: `import {TextField, Select, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ConnectedFieldsProps {
+  initialWeight?: string;
+  initialUnit?: string;
+  weightUnits?: string[];
+  onSubmit?: (weight: string, unit: string) => void;
+}
+
+function ConnectedFieldsExample({
+  initialWeight = '10.6',
+  initialUnit = 'kg',
+  weightUnits = ['kg', 'lb'],
+  onSubmit
+}: ConnectedFieldsProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialWeight);
+  const [selectValue, setSelectValue] = useState<string>(initialUnit);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelectValue(value),
+    [],
+  );
+
+  const handleSubmit = useCallback(() => {
+    onSubmit?.(textFieldValue, selectValue);
+  }, [textFieldValue, selectValue, onSubmit]);
+
+  return (
+    <TextField
+      label="Weight"
+      type="number"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      autoComplete="off"
+      connectedLeft={
+        <Select
+          value={selectValue}
+          label="Weight unit"
+          onChange={handleSelectChange}
+          labelHidden
+          options={weightUnits}
+        />
+      }
+      connectedRight={<Button onClick={handleSubmit}>Submit</Button>}
+    />
+  );
+}`
+  },
+  'with-hidden-label': {
+    react: `import {FormLayout, ChoiceList, TextField, Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function HiddenLabelExample() {
+  const [value, setValue] = useState('12');
+  const [selected, setSelected] = useState('yes');
+
+  const handleTextChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  const handleChoiceChange = useCallback(
+    (selections: string[]) => setSelected(selections[0]),
+    [],
+  );
+
+  return (
+    <FormLayout>
+      <ChoiceList
+        title="Gift card auto-expiration"
+        choices={[
+          {label: 'Gift cards never expire', value: 'no'},
+          {label: 'Gift cards expire', value: 'yes'},
+        ]}
+        selected={[selected]}
+        onChange={handleChoiceChange}
+      />
+      <TextField
+        label="Gift cards expire after"
+        type="number"
+        labelHidden
+        value={value}
+        disabled={selected === 'no'}
+        onChange={handleTextChange}
+        autoComplete="off"
+        connectedRight={
+          <Select
+            label="Unit of time"
+            labelHidden
+            options={['months after purchase']}
+          />
+        }
+      />
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'radiogroup',
+    fieldLabel: 'Gift card auto-expiration',
+    columns: 1,
+    items: [{
+      boxLabel: 'Gift cards never expire',
+      name: 'expiration',
+      inputValue: 'no'
+    }, {
+      boxLabel: 'Gift cards expire',
+      name: 'expiration',
+      inputValue: 'yes',
+      checked: true
+    }],
+    listeners: {
+      change: function(group, newValue) {
+        const numberField = this.up('form').down('numberfield');
+        const comboField = this.up('form').down('combobox');
+        const isExpiring = newValue.expiration === 'yes';
+        
+        numberField.setDisabled(!isExpiring);
+        comboField.setDisabled(!isExpiring);
+      }
+    }
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'numberfield',
+      value: 12,
+      width: 100,
+      hideTrigger: true,
+      listeners: {
+        change: function(field, newValue) {
+          console.log('Expiration period changed to:', newValue);
+        }
+      }
+    }, {
+      xtype: 'combobox',
+      store: ['months after purchase'],
+      value: 'months after purchase',
+      editable: false,
+      flex: 1
+    }]
+  }]
+});`,
+    vanilla: `<div class="polaris-form-layout">
+  <fieldset class="polaris-choice-list">
+    <legend class="polaris-choice-list__title">Gift card auto-expiration</legend>
+    <div class="polaris-choice-list__choices">
+      <label class="polaris-choice">
+        <input type="radio" name="expiration" value="no" class="polaris-choice__input">
+        <span class="polaris-choice__label">Gift cards never expire</span>
+      </label>
+      <label class="polaris-choice">
+        <input type="radio" name="expiration" value="yes" class="polaris-choice__input" checked>
+        <span class="polaris-choice__label">Gift cards expire</span>
+      </label>
+    </div>
+  </fieldset>
+  
+  <div class="polaris-connected-fields">
+    <div class="polaris-connected-fields__wrapper">
+      <input 
+        type="number" 
+        id="expiration-number" 
+        class="polaris-text-field__input polaris-connected-fields__center" 
+        value="12"
+        autocomplete="off"
+        aria-label="Gift cards expire after"
+      />
+      <select id="expiration-unit" class="polaris-select__input polaris-connected-fields__right">
+        <option value="months after purchase">months after purchase</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+const expirationRadios = document.querySelectorAll('input[name="expiration"]');
+const numberInput = document.getElementById('expiration-number');
+const unitSelect = document.getElementById('expiration-unit');
+
+function updateFieldsState(isExpiring) {
+  numberInput.disabled = !isExpiring;
+  unitSelect.disabled = !isExpiring;
+  
+  if (!isExpiring) {
+    numberInput.style.opacity = '0.5';
+    unitSelect.style.opacity = '0.5';
+  } else {
+    numberInput.style.opacity = '1';
+    unitSelect.style.opacity = '1';
+  }
+}
+
+expirationRadios.forEach(radio => {
+  radio.addEventListener('change', (event) => {
+    updateFieldsState(event.target.value === 'yes');
+  });
+});
+
+numberInput.addEventListener('input', (event) => {
+  console.log('Expiration period changed to:', event.target.value);
+});
+
+// Initialize state
+updateFieldsState(true);
+</script>`,
+    typescript: `import {FormLayout, ChoiceList, TextField, Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface HiddenLabelProps {
+  initialPeriod?: string;
+  initialExpires?: boolean;
+  timeUnits?: string[];
+  onExpirationChange?: (expires: boolean, period?: string) => void;
+}
+
+function HiddenLabelExample({
+  initialPeriod = '12',
+  initialExpires = true,
+  timeUnits = ['months after purchase'],
+  onExpirationChange
+}: HiddenLabelProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialPeriod);
+  const [selected, setSelected] = useState<string>(initialExpires ? 'yes' : 'no');
+
+  const handleTextChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onExpirationChange?.(selected === 'yes', newValue);
+    },
+    [selected, onExpirationChange],
+  );
+
+  const handleChoiceChange = useCallback(
+    (selections: string[]) => {
+      const newSelection = selections[0];
+      setSelected(newSelection);
+      onExpirationChange?.(newSelection === 'yes', value);
+    },
+    [value, onExpirationChange],
+  );
+
+  return (
+    <FormLayout>
+      <ChoiceList
+        title="Gift card auto-expiration"
+        choices={[
+          {label: 'Gift cards never expire', value: 'no'},
+          {label: 'Gift cards expire', value: 'yes'},
+        ]}
+        selected={[selected]}
+        onChange={handleChoiceChange}
+      />
+      <TextField
+        label="Gift cards expire after"
+        type="number"
+        labelHidden
+        value={value}
+        disabled={selected === 'no'}
+        onChange={handleTextChange}
+        autoComplete="off"
+        connectedRight={
+          <Select
+            label="Unit of time"
+            labelHidden
+            options={timeUnits}
+          />
+        }
+      />
+    </FormLayout>
+  );
+}`
+  },
+  'with-inline-suggestion': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback, useMemo} from 'react';
+
+function TextFieldWithSuggestionExample() {
+  const suggestions = useMemo(
+    () => [
+      'Alabama',
+      'Alaska',
+      'American Samoa',
+      'Arizona',
+      'Arkansas',
+      'California',
+      'Colorado',
+      'Connecticut',
+      'Delaware',
+      'District of Columbia',
+      'Florida',
+      'Georgia',
+      'Guam',
+      'Hawaii',
+      'Idaho',
+      'Illinois',
+      'Indiana',
+      'Iowa',
+      'Kansas',
+      'Kentucky',
+      'Louisiana',
+      'Maine',
+      'Maryland',
+      'Massachusetts',
+      'Michigan',
+      'Minnesota',
+      'Icon Outlying Islands',
+      'Mississippi',
+      'Missouri',
+      'Montana',
+      'Nebraska',
+      'Nevada',
+      'New Hampshire',
+      'New Jersey',
+      'New Mexico',
+      'New York',
+      'North Carolina',
+      'North Dakota',
+      'Northern Mariana Islands',
+      'Ohio',
+      'Oklahoma',
+      'Oregon',
+      'Pennsylvania',
+      'Puerto Rico',
+      'Rhode Island',
+      'South Carolina',
+      'South Dakota',
+      'Tennessee',
+      'Texas',
+      'U.S. Virgin Islands',
+      'Utah',
+      'Vermont',
+      'Virginia',
+      'Washington',
+      'West Virginia',
+      'Wisconsin',
+      'Wyoming',
+    ],
+    [],
+  );
+
+  const [value, setValue] = useState('');
+  const [suggestion, setSuggestion] = useState<string | undefined>();
+
+  const handleChange = useCallback(
+    (value: string) => {
+      const suggestion =
+        value &&
+        suggestions.find((suggestion) =>
+          suggestion.toLowerCase().startsWith(value.toLowerCase()),
+        );
+
+      setValue(value);
+      setSuggestion(suggestion);
+    },
+    [suggestions],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === 'Tab') {
+        setValue(suggestion || value);
+        setSuggestion('');
+      } else if (event.key === 'Backspace') {
+        setValue(value);
+        setSuggestion('');
+      }
+    },
+    [value, suggestion],
+  );
+
+  return (
+    <div onKeyDown={handleKeyDown}>
+      <TextField
+        type="text"
+        label="State"
+        value={value}
+        onChange={handleChange}
+        suggestion={suggestion}
+        autoComplete="off"
+      />
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'State',
+  store: [
+    'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas',
+    'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+    'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
+    'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+    'Massachusetts', 'Michigan', 'Minnesota', 'Icon Outlying Islands',
+    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+    'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+    'North Carolina', 'North Dakota', 'Northern Mariana Islands',
+    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico',
+    'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
+    'Texas', 'U.S. Virgin Islands', 'Utah', 'Vermont', 'Virginia',
+    'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+  ],
+  typeAhead: true,
+  typeAheadDelay: 100,
+  forceSelection: false,
+  selectOnFocus: true,
+  width: 300,
+  listeners: {
+    change: function(combo, newValue) {
+      console.log('State changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="state-input" class="polaris-text-field__label">State</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="state-input" 
+      class="polaris-text-field__input" 
+      value=""
+      autocomplete="off"
+      list="state-suggestions"
+    />
+    <datalist id="state-suggestions">
+      <option value="Alabama">
+      <option value="Alaska">
+      <option value="American Samoa">
+      <option value="Arizona">
+      <option value="Arkansas">
+      <option value="California">
+      <option value="Colorado">
+      <option value="Connecticut">
+      <option value="Delaware">
+      <option value="District of Columbia">
+      <option value="Florida">
+      <option value="Georgia">
+      <option value="Guam">
+      <option value="Hawaii">
+      <option value="Idaho">
+      <option value="Illinois">
+      <option value="Indiana">
+      <option value="Iowa">
+      <option value="Kansas">
+      <option value="Kentucky">
+      <option value="Louisiana">
+      <option value="Maine">
+      <option value="Maryland">
+      <option value="Massachusetts">
+      <option value="Michigan">
+      <option value="Minnesota">
+      <option value="Mississippi">
+      <option value="Missouri">
+      <option value="Montana">
+      <option value="Nebraska">
+      <option value="Nevada">
+      <option value="New Hampshire">
+      <option value="New Jersey">
+      <option value="New Mexico">
+      <option value="New York">
+      <option value="North Carolina">
+      <option value="North Dakota">
+      <option value="Ohio">
+      <option value="Oklahoma">
+      <option value="Oregon">
+      <option value="Pennsylvania">
+      <option value="Puerto Rico">
+      <option value="Rhode Island">
+      <option value="South Carolina">
+      <option value="South Dakota">
+      <option value="Tennessee">
+      <option value="Texas">
+      <option value="Utah">
+      <option value="Vermont">
+      <option value="Virginia">
+      <option value="Washington">
+      <option value="West Virginia">
+      <option value="Wisconsin">
+      <option value="Wyoming">
+    </datalist>
+    <div id="suggestion-preview" class="polaris-text-field__suggestion"></div>
+  </div>
+</div>
+
+<script>
+const stateInput = document.getElementById('state-input');
+const suggestionPreview = document.getElementById('suggestion-preview');
+
+const states = [
+  'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas',
+  'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+  'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
+  'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+  'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
+  'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+  'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico',
+  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
+  'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
+  'Wisconsin', 'Wyoming'
+];
+
+let currentSuggestion = '';
+
+stateInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  
+  if (value) {
+    const suggestion = states.find(state => 
+      state.toLowerCase().startsWith(value.toLowerCase())
+    );
+    
+    if (suggestion) {
+      currentSuggestion = suggestion;
+      suggestionPreview.textContent = suggestion.substring(value.length);
+      suggestionPreview.style.display = 'inline';
+    } else {
+      currentSuggestion = '';
+      suggestionPreview.style.display = 'none';
+    }
+  } else {
+    currentSuggestion = '';
+    suggestionPreview.style.display = 'none';
+  }
+});
+
+stateInput.addEventListener('keydown', (event) => {
+  if ((event.key === 'Tab' || event.key === 'Enter') && currentSuggestion) {
+    event.preventDefault();
+    stateInput.value = currentSuggestion;
+    suggestionPreview.style.display = 'none';
+    currentSuggestion = '';
+  }
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback, useMemo} from 'react';
+
+interface SuggestionTextFieldProps {
+  suggestions?: string[];
+  label?: string;
+  onValueChange?: (value: string) => void;
+  onSuggestionAccepted?: (suggestion: string) => void;
+}
+
+function TextFieldWithSuggestionExample({
+  suggestions: providedSuggestions,
+  label = 'State',
+  onValueChange,
+  onSuggestionAccepted
+}: SuggestionTextFieldProps): JSX.Element {
+  const suggestions = useMemo(
+    () => providedSuggestions || [
+      'Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas',
+      'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia',
+      'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana',
+      'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+      'Massachusetts', 'Michigan', 'Minnesota', 'Icon Outlying Islands',
+      'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+      'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+      'North Carolina', 'North Dakota', 'Northern Mariana Islands',
+      'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico',
+      'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
+      'Texas', 'U.S. Virgin Islands', 'Utah', 'Vermont', 'Virginia',
+      'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    ],
+    [providedSuggestions],
+  );
+
+  const [value, setValue] = useState<string>('');
+  const [suggestion, setSuggestion] = useState<string | undefined>();
+
+  const handleChange = useCallback(
+    (value: string) => {
+      const suggestion =
+        value &&
+        suggestions.find((suggestion) =>
+          suggestion.toLowerCase().startsWith(value.toLowerCase()),
+        );
+
+      setValue(value);
+      setSuggestion(suggestion);
+      onValueChange?.(value);
+    },
+    [suggestions, onValueChange],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === 'Tab') {
+        if (suggestion) {
+          setValue(suggestion);
+          setSuggestion('');
+          onSuggestionAccepted?.(suggestion);
+        }
+      } else if (event.key === 'Backspace') {
+        setValue(value);
+        setSuggestion('');
+      }
+    },
+    [value, suggestion, onSuggestionAccepted],
+  );
+
+  return (
+    <div onKeyDown={handleKeyDown}>
+      <TextField
+        type="text"
+        label={label}
+        value={value}
+        onChange={handleChange}
+        suggestion={suggestion}
+        autoComplete="off"
+      />
+    </div>
+  );
+}`
+  },
+  'with-label-action': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function LabelActionExample() {
+  const [textFieldValue, setTextFieldValue] = useState('6201.11.0000');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Tariff code"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      labelAction={{content: 'Look up codes'}}
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Tariff code',
+  value: '6201.11.0000',
+  labelWidth: 100,
+  width: 320,
+  afterLabelTpl: '<a href="#" class="label-action" onclick="alert(\\'Looking up codes...\\'); return false;">Look up codes</a>',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Tariff code changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <div class="polaris-text-field__label-wrapper">
+    <label for="tariff-code" class="polaris-text-field__label">Tariff code</label>
+    <button 
+      type="button" 
+      id="lookup-action" 
+      class="polaris-text-field__label-action"
+    >
+      Look up codes
+    </button>
+  </div>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="tariff-code" 
+      class="polaris-text-field__input" 
+      value="6201.11.0000"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+<script>
+const tariffInput = document.getElementById('tariff-code');
+const lookupAction = document.getElementById('lookup-action');
+
+tariffInput.addEventListener('input', (event) => {
+  console.log('Tariff code changed to:', event.target.value);
+});
+
+lookupAction.addEventListener('click', () => {
+  // Simulate lookup functionality
+  alert('Looking up tariff codes...');
+  console.log('Lookup codes action triggered');
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface LabelActionProps {
+  initialValue?: string;
+  label?: string;
+  actionContent?: string;
+  onValueChange?: (value: string) => void;
+  onLabelAction?: () => void;
+}
+
+function LabelActionExample({
+  initialValue = '6201.11.0000',
+  label = 'Tariff code',
+  actionContent = 'Look up codes',
+  onValueChange,
+  onLabelAction
+}: LabelActionProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  const handleLabelAction = useCallback(() => {
+    onLabelAction?.();
+  }, [onLabelAction]);
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      labelAction={{
+        content: actionContent,
+        onAction: handleLabelAction
+      }}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-loading': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function LoadingExample() {
+  const [value, setValue] = useState('');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  const handleClearButtonClick = useCallback(() => setValue(''), []);
+
+  return (
+    <TextField
+      label="Store name"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      clearButton
+      onClearButtonClick={handleClearButtonClick}
+      loading
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: '',
+  labelWidth: 100,
+  width: 320,
+  triggers: {
+    clear: {
+      cls: 'clear-trigger',
+      handler: function() {
+        this.setValue('');
+        this.focus();
+      }
+    }
+  },
+  plugins: [{
+    ptype: 'loadmask',
+    msg: 'Loading...'
+  }],
+  listeners: {
+    afterrender: function(field) {
+      // Show loading state
+      field.setLoading(true);
+      
+      // Simulate async operation
+      setTimeout(() => {
+        field.setLoading(false);
+      }, 2000);
+    },
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-loading" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper polaris-text-field__input-wrapper--loading">
+    <input 
+      type="text" 
+      id="store-name-loading" 
+      class="polaris-text-field__input" 
+      value=""
+      autocomplete="off"
+    />
+    <button 
+      type="button" 
+      id="clear-loading" 
+      class="polaris-text-field__clear-button"
+      aria-label="Clear field"
+      style="display: none;"
+    >
+      ×
+    </button>
+    <div class="polaris-text-field__spinner">
+      <div class="polaris-spinner polaris-spinner--size-small">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 3v3c0 .55-.45 1-1 1s-1-.45-1-1V3c0-.55.45-1 1-1s1 .45 1 1z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const loadingInput = document.getElementById('store-name-loading');
+const clearLoadingButton = document.getElementById('clear-loading');
+const inputWrapper = loadingInput.parentElement;
+
+function updateClearButtonVisibility() {
+  if (loadingInput.value) {
+    clearLoadingButton.style.display = 'block';
+  } else {
+    clearLoadingButton.style.display = 'none';
+  }
+}
+
+clearLoadingButton.addEventListener('click', () => {
+  loadingInput.value = '';
+  loadingInput.focus();
+  updateClearButtonVisibility();
+});
+
+loadingInput.addEventListener('input', updateClearButtonVisibility);
+
+// Simulate loading state
+setTimeout(() => {
+  inputWrapper.classList.remove('polaris-text-field__input-wrapper--loading');
+}, 2000);
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface LoadingTextFieldProps {
+  label?: string;
+  isLoading?: boolean;
+  onValueChange?: (value: string) => void;
+  onClear?: () => void;
+}
+
+function LoadingExample({
+  label = 'Store name',
+  isLoading = true,
+  onValueChange,
+  onClear
+}: LoadingTextFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onValueChange?.(newValue);
+    },
+    [onValueChange],
+  );
+
+  const handleClearButtonClick = useCallback(() => {
+    setValue('');
+    onClear?.();
+  }, [onClear]);
+
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      clearButton
+      onClearButtonClick={handleClearButtonClick}
+      loading={isLoading}
+    />
+  );
+}`
+  },
+  'with-monospaced-font': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TextFieldWithMonospacedFontExample() {
+  const [textFieldValue, setTextFieldValue] = useState('Jaded Pixel');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      monospaced
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  width: 320,
+  fieldStyle: 'font-family: Monaco, "Courier New", monospace; font-size: 13px;',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-mono" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name-mono" 
+      class="polaris-text-field__input polaris-text-field__input--monospaced" 
+      value="Jaded Pixel"
+      autocomplete="off"
+      style="font-family: Monaco, 'Courier New', monospace; font-size: 13px;"
+    />
+  </div>
+</div>
+
+<script>
+const monoInput = document.getElementById('store-name-mono');
+
+monoInput.addEventListener('input', (event) => {
+  console.log('Value changed to:', event.target.value);
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface MonospacedTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function TextFieldWithMonospacedFontExample({
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  onValueChange
+}: MonospacedTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      monospaced
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-placeholder-text': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function PlaceholderExample() {
+  const [textFieldValue, setTextFieldValue] = useState('');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Shipping zone name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      placeholder="Example: North America, Europe"
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Shipping zone name',
+  value: '',
+  labelWidth: 150,
+  width: 400,
+  emptyText: 'Example: North America, Europe',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="shipping-zone" class="polaris-text-field__label">Shipping zone name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="shipping-zone" 
+      class="polaris-text-field__input" 
+      value=""
+      autocomplete="off"
+      placeholder="Example: North America, Europe"
+    />
+  </div>
+</div>
+
+<script>
+const shippingInput = document.getElementById('shipping-zone');
+
+shippingInput.addEventListener('input', (event) => {
+  console.log('Value changed to:', event.target.value);
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface PlaceholderTextFieldProps {
+  label?: string;
+  placeholder?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function PlaceholderExample({
+  label = 'Shipping zone name',
+  placeholder = 'Example: North America, Europe',
+  onValueChange
+}: PlaceholderTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      placeholder={placeholder}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-prefix-or-suffix': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function PrefixExample() {
+  const [textFieldValue, setTextFieldValue] = useState('2.00');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Price"
+      type="number"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      prefix="$"
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Number', {
+  fieldLabel: 'Price',
+  value: 2.00,
+  labelWidth: 100,
+  width: 200,
+  prefix: '$',
+  decimalPrecision: 2,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Price changed to:', newValue);
+    },
+    afterrender: function(field) {
+      // Add prefix styling
+      const prefix = Ext.DomHelper.insertBefore(field.inputEl, {
+        tag: 'span',
+        cls: 'field-prefix',
+        html: '$'
+      });
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="price-input" class="polaris-text-field__label">Price</label>
+  <div class="polaris-text-field__input-wrapper">
+    <span class="polaris-text-field__prefix">$</span>
+    <input 
+      type="number" 
+      id="price-input" 
+      class="polaris-text-field__input polaris-text-field__input--with-prefix" 
+      value="2.00"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+<script>
+const priceInput = document.getElementById('price-input');
+
+priceInput.addEventListener('input', (event) => {
+  const value = parseFloat(event.target.value);
+  console.log('Price changed to:', value);
+});
+
+// Format number input to 2 decimal places on blur
+priceInput.addEventListener('blur', (event) => {
+  const value = parseFloat(event.target.value);
+  if (!isNaN(value)) {
+    event.target.value = value.toFixed(2);
+  }
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface PrefixSuffixTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  prefix?: string;
+  suffix?: string;
+  type?: 'text' | 'number' | 'email' | 'url';
+  onValueChange?: (value: string) => void;
+}
+
+function PrefixExample({
+  initialValue = '2.00',
+  label = 'Price',
+  prefix = '$',
+  suffix,
+  type = 'number',
+  onValueChange
+}: PrefixSuffixTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      type={type}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      prefix={prefix}
+      suffix={suffix}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-right-aligned-text': {
+    react: `import {LegacyStack, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function RightAlignExample() {
+  const [textFieldValue, setTextFieldValue] = useState('1');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <LegacyStack>
+      <LegacyStack.Item fill>Price</LegacyStack.Item>
+      <TextField
+        label="Price"
+        labelHidden
+        value={textFieldValue}
+        onChange={handleTextFieldChange}
+        autoComplete="off"
+        align="right"
+      />
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: 'Price',
+    flex: 1,
+    style: {
+      padding: '6px 0',
+      lineHeight: '20px'
+    }
+  }, {
+    xtype: 'numberfield',
+    value: 1,
+    width: 100,
+    fieldStyle: 'text-align: right;',
+    hideTrigger: true,
+    listeners: {
+      change: function(field, newValue) {
+        console.log('Price changed to:', newValue);
+      }
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-legacy-stack">
+  <div class="polaris-legacy-stack__item polaris-legacy-stack__item--fill">
+    <span class="polaris-text-field__companion-text">Price</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <div class="polaris-text-field">
+      <div class="polaris-text-field__input-wrapper">
+        <input 
+          type="text" 
+          id="price-right-align" 
+          class="polaris-text-field__input polaris-text-field__input--right-aligned" 
+          value="1"
+          autocomplete="off"
+          style="text-align: right;"
+          aria-label="Price"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const rightAlignInput = document.getElementById('price-right-align');
+
+rightAlignInput.addEventListener('input', (event) => {
+  console.log('Price changed to:', event.target.value);
+});
+</script>`,
+    typescript: `import {LegacyStack, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface RightAlignedTextFieldProps {
+  initialValue?: string;
+  label?: string;
+  companionText?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function RightAlignExample({
+  initialValue = '1',
+  label = 'Price',
+  companionText = 'Price',
+  onValueChange
+}: RightAlignedTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <LegacyStack>
+      <LegacyStack.Item fill>{companionText}</LegacyStack.Item>
+      <TextField
+        label={label}
+        labelHidden
+        value={textFieldValue}
+        onChange={handleTextFieldChange}
+        autoComplete="off"
+        align="right"
+      />
+    </LegacyStack>
+  );
+}`
+  },
+  'with-separate-validation-error': {
+    react: `import {
+  LegacyStack,
+  FormLayout,
+  Select,
+  TextField,
+  InlineError,
+  Button,
+  LegacyCard,
+} from '@shopify/polaris';
+import {DeleteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+function SeparateValidationErrorExample() {
+  const [textFieldValue, setTextFieldValue] = useState('');
+  const [selectTypeValue, setSelectTypeValue] = useState('Product type');
+  const [selectConditionValue, setSelectConditionValue] =
+    useState('is equal to');
+
+  const handleTextFieldValueChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  const handleSelectTypeChange = useCallback(
+    (value: string) => setSelectTypeValue(value),
+    [],
+  );
+
+  const handleSelectConditionChange = useCallback(
+    (value: string) => setSelectConditionValue(value),
+    [],
+  );
+
+  const textFieldID = 'ruleContent';
+  const isInvalid = isValueInvalid(textFieldValue);
+  const errorMessage = isInvalid
+    ? 'Enter 3 or more characters for product type is equal to'
+    : '';
+
+  const formGroupMarkup = (
+    <LegacyStack wrap={false} alignment="leading" spacing="loose">
+      <LegacyStack.Item fill>
+        <FormLayout>
+          <FormLayout.Group condensed>
+            <Select
+              labelHidden
+              label="Collection rule type"
+              options={['Product type']}
+              value={selectTypeValue}
+              onChange={handleSelectTypeChange}
+            />
+            <Select
+              labelHidden
+              label="Collection rule condition"
+              options={['is equal to']}
+              value={selectConditionValue}
+              onChange={handleSelectConditionChange}
+            />
+            <TextField
+              labelHidden
+              label="Collection rule content"
+              error={isInvalid}
+              id={textFieldID}
+              value={textFieldValue}
+              onChange={handleTextFieldValueChange}
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+        </FormLayout>
+        <div style={{marginTop: '4px'}}>
+          <InlineError message={errorMessage} fieldID={textFieldID} />
+        </div>
+      </LegacyStack.Item>
+      <Button icon={DeleteIcon} accessibilityLabel="Remove item" />
+    </LegacyStack>
+  );
+
+  return (
+    <LegacyCard sectioned>
+      <FormLayout>{formGroupMarkup}</FormLayout>
+    </LegacyCard>
+  );
+
+  function isValueInvalid(content: string) {
+    if (!content) {
+      return true;
+    }
+
+    return content.length < 3;
+  }
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  bodyPadding: 10,
+  items: [{
+    xtype: 'container',
+    flex: 1,
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'stretch'
+      },
+      items: [{
+        xtype: 'combobox',
+        store: ['Product type'],
+        value: 'Product type',
+        editable: false,
+        width: 120,
+        margin: '0 5 0 0'
+      }, {
+        xtype: 'combobox',
+        store: ['is equal to'],
+        value: 'is equal to',
+        editable: false,
+        width: 120,
+        margin: '0 5 0 0'
+      }, {
+        xtype: 'textfield',
+        flex: 1,
+        allowBlank: false,
+        minLength: 3,
+        msgTarget: 'none',
+        listeners: {
+          change: function(field, newValue) {
+            const isValid = newValue && newValue.length >= 3;
+            const errorEl = field.up('container').down('component[itemId=errorMsg]');
+            
+            if (isValid) {
+              field.removeCls('field-error');
+              errorEl.hide();
+            } else {
+              field.addCls('field-error');
+              errorEl.show();
+              errorEl.update('Enter 3 or more characters for product type is equal to');
+            }
+          }
+        }
+      }]
+    }, {
+      xtype: 'component',
+      itemId: 'errorMsg',
+      cls: 'error-message',
+      html: 'Enter 3 or more characters for product type is equal to',
+      style: {
+        color: '#d72c0d',
+        fontSize: '12px',
+        marginTop: '4px'
+      }
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    width: 30,
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `<div class="polaris-legacy-card polaris-legacy-card--sectioned">
+  <div class="polaris-form-layout">
+    <div class="polaris-legacy-stack polaris-legacy-stack--spacing-loose">
+      <div class="polaris-legacy-stack__item polaris-legacy-stack__item--fill">
+        <div class="polaris-form-layout__group polaris-form-layout__group--condensed">
+          <div class="polaris-form-layout__item">
+            <select id="rule-type" class="polaris-select__input" aria-label="Collection rule type">
+              <option value="Product type">Product type</option>
+            </select>
+          </div>
+          <div class="polaris-form-layout__item">
+            <select id="rule-condition" class="polaris-select__input" aria-label="Collection rule condition">
+              <option value="is equal to">is equal to</option>
+            </select>
+          </div>
+          <div class="polaris-form-layout__item">
+            <input 
+              type="text" 
+              id="rule-content" 
+              class="polaris-text-field__input" 
+              value=""
+              autocomplete="off"
+              aria-label="Collection rule content"
+              aria-describedby="rule-content-error"
+            />
+          </div>
+        </div>
+        <div id="rule-content-error" class="polaris-inline-error" style="margin-top: 4px; display: none;">
+          <span class="polaris-inline-error__text">Enter 3 or more characters for product type is equal to</span>
+        </div>
+      </div>
+      <div class="polaris-legacy-stack__item">
+        <button 
+          type="button" 
+          id="remove-rule" 
+          class="polaris-button polaris-button--plain"
+          aria-label="Remove item"
+        >
+          🗑️
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ruleContentInput = document.getElementById('rule-content');
+const errorElement = document.getElementById('rule-content-error');
+const removeButton = document.getElementById('remove-rule');
+
+function validateInput(value) {
+  const isValid = value && value.length >= 3;
+  
+  if (isValid) {
+    ruleContentInput.classList.remove('polaris-text-field__input--error');
+    errorElement.style.display = 'none';
+  } else {
+    ruleContentInput.classList.add('polaris-text-field__input--error');
+    errorElement.style.display = 'block';
+  }
+  
+  return isValid;
+}
+
+ruleContentInput.addEventListener('input', (event) => {
+  validateInput(event.target.value);
+});
+
+removeButton.addEventListener('click', () => {
+  const card = document.querySelector('.polaris-legacy-card');
+  card.style.opacity = '0.5';
+  console.log('Remove rule clicked');
+});
+
+// Initialize validation
+validateInput(ruleContentInput.value);
+</script>`,
+    typescript: `import {
+  LegacyStack,
+  FormLayout,
+  Select,
+  TextField,
+  InlineError,
+  Button,
+  LegacyCard,
+} from '@shopify/polaris';
+import {DeleteIcon} from '@shopify/polaris-icons';
+import {useState, useCallback} from 'react';
+
+interface ValidationRule {
+  type: string;
+  condition: string;
+  content: string;
+}
+
+interface SeparateValidationErrorProps {
+  initialRule?: ValidationRule;
+  ruleTypes?: string[];
+  ruleConditions?: string[];
+  onRuleChange?: (rule: ValidationRule) => void;
+  onRemove?: () => void;
+}
+
+function SeparateValidationErrorExample({
+  initialRule = {
+    type: 'Product type',
+    condition: 'is equal to',
+    content: ''
+  },
+  ruleTypes = ['Product type'],
+  ruleConditions = ['is equal to'],
+  onRuleChange,
+  onRemove
+}: SeparateValidationErrorProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialRule.content);
+  const [selectTypeValue, setSelectTypeValue] = useState<string>(initialRule.type);
+  const [selectConditionValue, setSelectConditionValue] = useState<string>(initialRule.condition);
+
+  const handleTextFieldValueChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onRuleChange?.({
+        type: selectTypeValue,
+        condition: selectConditionValue,
+        content: value
+      });
+    },
+    [selectTypeValue, selectConditionValue, onRuleChange],
+  );
+
+  const handleSelectTypeChange = useCallback(
+    (value: string) => {
+      setSelectTypeValue(value);
+      onRuleChange?.({
+        type: value,
+        condition: selectConditionValue,
+        content: textFieldValue
+      });
+    },
+    [selectConditionValue, textFieldValue, onRuleChange],
+  );
+
+  const handleSelectConditionChange = useCallback(
+    (value: string) => {
+      setSelectConditionValue(value);
+      onRuleChange?.({
+        type: selectTypeValue,
+        condition: value,
+        content: textFieldValue
+      });
+    },
+    [selectTypeValue, textFieldValue, onRuleChange],
+  );
+
+  const textFieldID = 'ruleContent';
+  const isInvalid = isValueInvalid(textFieldValue);
+  const errorMessage = isInvalid
+    ? \`Enter 3 or more characters for \${selectTypeValue.toLowerCase()} \${selectConditionValue}\`
+    : '';
+
+  const formGroupMarkup = (
+    <LegacyStack wrap={false} alignment="leading" spacing="loose">
+      <LegacyStack.Item fill>
+        <FormLayout>
+          <FormLayout.Group condensed>
+            <Select
+              labelHidden
+              label="Collection rule type"
+              options={ruleTypes}
+              value={selectTypeValue}
+              onChange={handleSelectTypeChange}
+            />
+            <Select
+              labelHidden
+              label="Collection rule condition"
+              options={ruleConditions}
+              value={selectConditionValue}
+              onChange={handleSelectConditionChange}
+            />
+            <TextField
+              labelHidden
+              label="Collection rule content"
+              error={isInvalid}
+              id={textFieldID}
+              value={textFieldValue}
+              onChange={handleTextFieldValueChange}
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+        </FormLayout>
+        <div style={{marginTop: '4px'}}>
+          <InlineError message={errorMessage} fieldID={textFieldID} />
+        </div>
+      </LegacyStack.Item>
+      <Button 
+        icon={DeleteIcon} 
+        accessibilityLabel="Remove item"
+        onClick={onRemove}
+      />
+    </LegacyStack>
+  );
+
+  return (
+    <LegacyCard sectioned>
+      <FormLayout>{formGroupMarkup}</FormLayout>
+    </LegacyCard>
+  );
+
+  function isValueInvalid(content: string): boolean {
+    if (!content) {
+      return true;
+    }
+    return content.length < 3;
+  }
+}`
+  },
+  'with-value-selected-on-focus': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TextFieldWithSelectTextOnFocusExample() {
+  const [textFieldValue, setTextFieldValue] = useState('Jaded Pixel');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      selectTextOnFocus
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  width: 320,
+  selectOnFocus: true,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    },
+    focus: function(field) {
+      // Text will be automatically selected due to selectOnFocus: true
+      console.log('Field focused, text selected');
+    }
+  }
+});`,
+    vanilla: `<div class="polaris-text-field">
+  <label for="store-name-select" class="polaris-text-field__label">Store name</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name-select" 
+      class="polaris-text-field__input" 
+      value="Jaded Pixel"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+<script>
+const selectOnFocusInput = document.getElementById('store-name-select');
+
+selectOnFocusInput.addEventListener('focus', (event) => {
+  // Select all text when field receives focus
+  event.target.select();
+  console.log('Field focused, text selected');
+});
+
+selectOnFocusInput.addEventListener('input', (event) => {
+  console.log('Value changed to:', event.target.value);
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface SelectTextOnFocusProps {
+  initialValue?: string;
+  label?: string;
+  selectOnFocus?: boolean;
+  onValueChange?: (value: string) => void;
+  onFocus?: () => void;
+}
+
+function TextFieldWithSelectTextOnFocusExample({
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  selectOnFocus = true,
+  onValueChange,
+  onFocus
+}: SelectTextOnFocusProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialValue);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  const handleFocus = useCallback(() => {
+    onFocus?.();
+  }, [onFocus]);
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      selectTextOnFocus={selectOnFocus}
+      onFocus={handleFocus}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-vertical-content': {
+    react: `import {LegacyStack, Tag, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function VerticalContentExample() {
+  const tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'];
+  const [textFieldValue, setTextFieldValue] = useState('');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  const verticalContentMarkup =
+    tags.length > 0 ? (
+      <LegacyStack spacing="extraTight" alignment="center">
+        {tags.map((tag) => (
+          <Tag key={tag}>{tag}</Tag>
+        ))}
+      </LegacyStack>
+    ) : null;
+
+  return (
+    <TextField
+      label="Tags"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      placeholder="Search tags"
+      autoComplete="off"
+      verticalContent={verticalContentMarkup}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Tags',
+    value: '',
+    emptyText: 'Search tags',
+    labelWidth: 100,
+    listeners: {
+      change: function(field, newValue) {
+        console.log('Tags search changed to:', newValue);
+      }
+    }
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'middle'
+    },
+    margin: '10 0 0 0',
+    items: [{
+      xtype: 'component',
+      html: '<span class="tag">Rustic</span>',
+      margin: '0 5 0 0'
+    }, {
+      xtype: 'component',
+      html: '<span class="tag">Antique</span>',
+      margin: '0 5 0 0'
+    }, {
+      xtype: 'component',
+      html: '<span class="tag">Vinyl</span>',
+      margin: '0 5 0 0'
+    }, {
+      xtype: 'component',
+      html: '<span class="tag">Refurbished</span>'
+    }]
+  }]
+});`,
+    vanilla: `<div class="polaris-text-field polaris-text-field--with-vertical-content">
+  <label for="tags-input" class="polaris-text-field__label">Tags</label>
+  <div class="polaris-text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="tags-input" 
+      class="polaris-text-field__input" 
+      value=""
+      autocomplete="off"
+      placeholder="Search tags"
+    />
+  </div>
+  <div class="polaris-text-field__vertical-content">
+    <div class="polaris-legacy-stack polaris-legacy-stack--spacing-extra-tight polaris-legacy-stack--alignment-center">
+      <div class="polaris-legacy-stack__item">
+        <span class="polaris-tag">Rustic</span>
+      </div>
+      <div class="polaris-legacy-stack__item">
+        <span class="polaris-tag">Antique</span>
+      </div>
+      <div class="polaris-legacy-stack__item">
+        <span class="polaris-tag">Vinyl</span>
+      </div>
+      <div class="polaris-legacy-stack__item">
+        <span class="polaris-tag">Refurbished</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const tagsInput = document.getElementById('tags-input');
+const tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'];
+
+tagsInput.addEventListener('input', (event) => {
+  const searchTerm = event.target.value.toLowerCase();
+  console.log('Tags search changed to:', searchTerm);
+  
+  // Filter and highlight matching tags
+  const tagElements = document.querySelectorAll('.polaris-tag');
+  tagElements.forEach((tagEl, index) => {
+    const tagText = tags[index].toLowerCase();
+    if (tagText.includes(searchTerm) || searchTerm === '') {
+      tagEl.style.display = 'inline-block';
+      tagEl.style.backgroundColor = tagText.includes(searchTerm) && searchTerm ? '#e1f5fe' : '';
+    } else {
+      tagEl.style.display = 'none';
+    }
+  });
+});
+</script>`,
+    typescript: `import {LegacyStack, Tag, TextField} from '@shopify/polaris';
+import {useState, useCallback, ReactNode} from 'react';
+
+interface VerticalContentTextFieldProps {
+  label?: string;
+  placeholder?: string;
+  tags?: string[];
+  onValueChange?: (value: string) => void;
+  onTagClick?: (tag: string) => void;
+  renderVerticalContent?: (searchValue: string) => ReactNode;
+}
+
+function VerticalContentExample({
+  label = 'Tags',
+  placeholder = 'Search tags',
+  tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'],
+  onValueChange,
+  onTagClick,
+  renderVerticalContent
+}: VerticalContentTextFieldProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  const handleTagClick = useCallback(
+    (tag: string) => {
+      onTagClick?.(tag);
+    },
+    [onTagClick],
+  );
+
+  const filteredTags = tags.filter(tag =>
+    tag.toLowerCase().includes(textFieldValue.toLowerCase())
+  );
+
+  const verticalContentMarkup = renderVerticalContent 
+    ? renderVerticalContent(textFieldValue)
+    : filteredTags.length > 0 ? (
+        <LegacyStack spacing="extraTight" alignment="center">
+          {filteredTags.map((tag) => (
+            <Tag key={tag} onClick={() => handleTagClick(tag)}>
+              {tag}
+            </Tag>
+          ))}
+        </LegacyStack>
+      ) : null;
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      placeholder={placeholder}
+      autoComplete="off"
+      verticalContent={verticalContentMarkup}
+    />
+  );
+}`
   }
 };
 
@@ -5729,78 +9369,31 @@ function BannerExample() {
     }
   }]
 });`,
-    vanilla: `// HTML
-<div class="banner" role="status" aria-live="polite">
-  <div class="banner__icon">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner" role="status" aria-live="polite">
+  <div class="polaris-banner__icon">
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
       <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
   </div>
-  <div class="banner__content">
-    <h3 class="banner__title">Order archived</h3>
-    <p class="banner__message">This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">Order archived</h3>
+    <p class="polaris-banner__message">This order was archived on March 7, 2017 at 3:12pm EDT.</p>
   </div>
-  <button class="banner__dismiss" aria-label="Dismiss banner">
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner">
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
     </svg>
   </button>
 </div>
 
-// CSS
-.banner {
-  display: flex;
-  gap: var(--p-space-300);
-  padding: var(--p-space-400);
-  background: var(--p-color-bg-fill-info);
-  border-radius: var(--p-border-radius-300);
-  position: relative;
-}
 
-.banner__icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  color: var(--p-color-icon-info);
-}
-
-.banner__content {
-  flex: 1;
-}
-
-.banner__title {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0 0 var(--p-space-100) 0;
-}
-
-.banner__message {
-  font-size: var(--p-font-size-300);
-  margin: 0;
-  color: var(--p-color-text);
-}
-
-.banner__dismiss {
-  position: absolute;
-  top: var(--p-space-300);
-  right: var(--p-space-300);
-  background: none;
-  border: none;
-  padding: var(--p-space-100);
-  cursor: pointer;
-  color: var(--p-color-icon);
-}
-
-.banner__dismiss svg {
-  width: 20px;
-  height: 20px;
-}
-
-// JavaScript
-document.querySelector('.banner__dismiss').addEventListener('click', () => {
-  document.querySelector('.banner').remove();
-});`,
+<script>
+document.querySelector('.polaris-banner__dismiss').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
     typescript: `import {Banner} from '@shopify/polaris';
 import React, {useState} from 'react';
 
@@ -5885,83 +9478,31 @@ function BannerExample() {
     }]
   }]
 });`,
-    vanilla: `// HTML
-<div class="banner banner--critical" role="alert">
-  <div class="banner__icon">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner banner--critical" role="alert">
+  <div class="polaris-banner__icon">
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 12a1 1 0 102 0v-4a1 1 0 10-2 0v4zm1-7a1 1 0 110 2 1 1 0 010-2z" fill="currentColor"/>
     </svg>
   </div>
-  <div class="banner__content">
-    <h3 class="banner__title">High risk of fraud detected</h3>
-    <p class="banner__message">
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">High risk of fraud detected</h3>
+    <p class="polaris-banner__message">
       Before fulfilling this order or capturing payment, please 
-      <a href="#" class="banner__link">review the Risk Analysis</a> 
+      <a href="#" class="polaris-banner__link">review the Risk Analysis</a> 
       and determine if this order is fraudulent.
     </p>
-    <button class="banner__action">Review risk analysis</button>
+    <button class="polaris-banner__action">Review risk analysis</button>
   </div>
 </div>
 
-// CSS
-.banner {
-  display: flex;
-  gap: var(--p-space-300);
-  padding: var(--p-space-400);
-  border-radius: var(--p-border-radius-300);
-  position: relative;
-}
 
-.banner--critical {
-  background: var(--p-color-bg-fill-critical);
-}
-
-.banner__icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-}
-
-.banner--critical .banner__icon {
-  color: var(--p-color-icon-critical);
-}
-
-.banner__content {
-  flex: 1;
-}
-
-.banner__title {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0 0 var(--p-space-100) 0;
-}
-
-.banner__message {
-  font-size: var(--p-font-size-300);
-  margin: 0;
-  color: var(--p-color-text);
-}
-
-.banner__link {
-  color: var(--p-color-text-link);
-  text-decoration: underline;
-}
-
-.banner__action {
-  margin-top: var(--p-space-200);
-  padding: var(--p-space-200) var(--p-space-400);
-  background: var(--p-color-bg-fill-transparent);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  cursor: pointer;
-  font-size: var(--p-font-size-300);
-}
-
-// JavaScript
-document.querySelector('.banner__action').addEventListener('click', () => {
+<script>
+document.querySelector('.polaris-banner__action').addEventListener('click', () => {
   console.log('Review risk analysis clicked');
   window.location.href = '#risk-analysis';
-});`,
+});
+</script>`,
     typescript: `import {Banner, Link} from '@shopify/polaris';
 import React from 'react';
 
@@ -6057,102 +9598,38 @@ function BannerExample() {
     }
   }]
 });`,
-    vanilla: `// HTML
-<div class="banner banner--success" role="status" aria-live="polite">
-  <div class="banner__icon">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner banner--success" role="status" aria-live="polite">
+  <div class="polaris-banner__icon">
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
     </svg>
   </div>
-  <div class="banner__content">
-    <div class="banner__header">
-      <h3 class="banner__title">Your shipping label is ready to print.</h3>
-      <button class="banner__action">Print label</button>
+  <div class="polaris-banner__content">
+    <div class="polaris-banner__header">
+      <h3 class="polaris-banner__title">Your shipping label is ready to print.</h3>
+      <button class="polaris-banner__action">Print label</button>
     </div>
   </div>
-  <button class="banner__dismiss" aria-label="Dismiss banner">
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner">
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
     </svg>
   </button>
 </div>
 
-// CSS
-.banner {
-  display: flex;
-  gap: var(--p-space-300);
-  padding: var(--p-space-400);
-  border-radius: var(--p-border-radius-300);
-  position: relative;
-}
 
-.banner--success {
-  background: var(--p-color-bg-fill-success);
-}
-
-.banner__icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-}
-
-.banner--success .banner__icon {
-  color: var(--p-color-icon-success);
-}
-
-.banner__content {
-  flex: 1;
-}
-
-.banner__header {
-  display: flex;
-  align-items: center;
-  gap: var(--p-space-300);
-}
-
-.banner__title {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0;
-  flex: 1;
-}
-
-.banner__action {
-  padding: var(--p-space-100) var(--p-space-300);
-  background: var(--p-color-bg-fill-transparent);
-  border: 1px solid var(--p-color-border-strong);
-  border-radius: var(--p-border-radius-200);
-  cursor: pointer;
-  font-size: var(--p-font-size-300);
-  white-space: nowrap;
-}
-
-.banner__dismiss {
-  position: absolute;
-  top: var(--p-space-300);
-  right: var(--p-space-300);
-  background: none;
-  border: none;
-  padding: var(--p-space-100);
-  cursor: pointer;
-  color: var(--p-color-icon);
-}
-
-.banner__dismiss svg {
-  width: 20px;
-  height: 20px;
-}
-
-// JavaScript
-document.querySelector('.banner__action').addEventListener('click', () => {
+<script>
+document.querySelector('.polaris-banner__action').addEventListener('click', () => {
   console.log('Print label clicked');
   window.print();
 });
 
-document.querySelector('.banner__dismiss').addEventListener('click', () => {
-  document.querySelector('.banner').remove();
-});`,
+document.querySelector('.polaris-banner__dismiss').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
     typescript: `import {Banner} from '@shopify/polaris';
 import React, {useState} from 'react';
 
@@ -7061,16 +10538,16 @@ function SelectExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="select-field">
-  <label for="date-range" class="select-field__label">Date range</label>
-  <div class="select-field__wrapper">
-    <select id="date-range" class="select-field__select">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-field">
+  <label for="date-range" class="polaris-select-field__label">Date range</label>
+  <div class="polaris-select-field__wrapper">
+    <select id="date-range" class="polaris-select-field__select">
       <option value="today" selected>Today</option>
       <option value="yesterday">Yesterday</option>
       <option value="lastWeek">Last 7 days</option>
     </select>
-    <div class="select-field__icon">
+    <div class="polaris-select-field__icon">
       <svg viewBox="0 0 20 20" aria-hidden="true">
         <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
@@ -7078,57 +10555,13 @@ function SelectExample() {
   </div>
 </div>
 
-// CSS
-.select-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.select-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.select-field__wrapper {
-  position: relative;
-}
-
-.select-field__select {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-800) var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-  appearance: none;
-  cursor: pointer;
-}
-
-.select-field__select:focus {
-  outline: none;
-  border-color: var(--p-color-border-emphasis);
-  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
-}
-
-.select-field__icon {
-  position: absolute;
-  right: var(--p-space-300);
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  width: 20px;
-  height: 20px;
-  color: var(--p-color-icon);
-}
-
-// JavaScript
+<script>
 const select = document.getElementById('date-range');
 select.addEventListener('change', (event) => {
   console.log('Selected:', event.target.value);
-});`,
+});
+</script>`,
     typescript: `import {Select} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -7220,86 +10653,32 @@ function ValidationErrorExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="select-field select-field--error">
-  <label for="province" class="select-field__label">Province</label>
-  <div class="select-field__wrapper">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-field select-field--error">
+  <label for="province" class="polaris-select-field__label">Province</label>
+  <div class="polaris-select-field__wrapper">
     <select 
       id="province" 
-      class="select-field__select select-field__select--error"
+      class="polaris-select-field__select select-field__select--error"
       aria-invalid="true"
       aria-describedby="province-error"
     >
       <option value="">Select a province</option>
       <option value="Alberta">Alberta</option>
     </select>
-    <div class="select-field__icon">
+    <div class="polaris-select-field__icon">
       <svg viewBox="0 0 20 20" aria-hidden="true">
         <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
   </div>
-  <div id="province-error" class="select-field__error">
+  <div id="province-error" class="polaris-select-field__error">
     Province is required
   </div>
 </div>
 
-// CSS
-.select-field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
 
-.select-field__label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.select-field__wrapper {
-  position: relative;
-}
-
-.select-field__select {
-  width: 100%;
-  padding: var(--p-space-200) var(--p-space-800) var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-surface);
-  appearance: none;
-  cursor: pointer;
-}
-
-.select-field__select--error {
-  border-color: var(--p-color-border-critical);
-}
-
-.select-field__select--error:focus {
-  border-color: var(--p-color-border-critical);
-  box-shadow: 0 0 0 1px var(--p-color-border-critical);
-}
-
-.select-field__icon {
-  position: absolute;
-  right: var(--p-space-300);
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  width: 20px;
-  height: 20px;
-  color: var(--p-color-icon);
-}
-
-.select-field__error {
-  color: var(--p-color-text-critical);
-  font-size: var(--p-font-size-200);
-  margin-top: var(--p-space-100);
-}
-
-// JavaScript
+<script>
 const select = document.getElementById('province');
 const errorDiv = document.getElementById('province-error');
 
@@ -7313,7 +10692,8 @@ select.addEventListener('change', (event) => {
     select.setAttribute('aria-invalid', 'true');
     errorDiv.style.display = 'block';
   }
-});`,
+});
+</script>`,
     typescript: `import {Select} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8142,27 +11522,27 @@ function ModalExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="modal-backdrop" id="modal-backdrop">
-  <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
-    <div class="modal__header">
-      <h2 id="modal-title" class="modal__title">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-modal-backdrop" id="modal-backdrop">
+  <div class="polaris-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="polaris-modal__header">
+      <h2 id="modal-title" class="polaris-modal__title">
         Reach more shoppers with Instagram product tags
       </h2>
-      <button class="modal__close" aria-label="Close modal">
+      <button class="polaris-modal__close" aria-label="Close modal">
         <svg viewBox="0 0 20 20" aria-hidden="true">
           <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
         </svg>
       </button>
     </div>
-    <div class="modal__body">
+    <div class="polaris-modal__body">
       <p>
         Use Instagram posts to share your products with millions of
         people. Let shoppers buy from your store without leaving
         Instagram.
       </p>
     </div>
-    <div class="modal__footer">
+    <div class="polaris-modal__footer">
       <button class="button button--secondary">Learn more</button>
       <button class="button button--primary">Add Instagram</button>
     </div>
@@ -8171,98 +11551,11 @@ function ModalExample() {
 
 <button id="open-modal" class="button">Open</button>
 
-// CSS
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
 
-.modal-backdrop.active {
-  display: flex;
-}
-
-.modal {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-600);
-  max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--p-space-500);
-  border-bottom: 1px solid var(--p-color-border);
-}
-
-.modal__title {
-  font-size: var(--p-font-size-500);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0;
-}
-
-.modal__close {
-  background: none;
-  border: none;
-  padding: var(--p-space-200);
-  cursor: pointer;
-  color: var(--p-color-icon);
-}
-
-.modal__close svg {
-  width: 20px;
-  height: 20px;
-}
-
-.modal__body {
-  padding: var(--p-space-500);
-  flex: 1;
-  overflow-y: auto;
-}
-
-.modal__footer {
-  display: flex;
-  gap: var(--p-space-300);
-  justify-content: flex-end;
-  padding: var(--p-space-500);
-  border-top: 1px solid var(--p-color-border);
-}
-
-.button {
-  padding: var(--p-space-200) var(--p-space-400);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  cursor: pointer;
-  border: 1px solid var(--p-color-border);
-}
-
-.button--primary {
-  background: var(--p-color-bg-fill-brand);
-  color: white;
-  border-color: var(--p-color-bg-fill-brand);
-}
-
-.button--secondary {
-  background: white;
-}
-
-// JavaScript
+<script>
 const modal = document.getElementById('modal-backdrop');
 const openBtn = document.getElementById('open-modal');
-const closeBtn = document.querySelector('.modal__close');
+const closeBtn = document.querySelector('.polaris-modal__close');
 const primaryBtn = document.querySelector('.button--primary');
 const secondaryBtn = document.querySelector('.button--secondary');
 
@@ -8295,7 +11588,8 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.classList.contains('active')) {
     closeModal();
   }
-});`,
+});
+</script>`,
     typescript: `import {Button, Frame, Modal, TextContainer} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8396,89 +11690,30 @@ function CheckboxExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="checkbox-field">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-field">
   <input 
     type="checkbox" 
     id="basic-checkbox" 
-    class="checkbox-field__input"
+    class="polaris-checkbox-field__input"
   />
-  <label for="basic-checkbox" class="checkbox-field__label">
-    <span class="checkbox-field__box">
-      <svg class="checkbox-field__icon" viewBox="0 0 16 16" aria-hidden="true">
+  <label for="basic-checkbox" class="polaris-checkbox-field__label">
+    <span class="polaris-checkbox-field__box">
+      <svg class="polaris-checkbox-field__icon" viewBox="0 0 16 16" aria-hidden="true">
         <path d="M13.527 3.84a1 1 0 0 1 0 1.414l-6.5 6.5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 1 1 1.414-1.414l1.793 1.793 5.793-5.793a1 1 0 0 1 1.414 0Z" fill="currentColor"/>
       </svg>
     </span>
-    <span class="checkbox-field__text">Basic checkbox</span>
+    <span class="polaris-checkbox-field__text">Basic checkbox</span>
   </label>
 </div>
 
-// CSS
-.checkbox-field {
-  display: flex;
-  align-items: flex-start;
-}
 
-.checkbox-field__input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-}
-
-.checkbox-field__label {
-  display: flex;
-  align-items: center;
-  gap: var(--p-space-200);
-  cursor: pointer;
-  user-select: none;
-}
-
-.checkbox-field__box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-100);
-  background: var(--p-color-bg-surface);
-  transition: all 0.1s ease;
-}
-
-.checkbox-field__icon {
-  width: 12px;
-  height: 12px;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.1s ease;
-}
-
-.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__box {
-  background: var(--p-color-bg-fill-brand);
-  border-color: var(--p-color-bg-fill-brand);
-}
-
-.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__icon {
-  opacity: 1;
-  transform: scale(1);
-  color: white;
-}
-
-.checkbox-field__input:focus + .checkbox-field__label .checkbox-field__box {
-  box-shadow: 0 0 0 2px var(--p-color-border-emphasis);
-}
-
-.checkbox-field__text {
-  font-size: var(--p-font-size-300);
-  color: var(--p-color-text);
-}
-
-// JavaScript
+<script>
 const checkbox = document.getElementById('basic-checkbox');
 checkbox.addEventListener('change', (event) => {
   console.log('Checkbox changed to:', event.target.checked);
-});`,
+});
+</script>`,
     typescript: `import {Checkbox} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8624,32 +11859,32 @@ function PageExample() {
     html: '<p>Credit card information</p>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="page">
-  <div class="page__header">
-    <div class="page__breadcrumb">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page__header">
+    <div class="polaris-page__breadcrumb">
       <a href="#" class="breadcrumb-link">
-        <svg class="icon" viewBox="0 0 20 20">
+        <svg class="polaris-icon" viewBox="0 0 20 20">
           <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
         </svg>
         Products
       </a>
     </div>
-    <div class="page__title-wrapper">
-      <h1 class="page__title">
+    <div class="polaris-page__title-wrapper">
+      <h1 class="polaris-page__title">
         3/4 inch Leather pet collar
-        <span class="badge badge--success">Paid</span>
+        <span class="polaris-badge badge--success">Paid</span>
       </h1>
-      <p class="page__subtitle">Perfect for any pet</p>
+      <p class="polaris-page__subtitle">Perfect for any pet</p>
     </div>
-    <div class="page__actions">
-      <div class="page__secondary-actions">
+    <div class="polaris-page__actions">
+      <div class="polaris-page__secondary-actions">
         <button class="button button--secondary">Duplicate</button>
         <button class="button button--secondary">View on your store</button>
         <div class="dropdown">
           <button class="button button--secondary dropdown-toggle">
             Promote
-            <svg class="icon" viewBox="0 0 20 20">
+            <svg class="polaris-icon" viewBox="0 0 20 20">
               <path d="M7 8l3 3 3-3" stroke="currentColor" fill="none"/>
             </svg>
           </button>
@@ -8661,172 +11896,42 @@ function PageExample() {
       <button class="button button--primary" disabled>Save</button>
     </div>
   </div>
-  <div class="page__content">
-    <div class="card">
-      <div class="card__header">
-        <h2 class="card__title">Credit card</h2>
+  <div class="polaris-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h2 class="polaris-card__title">Credit card</h2>
       </div>
-      <div class="card__body">
+      <div class="polaris-card__body">
         <p>Credit card information</p>
       </div>
     </div>
   </div>
-  <div class="page__pagination">
+  <div class="polaris-page__pagination">
     <button class="pagination__button">
-      <svg class="icon" viewBox="0 0 20 20">
+      <svg class="polaris-icon" viewBox="0 0 20 20">
         <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
       </svg>
       Previous
     </button>
     <button class="pagination__button">
       Next
-      <svg class="icon" viewBox="0 0 20 20">
+      <svg class="polaris-icon" viewBox="0 0 20 20">
         <path d="M8 4l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2"/>
       </svg>
     </button>
   </div>
 </div>
 
-// CSS
-.page {
-  background: var(--p-color-bg);
-  min-height: 100vh;
-}
 
-.page__header {
-  background: var(--p-color-bg-surface);
-  border-bottom: 1px solid var(--p-color-border);
-  padding: var(--p-space-400) var(--p-space-600);
-}
-
-.page__breadcrumb {
-  margin-bottom: var(--p-space-200);
-}
-
-.breadcrumb-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--p-space-100);
-  color: var(--p-color-text);
-  text-decoration: none;
-}
-
-.page__title-wrapper {
-  margin-bottom: var(--p-space-400);
-}
-
-.page__title {
-  font-size: var(--p-font-size-600);
-  font-weight: var(--p-font-weight-bold);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: var(--p-space-200);
-}
-
-.badge {
-  display: inline-flex;
-  padding: 0 var(--p-space-200);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-200);
-}
-
-.badge--success {
-  background: var(--p-color-bg-fill-success);
-  color: white;
-}
-
-.page__subtitle {
-  color: var(--p-color-text-secondary);
-  margin: var(--p-space-100) 0 0 0;
-}
-
-.page__actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.page__secondary-actions {
-  display: flex;
-  gap: var(--p-space-200);
-}
-
-.button {
-  padding: var(--p-space-200) var(--p-space-400);
-  border-radius: var(--p-border-radius-200);
-  border: 1px solid var(--p-color-border);
-  background: white;
-  cursor: pointer;
-}
-
-.button--primary {
-  background: var(--p-color-bg-fill-brand);
-  color: white;
-  border-color: var(--p-color-bg-fill-brand);
-}
-
-.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.page__content {
-  padding: var(--p-space-600);
-}
-
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-}
-
-.card__header {
-  padding: var(--p-space-400);
-  border-bottom: 1px solid var(--p-color-border);
-}
-
-.card__title {
-  font-size: var(--p-font-size-400);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0;
-}
-
-.card__body {
-  padding: var(--p-space-400);
-}
-
-.page__pagination {
-  display: flex;
-  justify-content: space-between;
-  padding: var(--p-space-400) var(--p-space-600);
-  border-top: 1px solid var(--p-color-border);
-}
-
-.pagination__button {
-  display: flex;
-  align-items: center;
-  gap: var(--p-space-100);
-  padding: var(--p-space-200) var(--p-space-300);
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--p-color-text);
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-// JavaScript
+<script>
 document.querySelectorAll('.button').forEach(button => {
   if (!button.disabled) {
     button.addEventListener('click', () => {
       console.log(button.textContent + ' clicked');
     });
   }
-});`,
+});
+</script>`,
     typescript: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
@@ -8924,54 +12029,39 @@ function PageExample() {
     html: '<p>Credit card information</p>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="page">
-  <div class="page__header">
-    <div class="page__breadcrumb">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page__header">
+    <div class="polaris-page__breadcrumb">
       <a href="#" class="breadcrumb-link">
-        <svg class="icon" viewBox="0 0 20 20">
+        <svg class="polaris-icon" viewBox="0 0 20 20">
           <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
         </svg>
         Products
       </a>
     </div>
-    <div class="page__title-wrapper">
-      <h1 class="page__title">Invoice</h1>
-      <p class="page__subtitle">Statement period: May 3, 2019 to June 2, 2019</p>
+    <div class="polaris-page__title-wrapper">
+      <h1 class="polaris-page__title">Invoice</h1>
+      <p class="polaris-page__subtitle">Statement period: May 3, 2019 to June 2, 2019</p>
     </div>
-    <div class="page__actions">
+    <div class="polaris-page__actions">
       <button class="button button--secondary">
-        <svg class="icon" viewBox="0 0 20 20">
+        <svg class="polaris-icon" viewBox="0 0 20 20">
           <path d="M10 3v10m0 0l-3-3m3 3l3-3M5 16h10" stroke="currentColor" fill="none" stroke-width="2"/>
         </svg>
         Download
       </button>
     </div>
   </div>
-  <div class="page__content">
-    <div class="card">
-      <div class="card__body card__body--section">
-        <h2 class="card__title">Credit card</h2>
+  <div class="polaris-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__body card__body--section">
+        <h2 class="polaris-card__title">Credit card</h2>
         <p>Credit card information</p>
       </div>
     </div>
   </div>
-</div>
-
-// CSS (same as default example with minor additions)
-.button--secondary {
-  display: flex;
-  align-items: center;
-  gap: var(--p-space-100);
-}
-
-.card__body--section {
-  padding: var(--p-space-400);
-}
-
-.card__body--section .card__title {
-  margin-bottom: var(--p-space-200);
-}`,
+</div>`,
     typescript: `import {Page, LegacyCard} from '@shopify/polaris';
 import {ArrowDownIcon} from '@shopify/polaris-icons';
 import React from 'react';
@@ -9009,6 +12099,1856 @@ function PageWithSubtitle({
     </Page>
   );
 }`
+  },
+  'full-width': {
+    react: `import {Page, Card, Text, BlockStack} from '@shopify/polaris';
+import {ExportIcon, PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      fullWidth
+      title="Orders"
+      primaryAction={{
+        content: 'Create order',
+        icon: PlusIcon,
+        accessibilityLabel: 'Create order',
+      }}
+      secondaryActions={[
+        {accessibilityLabel: 'Export orders', icon: ExportIcon},
+      ]}
+      pagination={{
+        hasNext: true,
+      }}
+    >
+      <Card>
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Credit card
+          </Text>
+          <Text as="p" variant="bodyMd">
+            Credit card information
+          </Text>
+        </BlockStack>
+      </Card>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Orders',
+  layout: 'fit',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      text: 'Export orders',
+      iconCls: 'x-fa fa-download',
+      handler: function() {
+        console.log('Export orders');
+      }
+    }, {
+      text: 'Create order',
+      iconCls: 'x-fa fa-plus',
+      ui: 'primary',
+      handler: function() {
+        console.log('Create order');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: ['->', {
+      text: 'Next',
+      iconCls: 'x-fa fa-arrow-right',
+      iconAlign: 'right',
+      handler: function() {
+        console.log('Next page');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<h3>Credit card</h3><p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page page--full-width">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Orders</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M10 15V3m-6 6l6-6 6 6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Export orders
+      </button>
+      <button class="button button--primary">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M10 5v10m-5-5h10" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Create order
+      </button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+  <div class="page__pagination">
+    <button class="pagination__button">
+      Next
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M8 4l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button, .pagination__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, Card, Text, BlockStack} from '@shopify/polaris';
+import {ExportIcon, PlusIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface PageFullWidthExampleProps {
+  onCreateOrder?: () => void;
+  onExportOrders?: () => void;
+  onNext?: () => void;
+}
+
+function PageFullWidthExample({
+  onCreateOrder,
+  onExportOrders,
+  onNext
+}: PageFullWidthExampleProps): JSX.Element {
+  return (
+    <Page
+      fullWidth
+      title="Orders"
+      primaryAction={{
+        content: 'Create order',
+        icon: PlusIcon,
+        accessibilityLabel: 'Create order',
+        onAction: onCreateOrder
+      }}
+      secondaryActions={[
+        {
+          accessibilityLabel: 'Export orders',
+          icon: ExportIcon,
+          onAction: onExportOrders
+        },
+      ]}
+      pagination={{
+        hasNext: true,
+        onNext
+      }}
+    >
+      <Card>
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Credit card
+          </Text>
+          <Text as="p" variant="bodyMd">
+            Credit card information
+          </Text>
+        </BlockStack>
+      </Card>
+    </Page>
+  );
+}`
+  },
+  'narrow-width': {
+    react: `import {Page, PageActions, Card, Text, BlockStack} from '@shopify/polaris';
+import React from 'react';
+import {DeleteIcon} from '@shopify/polaris-icons';
+
+function PageExample() {
+  return (
+    <Page
+      narrowWidth
+      backAction={{content: 'Orders', url: '#'}}
+      title="Add payment method"
+      primaryAction={{content: 'Save', disabled: true}}
+    >
+      <Card>
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Credit card
+          </Text>
+          <Text as="p" variant="bodyMd">
+            Credit card information
+          </Text>
+        </BlockStack>
+      </Card>
+      <PageActions
+        primaryAction={{content: 'Save', disabled: true}}
+        secondaryActions={[{content: 'Delete', icon: DeleteIcon}]}
+      />
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Add payment method',
+  width: 600,
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Orders',
+      handler: function() {
+        console.log('Back to orders');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: [{
+      text: 'Delete',
+      iconCls: 'x-fa fa-trash',
+      handler: function() {
+        console.log('Delete payment method');
+      }
+    }, '->', {
+      text: 'Save',
+      ui: 'primary',
+      disabled: true,
+      handler: function() {
+        console.log('Save payment method');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<h3>Credit card</h3><p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page page--narrow-width">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Orders
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Add payment method</h1>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+  <div class="page__actions">
+    <button class="button button--secondary">
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M3 7v10a2 2 0 002 2h9a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+      Delete
+    </button>
+    <button class="button button--primary" disabled>Save</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button:not([disabled])').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, PageActions, Card, Text, BlockStack} from '@shopify/polaris';
+import React from 'react';
+import {DeleteIcon} from '@shopify/polaris-icons';
+
+interface PageNarrowWidthExampleProps {
+  onBack?: () => void;
+  onSave?: () => void;
+  onDelete?: () => void;
+  isValid?: boolean;
+}
+
+function PageNarrowWidthExample({
+  onBack,
+  onSave,
+  onDelete,
+  isValid = false
+}: PageNarrowWidthExampleProps): JSX.Element {
+  return (
+    <Page
+      narrowWidth
+      backAction={{content: 'Orders', onAction: onBack}}
+      title="Add payment method"
+      primaryAction={{content: 'Save', disabled: !isValid, onAction: onSave}}
+    >
+      <Card>
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Credit card
+          </Text>
+          <Text as="p" variant="bodyMd">
+            Credit card information
+          </Text>
+        </BlockStack>
+      </Card>
+      <PageActions
+        primaryAction={{content: 'Save', disabled: !isValid, onAction: onSave}}
+        secondaryActions={[{content: 'Delete', icon: DeleteIcon, onAction: onDelete}]}
+      />
+    </Page>
+  );
+}`
+  },
+  'with-action-groups': {
+    react: `import {Page, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      title="Products"
+      actionGroups={[
+        {
+          title: 'Copy',
+          onClick: (openActions) => {
+            alert('Copy action');
+            openActions();
+          },
+          actions: [{content: 'Copy to clipboard'}],
+        },
+        {
+          title: 'Promote',
+          disabled: true,
+          actions: [{content: 'Share on Facebook'}],
+        },
+        {
+          title: 'More actions',
+          actions: [
+            {content: 'Duplicate'},
+            {content: 'Print'},
+            {content: 'Unarchive'},
+            {content: 'Cancel order'},
+          ],
+        },
+      ]}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      text: 'Copy',
+      menu: [{
+        text: 'Copy to clipboard',
+        handler: function() {
+          console.log('Copy to clipboard');
+        }
+      }]
+    }, {
+      text: 'Promote',
+      disabled: true,
+      menu: [{
+        text: 'Share on Facebook',
+        handler: function() {
+          console.log('Share on Facebook');
+        }
+      }]
+    }, {
+      text: 'More actions',
+      menu: [{
+        text: 'Duplicate',
+        handler: function() {
+          console.log('Duplicate');
+        }
+      }, {
+        text: 'Print',
+        handler: function() {
+          console.log('Print');
+        }
+      }, {
+        text: 'Unarchive',
+        handler: function() {
+          console.log('Unarchive');
+        }
+      }, {
+        text: 'Cancel order',
+        handler: function() {
+          console.log('Cancel order');
+        }
+      }]
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Products</h1>
+    </div>
+    <div class="page__action-groups">
+      <div class="action-group">
+        <button class="button button--secondary action-group__button">
+          Copy
+          <svg class="icon" viewBox="0 0 20 20">
+            <path d="M6 10l3 3 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+          </svg>
+        </button>
+        <div class="action-group__menu">
+          <button class="menu-item">Copy to clipboard</button>
+        </div>
+      </div>
+      <div class="action-group">
+        <button class="button button--secondary action-group__button" disabled>
+          Promote
+          <svg class="icon" viewBox="0 0 20 20">
+            <path d="M6 10l3 3 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+          </svg>
+        </button>
+        <div class="action-group__menu">
+          <button class="menu-item">Share on Facebook</button>
+        </div>
+      </div>
+      <div class="action-group">
+        <button class="button button--secondary action-group__button">
+          More actions
+          <svg class="icon" viewBox="0 0 20 20">
+            <path d="M6 10l3 3 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+          </svg>
+        </button>
+        <div class="action-group__menu">
+          <button class="menu-item">Duplicate</button>
+          <button class="menu-item">Print</button>
+          <button class="menu-item">Unarchive</button>
+          <button class="menu-item">Cancel order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.action-group__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const menu = e.currentTarget.nextElementSibling;
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  });
+});
+
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent} clicked\`);
+    e.target.closest('.action-group__menu').style.display = 'none';
+  });
+});
+</script>`,
+    typescript: `import {Page, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface ActionGroup {
+  title: string;
+  disabled?: boolean;
+  onClick?: (openActions: () => void) => void;
+  actions: Array<{
+    content: string;
+    onAction?: () => void;
+  }>;
+}
+
+interface PageWithActionGroupsExampleProps {
+  actionGroups?: ActionGroup[];
+  onActionClick?: (action: string) => void;
+}
+
+function PageWithActionGroupsExample({
+  actionGroups = [
+    {
+      title: 'Copy',
+      onClick: (openActions) => {
+        alert('Copy action');
+        openActions();
+      },
+      actions: [{content: 'Copy to clipboard'}],
+    },
+    {
+      title: 'Promote',
+      disabled: true,
+      actions: [{content: 'Share on Facebook'}],
+    },
+    {
+      title: 'More actions',
+      actions: [
+        {content: 'Duplicate'},
+        {content: 'Print'},
+        {content: 'Unarchive'},
+        {content: 'Cancel order'},
+      ],
+    },
+  ],
+  onActionClick
+}: PageWithActionGroupsExampleProps): JSX.Element {
+  const enhancedActionGroups = actionGroups.map(group => ({
+    ...group,
+    actions: group.actions.map(action => ({
+      ...action,
+      onAction: action.onAction || (() => onActionClick?.(action.content))
+    }))
+  }));
+
+  return (
+    <Page
+      title="Products"
+      actionGroups={enhancedActionGroups}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'with-content-after-title': {
+    react: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Products', url: '#'}}
+      title="Jar With Lock-Lid"
+      titleMetadata={<Badge tone="attention">Verified</Badge>}
+      primaryAction={{content: 'Save', disabled: true}}
+      secondaryActions={[
+        {content: 'Duplicate'},
+        {content: 'View on your store'},
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+      }}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Jar With Lock-Lid',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Products',
+      handler: function() {
+        console.log('Back to products');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      xtype: 'label',
+      text: 'Verified',
+      style: 'background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 4px; font-size: 12px;'
+    }, '->', {
+      text: 'Duplicate',
+      handler: function() {
+        console.log('Duplicate product');
+      }
+    }, {
+      text: 'View on your store',
+      handler: function() {
+        console.log('View on store');
+      }
+    }, {
+      text: 'Save',
+      ui: 'primary',
+      disabled: true,
+      handler: function() {
+        console.log('Save product');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: [{
+      text: 'Previous',
+      iconCls: 'x-fa fa-arrow-left',
+      handler: function() {
+        console.log('Previous page');
+      }
+    }, '->', {
+      text: 'Next',
+      iconCls: 'x-fa fa-arrow-right',
+      iconAlign: 'right',
+      handler: function() {
+        console.log('Next page');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Products
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">
+        Jar With Lock-Lid
+        <span class="badge badge--attention">Verified</span>
+      </h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary">Duplicate</button>
+      <button class="button button--secondary">View on your store</button>
+      <button class="button button--primary" disabled>Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+  <div class="page__pagination">
+    <button class="pagination__button">
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+      Previous
+    </button>
+    <button class="pagination__button">
+      Next
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M8 4l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button:not([disabled]), .pagination__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface PageWithContentAfterTitleExampleProps {
+  title?: string;
+  metadataText?: string;
+  metadataTone?: 'attention' | 'success' | 'warning' | 'critical';
+  onBack?: () => void;
+  onSave?: () => void;
+  onDuplicate?: () => void;
+  onViewOnStore?: () => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  isValid?: boolean;
+}
+
+function PageWithContentAfterTitleExample({
+  title = "Jar With Lock-Lid",
+  metadataText = "Verified",
+  metadataTone = "attention",
+  onBack,
+  onSave,
+  onDuplicate,
+  onViewOnStore,
+  onPrevious,
+  onNext,
+  isValid = false
+}: PageWithContentAfterTitleExampleProps): JSX.Element {
+  return (
+    <Page
+      backAction={{content: 'Products', onAction: onBack}}
+      title={title}
+      titleMetadata={<Badge tone={metadataTone}>{metadataText}</Badge>}
+      primaryAction={{content: 'Save', disabled: !isValid, onAction: onSave}}
+      secondaryActions={[
+        {content: 'Duplicate', onAction: onDuplicate},
+        {content: 'View on your store', onAction: onViewOnStore},
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+        onPrevious,
+        onNext
+      }}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'with-custom-primary-action': {
+    react: `import {Page, Button, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Settings', url: '#'}}
+      title="General"
+      primaryAction={<Button variant="primary">Save</Button>}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'General',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Settings',
+      handler: function() {
+        console.log('Back to settings');
+      }
+    }, '->', {
+      xtype: 'button',
+      text: 'Save',
+      ui: 'primary',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Settings
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">General</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--primary">Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, Button, LegacyCard} from '@shopify/polaris';
+import React, {ReactElement} from 'react';
+
+interface PageWithCustomPrimaryActionExampleProps {
+  title?: string;
+  onBack?: () => void;
+  onSave?: () => void;
+  customPrimaryAction?: ReactElement;
+}
+
+function PageWithCustomPrimaryActionExample({
+  title = "General",
+  onBack,
+  onSave,
+  customPrimaryAction
+}: PageWithCustomPrimaryActionExampleProps): JSX.Element {
+  const primaryAction = customPrimaryAction || (
+    <Button variant="primary" onClick={onSave}>
+      Save
+    </Button>
+  );
+
+  return (
+    <Page
+      backAction={{content: 'Settings', onAction: onBack}}
+      title={title}
+      primaryAction={primaryAction}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'with-custom-secondary-action': {
+    react: `import {Page, Button} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page title="General" secondaryActions={<Button>Save</Button>}>
+      <p>Page content</p>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'General',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      xtype: 'button',
+      text: 'Save',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }]
+  }],
+  bodyPadding: 16,
+  html: '<p>Page content</p>'
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">General</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary">Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <p>Page content</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, Button} from '@shopify/polaris';
+import React, {ReactElement} from 'react';
+
+interface PageWithCustomSecondaryActionExampleProps {
+  title?: string;
+  onSave?: () => void;
+  customSecondaryAction?: ReactElement;
+  children?: React.ReactNode;
+}
+
+function PageWithCustomSecondaryActionExample({
+  title = "General",
+  onSave,
+  customSecondaryAction,
+  children = <p>Page content</p>
+}: PageWithCustomSecondaryActionExampleProps): JSX.Element {
+  const secondaryAction = customSecondaryAction || (
+    <Button onClick={onSave}>Save</Button>
+  );
+
+  return (
+    <Page title={title} secondaryActions={secondaryAction}>
+      {children}
+    </Page>
+  );
+}`
+  },
+  'with-destructive-secondary-action': {
+    react: `import {Page} from '@shopify/polaris';
+import React from 'react';
+import {DeleteIcon} from '@shopify/polaris-icons';
+
+function PageExample() {
+  return (
+    <Page
+      title="General"
+      secondaryActions={[
+        {content: 'Delete', destructive: true, icon: DeleteIcon},
+      ]}
+    >
+      <p>Page content</p>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'General',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      text: 'Delete',
+      iconCls: 'x-fa fa-trash',
+      ui: 'destructive',
+      handler: function() {
+        console.log('Delete clicked');
+      }
+    }]
+  }],
+  bodyPadding: 16,
+  html: '<p>Page content</p>'
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">General</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--destructive">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M3 7v10a2 2 0 002 2h9a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="page__content">
+    <p>Page content</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page} from '@shopify/polaris';
+import React from 'react';
+import {DeleteIcon} from '@shopify/polaris-icons';
+
+interface PageWithDestructiveSecondaryActionExampleProps {
+  title?: string;
+  onDelete?: () => void;
+  children?: React.ReactNode;
+}
+
+function PageWithDestructiveSecondaryActionExample({
+  title = "General",
+  onDelete,
+  children = <p>Page content</p>
+}: PageWithDestructiveSecondaryActionExampleProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+          icon: DeleteIcon,
+          onAction: onDelete
+        },
+      ]}
+    >
+      {children}
+    </Page>
+  );
+}`
+  },
+  'with-external-link': {
+    react: `import {Page, LegacyCard} from '@shopify/polaris';
+import {ExternalIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      title="Jar With Lock-Lid"
+      primaryAction={{content: 'Save', disabled: true}}
+      secondaryActions={[
+        {
+          content: 'Promote',
+          external: true,
+          icon: ExternalIcon,
+          url: 'https://www.facebook.com/business/learn/facebook-page-build-audience',
+        },
+      ]}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Jar With Lock-Lid',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      text: 'Promote',
+      iconCls: 'x-fa fa-external-link',
+      handler: function() {
+        window.open('https://www.facebook.com/business/learn/facebook-page-build-audience', '_blank');
+      }
+    }, {
+      text: 'Save',
+      ui: 'primary',
+      disabled: true,
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Jar With Lock-Lid</h1>
+    </div>
+    <div class="page__actions">
+      <a href="https://www.facebook.com/business/learn/facebook-page-build-audience" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="button button--secondary">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Promote
+      </a>
+      <button class="button button--primary" disabled>Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button:not([disabled])').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, LegacyCard} from '@shopify/polaris';
+import {ExternalIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface PageWithExternalLinkExampleProps {
+  title?: string;
+  onSave?: () => void;
+  externalUrl?: string;
+  isValid?: boolean;
+}
+
+function PageWithExternalLinkExample({
+  title = "Jar With Lock-Lid",
+  onSave,
+  externalUrl = "https://www.facebook.com/business/learn/facebook-page-build-audience",
+  isValid = false
+}: PageWithExternalLinkExampleProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      primaryAction={{content: 'Save', disabled: !isValid, onAction: onSave}}
+      secondaryActions={[
+        {
+          content: 'Promote',
+          external: true,
+          icon: ExternalIcon,
+          url: externalUrl,
+        },
+      ]}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'with-tooltip-action': {
+    react: `import {Page} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      title="Product"
+      primaryAction={{
+        content: 'Save',
+      }}
+      secondaryActions={[
+        {
+          content: 'Import',
+          disabled: true,
+          helpText: 'You need permission to import products.',
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: ['->', {
+      text: 'Import',
+      disabled: true,
+      tooltip: 'You need permission to import products.',
+      handler: function() {
+        console.log('Import clicked');
+      }
+    }, {
+      text: 'Save',
+      ui: 'primary',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Product</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary" 
+              disabled 
+              title="You need permission to import products.">
+        Import
+      </button>
+      <button class="button button--primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button:not([disabled])').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page} from '@shopify/polaris';
+import React from 'react';
+
+interface PageWithTooltipActionExampleProps {
+  title?: string;
+  onSave?: () => void;
+  onImport?: () => void;
+  canImport?: boolean;
+  importHelpText?: string;
+}
+
+function PageWithTooltipActionExample({
+  title = "Product",
+  onSave,
+  onImport,
+  canImport = false,
+  importHelpText = "You need permission to import products."
+}: PageWithTooltipActionExampleProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      primaryAction={{
+        content: 'Save',
+        onAction: onSave
+      }}
+      secondaryActions={[
+        {
+          content: 'Import',
+          disabled: !canImport,
+          helpText: importHelpText,
+          onAction: onImport
+        },
+      ]}
+    />
+  );
+}`
+  },
+  'without-pagination': {
+    react: `import {Page, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Settings', url: '#'}}
+      title="General"
+      primaryAction={{content: 'Save'}}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'General',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Settings',
+      handler: function() {
+        console.log('Back to settings');
+      }
+    }, '->', {
+      text: 'Save',
+      ui: 'primary',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Settings
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">General</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--primary">Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface PageWithoutPaginationExampleProps {
+  title?: string;
+  onBack?: () => void;
+  onSave?: () => void;
+}
+
+function PageWithoutPaginationExample({
+  title = "General",
+  onBack,
+  onSave
+}: PageWithoutPaginationExampleProps): JSX.Element {
+  return (
+    <Page
+      backAction={{content: 'Settings', onAction: onBack}}
+      title={title}
+      primaryAction={{content: 'Save', onAction: onSave}}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'without-primary-action-in-header': {
+    react: `import {Page, LegacyCard, LegacyStack, Button} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Orders', url: '#'}}
+      title="#1085"
+      secondaryActions={[
+        {content: 'Print'},
+        {content: 'Unarchive'},
+        {content: 'Cancel order'},
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+      }}
+    >
+      <LegacyCard sectioned title="Fulfill order">
+        <LegacyStack alignment="center">
+          <LegacyStack.Item fill>
+            <p>Buy postage and ship remaining 2 items</p>
+          </LegacyStack.Item>
+          <Button variant="primary">Continue</Button>
+        </LegacyStack>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: '#1085',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Orders',
+      handler: function() {
+        console.log('Back to orders');
+      }
+    }, '->', {
+      text: 'Print',
+      handler: function() {
+        console.log('Print');
+      }
+    }, {
+      text: 'Unarchive',
+      handler: function() {
+        console.log('Unarchive');
+      }
+    }, {
+      text: 'Cancel order',
+      handler: function() {
+        console.log('Cancel order');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: [{
+      text: 'Previous',
+      iconCls: 'x-fa fa-arrow-left',
+      handler: function() {
+        console.log('Previous');
+      }
+    }, '->', {
+      text: 'Next',
+      iconCls: 'x-fa fa-arrow-right',
+      iconAlign: 'right',
+      handler: function() {
+        console.log('Next');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Fulfill order',
+    bodyPadding: 16,
+    items: [{
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'middle'
+      },
+      items: [{
+        xtype: 'component',
+        flex: 1,
+        html: '<p>Buy postage and ship remaining 2 items</p>'
+      }, {
+        xtype: 'button',
+        text: 'Continue',
+        ui: 'primary',
+        handler: function() {
+          console.log('Continue clicked');
+        }
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Orders
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">#1085</h1>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary">Print</button>
+      <button class="button button--secondary">Unarchive</button>
+      <button class="button button--secondary">Cancel order</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Fulfill order</h2>
+        <div class="stack stack--horizontal stack--center">
+          <div class="stack__item stack__item--fill">
+            <p>Buy postage and ship remaining 2 items</p>
+          </div>
+          <div class="stack__item">
+            <button class="button button--primary">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page__pagination">
+    <button class="pagination__button">
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+      Previous
+    </button>
+    <button class="pagination__button">
+      Next
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M8 4l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button, .pagination__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Page, LegacyCard, LegacyStack, Button} from '@shopify/polaris';
+import React from 'react';
+
+interface PageWithoutPrimaryActionInHeaderExampleProps {
+  orderNumber?: string;
+  onBack?: () => void;
+  onPrint?: () => void;
+  onUnarchive?: () => void;
+  onCancel?: () => void;
+  onContinue?: () => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+function PageWithoutPrimaryActionInHeaderExample({
+  orderNumber = "#1085",
+  onBack,
+  onPrint,
+  onUnarchive,
+  onCancel,
+  onContinue,
+  onPrevious,
+  onNext
+}: PageWithoutPrimaryActionInHeaderExampleProps): JSX.Element {
+  return (
+    <Page
+      backAction={{content: 'Orders', onAction: onBack}}
+      title={orderNumber}
+      secondaryActions={[
+        {content: 'Print', onAction: onPrint},
+        {content: 'Unarchive', onAction: onUnarchive},
+        {content: 'Cancel order', onAction: onCancel},
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+        onPrevious,
+        onNext
+      }}
+    >
+      <LegacyCard sectioned title="Fulfill order">
+        <LegacyStack alignment="center">
+          <LegacyStack.Item fill>
+            <p>Buy postage and ship remaining 2 items</p>
+          </LegacyStack.Item>
+          <Button variant="primary" onClick={onContinue}>
+            Continue
+          </Button>
+        </LegacyStack>
+      </LegacyCard>
+    </Page>
+  );
+}`
+  },
+  'actions-default': {
+    react: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+      }}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: [{
+    text: 'Delete',
+    ui: 'destructive',
+    handler: function() {
+      console.log('Delete clicked');
+    }
+  }, '->', {
+    text: 'Save',
+    ui: 'primary',
+    handler: function() {
+      console.log('Save clicked');
+    }
+  }]
+});`,
+    vanilla: `<div class="page-actions">
+  <div class="page-actions__secondary">
+    <button class="button button--destructive">Delete</button>
+  </div>
+  <div class="page-actions__primary">
+    <button class="button button--primary">Save</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+interface PageActionsDefaultExampleProps {
+  onSave?: () => void;
+  onDelete?: () => void;
+}
+
+function PageActionsDefaultExample({
+  onSave,
+  onDelete
+}: PageActionsDefaultExampleProps): JSX.Element {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        onAction: onSave
+      }}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+          onAction: onDelete
+        },
+      ]}
+    />
+  );
+}`
+  },
+  'actions-primary-action-only': {
+    react: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+      }}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: ['->', {
+    text: 'Save',
+    ui: 'primary',
+    handler: function() {
+      console.log('Save clicked');
+    }
+  }]
+});`,
+    vanilla: `<div class="page-actions">
+  <div class="page-actions__primary">
+    <button class="button button--primary">Save</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {PageActions} from '@shopify/polaris';
+import React from 'react';
+
+interface PageActionsPrimaryActionOnlyExampleProps {
+  onSave?: () => void;
+}
+
+function PageActionsPrimaryActionOnlyExample({
+  onSave
+}: PageActionsPrimaryActionOnlyExampleProps): JSX.Element {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        onAction: onSave
+      }}
+    />
+  );
+}`
+  },
+  'actions-with-custom-primary-action': {
+    react: `import {PageActions, Button} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <PageActions
+      primaryAction={<Button variant="primary">Save</Button>}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+        },
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: [{
+    text: 'Delete',
+    ui: 'destructive',
+    handler: function() {
+      console.log('Delete clicked');
+    }
+  }, '->', {
+    xtype: 'button',
+    text: 'Save',
+    ui: 'primary',
+    handler: function() {
+      console.log('Save clicked');
+    }
+  }]
+});`,
+    vanilla: `<div class="page-actions">
+  <div class="page-actions__secondary">
+    <button class="button button--destructive">Delete</button>
+  </div>
+  <div class="page-actions__primary">
+    <button class="button button--primary">Save</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {PageActions, Button} from '@shopify/polaris';
+import React, {ReactElement} from 'react';
+
+interface PageActionsWithCustomPrimaryActionExampleProps {
+  onSave?: () => void;
+  onDelete?: () => void;
+  customPrimaryAction?: ReactElement;
+}
+
+function PageActionsWithCustomPrimaryActionExample({
+  onSave,
+  onDelete,
+  customPrimaryAction
+}: PageActionsWithCustomPrimaryActionExampleProps): JSX.Element {
+  const primaryAction = customPrimaryAction || (
+    <Button variant="primary" onClick={onSave}>Save</Button>
+  );
+
+  return (
+    <PageActions
+      primaryAction={primaryAction}
+      secondaryActions={[
+        {
+          content: 'Delete',
+          destructive: true,
+          onAction: onDelete
+        },
+      ]}
+    />
+  );
+}`
+  },
+  'actions-with-custom-secondary-action': {
+    react: `import {PageActions, Button} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+      }}
+      secondaryActions={<Button>Save</Button>}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: [{
+    xtype: 'button',
+    text: 'Save',
+    handler: function() {
+      console.log('Secondary save clicked');
+    }
+  }, '->', {
+    text: 'Save',
+    ui: 'primary',
+    handler: function() {
+      console.log('Primary save clicked');
+    }
+  }]
+});`,
+    vanilla: `<div class="page-actions">
+  <div class="page-actions__secondary">
+    <button class="button button--secondary">Save</button>
+  </div>
+  <div class="page-actions__primary">
+    <button class="button button--primary">Save</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const isPrimary = e.target.classList.contains('button--primary');
+    console.log(\`\${isPrimary ? 'Primary' : 'Secondary'} \${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {PageActions, Button} from '@shopify/polaris';
+import React, {ReactElement} from 'react';
+
+interface PageActionsWithCustomSecondaryActionExampleProps {
+  onPrimarySave?: () => void;
+  onSecondarySave?: () => void;
+  customSecondaryAction?: ReactElement;
+}
+
+function PageActionsWithCustomSecondaryActionExample({
+  onPrimarySave,
+  onSecondarySave,
+  customSecondaryAction
+}: PageActionsWithCustomSecondaryActionExampleProps): JSX.Element {
+  const secondaryAction = customSecondaryAction || (
+    <Button onClick={onSecondarySave}>Save</Button>
+  );
+
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        onAction: onPrimarySave
+      }}
+      secondaryActions={secondaryAction}
+    />
+  );
+}`
   }
 };
 
@@ -9040,44 +13980,18 @@ function LayoutExample() {
     html: '<p>View a summary of your online store\\'s performance.</p>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="layout">
-  <div class="layout__section">
-    <div class="card">
-      <div class="card__body card__body--section">
-        <h2 class="card__title">Online store dashboard</h2>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-layout">
+  <div class="polaris-layout__section">
+    <div class="polaris-card">
+      <div class="polaris-card__body card__body--section">
+        <h2 class="polaris-card__title">Online store dashboard</h2>
         <p>View a summary of your online store's performance.</p>
       </div>
     </div>
   </div>
 </div>
-
-// CSS
-.layout {
-  display: grid;
-  gap: var(--p-space-500);
-  padding: var(--p-space-500);
-}
-
-.layout__section {
-  grid-column: 1 / -1;
-}
-
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-}
-
-.card__body--section {
-  padding: var(--p-space-400);
-}
-
-.card__title {
-  font-size: var(--p-font-size-400);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0 0 var(--p-space-200) 0;
-}`,
+`,
     typescript: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
@@ -9096,6 +14010,1780 @@ function LayoutExample({
         <Layout.Section>
           {children}
         </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'two-columns-with-equal-width': {
+    react: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  ResourceList,
+  Thumbnail,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section variant="oneHalf">
+          <LegacyCard title="Florida" actions={[{content: 'Manage'}]}>
+            <LegacyCard.Section>
+              <Text tone="subdued" as="span">
+                455 units available
+              </Text>
+            </LegacyCard.Section>
+            <LegacyCard.Section title="Items">
+              <ResourceList
+                resourceName={{singular: 'product', plural: 'products'}}
+                items={[
+                  {
+                    id: '341',
+                    url: '#',
+                    name: 'Black & orange scarf',
+                    sku: '9234194023',
+                    quantity: '254',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+                        alt="Black orange scarf"
+                      />
+                    ),
+                  },
+                  {
+                    id: '256',
+                    url: '#',
+                    name: 'Tucan scarf',
+                    sku: '9234194010',
+                    quantity: '201',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+                        alt="Tucan scarf"
+                      />
+                    ),
+                  },
+                ]}
+                renderItem={(item) => {
+                  const {id, url, name, sku, media, quantity} = item;
+
+                  return (
+                    <ResourceList.Item
+                      id={id}
+                      url={url}
+                      media={media}
+                      accessibilityLabel={\`View details for \${name}\`}
+                    >
+                      <Text variant="bodyMd" fontWeight="bold" as="h3">
+                        {name}
+                      </Text>
+                      <div>SKU: {sku}</div>
+                      <div>{quantity} available</div>
+                    </ResourceList.Item>
+                  );
+                }}
+              />
+            </LegacyCard.Section>
+          </LegacyCard>
+        </Layout.Section>
+        <Layout.Section variant="oneHalf">
+          <LegacyCard title="Nevada" actions={[{content: 'Manage'}]}>
+            <LegacyCard.Section>
+              <Text tone="subdued" as="span">
+                301 units available
+              </Text>
+            </LegacyCard.Section>
+            <LegacyCard.Section title="Items">
+              <ResourceList
+                resourceName={{singular: 'product', plural: 'products'}}
+                items={[
+                  {
+                    id: '342',
+                    url: '#',
+                    name: 'Black & orange scarf',
+                    sku: '9234194023',
+                    quantity: '100',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+                        alt="Black orange scarf"
+                      />
+                    ),
+                  },
+                  {
+                    id: '257',
+                    url: '#',
+                    name: 'Tucan scarf',
+                    sku: '9234194010',
+                    quantity: '201',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+                        alt="Tucan scarf"
+                      />
+                    ),
+                  },
+                ]}
+                renderItem={(item) => {
+                  const {id, url, name, sku, media, quantity} = item;
+
+                  return (
+                    <ResourceList.Item
+                      id={id}
+                      url={url}
+                      media={media}
+                      accessibilityLabel={\`View details for \${name}\`}
+                    >
+                      <Text variant="bodyMd" fontWeight="bold" as="h3">
+                        {name}
+                      </Text>
+                      <div>SKU: {sku}</div>
+                      <div>{quantity} available</div>
+                    </ResourceList.Item>
+                  );
+                }}
+              />
+            </LegacyCard.Section>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  defaults: {
+    flex: 1,
+    margin: '0 8 0 0'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Florida',
+    tools: [{
+      type: 'gear',
+      tooltip: 'Manage',
+      handler: function() {
+        console.log('Manage Florida');
+      }
+    }],
+    items: [{
+      xtype: 'panel',
+      bodyPadding: 16,
+      html: '<span style="color:#6d7175;">455 units available</span>'
+    }, {
+      xtype: 'grid',
+      title: 'Items',
+      columns: [{
+        text: 'Product',
+        dataIndex: 'name',
+        flex: 1,
+        renderer: function(value, meta, record) {
+          return '<strong>' + value + '</strong><br>SKU: ' + record.get('sku') + '<br>' + record.get('quantity') + ' available';
+        }
+      }],
+      store: {
+        fields: ['id', 'name', 'sku', 'quantity'],
+        data: [
+          {id: '341', name: 'Black & orange scarf', sku: '9234194023', quantity: '254'},
+          {id: '256', name: 'Tucan scarf', sku: '9234194010', quantity: '201'}
+        ]
+      }
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Nevada',
+    margin: '0 0 0 0',
+    tools: [{
+      type: 'gear',
+      tooltip: 'Manage',
+      handler: function() {
+        console.log('Manage Nevada');
+      }
+    }],
+    items: [{
+      xtype: 'panel',
+      bodyPadding: 16,
+      html: '<span style="color:#6d7175;">301 units available</span>'
+    }, {
+      xtype: 'grid',
+      title: 'Items',
+      columns: [{
+        text: 'Product',
+        dataIndex: 'name',
+        flex: 1,
+        renderer: function(value, meta, record) {
+          return '<strong>' + value + '</strong><br>SKU: ' + record.get('sku') + '<br>' + record.get('quantity') + ' available';
+        }
+      }],
+      store: {
+        fields: ['id', 'name', 'sku', 'quantity'],
+        data: [
+          {id: '342', name: 'Black & orange scarf', sku: '9234194023', quantity: '100'},
+          {id: '257', name: 'Tucan scarf', sku: '9234194010', quantity: '201'}
+        ]
+      }
+    }]
+  }]
+});`,
+    vanilla: `<div class="layout layout--two-columns">
+  <div class="layout__section layout__section--one-half">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Florida</h2>
+        <button class="button button--plain">Manage</button>
+      </div>
+      <div class="card__section">
+        <span class="text-subdued">455 units available</span>
+      </div>
+      <div class="card__section">
+        <h3 class="card__section-title">Items</h3>
+        <div class="resource-list">
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" alt="Black orange scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Black & orange scarf</h4>
+              <div>SKU: 9234194023</div>
+              <div>254 available</div>
+            </div>
+          </div>
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg" alt="Tucan scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Tucan scarf</h4>
+              <div>SKU: 9234194010</div>
+              <div>201 available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="layout__section layout__section--one-half">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Nevada</h2>
+        <button class="button button--plain">Manage</button>
+      </div>
+      <div class="card__section">
+        <span class="text-subdued">301 units available</span>
+      </div>
+      <div class="card__section">
+        <h3 class="card__section-title">Items</h3>
+        <div class="resource-list">
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" alt="Black orange scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Black & orange scarf</h4>
+              <div>SKU: 9234194023</div>
+              <div>100 available</div>
+            </div>
+          </div>
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg" alt="Tucan scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Tucan scarf</h4>
+              <div>SKU: 9234194010</div>
+              <div>201 available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  ResourceList,
+  Thumbnail,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+interface Product {
+  id: string;
+  url: string;
+  name: string;
+  sku: string;
+  quantity: string;
+  media: React.ReactNode;
+}
+
+interface LocationData {
+  name: string;
+  totalUnits: number;
+  products: Product[];
+}
+
+interface LayoutTwoColumnsExampleProps {
+  locations?: LocationData[];
+  onManage?: (location: string) => void;
+}
+
+function LayoutTwoColumnsExample({
+  locations = [
+    {
+      name: 'Florida',
+      totalUnits: 455,
+      products: [
+        {
+          id: '341',
+          url: '#',
+          name: 'Black & orange scarf',
+          sku: '9234194023',
+          quantity: '254',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+              alt="Black orange scarf"
+            />
+          ),
+        },
+        {
+          id: '256',
+          url: '#',
+          name: 'Tucan scarf',
+          sku: '9234194010',
+          quantity: '201',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+              alt="Tucan scarf"
+            />
+          ),
+        },
+      ]
+    },
+    {
+      name: 'Nevada',
+      totalUnits: 301,
+      products: [
+        {
+          id: '342',
+          url: '#',
+          name: 'Black & orange scarf',
+          sku: '9234194023',
+          quantity: '100',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+              alt="Black orange scarf"
+            />
+          ),
+        },
+        {
+          id: '257',
+          url: '#',
+          name: 'Tucan scarf',
+          sku: '9234194010',
+          quantity: '201',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+              alt="Tucan scarf"
+            />
+          ),
+        },
+      ]
+    }
+  ],
+  onManage
+}: LayoutTwoColumnsExampleProps): JSX.Element {
+  return (
+    <Page fullWidth>
+      <Layout>
+        {locations.map((location, index) => (
+          <Layout.Section key={location.name} variant="oneHalf">
+            <LegacyCard 
+              title={location.name} 
+              actions={[{
+                content: 'Manage',
+                onAction: () => onManage?.(location.name)
+              }]}
+            >
+              <LegacyCard.Section>
+                <Text tone="subdued" as="span">
+                  {location.totalUnits} units available
+                </Text>
+              </LegacyCard.Section>
+              <LegacyCard.Section title="Items">
+                <ResourceList
+                  resourceName={{singular: 'product', plural: 'products'}}
+                  items={location.products}
+                  renderItem={(item) => {
+                    const {id, url, name, sku, media, quantity} = item;
+
+                    return (
+                      <ResourceList.Item
+                        id={id}
+                        url={url}
+                        media={media}
+                        accessibilityLabel={\`View details for \${name}\`}
+                      >
+                        <Text variant="bodyMd" fontWeight="bold" as="h3">
+                          {name}
+                        </Text>
+                        <div>SKU: {sku}</div>
+                        <div>{quantity} available</div>
+                      </ResourceList.Item>
+                    );
+                  }}
+                />
+              </LegacyCard.Section>
+            </LegacyCard>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'two-columns-with-primary-and-secondary-widths': {
+    react: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section>
+          <LegacyCard title="Order details" sectioned>
+            <p>
+              Use to follow a normal section with a secondary section to create
+              a 2/3 + 1/3 layout on detail pages (such as individual product or
+              order pages). Can also be used on any page that needs to structure
+              a lot of content. This layout stacks the columns on small screens.
+            </p>
+          </LegacyCard>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <LegacyCard title="Tags" sectioned>
+            <p>Add tags to your order.</p>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Order details',
+    flex: 2,
+    margin: '0 8 0 0',
+    bodyPadding: 16,
+    html: '<p>Use to follow a normal section with a secondary section to create a 2/3 + 1/3 layout on detail pages (such as individual product or order pages). Can also be used on any page that needs to structure a lot of content. This layout stacks the columns on small screens.</p>'
+  }, {
+    xtype: 'panel',
+    title: 'Tags',
+    flex: 1,
+    bodyPadding: 16,
+    html: '<p>Add tags to your order.</p>'
+  }]
+});`,
+    vanilla: `<div class="layout layout--two-columns">
+  <div class="layout__section layout__section--primary">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Order details</h2>
+        <p>
+          Use to follow a normal section with a secondary section to create
+          a 2/3 + 1/3 layout on detail pages (such as individual product or
+          order pages). Can also be used on any page that needs to structure
+          a lot of content. This layout stacks the columns on small screens.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="layout__section layout__section--one-third">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Tags</h2>
+        <p>Add tags to your order.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface LayoutPrimarySecondaryExampleProps {
+  primaryContent?: React.ReactNode;
+  secondaryContent?: React.ReactNode;
+}
+
+function LayoutPrimarySecondaryExample({
+  primaryContent = (
+    <p>
+      Use to follow a normal section with a secondary section to create
+      a 2/3 + 1/3 layout on detail pages (such as individual product or
+      order pages). Can also be used on any page that needs to structure
+      a lot of content. This layout stacks the columns on small screens.
+    </p>
+  ),
+  secondaryContent = <p>Add tags to your order.</p>
+}: LayoutPrimarySecondaryExampleProps): JSX.Element {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section>
+          <LegacyCard title="Order details" sectioned>
+            {primaryContent}
+          </LegacyCard>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <LegacyCard title="Tags" sectioned>
+            {secondaryContent}
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'three-columns-with-equal-width': {
+    react: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  ResourceList,
+  Thumbnail,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section variant="oneThird">
+          <LegacyCard title="Florida" actions={[{content: 'Manage'}]}>
+            <LegacyCard.Section>
+              <Text tone="subdued" as="span">
+                455 units available
+              </Text>
+            </LegacyCard.Section>
+            <LegacyCard.Section title="Items">
+              <ResourceList
+                resourceName={{singular: 'product', plural: 'products'}}
+                items={[
+                  {
+                    id: '343',
+                    url: '#',
+                    name: 'Black & orange scarf',
+                    sku: '9234194023',
+                    quantity: '254',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+                        alt="Black orange scarf"
+                      />
+                    ),
+                  },
+                  {
+                    id: '258',
+                    url: '#',
+                    name: 'Tucan scarf',
+                    sku: '9234194010',
+                    quantity: '201',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+                        alt="Tucan scarf"
+                      />
+                    ),
+                  },
+                ]}
+                renderItem={(item) => {
+                  const {id, url, name, sku, media, quantity} = item;
+
+                  return (
+                    <ResourceList.Item
+                      id={id}
+                      url={url}
+                      media={media}
+                      accessibilityLabel={\`View details for \${name}\`}
+                    >
+                      <Text variant="bodyMd" fontWeight="bold" as="h3">
+                        {name}
+                      </Text>
+                      <div>SKU: {sku}</div>
+                      <div>{quantity} available</div>
+                    </ResourceList.Item>
+                  );
+                }}
+              />
+            </LegacyCard.Section>
+          </LegacyCard>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <LegacyCard title="Nevada" actions={[{content: 'Manage'}]}>
+            <LegacyCard.Section>
+              <Text tone="subdued" as="span">
+                301 units available
+              </Text>
+            </LegacyCard.Section>
+            <LegacyCard.Section title="Items">
+              <ResourceList
+                resourceName={{singular: 'product', plural: 'products'}}
+                items={[
+                  {
+                    id: '344',
+                    url: '#',
+                    name: 'Black & orange scarf',
+                    sku: '9234194023',
+                    quantity: '100',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+                        alt="Black orange scarf"
+                      />
+                    ),
+                  },
+                  {
+                    id: '259',
+                    url: '#',
+                    name: 'Tucan scarf',
+                    sku: '9234194010',
+                    quantity: '201',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+                        alt="Tucan scarf"
+                      />
+                    ),
+                  },
+                ]}
+                renderItem={(item) => {
+                  const {id, url, name, sku, media, quantity} = item;
+
+                  return (
+                    <ResourceList.Item
+                      id={id}
+                      url={url}
+                      media={media}
+                      accessibilityLabel={\`View details for \${name}\`}
+                    >
+                      <Text variant="bodyMd" fontWeight="bold" as="h3">
+                        {name}
+                      </Text>
+                      <div>SKU: {sku}</div>
+                      <div>{quantity} available</div>
+                    </ResourceList.Item>
+                  );
+                }}
+              />
+            </LegacyCard.Section>
+          </LegacyCard>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <LegacyCard title="Minneapolis" actions={[{content: 'Manage'}]}>
+            <LegacyCard.Section>
+              <Text tone="subdued" as="span">
+                1931 units available
+              </Text>
+            </LegacyCard.Section>
+            <LegacyCard.Section title="Items">
+              <ResourceList
+                resourceName={{singular: 'product', plural: 'products'}}
+                items={[
+                  {
+                    id: '345',
+                    url: '#',
+                    name: 'Black & orange scarf',
+                    sku: '9234194023',
+                    quantity: '1230',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+                        alt="Black orange scarf"
+                      />
+                    ),
+                  },
+                  {
+                    id: '260',
+                    url: '#',
+                    name: 'Tucan scarf',
+                    sku: '9234194010',
+                    quantity: '701',
+                    media: (
+                      <Thumbnail
+                        source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+                        alt="Tucan scarf"
+                      />
+                    ),
+                  },
+                ]}
+                renderItem={(item) => {
+                  const {id, url, name, sku, media, quantity} = item;
+
+                  return (
+                    <ResourceList.Item
+                      id={id}
+                      url={url}
+                      media={media}
+                      accessibilityLabel={\`View details for \${name}\`}
+                    >
+                      <Text variant="bodyMd" fontWeight="bold" as="h3">
+                        {name}
+                      </Text>
+                      <div>SKU: {sku}</div>
+                      <div>{quantity} available</div>
+                    </ResourceList.Item>
+                  );
+                }}
+              />
+            </LegacyCard.Section>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  defaults: {
+    flex: 1,
+    margin: '0 8 0 0'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Florida',
+    tools: [{
+      type: 'gear',
+      tooltip: 'Manage',
+      handler: function() {
+        console.log('Manage Florida');
+      }
+    }],
+    items: [{
+      xtype: 'panel',
+      bodyPadding: 16,
+      html: '<span style="color:#6d7175;">455 units available</span>'
+    }, {
+      xtype: 'grid',
+      title: 'Items',
+      columns: [{
+        text: 'Product',
+        dataIndex: 'name',
+        flex: 1,
+        renderer: function(value, meta, record) {
+          return '<strong>' + value + '</strong><br>SKU: ' + record.get('sku') + '<br>' + record.get('quantity') + ' available';
+        }
+      }],
+      store: {
+        fields: ['id', 'name', 'sku', 'quantity'],
+        data: [
+          {id: '343', name: 'Black & orange scarf', sku: '9234194023', quantity: '254'},
+          {id: '258', name: 'Tucan scarf', sku: '9234194010', quantity: '201'}
+        ]
+      }
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Nevada',
+    tools: [{
+      type: 'gear',
+      tooltip: 'Manage',
+      handler: function() {
+        console.log('Manage Nevada');
+      }
+    }],
+    items: [{
+      xtype: 'panel',
+      bodyPadding: 16,
+      html: '<span style="color:#6d7175;">301 units available</span>'
+    }, {
+      xtype: 'grid',
+      title: 'Items',
+      columns: [{
+        text: 'Product',
+        dataIndex: 'name',
+        flex: 1,
+        renderer: function(value, meta, record) {
+          return '<strong>' + value + '</strong><br>SKU: ' + record.get('sku') + '<br>' + record.get('quantity') + ' available';
+        }
+      }],
+      store: {
+        fields: ['id', 'name', 'sku', 'quantity'],
+        data: [
+          {id: '344', name: 'Black & orange scarf', sku: '9234194023', quantity: '100'},
+          {id: '259', name: 'Tucan scarf', sku: '9234194010', quantity: '201'}
+        ]
+      }
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Minneapolis',
+    margin: '0 0 0 0',
+    tools: [{
+      type: 'gear',
+      tooltip: 'Manage',
+      handler: function() {
+        console.log('Manage Minneapolis');
+      }
+    }],
+    items: [{
+      xtype: 'panel',
+      bodyPadding: 16,
+      html: '<span style="color:#6d7175;">1931 units available</span>'
+    }, {
+      xtype: 'grid',
+      title: 'Items',
+      columns: [{
+        text: 'Product',
+        dataIndex: 'name',
+        flex: 1,
+        renderer: function(value, meta, record) {
+          return '<strong>' + value + '</strong><br>SKU: ' + record.get('sku') + '<br>' + record.get('quantity') + ' available';
+        }
+      }],
+      store: {
+        fields: ['id', 'name', 'sku', 'quantity'],
+        data: [
+          {id: '345', name: 'Black & orange scarf', sku: '9234194023', quantity: '1230'},
+          {id: '260', name: 'Tucan scarf', sku: '9234194010', quantity: '701'}
+        ]
+      }
+    }]
+  }]
+});`,
+    vanilla: `<div class="layout layout--three-columns">
+  <div class="layout__section layout__section--one-third">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Florida</h2>
+        <button class="button button--plain">Manage</button>
+      </div>
+      <div class="card__section">
+        <span class="text-subdued">455 units available</span>
+      </div>
+      <div class="card__section">
+        <h3 class="card__section-title">Items</h3>
+        <div class="resource-list">
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" alt="Black orange scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Black & orange scarf</h4>
+              <div>SKU: 9234194023</div>
+              <div>254 available</div>
+            </div>
+          </div>
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg" alt="Tucan scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Tucan scarf</h4>
+              <div>SKU: 9234194010</div>
+              <div>201 available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="layout__section layout__section--one-third">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Nevada</h2>
+        <button class="button button--plain">Manage</button>
+      </div>
+      <div class="card__section">
+        <span class="text-subdued">301 units available</span>
+      </div>
+      <div class="card__section">
+        <h3 class="card__section-title">Items</h3>
+        <div class="resource-list">
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" alt="Black orange scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Black & orange scarf</h4>
+              <div>SKU: 9234194023</div>
+              <div>100 available</div>
+            </div>
+          </div>
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg" alt="Tucan scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Tucan scarf</h4>
+              <div>SKU: 9234194010</div>
+              <div>201 available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="layout__section layout__section--one-third">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Minneapolis</h2>
+        <button class="button button--plain">Manage</button>
+      </div>
+      <div class="card__section">
+        <span class="text-subdued">1931 units available</span>
+      </div>
+      <div class="card__section">
+        <h3 class="card__section-title">Items</h3>
+        <div class="resource-list">
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" alt="Black orange scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Black & orange scarf</h4>
+              <div>SKU: 9234194023</div>
+              <div>1230 available</div>
+            </div>
+          </div>
+          <div class="resource-list__item">
+            <div class="resource-list__item-media">
+              <img src="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg" alt="Tucan scarf" class="thumbnail">
+            </div>
+            <div class="resource-list__item-content">
+              <h4 class="text-strong">Tucan scarf</h4>
+              <div>SKU: 9234194010</div>
+              <div>701 available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    console.log(\`\${e.target.textContent.trim()} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  ResourceList,
+  Thumbnail,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+interface Product {
+  id: string;
+  url: string;
+  name: string;
+  sku: string;
+  quantity: string;
+  media: React.ReactNode;
+}
+
+interface LocationData {
+  name: string;
+  totalUnits: number;
+  products: Product[];
+}
+
+interface LayoutThreeColumnsExampleProps {
+  locations?: LocationData[];
+  onManage?: (location: string) => void;
+}
+
+function LayoutThreeColumnsExample({
+  locations = [
+    {
+      name: 'Florida',
+      totalUnits: 455,
+      products: [
+        {
+          id: '343',
+          url: '#',
+          name: 'Black & orange scarf',
+          sku: '9234194023',
+          quantity: '254',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+              alt="Black orange scarf"
+            />
+          ),
+        },
+        {
+          id: '258',
+          url: '#',
+          name: 'Tucan scarf',
+          sku: '9234194010',
+          quantity: '201',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+              alt="Tucan scarf"
+            />
+          ),
+        },
+      ]
+    },
+    {
+      name: 'Nevada',
+      totalUnits: 301,
+      products: [
+        {
+          id: '344',
+          url: '#',
+          name: 'Black & orange scarf',
+          sku: '9234194023',
+          quantity: '100',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+              alt="Black orange scarf"
+            />
+          ),
+        },
+        {
+          id: '259',
+          url: '#',
+          name: 'Tucan scarf',
+          sku: '9234194010',
+          quantity: '201',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+              alt="Tucan scarf"
+            />
+          ),
+        },
+      ]
+    },
+    {
+      name: 'Minneapolis',
+      totalUnits: 1931,
+      products: [
+        {
+          id: '345',
+          url: '#',
+          name: 'Black & orange scarf',
+          sku: '9234194023',
+          quantity: '1230',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+              alt="Black orange scarf"
+            />
+          ),
+        },
+        {
+          id: '260',
+          url: '#',
+          name: 'Tucan scarf',
+          sku: '9234194010',
+          quantity: '701',
+          media: (
+            <Thumbnail
+              source="https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg"
+              alt="Tucan scarf"
+            />
+          ),
+        },
+      ]
+    }
+  ],
+  onManage
+}: LayoutThreeColumnsExampleProps): JSX.Element {
+  return (
+    <Page fullWidth>
+      <Layout>
+        {locations.map((location) => (
+          <Layout.Section key={location.name} variant="oneThird">
+            <LegacyCard 
+              title={location.name} 
+              actions={[{
+                content: 'Manage',
+                onAction: () => onManage?.(location.name)
+              }]}
+            >
+              <LegacyCard.Section>
+                <Text tone="subdued" as="span">
+                  {location.totalUnits} units available
+                </Text>
+              </LegacyCard.Section>
+              <LegacyCard.Section title="Items">
+                <ResourceList
+                  resourceName={{singular: 'product', plural: 'products'}}
+                  items={location.products}
+                  renderItem={(item) => {
+                    const {id, url, name, sku, media, quantity} = item;
+
+                    return (
+                      <ResourceList.Item
+                        id={id}
+                        url={url}
+                        media={media}
+                        accessibilityLabel={\`View details for \${name}\`}
+                      >
+                        <Text variant="bodyMd" fontWeight="bold" as="h3">
+                          {name}
+                        </Text>
+                        <div>SKU: {sku}</div>
+                        <div>{quantity} available</div>
+                      </ResourceList.Item>
+                    );
+                  }}
+                />
+              </LegacyCard.Section>
+            </LegacyCard>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'annotated': {
+    react: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  FormLayout,
+  TextField,
+} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.AnnotatedSection
+          id="storeDetails"
+          title="Store details"
+          description="Shopify and your customers will use this information to contact you."
+        >
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                onChange={() => {}}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                onChange={() => {}}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.AnnotatedSection>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'panel',
+    flex: 1,
+    border: false,
+    bodyPadding: 20,
+    html: '<h2 id="storeDetails">Store details</h2><p style="color:#6d7175;">Shopify and your customers will use this information to contact you.</p>'
+  }, {
+    xtype: 'panel',
+    flex: 2,
+    margin: '0 0 0 16',
+    items: [{
+      xtype: 'form',
+      bodyPadding: 16,
+      defaults: {
+        anchor: '100%',
+        labelWidth: 100,
+        margin: '0 0 16 0'
+      },
+      items: [{
+        xtype: 'textfield',
+        fieldLabel: 'Store name'
+      }, {
+        xtype: 'textfield',
+        fieldLabel: 'Account email',
+        vtype: 'email'
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<div class="layout layout--annotated">
+  <div class="layout__annotation">
+    <h2 id="storeDetails" class="layout__annotation-title">Store details</h2>
+    <p class="layout__annotation-description">
+      Shopify and your customers will use this information to contact you.
+    </p>
+  </div>
+  <div class="layout__section">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <form class="form-layout">
+          <div class="form-layout__item">
+            <label for="store-name" class="form-label">Store name</label>
+            <input type="text" id="store-name" class="text-field" autocomplete="off">
+          </div>
+          <div class="form-layout__item">
+            <label for="account-email" class="form-label">Account email</label>
+            <input type="email" id="account-email" class="text-field" autocomplete="email">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.text-field').forEach(field => {
+  field.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  FormLayout,
+  TextField,
+} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface StoreDetails {
+  storeName: string;
+  accountEmail: string;
+}
+
+interface LayoutAnnotatedExampleProps {
+  initialStoreDetails?: StoreDetails;
+  onDetailsChange?: (details: StoreDetails) => void;
+}
+
+function LayoutAnnotatedExample({
+  initialStoreDetails = {
+    storeName: '',
+    accountEmail: ''
+  },
+  onDetailsChange
+}: LayoutAnnotatedExampleProps): JSX.Element {
+  const [storeDetails, setStoreDetails] = useState<StoreDetails>(initialStoreDetails);
+
+  const handleStoreNameChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, storeName: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  const handleAccountEmailChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, accountEmail: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.AnnotatedSection
+          id="storeDetails"
+          title="Store details"
+          description="Shopify and your customers will use this information to contact you."
+        >
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                value={storeDetails.storeName}
+                onChange={handleStoreNameChange}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                value={storeDetails.accountEmail}
+                onChange={handleAccountEmailChange}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.AnnotatedSection>
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'annotated-with-sections': {
+    react: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  FormLayout,
+  TextField,
+  TextContainer,
+  Text,
+} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section variant="oneThird">
+          <div style={{marginTop: 'var(--p-space-500)'}}>
+            <TextContainer>
+              <Text id="storeDetails" variant="headingMd" as="h2">
+                Store details
+              </Text>
+              <Text tone="subdued" as="p">
+                Shopify and your customers will use this information to contact
+                you.
+              </Text>
+            </TextContainer>
+          </div>
+        </Layout.Section>
+        <Layout.Section>
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                onChange={() => {}}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                onChange={() => {}}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'panel',
+    flex: 1,
+    border: false,
+    bodyPadding: '20 20 20 0',
+    html: '<div style="margin-top:20px;"><h2 id="storeDetails">Store details</h2><p style="color:#6d7175;">Shopify and your customers will use this information to contact you.</p></div>'
+  }, {
+    xtype: 'panel',
+    flex: 2,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 16,
+      defaults: {
+        anchor: '100%',
+        labelWidth: 100,
+        margin: '0 0 16 0'
+      },
+      items: [{
+        xtype: 'textfield',
+        fieldLabel: 'Store name'
+      }, {
+        xtype: 'textfield',
+        fieldLabel: 'Account email',
+        vtype: 'email'
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<div class="layout">
+  <div class="layout__section layout__section--one-third">
+    <div class="text-container" style="margin-top: var(--p-space-500);">
+      <h2 id="storeDetails" class="text-heading-md">Store details</h2>
+      <p class="text-subdued">
+        Shopify and your customers will use this information to contact
+        you.
+      </p>
+    </div>
+  </div>
+  <div class="layout__section">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <form class="form-layout">
+          <div class="form-layout__item">
+            <label for="store-name" class="form-label">Store name</label>
+            <input type="text" id="store-name" class="text-field" autocomplete="off">
+          </div>
+          <div class="form-layout__item">
+            <label for="account-email" class="form-label">Account email</label>
+            <input type="email" id="account-email" class="text-field" autocomplete="email">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.text-field').forEach(field => {
+  field.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {
+  Page,
+  Layout,
+  LegacyCard,
+  FormLayout,
+  TextField,
+  TextContainer,
+  Text,
+} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface StoreDetails {
+  storeName: string;
+  accountEmail: string;
+}
+
+interface LayoutAnnotatedWithSectionsExampleProps {
+  initialStoreDetails?: StoreDetails;
+  onDetailsChange?: (details: StoreDetails) => void;
+}
+
+function LayoutAnnotatedWithSectionsExample({
+  initialStoreDetails = {
+    storeName: '',
+    accountEmail: ''
+  },
+  onDetailsChange
+}: LayoutAnnotatedWithSectionsExampleProps): JSX.Element {
+  const [storeDetails, setStoreDetails] = useState<StoreDetails>(initialStoreDetails);
+
+  const handleStoreNameChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, storeName: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  const handleAccountEmailChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, accountEmail: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section variant="oneThird">
+          <div style={{marginTop: 'var(--p-space-500)'}}>
+            <TextContainer>
+              <Text id="storeDetails" variant="headingMd" as="h2">
+                Store details
+              </Text>
+              <Text tone="subdued" as="p">
+                Shopify and your customers will use this information to contact
+                you.
+              </Text>
+            </TextContainer>
+          </div>
+        </Layout.Section>
+        <Layout.Section>
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                value={storeDetails.storeName}
+                onChange={handleStoreNameChange}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                value={storeDetails.accountEmail}
+                onChange={handleAccountEmailChange}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`
+  },
+  'annotated-with-banner-at-the-top': {
+    react: `import {
+  Page,
+  Layout,
+  Banner,
+  LegacyCard,
+  FormLayout,
+  TextField,
+} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section>
+          <Banner title="Order archived" onDismiss={() => {}}>
+            <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+          </Banner>
+        </Layout.Section>
+        <Layout.AnnotatedSection
+          id="storeDetails"
+          title="Store details"
+          description="Shopify and your customers will use this information to contact you."
+        >
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                onChange={() => {}}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                onChange={() => {}}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.AnnotatedSection>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'panel',
+    ui: 'warning',
+    bodyPadding: 16,
+    closable: true,
+    title: 'Order archived',
+    html: '<p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>',
+    margin: '0 0 16 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    flex: 1,
+    items: [{
+      xtype: 'panel',
+      flex: 1,
+      border: false,
+      bodyPadding: 20,
+      html: '<h2 id="storeDetails">Store details</h2><p style="color:#6d7175;">Shopify and your customers will use this information to contact you.</p>'
+    }, {
+      xtype: 'panel',
+      flex: 2,
+      margin: '0 0 0 16',
+      items: [{
+        xtype: 'form',
+        bodyPadding: 16,
+        defaults: {
+          anchor: '100%',
+          labelWidth: 100,
+          margin: '0 0 16 0'
+        },
+        items: [{
+          xtype: 'textfield',
+          fieldLabel: 'Store name'
+        }, {
+          xtype: 'textfield',
+          fieldLabel: 'Account email',
+          vtype: 'email'
+        }]
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<div class="layout">
+  <div class="layout__section">
+    <div class="banner banner--dismissible">
+      <div class="banner__content">
+        <h2 class="banner__title">Order archived</h2>
+        <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+      </div>
+      <button class="banner__dismiss" aria-label="Dismiss banner">
+        <svg viewBox="0 0 20 20" class="icon">
+          <path d="M11.414 10l6.293-6.293a1 1 0 10-1.414-1.414L10 8.586 3.707 2.293a1 1 0 00-1.414 1.414L8.586 10l-6.293 6.293a1 1 0 101.414 1.414L10 11.414l6.293 6.293a1 1 0 001.414-1.414L11.414 10z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="layout__annotated-section">
+    <div class="layout__annotation">
+      <h2 id="storeDetails" class="layout__annotation-title">Store details</h2>
+      <p class="layout__annotation-description">
+        Shopify and your customers will use this information to contact you.
+      </p>
+    </div>
+    <div class="layout__section">
+      <div class="card">
+        <div class="card__body card__body--section">
+          <form class="form-layout">
+            <div class="form-layout__item">
+              <label for="store-name" class="form-label">Store name</label>
+              <input type="text" id="store-name" class="text-field" autocomplete="off">
+            </div>
+            <div class="form-layout__item">
+              <label for="account-email" class="form-label">Account email</label>
+              <input type="email" id="account-email" class="text-field" autocomplete="email">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelector('.banner__dismiss').addEventListener('click', (e) => {
+  e.target.closest('.banner').remove();
+  console.log('Banner dismissed');
+});
+
+document.querySelectorAll('.text-field').forEach(field => {
+  field.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {
+  Page,
+  Layout,
+  Banner,
+  LegacyCard,
+  FormLayout,
+  TextField,
+} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface StoreDetails {
+  storeName: string;
+  accountEmail: string;
+}
+
+interface LayoutWithBannerExampleProps {
+  initialStoreDetails?: StoreDetails;
+  onDetailsChange?: (details: StoreDetails) => void;
+  bannerDismissed?: boolean;
+  onBannerDismiss?: () => void;
+}
+
+function LayoutWithBannerExample({
+  initialStoreDetails = {
+    storeName: '',
+    accountEmail: ''
+  },
+  onDetailsChange,
+  bannerDismissed = false,
+  onBannerDismiss
+}: LayoutWithBannerExampleProps): JSX.Element {
+  const [storeDetails, setStoreDetails] = useState<StoreDetails>(initialStoreDetails);
+  const [showBanner, setShowBanner] = useState(!bannerDismissed);
+
+  const handleStoreNameChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, storeName: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  const handleAccountEmailChange = useCallback((value: string) => {
+    const newDetails = {...storeDetails, accountEmail: value};
+    setStoreDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [storeDetails, onDetailsChange]);
+
+  const handleBannerDismiss = useCallback(() => {
+    setShowBanner(false);
+    onBannerDismiss?.();
+  }, [onBannerDismiss]);
+
+  return (
+    <Page fullWidth>
+      <Layout>
+        {showBanner && (
+          <Layout.Section>
+            <Banner title="Order archived" onDismiss={handleBannerDismiss}>
+              <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+            </Banner>
+          </Layout.Section>
+        )}
+        <Layout.AnnotatedSection
+          id="storeDetails"
+          title="Store details"
+          description="Shopify and your customers will use this information to contact you."
+        >
+          <LegacyCard sectioned>
+            <FormLayout>
+              <TextField
+                label="Store name"
+                value={storeDetails.storeName}
+                onChange={handleStoreNameChange}
+                autoComplete="off"
+              />
+              <TextField
+                type="email"
+                label="Account email"
+                value={storeDetails.accountEmail}
+                onChange={handleAccountEmailChange}
+                autoComplete="email"
+              />
+            </FormLayout>
+          </LegacyCard>
+        </Layout.AnnotatedSection>
       </Layout>
     </Page>
   );
@@ -9141,67 +15829,36 @@ function Example() {
     vtype: 'email'
   }]
 });`,
-    vanilla: `// HTML
-<form class="form-layout">
-  <div class="form-layout__item">
+    vanilla: `<!-- HTML Structure -->
+<form class="polaris-form-layout">
+  <div class="polaris-form-layout__item">
     <label for="store-name" class="label">Store name</label>
     <input 
       type="text" 
       id="store-name" 
-      class="text-field"
+      class="polaris-text-field"
       autocomplete="off"
     />
   </div>
-  <div class="form-layout__item">
+  <div class="polaris-form-layout__item">
     <label for="account-email" class="label">Account email</label>
     <input 
       type="email" 
       id="account-email" 
-      class="text-field"
+      class="polaris-text-field"
       autocomplete="email"
     />
   </div>
 </form>
 
-// CSS
-.form-layout {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-400);
-}
 
-.form-layout__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-100);
-}
-
-.label {
-  font-size: var(--p-font-size-300);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}
-
-.text-field {
-  padding: var(--p-space-200) var(--p-space-300);
-  border: 1px solid var(--p-color-border);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-}
-
-.text-field:focus {
-  outline: none;
-  border-color: var(--p-color-border-emphasis);
-  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
-}
-
-// JavaScript
-const form = document.querySelector('.form-layout');
+<script>
+const form = document.querySelector('.polaris-form-layout');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   console.log('Form submitted');
-});`,
+});
+</script>`,
     typescript: `import {FormLayout, TextField} from '@shopify/polaris';
 import React, {useState, useCallback} from 'react';
 
@@ -9244,6 +15901,715 @@ function FormLayoutExample({ onSubmit }: FormLayoutExampleProps): JSX.Element {
         value={formData.accountEmail}
         onChange={handleEmailChange}
         autoComplete="email"
+      />
+    </FormLayout>
+  );
+}`
+  },
+  'field-group': {
+    react: `import {FormLayout, TextField} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <FormLayout>
+      <FormLayout.Group>
+        <TextField
+          type="number"
+          label="Minimum order"
+          onChange={() => {}}
+          autoComplete="off"
+        />
+        <TextField
+          type="number"
+          label="Maximum order"
+          onChange={() => {}}
+          autoComplete="off"
+        />
+      </FormLayout.Group>
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'fieldcontainer',
+    layout: 'hbox',
+    defaults: {
+      flex: 1,
+      margin: '0 8 0 0'
+    },
+    items: [{
+      xtype: 'numberfield',
+      fieldLabel: 'Minimum order',
+      labelWidth: 100
+    }, {
+      xtype: 'numberfield',
+      fieldLabel: 'Maximum order',
+      labelWidth: 100,
+      margin: '0 0 0 0'
+    }]
+  }]
+});`,
+    vanilla: `<form class="form-layout">
+  <div class="form-layout__group">
+    <div class="form-layout__item">
+      <label for="minimum-order" class="label">Minimum order</label>
+      <input 
+        type="number" 
+        id="minimum-order" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-layout__item">
+      <label for="maximum-order" class="label">Maximum order</label>
+      <input 
+        type="number" 
+        id="maximum-order" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+</form>
+
+<script>
+document.querySelectorAll('.text-field').forEach(input => {
+  input.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {FormLayout, TextField} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface OrderLimits {
+  minimum: string;
+  maximum: string;
+}
+
+interface FormLayoutFieldGroupExampleProps {
+  initialLimits?: OrderLimits;
+  onLimitsChange?: (limits: OrderLimits) => void;
+}
+
+function FormLayoutFieldGroupExample({
+  initialLimits = { minimum: '', maximum: '' },
+  onLimitsChange
+}: FormLayoutFieldGroupExampleProps): JSX.Element {
+  const [limits, setLimits] = useState<OrderLimits>(initialLimits);
+
+  const handleMinimumChange = useCallback((value: string) => {
+    const newLimits = {...limits, minimum: value};
+    setLimits(newLimits);
+    onLimitsChange?.(newLimits);
+  }, [limits, onLimitsChange]);
+
+  const handleMaximumChange = useCallback((value: string) => {
+    const newLimits = {...limits, maximum: value};
+    setLimits(newLimits);
+    onLimitsChange?.(newLimits);
+  }, [limits, onLimitsChange]);
+
+  return (
+    <FormLayout>
+      <FormLayout.Group>
+        <TextField
+          type="number"
+          label="Minimum order"
+          value={limits.minimum}
+          onChange={handleMinimumChange}
+          autoComplete="off"
+        />
+        <TextField
+          type="number"
+          label="Maximum order"
+          value={limits.maximum}
+          onChange={handleMaximumChange}
+          autoComplete="off"
+        />
+      </FormLayout.Group>
+    </FormLayout>
+  );
+}`
+  },
+  'condensed-field-group': {
+    react: `import {FormLayout, TextField} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <FormLayout>
+      <FormLayout.Group condensed>
+        <TextField label="Length" onChange={() => {}} autoComplete="off" />
+        <TextField label="Width" onChange={() => {}} autoComplete="off" />
+        <TextField label="Height" onChange={() => {}} autoComplete="off" />
+        <TextField label="Unit" onChange={() => {}} autoComplete="off" />
+      </FormLayout.Group>
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'fieldcontainer',
+    layout: {
+      type: 'hbox',
+      pack: 'start'
+    },
+    defaults: {
+      flex: 1,
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Length',
+      labelWidth: 50
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Width',
+      labelWidth: 50
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Height',
+      labelWidth: 50
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Unit',
+      labelWidth: 40,
+      margin: '0 0 0 0'
+    }]
+  }]
+});`,
+    vanilla: `<form class="form-layout">
+  <div class="form-layout__group form-layout__group--condensed">
+    <div class="form-layout__item">
+      <label for="length" class="label">Length</label>
+      <input 
+        type="text" 
+        id="length" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-layout__item">
+      <label for="width" class="label">Width</label>
+      <input 
+        type="text" 
+        id="width" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-layout__item">
+      <label for="height" class="label">Height</label>
+      <input 
+        type="text" 
+        id="height" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-layout__item">
+      <label for="unit" class="label">Unit</label>
+      <input 
+        type="text" 
+        id="unit" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+</form>
+
+<script>
+document.querySelectorAll('.text-field').forEach(input => {
+  input.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {FormLayout, TextField} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface Dimensions {
+  length: string;
+  width: string;
+  height: string;
+  unit: string;
+}
+
+interface FormLayoutCondensedExampleProps {
+  initialDimensions?: Dimensions;
+  onDimensionsChange?: (dimensions: Dimensions) => void;
+}
+
+function FormLayoutCondensedExample({
+  initialDimensions = { length: '', width: '', height: '', unit: 'cm' },
+  onDimensionsChange
+}: FormLayoutCondensedExampleProps): JSX.Element {
+  const [dimensions, setDimensions] = useState<Dimensions>(initialDimensions);
+
+  const handleChange = useCallback((field: keyof Dimensions) => (value: string) => {
+    const newDimensions = {...dimensions, [field]: value};
+    setDimensions(newDimensions);
+    onDimensionsChange?.(newDimensions);
+  }, [dimensions, onDimensionsChange]);
+
+  return (
+    <FormLayout>
+      <FormLayout.Group condensed>
+        <TextField 
+          label="Length" 
+          value={dimensions.length}
+          onChange={handleChange('length')} 
+          autoComplete="off" 
+        />
+        <TextField 
+          label="Width" 
+          value={dimensions.width}
+          onChange={handleChange('width')} 
+          autoComplete="off" 
+        />
+        <TextField 
+          label="Height" 
+          value={dimensions.height}
+          onChange={handleChange('height')} 
+          autoComplete="off" 
+        />
+        <TextField 
+          label="Unit" 
+          value={dimensions.unit}
+          onChange={handleChange('unit')} 
+          autoComplete="off" 
+        />
+      </FormLayout.Group>
+    </FormLayout>
+  );
+}`
+  },
+  'with-help-text': {
+    react: `import {FormLayout, TextField, Select} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  const options = [
+    {label: 'Today', value: 'today'},
+    {label: 'Yesterday', value: 'yesterday'},
+    {label: 'Last 7 days', value: 'lastWeek'},
+  ];
+
+  return (
+    <FormLayout>
+      <TextField
+        label="Store name"
+        onChange={() => {}}
+        autoComplete="off"
+        helpText="This will be displayed on your storefront."
+      />
+      <TextField
+        type="email"
+        label="Account email"
+        onChange={() => {}}
+        autoComplete="email"
+        helpText="We'll use this email address to inform you on future changes to Polaris."
+      />
+      <Select
+        label="Shipping options"
+        options={options}
+        onChange={() => {}}
+        helpText="Select when orders should be fulfilled."
+      />
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0',
+    labelWidth: 120
+  },
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Store name',
+    afterLabelTextTpl: '<div class="help-text">This will be displayed on your storefront.</div>'
+  }, {
+    xtype: 'textfield',
+    fieldLabel: 'Account email',
+    vtype: 'email',
+    afterLabelTextTpl: '<div class="help-text">We\\'ll use this email address to inform you on future changes to Polaris.</div>'
+  }, {
+    xtype: 'combobox',
+    fieldLabel: 'Shipping options',
+    store: [
+      ['today', 'Today'],
+      ['yesterday', 'Yesterday'],
+      ['lastWeek', 'Last 7 days']
+    ],
+    queryMode: 'local',
+    afterLabelTextTpl: '<div class="help-text">Select when orders should be fulfilled.</div>'
+  }]
+});`,
+    vanilla: `<form class="form-layout">
+  <div class="form-layout__item">
+    <label for="store-name" class="label">Store name</label>
+    <input 
+      type="text" 
+      id="store-name" 
+      class="text-field"
+      autocomplete="off"
+    />
+    <div class="help-text">This will be displayed on your storefront.</div>
+  </div>
+  <div class="form-layout__item">
+    <label for="account-email" class="label">Account email</label>
+    <input 
+      type="email" 
+      id="account-email" 
+      class="text-field"
+      autocomplete="email"
+    />
+    <div class="help-text">We'll use this email address to inform you on future changes to Polaris.</div>
+  </div>
+  <div class="form-layout__item">
+    <label for="shipping-options" class="label">Shipping options</label>
+    <select id="shipping-options" class="select-field">
+      <option value="today">Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="lastWeek">Last 7 days</option>
+    </select>
+    <div class="help-text">Select when orders should be fulfilled.</div>
+  </div>
+</form>
+
+<script>
+document.querySelectorAll('.text-field, .select-field').forEach(input => {
+  input.addEventListener('change', (e) => {
+    console.log(\`\${e.target.id} changed: \${e.target.value}\`);
+  });
+});
+</script>`,
+    typescript: `import {FormLayout, TextField, Select} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface FormData {
+  storeName: string;
+  accountEmail: string;
+  shippingOption: string;
+}
+
+interface FormLayoutWithHelpTextExampleProps {
+  initialData?: FormData;
+  onDataChange?: (data: FormData) => void;
+}
+
+function FormLayoutWithHelpTextExample({
+  initialData = { storeName: '', accountEmail: '', shippingOption: 'today' },
+  onDataChange
+}: FormLayoutWithHelpTextExampleProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>(initialData);
+
+  const options = [
+    {label: 'Today', value: 'today'},
+    {label: 'Yesterday', value: 'yesterday'},
+    {label: 'Last 7 days', value: 'lastWeek'},
+  ];
+
+  const handleChange = useCallback((field: keyof FormData) => (value: string) => {
+    const newData = {...formData, [field]: value};
+    setFormData(newData);
+    onDataChange?.(newData);
+  }, [formData, onDataChange]);
+
+  return (
+    <FormLayout>
+      <TextField
+        label="Store name"
+        value={formData.storeName}
+        onChange={handleChange('storeName')}
+        autoComplete="off"
+        helpText="This will be displayed on your storefront."
+      />
+      <TextField
+        type="email"
+        label="Account email"
+        value={formData.accountEmail}
+        onChange={handleChange('accountEmail')}
+        autoComplete="email"
+        helpText="We'll use this email address to inform you on future changes to Polaris."
+      />
+      <Select
+        label="Shipping options"
+        options={options}
+        value={formData.shippingOption}
+        onChange={handleChange('shippingOption')}
+        helpText="Select when orders should be fulfilled."
+      />
+    </FormLayout>
+  );
+}`
+  },
+  'sectioned': {
+    react: `import {FormLayout, TextField, Select, Checkbox} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <FormLayout>
+      <FormLayout.Group title="Store details">
+        <TextField
+          label="Store name"
+          onChange={() => {}}
+          autoComplete="off"
+        />
+        <TextField
+          type="email"
+          label="Account email"
+          onChange={() => {}}
+          autoComplete="email"
+        />
+      </FormLayout.Group>
+      <FormLayout.Group title="Store address">
+        <TextField
+          label="Address"
+          onChange={() => {}}
+          autoComplete="address-line1"
+        />
+        <FormLayout.Group condensed>
+          <TextField
+            label="City"
+            onChange={() => {}}
+            autoComplete="address-level2"
+          />
+          <TextField
+            label="Postal code"
+            onChange={() => {}}
+            autoComplete="postal-code"
+          />
+        </FormLayout.Group>
+      </FormLayout.Group>
+      <Checkbox
+        label="Save this address"
+        checked={false}
+        onChange={() => {}}
+      />
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'fieldset',
+    title: 'Store details',
+    layout: 'anchor',
+    defaults: {
+      anchor: '100%',
+      margin: '0 0 16 0'
+    },
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Store name'
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Account email',
+      vtype: 'email'
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Store address',
+    layout: 'anchor',
+    margin: '16 0 0 0',
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Address',
+      anchor: '100%',
+      margin: '0 0 16 0'
+    }, {
+      xtype: 'fieldcontainer',
+      layout: 'hbox',
+      defaults: {
+        flex: 1,
+        margin: '0 8 0 0'
+      },
+      items: [{
+        xtype: 'textfield',
+        fieldLabel: 'City'
+      }, {
+        xtype: 'textfield',
+        fieldLabel: 'Postal code',
+        margin: '0 0 0 0'
+      }]
+    }]
+  }, {
+    xtype: 'checkbox',
+    boxLabel: 'Save this address',
+    margin: '16 0 0 0'
+  }]
+});`,
+    vanilla: `<form class="form-layout">
+  <fieldset class="form-layout__group">
+    <legend class="form-layout__group-title">Store details</legend>
+    <div class="form-layout__item">
+      <label for="store-name" class="label">Store name</label>
+      <input 
+        type="text" 
+        id="store-name" 
+        class="text-field"
+        autocomplete="off"
+      />
+    </div>
+    <div class="form-layout__item">
+      <label for="account-email" class="label">Account email</label>
+      <input 
+        type="email" 
+        id="account-email" 
+        class="text-field"
+        autocomplete="email"
+      />
+    </div>
+  </fieldset>
+  
+  <fieldset class="form-layout__group">
+    <legend class="form-layout__group-title">Store address</legend>
+    <div class="form-layout__item">
+      <label for="address" class="label">Address</label>
+      <input 
+        type="text" 
+        id="address" 
+        class="text-field"
+        autocomplete="address-line1"
+      />
+    </div>
+    <div class="form-layout__group form-layout__group--condensed">
+      <div class="form-layout__item">
+        <label for="city" class="label">City</label>
+        <input 
+          type="text" 
+          id="city" 
+          class="text-field"
+          autocomplete="address-level2"
+        />
+      </div>
+      <div class="form-layout__item">
+        <label for="postal-code" class="label">Postal code</label>
+        <input 
+          type="text" 
+          id="postal-code" 
+          class="text-field"
+          autocomplete="postal-code"
+        />
+      </div>
+    </div>
+  </fieldset>
+  
+  <div class="form-layout__item">
+    <label class="checkbox-label">
+      <input type="checkbox" class="checkbox" />
+      <span>Save this address</span>
+    </label>
+  </div>
+</form>
+
+<script>
+document.querySelectorAll('.text-field, .checkbox').forEach(input => {
+  input.addEventListener('change', (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    console.log(\`\${e.target.id || 'checkbox'} changed: \${value}\`);
+  });
+});
+</script>`,
+    typescript: `import {FormLayout, TextField, Select, Checkbox} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface StoreDetails {
+  storeName: string;
+  accountEmail: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  saveAddress: boolean;
+}
+
+interface FormLayoutSectionedExampleProps {
+  initialDetails?: StoreDetails;
+  onDetailsChange?: (details: StoreDetails) => void;
+}
+
+function FormLayoutSectionedExample({
+  initialDetails = {
+    storeName: '',
+    accountEmail: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    saveAddress: false
+  },
+  onDetailsChange
+}: FormLayoutSectionedExampleProps): JSX.Element {
+  const [details, setDetails] = useState<StoreDetails>(initialDetails);
+
+  const handleChange = useCallback((field: keyof StoreDetails) => (value: string | boolean) => {
+    const newDetails = {...details, [field]: value};
+    setDetails(newDetails);
+    onDetailsChange?.(newDetails);
+  }, [details, onDetailsChange]);
+
+  return (
+    <FormLayout>
+      <FormLayout.Group title="Store details">
+        <TextField
+          label="Store name"
+          value={details.storeName}
+          onChange={handleChange('storeName')}
+          autoComplete="off"
+        />
+        <TextField
+          type="email"
+          label="Account email"
+          value={details.accountEmail}
+          onChange={handleChange('accountEmail')}
+          autoComplete="email"
+        />
+      </FormLayout.Group>
+      <FormLayout.Group title="Store address">
+        <TextField
+          label="Address"
+          value={details.address}
+          onChange={handleChange('address')}
+          autoComplete="address-line1"
+        />
+        <FormLayout.Group condensed>
+          <TextField
+            label="City"
+            value={details.city}
+            onChange={handleChange('city')}
+            autoComplete="address-level2"
+          />
+          <TextField
+            label="Postal code"
+            value={details.postalCode}
+            onChange={handleChange('postalCode')}
+            autoComplete="postal-code"
+          />
+        </FormLayout.Group>
+      </FormLayout.Group>
+      <Checkbox
+        label="Save this address"
+        checked={details.saveAddress}
+        onChange={handleChange('saveAddress')}
       />
     </FormLayout>
   );
@@ -9317,11 +16683,11 @@ function TabsDefaultExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="tabs" role="tablist">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-tabs" role="tablist">
   <button 
     role="tab" 
-    class="tab tab--selected" 
+    class="polaris-tab polaris-tab--selected" 
     aria-selected="true"
     aria-controls="panel-0"
     id="tab-0"
@@ -9330,7 +16696,7 @@ function TabsDefaultExample() {
   </button>
   <button 
     role="tab" 
-    class="tab" 
+    class="polaris-tab" 
     aria-selected="false"
     aria-controls="panel-1"
     id="tab-1"
@@ -9339,7 +16705,7 @@ function TabsDefaultExample() {
   </button>
   <button 
     role="tab" 
-    class="tab" 
+    class="polaris-tab" 
     aria-selected="false"
     aria-controls="panel-2"
     id="tab-2"
@@ -9348,7 +16714,7 @@ function TabsDefaultExample() {
   </button>
   <button 
     role="tab" 
-    class="tab" 
+    class="polaris-tab" 
     aria-selected="false"
     aria-controls="panel-3"
     id="tab-3"
@@ -9356,15 +16722,15 @@ function TabsDefaultExample() {
     Prospects
   </button>
 </div>
-<div class="tab-panels">
+<div class="polaris-tab-panels">
   <div 
     role="tabpanel" 
     id="panel-0" 
     aria-labelledby="tab-0"
-    class="tab-panel tab-panel--active"
+    class="polaris-tab-panel polaris-tab-panel--active"
   >
-    <div class="card-section">
-      <h3 class="card-section__title">All</h3>
+    <div class="polaris-card-section">
+      <h3 class="polaris-card-section__title">All</h3>
       <p>Tab 0 selected</p>
     </div>
   </div>
@@ -9372,11 +16738,11 @@ function TabsDefaultExample() {
     role="tabpanel" 
     id="panel-1" 
     aria-labelledby="tab-1"
-    class="tab-panel"
+    class="polaris-tab-panel"
     hidden
   >
-    <div class="card-section">
-      <h3 class="card-section__title">Accepts marketing</h3>
+    <div class="polaris-card-section">
+      <h3 class="polaris-card-section__title">Accepts marketing</h3>
       <p>Tab 1 selected</p>
     </div>
   </div>
@@ -9384,11 +16750,11 @@ function TabsDefaultExample() {
     role="tabpanel" 
     id="panel-2" 
     aria-labelledby="tab-2"
-    class="tab-panel"
+    class="polaris-tab-panel"
     hidden
   >
-    <div class="card-section">
-      <h3 class="card-section__title">Repeat customers</h3>
+    <div class="polaris-card-section">
+      <h3 class="polaris-card-section__title">Repeat customers</h3>
       <p>Tab 2 selected</p>
     </div>
   </div>
@@ -9396,90 +16762,43 @@ function TabsDefaultExample() {
     role="tabpanel" 
     id="panel-3" 
     aria-labelledby="tab-3"
-    class="tab-panel"
+    class="polaris-tab-panel"
     hidden
   >
-    <div class="card-section">
-      <h3 class="card-section__title">Prospects</h3>
+    <div class="polaris-card-section">
+      <h3 class="polaris-card-section__title">Prospects</h3>
       <p>Tab 3 selected</p>
     </div>
   </div>
 </div>
 
-// CSS
-.tabs {
-  display: flex;
-  border-bottom: 1px solid var(--p-color-border);
-  background: var(--p-color-bg-surface);
-}
-
-.tab {
-  padding: var(--p-space-300) var(--p-space-400);
-  border: none;
-  background: none;
-  cursor: pointer;
-  position: relative;
-  font-size: var(--p-font-size-300);
-  color: var(--p-color-text);
-}
-
-.tab:hover {
-  background: var(--p-color-bg-surface-hover);
-}
-
-.tab--selected {
-  color: var(--p-color-text-emphasis);
-}
-
-.tab--selected::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--p-color-border-emphasis);
-}
-
-.tab-panel {
-  background: var(--p-color-bg-surface);
-}
-
-.card-section {
-  padding: var(--p-space-400);
-}
-
-.card-section__title {
-  font-size: var(--p-font-size-400);
-  font-weight: var(--p-font-weight-semibold);
-  margin: 0 0 var(--p-space-200) 0;
-}
-
-// JavaScript
-const tabs = document.querySelectorAll('.tab');
-const panels = document.querySelectorAll('.tab-panel');
+<script>
+// JavaScript behavior
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('.polaris-tab-panel');
 
 tabs.forEach((tab, index) => {
   tab.addEventListener('click', () => {
     // Update tabs
     tabs.forEach(t => {
-      t.classList.remove('tab--selected');
+      t.classList.remove('polaris-tab--selected');
       t.setAttribute('aria-selected', 'false');
     });
-    tab.classList.add('tab--selected');
+    tab.classList.add('polaris-tab--selected');
     tab.setAttribute('aria-selected', 'true');
     
     // Update panels
     panels.forEach(p => {
-      p.classList.remove('tab-panel--active');
+      p.classList.remove('polaris-tab-panel--active');
       p.setAttribute('hidden', '');
     });
-    panels[index].classList.add('tab-panel--active');
+    panels[index].classList.add('polaris-tab-panel--active');
     panels[index].removeAttribute('hidden');
     
     console.log('Tab changed to:', index);
   });
-});`,
+});
+</script>`,
     typescript: `import {LegacyCard, Tabs} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -9519,6 +16838,1332 @@ function TabsExample({
     </Tabs>
   );
 }`
+  },
+  'fitted': {
+    react: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TabsFittedExample() {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => setSelected(selectedTabIndex),
+    [],
+  );
+
+  const tabs = [
+    {
+      id: 'all-customers-fitted-2',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-fitted-content-2',
+    },
+    {
+      id: 'accepts-marketing-fitted-2',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-fitted-Ccontent-2',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  items: [{
+    xtype: 'tabpanel',
+    tabBarPosition: 'top',
+    defaults: {
+      padding: 20
+    },
+    items: [{
+      title: 'All',
+      html: '<h3>All</h3><p>Tab 0 selected</p>'
+    }, {
+      title: 'Accepts marketing',
+      html: '<h3>Accepts marketing</h3><p>Tab 1 selected</p>'
+    }],
+    tabBar: {
+      layout: {
+        pack: 'stretch'
+      }
+    },
+    listeners: {
+      tabchange: function(tabPanel, newCard, oldCard) {
+        console.log('Tab changed to:', newCard.title);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-tabs polaris-tabs--fitted" role="tablist">
+    <button 
+      role="tab" 
+      class="polaris-tab polaris-tab--selected" 
+      aria-selected="true"
+      aria-controls="panel-0"
+      id="tab-0"
+    >
+      All
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Accepts marketing
+    </button>
+  </div>
+  <div class="polaris-card__section">
+    <div role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <h3>All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <h3>Accepts marketing</h3>
+      <p>Tab 1 selected</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('[role="tabpanel"]');
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => {
+    // Update tab states
+    tabs.forEach(t => {
+      t.classList.remove('polaris-tab--selected');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('polaris-tab--selected');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Update panel visibility
+    panels.forEach((panel, i) => {
+      if (i === index) {
+        panel.hidden = false;
+        panel.querySelector('p').textContent = \`Tab \${index} selected\`;
+      } else {
+        panel.hidden = true;
+      }
+    });
+  });
+});
+</script>`,
+    typescript: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TabsFittedExampleProps {
+  onTabChange?: (index: number) => void;
+}
+
+function TabsFittedExample({ onTabChange }: TabsFittedExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => {
+      setSelected(selectedTabIndex);
+      onTabChange?.(selectedTabIndex);
+    },
+    [onTabChange],
+  );
+
+  const tabs: TabProps[] = [
+    {
+      id: 'all-customers-fitted-2',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-fitted-content-2',
+    },
+    {
+      id: 'accepts-marketing-fitted-2',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-fitted-Ccontent-2',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`
+  },
+  'inside-of-a-card': {
+    react: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TabsInsideOfACardExample() {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => setSelected(selectedTabIndex),
+    [],
+  );
+
+  const tabs = [
+    {
+      id: 'all-customers-1',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-1',
+    },
+    {
+      id: 'accepts-marketing-1',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-1',
+    },
+    {
+      id: 'repeat-customers-1',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-1',
+    },
+    {
+      id: 'prospects-1',
+      content: 'Prospects',
+      panelID: 'prospects-content-1',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  border: true,
+  items: [{
+    xtype: 'tabpanel',
+    border: false,
+    items: [{
+      title: 'All',
+      padding: 20,
+      html: '<h3>All</h3><p>Tab 0 selected</p>'
+    }, {
+      title: 'Accepts marketing',
+      padding: 20,
+      html: '<h3>Accepts marketing</h3><p>Tab 1 selected</p>'
+    }, {
+      title: 'Repeat customers',
+      padding: 20,
+      html: '<h3>Repeat customers</h3><p>Tab 2 selected</p>'
+    }, {
+      title: 'Prospects',
+      padding: 20,
+      html: '<h3>Prospects</h3><p>Tab 3 selected</p>'
+    }],
+    listeners: {
+      tabchange: function(tabPanel, newCard, oldCard) {
+        console.log('Tab changed to:', newCard.title);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-tabs" role="tablist">
+    <button 
+      role="tab" 
+      class="polaris-tab polaris-tab--selected" 
+      aria-selected="true"
+      aria-controls="panel-0"
+      id="tab-0"
+    >
+      All
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Accepts marketing
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+    >
+      Repeat customers
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-3"
+      id="tab-3"
+    >
+      Prospects
+    </button>
+  </div>
+  <div class="polaris-card__section">
+    <div role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <h3>All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <h3>Accepts marketing</h3>
+      <p>Tab 1 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+      <h3>Repeat customers</h3>
+      <p>Tab 2 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+      <h3>Prospects</h3>
+      <p>Tab 3 selected</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('[role="tabpanel"]');
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => {
+    // Update tab states
+    tabs.forEach(t => {
+      t.classList.remove('polaris-tab--selected');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('polaris-tab--selected');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Update panel visibility
+    panels.forEach((panel, i) => {
+      if (i === index) {
+        panel.hidden = false;
+        panel.querySelector('p').textContent = \`Tab \${index} selected\`;
+      } else {
+        panel.hidden = true;
+      }
+    });
+  });
+});
+</script>`,
+    typescript: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TabsInsideCardProps {
+  initialSelected?: number;
+  onTabChange?: (index: number) => void;
+}
+
+function TabsInsideOfACardExample({ 
+  initialSelected = 0,
+  onTabChange 
+}: TabsInsideCardProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(initialSelected);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => {
+      setSelected(selectedTabIndex);
+      onTabChange?.(selectedTabIndex);
+    },
+    [onTabChange],
+  );
+
+  const tabs: TabProps[] = [
+    {
+      id: 'all-customers-1',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-1',
+    },
+    {
+      id: 'accepts-marketing-1',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-1',
+    },
+    {
+      id: 'repeat-customers-1',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-1',
+    },
+    {
+      id: 'prospects-1',
+      content: 'Prospects',
+      panelID: 'prospects-content-1',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-actions': {
+    react: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState} from 'react';
+
+function TabsWithActionsExample() {
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  const [itemStrings, setItemStrings] = useState([
+    'All',
+    'Unpaid',
+    'Open',
+    'Closed',
+    'Local delivery',
+    'Local pickup',
+  ]);
+  const deleteView = (index: number) => {
+    const newItemStrings = [...itemStrings];
+    newItemStrings.splice(index, 1);
+    setItemStrings(newItemStrings);
+    setSelected(0);
+  };
+
+  const duplicateView = async (name: string) => {
+    setItemStrings([...itemStrings, name]);
+    setSelected(itemStrings.length);
+    await sleep(1);
+    return true;
+  };
+
+  const tabs: TabProps[] = itemStrings.map((item, index) => ({
+    content: item,
+    index,
+    onAction: () => {},
+    id: \`\${item}-\${index}\`,
+    isLocked: index === 0,
+    actions:
+      index === 0
+        ? []
+        : [
+            {
+              type: 'rename',
+              onAction: () => {},
+              onPrimaryAction: async (value: string) => {
+                const newItemsStrings = tabs.map((item, idx) => {
+                  if (idx === index) {
+                    return value;
+                  }
+                  return item.content;
+                });
+                await sleep(1);
+                setItemStrings(newItemsStrings);
+                return true;
+              },
+            },
+            {
+              type: 'duplicate',
+              onPrimaryAction: async (name) => {
+                await sleep(1);
+                duplicateView(name);
+                return true;
+              },
+            },
+            {
+              type: 'edit',
+            },
+            {
+              type: 'delete',
+              onPrimaryAction: async () => {
+                await sleep(1);
+                deleteView(index);
+                return true;
+              },
+            },
+          ],
+  }));
+  const [selected, setSelected] = useState(0);
+  const onCreateNewView = async (value: string) => {
+    await sleep(500);
+    setItemStrings([...itemStrings, value]);
+    setSelected(itemStrings.length);
+    return true;
+  };
+
+  return (
+    <LegacyCard>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+        canCreateNewView
+        onCreateNewView={onCreateNewView}
+      >
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  border: true,
+  items: [{
+    xtype: 'tabpanel',
+    border: false,
+    tabBar: {
+      items: [{
+        xtype: 'button',
+        text: '+',
+        ui: 'plain',
+        handler: function() {
+          Ext.Msg.prompt('New View', 'Enter view name:', function(btn, text) {
+            if (btn === 'ok' && text) {
+              var tabPanel = this.up('tabpanel');
+              var newTab = tabPanel.add({
+                title: text,
+                closable: true,
+                padding: 20,
+                html: '<h3>' + text + '</h3><p>New tab created</p>'
+              });
+              tabPanel.setActiveTab(newTab);
+            }
+          }, this);
+        }
+      }]
+    },
+    items: [{
+      title: 'All',
+      closable: false,
+      padding: 20,
+      html: '<h3>All</h3><p>Tab 0 selected</p>'
+    }, {
+      title: 'Unpaid',
+      closable: true,
+      padding: 20,
+      html: '<h3>Unpaid</h3><p>Tab 1 selected</p>',
+      tabConfig: {
+        xtype: 'tab',
+        menu: [{
+          text: 'Rename',
+          handler: function() {
+            var tab = this.up('tab');
+            Ext.Msg.prompt('Rename', 'Enter new name:', function(btn, text) {
+              if (btn === 'ok' && text) {
+                tab.setText(text);
+              }
+            });
+          }
+        }, {
+          text: 'Duplicate',
+          handler: function() {
+            var tab = this.up('tab');
+            var tabPanel = tab.up('tabpanel');
+            var newTab = tabPanel.add({
+              title: tab.getText() + ' (copy)',
+              closable: true,
+              padding: 20,
+              html: '<h3>' + tab.getText() + ' (copy)</h3><p>Duplicated tab</p>'
+            });
+            tabPanel.setActiveTab(newTab);
+          }
+        }, '-', {
+          text: 'Delete',
+          handler: function() {
+            var tab = this.up('tab');
+            tab.card.close();
+          }
+        }]
+      }
+    }, {
+      title: 'Open',
+      closable: true,
+      padding: 20,
+      html: '<h3>Open</h3><p>Tab 2 selected</p>'
+    }, {
+      title: 'Closed',
+      closable: true,
+      padding: 20,
+      html: '<h3>Closed</h3><p>Tab 3 selected</p>'
+    }],
+    listeners: {
+      tabchange: function(tabPanel, newCard) {
+        console.log('Tab changed to:', newCard.title);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-tabs polaris-tabs--with-actions" role="tablist">
+    <button 
+      role="tab" 
+      class="polaris-tab polaris-tab--selected" 
+      aria-selected="true"
+      aria-controls="panel-0"
+      id="tab-0"
+      data-locked="true"
+    >
+      All
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Unpaid
+      <button class="polaris-tab__action" aria-label="Actions for Unpaid tab">⋮</button>
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+    >
+      Open
+      <button class="polaris-tab__action" aria-label="Actions for Open tab">⋮</button>
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-3"
+      id="tab-3"
+    >
+      Closed
+      <button class="polaris-tab__action" aria-label="Actions for Closed tab">⋮</button>
+    </button>
+    <button class="polaris-tab__add-button" aria-label="Add new view">+</button>
+  </div>
+  <div class="polaris-card__section">
+    <div role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <h3>All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <h3>Unpaid</h3>
+      <p>Tab 1 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+      <h3>Open</h3>
+      <p>Tab 2 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+      <h3>Closed</h3>
+      <p>Tab 3 selected</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const tabsContainer = document.querySelector('.polaris-tabs');
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('[role="tabpanel"]');
+const addButton = document.querySelector('.polaris-tab__add-button');
+let tabCount = tabs.length;
+
+// Tab switching
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', (e) => {
+    if (e.target.classList.contains('polaris-tab__action')) {
+      showTabActions(tab, index);
+      return;
+    }
+    
+    selectTab(index);
+  });
+});
+
+function selectTab(index) {
+  tabs.forEach((t, i) => {
+    t.classList.toggle('polaris-tab--selected', i === index);
+    t.setAttribute('aria-selected', i === index ? 'true' : 'false');
+  });
+  
+  panels.forEach((panel, i) => {
+    panel.hidden = i !== index;
+    if (i === index) {
+      panel.querySelector('p').textContent = \`Tab \${index} selected\`;
+    }
+  });
+}
+
+// Add new tab
+addButton.addEventListener('click', () => {
+  const name = prompt('Enter view name:');
+  if (name) {
+    addNewTab(name);
+  }
+});
+
+function addNewTab(name) {
+  const newIndex = tabCount++;
+  
+  // Create new tab
+  const newTab = document.createElement('button');
+  newTab.role = 'tab';
+  newTab.className = 'polaris-tab';
+  newTab.setAttribute('aria-selected', 'false');
+  newTab.setAttribute('aria-controls', \`panel-\${newIndex}\`);
+  newTab.id = \`tab-\${newIndex}\`;
+  newTab.innerHTML = \`\${name} <button class="polaris-tab__action" aria-label="Actions for \${name} tab">⋮</button>\`;
+  
+  // Insert before add button
+  tabsContainer.insertBefore(newTab, addButton);
+  
+  // Create new panel
+  const newPanel = document.createElement('div');
+  newPanel.role = 'tabpanel';
+  newPanel.id = \`panel-\${newIndex}\`;
+  newPanel.setAttribute('aria-labelledby', \`tab-\${newIndex}\`);
+  newPanel.hidden = true;
+  newPanel.innerHTML = \`<h3>\${name}</h3><p>Tab \${newIndex} selected</p>\`;
+  
+  document.querySelector('.polaris-card__section').appendChild(newPanel);
+  
+  // Add event listener
+  newTab.addEventListener('click', (e) => {
+    if (e.target.classList.contains('polaris-tab__action')) {
+      showTabActions(newTab, newIndex);
+      return;
+    }
+    selectTab(newIndex);
+  });
+  
+  // Select the new tab
+  selectTab(newIndex);
+}
+
+function showTabActions(tab, index) {
+  if (tab.dataset.locked === 'true') return;
+  
+  const actions = ['Rename', 'Duplicate', 'Delete'];
+  const action = prompt(\`Choose action:\\n\${actions.join('\\n')}\`);
+  
+  switch(action?.toLowerCase()) {
+    case 'rename':
+      const newName = prompt('Enter new name:');
+      if (newName) {
+        tab.childNodes[0].textContent = newName + ' ';
+      }
+      break;
+    case 'duplicate':
+      const tabText = tab.childNodes[0].textContent.trim();
+      addNewTab(tabText + ' (copy)');
+      break;
+    case 'delete':
+      if (confirm('Delete this tab?')) {
+        tab.remove();
+        panels[index].remove();
+        selectTab(0);
+      }
+      break;
+  }
+}
+</script>`,
+    typescript: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TabAction {
+  type: 'rename' | 'duplicate' | 'edit' | 'delete';
+  onAction?: () => void;
+  onPrimaryAction?: (value: string) => Promise<boolean>;
+}
+
+interface TabsWithActionsProps {
+  initialTabs?: string[];
+  canCreateNewView?: boolean;
+}
+
+function TabsWithActionsExample({ 
+  initialTabs = ['All', 'Unpaid', 'Open', 'Closed', 'Local delivery', 'Local pickup'],
+  canCreateNewView = true
+}: TabsWithActionsProps): JSX.Element {
+  const [itemStrings, setItemStrings] = useState<string[]>(initialTabs);
+  const [selected, setSelected] = useState<number>(0);
+
+  const sleep = (ms: number): Promise<void> =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  const deleteView = useCallback((index: number): void => {
+    const newItemStrings = [...itemStrings];
+    newItemStrings.splice(index, 1);
+    setItemStrings(newItemStrings);
+    setSelected(0);
+  }, [itemStrings]);
+
+  const duplicateView = useCallback(async (name: string): Promise<boolean> => {
+    setItemStrings(prev => [...prev, name]);
+    setSelected(itemStrings.length);
+    await sleep(1);
+    return true;
+  }, [itemStrings.length]);
+
+  const tabs: TabProps[] = itemStrings.map((item, index) => ({
+    content: item,
+    index,
+    onAction: () => {},
+    id: \`\${item}-\${index}\`,
+    isLocked: index === 0,
+    actions:
+      index === 0
+        ? []
+        : [
+            {
+              type: 'rename',
+              onAction: () => {},
+              onPrimaryAction: async (value: string) => {
+                const newItemsStrings = itemStrings.map((tabItem, idx) => {
+                  if (idx === index) {
+                    return value;
+                  }
+                  return tabItem;
+                });
+                await sleep(1);
+                setItemStrings(newItemsStrings);
+                return true;
+              },
+            },
+            {
+              type: 'duplicate',
+              onPrimaryAction: async (name: string) => {
+                await sleep(1);
+                duplicateView(name);
+                return true;
+              },
+            },
+            {
+              type: 'edit',
+            },
+            {
+              type: 'delete',
+              onPrimaryAction: async () => {
+                await sleep(1);
+                deleteView(index);
+                return true;
+              },
+            },
+          ],
+  }));
+
+  const onCreateNewView = useCallback(async (value: string): Promise<boolean> => {
+    await sleep(500);
+    setItemStrings(prev => [...prev, value]);
+    setSelected(itemStrings.length);
+    return true;
+  }, [itemStrings.length]);
+
+  return (
+    <LegacyCard>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+        canCreateNewView={canCreateNewView}
+        onCreateNewView={onCreateNewView}
+      >
+        <LegacyCard.Section title={tabs[selected]?.content || ''}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-badge-content': {
+    react: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TabsWithBadgeExample() {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => setSelected(selectedTabIndex),
+    [],
+  );
+
+  const tabs = [
+    {
+      id: 'all-customers-fitted-3',
+      content: 'All',
+      badge: '10+',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-fitted-content-3',
+    },
+    {
+      id: 'accepts-marketing-fitted-3',
+      content: 'Accepts marketing',
+      badge: '4',
+      panelID: 'accepts-marketing-fitted-content-3',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  border: true,
+  items: [{
+    xtype: 'tabpanel',
+    tabBarPosition: 'top',
+    defaults: {
+      padding: 20
+    },
+    items: [{
+      title: 'All',
+      tabConfig: {
+        title: 'All <span class="badge">10+</span>'
+      },
+      html: '<h3>All</h3><p>Tab 0 selected</p>'
+    }, {
+      title: 'Accepts marketing',
+      tabConfig: {
+        title: 'Accepts marketing <span class="badge">4</span>'
+      },
+      html: '<h3>Accepts marketing</h3><p>Tab 1 selected</p>'
+    }],
+    tabBar: {
+      layout: {
+        pack: 'stretch'
+      }
+    },
+    listeners: {
+      tabchange: function(tabPanel, newCard, oldCard) {
+        console.log('Tab changed to:', newCard.title);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-tabs polaris-tabs--fitted" role="tablist">
+    <button 
+      role="tab" 
+      class="polaris-tab polaris-tab--selected" 
+      aria-selected="true"
+      aria-controls="panel-0"
+      id="tab-0"
+    >
+      All
+      <span class="polaris-tab__badge">10+</span>
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Accepts marketing
+      <span class="polaris-tab__badge">4</span>
+    </button>
+  </div>
+  <div class="polaris-card__section">
+    <div role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <h3>All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <h3>Accepts marketing</h3>
+      <p>Tab 1 selected</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('[role="tabpanel"]');
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => {
+    // Update tab states
+    tabs.forEach(t => {
+      t.classList.remove('polaris-tab--selected');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('polaris-tab--selected');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Update panel visibility
+    panels.forEach((panel, i) => {
+      if (i === index) {
+        panel.hidden = false;
+        panel.querySelector('p').textContent = \`Tab \${index} selected\`;
+      } else {
+        panel.hidden = true;
+      }
+    });
+  });
+});
+</script>`,
+    typescript: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BadgeTab extends TabProps {
+  badge?: string;
+}
+
+interface TabsWithBadgeProps {
+  onTabChange?: (index: number) => void;
+}
+
+function TabsWithBadgeExample({ onTabChange }: TabsWithBadgeProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => {
+      setSelected(selectedTabIndex);
+      onTabChange?.(selectedTabIndex);
+    },
+    [onTabChange],
+  );
+
+  const tabs: BadgeTab[] = [
+    {
+      id: 'all-customers-fitted-3',
+      content: 'All',
+      badge: '10+',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-fitted-content-3',
+    },
+    {
+      id: 'accepts-marketing-fitted-3',
+      content: 'Accepts marketing',
+      badge: '4',
+      panelID: 'accepts-marketing-fitted-content-3',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange} fitted>
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-custom-disclosure': {
+    react: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TabsWithCustomDisclosureExample() {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => setSelected(selectedTabIndex),
+    [],
+  );
+
+  const tabs = [
+    {
+      id: 'all-customers-4',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-4',
+    },
+    {
+      id: 'accepts-marketing-4',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-4',
+    },
+    {
+      id: 'repeat-customers-4',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-4',
+    },
+    {
+      id: 'prospects-4',
+      content: 'Prospects',
+      panelID: 'prospects-content-4',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleTabChange}
+        disclosureText="More views"
+      >
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  border: true,
+  items: [{
+    xtype: 'tabpanel',
+    border: false,
+    tabBar: {
+      items: [{
+        xtype: 'tbfill'
+      }, {
+        xtype: 'button',
+        text: 'More views',
+        ui: 'plain',
+        menu: [{
+          text: 'Repeat customers',
+          handler: function() {
+            console.log('Show Repeat customers');
+          }
+        }, {
+          text: 'Prospects',
+          handler: function() {
+            console.log('Show Prospects');
+          }
+        }]
+      }]
+    },
+    items: [{
+      title: 'All',
+      padding: 20,
+      html: '<h3>All</h3><p>Tab 0 selected</p>'
+    }, {
+      title: 'Accepts marketing',
+      padding: 20,
+      html: '<h3>Accepts marketing</h3><p>Tab 1 selected</p>'
+    }, {
+      title: 'Repeat customers',
+      padding: 20,
+      hidden: true,
+      html: '<h3>Repeat customers</h3><p>Tab 2 selected</p>'
+    }, {
+      title: 'Prospects',
+      padding: 20,
+      hidden: true,
+      html: '<h3>Prospects</h3><p>Tab 3 selected</p>'
+    }],
+    listeners: {
+      tabchange: function(tabPanel, newCard, oldCard) {
+        console.log('Tab changed to:', newCard.title);
+      }
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-tabs" role="tablist">
+    <button 
+      role="tab" 
+      class="polaris-tab polaris-tab--selected" 
+      aria-selected="true"
+      aria-controls="panel-0"
+      id="tab-0"
+    >
+      All
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-1"
+      id="tab-1"
+    >
+      Accepts marketing
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+    >
+      Repeat customers
+    </button>
+    <button 
+      role="tab" 
+      class="polaris-tab" 
+      aria-selected="false"
+      aria-controls="panel-3"
+      id="tab-3"
+    >
+      Prospects
+    </button>
+    <button class="polaris-tabs__disclosure" aria-label="More tabs">
+      More views
+      <span class="polaris-icon">▼</span>
+    </button>
+  </div>
+  <div class="polaris-card__section">
+    <div role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+      <h3>All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+      <h3>Accepts marketing</h3>
+      <p>Tab 1 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+      <h3>Repeat customers</h3>
+      <p>Tab 2 selected</p>
+    </div>
+    <div role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+      <h3>Prospects</h3>
+      <p>Tab 3 selected</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const tabs = document.querySelectorAll('.polaris-tab');
+const panels = document.querySelectorAll('[role="tabpanel"]');
+const disclosureButton = document.querySelector('.polaris-tabs__disclosure');
+
+// Tab switching
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => {
+    selectTab(index);
+  });
+});
+
+function selectTab(index) {
+  tabs.forEach((t, i) => {
+    t.classList.toggle('polaris-tab--selected', i === index);
+    t.setAttribute('aria-selected', i === index ? 'true' : 'false');
+  });
+  
+  panels.forEach((panel, i) => {
+    panel.hidden = i !== index;
+    if (i === index) {
+      panel.querySelector('p').textContent = \`Tab \${index} selected\`;
+    }
+  });
+}
+
+// Disclosure menu
+disclosureButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  
+  // Create and show dropdown menu
+  const menu = document.createElement('div');
+  menu.className = 'polaris-tabs__menu';
+  menu.innerHTML = \`
+    <button class="polaris-tabs__menu-item" data-tab="2">Repeat customers</button>
+    <button class="polaris-tabs__menu-item" data-tab="3">Prospects</button>
+  \`;
+  
+  // Position menu
+  const rect = disclosureButton.getBoundingClientRect();
+  menu.style.position = 'absolute';
+  menu.style.top = rect.bottom + 'px';
+  menu.style.right = (window.innerWidth - rect.right) + 'px';
+  
+  document.body.appendChild(menu);
+  
+  // Handle menu item clicks
+  menu.querySelectorAll('.polaris-tabs__menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const tabIndex = parseInt(item.dataset.tab);
+      selectTab(tabIndex);
+      menu.remove();
+    });
+  });
+  
+  // Close menu on outside click
+  document.addEventListener('click', function closeMenu() {
+    menu.remove();
+    document.removeEventListener('click', closeMenu);
+  });
+});
+</script>`,
+    typescript: `import {LegacyCard, Tabs, TabProps} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TabsWithDisclosureProps {
+  disclosureText?: string;
+  onTabChange?: (index: number) => void;
+}
+
+function TabsWithCustomDisclosureExample({ 
+  disclosureText = "More views",
+  onTabChange 
+}: TabsWithDisclosureProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => {
+      setSelected(selectedTabIndex);
+      onTabChange?.(selectedTabIndex);
+    },
+    [onTabChange],
+  );
+
+  const tabs: TabProps[] = [
+    {
+      id: 'all-customers-4',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-4',
+    },
+    {
+      id: 'accepts-marketing-4',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-4',
+    },
+    {
+      id: 'repeat-customers-4',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-4',
+    },
+    {
+      id: 'prospects-4',
+      content: 'Prospects',
+      panelID: 'prospects-content-4',
+    },
+  ];
+
+  return (
+    <LegacyCard>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleTabChange}
+        disclosureText={disclosureText}
+      >
+        <LegacyCard.Section title={tabs[selected].content}>
+          <p>Tab {selected} selected</p>
+        </LegacyCard.Section>
+      </Tabs>
+    </LegacyCard>
+  );
+}`
   }
 };
 
@@ -9544,34 +18189,13 @@ function ListExample() {
         '<li>Green shirt</li>' +
         '</ul>'
 });`,
-    vanilla: `// HTML
-<ul class="list list--bullet">
-  <li class="list__item">Yellow shirt</li>
-  <li class="list__item">Red shirt</li>
-  <li class="list__item">Green shirt</li>
+    vanilla: `<!-- HTML Structure -->
+<ul class="polaris-list list--bullet">
+  <li class="polaris-list__item">Yellow shirt</li>
+  <li class="polaris-list__item">Red shirt</li>
+  <li class="polaris-list__item">Green shirt</li>
 </ul>
-
-// CSS
-.list {
-  margin: 0;
-  padding: 0;
-}
-
-.list--bullet {
-  list-style: disc;
-  padding-left: var(--p-space-500);
-}
-
-.list__item {
-  font-size: var(--p-font-size-300);
-  line-height: var(--p-font-line-height-400);
-  color: var(--p-color-text);
-  margin-bottom: var(--p-space-100);
-}
-
-.list__item:last-child {
-  margin-bottom: 0;
-}`,
+`,
     typescript: `import {List} from '@shopify/polaris';
 import React from 'react';
 
@@ -9743,27 +18367,13 @@ function IconExample() {
         '</svg></span>',
   cls: 'polaris-icon-wrapper'
 });`,
-    vanilla: `// HTML
-<span class="icon">
+    vanilla: `<!-- HTML Structure -->
+<span class="polaris-icon">
   <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true">
     <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 9h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V8a1 1 0 0 1 2 0v3z" fill="currentColor"/>
   </svg>
 </span>
-
-// CSS
-.icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  color: var(--p-color-icon);
-}
-
-.icon svg {
-  width: 100%;
-  height: 100%;
-}`,
+`,
     typescript: `import {Icon} from '@shopify/polaris';
 import {PlusCircleIcon} from '@shopify/polaris-icons';
 import React from 'react';
@@ -10039,29 +18649,13 @@ function AvatarExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="avatar avatar--customer" aria-label="Farrah" role="img">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-avatar avatar--customer" aria-label="Farrah" role="img">
   <svg viewBox="0 0 20 20" aria-hidden="true">
     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
   </svg>
 </div>
-
-// CSS
-.avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--p-color-avatar-background-experimental);
-  color: var(--p-color-avatar-text-on-background-experimental);
-}
-
-.avatar--customer svg {
-  width: 20px;
-  height: 20px;
-}`,
+`,
     typescript: `import {Avatar} from '@shopify/polaris';
 import React from 'react';
 
@@ -10135,19 +18729,19 @@ function ExtraSmallAvatarExample() {
     }]
   }
 });`,
-    vanilla: `// HTML
-<div class="dropdown">
-  <button class="button button--disclosure" aria-expanded="false" aria-controls="staff-menu">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-dropdown">
+  <button class="polaris-button polaris-button--disclosure" aria-expanded="false" aria-controls="staff-menu">
     Manage staff
-    <svg class="icon icon--caret" viewBox="0 0 20 20" aria-hidden="true">
+    <svg class="polaris-icon polaris-icon--caret" viewBox="0 0 20 20" aria-hidden="true">
       <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none"/>
     </svg>
   </button>
-  <div id="staff-menu" class="dropdown-menu" hidden>
-    <ul class="action-list" role="list">
-      <li class="action-list__item">
-        <button class="action-list__button">
-          <span class="avatar avatar--xs avatar--customer" aria-label="Chet Baker">
+  <div id="staff-menu" class="polaris-dropdown-menu" hidden>
+    <ul class="polaris-action-list" role="list">
+      <li class="polaris-action-list__item">
+        <button class="polaris-action-list__button">
+          <span class="polaris-avatar polaris-avatar--xs polaris-avatar--customer" aria-label="Chet Baker">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
             </svg>
@@ -10155,9 +18749,9 @@ function ExtraSmallAvatarExample() {
           <span>Chet Baker</span>
         </button>
       </li>
-      <li class="action-list__item">
-        <button class="action-list__button">
-          <span class="avatar avatar--xs avatar--customer" aria-label="Farrah Fawcett">
+      <li class="polaris-action-list__item">
+        <button class="polaris-action-list__button">
+          <span class="polaris-avatar polaris-avatar--xs polaris-avatar--customer" aria-label="Farrah Fawcett">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
             </svg>
@@ -10169,30 +18763,9 @@ function ExtraSmallAvatarExample() {
   </div>
 </div>
 
-// CSS
-.avatar--xs {
-  width: 24px;
-  height: 24px;
-}
-
-.action-list__button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 16px;
-  border: none;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-}
-
-.action-list__button:hover {
-  background: var(--p-color-bg-surface-hover);
-}
-
-// JavaScript
-const button = document.querySelector('.button--disclosure');
+<script>
+// JavaScript behavior
+const button = document.querySelector('.polaris-button--disclosure');
 const menu = document.getElementById('staff-menu');
 
 button.addEventListener('click', () => {
@@ -10202,11 +18775,12 @@ button.addEventListener('click', () => {
 });
 
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.dropdown')) {
+  if (!e.target.closest('.polaris-dropdown')) {
     button.setAttribute('aria-expanded', 'false');
     menu.hidden = true;
   }
-});`,
+});
+</script>`,
     typescript: `import {Button, Popover, ActionList, Avatar} from '@shopify/polaris';
 import React, {useState, useCallback} from 'react';
 
@@ -10284,29 +18858,11 @@ function AvatarExample() {
     }
   }
 });`,
-    vanilla: `// HTML
-<div class="avatar avatar--initials" aria-label="Woluwayemisi Weun-Jung" role="img">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-avatar avatar--initials" aria-label="Woluwayemisi Weun-Jung" role="img">
   <span>WW</span>
 </div>
-
-// CSS
-.avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--p-color-avatar-background-experimental);
-  color: var(--p-color-avatar-text-on-background-experimental);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.avatar--initials span {
-  text-transform: uppercase;
-  user-select: none;
-}`,
+`,
     typescript: `import {Avatar} from '@shopify/polaris';
 import React from 'react';
 
@@ -10385,33 +18941,15 @@ const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
     html: '<div style="color: var(--p-color-bg-surface);">marginInline</div>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card" style="width: 320px;">
-  <div class="bleed bleed--inline">
-    <div class="placeholder">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card" style="width: 320px;">
+  <div class="polaris-bleed bleed--inline">
+    <div class="polaris-placeholder">
       <span>marginInline</span>
     </div>
   </div>
 </div>
-
-// CSS
-.card {
-  background: white;
-  border-radius: var(--p-border-radius-300);
-  padding: var(--p-space-400);
-  box-shadow: var(--p-shadow-300);
-}
-
-.bleed--inline {
-  margin-left: calc(var(--p-space-400) * -1);
-  margin-right: calc(var(--p-space-400) * -1);
-}
-
-.placeholder {
-  background: var(--p-color-text-info);
-  padding: var(--p-space-200);
-  color: var(--p-color-bg-surface);
-}`,
+`,
     typescript: `import {Bleed, Box, Card, Text} from '@shopify/polaris';
 import React from 'react';
 
@@ -10576,76 +19114,41 @@ const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
     }]
   }]
 });`,
-    vanilla: `// HTML
-<div class="stack">
-  <div class="card" style="width: 320px;">
-    <div class="bleed bleed--inline-start">
-      <div class="placeholder">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack">
+  <div class="polaris-card" style="width: 320px;">
+    <div class="polaris-bleed bleed--inline-start">
+      <div class="polaris-placeholder">
         <span>marginInlineStart</span>
       </div>
     </div>
   </div>
   
-  <div class="card" style="width: 320px;">
-    <div class="bleed bleed--inline-end">
-      <div class="placeholder">
+  <div class="polaris-card" style="width: 320px;">
+    <div class="polaris-bleed bleed--inline-end">
+      <div class="polaris-placeholder">
         <span>marginInlineEnd</span>
       </div>
     </div>
   </div>
   
-  <div class="card" style="width: 320px;">
-    <div class="bleed bleed--block-start">
-      <div class="placeholder">
+  <div class="polaris-card" style="width: 320px;">
+    <div class="polaris-bleed bleed--block-start">
+      <div class="polaris-placeholder">
         <span>marginBlockStart</span>
       </div>
     </div>
   </div>
   
-  <div class="card" style="width: 320px;">
-    <div class="bleed bleed--block-end">
-      <div class="placeholder">
+  <div class="polaris-card" style="width: 320px;">
+    <div class="polaris-bleed bleed--block-end">
+      <div class="polaris-placeholder">
         <span>marginBlockEnd</span>
       </div>
     </div>
   </div>
 </div>
-
-// CSS
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-space-400);
-}
-
-.card {
-  background: white;
-  border-radius: var(--p-border-radius-300);
-  padding: var(--p-space-400);
-  box-shadow: var(--p-shadow-300);
-}
-
-.bleed--inline-start {
-  margin-left: calc(var(--p-space-800) * -1);
-}
-
-.bleed--inline-end {
-  margin-right: calc(var(--p-space-800) * -1);
-}
-
-.bleed--block-start {
-  margin-top: calc(var(--p-space-800) * -1);
-}
-
-.bleed--block-end {
-  margin-bottom: calc(var(--p-space-800) * -1);
-}
-
-.placeholder {
-  background: var(--p-color-text-info);
-  padding: var(--p-space-200);
-  color: var(--p-color-bg-surface);
-}`,
+`,
     typescript: `import {BlockStack, Bleed, Box, Card, Text} from '@shopify/polaris';
 import React from 'react';
 
@@ -10754,37 +19257,15 @@ const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
     html: '<div style="color: var(--p-color-bg-surface);">marginBlock</div>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card" style="width: 320px;">
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card" style="width: 320px;">
   <div class="bleed bleed--block">
     <div class="placeholder placeholder--vertical">
       <span>marginBlock</span>
     </div>
   </div>
 </div>
-
-// CSS
-.card {
-  background: white;
-  border-radius: var(--p-border-radius-300);
-  padding: var(--p-space-400);
-  box-shadow: var(--p-shadow-300);
-}
-
-.bleed--block {
-  margin-top: calc(var(--p-space-800) * -1);
-  margin-bottom: calc(var(--p-space-800) * -1);
-}
-
-.placeholder {
-  background: var(--p-color-text-info);
-  padding: var(--p-space-200);
-  color: var(--p-color-bg-surface);
-}
-
-.placeholder--vertical {
-  padding: var(--p-space-1000) var(--p-space-200);
-}`,
+`,
     typescript: `import {Bleed, Box, Card, Text} from '@shopify/polaris';
 import React from 'react';
 

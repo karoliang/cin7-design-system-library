@@ -11,14 +11,30 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (114 examples)
+### ✅ Completed Components (215 examples)
 - **Button Group** (3/3 examples) ✅
   - default
   - with-segmented-buttons
   - pressed-with-segmented-buttons
-- **Button** (2/18 examples)
+- **Button** (18/18 examples) ✅
   - primary
   - plain
+  - disabled-state
+  - full-width
+  - icon-only
+  - large
+  - loading-state
+  - plain-critical
+  - plain-disclosure
+  - pressed
+  - primary-critical
+  - right-aligned-disclosure
+  - select-disclosure
+  - split
+  - tertiary
+  - text-aligned
+  - with-icon
+  - default
 - **Card** (20/20 examples) ✅
   - default
   - with-subdued-background
@@ -51,7 +67,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - informational
   - warning
   - partially-complete
-- **Text Field** (7/23 examples)
+- **Text Field** (23/23 examples) ✅
   - default
   - with-validation-error
   - with-help-text
@@ -59,6 +75,22 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - disabled
   - email
   - multiline
+  - with-auto-size
+  - with-auto-size-and-dynamic-suffix
+  - with-character-count
+  - with-clear-button
+  - with-connected-fields
+  - with-hidden-label
+  - with-inline-suggestion
+  - with-label-action
+  - with-loading
+  - with-monospaced-font
+  - with-placeholder-text
+  - with-prefix-or-suffix
+  - with-right-aligned-text
+  - with-separate-validation-error
+  - with-value-selected-on-focus
+  - with-vertical-content
 - **Banner** (9/9 examples) ✅
   - default
   - critical
@@ -80,15 +112,45 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - default
 - **Checkbox** (1/1 examples) ✅
   - default
-- **Page** (2/17 examples)
+- **Page** (17/17 examples) ✅
   - default
   - with-subtitle
-- **Layout** (1/7 examples)
+  - full-width
+  - narrow-width
+  - with-action-groups
+  - with-content-after-title
+  - with-custom-primary-action
+  - with-custom-secondary-action
+  - with-destructive-secondary-action
+  - with-external-link
+  - with-tooltip-action
+  - without-pagination
+  - without-primary-action-in-header
+  - actions-default
+  - actions-primary-action-only
+  - actions-with-custom-primary-action
+  - actions-with-custom-secondary-action
+- **Layout** (7/7 examples) ✅
   - one-column
-- **Form Layout** (1/5 examples)
+  - two-columns-with-equal-width
+  - two-columns-with-primary-and-secondary-widths
+  - three-columns-with-equal-width
+  - annotated
+  - annotated-with-sections
+  - annotated-with-banner-at-the-top
+- **Form Layout** (5/5 examples) ✅
   - default
-- **Tabs** (1/6 examples)
+  - field-group
+  - condensed-field-group
+  - with-help-text
+  - sectioned
+- **Tabs** (6/6 examples) ✅
   - default
+  - fitted
+  - inside-of-a-card
+  - with-actions
+  - with-badge-content
+  - with-custom-disclosure
 - **List** (3/3 examples) ✅
   - bulleted
   - extra-tight
