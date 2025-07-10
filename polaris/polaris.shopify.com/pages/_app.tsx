@@ -115,7 +115,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta property="og:image" content={ogImagePath} />
       </Head>
 
-      <AppProvider i18n={enTranslations} theme={darkMode.value ? 'dark-experimental' : 'light'}>
+      <AppProvider i18n={enTranslations} theme={(isPolarisExample || isPolarisSandbox) ? 'light' : (darkMode.value ? 'dark-experimental' : 'light')}>
         <div
           style={
             {
