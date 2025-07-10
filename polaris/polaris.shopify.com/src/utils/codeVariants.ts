@@ -7390,6 +7390,130 @@ function ListExample({
     </List>
   );
 }`
+  },
+  'extra-tight': {
+    react: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+function ListExtraTightExample() {
+  return (
+    <List gap="extraTight">
+      <List.Item>Yellow shirt</List.Item>
+      <List.Item>Red shirt</List.Item>
+      <List.Item>Green shirt</List.Item>
+    </List>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  cls: 'polaris-list polaris-list--extra-tight',
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 2 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<li class="polaris-list__item">• Yellow shirt</li>'
+  }, {
+    xtype: 'component',
+    html: '<li class="polaris-list__item">• Red shirt</li>'
+  }, {
+    xtype: 'component',
+    html: '<li class="polaris-list__item">• Green shirt</li>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<ul class="polaris-list polaris-list--extra-tight">
+  <li class="polaris-list__item">Yellow shirt</li>
+  <li class="polaris-list__item">Red shirt</li>
+  <li class="polaris-list__item">Green shirt</li>
+</ul>`,
+    typescript: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+type ListGap = 'none' | 'extraTight' | 'tight' | 'loose';
+
+interface ExtraTightListProps {
+  items?: string[];
+  gap?: ListGap;
+}
+
+function ExtraTightList({
+  items = ['Yellow shirt', 'Red shirt', 'Green shirt'],
+  gap = "extraTight"
+}: ExtraTightListProps): JSX.Element {
+  return (
+    <List gap={gap}>
+      {items.map((item, index) => (
+        <List.Item key={index}>{item}</List.Item>
+      ))}
+    </List>
+  );
+}`
+  },
+  numbered: {
+    react: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+function ListExample() {
+  return (
+    <List type="number">
+      <List.Item>First item</List.Item>
+      <List.Item>Second item</List.Item>
+      <List.Item>Third Item</List.Item>
+    </List>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  cls: 'polaris-list polaris-list--numbered',
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 8 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<li class="polaris-list__item">1. First item</li>'
+  }, {
+    xtype: 'component',
+    html: '<li class="polaris-list__item">2. Second item</li>'
+  }, {
+    xtype: 'component',
+    html: '<li class="polaris-list__item">3. Third Item</li>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<ol class="polaris-list polaris-list--numbered">
+  <li class="polaris-list__item">First item</li>
+  <li class="polaris-list__item">Second item</li>
+  <li class="polaris-list__item">Third Item</li>
+</ol>`,
+    typescript: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+type ListType = 'bullet' | 'number';
+
+interface NumberedListProps {
+  items?: string[];
+  type?: ListType;
+}
+
+function NumberedList({
+  items = ['First item', 'Second item', 'Third Item'],
+  type = "number"
+}: NumberedListProps): JSX.Element {
+  return (
+    <List type={type}>
+      {items.map((item, index) => (
+        <List.Item key={index}>{item}</List.Item>
+      ))}
+    </List>
+  );
+}`
   }
 };
 
@@ -7451,6 +7575,234 @@ function IconExample({
       source={source} 
       tone={tone}
       accessibilityLabel={accessibilityLabel}
+    />
+  );
+}`
+  },
+  colored: {
+    react: `import {Icon} from '@shopify/polaris';
+import {PlusCircleIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function IconColoredExample() {
+  return (
+    <div>
+      <Icon source={PlusCircleIcon} tone="base" />
+      <Icon source={PlusCircleIcon} tone="subdued" />
+      <Icon source={PlusCircleIcon} tone="primary" />
+      <Icon source={PlusCircleIcon} tone="info" />
+      <Icon source={PlusCircleIcon} tone="success" />
+      <Icon source={PlusCircleIcon} tone="caution" />
+      <Icon source={PlusCircleIcon} tone="warning" />
+      <Icon source={PlusCircleIcon} tone="critical" />
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: {
+    margin: '0 10 0 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<span class="icon icon--base">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--subdued">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--primary">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--info">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--success">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--caution">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--warning">⊕</span>'
+  }, {
+    xtype: 'component',
+    html: '<span class="icon icon--critical">⊕</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-icon-container">
+  <span class="polaris-icon polaris-icon--tone-base">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-subdued">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-primary">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-info">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-success">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-caution">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-warning">⊕</span>
+  <span class="polaris-icon polaris-icon--tone-critical">⊕</span>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-icon').forEach(icon => {
+  icon.addEventListener('click', (e) => {
+    console.log(\`Icon with tone \${e.target.className.match(/tone-(\\w+)/)?.[1] || 'default'} clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Icon} from '@shopify/polaris';
+import {PlusCircleIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+type IconTone = 'base' | 'subdued' | 'primary' | 'info' | 'success' | 'caution' | 'warning' | 'critical';
+
+interface IconColoredExampleProps {
+  onIconClick?: (tone: IconTone) => void;
+}
+
+function IconColoredExample({ onIconClick }: IconColoredExampleProps): JSX.Element {
+  const tones: IconTone[] = ['base', 'subdued', 'primary', 'info', 'success', 'caution', 'warning', 'critical'];
+
+  return (
+    <div>
+      {tones.map((tone) => (
+        <Icon 
+          key={tone}
+          source={PlusCircleIcon} 
+          tone={tone}
+          onClick={() => onIconClick?.(tone)}
+        />
+      ))}
+    </div>
+  );
+}`
+  },
+  'with-custom-svg': {
+    react: `import {Icon} from '@shopify/polaris';
+import React from 'react';
+
+function IconWithCustomSvgExample() {
+  return (
+    <Icon source="<svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path d='M10.707 17.707l5-5a.999.999 0 1 0-1.414-1.414L11 14.586V3a1 1 0 1 0-2 0v11.586l-3.293-3.293a.999.999 0 1 0-1.414 1.414l5 5a.999.999 0 0 0 1.414 0' /></svg>" />
+  );
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<span class="icon icon--custom"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 17.707l5-5a.999.999 0 1 0-1.414-1.414L11 14.586V3a1 1 0 1 0-2 0v11.586l-3.293-3.293a.999.999 0 1 0-1.414 1.414l5 5a.999.999 0 0 0 1.414 0" /></svg></span>',
+  listeners: {
+    render: function(component) {
+      component.getEl().on('click', function() {
+        console.log('Custom SVG icon clicked');
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<span class="polaris-icon polaris-icon--custom">
+  <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10.707 17.707l5-5a.999.999 0 1 0-1.414-1.414L11 14.586V3a1 1 0 1 0-2 0v11.586l-3.293-3.293a.999.999 0 1 0-1.414 1.414l5 5a.999.999 0 0 0 1.414 0" />
+  </svg>
+</span>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-icon--custom').addEventListener('click', (e) => {
+  console.log('Custom SVG icon clicked');
+});
+</script>`,
+    typescript: `import {Icon} from '@shopify/polaris';
+import React from 'react';
+
+interface IconWithCustomSvgExampleProps {
+  onIconClick?: () => void;
+  accessibilityLabel?: string;
+}
+
+function IconWithCustomSvgExample({ 
+  onIconClick,
+  accessibilityLabel = 'Download arrow'
+}: IconWithCustomSvgExampleProps): JSX.Element {
+  const customSvg = "<svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path d='M10.707 17.707l5-5a.999.999 0 1 0-1.414-1.414L11 14.586V3a1 1 0 1 0-2 0v11.586l-3.293-3.293a.999.999 0 1 0-1.414 1.414l5 5a.999.999 0 0 0 1.414 0' /></svg>";
+
+  return (
+    <Icon 
+      source={customSvg}
+      accessibilityLabel={accessibilityLabel}
+      onClick={onIconClick}
+    />
+  );
+}`
+  },
+  'with-custom-svg-and-color': {
+    react: `import {Icon} from '@shopify/polaris';
+import React from 'react';
+
+function IconWithCustomSvgAndColorExample() {
+  const iconContent = () => {
+    return (
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="10" fill="rebeccapurple" />
+        <circle cx="10" cy="10" r="6" fill="currentColor" />
+        <circle cx="10" cy="10" r="3" />
+      </svg>
+    );
+  };
+
+  return <Icon source={iconContent} tone="warning" />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<span class="icon icon--warning"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="10" fill="rebeccapurple" /><circle cx="10" cy="10" r="6" fill="currentColor" /><circle cx="10" cy="10" r="3" /></svg></span>',
+  listeners: {
+    render: function(component) {
+      component.getEl().on('click', function() {
+        console.log('Custom colored icon clicked');
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<span class="polaris-icon polaris-icon--tone-warning">
+  <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="10" cy="10" r="10" fill="rebeccapurple" />
+    <circle cx="10" cy="10" r="6" fill="currentColor" />
+    <circle cx="10" cy="10" r="3" />
+  </svg>
+</span>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-icon--tone-warning').addEventListener('click', (e) => {
+  console.log('Custom colored icon clicked');
+});
+</script>`,
+    typescript: `import {Icon} from '@shopify/polaris';
+import React, {ReactElement} from 'react';
+
+interface IconWithCustomSvgAndColorExampleProps {
+  tone?: 'base' | 'subdued' | 'primary' | 'info' | 'success' | 'caution' | 'warning' | 'critical';
+  onIconClick?: () => void;
+}
+
+function IconWithCustomSvgAndColorExample({ 
+  tone = 'warning',
+  onIconClick 
+}: IconWithCustomSvgAndColorExampleProps): JSX.Element {
+  const iconContent = (): ReactElement => {
+    return (
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="10" fill="rebeccapurple" />
+        <circle cx="10" cy="10" r="6" fill="currentColor" />
+        <circle cx="10" cy="10" r="3" />
+      </svg>
+    );
+  };
+
+  return (
+    <Icon 
+      source={iconContent} 
+      tone={tone}
+      onClick={onIconClick}
     />
   );
 }`
