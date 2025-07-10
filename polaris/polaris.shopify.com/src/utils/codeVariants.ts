@@ -2058,6 +2058,652 @@ function CardWithCustomFooterActions({
     </Card>
   );
 }`
+  },
+  'with-custom-react-node-title': {
+    react: `import React from 'react';
+import {
+  BlockStack,
+  Card,
+  Icon,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+import {ProductIcon} from '@shopify/polaris-icons';
+
+function CardWithCustomReactNodeTitle() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Products
+        </Text>
+        <BlockStack inlineAlign="start">
+          <InlineStack gap="400">
+            <Icon source={ProductIcon} />
+            <Text as="h3" variant="headingSm">
+              New Products
+            </Text>
+          </InlineStack>
+        </BlockStack>
+        <List>
+          <List.Item>Socks</List.Item>
+          <List.Item>Super Shoes</List.Item>
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      align: 'middle'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<span class="icon">📦</span>',
+      margin: '0 10 0 0'
+    }, {
+      xtype: 'component',
+      html: '<h3 style="margin: 0; font-weight: 600;">New Products</h3>'
+    }],
+    margin: '0 0 15 0'
+  }, {
+    xtype: 'component',
+    html: '<ul style="margin: 0; padding-left: 20px;"><li>Socks</li><li>Super Shoes</li></ul>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-200">
+      <h2 class="polaris-text polaris-text--variant-heading-sm">Products</h2>
+      <div class="polaris-block-stack polaris-block-stack--inline-align-start">
+        <div class="polaris-inline-stack polaris-inline-stack--gap-400">
+          <span class="polaris-icon">📦</span>
+          <h3 class="polaris-text polaris-text--variant-heading-sm">New Products</h3>
+        </div>
+      </div>
+      <ul class="polaris-list">
+        <li class="polaris-list__item">Socks</li>
+        <li class="polaris-list__item">Super Shoes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-list__item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    console.log(\`Product selected: \${e.target.textContent}\`);
+  });
+});
+</script>`,
+    typescript: `import React from 'react';
+import {
+  BlockStack,
+  Card,
+  Icon,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+import {ProductIcon} from '@shopify/polaris-icons';
+
+interface Product {
+  id: string;
+  name: string;
+}
+
+interface CardWithCustomReactNodeTitleProps {
+  title?: string;
+  subtitle?: string;
+  products?: Product[];
+  onProductClick?: (product: Product) => void;
+}
+
+function CardWithCustomReactNodeTitle({
+  title = "Products",
+  subtitle = "New Products",
+  products = [
+    { id: '1', name: 'Socks' },
+    { id: '2', name: 'Super Shoes' }
+  ],
+  onProductClick
+}: CardWithCustomReactNodeTitleProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          {title}
+        </Text>
+        <BlockStack inlineAlign="start">
+          <InlineStack gap="400">
+            <Icon source={ProductIcon} />
+            <Text as="h3" variant="headingSm">
+              {subtitle}
+            </Text>
+          </InlineStack>
+        </BlockStack>
+        <List>
+          {products.map((product) => (
+            <List.Item 
+              key={product.id}
+              onClick={() => onProductClick?.(product)}
+            >
+              {product.name}
+            </List.Item>
+          ))}
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-flushed-section': {
+    react: `import React from 'react';
+import {Bleed, Box, Card, Image, Text} from '@shopify/polaris';
+
+function CardWithFlushedSection() {
+  return (
+    <Card roundedAbove="sm">
+      <Bleed marginInline="400" marginBlock="400">
+        <Image
+          source="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg"
+          alt="a sheet with purple and orange stripes"
+        />
+        <Box background="bg-surface-secondary" padding="400">
+          <Text as="p" variant="bodyMd">
+            You can use sales reports to see information about your customers'
+            orders based on criteria such as sales over time, by channel, or by
+            staff.
+          </Text>
+        </Box>
+      </Bleed>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  border: false,
+  bodyPadding: 0,
+  layout: 'fit',
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'image',
+      src: 'https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg',
+      alt: 'a sheet with purple and orange stripes',
+      height: 200,
+      style: 'object-fit: cover;'
+    }, {
+      xtype: 'container',
+      style: {
+        backgroundColor: '#f6f6f7',
+        padding: '20px'
+      },
+      html: '<p style="margin: 0; line-height: 1.5;">You can use sales reports to see information about your customers\' orders based on criteria such as sales over time, by channel, or by staff.</p>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__bleed">
+    <img 
+      src="https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg" 
+      alt="a sheet with purple and orange stripes"
+      class="polaris-image polaris-image--full-width"
+    />
+    <div class="polaris-box polaris-box--bg-surface-secondary polaris-box--padding-400">
+      <p class="polaris-text polaris-text--variant-body-md">
+        You can use sales reports to see information about your customers'
+        orders based on criteria such as sales over time, by channel, or by
+        staff.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-image').addEventListener('load', (e) => {
+  console.log('Image loaded successfully');
+});
+</script>`,
+    typescript: `import React from 'react';
+import {Bleed, Box, Card, Image, Text} from '@shopify/polaris';
+
+interface ImageData {
+  source: string;
+  alt: string;
+}
+
+interface CardWithFlushedSectionProps {
+  image?: ImageData;
+  content?: string;
+  onImageLoad?: () => void;
+}
+
+function CardWithFlushedSection({
+  image = {
+    source: "https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg",
+    alt: "a sheet with purple and orange stripes"
+  },
+  content = "You can use sales reports to see information about your customers' orders based on criteria such as sales over time, by channel, or by staff.",
+  onImageLoad
+}: CardWithFlushedSectionProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <Bleed marginInline="400" marginBlock="400">
+        <Image
+          source={image.source}
+          alt={image.alt}
+          onLoad={onImageLoad}
+        />
+        <Box background="bg-surface-secondary" padding="400">
+          <Text as="p" variant="bodyMd">
+            {content}
+          </Text>
+        </Box>
+      </Bleed>
+    </Card>
+  );
+}`
+  },
+  'with-header-icon-actions': {
+    react: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {ExportIcon} from '@shopify/polaris-icons';
+
+function CardWithHeaderIconActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            Variants
+          </Text>
+          <Button
+            onClick={() => {}}
+            accessibilityLabel="Export variants"
+            icon={ExportIcon}
+          />
+        </InlineGrid>
+        <Text as="p" variant="bodyMd">
+          Export variants
+        </Text>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Variants',
+  padding: 20,
+  tools: [{
+    type: 'save',
+    tooltip: 'Export variants',
+    handler: function() {
+      console.log('Export variants clicked');
+    }
+  }],
+  html: '<p style="margin: 0; line-height: 1.5;">Export variants</p>'
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-200">
+      <div class="polaris-inline-grid polaris-inline-grid--columns-1fr-auto">
+        <h2 class="polaris-text polaris-text--variant-heading-sm">Variants</h2>
+        <button 
+          class="polaris-button polaris-button--icon-only" 
+          aria-label="Export variants"
+          id="export-button"
+        >
+          <span class="polaris-icon">📤</span>
+        </button>
+      </div>
+      <p class="polaris-text polaris-text--variant-body-md">
+        Export variants
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('export-button').addEventListener('click', (e) => {
+  console.log('Export variants clicked');
+  // Add export functionality here
+});
+</script>`,
+    typescript: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {ExportIcon} from '@shopify/polaris-icons';
+
+interface CardWithHeaderIconActionsProps {
+  title?: string;
+  description?: string;
+  exportLabel?: string;
+  onExport?: () => void;
+  exportIcon?: React.ComponentType;
+}
+
+function CardWithHeaderIconActions({
+  title = "Variants",
+  description = "Export variants",
+  exportLabel = "Export variants",
+  onExport = () => console.log('Export clicked'),
+  exportIcon = ExportIcon
+}: CardWithHeaderIconActionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            {title}
+          </Text>
+          <Button
+            onClick={onExport}
+            accessibilityLabel={exportLabel}
+            icon={exportIcon}
+          />
+        </InlineGrid>
+        <Text as="p" variant="bodyMd">
+          {description}
+        </Text>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-multiple-footer-actions': {
+    react: `import React, {useState} from 'react';
+import {
+  ActionList,
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Popover,
+  Text,
+} from '@shopify/polaris';
+
+function CardWithMultipleFooterActions() {
+  const [actionActive, toggleAction] = useState(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const items = [
+    {content: 'Cancel shipment', destructive: true},
+    {content: 'Add another shipment', disabled: true},
+  ];
+
+  const disclosureButtonActivator = (
+    <Button disclosure accessibilityLabel="More" onClick={handleToggleAction}>
+      More
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList items={items} />
+    </Popover>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment 1234
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            <List.Item>1 × Oasis Glass, 4-Pack</List.Item>
+            <List.Item>1 × Anubis Cup, 2-Pack</List.Item>
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            {disclosureButton}
+            <Button
+              variant="primary"
+              onClick={() => {}}
+              accessibilityLabel="Add tracking number"
+            >
+              Add tracking number
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Shipment 1234',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<h3 style="margin: 0 0 10px 0; font-weight: 600;">Items</h3><ul style="margin: 0; padding-left: 20px;"><li>1 × Oasis Glass, 4-Pack</li><li>1 × Anubis Cup, 2-Pack</li></ul>',
+    flex: 1
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    layout: {
+      pack: 'end'
+    },
+    items: [{
+      text: 'More',
+      menu: [{
+        text: 'Cancel shipment',
+        iconCls: 'delete',
+        handler: function() {
+          console.log('Cancel shipment clicked');
+        }
+      }, {
+        text: 'Add another shipment',
+        disabled: true
+      }]
+    }, {
+      text: 'Add tracking number',
+      ui: 'primary',
+      handler: function() {
+        console.log('Add tracking number clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-200">
+      <h2 class="polaris-text polaris-text--variant-heading-sm">Shipment 1234</h2>
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">Items</h3>
+        <ul class="polaris-list">
+          <li class="polaris-list__item">1 × Oasis Glass, 4-Pack</li>
+          <li class="polaris-list__item">1 × Anubis Cup, 2-Pack</li>
+        </ul>
+      </div>
+      <div class="polaris-inline-stack polaris-inline-stack--align-end">
+        <div class="polaris-button-group">
+          <div class="polaris-popover-wrapper">
+            <button class="polaris-button polaris-button--disclosure" id="more-button">
+              More
+            </button>
+            <div class="polaris-popover polaris-popover--hidden" id="more-popover">
+              <ul class="polaris-action-list">
+                <li class="polaris-action-list__item polaris-action-list__item--destructive">
+                  <button class="polaris-action-list__button">Cancel shipment</button>
+                </li>
+                <li class="polaris-action-list__item polaris-action-list__item--disabled">
+                  <button class="polaris-action-list__button" disabled>Add another shipment</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <button class="polaris-button polaris-button--primary" id="tracking-button">
+            Add tracking number
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const moreButton = document.getElementById('more-button');
+const morePopover = document.getElementById('more-popover');
+const trackingButton = document.getElementById('tracking-button');
+
+moreButton.addEventListener('click', (e) => {
+  morePopover.classList.toggle('polaris-popover--hidden');
+});
+
+trackingButton.addEventListener('click', (e) => {
+  console.log('Add tracking number clicked');
+});
+
+document.querySelectorAll('.polaris-action-list__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    if (!e.target.disabled) {
+      console.log(\`Action clicked: \${e.target.textContent}\`);
+      morePopover.classList.add('polaris-popover--hidden');
+    }
+  });
+});
+</script>`,
+    typescript: `import React, {useState} from 'react';
+import {
+  ActionList,
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Popover,
+  Text,
+} from '@shopify/polaris';
+
+interface ShipmentItem {
+  id: string;
+  name: string;
+  quantity: number;
+}
+
+interface ActionItem {
+  content: string;
+  destructive?: boolean;
+  disabled?: boolean;
+  onAction?: () => void;
+}
+
+interface CardWithMultipleFooterActionsProps {
+  shipmentId?: string;
+  items?: ShipmentItem[];
+  actions?: ActionItem[];
+  onPrimaryAction?: () => void;
+  primaryActionText?: string;
+}
+
+function CardWithMultipleFooterActions({
+  shipmentId = "1234",
+  items = [
+    { id: '1', name: 'Oasis Glass, 4-Pack', quantity: 1 },
+    { id: '2', name: 'Anubis Cup, 2-Pack', quantity: 1 }
+  ],
+  actions = [
+    { content: 'Cancel shipment', destructive: true },
+    { content: 'Add another shipment', disabled: true }
+  ],
+  onPrimaryAction = () => console.log('Add tracking number clicked'),
+  primaryActionText = "Add tracking number"
+}: CardWithMultipleFooterActionsProps): JSX.Element {
+  const [actionActive, toggleAction] = useState(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const disclosureButtonActivator = (
+    <Button disclosure accessibilityLabel="More actions" onClick={handleToggleAction}>
+      More
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList items={actions} />
+    </Popover>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment {shipmentId}
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            {items.map((item) => (
+              <List.Item key={item.id}>
+                {item.quantity} × {item.name}
+              </List.Item>
+            ))}
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            {disclosureButton}
+            <Button
+              variant="primary"
+              onClick={onPrimaryAction}
+              accessibilityLabel={primaryActionText}
+            >
+              {primaryActionText}
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`
   }
 };
 
