@@ -2704,6 +2704,584 @@ function CardWithMultipleFooterActions({
     </Card>
   );
 }`
+  },
+  'with-multiple-sections': {
+    react: `import React from 'react';
+import {Box, Card, Text} from '@shopify/polaris';
+
+function CardWithMultipleSections() {
+  return (
+    <Card roundedAbove="sm">
+      <Text as="h2" variant="headingSm">
+        Online store dashboard
+      </Text>
+      <Box paddingBlock="200">
+        <Text as="p" variant="bodyMd">
+          View a summary of your online store's performance.
+        </Text>
+      </Box>
+      <Box paddingBlockStart="200">
+        <Text as="p" variant="bodyMd">
+          View a summary of your online store's performance, including sales,
+          visitors, top products, and referrals.
+        </Text>
+      </Box>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Online store dashboard',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p style="margin: 0; padding: 10px 0; line-height: 1.5;">View a summary of your online store\\'s performance.</p>',
+    style: {
+      borderBottom: '1px solid #e1e1e1'
+    }
+  }, {
+    xtype: 'component',
+    html: '<p style="margin: 0; padding: 10px 0; line-height: 1.5;">View a summary of your online store\\'s performance, including sales, visitors, top products, and referrals.</p>',
+    margin: '10 0 0 0'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <h2 class="polaris-text polaris-text--variant-heading-sm">
+      Online store dashboard
+    </h2>
+    <div class="polaris-box polaris-box--padding-block-200">
+      <p class="polaris-text polaris-text--variant-body-md">
+        View a summary of your online store's performance.
+      </p>
+    </div>
+    <div class="polaris-box polaris-box--padding-block-start-200">
+      <p class="polaris-text polaris-text--variant-body-md">
+        View a summary of your online store's performance, including sales,
+        visitors, top products, and referrals.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-box').forEach(section => {
+  section.addEventListener('mouseenter', (e) => {
+    e.target.style.backgroundColor = '#f6f6f7';
+  });
+  section.addEventListener('mouseleave', (e) => {
+    e.target.style.backgroundColor = '';
+  });
+});
+</script>`,
+    typescript: `import React from 'react';
+import {Box, Card, Text} from '@shopify/polaris';
+
+interface Section {
+  id: string;
+  content: string;
+}
+
+interface CardWithMultipleSectionsProps {
+  title?: string;
+  sections?: Section[];
+  onSectionClick?: (section: Section) => void;
+}
+
+function CardWithMultipleSections({
+  title = "Online store dashboard",
+  sections = [
+    { id: '1', content: "View a summary of your online store's performance." },
+    { id: '2', content: "View a summary of your online store's performance, including sales, visitors, top products, and referrals." }
+  ],
+  onSectionClick
+}: CardWithMultipleSectionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <Text as="h2" variant="headingSm">
+        {title}
+      </Text>
+      {sections.map((section, index) => (
+        <Box 
+          key={section.id}
+          paddingBlock={index === 0 ? "200" : undefined}
+          paddingBlockStart={index > 0 ? "200" : undefined}
+          onClick={() => onSectionClick?.(section)}
+        >
+          <Text as="p" variant="bodyMd">
+            {section.content}
+          </Text>
+        </Box>
+      ))}
+    </Card>
+  );
+}`
+  },
+  'with-multiple-titled-sections': {
+    react: `import React from 'react';
+import {BlockStack, Box, Card, Text} from '@shopify/polaris';
+
+function CardWithMultipleTitledSections() {
+  return (
+    <Card roundedAbove="sm">
+      <Text as="h2" variant="headingSm">
+        Online store dashboard
+      </Text>
+      <Box paddingBlock="200">
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Reports
+          </Text>
+          <Text as="p" variant="bodyMd">
+            View a summary of your online store's performance.
+          </Text>
+        </BlockStack>
+      </Box>
+      <Box paddingBlockStart="200">
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Summary
+          </Text>
+          <Text as="p" variant="bodyMd">
+            View a summary of your online store's performance, including sales,
+            visitors, top products, and referrals.
+          </Text>
+        </BlockStack>
+      </Box>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Online store dashboard',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    padding: '10 0',
+    style: {
+      borderBottom: '1px solid #e1e1e1'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<h3 style="margin: 0 0 10px 0; font-weight: 600;">Reports</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p style="margin: 0; line-height: 1.5;">View a summary of your online store\\'s performance.</p>'
+    }]
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    padding: '10 0 0 0',
+    items: [{
+      xtype: 'component',
+      html: '<h3 style="margin: 0 0 10px 0; font-weight: 600;">Summary</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p style="margin: 0; line-height: 1.5;">View a summary of your online store\\'s performance, including sales, visitors, top products, and referrals.</p>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <h2 class="polaris-text polaris-text--variant-heading-sm">
+      Online store dashboard
+    </h2>
+    <div class="polaris-box polaris-box--padding-block-200">
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+          Reports
+        </h3>
+        <p class="polaris-text polaris-text--variant-body-md">
+          View a summary of your online store's performance.
+        </p>
+      </div>
+    </div>
+    <div class="polaris-box polaris-box--padding-block-start-200">
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+          Summary
+        </h3>
+        <p class="polaris-text polaris-text--variant-body-md">
+          View a summary of your online store's performance, including sales,
+          visitors, top products, and referrals.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-block-stack').forEach(section => {
+  section.addEventListener('click', (e) => {
+    const title = section.querySelector('h3').textContent;
+    console.log(\`Section clicked: \${title}\`);
+  });
+});
+</script>`,
+    typescript: `import React from 'react';
+import {BlockStack, Box, Card, Text} from '@shopify/polaris';
+
+interface TitledSection {
+  id: string;
+  title: string;
+  content: string;
+}
+
+interface CardWithMultipleTitledSectionsProps {
+  title?: string;
+  sections?: TitledSection[];
+  onSectionClick?: (section: TitledSection) => void;
+}
+
+function CardWithMultipleTitledSections({
+  title = "Online store dashboard",
+  sections = [
+    { 
+      id: '1', 
+      title: "Reports", 
+      content: "View a summary of your online store's performance." 
+    },
+    { 
+      id: '2', 
+      title: "Summary", 
+      content: "View a summary of your online store's performance, including sales, visitors, top products, and referrals." 
+    }
+  ],
+  onSectionClick
+}: CardWithMultipleTitledSectionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <Text as="h2" variant="headingSm">
+        {title}
+      </Text>
+      {sections.map((section, index) => (
+        <Box 
+          key={section.id}
+          paddingBlock={index === 0 ? "200" : undefined}
+          paddingBlockStart={index > 0 ? "200" : undefined}
+          onClick={() => onSectionClick?.(section)}
+        >
+          <BlockStack gap="200">
+            <Text as="h3" variant="headingSm" fontWeight="medium">
+              {section.title}
+            </Text>
+            <Text as="p" variant="bodyMd">
+              {section.content}
+            </Text>
+          </BlockStack>
+        </Box>
+      ))}
+    </Card>
+  );
+}`
+  },
+  'with-responsive-border-radius': {
+    react: `import {Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+function CardWithResponsiveBorderRadius() {
+  return (
+    <Card roundedAbove="md" background="bg-surface-secondary">
+      <Text as="h2" variant="bodyMd">
+        Content inside a card
+      </Text>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'card-responsive-radius',
+  style: {
+    backgroundColor: '#f6f6f7',
+    borderRadius: '8px'
+  },
+  bodyStyle: {
+    backgroundColor: 'transparent'
+  },
+  border: false,
+  padding: 20,
+  html: '<h2 style="margin: 0; font-size: 14px; font-weight: normal;">Content inside a card</h2>',
+  listeners: {
+    afterrender: function(panel) {
+      // Responsive border radius based on viewport
+      const updateRadius = () => {
+        const radius = window.innerWidth >= 768 ? '8px' : '4px';
+        panel.getEl().setStyle('border-radius', radius);
+      };
+      updateRadius();
+      window.addEventListener('resize', updateRadius);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded-above-md polaris-card--bg-surface-secondary">
+  <div class="polaris-card__content">
+    <h2 class="polaris-text polaris-text--variant-body-md">
+      Content inside a card
+    </h2>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior for responsive border radius
+function updateCardRadius() {
+  const cards = document.querySelectorAll('.polaris-card--rounded-above-md');
+  cards.forEach(card => {
+    if (window.innerWidth >= 768) {
+      card.style.borderRadius = '8px';
+    } else {
+      card.style.borderRadius = '4px';
+    }
+  });
+}
+
+// Apply on load and resize
+updateCardRadius();
+window.addEventListener('resize', updateCardRadius);
+</script>`,
+    typescript: `import {Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+type ResponsiveSize = 'sm' | 'md' | 'lg' | 'xl';
+type BackgroundVariant = 'bg-surface' | 'bg-surface-secondary' | 'bg-surface-tertiary';
+
+interface CardWithResponsiveBorderRadiusProps {
+  roundedAbove?: ResponsiveSize;
+  background?: BackgroundVariant;
+  content?: string;
+  variant?: 'bodyMd' | 'headingSm' | 'headingMd';
+  as?: 'h1' | 'h2' | 'h3' | 'p';
+}
+
+function CardWithResponsiveBorderRadius({
+  roundedAbove = "md",
+  background = "bg-surface-secondary",
+  content = "Content inside a card",
+  variant = "bodyMd",
+  as = "h2"
+}: CardWithResponsiveBorderRadiusProps): JSX.Element {
+  return (
+    <Card roundedAbove={roundedAbove} background={background}>
+      <Text as={as} variant={variant}>
+        {content}
+      </Text>
+    </Card>
+  );
+}`
+  },
+  'with-sections-and-actions': {
+    react: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {EditIcon} from '@shopify/polaris-icons';
+
+function CardWithSectionsAndActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text as="p" variant="bodyMd">
+            John Smith
+          </Text>
+        </BlockStack>
+        <BlockStack gap="200">
+          <InlineGrid columns="1fr auto">
+            <Text as="h3" variant="headingSm" fontWeight="medium">
+              Contact Information
+            </Text>
+            <Button
+              icon={EditIcon}
+              variant="tertiary"
+              onClick={() => {}}
+              accessibilityLabel="Edit"
+            />
+          </InlineGrid>
+          <Text as="p" variant="bodyMd">
+            john.smith@example.com
+          </Text>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customer',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p style="margin: 0; font-size: 14px; line-height: 1.5;">John Smith</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        pack: 'justify',
+        align: 'middle'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<h3 style="margin: 0; font-weight: 600; font-size: 14px;">Contact Information</h3>'
+      }, {
+        xtype: 'button',
+        text: 'Edit',
+        iconCls: 'edit',
+        ui: 'tertiary',
+        handler: function() {
+          console.log('Edit contact information');
+        }
+      }],
+      margin: '0 0 10 0'
+    }, {
+      xtype: 'component',
+      html: '<p style="margin: 0; font-size: 14px; line-height: 1.5;">john.smith@example.com</p>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-400">
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h2 class="polaris-text polaris-text--variant-heading-sm">Customer</h2>
+        <p class="polaris-text polaris-text--variant-body-md">John Smith</p>
+      </div>
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <div class="polaris-inline-grid polaris-inline-grid--columns-1fr-auto">
+          <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+            Contact Information
+          </h3>
+          <button 
+            class="polaris-button polaris-button--tertiary polaris-button--icon-only" 
+            aria-label="Edit"
+            id="edit-contact-button"
+          >
+            <span class="polaris-icon">✏️</span>
+          </button>
+        </div>
+        <p class="polaris-text polaris-text--variant-body-md">
+          john.smith@example.com
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('edit-contact-button').addEventListener('click', (e) => {
+  console.log('Edit contact information clicked');
+  // Add edit functionality here
+});
+
+// Make email clickable
+document.querySelectorAll('.polaris-text').forEach(text => {
+  if (text.textContent.includes('@')) {
+    text.style.cursor = 'pointer';
+    text.addEventListener('click', (e) => {
+      window.location.href = \`mailto:\${e.target.textContent}\`;
+    });
+  }
+});
+</script>`,
+    typescript: `import React from 'react';
+import {BlockStack, Button, Card, InlineGrid, Text} from '@shopify/polaris';
+import {EditIcon} from '@shopify/polaris-icons';
+
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface Section {
+  id: string;
+  title: string;
+  content: string;
+  editable?: boolean;
+}
+
+interface CardWithSectionsAndActionsProps {
+  customer?: Customer;
+  sections?: Section[];
+  onEdit?: (sectionId: string) => void;
+  onCustomerClick?: (customer: Customer) => void;
+}
+
+function CardWithSectionsAndActions({
+  customer = { id: '1', name: 'John Smith', email: 'john.smith@example.com' },
+  sections = [
+    { id: 'contact', title: 'Contact Information', content: 'john.smith@example.com', editable: true }
+  ],
+  onEdit,
+  onCustomerClick
+}: CardWithSectionsAndActionsProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text 
+            as="p" 
+            variant="bodyMd"
+            onClick={() => onCustomerClick?.(customer)}
+          >
+            {customer.name}
+          </Text>
+        </BlockStack>
+        {sections.map((section) => (
+          <BlockStack key={section.id} gap="200">
+            <InlineGrid columns="1fr auto">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                {section.title}
+              </Text>
+              {section.editable && (
+                <Button
+                  icon={EditIcon}
+                  variant="tertiary"
+                  onClick={() => onEdit?.(section.id)}
+                  accessibilityLabel={\`Edit \${section.title}\`}
+                />
+              )}
+            </InlineGrid>
+            <Text as="p" variant="bodyMd">
+              {section.content}
+            </Text>
+          </BlockStack>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}`
   }
 };
 
