@@ -62,27 +62,32 @@ const getMultiLanguageCode = (
   // Parse the filename to extract component and example names
   const parsed = parseExampleFileName(fileName);
   
+  // Get the code variants if they exist
+  let codeVariants = null;
+  if (parsed) {
+    codeVariants = getCodeExamples(parsed.component, parsed.example);
+  }
+  
+  // Always show all 5 tabs with placeholders for missing implementations
   const codeTabs = [
     {title: 'React', code: reactCode.trim()},
-    {title: 'HTML', code: htmlCode}
-  ];
-  
-  // If we successfully parsed the filename, try to get additional code variants
-  if (parsed) {
-    const codeVariants = getCodeExamples(parsed.component, parsed.example);
-    
-    if (codeVariants) {
-      if (codeVariants.extjs) {
-        codeTabs.push({title: 'ExtJS', code: codeVariants.extjs.trim()});
-      }
-      if (codeVariants.vanilla) {
-        codeTabs.push({title: 'Vanilla JS', code: codeVariants.vanilla.trim()});
-      }
-      if (codeVariants.typescript) {
-        codeTabs.push({title: 'TypeScript', code: codeVariants.typescript.trim()});
-      }
+    {title: 'HTML', code: htmlCode},
+    {
+      title: 'ExtJS', 
+      code: codeVariants?.extjs?.trim() || 
+        `// ExtJS implementation coming soon\n// This example will demonstrate how to implement this component using ExtJS\n\n// Placeholder for: ${fileName}`
+    },
+    {
+      title: 'Vanilla JS', 
+      code: codeVariants?.vanilla?.trim() || 
+        `<!-- Vanilla JS implementation coming soon -->\n<!-- This example will show pure HTML/CSS/JavaScript implementation -->\n\n<!-- Placeholder for: ${fileName} -->`
+    },
+    {
+      title: 'TypeScript', 
+      code: codeVariants?.typescript?.trim() || 
+        `// TypeScript implementation coming soon\n// This example will include proper type definitions and interfaces\n\n// Placeholder for: ${fileName}`
     }
-  }
+  ];
   
   return codeTabs;
 };
