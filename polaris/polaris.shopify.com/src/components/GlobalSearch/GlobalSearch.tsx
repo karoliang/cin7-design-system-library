@@ -4,6 +4,7 @@ import {
   SearchResultCategory,
   SearchResults,
   SearchResult,
+  FoundationsCategory,
 } from '../../types';
 import {useThrottle} from '../../utils/hooks';
 import styles from './GlobalSearch.module.scss';
@@ -390,7 +391,7 @@ function SearchResults({
                           renderPreview={() => (
                             <FoundationsThumbnail
                               icon={icon || 'BookOpenIcon'}
-                              category={category}
+                              category={category as FoundationsCategory}
                             />
                           )}
                         />
