@@ -3987,6 +3987,381 @@ function SuccessBanner({
     />
   );
 }`
+  },
+  dismissible: {
+    react: `import {Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner onDismiss={() => {}}>
+      <p>
+        Use your finance report to get detailed information about your business.{' '}
+        <Link url="">Let us know what you think</Link>
+      </p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">ℹ</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    html: '<p>Use your finance report to get detailed information about your business. <a href="#" class="banner-link">Let us know what you think</a></p>'
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner" role="status" aria-live="polite">
+  <div class="polaris-banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M10 7v3M10 14h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="polaris-banner__content">
+    <p>
+      Use your finance report to get detailed information about your business. 
+      <a href="#" class="polaris-banner__link">Let us know what you think</a>
+    </p>
+  </div>
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner" id="dismiss-banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('dismiss-banner').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
+    typescript: `import {Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+interface DismissibleBannerProps {
+  message?: React.ReactNode;
+  linkText?: string;
+  linkUrl?: string;
+  onDismiss?: () => void;
+}
+
+function DismissibleBanner({
+  message = "Use your finance report to get detailed information about your business.",
+  linkText = "Let us know what you think",
+  linkUrl = "",
+  onDismiss
+}: DismissibleBannerProps): JSX.Element {
+  const handleDismiss = () => {
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      console.log('Banner dismissed');
+    }
+  };
+
+  return (
+    <Banner onDismiss={handleDismiss}>
+      <p>
+        {message}{' '}
+        <Link url={linkUrl}>{linkText}</Link>
+      </p>
+    </Banner>
+  );
+}`
+  },
+  informational: {
+    react: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner
+      title="USPS has updated their rates"
+      action={{content: 'Update rates', url: ''}}
+      secondaryAction={{content: 'Learn more'}}
+      tone="info"
+      onDismiss={() => {}}
+    >
+      <p>Make sure you know how these changes affect your store.</p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--info',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">ℹ</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">USPS has updated their rates</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p>Make sure you know how these changes affect your store.</p>'
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [{
+        xtype: 'button',
+        text: 'Update rates',
+        handler: function() {
+          console.log('Update rates clicked');
+        }
+      }, {
+        xtype: 'button',
+        text: 'Learn more',
+        ui: 'plain',
+        handler: function() {
+          console.log('Learn more clicked');
+        }
+      }]
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner polaris-banner--info" role="status" aria-live="polite">
+  <div class="polaris-banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M10 7v3M10 14h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">USPS has updated their rates</h3>
+    <p>Make sure you know how these changes affect your store.</p>
+    <div class="polaris-banner__actions">
+      <button class="polaris-button" id="update-rates-btn">Update rates</button>
+      <button class="polaris-button polaris-button--plain" id="learn-more-btn">Learn more</button>
+    </div>
+  </div>
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner" id="dismiss-info-banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('update-rates-btn').addEventListener('click', () => {
+  console.log('Update rates clicked');
+});
+
+document.getElementById('learn-more-btn').addEventListener('click', () => {
+  console.log('Learn more clicked');
+});
+
+document.getElementById('dismiss-info-banner').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
+    typescript: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+interface BannerAction {
+  content: string;
+  url?: string;
+  onAction?: () => void;
+}
+
+interface InformationalBannerProps {
+  title?: string;
+  message?: string;
+  primaryAction?: BannerAction;
+  secondaryAction?: BannerAction;
+  onDismiss?: () => void;
+  tone?: 'success' | 'info' | 'warning' | 'critical';
+}
+
+function InformationalBanner({
+  title = "USPS has updated their rates",
+  message = "Make sure you know how these changes affect your store.",
+  primaryAction = { content: 'Update rates', url: '' },
+  secondaryAction = { content: 'Learn more' },
+  onDismiss,
+  tone = "info"
+}: InformationalBannerProps): JSX.Element {
+  const handleDismiss = () => {
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      console.log('Banner dismissed');
+    }
+  };
+
+  return (
+    <Banner
+      title={title}
+      action={primaryAction}
+      secondaryAction={secondaryAction}
+      tone={tone}
+      onDismiss={handleDismiss}
+    >
+      <p>{message}</p>
+    </Banner>
+  );
+}`
+  },
+  warning: {
+    react: `import {Banner, List} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner
+      title="Before you can purchase a shipping label, this change needs to be made:"
+      action={{content: 'Edit address'}}
+      tone="warning"
+    >
+      <List>
+        <List.Item>
+          The name of the city you're shipping to has characters that aren't
+          allowed. City name can only include spaces and hyphens.
+        </List.Item>
+      </List>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--warning',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">⚠</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">Before you can purchase a shipping label, this change needs to be made:</h3>'
+    }, {
+      xtype: 'component',
+      html: '<ul><li>The name of the city you\\'re shipping to has characters that aren\\'t allowed. City name can only include spaces and hyphens.</li></ul>'
+    }, {
+      xtype: 'button',
+      text: 'Edit address',
+      handler: function() {
+        console.log('Edit address clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner polaris-banner--warning" role="alert" aria-live="assertive">
+  <div class="polaris-banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 2L2 18h16L10 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 8v4M10 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">Before you can purchase a shipping label, this change needs to be made:</h3>
+    <ul class="polaris-list">
+      <li>
+        The name of the city you're shipping to has characters that aren't
+        allowed. City name can only include spaces and hyphens.
+      </li>
+    </ul>
+    <div class="polaris-banner__actions">
+      <button class="polaris-button" id="edit-address-btn">Edit address</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('edit-address-btn').addEventListener('click', () => {
+  console.log('Edit address clicked');
+});
+</script>`,
+    typescript: `import {Banner, List} from '@shopify/polaris';
+import React from 'react';
+
+interface ValidationIssue {
+  id: string;
+  message: string;
+}
+
+interface WarningBannerProps {
+  title?: string;
+  issues?: ValidationIssue[];
+  actionText?: string;
+  onAction?: () => void;
+}
+
+function WarningBanner({
+  title = "Before you can purchase a shipping label, this change needs to be made:",
+  issues = [{
+    id: '1',
+    message: "The name of the city you're shipping to has characters that aren't allowed. City name can only include spaces and hyphens."
+  }],
+  actionText = "Edit address",
+  onAction
+}: WarningBannerProps): JSX.Element {
+  const handleAction = () => {
+    if (onAction) {
+      onAction();
+    } else {
+      console.log('Warning action clicked');
+    }
+  };
+
+  return (
+    <Banner
+      title={title}
+      action={{ content: actionText, onAction: handleAction }}
+      tone="warning"
+    >
+      <List>
+        {issues.map((issue) => (
+          <List.Item key={issue.id}>
+            {issue.message}
+          </List.Item>
+        ))}
+      </List>
+    </Banner>
+  );
+}`
   }
 };
 

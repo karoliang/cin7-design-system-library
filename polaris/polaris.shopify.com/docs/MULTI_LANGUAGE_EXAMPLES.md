@@ -11,7 +11,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (87 examples)
+### ✅ Completed Components (90 examples)
 - **Button Group** (3/3 examples) ✅
   - default
   - with-segmented-buttons
@@ -47,10 +47,13 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - disabled
   - email
   - multiline
-- **Banner** (3/9 examples)
+- **Banner** (6/9 examples)
   - default
   - critical
   - success
+  - dismissible
+  - informational
+  - warning
 - **Select** (2/6 examples)
   - default
   - with-validation-error
