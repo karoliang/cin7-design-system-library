@@ -1134,6 +1134,930 @@ function CardWithHeaderActions({
     </Card>
   );
 }`
+  },
+  'with-all-elements': {
+    react: `import React, {useState} from 'react';
+import {
+  ActionList,
+  Bleed,
+  BlockStack,
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  InlineStack,
+  List,
+  Popover,
+  ResourceList,
+  Text,
+} from '@shopify/polaris';
+import {ExportIcon} from '@shopify/polaris-icons';
+
+function CardWithAllElements() {
+  const [actionActive, toggleAction] = useState(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const items = [{content: 'Gross Sales'}, {content: 'Net Sales'}];
+
+  const disclosureButtonActivator = (
+    <Button variant="plain" disclosure onClick={handleToggleAction}>
+      View Sales
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList items={items} />
+    </Popover>
+  );
+
+  const salesMarkup = (
+    <div>
+      <ResourceList
+        resourceName={{singular: 'sale', plural: 'sales'}}
+        items={[
+          {
+            sales: 'Orders',
+            amount: 'USD$0.00',
+            url: '#',
+          },
+          {
+            sales: 'Returns',
+            amount: '-USD$250.00',
+            url: '#',
+          },
+        ]}
+        renderItem={(item) => {
+          const {sales, amount, url} = item;
+          return (
+            <ResourceList.Item
+              id={sales}
+              url={url}
+              accessibilityLabel={\`View Sales for \${sales}\`}
+            >
+              <InlineStack align="space-between">
+                <div>{sales}</div>
+                <div>{amount}</div>
+              </InlineStack>
+            </ResourceList.Item>
+          );
+        }}
+      />
+    </div>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            Sales
+          </Text>
+          <ButtonGroup>
+            <Button variant="plain">Total Sales</Button>
+            {disclosureButton}
+          </ButtonGroup>
+        </InlineGrid>
+        <BlockStack gap="400">
+          <Text as="p" variant="bodyMd">
+            You can use sales reports to see information about your customers'
+            orders based on criteria such as sales over time, by channel, or by
+            staff.
+          </Text>
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Total Sales Breakdown
+          </Text>
+        </BlockStack>
+        {salesMarkup}
+        <Bleed marginInline="400">
+          <Box
+            background="bg-surface-secondary"
+            paddingBlock="300"
+            paddingInline="400"
+          >
+            <BlockStack gap="200">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                Deactivated reports
+              </Text>
+              <List>
+                <List.Item>Payouts</List.Item>
+                <List.Item>Total Sales By Channel</List.Item>
+              </List>
+            </BlockStack>
+          </Box>
+        </Bleed>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Note
+          </Text>
+          <Text as="p" variant="bodyMd">
+            The sales reports are available only if your store is on the Shopify
+            plan or higher.
+          </Text>
+          <InlineStack align="end">
+            <ButtonGroup>
+              <Button onClick={() => {}} accessibilityLabel="Dismiss">
+                Dismiss
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => {}}
+                icon={ExportIcon}
+                accessibilityLabel="Export Report"
+              >
+                Export Report
+              </Button>
+            </ButtonGroup>
+          </InlineStack>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Sales',
+  headerCfg: {
+    style: {
+      fontSize: '14px',
+      fontWeight: '500'
+    }
+  },
+  cls: 'polaris-card',
+  bodyPadding: 16,
+  shadow: true,
+  tools: [{
+    type: 'gear',
+    tooltip: 'Total Sales',
+    handler: function() {
+      console.log('Total Sales clicked');
+    }
+  }, {
+    type: 'help',
+    tooltip: 'View Sales',
+    handler: function() {
+      console.log('View Sales clicked');
+    }
+  }],
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p>You can use sales reports to see information about your customers\\' orders based on criteria such as sales over time, by channel, or by staff.</p>',
+    margin: '0 0 16 0'
+  }, {
+    xtype: 'component',
+    html: '<h3 style="font-weight: 500; margin: 0 0 16 0;">Total Sales Breakdown</h3>'
+  }, {
+    xtype: 'grid',
+    store: {
+      fields: ['sales', 'amount'],
+      data: [
+        { sales: 'Orders', amount: 'USD$0.00' },
+        { sales: 'Returns', amount: '-USD$250.00' }
+      ]
+    },
+    columns: [
+      { text: 'Type', dataIndex: 'sales', flex: 1 },
+      { text: 'Amount', dataIndex: 'amount', width: 120 }
+    ],
+    height: 150,
+    margin: '0 0 16 0'
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-card-section--subdued',
+    bodyPadding: 12,
+    html: '<h3 style="font-weight: 500; margin: 0 0 8 0;">Deactivated reports</h3><ul><li>Payouts</li><li>Total Sales By Channel</li></ul>',
+    margin: '0 0 16 0'
+  }, {
+    xtype: 'component',
+    html: '<h3 style="font-weight: 500; margin: 0 0 8 0;">Note</h3><p>The sales reports are available only if your store is on the Shopify plan or higher.</p>',
+    margin: '0 0 16 0'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    layout: {
+      type: 'hbox',
+      pack: 'end'
+    },
+    items: [{
+      text: 'Dismiss',
+      handler: function() {
+        console.log('Dismiss clicked');
+      }
+    }, {
+      text: 'Export Report',
+      ui: 'primary',
+      iconCls: 'export-icon',
+      handler: function() {
+        console.log('Export Report clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__header">
+    <div class="polaris-card__header-title">
+      <h2 class="polaris-text--heading-sm">Sales</h2>
+    </div>
+    <div class="polaris-button-group">
+      <button class="polaris-button polaris-button--plain">Total Sales</button>
+      <button class="polaris-button polaris-button--plain polaris-button--disclosure" id="view-sales-btn">
+        View Sales
+      </button>
+    </div>
+  </div>
+  
+  <div class="polaris-card__section">
+    <div class="polaris-stack polaris-stack--vertical polaris-stack--spacing-loose">
+      <p class="polaris-text--body-md">
+        You can use sales reports to see information about your customers' orders 
+        based on criteria such as sales over time, by channel, or by staff.
+      </p>
+      
+      <h3 class="polaris-text--heading-sm">Total Sales Breakdown</h3>
+      
+      <div class="sales-list">
+        <div class="sales-item">
+          <span>Orders</span>
+          <span>USD$0.00</span>
+        </div>
+        <div class="sales-item">
+          <span>Returns</span>
+          <span>-USD$250.00</span>
+        </div>
+      </div>
+      
+      <div class="polaris-card__section polaris-card__section--subdued">
+        <h3 class="polaris-text--heading-sm">Deactivated reports</h3>
+        <ul class="polaris-list">
+          <li>Payouts</li>
+          <li>Total Sales By Channel</li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="polaris-text--heading-sm">Note</h3>
+        <p class="polaris-text--body-md">
+          The sales reports are available only if your store is on the Shopify plan or higher.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="polaris-card__footer">
+    <div class="polaris-button-group">
+      <button class="polaris-button" id="dismiss-btn">Dismiss</button>
+      <button class="polaris-button polaris-button--primary" id="export-btn">
+        <span class="polaris-button__icon">📄</span>
+        Export Report
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('view-sales-btn').addEventListener('click', () => {
+  console.log('View Sales clicked');
+  // Show dropdown menu
+});
+
+document.getElementById('dismiss-btn').addEventListener('click', () => {
+  console.log('Dismiss clicked');
+});
+
+document.getElementById('export-btn').addEventListener('click', () => {
+  console.log('Export Report clicked');
+});
+</script>`,
+    typescript: `import React, {useState} from 'react';
+import {
+  ActionList,
+  Bleed,
+  BlockStack,
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  InlineStack,
+  List,
+  Popover,
+  ResourceList,
+  Text,
+} from '@shopify/polaris';
+import {ExportIcon} from '@shopify/polaris-icons';
+
+interface SalesItem {
+  sales: string;
+  amount: string;
+  url: string;
+}
+
+interface ActionItem {
+  content: string;
+  onAction?: () => void;
+}
+
+interface CardWithAllElementsProps {
+  title?: string;
+  salesItems?: SalesItem[];
+  actionItems?: ActionItem[];
+  onDismiss?: () => void;
+  onExport?: () => void;
+}
+
+function CardWithAllElements({
+  title = "Sales",
+  salesItems = [
+    { sales: 'Orders', amount: 'USD$0.00', url: '#' },
+    { sales: 'Returns', amount: '-USD$250.00', url: '#' }
+  ],
+  actionItems = [
+    { content: 'Gross Sales' },
+    { content: 'Net Sales' }
+  ],
+  onDismiss,
+  onExport
+}: CardWithAllElementsProps): JSX.Element {
+  const [actionActive, toggleAction] = useState<boolean>(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const handleExport = () => {
+    if (onExport) {
+      onExport();
+    } else {
+      console.log('Export Report clicked');
+    }
+  };
+
+  const handleDismiss = () => {
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      console.log('Dismiss clicked');
+    }
+  };
+
+  const disclosureButtonActivator = (
+    <Button variant="plain" disclosure onClick={handleToggleAction}>
+      View Sales
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList items={actionItems} />
+    </Popover>
+  );
+
+  const salesMarkup = (
+    <div>
+      <ResourceList
+        resourceName={{singular: 'sale', plural: 'sales'}}
+        items={salesItems}
+        renderItem={(item: SalesItem) => {
+          const {sales, amount, url} = item;
+          return (
+            <ResourceList.Item
+              id={sales}
+              url={url}
+              accessibilityLabel={\`View Sales for \${sales}\`}
+            >
+              <InlineStack align="space-between">
+                <div>{sales}</div>
+                <div>{amount}</div>
+              </InlineStack>
+            </ResourceList.Item>
+          );
+        }}
+      />
+    </div>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            {title}
+          </Text>
+          <ButtonGroup>
+            <Button variant="plain">Total Sales</Button>
+            {disclosureButton}
+          </ButtonGroup>
+        </InlineGrid>
+        <BlockStack gap="400">
+          <Text as="p" variant="bodyMd">
+            You can use sales reports to see information about your customers'
+            orders based on criteria such as sales over time, by channel, or by
+            staff.
+          </Text>
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Total Sales Breakdown
+          </Text>
+        </BlockStack>
+        {salesMarkup}
+        <Bleed marginInline="400">
+          <Box
+            background="bg-surface-secondary"
+            paddingBlock="300"
+            paddingInline="400"
+          >
+            <BlockStack gap="200">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                Deactivated reports
+              </Text>
+              <List>
+                <List.Item>Payouts</List.Item>
+                <List.Item>Total Sales By Channel</List.Item>
+              </List>
+            </BlockStack>
+          </Box>
+        </Bleed>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Note
+          </Text>
+          <Text as="p" variant="bodyMd">
+            The sales reports are available only if your store is on the Shopify
+            plan or higher.
+          </Text>
+          <InlineStack align="end">
+            <ButtonGroup>
+              <Button onClick={handleDismiss} accessibilityLabel="Dismiss">
+                Dismiss
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleExport}
+                icon={ExportIcon}
+                accessibilityLabel="Export Report"
+              >
+                Export Report
+              </Button>
+            </ButtonGroup>
+          </InlineStack>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-critical-footer-actions': {
+    react: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+
+function CardWithCriticalFooterActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment 1234
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            <List.Item>1 × Oasis Glass, 4-Pack</List.Item>
+            <List.Item>1 × Anubis Cup, 2-Pack</List.Item>
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button
+              variant="secondary"
+              tone="critical"
+              onClick={() => {}}
+              accessibilityLabel="Cancel shipment"
+            >
+              Cancel shipment
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {}}
+              accessibilityLabel="Add tracking number"
+            >
+              Add tracking number
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Shipment 1234',
+  headerCfg: {
+    style: {
+      fontSize: '14px',
+      fontWeight: '500'
+    }
+  },
+  cls: 'polaris-card',
+  bodyPadding: 16,
+  shadow: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<h3 style="font-weight: 500; margin: 0 0 8 0;">Items</h3>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'component',
+    html: '<ul><li>1 × Oasis Glass, 4-Pack</li><li>1 × Anubis Cup, 2-Pack</li></ul>',
+    margin: '0 0 16 0'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    layout: {
+      type: 'hbox',
+      pack: 'end'
+    },
+    items: [{
+      text: 'Cancel shipment',
+      ui: 'critical',
+      handler: function() {
+        Ext.Msg.confirm('Confirm', 'Are you sure you want to cancel this shipment?', function(choice) {
+          if (choice === 'yes') {
+            console.log('Shipment cancelled');
+          }
+        });
+      }
+    }, {
+      text: 'Add tracking number',
+      ui: 'primary',
+      handler: function() {
+        console.log('Add tracking number clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <div class="polaris-stack polaris-stack--vertical polaris-stack--spacing-tight">
+      <h2 class="polaris-text--heading-sm">Shipment 1234</h2>
+      
+      <div class="polaris-stack polaris-stack--vertical polaris-stack--spacing-tight">
+        <h3 class="polaris-text--heading-sm">Items</h3>
+        <ul class="polaris-list">
+          <li>1 × Oasis Glass, 4-Pack</li>
+          <li>1 × Anubis Cup, 2-Pack</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="polaris-card__footer">
+    <div class="polaris-button-group">
+      <button class="polaris-button polaris-button--secondary polaris-button--critical" id="cancel-btn">
+        Cancel shipment
+      </button>
+      <button class="polaris-button polaris-button--primary" id="tracking-btn">
+        Add tracking number
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('cancel-btn').addEventListener('click', () => {
+  if (confirm('Are you sure you want to cancel this shipment?')) {
+    console.log('Shipment cancelled');
+  }
+});
+
+document.getElementById('tracking-btn').addEventListener('click', () => {
+  console.log('Add tracking number clicked');
+});
+</script>`,
+    typescript: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  List,
+  Text,
+} from '@shopify/polaris';
+
+interface ShipmentItem {
+  id: string;
+  quantity: number;
+  name: string;
+}
+
+interface CardWithCriticalFooterActionsProps {
+  shipmentId?: string;
+  items?: ShipmentItem[];
+  onCancelShipment?: () => void;
+  onAddTracking?: () => void;
+}
+
+function CardWithCriticalFooterActions({
+  shipmentId = "1234",
+  items = [
+    { id: '1', quantity: 1, name: 'Oasis Glass, 4-Pack' },
+    { id: '2', quantity: 1, name: 'Anubis Cup, 2-Pack' }
+  ],
+  onCancelShipment,
+  onAddTracking
+}: CardWithCriticalFooterActionsProps): JSX.Element {
+  const handleCancelShipment = () => {
+    if (onCancelShipment) {
+      onCancelShipment();
+    } else {
+      console.log('Cancel shipment clicked');
+    }
+  };
+
+  const handleAddTracking = () => {
+    if (onAddTracking) {
+      onAddTracking();
+    } else {
+      console.log('Add tracking number clicked');
+    }
+  };
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Shipment {shipmentId}
+        </Text>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingSm" fontWeight="medium">
+            Items
+          </Text>
+          <List>
+            {items.map((item) => (
+              <List.Item key={item.id}>
+                {item.quantity} × {item.name}
+              </List.Item>
+            ))}
+          </List>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button
+              variant="secondary"
+              tone="critical"
+              onClick={handleCancelShipment}
+              accessibilityLabel="Cancel shipment"
+            >
+              Cancel shipment
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleAddTracking}
+              accessibilityLabel="Add tracking number"
+            >
+              Add tracking number
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-custom-footer-actions': {
+    react: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  Text,
+} from '@shopify/polaris';
+
+function CardWithCustomFooterActions() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="500">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Secure your account with 2-step authentication
+          </Text>
+          <Text as="p" variant="bodyMd">
+            Two-step authentication adds an extra layer of security when logging
+            in to your account. A special code will be required each time you
+            log in, ensuring only you can access your account.
+          </Text>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button
+              onClick={() => {}}
+              accessibilityLabel="Enable two-step authentication"
+            >
+              Enable two-step authentication
+            </Button>
+            <Button variant="plain">Learn more</Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Secure your account with 2-step authentication',
+  headerCfg: {
+    style: {
+      fontSize: '14px',
+      fontWeight: '500'
+    }
+  },
+  cls: 'polaris-card',
+  bodyPadding: 16,
+  shadow: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p>Two-step authentication adds an extra layer of security when logging in to your account. A special code will be required each time you log in, ensuring only you can access your account.</p>',
+    margin: '0 0 24 0'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    layout: {
+      type: 'hbox',
+      pack: 'end'
+    },
+    items: [{
+      text: 'Enable two-step authentication',
+      handler: function() {
+        console.log('Enable two-step authentication clicked');
+      }
+    }, {
+      text: 'Learn more',
+      ui: 'plain',
+      handler: function() {
+        console.log('Learn more clicked');
+        window.open('https://help.shopify.com/en/manual/account/account-security/two-step-authentication');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <div class="polaris-stack polaris-stack--vertical polaris-stack--spacing-loose">
+      <h2 class="polaris-text--heading-sm">
+        Secure your account with 2-step authentication
+      </h2>
+      <p class="polaris-text--body-md">
+        Two-step authentication adds an extra layer of security when logging
+        in to your account. A special code will be required each time you
+        log in, ensuring only you can access your account.
+      </p>
+    </div>
+  </div>
+  
+  <div class="polaris-card__footer">
+    <div class="polaris-button-group">
+      <button class="polaris-button" id="enable-2fa-btn">
+        Enable two-step authentication
+      </button>
+      <button class="polaris-button polaris-button--plain" id="learn-more-btn">
+        Learn more
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('enable-2fa-btn').addEventListener('click', () => {
+  console.log('Enable two-step authentication clicked');
+});
+
+document.getElementById('learn-more-btn').addEventListener('click', () => {
+  console.log('Learn more clicked');
+  window.open('https://help.shopify.com/en/manual/account/account-security/two-step-authentication');
+});
+</script>`,
+    typescript: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineStack,
+  Text,
+} from '@shopify/polaris';
+
+interface SecurityAction {
+  content: string;
+  onAction?: () => void;
+  url?: string;
+  variant?: 'primary' | 'secondary' | 'plain';
+}
+
+interface CardWithCustomFooterActionsProps {
+  title?: string;
+  description?: string;
+  primaryAction?: SecurityAction;
+  secondaryAction?: SecurityAction;
+}
+
+function CardWithCustomFooterActions({
+  title = "Secure your account with 2-step authentication",
+  description = "Two-step authentication adds an extra layer of security when logging in to your account. A special code will be required each time you log in, ensuring only you can access your account.",
+  primaryAction = {
+    content: "Enable two-step authentication",
+    onAction: () => console.log('Enable two-step authentication clicked')
+  },
+  secondaryAction = {
+    content: "Learn more",
+    variant: "plain",
+    url: "https://help.shopify.com/en/manual/account/account-security/two-step-authentication"
+  }
+}: CardWithCustomFooterActionsProps): JSX.Element {
+  const handlePrimaryAction = () => {
+    if (primaryAction?.onAction) {
+      primaryAction.onAction();
+    }
+  };
+
+  const handleSecondaryAction = () => {
+    if (secondaryAction?.onAction) {
+      secondaryAction.onAction();
+    } else if (secondaryAction?.url) {
+      window.open(secondaryAction.url);
+    }
+  };
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="500">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            {title}
+          </Text>
+          <Text as="p" variant="bodyMd">
+            {description}
+          </Text>
+        </BlockStack>
+        <InlineStack align="end">
+          <ButtonGroup>
+            <Button
+              onClick={handlePrimaryAction}
+              accessibilityLabel={primaryAction?.content}
+              variant={primaryAction?.variant}
+            >
+              {primaryAction?.content}
+            </Button>
+            <Button 
+              variant={secondaryAction?.variant || "plain"}
+              onClick={handleSecondaryAction}
+            >
+              {secondaryAction?.content}
+            </Button>
+          </ButtonGroup>
+        </InlineStack>
+      </BlockStack>
+    </Card>
+  );
+}`
   }
 };
 
