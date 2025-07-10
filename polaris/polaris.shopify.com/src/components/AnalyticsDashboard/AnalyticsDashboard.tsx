@@ -15,7 +15,7 @@ import {
   Banner,
   Box,
 } from '@shopify/polaris';
-import { BarChart, TrendingUpIcon, EyeIcon, ClickIcon } from '@shopify/polaris-icons';
+import { ChartVerticalIcon, TrendingUpIcon, EyeIcon, ClickIcon } from '@shopify/polaris-icons';
 import styles from './AnalyticsDashboard.module.scss';
 
 interface AnalyticsData {
@@ -203,7 +203,7 @@ export function AnalyticsDashboard() {
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
                     <Text variant="headingSm" as="h4">Return Visitors</Text>
-                    <BarChart />
+                    <ChartVerticalIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
                     {data.userEngagement.returnVisitors}%
