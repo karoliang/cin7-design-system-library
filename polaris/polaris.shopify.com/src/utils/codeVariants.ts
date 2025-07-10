@@ -20813,7 +20813,7 @@ document.querySelectorAll('.polaris-tab').forEach(tab => {
         document.querySelectorAll('.polaris-tab-content').forEach(c => c.classList.remove('polaris-tab-content--active'));
         
         e.target.classList.add('polaris-tab--active');
-        document.querySelector(`[data-content="${newTab}"]`).classList.add('polaris-tab-content--active');
+        document.querySelector('[data-content="' + newTab + '"]').classList.add('polaris-tab-content--active');
         
         currentTab = newTab;
       }, 1500);
