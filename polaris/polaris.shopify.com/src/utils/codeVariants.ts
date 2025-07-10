@@ -6334,6 +6334,443 @@ function GridTwoThirdsAndOneThirdColumnExample(): JSX.Element {
   }
 };
 
+// Spinner Examples
+export const spinnerExamples = {
+  default: {
+    react: `import React from 'react';
+import {Spinner} from '@shopify/polaris';
+
+function SpinnerExample() {
+  return <Spinner accessibilityLabel="Spinner example" size="large" />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<div class="polaris-spinner polaris-spinner--large" role="status" aria-label="Spinner example">' +
+          '<svg viewBox="0 0 20 20" class="polaris-spinner__svg">' +
+            '<path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>' +
+          '</svg>' +
+        '</div>',
+  cls: 'polaris-spinner-container',
+  listeners: {
+    afterrender: function(cmp) {
+      // Add rotation animation to the spinner
+      const spinner = cmp.getEl().down('.polaris-spinner');
+      if (spinner) {
+        spinner.addCls('polaris-spinner--animated');
+      }
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-spinner polaris-spinner--large" role="status" aria-label="Spinner example">
+  <svg viewBox="0 0 20 20" class="polaris-spinner__svg">
+    <path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>
+  </svg>
+</div>`,
+    typescript: `import React from 'react';
+import {Spinner} from '@shopify/polaris';
+
+interface SpinnerExampleProps {
+  accessibilityLabel?: string;
+  size?: 'small' | 'large';
+}
+
+function SpinnerExample({ 
+  accessibilityLabel = "Spinner example",
+  size = "large"
+}: SpinnerExampleProps): JSX.Element {
+  return (
+    <Spinner 
+      accessibilityLabel={accessibilityLabel} 
+      size={size} 
+    />
+  );
+}`
+  },
+  small: {
+    react: `import React from 'react';
+import {Spinner} from '@shopify/polaris';
+
+function SpinnerSmallExample() {
+  return <Spinner accessibilityLabel="Small spinner example" size="small" />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<div class="polaris-spinner polaris-spinner--small" role="status" aria-label="Small spinner example">' +
+          '<svg viewBox="0 0 20 20" class="polaris-spinner__svg">' +
+            '<path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>' +
+          '</svg>' +
+        '</div>',
+  cls: 'polaris-spinner-container',
+  listeners: {
+    afterrender: function(cmp) {
+      const spinner = cmp.getEl().down('.polaris-spinner');
+      if (spinner) {
+        spinner.addCls('polaris-spinner--animated');
+      }
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-spinner polaris-spinner--small" role="status" aria-label="Small spinner example">
+  <svg viewBox="0 0 20 20" class="polaris-spinner__svg">
+    <path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>
+  </svg>
+</div>`,
+    typescript: `import React from 'react';
+import {Spinner} from '@shopify/polaris';
+
+interface SpinnerSmallExampleProps {
+  accessibilityLabel?: string;
+}
+
+function SpinnerSmallExample({ 
+  accessibilityLabel = "Small spinner example"
+}: SpinnerSmallExampleProps): JSX.Element {
+  return (
+    <Spinner 
+      accessibilityLabel={accessibilityLabel} 
+      size="small" 
+    />
+  );
+}`
+  },
+  'with-focus-management': {
+    react: `import React, {useCallback, useRef, useState} from 'react';
+import {
+  Button,
+  LegacyCard,
+  Form,
+  FormLayout,
+  Spinner,
+  LegacyTabs,
+  TextField,
+} from '@shopify/polaris';
+
+function SpinnerWithFocusManagementExample() {
+  const [selected, setSelected] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [textFieldFocused, setTextFieldFocused] = useState(false);
+  const [textFieldValue, setTextFieldValue] = useState('');
+  const textFieldRef = useRef<HTMLDivElement>(null);
+
+  const handleTabChange = useCallback((selectedTabIndex: number) => {
+    if (selected === selectedTabIndex) return;
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSelected(selectedTabIndex);
+    }, 1500);
+  }, [selected]);
+
+  const tabs = [
+    {id: 'all-customers', content: 'All'},
+    {id: 'accepts-marketing', content: 'Accepts marketing'},
+  ];
+
+  const handleTextFieldFocus = useCallback(() => {
+    setTextFieldFocused(true);
+  }, []);
+
+  const handleTextFieldBlur = useCallback(() => {
+    setTextFieldFocused(false);
+  }, []);
+
+  const handleTextFieldChange = useCallback((value: string) => {
+    setTextFieldValue(value);
+  }, []);
+
+  const spinnerMarkup = loading ? (
+    <Spinner accessibilityLabel="Loading form field" hasFocusableParent={false} />
+  ) : null;
+
+  const tabMarkup = loading ? null : (
+    <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      <LegacyCard.Section title={tabs[selected].content}>
+        <Form onSubmit={() => {}}>
+          <FormLayout>
+            <div ref={textFieldRef}>
+              <TextField
+                label="Customers"
+                focused={textFieldFocused}
+                onFocus={handleTextFieldFocus}
+                onBlur={handleTextFieldBlur}
+                value={textFieldValue}
+                onChange={handleTextFieldChange}
+                autoComplete="off"
+              />
+            </div>
+            <Button variant="primary" submit>
+              Submit
+            </Button>
+          </FormLayout>
+        </Form>
+      </LegacyCard.Section>
+    </LegacyTabs>
+  );
+
+  return (
+    <LegacyCard>
+      {spinnerMarkup}
+      {tabMarkup}
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  layout: 'card',
+  items: [{
+    // Loading state
+    itemId: 'loading',
+    html: '<div class="polaris-spinner" role="status" aria-label="Loading form field">' +
+            '<svg viewBox="0 0 20 20" class="polaris-spinner__svg">' +
+              '<path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>' +
+            '</svg>' +
+          '</div>',
+    cls: 'polaris-spinner-container',
+    hidden: true
+  }, {
+    // Form state
+    itemId: 'form',
+    xtype: 'tabpanel',
+    items: [{
+      title: 'All',
+      items: [{
+        xtype: 'form',
+        bodyPadding: 16,
+        items: [{
+          xtype: 'textfield',
+          fieldLabel: 'Customers',
+          name: 'customers',
+          allowBlank: true
+        }, {
+          xtype: 'button',
+          text: 'Submit',
+          formBind: true,
+          handler: function() {
+            console.log('Form submitted');
+          }
+        }]
+      }]
+    }, {
+      title: 'Accepts marketing',
+      html: '<p>Marketing customers content</p>'
+    }],
+    listeners: {
+      tabchange: function(tabPanel, newCard, oldCard) {
+        if (newCard !== oldCard) {
+          this.up('panel').showLoading();
+        }
+      }
+    }
+  }],
+  
+  showLoading: function() {
+    this.getLayout().setActiveItem('loading');
+    this.down('#loading').show();
+    this.down('#form').hide();
+    
+    Ext.defer(function() {
+      this.hideLoading();
+    }, 1500, this);
+  },
+  
+  hideLoading: function() {
+    this.down('#loading').hide();
+    this.down('#form').show();
+    this.getLayout().setActiveItem('form');
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div id="spinner-container" class="polaris-spinner-container" style="display: none;">
+    <div class="polaris-spinner" role="status" aria-label="Loading form field">
+      <svg viewBox="0 0 20 20" class="polaris-spinner__svg">
+        <path d="M10 3V1a9 9 0 0 1 0 18v-2a7 7 0 0 0 0-14z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+  
+  <div id="content-container" class="polaris-tabs-container">
+    <div class="polaris-tabs">
+      <button class="polaris-tab polaris-tab--active" data-tab="0">All</button>
+      <button class="polaris-tab" data-tab="1">Accepts marketing</button>
+    </div>
+    
+    <div class="polaris-tab-content polaris-tab-content--active" data-content="0">
+      <div class="polaris-card__section">
+        <h3 class="polaris-card__title">All</h3>
+        <form class="polaris-form">
+          <div class="polaris-form-layout">
+            <div class="polaris-text-field">
+              <label class="polaris-text-field__label">Customers</label>
+              <input type="text" class="polaris-text-field__input" />
+            </div>
+            <button type="submit" class="polaris-button polaris-button--primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="polaris-tab-content" data-content="1">
+      <div class="polaris-card__section">
+        <h3 class="polaris-card__title">Accepts marketing</h3>
+        <p>Marketing customers content</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+let currentTab = 0;
+let isLoading = false;
+
+function showSpinner() {
+  if (isLoading) return;
+  isLoading = true;
+  
+  document.getElementById('spinner-container').style.display = 'flex';
+  document.getElementById('content-container').style.display = 'none';
+  
+  setTimeout(() => {
+    hideSpinner();
+  }, 1500);
+}
+
+function hideSpinner() {
+  isLoading = false;
+  document.getElementById('spinner-container').style.display = 'none';
+  document.getElementById('content-container').style.display = 'block';
+}
+
+// Tab switching
+document.querySelectorAll('.polaris-tab').forEach(tab => {
+  tab.addEventListener('click', (e) => {
+    const newTab = parseInt(e.target.dataset.tab);
+    if (newTab !== currentTab && !isLoading) {
+      showSpinner();
+      
+      setTimeout(() => {
+        // Update active tab
+        document.querySelectorAll('.polaris-tab').forEach(t => t.classList.remove('polaris-tab--active'));
+        document.querySelectorAll('.polaris-tab-content').forEach(c => c.classList.remove('polaris-tab-content--active'));
+        
+        e.target.classList.add('polaris-tab--active');
+        document.querySelector(`[data-content="${newTab}"]`).classList.add('polaris-tab-content--active');
+        
+        currentTab = newTab;
+      }, 1500);
+    }
+  });
+});
+
+// Form submission
+document.querySelector('.polaris-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('Form submitted');
+});
+</script>`,
+    typescript: `import React, {useCallback, useRef, useState} from 'react';
+import {
+  Button,
+  LegacyCard,
+  Form,
+  FormLayout,
+  Spinner,
+  LegacyTabs,
+  TextField,
+} from '@shopify/polaris';
+
+interface TabData {
+  id: string;
+  content: string;
+}
+
+interface SpinnerWithFocusManagementExampleProps {
+  tabs?: TabData[];
+  loadingDelay?: number;
+}
+
+function SpinnerWithFocusManagementExample({
+  tabs = [
+    {id: 'all-customers', content: 'All'},
+    {id: 'accepts-marketing', content: 'Accepts marketing'},
+  ],
+  loadingDelay = 1500
+}: SpinnerWithFocusManagementExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [textFieldFocused, setTextFieldFocused] = useState<boolean>(false);
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  const textFieldRef = useRef<HTMLDivElement>(null);
+
+  const handleTabChange = useCallback((selectedTabIndex: number) => {
+    if (selected === selectedTabIndex) return;
+    
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSelected(selectedTabIndex);
+    }, loadingDelay);
+  }, [selected, loadingDelay]);
+
+  const handleTextFieldFocus = useCallback(() => {
+    setTextFieldFocused(true);
+  }, []);
+
+  const handleTextFieldBlur = useCallback(() => {
+    setTextFieldFocused(false);
+  }, []);
+
+  const handleTextFieldChange = useCallback((value: string) => {
+    setTextFieldValue(value);
+  }, []);
+
+  const handleFormSubmit = useCallback(() => {
+    console.log('Form submitted with value:', textFieldValue);
+  }, [textFieldValue]);
+
+  const spinnerMarkup = loading ? (
+    <Spinner 
+      accessibilityLabel="Loading form field" 
+      hasFocusableParent={false} 
+    />
+  ) : null;
+
+  const tabMarkup = loading ? null : (
+    <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      <LegacyCard.Section title={tabs[selected].content}>
+        <Form onSubmit={handleFormSubmit}>
+          <FormLayout>
+            <div ref={textFieldRef}>
+              <TextField
+                label="Customers"
+                focused={textFieldFocused}
+                onFocus={handleTextFieldFocus}
+                onBlur={handleTextFieldBlur}
+                value={textFieldValue}
+                onChange={handleTextFieldChange}
+                autoComplete="off"
+              />
+            </div>
+            <Button variant="primary" submit>
+              Submit
+            </Button>
+          </FormLayout>
+        </Form>
+      </LegacyCard.Section>
+    </LegacyTabs>
+  );
+
+  return (
+    <LegacyCard>
+      {spinnerMarkup}
+      {tabMarkup}
+    </LegacyCard>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -6356,6 +6793,7 @@ const componentExamples: Record<string, any> = {
   'box': boxExamples,
   'divider': dividerExamples,
   'grid': gridExamples,
+  'spinner': spinnerExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
