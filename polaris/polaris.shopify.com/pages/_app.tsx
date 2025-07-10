@@ -115,7 +115,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta property="og:image" content={ogImagePath} />
       </Head>
 
-      <AppProvider i18n={enTranslations}>
+      <AppProvider i18n={enTranslations} theme={darkMode.value ? 'dark-experimental' : 'light'}>
         <div
           style={
             {
