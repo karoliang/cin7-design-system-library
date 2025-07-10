@@ -9045,6 +9045,389 @@ function EmptyStateExample({
   }
 };
 
+// CalloutCard Examples
+export const calloutCardExamples = {
+  'default': {
+    react: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <CalloutCard
+      title="Customize the style of your checkout"
+      illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+      primaryAction={{
+        content: 'Customize checkout',
+        url: '#',
+      }}
+    >
+      <p>Upload your store's logo, change colors and fonts, and more.</p>
+    </CalloutCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customize the style of your checkout',
+  cls: 'callout-card',
+  bodyPadding: 20,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg',
+    width: 120,
+    height: 120,
+    margin: '0 20 0 0'
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<p style="margin: 0 0 20px 0; color: #5c6b73;">Upload your store\\'s logo, change colors and fonts, and more.</p>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Customize checkout',
+      ui: 'primary',
+      handler: function() {
+        console.log('Customize checkout clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-callout-card">
+  <div class="polaris-callout-card__container">
+    <div class="polaris-callout-card__illustration">
+      <img src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg" 
+           alt="Checkout customization illustration" 
+           class="polaris-callout-card__image">
+    </div>
+    <div class="polaris-callout-card__content">
+      <div class="polaris-callout-card__header">
+        <h2 class="polaris-callout-card__title">Customize the style of your checkout</h2>
+      </div>
+      <div class="polaris-callout-card__text">
+        <p>Upload your store's logo, change colors and fonts, and more.</p>
+      </div>
+      <div class="polaris-callout-card__actions">
+        <a href="#" class="polaris-button polaris-button--primary">
+          Customize checkout
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('Customize checkout clicked');
+});
+</script>`,
+    typescript: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+interface CalloutCardAction {
+  content: string;
+  url?: string;
+  onAction?: () => void;
+  external?: boolean;
+}
+
+interface CalloutCardExampleProps {
+  title?: string;
+  illustration?: string;
+  children?: React.ReactNode;
+  primaryAction?: CalloutCardAction;
+}
+
+function Example({
+  title = "Customize the style of your checkout",
+  illustration = "https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg",
+  children = <p>Upload your store's logo, change colors and fonts, and more.</p>,
+  primaryAction = {
+    content: 'Customize checkout',
+    url: '#',
+  }
+}: CalloutCardExampleProps): JSX.Element {
+  return (
+    <CalloutCard
+      title={title}
+      illustration={illustration}
+      primaryAction={primaryAction}
+    >
+      {children}
+    </CalloutCard>
+  );
+}`
+  },
+  'dismissable': {
+    react: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <CalloutCard
+      title="Customize the style of your checkout"
+      illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+      primaryAction={{content: 'Customize checkout'}}
+      onDismiss={() => {}}
+    >
+      <p>Upload your store's logo, change colors and fonts, and more.</p>
+    </CalloutCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customize the style of your checkout',
+  cls: 'callout-card',
+  bodyPadding: 20,
+  closable: true,
+  closeAction: 'hide',
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg',
+    width: 120,
+    height: 120,
+    margin: '0 20 0 0'
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<p style="margin: 0 0 20px 0; color: #5c6b73;">Upload your store\\'s logo, change colors and fonts, and more.</p>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Customize checkout',
+      ui: 'primary',
+      handler: function() {
+        console.log('Customize checkout clicked');
+      }
+    }]
+  }],
+  listeners: {
+    close: function() {
+      console.log('Callout card dismissed');
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-callout-card polaris-callout-card--dismissable">
+  <div class="polaris-callout-card__container">
+    <button class="polaris-callout-card__dismiss" type="button" aria-label="Dismiss">
+      <span class="polaris-icon polaris-icon--small">×</span>
+    </button>
+    <div class="polaris-callout-card__illustration">
+      <img src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg" 
+           alt="Checkout customization illustration" 
+           class="polaris-callout-card__image">
+    </div>
+    <div class="polaris-callout-card__content">
+      <div class="polaris-callout-card__header">
+        <h2 class="polaris-callout-card__title">Customize the style of your checkout</h2>
+      </div>
+      <div class="polaris-callout-card__text">
+        <p>Upload your store's logo, change colors and fonts, and more.</p>
+      </div>
+      <div class="polaris-callout-card__actions">
+        <button class="polaris-button polaris-button--primary" type="button">
+          Customize checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Customize checkout clicked');
+});
+
+document.querySelector('.polaris-callout-card__dismiss').addEventListener('click', () => {
+  const card = document.querySelector('.polaris-callout-card');
+  card.style.display = 'none';
+  console.log('Callout card dismissed');
+});
+</script>`,
+    typescript: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+interface DismissableCalloutCardProps {
+  title?: string;
+  illustration?: string;
+  children?: React.ReactNode;
+  primaryAction?: {
+    content: string;
+    onAction?: () => void;
+  };
+  onDismiss?: () => void;
+}
+
+function Example({
+  title = "Customize the style of your checkout",
+  illustration = "https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg",
+  children = <p>Upload your store's logo, change colors and fonts, and more.</p>,
+  primaryAction = {content: 'Customize checkout'},
+  onDismiss = () => console.log('Card dismissed')
+}: DismissableCalloutCardProps): JSX.Element {
+  return (
+    <CalloutCard
+      title={title}
+      illustration={illustration}
+      primaryAction={primaryAction}
+      onDismiss={onDismiss}
+    >
+      {children}
+    </CalloutCard>
+  );
+}`
+  },
+  'with-secondary-action': {
+    react: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <CalloutCard
+      title="Customize the style of your checkout"
+      illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
+      primaryAction={{content: 'Customize checkout'}}
+      secondaryAction={{content: 'Learn more about customizing checkout'}}
+    >
+      <p>Upload your store's logo, change colors and fonts, and more.</p>
+    </CalloutCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customize the style of your checkout',
+  cls: 'callout-card',
+  bodyPadding: 20,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg',
+    width: 120,
+    height: 120,
+    margin: '0 20 0 0'
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<p style="margin: 0 0 20px 0; color: #5c6b73;">Upload your store\\'s logo, change colors and fonts, and more.</p>',
+      flex: 1
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [{
+        xtype: 'button',
+        text: 'Customize checkout',
+        ui: 'primary',
+        margin: '0 10 0 0',
+        handler: function() {
+          console.log('Customize checkout clicked');
+        }
+      }, {
+        xtype: 'button',
+        text: 'Learn more about customizing checkout',
+        handler: function() {
+          console.log('Learn more clicked');
+        }
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-callout-card">
+  <div class="polaris-callout-card__container">
+    <div class="polaris-callout-card__illustration">
+      <img src="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg" 
+           alt="Checkout customization illustration" 
+           class="polaris-callout-card__image">
+    </div>
+    <div class="polaris-callout-card__content">
+      <div class="polaris-callout-card__header">
+        <h2 class="polaris-callout-card__title">Customize the style of your checkout</h2>
+      </div>
+      <div class="polaris-callout-card__text">
+        <p>Upload your store's logo, change colors and fonts, and more.</p>
+      </div>
+      <div class="polaris-callout-card__actions">
+        <button class="polaris-button polaris-button--primary" type="button">
+          Customize checkout
+        </button>
+        <button class="polaris-button" type="button">
+          Learn more about customizing checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Customize checkout clicked');
+});
+
+document.querySelectorAll('.polaris-button:not(.polaris-button--primary)').forEach(button => {
+  button.addEventListener('click', () => {
+    console.log('Learn more clicked');
+  });
+});
+</script>`,
+    typescript: `import {CalloutCard} from '@shopify/polaris';
+import React from 'react';
+
+interface CalloutCardAction {
+  content: string;
+  onAction?: () => void;
+  url?: string;
+}
+
+interface CalloutCardWithSecondaryActionProps {
+  title?: string;
+  illustration?: string;
+  children?: React.ReactNode;
+  primaryAction?: CalloutCardAction;
+  secondaryAction?: CalloutCardAction;
+}
+
+function Example({
+  title = "Customize the style of your checkout",
+  illustration = "https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg",
+  children = <p>Upload your store's logo, change colors and fonts, and more.</p>,
+  primaryAction = {content: 'Customize checkout'},
+  secondaryAction = {content: 'Learn more about customizing checkout'}
+}: CalloutCardWithSecondaryActionProps): JSX.Element {
+  return (
+    <CalloutCard
+      title={title}
+      illustration={illustration}
+      primaryAction={primaryAction}
+      secondaryAction={secondaryAction}
+    >
+      {children}
+    </CalloutCard>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -9073,6 +9456,7 @@ const componentExamples: Record<string, any> = {
   'inline-stack': inlineStackExamples,
   'legacy-stack': legacyStackExamples,
   'empty-state': emptyStateExamples,
+  'callout-card': calloutCardExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,

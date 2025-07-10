@@ -11,7 +11,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (68 examples)
+### ✅ Completed Components (71 examples)
 - **Button Group** (3/3 examples) ✅
   - default
   - with-segmented-buttons
@@ -103,6 +103,10 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - default
   - with-full-width-layout
   - with-subdued-footer-context
+- **CalloutCard** (3/3 examples) ✅
+  - default
+  - dismissable
+  - with-secondary-action
 
 ### 📋 Components To Do (443 total examples across 96 components)
 
