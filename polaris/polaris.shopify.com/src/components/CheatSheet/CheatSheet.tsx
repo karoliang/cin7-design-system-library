@@ -49,31 +49,33 @@ export function CheatSheet({ title, items }: CheatSheetProps) {
                 {items
                   .filter(item => item.category === category)
                   .map((item, index) => (
-                    <Card key={index} sectioned>
-                      <BlockStack gap="300">
-                        <InlineStack align="space-between" blockAlign="start">
-                          <BlockStack gap="100">
-                            <Text variant="headingSm" as="h4">{item.title}</Text>
-                            <Text variant="bodySm" tone="subdued" as="p">
-                              {item.description}
-                            </Text>
-                          </BlockStack>
-                          
-                          <CopyButton code={item.code} codeType="cheat-sheet" />
-                        </InlineStack>
-                        
-                        <div className={styles.CodeBlock}>
-                          <pre><code>{item.code}</code></pre>
-                        </div>
-                        
-                        {item.tags && (
-                          <InlineStack gap="100">
-                            {item.tags.map((tag, tagIndex) => (
-                              <Badge key={tagIndex}>{tag}</Badge>
-                            ))}
+                    <Card key={index}>
+                      <Box padding="400">
+                        <BlockStack gap="300">
+                          <InlineStack align="space-between" blockAlign="start">
+                            <BlockStack gap="100">
+                              <Text variant="headingSm" as="h4">{item.title}</Text>
+                              <Text variant="bodySm" tone="subdued" as="p">
+                                {item.description}
+                              </Text>
+                            </BlockStack>
+                            
+                            <CopyButton code={item.code} codeType="cheat-sheet" />
                           </InlineStack>
-                        )}
-                      </BlockStack>
+                          
+                          <div className={styles.CodeBlock}>
+                            <pre><code>{item.code}</code></pre>
+                          </div>
+                          
+                          {item.tags && (
+                            <InlineStack gap="100">
+                              {item.tags.map((tag, tagIndex) => (
+                                <Badge key={tagIndex}>{tag}</Badge>
+                              ))}
+                            </InlineStack>
+                          )}
+                        </BlockStack>
+                      </Box>
                     </Card>
                   ))}
               </div>
