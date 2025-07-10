@@ -3988,6 +3988,421 @@ function FormLayoutExample({ onSubmit }: FormLayoutExampleProps): JSX.Element {
   }
 };
 
+// Tabs Examples
+export const tabsExamples = {
+  default: {
+    react: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TabsDefaultExample() {
+  const [selected, setSelected] = useState(0);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => setSelected(selectedTabIndex),
+    [],
+  );
+
+  const tabs = [
+    {
+      id: 'all-customers-1',
+      content: 'All',
+      accessibilityLabel: 'All customers',
+      panelID: 'all-customers-content-1',
+    },
+    {
+      id: 'accepts-marketing-1',
+      content: 'Accepts marketing',
+      panelID: 'accepts-marketing-content-1',
+    },
+    {
+      id: 'repeat-customers-1',
+      content: 'Repeat customers',
+      panelID: 'repeat-customers-content-1',
+    },
+    {
+      id: 'prospects-1',
+      content: 'Prospects',
+      panelID: 'prospects-content-1',
+    },
+  ];
+
+  return (
+    <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      <LegacyCard.Section title={tabs[selected].content}>
+        <p>Tab {selected} selected</p>
+      </LegacyCard.Section>
+    </Tabs>
+  );
+}`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  items: [{
+    title: 'All',
+    html: '<p>Tab 0 selected</p>'
+  }, {
+    title: 'Accepts marketing',
+    html: '<p>Tab 1 selected</p>'
+  }, {
+    title: 'Repeat customers',
+    html: '<p>Tab 2 selected</p>'
+  }, {
+    title: 'Prospects',
+    html: '<p>Tab 3 selected</p>'
+  }],
+  listeners: {
+    tabchange: function(tabPanel, newCard, oldCard) {
+      console.log('Tab changed to:', newCard.title);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="tabs" role="tablist">
+  <button 
+    role="tab" 
+    class="tab tab--selected" 
+    aria-selected="true"
+    aria-controls="panel-0"
+    id="tab-0"
+  >
+    All
+  </button>
+  <button 
+    role="tab" 
+    class="tab" 
+    aria-selected="false"
+    aria-controls="panel-1"
+    id="tab-1"
+  >
+    Accepts marketing
+  </button>
+  <button 
+    role="tab" 
+    class="tab" 
+    aria-selected="false"
+    aria-controls="panel-2"
+    id="tab-2"
+  >
+    Repeat customers
+  </button>
+  <button 
+    role="tab" 
+    class="tab" 
+    aria-selected="false"
+    aria-controls="panel-3"
+    id="tab-3"
+  >
+    Prospects
+  </button>
+</div>
+<div class="tab-panels">
+  <div 
+    role="tabpanel" 
+    id="panel-0" 
+    aria-labelledby="tab-0"
+    class="tab-panel tab-panel--active"
+  >
+    <div class="card-section">
+      <h3 class="card-section__title">All</h3>
+      <p>Tab 0 selected</p>
+    </div>
+  </div>
+  <div 
+    role="tabpanel" 
+    id="panel-1" 
+    aria-labelledby="tab-1"
+    class="tab-panel"
+    hidden
+  >
+    <div class="card-section">
+      <h3 class="card-section__title">Accepts marketing</h3>
+      <p>Tab 1 selected</p>
+    </div>
+  </div>
+  <div 
+    role="tabpanel" 
+    id="panel-2" 
+    aria-labelledby="tab-2"
+    class="tab-panel"
+    hidden
+  >
+    <div class="card-section">
+      <h3 class="card-section__title">Repeat customers</h3>
+      <p>Tab 2 selected</p>
+    </div>
+  </div>
+  <div 
+    role="tabpanel" 
+    id="panel-3" 
+    aria-labelledby="tab-3"
+    class="tab-panel"
+    hidden
+  >
+    <div class="card-section">
+      <h3 class="card-section__title">Prospects</h3>
+      <p>Tab 3 selected</p>
+    </div>
+  </div>
+</div>
+
+// CSS
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--p-color-border);
+  background: var(--p-color-bg-surface);
+}
+
+.tab {
+  padding: var(--p-space-300) var(--p-space-400);
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  font-size: var(--p-font-size-300);
+  color: var(--p-color-text);
+}
+
+.tab:hover {
+  background: var(--p-color-bg-surface-hover);
+}
+
+.tab--selected {
+  color: var(--p-color-text-emphasis);
+}
+
+.tab--selected::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--p-color-border-emphasis);
+}
+
+.tab-panel {
+  background: var(--p-color-bg-surface);
+}
+
+.card-section {
+  padding: var(--p-space-400);
+}
+
+.card-section__title {
+  font-size: var(--p-font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0 0 var(--p-space-200) 0;
+}
+
+// JavaScript
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.tab-panel');
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => {
+    // Update tabs
+    tabs.forEach(t => {
+      t.classList.remove('tab--selected');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('tab--selected');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Update panels
+    panels.forEach(p => {
+      p.classList.remove('tab-panel--active');
+      p.setAttribute('hidden', '');
+    });
+    panels[index].classList.add('tab-panel--active');
+    panels[index].removeAttribute('hidden');
+    
+    console.log('Tab changed to:', index);
+  });
+});`,
+    typescript: `import {LegacyCard, Tabs} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+  accessibilityLabel?: string;
+  panelID: string;
+}
+
+interface TabsExampleProps {
+  tabs: Tab[];
+  defaultSelected?: number;
+  onTabChange?: (index: number) => void;
+}
+
+function TabsExample({ 
+  tabs,
+  defaultSelected = 0,
+  onTabChange
+}: TabsExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(defaultSelected);
+
+  const handleTabChange = useCallback(
+    (selectedTabIndex: number) => {
+      setSelected(selectedTabIndex);
+      onTabChange?.(selectedTabIndex);
+    },
+    [onTabChange],
+  );
+
+  return (
+    <Tabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
+      <LegacyCard.Section title={tabs[selected].content}>
+        <p>Tab {selected} selected</p>
+      </LegacyCard.Section>
+    </Tabs>
+  );
+}`
+  }
+};
+
+// List Examples
+export const listExamples = {
+  bulleted: {
+    react: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+function ListExample() {
+  return (
+    <List type="bullet">
+      <List.Item>Yellow shirt</List.Item>
+      <List.Item>Red shirt</List.Item>
+      <List.Item>Green shirt</List.Item>
+    </List>
+  );
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<ul class="polaris-list polaris-list--bullet">' +
+        '<li>Yellow shirt</li>' +
+        '<li>Red shirt</li>' +
+        '<li>Green shirt</li>' +
+        '</ul>'
+});`,
+    vanilla: `// HTML
+<ul class="list list--bullet">
+  <li class="list__item">Yellow shirt</li>
+  <li class="list__item">Red shirt</li>
+  <li class="list__item">Green shirt</li>
+</ul>
+
+// CSS
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.list--bullet {
+  list-style: disc;
+  padding-left: var(--p-space-500);
+}
+
+.list__item {
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  color: var(--p-color-text);
+  margin-bottom: var(--p-space-100);
+}
+
+.list__item:last-child {
+  margin-bottom: 0;
+}`,
+    typescript: `import {List} from '@shopify/polaris';
+import React from 'react';
+
+interface ListItem {
+  id: string;
+  content: string;
+}
+
+interface ListExampleProps {
+  items: ListItem[] | string[];
+  type?: 'bullet' | 'number';
+}
+
+function ListExample({ 
+  items,
+  type = 'bullet'
+}: ListExampleProps): JSX.Element {
+  return (
+    <List type={type}>
+      {items.map((item, index) => (
+        <List.Item key={typeof item === 'string' ? index : item.id}>
+          {typeof item === 'string' ? item : item.content}
+        </List.Item>
+      ))}
+    </List>
+  );
+}`
+  }
+};
+
+// Icon Examples
+export const iconExamples = {
+  default: {
+    react: `import {Icon} from '@shopify/polaris';
+import {PlusCircleIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function IconExample() {
+  return <Icon source={PlusCircleIcon} />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<span class="polaris-icon">' +
+        '<svg viewBox="0 0 20 20" class="polaris-icon__svg" focusable="false" aria-hidden="true">' +
+        '<path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 9h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V8a1 1 0 0 1 2 0v3z" fill="currentColor"/>' +
+        '</svg></span>',
+  cls: 'polaris-icon-wrapper'
+});`,
+    vanilla: `// HTML
+<span class="icon">
+  <svg viewBox="0 0 20 20" focusable="false" aria-hidden="true">
+    <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 9h3a1 1 0 1 1 0 2h-3v3a1 1 0 1 1-2 0v-3H6a1 1 0 1 1 0-2h3V8a1 1 0 0 1 2 0v3z" fill="currentColor"/>
+  </svg>
+</span>
+
+// CSS
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--p-color-icon);
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}`,
+    typescript: `import {Icon} from '@shopify/polaris';
+import {PlusCircleIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface IconExampleProps {
+  source: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  tone?: 'base' | 'subdued' | 'primary' | 'success' | 'warning' | 'critical';
+  accessibilityLabel?: string;
+}
+
+function IconExample({ 
+  source,
+  tone = 'base',
+  accessibilityLabel
+}: IconExampleProps): JSX.Element {
+  return (
+    <Icon 
+      source={source} 
+      tone={tone}
+      accessibilityLabel={accessibilityLabel}
+    />
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -4002,6 +4417,9 @@ const componentExamples: Record<string, any> = {
   'page': pageExamples,
   'layout': layoutExamples,
   'form-layout': formLayoutExamples,
+  'tabs': tabsExamples,
+  'list': listExamples,
+  'icon': iconExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
