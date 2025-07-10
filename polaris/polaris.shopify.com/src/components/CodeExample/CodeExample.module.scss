@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.CodeExample {
+  margin: var(--p-space-400) 0;
+}
+
+.Title {
+  font-size: var(--font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  margin-bottom: var(--p-space-200);
+  color: var(--p-color-text);
+}
+
+.Description {
+  font-size: var(--font-size-300);
+  color: var(--p-color-text-subdued);
+  margin-bottom: var(--p-space-300);
+  line-height: var(--p-line-height-400);
+}
