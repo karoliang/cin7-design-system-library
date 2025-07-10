@@ -9428,6 +9428,544 @@ function Example({
   }
 };
 
+// MediaCard Examples
+export const mediaCardExamples = {
+  'default': {
+    react: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+function MediaCardExample() {
+  return (
+    <MediaCard
+      title="Getting Started"
+      primaryAction={{
+        content: 'Learn about getting started',
+        onAction: () => {},
+      }}
+      description="Discover how Shopify can power up your entrepreneurial journey."
+      popoverActions={[{content: 'Dismiss', onAction: () => {}}]}
+    >
+      <img
+        alt=""
+        width="100%"
+        height="100%"
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+        src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+      />
+    </MediaCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Getting Started',
+  cls: 'media-card',
+  width: 400,
+  bodyPadding: 0,
+  layout: 'fit',
+  tools: [{
+    type: 'gear',
+    menu: [{
+      text: 'Dismiss',
+      handler: function() {
+        console.log('Dismiss clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'container',
+    layout: 'vbox',
+    items: [{
+      xtype: 'image',
+      src: 'https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850',
+      height: 200,
+      style: {
+        objectFit: 'cover',
+        objectPosition: 'center'
+      }
+    }, {
+      xtype: 'container',
+      padding: 16,
+      layout: 'vbox',
+      items: [{
+        xtype: 'component',
+        html: '<p style="margin: 0 0 16px 0; color: #5c6b73;">Discover how Shopify can power up your entrepreneurial journey.</p>'
+      }, {
+        xtype: 'button',
+        text: 'Learn about getting started',
+        ui: 'primary',
+        handler: function() {
+          console.log('Learn about getting started clicked');
+        }
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media">
+    <img src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850" 
+         alt="Getting Started" 
+         class="polaris-media-card__image">
+  </div>
+  <div class="polaris-media-card__content">
+    <div class="polaris-media-card__header">
+      <h2 class="polaris-media-card__title">Getting Started</h2>
+      <div class="polaris-media-card__popover">
+        <button class="polaris-button polaris-button--icon" type="button" aria-label="More actions">
+          <span class="polaris-icon">⋮</span>
+        </button>
+        <div class="polaris-popover" style="display: none;">
+          <button class="polaris-action-list__item" type="button">Dismiss</button>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-media-card__description">
+      <p>Discover how Shopify can power up your entrepreneurial journey.</p>
+    </div>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" type="button">
+        Learn about getting started
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Learn about getting started clicked');
+});
+
+// Popover toggle
+document.querySelector('.polaris-button--icon').addEventListener('click', () => {
+  const popover = document.querySelector('.polaris-popover');
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelector('.polaris-action-list__item').addEventListener('click', () => {
+  console.log('Dismiss clicked');
+  document.querySelector('.polaris-popover').style.display = 'none';
+});
+</script>`,
+    typescript: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+interface MediaCardAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface MediaCardExampleProps {
+  title?: string;
+  description?: string;
+  primaryAction?: MediaCardAction;
+  popoverActions?: MediaCardAction[];
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+function MediaCardExample({
+  title = "Getting Started",
+  description = "Discover how Shopify can power up your entrepreneurial journey.",
+  primaryAction = {
+    content: 'Learn about getting started',
+    onAction: () => console.log('Primary action clicked'),
+  },
+  popoverActions = [{content: 'Dismiss', onAction: () => console.log('Dismissed')}],
+  imageSrc = "https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850",
+  imageAlt = ""
+}: MediaCardExampleProps): JSX.Element {
+  return (
+    <MediaCard
+      title={title}
+      primaryAction={primaryAction}
+      description={description}
+      popoverActions={popoverActions}
+    >
+      <img
+        alt={imageAlt}
+        width="100%"
+        height="100%"
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+        src={imageSrc}
+      />
+    </MediaCard>
+  );
+}`
+  },
+  'with-small-visual': {
+    react: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+function MediaCardExample() {
+  return (
+    <MediaCard
+      title="Getting Started"
+      primaryAction={{
+        content: 'Learn about getting started',
+        onAction: () => {},
+      }}
+      description="Discover how Shopify can power up your entrepreneurial journey."
+      popoverActions={[{content: 'Dismiss', onAction: () => {}}]}
+      size="small"
+    >
+      <img
+        alt=""
+        width="100%"
+        height="100%"
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+        src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+      />
+    </MediaCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Getting Started',
+  cls: 'media-card media-card-small',
+  width: 300,
+  height: 150,
+  bodyPadding: 0,
+  layout: 'hbox',
+  tools: [{
+    type: 'gear',
+    menu: [{
+      text: 'Dismiss',
+      handler: function() {
+        console.log('Dismiss clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'image',
+    src: 'https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850',
+    width: 100,
+    style: {
+      objectFit: 'cover',
+      objectPosition: 'center'
+    }
+  }, {
+    xtype: 'container',
+    flex: 1,
+    padding: 12,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<p style="margin: 0 0 12px 0; color: #5c6b73; font-size: 13px;">Discover how Shopify can power up your entrepreneurial journey.</p>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Learn about getting started',
+      ui: 'primary',
+      scale: 'small',
+      handler: function() {
+        console.log('Learn about getting started clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card polaris-media-card--small">
+  <div class="polaris-media-card__media polaris-media-card__media--small">
+    <img src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850" 
+         alt="Getting Started" 
+         class="polaris-media-card__image">
+  </div>
+  <div class="polaris-media-card__content">
+    <div class="polaris-media-card__header">
+      <h2 class="polaris-media-card__title">Getting Started</h2>
+      <div class="polaris-media-card__popover">
+        <button class="polaris-button polaris-button--icon" type="button" aria-label="More actions">
+          <span class="polaris-icon">⋮</span>
+        </button>
+        <div class="polaris-popover" style="display: none;">
+          <button class="polaris-action-list__item" type="button">Dismiss</button>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-media-card__description">
+      <p>Discover how Shopify can power up your entrepreneurial journey.</p>
+    </div>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary polaris-button--size-slim" type="button">
+        Learn about getting started
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Learn about getting started clicked');
+});
+
+// Popover toggle
+document.querySelector('.polaris-button--icon').addEventListener('click', () => {
+  const popover = document.querySelector('.polaris-popover');
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelector('.polaris-action-list__item').addEventListener('click', () => {
+  console.log('Dismiss clicked');
+  document.querySelector('.polaris-popover').style.display = 'none';
+});
+</script>`,
+    typescript: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+type MediaCardSize = 'small' | 'medium';
+
+interface MediaCardAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface SmallMediaCardProps {
+  title?: string;
+  description?: string;
+  primaryAction?: MediaCardAction;
+  popoverActions?: MediaCardAction[];
+  size?: MediaCardSize;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+function MediaCardExample({
+  title = "Getting Started",
+  description = "Discover how Shopify can power up your entrepreneurial journey.",
+  primaryAction = {
+    content: 'Learn about getting started',
+    onAction: () => console.log('Primary action clicked'),
+  },
+  popoverActions = [{content: 'Dismiss', onAction: () => console.log('Dismissed')}],
+  size = "small",
+  imageSrc = "https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850",
+  imageAlt = ""
+}: SmallMediaCardProps): JSX.Element {
+  return (
+    <MediaCard
+      title={title}
+      primaryAction={primaryAction}
+      description={description}
+      popoverActions={popoverActions}
+      size={size}
+    >
+      <img
+        alt={imageAlt}
+        width="100%"
+        height="100%"
+        style={{
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+        src={imageSrc}
+      />
+    </MediaCard>
+  );
+}`
+  },
+  'with-secondary-action': {
+    react: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+function MediaCardExample() {
+  return (
+    <MediaCard
+      title="Get closer to launching your store"
+      primaryAction={{
+        content: 'Add a product',
+        onAction: () => {},
+      }}
+      secondaryAction={{
+        content: 'Learn more',
+        onAction: () => {},
+      }}
+      description="Start your business with eye-catching inventory."
+      popoverActions={[{content: 'Dismiss', onAction: () => {}}]}
+    >
+      <img
+        alt=""
+        width="100%"
+        height="100%"
+        style={{objectFit: 'cover', objectPosition: 'center'}}
+        src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850"
+      />
+    </MediaCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Get closer to launching your store',
+  cls: 'media-card',
+  width: 400,
+  bodyPadding: 0,
+  layout: 'fit',
+  tools: [{
+    type: 'gear',
+    menu: [{
+      text: 'Dismiss',
+      handler: function() {
+        console.log('Dismiss clicked');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'container',
+    layout: 'vbox',
+    items: [{
+      xtype: 'image',
+      src: 'https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850',
+      height: 200,
+      style: {
+        objectFit: 'cover',
+        objectPosition: 'center'
+      }
+    }, {
+      xtype: 'container',
+      padding: 16,
+      layout: 'vbox',
+      items: [{
+        xtype: 'component',
+        html: '<p style="margin: 0 0 16px 0; color: #5c6b73;">Start your business with eye-catching inventory.</p>'
+      }, {
+        xtype: 'container',
+        layout: 'hbox',
+        items: [{
+          xtype: 'button',
+          text: 'Add a product',
+          ui: 'primary',
+          margin: '0 8 0 0',
+          handler: function() {
+            console.log('Add a product clicked');
+          }
+        }, {
+          xtype: 'button',
+          text: 'Learn more',
+          handler: function() {
+            console.log('Learn more clicked');
+          }
+        }]
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media">
+    <img src="https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850" 
+         alt="Get closer to launching your store" 
+         class="polaris-media-card__image">
+  </div>
+  <div class="polaris-media-card__content">
+    <div class="polaris-media-card__header">
+      <h2 class="polaris-media-card__title">Get closer to launching your store</h2>
+      <div class="polaris-media-card__popover">
+        <button class="polaris-button polaris-button--icon" type="button" aria-label="More actions">
+          <span class="polaris-icon">⋮</span>
+        </button>
+        <div class="polaris-popover" style="display: none;">
+          <button class="polaris-action-list__item" type="button">Dismiss</button>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-media-card__description">
+      <p>Start your business with eye-catching inventory.</p>
+    </div>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" type="button">
+        Add a product
+      </button>
+      <button class="polaris-button" type="button">
+        Learn more
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Add a product clicked');
+});
+
+document.querySelectorAll('.polaris-button:not(.polaris-button--primary):not(.polaris-button--icon)').forEach(button => {
+  button.addEventListener('click', () => {
+    console.log('Learn more clicked');
+  });
+});
+
+// Popover toggle
+document.querySelector('.polaris-button--icon').addEventListener('click', () => {
+  const popover = document.querySelector('.polaris-popover');
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelector('.polaris-action-list__item').addEventListener('click', () => {
+  console.log('Dismiss clicked');
+  document.querySelector('.polaris-popover').style.display = 'none';
+});
+</script>`,
+    typescript: `import {MediaCard} from '@shopify/polaris';
+import React from 'react';
+
+interface MediaCardAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface MediaCardWithSecondaryActionProps {
+  title?: string;
+  description?: string;
+  primaryAction?: MediaCardAction;
+  secondaryAction?: MediaCardAction;
+  popoverActions?: MediaCardAction[];
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+function MediaCardExample({
+  title = "Get closer to launching your store",
+  description = "Start your business with eye-catching inventory.",
+  primaryAction = {
+    content: 'Add a product',
+    onAction: () => console.log('Add a product clicked'),
+  },
+  secondaryAction = {
+    content: 'Learn more',
+    onAction: () => console.log('Learn more clicked'),
+  },
+  popoverActions = [{content: 'Dismiss', onAction: () => console.log('Dismissed')}],
+  imageSrc = "https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850",
+  imageAlt = ""
+}: MediaCardWithSecondaryActionProps): JSX.Element {
+  return (
+    <MediaCard
+      title={title}
+      primaryAction={primaryAction}
+      secondaryAction={secondaryAction}
+      description={description}
+      popoverActions={popoverActions}
+    >
+      <img
+        alt={imageAlt}
+        width="100%"
+        height="100%"
+        style={{objectFit: 'cover', objectPosition: 'center'}}
+        src={imageSrc}
+      />
+    </MediaCard>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -9457,6 +9995,7 @@ const componentExamples: Record<string, any> = {
   'legacy-stack': legacyStackExamples,
   'empty-state': emptyStateExamples,
   'callout-card': calloutCardExamples,
+  'media-card': mediaCardExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
