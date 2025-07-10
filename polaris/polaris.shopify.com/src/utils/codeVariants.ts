@@ -8601,6 +8601,450 @@ function LegacyStackExample({
   }
 };
 
+// EmptyState Examples
+export const emptyStateExamples = {
+  'default': {
+    react: `import {LegacyCard, EmptyState} from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateExample() {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading="Manage your inventory transfers"
+        action={{content: 'Add transfer'}}
+        secondaryAction={{
+          content: 'Learn more',
+          url: 'https://help.shopify.com',
+        }}
+        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      >
+        <p>Track and receive your incoming inventory from suppliers.</p>
+      </EmptyState>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Empty State',
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'center',
+    pack: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 120,
+    height: 120,
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Manage your inventory transfers</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; margin: 0 0 20px 0; color: #6d7175;">Track and receive your incoming inventory from suppliers.</p>'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    items: [{
+      xtype: 'button',
+      text: 'Add transfer',
+      ui: 'primary',
+      margin: '0 10 0 0',
+      handler: function() {
+        console.log('Add transfer clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Learn more',
+      handler: function() {
+        window.open('https://help.shopify.com', '_blank');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-card polaris-legacy-card--sectioned">
+  <div class="polaris-empty-state">
+    <div class="polaris-empty-state__section">
+      <div class="polaris-empty-state__image">
+        <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png" 
+             alt="Empty state illustration" 
+             class="polaris-empty-state__illustration">
+      </div>
+      <div class="polaris-empty-state__content">
+        <h2 class="polaris-empty-state__heading">Manage your inventory transfers</h2>
+        <div class="polaris-empty-state__text">
+          <p>Track and receive your incoming inventory from suppliers.</p>
+        </div>
+        <div class="polaris-empty-state__actions">
+          <button class="polaris-button polaris-button--primary" type="button">
+            Add transfer
+          </button>
+          <a href="https://help.shopify.com" class="polaris-button" target="_blank">
+            Learn more
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Add transfer clicked');
+});
+</script>`,
+    typescript: `import {LegacyCard, EmptyState} from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateAction {
+  content: string;
+  onAction?: () => void;
+  url?: string;
+  external?: boolean;
+}
+
+interface EmptyStateExampleProps {
+  heading?: string;
+  image?: string;
+  children?: React.ReactNode;
+  action?: EmptyStateAction;
+  secondaryAction?: EmptyStateAction;
+}
+
+function EmptyStateExample({
+  heading = "Manage your inventory transfers",
+  image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
+  children = <p>Track and receive your incoming inventory from suppliers.</p>,
+  action = {content: 'Add transfer'},
+  secondaryAction = {
+    content: 'Learn more',
+    url: 'https://help.shopify.com',
+  }
+}: EmptyStateExampleProps): JSX.Element {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading={heading}
+        action={action}
+        secondaryAction={secondaryAction}
+        image={image}
+      >
+        {children}
+      </EmptyState>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-full-width-layout': {
+    react: `import {LegacyCard, EmptyState} from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateExample() {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading="Upload a file to get started"
+        action={{content: 'Upload files'}}
+        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+        fullWidth
+      >
+        <p>
+          You can use the Files section to upload images, videos, and other
+          documents. This example shows the content with a centered layout and
+          full width.
+        </p>
+      </EmptyState>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Upload Files',
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'center',
+      pack: 'center'
+    },
+    items: [{
+      xtype: 'image',
+      src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+      width: 120,
+      height: 120,
+      margin: '0 0 20 0'
+    }, {
+      xtype: 'component',
+      html: '<h2 style="text-align: center; margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Upload a file to get started</h2>'
+    }, {
+      xtype: 'component',
+      html: '<p style="text-align: center; margin: 0 0 20px 0; color: #6d7175; max-width: 600px;">You can use the Files section to upload images, videos, and other documents. This example shows the content with a centered layout and full width.</p>'
+    }, {
+      xtype: 'button',
+      text: 'Upload files',
+      ui: 'primary',
+      handler: function() {
+        console.log('Upload files clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-card polaris-legacy-card--sectioned">
+  <div class="polaris-empty-state polaris-empty-state--full-width">
+    <div class="polaris-empty-state__section">
+      <div class="polaris-empty-state__image">
+        <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png" 
+             alt="Empty state illustration" 
+             class="polaris-empty-state__illustration">
+      </div>
+      <div class="polaris-empty-state__content">
+        <h2 class="polaris-empty-state__heading">Upload a file to get started</h2>
+        <div class="polaris-empty-state__text">
+          <p>
+            You can use the Files section to upload images, videos, and other
+            documents. This example shows the content with a centered layout and
+            full width.
+          </p>
+        </div>
+        <div class="polaris-empty-state__actions">
+          <button class="polaris-button polaris-button--primary" type="button">
+            Upload files
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Upload files clicked');
+});
+</script>`,
+    typescript: `import {LegacyCard, EmptyState} from '@shopify/polaris';
+import React from 'react';
+
+interface FullWidthEmptyStateProps {
+  heading?: string;
+  image?: string;
+  children?: React.ReactNode;
+  actionContent?: string;
+  onAction?: () => void;
+  fullWidth?: boolean;
+}
+
+function EmptyStateExample({
+  heading = "Upload a file to get started",
+  image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
+  children = (
+    <p>
+      You can use the Files section to upload images, videos, and other
+      documents. This example shows the content with a centered layout and
+      full width.
+    </p>
+  ),
+  actionContent = 'Upload files',
+  onAction,
+  fullWidth = true
+}: FullWidthEmptyStateProps): JSX.Element {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading={heading}
+        action={{content: actionContent, onAction}}
+        image={image}
+        fullWidth={fullWidth}
+      >
+        {children}
+      </EmptyState>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-subdued-footer-context': {
+    react: `import {LegacyCard, EmptyState, Link} from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateExample() {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading="Manage your inventory transfers"
+        action={{content: 'Add transfer'}}
+        secondaryAction={{
+          content: 'Learn more',
+          url: 'https://help.shopify.com',
+        }}
+        footerContent={
+          <p>
+            If you don't want to add a transfer, you can import your inventory
+            from{' '}
+            <Link monochrome url="/settings">
+              settings
+            </Link>
+            .
+          </p>
+        }
+        image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      >
+        <p>Track and receive your incoming inventory from suppliers.</p>
+      </EmptyState>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Inventory Transfers',
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'center',
+    pack: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 120,
+    height: 120,
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Manage your inventory transfers</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; margin: 0 0 20px 0; color: #6d7175;">Track and receive your incoming inventory from suppliers.</p>'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    margin: '0 0 20 0',
+    items: [{
+      xtype: 'button',
+      text: 'Add transfer',
+      ui: 'primary',
+      margin: '0 10 0 0',
+      handler: function() {
+        console.log('Add transfer clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Learn more',
+      handler: function() {
+        window.open('https://help.shopify.com', '_blank');
+      }
+    }]
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #8c9196; font-size: 14px;">If you don\\'t want to add a transfer, you can import your inventory from <a href="/settings" style="color: #8c9196; text-decoration: underline;">settings</a>.</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-card polaris-legacy-card--sectioned">
+  <div class="polaris-empty-state">
+    <div class="polaris-empty-state__section">
+      <div class="polaris-empty-state__image">
+        <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png" 
+             alt="Empty state illustration" 
+             class="polaris-empty-state__illustration">
+      </div>
+      <div class="polaris-empty-state__content">
+        <h2 class="polaris-empty-state__heading">Manage your inventory transfers</h2>
+        <div class="polaris-empty-state__text">
+          <p>Track and receive your incoming inventory from suppliers.</p>
+        </div>
+        <div class="polaris-empty-state__actions">
+          <button class="polaris-button polaris-button--primary" type="button">
+            Add transfer
+          </button>
+          <a href="https://help.shopify.com" class="polaris-button" target="_blank">
+            Learn more
+          </a>
+        </div>
+        <div class="polaris-empty-state__footer">
+          <p class="polaris-text--subdued">
+            If you don't want to add a transfer, you can import your inventory
+            from <a href="/settings" class="polaris-link polaris-link--monochrome">settings</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelector('.polaris-button--primary').addEventListener('click', () => {
+  console.log('Add transfer clicked');
+});
+
+document.querySelector('.polaris-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('Settings link clicked');
+});
+</script>`,
+    typescript: `import {LegacyCard, EmptyState, Link} from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateAction {
+  content: string;
+  onAction?: () => void;
+  url?: string;
+}
+
+interface EmptyStateWithFooterProps {
+  heading?: string;
+  image?: string;
+  children?: React.ReactNode;
+  action?: EmptyStateAction;
+  secondaryAction?: EmptyStateAction;
+  footerContent?: React.ReactNode;
+}
+
+function EmptyStateExample({
+  heading = "Manage your inventory transfers",
+  image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
+  children = <p>Track and receive your incoming inventory from suppliers.</p>,
+  action = {content: 'Add transfer'},
+  secondaryAction = {
+    content: 'Learn more',
+    url: 'https://help.shopify.com',
+  },
+  footerContent = (
+    <p>
+      If you don't want to add a transfer, you can import your inventory
+      from{' '}
+      <Link monochrome url="/settings">
+        settings
+      </Link>
+      .
+    </p>
+  )
+}: EmptyStateWithFooterProps): JSX.Element {
+  return (
+    <LegacyCard sectioned>
+      <EmptyState
+        heading={heading}
+        action={action}
+        secondaryAction={secondaryAction}
+        footerContent={footerContent}
+        image={image}
+      >
+        {children}
+      </EmptyState>
+    </LegacyCard>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -8628,6 +9072,7 @@ const componentExamples: Record<string, any> = {
   'block-stack': blockStackExamples,
   'inline-stack': inlineStackExamples,
   'legacy-stack': legacyStackExamples,
+  'empty-state': emptyStateExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
