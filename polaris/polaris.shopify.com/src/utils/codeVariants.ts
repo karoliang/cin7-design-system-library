@@ -4403,6 +4403,825 @@ function IconExample({
   }
 };
 
+// Avatar Examples
+export const avatarExamples = {
+  default: {
+    react: `import {Avatar} from '@shopify/polaris';
+import React from 'react';
+
+function AvatarExample() {
+  return <Avatar customer name="Farrah" />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<div class="avatar avatar--customer" title="Farrah"><svg viewBox="0 0 20 20"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z"/></svg></div>',
+  cls: 'polaris-avatar',
+  listeners: {
+    afterrender: function(cmp) {
+      cmp.getEl().down('.avatar').set({
+        'aria-label': 'Farrah',
+        'role': 'img'
+      });
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="avatar avatar--customer" aria-label="Farrah" role="img">
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
+  </svg>
+</div>
+
+// CSS
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--p-color-avatar-background-experimental);
+  color: var(--p-color-avatar-text-on-background-experimental);
+}
+
+.avatar--customer svg {
+  width: 20px;
+  height: 20px;
+}`,
+    typescript: `import {Avatar} from '@shopify/polaris';
+import React from 'react';
+
+interface AvatarExampleProps {
+  name: string;
+  customer?: boolean;
+  source?: string;
+}
+
+function AvatarExample({ 
+  name = "Farrah",
+  customer = true,
+  source
+}: AvatarExampleProps): JSX.Element {
+  return (
+    <Avatar 
+      customer={customer} 
+      name={name}
+      source={source}
+    />
+  );
+}`
+  },
+  'extra-small': {
+    react: `import {Button, Popover, ActionList, Avatar} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ExtraSmallAvatarExample() {
+  const [active, setActive] = useState(true);
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      Manage staff
+    </Button>
+  );
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover active={active} activator={activator} onClose={toggleActive}>
+        <ActionList
+          items={[
+            {
+              content: 'Chet Baker',
+              prefix: <Avatar customer size="xs" name="Chet Baker" />,
+            },
+            {
+              content: 'Farrah Fawcett',
+              prefix: <Avatar customer size="xs" name="Farrah Fawcett" />,
+            },
+          ]}
+        />
+      </Popover>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Manage staff',
+  iconCls: 'x-fa fa-caret-down',
+  iconAlign: 'right',
+  menu: {
+    items: [{
+      text: 'Chet Baker',
+      icon: null,
+      cls: 'avatar-menu-item',
+      html: '<span class="avatar avatar--xs avatar--customer" title="Chet Baker"><svg viewBox="0 0 20 20"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z"/></svg></span> Chet Baker'
+    }, {
+      text: 'Farrah Fawcett',
+      icon: null,
+      cls: 'avatar-menu-item',
+      html: '<span class="avatar avatar--xs avatar--customer" title="Farrah Fawcett"><svg viewBox="0 0 20 20"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z"/></svg></span> Farrah Fawcett'
+    }]
+  }
+});`,
+    vanilla: `// HTML
+<div class="dropdown">
+  <button class="button button--disclosure" aria-expanded="false" aria-controls="staff-menu">
+    Manage staff
+    <svg class="icon icon--caret" viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+  </button>
+  <div id="staff-menu" class="dropdown-menu" hidden>
+    <ul class="action-list" role="list">
+      <li class="action-list__item">
+        <button class="action-list__button">
+          <span class="avatar avatar--xs avatar--customer" aria-label="Chet Baker">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Chet Baker</span>
+        </button>
+      </li>
+      <li class="action-list__item">
+        <button class="action-list__button">
+          <span class="avatar avatar--xs avatar--customer" aria-label="Farrah Fawcett">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-4.991 5c-.145 0-.218 0-.253-.003a.75.75 0 0 1-.497-1.246c.19-.214.52-.429.835-.628a10.28 10.28 0 0 1 2.368-1.082c1.264-.387 2.733-.584 4.538-.584 1.805 0 3.274.197 4.537.584a10.278 10.278 0 0 1 2.369 1.082c.315.2.644.414.835.628a.75.75 0 0 1-.497 1.246c-.036.003-.109.003-.253.003h-13.982z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Farrah Fawcett</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+// CSS
+.avatar--xs {
+  width: 24px;
+  height: 24px;
+}
+
+.action-list__button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.action-list__button:hover {
+  background: var(--p-color-bg-surface-hover);
+}
+
+// JavaScript
+const button = document.querySelector('.button--disclosure');
+const menu = document.getElementById('staff-menu');
+
+button.addEventListener('click', () => {
+  const isOpen = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', !isOpen);
+  menu.hidden = isOpen;
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.dropdown')) {
+    button.setAttribute('aria-expanded', 'false');
+    menu.hidden = true;
+  }
+});`,
+    typescript: `import {Button, Popover, ActionList, Avatar} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface StaffMember {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
+interface ExtraSmallAvatarExampleProps {
+  staffMembers?: StaffMember[];
+  onSelectMember?: (member: StaffMember) => void;
+}
+
+function ExtraSmallAvatarExample({
+  staffMembers = [
+    { id: '1', name: 'Chet Baker' },
+    { id: '2', name: 'Farrah Fawcett' }
+  ],
+  onSelectMember
+}: ExtraSmallAvatarExampleProps): JSX.Element {
+  const [active, setActive] = useState(false);
+  
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+  
+  const handleSelectMember = useCallback((member: StaffMember) => {
+    onSelectMember?.(member);
+    setActive(false);
+  }, [onSelectMember]);
+
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      Manage staff
+    </Button>
+  );
+
+  const actionListItems = staffMembers.map((member) => ({
+    content: member.name,
+    prefix: (
+      <Avatar 
+        customer 
+        size="xs" 
+        name={member.name}
+        source={member.avatar}
+      />
+    ),
+    onAction: () => handleSelectMember(member)
+  }));
+
+  return (
+    <div style={{height: '250px'}}>
+      <Popover active={active} activator={activator} onClose={toggleActive}>
+        <ActionList items={actionListItems} />
+      </Popover>
+    </div>
+  );
+}`
+  },
+  initials: {
+    react: `import {Avatar} from '@shopify/polaris';
+import React from 'react';
+
+function AvatarExample() {
+  return <Avatar initials="WW" name="Woluwayemisi Weun-Jung" />;
+}`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<div class="avatar avatar--initials" title="Woluwayemisi Weun-Jung"><span>WW</span></div>',
+  cls: 'polaris-avatar',
+  listeners: {
+    afterrender: function(cmp) {
+      cmp.getEl().down('.avatar').set({
+        'aria-label': 'Woluwayemisi Weun-Jung',
+        'role': 'img'
+      });
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="avatar avatar--initials" aria-label="Woluwayemisi Weun-Jung" role="img">
+  <span>WW</span>
+</div>
+
+// CSS
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--p-color-avatar-background-experimental);
+  color: var(--p-color-avatar-text-on-background-experimental);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.avatar--initials span {
+  text-transform: uppercase;
+  user-select: none;
+}`,
+    typescript: `import {Avatar} from '@shopify/polaris';
+import React from 'react';
+
+interface AvatarExampleProps {
+  initials: string;
+  name: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+}
+
+function AvatarExample({ 
+  initials,
+  name,
+  size = 'md'
+}: AvatarExampleProps): JSX.Element {
+  return (
+    <Avatar 
+      initials={initials} 
+      name={name}
+      size={size}
+    />
+  );
+}`
+  }
+};
+
+// Bleed Examples
+export const bleedExamples = {
+  horizontal: {
+    react: `import {Bleed, Box, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BleedExample() {
+  return (
+    <Box width="320px">
+      <Card>
+        <Bleed marginInline="400">
+          <Placeholder label="marginInline" />
+        </Bleed>
+      </Card>
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)',
+        height: height,
+        width: width,
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-bg-surface)',
+        }}
+      >
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  width: 320,
+  bodyPadding: 16,
+  items: [{
+    xtype: 'container',
+    margin: '0 -16 0 -16', // negative margins to create bleed effect
+    style: {
+      background: 'var(--p-color-text-info)',
+      padding: 'var(--p-space-200)'
+    },
+    html: '<div style="color: var(--p-color-bg-surface);">marginInline</div>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card" style="width: 320px;">
+  <div class="bleed bleed--inline">
+    <div class="placeholder">
+      <span>marginInline</span>
+    </div>
+  </div>
+</div>
+
+// CSS
+.card {
+  background: white;
+  border-radius: var(--p-border-radius-300);
+  padding: var(--p-space-400);
+  box-shadow: var(--p-shadow-300);
+}
+
+.bleed--inline {
+  margin-left: calc(var(--p-space-400) * -1);
+  margin-right: calc(var(--p-space-400) * -1);
+}
+
+.placeholder {
+  background: var(--p-color-text-info);
+  padding: var(--p-space-200);
+  color: var(--p-color-bg-surface);
+}`,
+    typescript: `import {Bleed, Box, Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto'
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)',
+        height,
+        width,
+      }}
+    >
+      <div style={{ color: 'var(--p-color-bg-surface)' }}>
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function BleedExample(): JSX.Element {
+  return (
+    <Box width="320px">
+      <Card>
+        <Bleed marginInline="400">
+          <Placeholder label="marginInline" />
+        </Bleed>
+      </Card>
+    </Box>
+  );
+}`
+  },
+  'specific-direction': {
+    react: `import {BlockStack, Bleed, Box, Card} from '@shopify/polaris';
+import React from 'react';
+
+function SpecificDirectionBleedExample() {
+  return (
+    <BlockStack gap="400">
+      <Box width="320px">
+        <Card>
+          <Bleed marginInlineStart="800">
+            <Placeholder label="marginInlineStart" />
+          </Bleed>
+        </Card>
+      </Box>
+      <Box width="320px">
+        <Card>
+          <Bleed marginInlineEnd="800">
+            <Placeholder label="marginInlineEnd" />
+          </Bleed>
+        </Card>
+      </Box>
+      <Box width="320px">
+        <Card>
+          <Bleed marginBlockStart="800">
+            <Placeholder label="marginBlockStart" />
+          </Bleed>
+        </Card>
+      </Box>
+      <Box width="320px">
+        <Card>
+          <Bleed marginBlockEnd="800">
+            <Placeholder label="marginBlockEnd" />
+          </Bleed>
+        </Card>
+      </Box>
+    </BlockStack>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)',
+        height: height,
+        width: width,
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-bg-surface)',
+        }}
+      >
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    width: 320,
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 16,
+    items: [{
+      xtype: 'container',
+      margin: '0 0 0 -32', // bleed left/start
+      style: {
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)'
+      },
+      html: '<div style="color: var(--p-color-bg-surface);">marginInlineStart</div>'
+    }]
+  }, {
+    xtype: 'panel',
+    bodyPadding: 16,
+    items: [{
+      xtype: 'container',
+      margin: '0 -32 0 0', // bleed right/end
+      style: {
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)'
+      },
+      html: '<div style="color: var(--p-color-bg-surface);">marginInlineEnd</div>'
+    }]
+  }, {
+    xtype: 'panel',
+    bodyPadding: 16,
+    items: [{
+      xtype: 'container',
+      margin: '-32 0 0 0', // bleed top
+      style: {
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)'
+      },
+      html: '<div style="color: var(--p-color-bg-surface);">marginBlockStart</div>'
+    }]
+  }, {
+    xtype: 'panel',
+    bodyPadding: 16,
+    items: [{
+      xtype: 'container',
+      margin: '0 0 -32 0', // bleed bottom
+      style: {
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)'
+      },
+      html: '<div style="color: var(--p-color-bg-surface);">marginBlockEnd</div>'
+    }]
+  }]
+});`,
+    vanilla: `// HTML
+<div class="stack">
+  <div class="card" style="width: 320px;">
+    <div class="bleed bleed--inline-start">
+      <div class="placeholder">
+        <span>marginInlineStart</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" style="width: 320px;">
+    <div class="bleed bleed--inline-end">
+      <div class="placeholder">
+        <span>marginInlineEnd</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" style="width: 320px;">
+    <div class="bleed bleed--block-start">
+      <div class="placeholder">
+        <span>marginBlockStart</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" style="width: 320px;">
+    <div class="bleed bleed--block-end">
+      <div class="placeholder">
+        <span>marginBlockEnd</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+// CSS
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-400);
+}
+
+.card {
+  background: white;
+  border-radius: var(--p-border-radius-300);
+  padding: var(--p-space-400);
+  box-shadow: var(--p-shadow-300);
+}
+
+.bleed--inline-start {
+  margin-left: calc(var(--p-space-800) * -1);
+}
+
+.bleed--inline-end {
+  margin-right: calc(var(--p-space-800) * -1);
+}
+
+.bleed--block-start {
+  margin-top: calc(var(--p-space-800) * -1);
+}
+
+.bleed--block-end {
+  margin-bottom: calc(var(--p-space-800) * -1);
+}
+
+.placeholder {
+  background: var(--p-color-text-info);
+  padding: var(--p-space-200);
+  color: var(--p-color-bg-surface);
+}`,
+    typescript: `import {BlockStack, Bleed, Box, Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+type BleedDirection = 'marginInlineStart' | 'marginInlineEnd' | 'marginBlockStart' | 'marginBlockEnd';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto'
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-200)',
+        height,
+        width,
+      }}
+    >
+      <div style={{ color: 'var(--p-color-bg-surface)' }}>
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function SpecificDirectionBleedExample(): JSX.Element {
+  const directions: BleedDirection[] = [
+    'marginInlineStart',
+    'marginInlineEnd', 
+    'marginBlockStart',
+    'marginBlockEnd'
+  ];
+
+  return (
+    <BlockStack gap="400">
+      {directions.map((direction) => (
+        <Box width="320px" key={direction}>
+          <Card>
+            <Bleed {...{[direction]: "800"}}>
+              <Placeholder label={direction} />
+            </Bleed>
+          </Card>
+        </Box>
+      ))}
+    </BlockStack>
+  );
+}`
+  },
+  vertical: {
+    react: `import {Bleed, Box, Card} from '@shopify/polaris';
+import React from 'react';
+
+function VerticalBleedExample() {
+  return (
+    <Box width="320px">
+      <Card>
+        <Bleed marginBlock="800">
+          <Placeholder label="marginBlock" />
+        </Bleed>
+      </Card>
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding: 'var(--p-space-1000) var(--p-space-200)',
+        height: height,
+        width: width,
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-bg-surface)',
+        }}
+      >
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  width: 320,
+  bodyPadding: 16,
+  items: [{
+    xtype: 'container',
+    margin: '-32 0 -32 0', // negative vertical margins
+    style: {
+      background: 'var(--p-color-text-info)',
+      padding: 'var(--p-space-1000) var(--p-space-200)'
+    },
+    html: '<div style="color: var(--p-color-bg-surface);">marginBlock</div>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="card" style="width: 320px;">
+  <div class="bleed bleed--block">
+    <div class="placeholder placeholder--vertical">
+      <span>marginBlock</span>
+    </div>
+  </div>
+</div>
+
+// CSS
+.card {
+  background: white;
+  border-radius: var(--p-border-radius-300);
+  padding: var(--p-space-400);
+  box-shadow: var(--p-shadow-300);
+}
+
+.bleed--block {
+  margin-top: calc(var(--p-space-800) * -1);
+  margin-bottom: calc(var(--p-space-800) * -1);
+}
+
+.placeholder {
+  background: var(--p-color-text-info);
+  padding: var(--p-space-200);
+  color: var(--p-color-bg-surface);
+}
+
+.placeholder--vertical {
+  padding: var(--p-space-1000) var(--p-space-200);
+}`,
+    typescript: `import {Bleed, Box, Card, Text} from '@shopify/polaris';
+import React from 'react';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+  verticalPadding?: boolean;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto',
+  verticalPadding = false
+}) => {
+  const padding = verticalPadding 
+    ? 'var(--p-space-1000) var(--p-space-200)'
+    : 'var(--p-space-200)';
+
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        padding,
+        height,
+        width,
+      }}
+    >
+      <div style={{ color: 'var(--p-color-bg-surface)' }}>
+        <Text size="bodyMd" as="p" fontWeight="regular">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function VerticalBleedExample(): JSX.Element {
+  return (
+    <Box width="320px">
+      <Card>
+        <Bleed marginBlock="800">
+          <Placeholder label="marginBlock" verticalPadding />
+        </Bleed>
+      </Card>
+    </Box>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -4420,6 +5239,8 @@ const componentExamples: Record<string, any> = {
   'tabs': tabsExamples,
   'list': listExamples,
   'icon': iconExamples,
+  'avatar': avatarExamples,
+  'bleed': bleedExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
