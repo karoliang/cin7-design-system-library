@@ -11,7 +11,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (110 examples)
+### ✅ Completed Components (114 examples)
 - **Button Group** (3/3 examples) ✅
   - default
   - with-segmented-buttons
@@ -19,7 +19,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 - **Button** (2/18 examples)
   - primary
   - plain
-- **Card** (16/20 examples)
+- **Card** (20/20 examples) ✅
   - default
   - with-subdued-background
   - with-section
@@ -36,6 +36,10 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - with-multiple-titled-sections
   - with-responsive-border-radius
   - with-sections-and-actions
+  - with-sections-and-critical-action
+  - with-separate-header
+  - with-subdued-section
+  - with-subsection
 - **Badge** (10/10 examples) ✅
   - default
   - critical

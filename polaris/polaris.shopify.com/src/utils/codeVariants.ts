@@ -3282,6 +3282,991 @@ function CardWithSectionsAndActions({
     </Card>
   );
 }`
+  },
+  'with-sections-and-critical-action': {
+    react: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  Text,
+} from '@shopify/polaris';
+import {DeleteIcon, EditIcon} from '@shopify/polaris-icons';
+
+function CardWithSectionsAndCriticalAction() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text as="p" variant="bodyMd">
+            John Smith
+          </Text>
+        </BlockStack>
+        <BlockStack gap="200">
+          <InlineGrid columns="1fr auto">
+            <Text as="h3" variant="headingSm" fontWeight="medium">
+              Contact Information
+            </Text>
+            <ButtonGroup>
+              <Button
+                icon={DeleteIcon}
+                variant="tertiary"
+                tone="critical"
+                onClick={() => {}}
+                accessibilityLabel="Delete"
+              />
+              <Button
+                icon={EditIcon}
+                variant="tertiary"
+                onClick={() => {}}
+                accessibilityLabel="Edit"
+              />
+            </ButtonGroup>
+          </InlineGrid>
+          <Text as="p" variant="bodyMd">
+            john.smith@example.com
+          </Text>
+        </BlockStack>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customer',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p style="margin: 0; font-size: 14px; line-height: 1.5;">John Smith</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        pack: 'justify',
+        align: 'middle'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<h3 style="margin: 0; font-weight: 600; font-size: 14px;">Contact Information</h3>'
+      }, {
+        xtype: 'container',
+        layout: {
+          type: 'hbox'
+        },
+        items: [{
+          xtype: 'button',
+          text: 'Delete',
+          iconCls: 'delete',
+          ui: 'critical',
+          handler: function() {
+            console.log('Delete contact information');
+          }
+        }, {
+          xtype: 'button',
+          text: 'Edit',
+          iconCls: 'edit',
+          ui: 'tertiary',
+          handler: function() {
+            console.log('Edit contact information');
+          }
+        }]
+      }],
+      margin: '0 0 10 0'
+    }, {
+      xtype: 'component',
+      html: '<p style="margin: 0; font-size: 14px; line-height: 1.5;">john.smith@example.com</p>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-400">
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h2 class="polaris-text polaris-text--variant-heading-sm">Customer</h2>
+        <p class="polaris-text polaris-text--variant-body-md">John Smith</p>
+      </div>
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <div class="polaris-inline-grid polaris-inline-grid--columns-1fr-auto">
+          <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+            Contact Information
+          </h3>
+          <div class="polaris-button-group">
+            <button 
+              class="polaris-button polaris-button--tertiary polaris-button--critical polaris-button--icon-only" 
+              aria-label="Delete"
+              id="delete-contact-button"
+            >
+              <span class="polaris-icon">🗑️</span>
+            </button>
+            <button 
+              class="polaris-button polaris-button--tertiary polaris-button--icon-only" 
+              aria-label="Edit"
+              id="edit-contact-button"
+            >
+              <span class="polaris-icon">✏️</span>
+            </button>
+          </div>
+        </div>
+        <p class="polaris-text polaris-text--variant-body-md">
+          john.smith@example.com
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('delete-contact-button').addEventListener('click', (e) => {
+  if (confirm('Are you sure you want to delete this contact information?')) {
+    console.log('Delete contact information confirmed');
+    // Add delete functionality here
+  }
+});
+
+document.getElementById('edit-contact-button').addEventListener('click', (e) => {
+  console.log('Edit contact information clicked');
+  // Add edit functionality here
+});
+
+// Make email clickable
+document.querySelectorAll('.polaris-text').forEach(text => {
+  if (text.textContent.includes('@')) {
+    text.style.cursor = 'pointer';
+    text.addEventListener('click', (e) => {
+      window.location.href = \`mailto:\${e.target.textContent}\`;
+    });
+  }
+});
+</script>`,
+    typescript: `import React from 'react';
+import {
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  Text,
+} from '@shopify/polaris';
+import {DeleteIcon, EditIcon} from '@shopify/polaris-icons';
+
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface Section {
+  id: string;
+  title: string;
+  content: string;
+  editable?: boolean;
+  deletable?: boolean;
+}
+
+interface CardWithSectionsAndCriticalActionProps {
+  customer?: Customer;
+  sections?: Section[];
+  onEdit?: (sectionId: string) => void;
+  onDelete?: (sectionId: string) => void;
+  onCustomerClick?: (customer: Customer) => void;
+}
+
+function CardWithSectionsAndCriticalAction({
+  customer = { id: '1', name: 'John Smith', email: 'john.smith@example.com' },
+  sections = [
+    { 
+      id: 'contact', 
+      title: 'Contact Information', 
+      content: 'john.smith@example.com', 
+      editable: true,
+      deletable: true 
+    }
+  ],
+  onEdit,
+  onDelete,
+  onCustomerClick
+}: CardWithSectionsAndCriticalActionProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text 
+            as="p" 
+            variant="bodyMd"
+            onClick={() => onCustomerClick?.(customer)}
+          >
+            {customer.name}
+          </Text>
+        </BlockStack>
+        {sections.map((section) => (
+          <BlockStack key={section.id} gap="200">
+            <InlineGrid columns="1fr auto">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                {section.title}
+              </Text>
+              <ButtonGroup>
+                {section.deletable && (
+                  <Button
+                    icon={DeleteIcon}
+                    variant="tertiary"
+                    tone="critical"
+                    onClick={() => onDelete?.(section.id)}
+                    accessibilityLabel={\`Delete \${section.title}\`}
+                  />
+                )}
+                {section.editable && (
+                  <Button
+                    icon={EditIcon}
+                    variant="tertiary"
+                    onClick={() => onEdit?.(section.id)}
+                    accessibilityLabel={\`Edit \${section.title}\`}
+                  />
+                )}
+              </ButtonGroup>
+            </InlineGrid>
+            <Text as="p" variant="bodyMd">
+              {section.content}
+            </Text>
+          </BlockStack>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-separate-header': {
+    react: `import React, {useState} from 'react';
+import {
+  ActionList,
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  List,
+  Popover,
+  Text,
+} from '@shopify/polaris';
+
+function CardWithSeparateHeader() {
+  const [actionActive, toggleAction] = useState(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const items = [{content: 'Member'}, {content: 'Admin'}];
+
+  const disclosureButtonActivator = (
+    <Button variant="plain" disclosure onClick={handleToggleAction}>
+      Add account
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList items={items} />
+    </Popover>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            Staff accounts
+          </Text>
+          <ButtonGroup>
+            <Button
+              variant="plain"
+              onClick={() => {}}
+              accessibilityLabel="Preview"
+            >
+              Preview
+            </Button>
+            {disclosureButton}
+          </ButtonGroup>
+        </InlineGrid>
+        <List>
+          <List.Item>Felix Crafford</List.Item>
+          <List.Item>Ezequiel Manno</List.Item>
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Staff accounts',
+  padding: 20,
+  tools: [{
+    type: 'gear',
+    tooltip: 'Preview',
+    handler: function() {
+      console.log('Preview clicked');
+    }
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    layout: {
+      pack: 'end'
+    },
+    items: [{
+      text: 'Preview',
+      ui: 'plain',
+      handler: function() {
+        console.log('Preview clicked');
+      }
+    }, {
+      text: 'Add account',
+      ui: 'plain',
+      menu: [{
+        text: 'Member',
+        handler: function() {
+          console.log('Add Member clicked');
+        }
+      }, {
+        text: 'Admin',
+        handler: function() {
+          console.log('Add Admin clicked');
+        }
+      }]
+    }]
+  }],
+  items: [{
+    xtype: 'component',
+    html: '<ul style="margin: 0; padding-left: 20px; list-style: disc;"><li>Felix Crafford</li><li>Ezequiel Manno</li></ul>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-200">
+      <div class="polaris-inline-grid polaris-inline-grid--columns-1fr-auto">
+        <h2 class="polaris-text polaris-text--variant-heading-sm">Staff accounts</h2>
+        <div class="polaris-button-group">
+          <button class="polaris-button polaris-button--plain" id="preview-button">
+            Preview
+          </button>
+          <div class="polaris-popover-wrapper">
+            <button class="polaris-button polaris-button--plain polaris-button--disclosure" id="add-account-button">
+              Add account
+            </button>
+            <div class="polaris-popover polaris-popover--hidden" id="add-account-popover">
+              <ul class="polaris-action-list">
+                <li class="polaris-action-list__item">
+                  <button class="polaris-action-list__button" data-role="Member">Member</button>
+                </li>
+                <li class="polaris-action-list__item">
+                  <button class="polaris-action-list__button" data-role="Admin">Admin</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="polaris-list">
+        <li class="polaris-list__item">Felix Crafford</li>
+        <li class="polaris-list__item">Ezequiel Manno</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const previewButton = document.getElementById('preview-button');
+const addAccountButton = document.getElementById('add-account-button');
+const addAccountPopover = document.getElementById('add-account-popover');
+
+previewButton.addEventListener('click', (e) => {
+  console.log('Preview clicked');
+});
+
+addAccountButton.addEventListener('click', (e) => {
+  addAccountPopover.classList.toggle('polaris-popover--hidden');
+});
+
+document.querySelectorAll('.polaris-action-list__button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const role = e.target.dataset.role;
+    console.log(\`Add \${role} clicked\`);
+    addAccountPopover.classList.add('polaris-popover--hidden');
+  });
+});
+
+// Close popover when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.polaris-popover-wrapper')) {
+    addAccountPopover.classList.add('polaris-popover--hidden');
+  }
+});
+</script>`,
+    typescript: `import React, {useState} from 'react';
+import {
+  ActionList,
+  BlockStack,
+  Button,
+  ButtonGroup,
+  Card,
+  InlineGrid,
+  List,
+  Popover,
+  Text,
+} from '@shopify/polaris';
+
+interface StaffMember {
+  id: string;
+  name: string;
+  role: 'Member' | 'Admin';
+}
+
+interface ActionItem {
+  content: string;
+  onAction?: () => void;
+}
+
+interface CardWithSeparateHeaderProps {
+  title?: string;
+  staffMembers?: StaffMember[];
+  actions?: ActionItem[];
+  onPreview?: () => void;
+  onAddAccount?: (role: 'Member' | 'Admin') => void;
+  onStaffClick?: (staff: StaffMember) => void;
+}
+
+function CardWithSeparateHeader({
+  title = "Staff accounts",
+  staffMembers = [
+    { id: '1', name: 'Felix Crafford', role: 'Admin' },
+    { id: '2', name: 'Ezequiel Manno', role: 'Member' }
+  ],
+  actions = [
+    { content: 'Member' },
+    { content: 'Admin' }
+  ],
+  onPreview = () => console.log('Preview clicked'),
+  onAddAccount = (role) => console.log(\`Add \${role} clicked\`),
+  onStaffClick
+}: CardWithSeparateHeaderProps): JSX.Element {
+  const [actionActive, toggleAction] = useState(false);
+
+  const handleToggleAction = () => {
+    toggleAction(!actionActive);
+  };
+
+  const handleActionSelect = (item: ActionItem) => {
+    onAddAccount?.(item.content as 'Member' | 'Admin');
+    item.onAction?.();
+  };
+
+  const disclosureButtonActivator = (
+    <Button variant="plain" disclosure onClick={handleToggleAction}>
+      Add account
+    </Button>
+  );
+
+  const disclosureButton = (
+    <Popover
+      active={actionActive}
+      activator={disclosureButtonActivator}
+      onClose={handleToggleAction}
+    >
+      <ActionList 
+        items={actions.map(item => ({
+          ...item,
+          onAction: () => handleActionSelect(item)
+        }))} 
+      />
+    </Popover>
+  );
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <InlineGrid columns="1fr auto">
+          <Text as="h2" variant="headingSm">
+            {title}
+          </Text>
+          <ButtonGroup>
+            <Button
+              variant="plain"
+              onClick={onPreview}
+              accessibilityLabel="Preview staff accounts"
+            >
+              Preview
+            </Button>
+            {disclosureButton}
+          </ButtonGroup>
+        </InlineGrid>
+        <List>
+          {staffMembers.map((staff) => (
+            <List.Item 
+              key={staff.id}
+              onClick={() => onStaffClick?.(staff)}
+            >
+              {staff.name}
+            </List.Item>
+          ))}
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  'with-subdued-section': {
+    react: `import React from 'react';
+import {Bleed, BlockStack, Box, Card, List, Text} from '@shopify/polaris';
+
+function CardWithSubduedSection() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          Staff accounts
+        </Text>
+        <Box paddingBlockEnd="200">
+          <List>
+            <List.Item>Felix Crafford</List.Item>
+            <List.Item>Ezequiel Manno</List.Item>
+          </List>
+        </Box>
+      </BlockStack>
+      <Bleed marginBlockEnd="400" marginInline="400">
+        <Box background="bg-surface-secondary" padding="400">
+          <BlockStack gap="200">
+            <Text as="h3" variant="headingSm" fontWeight="medium">
+              Deactivated staff accounts
+            </Text>
+            <List>
+              <List.Item>Felix Crafford</List.Item>
+              <List.Item>Ezequiel Manno</List.Item>
+            </List>
+          </BlockStack>
+        </Box>
+      </Bleed>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Staff accounts',
+  padding: '20 20 0 20',
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<ul style="margin: 0; padding-left: 20px; list-style: disc;"><li>Felix Crafford</li><li>Ezequiel Manno</li></ul>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    style: {
+      backgroundColor: '#f6f6f7',
+      margin: '0 -20px -20px -20px',
+      padding: '20px'
+    },
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<h3 style="margin: 0 0 10px 0; font-weight: 600;">Deactivated staff accounts</h3>'
+    }, {
+      xtype: 'component',
+      html: '<ul style="margin: 0; padding-left: 20px; list-style: disc;"><li>Felix Crafford</li><li>Ezequiel Manno</li></ul>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-200">
+      <h2 class="polaris-text polaris-text--variant-heading-sm">Staff accounts</h2>
+      <div class="polaris-box polaris-box--padding-block-end-200">
+        <ul class="polaris-list">
+          <li class="polaris-list__item">Felix Crafford</li>
+          <li class="polaris-list__item">Ezequiel Manno</li>
+        </ul>
+      </div>
+    </div>
+    <div class="polaris-bleed polaris-bleed--margin-block-end-400 polaris-bleed--margin-inline-400">
+      <div class="polaris-box polaris-box--bg-surface-secondary polaris-box--padding-400">
+        <div class="polaris-block-stack polaris-block-stack--gap-200">
+          <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+            Deactivated staff accounts
+          </h3>
+          <ul class="polaris-list">
+            <li class="polaris-list__item">Felix Crafford</li>
+            <li class="polaris-list__item">Ezequiel Manno</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-list__item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const isDeactivated = e.target.closest('.polaris-box--bg-surface-secondary') !== null;
+    const status = isDeactivated ? 'deactivated' : 'active';
+    console.log(\`\${status} staff member clicked: \${e.target.textContent}\`);
+  });
+});
+</script>`,
+    typescript: `import React from 'react';
+import {Bleed, BlockStack, Box, Card, List, Text} from '@shopify/polaris';
+
+interface StaffMember {
+  id: string;
+  name: string;
+  active: boolean;
+}
+
+interface CardWithSubduedSectionProps {
+  title?: string;
+  staffMembers?: StaffMember[];
+  deactivatedTitle?: string;
+  onStaffClick?: (staff: StaffMember) => void;
+}
+
+function CardWithSubduedSection({
+  title = "Staff accounts",
+  staffMembers = [
+    { id: '1', name: 'Felix Crafford', active: true },
+    { id: '2', name: 'Ezequiel Manno', active: true },
+    { id: '3', name: 'Felix Crafford', active: false },
+    { id: '4', name: 'Ezequiel Manno', active: false }
+  ],
+  deactivatedTitle = "Deactivated staff accounts",
+  onStaffClick
+}: CardWithSubduedSectionProps): JSX.Element {
+  const activeStaff = staffMembers.filter(staff => staff.active);
+  const deactivatedStaff = staffMembers.filter(staff => !staff.active);
+
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="200">
+        <Text as="h2" variant="headingSm">
+          {title}
+        </Text>
+        <Box paddingBlockEnd="200">
+          <List>
+            {activeStaff.map((staff) => (
+              <List.Item 
+                key={staff.id}
+                onClick={() => onStaffClick?.(staff)}
+              >
+                {staff.name}
+              </List.Item>
+            ))}
+          </List>
+        </Box>
+      </BlockStack>
+      {deactivatedStaff.length > 0 && (
+        <Bleed marginBlockEnd="400" marginInline="400">
+          <Box background="bg-surface-secondary" padding="400">
+            <BlockStack gap="200">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                {deactivatedTitle}
+              </Text>
+              <List>
+                {deactivatedStaff.map((staff) => (
+                  <List.Item 
+                    key={staff.id}
+                    onClick={() => onStaffClick?.(staff)}
+                  >
+                    {staff.name}
+                  </List.Item>
+                ))}
+              </List>
+            </BlockStack>
+          </Box>
+        </Bleed>
+      )}
+    </Card>
+  );
+}`
+  },
+  'with-subsection': {
+    react: `import React from 'react';
+import {BlockStack, Card, Text} from '@shopify/polaris';
+
+function CardWithSubsection() {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text as="p" variant="bodyMd">
+            John Smith
+          </Text>
+        </BlockStack>
+        <div>
+          <BlockStack gap="200">
+            <Text as="h3" variant="headingSm" fontWeight="medium">
+              Addresses
+            </Text>
+            <div>
+              <Text as="p" variant="bodyMd">
+                123 First St
+              </Text>
+              <Text as="p" variant="bodyMd">
+                Somewhere
+              </Text>
+              <Text as="p" variant="bodyMd">
+                The Universe
+              </Text>
+            </div>
+            <div>
+              <Text as="p" variant="bodyMd">
+                123 Second St
+              </Text>
+              <Text as="p" variant="bodyMd">
+                Somewhere
+              </Text>
+              <Text as="p" variant="bodyMd">
+                The Universe
+              </Text>
+            </div>
+          </BlockStack>
+        </div>
+        <div>
+          <Text as="p" variant="bodyMd">
+            A single subsection without a sibling has no visual appearance
+          </Text>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Customer',
+  padding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<p style="margin: 0; font-size: 14px; line-height: 1.5;">John Smith</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<h3 style="margin: 0 0 10px 0; font-weight: 600;">Addresses</h3>'
+    }, {
+      xtype: 'container',
+      layout: {
+        type: 'vbox',
+        align: 'stretch'
+      },
+      style: {
+        borderBottom: '1px solid #e1e1e1',
+        paddingBottom: '10px',
+        marginBottom: '10px'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">123 First St</p>'
+      }, {
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">Somewhere</p>'
+      }, {
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">The Universe</p>'
+      }]
+    }, {
+      xtype: 'container',
+      layout: {
+        type: 'vbox',
+        align: 'stretch'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">123 Second St</p>'
+      }, {
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">Somewhere</p>'
+      }, {
+        xtype: 'component',
+        html: '<p style="margin: 0; line-height: 1.5;">The Universe</p>'
+      }]
+    }],
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'component',
+    html: '<p style="margin: 0; line-height: 1.5; font-style: italic;">A single subsection without a sibling has no visual appearance</p>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card polaris-card--rounded">
+  <div class="polaris-card__content">
+    <div class="polaris-block-stack polaris-block-stack--gap-400">
+      <div class="polaris-block-stack polaris-block-stack--gap-200">
+        <h2 class="polaris-text polaris-text--variant-heading-sm">Customer</h2>
+        <p class="polaris-text polaris-text--variant-body-md">John Smith</p>
+      </div>
+      <div class="polaris-subsection">
+        <div class="polaris-block-stack polaris-block-stack--gap-200">
+          <h3 class="polaris-text polaris-text--variant-heading-sm polaris-text--font-weight-medium">
+            Addresses
+          </h3>
+          <div class="polaris-address-block">
+            <p class="polaris-text polaris-text--variant-body-md">123 First St</p>
+            <p class="polaris-text polaris-text--variant-body-md">Somewhere</p>
+            <p class="polaris-text polaris-text--variant-body-md">The Universe</p>
+          </div>
+          <div class="polaris-address-block">
+            <p class="polaris-text polaris-text--variant-body-md">123 Second St</p>
+            <p class="polaris-text polaris-text--variant-body-md">Somewhere</p>
+            <p class="polaris-text polaris-text--variant-body-md">The Universe</p>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-single-subsection">
+        <p class="polaris-text polaris-text--variant-body-md">
+          A single subsection without a sibling has no visual appearance
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-address-block').forEach((block, index) => {
+  block.addEventListener('click', (e) => {
+    console.log(\`Address \${index + 1} clicked\`);
+  });
+  
+  // Add visual feedback
+  block.style.cursor = 'pointer';
+  block.addEventListener('mouseenter', (e) => {
+    e.target.style.backgroundColor = '#f6f6f7';
+  });
+  block.addEventListener('mouseleave', (e) => {
+    e.target.style.backgroundColor = '';
+  });
+});
+</script>`,
+    typescript: `import React from 'react';
+import {BlockStack, Card, Text} from '@shopify/polaris';
+
+interface Address {
+  id: string;
+  street: string;
+  city: string;
+  country: string;
+}
+
+interface Customer {
+  id: string;
+  name: string;
+}
+
+interface CardWithSubsectionProps {
+  customer?: Customer;
+  addresses?: Address[];
+  note?: string;
+  onCustomerClick?: (customer: Customer) => void;
+  onAddressClick?: (address: Address) => void;
+}
+
+function CardWithSubsection({
+  customer = { id: '1', name: 'John Smith' },
+  addresses = [
+    { id: '1', street: '123 First St', city: 'Somewhere', country: 'The Universe' },
+    { id: '2', street: '123 Second St', city: 'Somewhere', country: 'The Universe' }
+  ],
+  note = "A single subsection without a sibling has no visual appearance",
+  onCustomerClick,
+  onAddressClick
+}: CardWithSubsectionProps): JSX.Element {
+  return (
+    <Card roundedAbove="sm">
+      <BlockStack gap="400">
+        <BlockStack gap="200">
+          <Text as="h2" variant="headingSm">
+            Customer
+          </Text>
+          <Text 
+            as="p" 
+            variant="bodyMd"
+            onClick={() => onCustomerClick?.(customer)}
+          >
+            {customer.name}
+          </Text>
+        </BlockStack>
+        {addresses.length > 0 && (
+          <div>
+            <BlockStack gap="200">
+              <Text as="h3" variant="headingSm" fontWeight="medium">
+                Addresses
+              </Text>
+              {addresses.map((address) => (
+                <div 
+                  key={address.id}
+                  onClick={() => onAddressClick?.(address)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <Text as="p" variant="bodyMd">
+                    {address.street}
+                  </Text>
+                  <Text as="p" variant="bodyMd">
+                    {address.city}
+                  </Text>
+                  <Text as="p" variant="bodyMd">
+                    {address.country}
+                  </Text>
+                </div>
+              ))}
+            </BlockStack>
+          </div>
+        )}
+        <div>
+          <Text as="p" variant="bodyMd">
+            {note}
+          </Text>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`
   }
 };
 
