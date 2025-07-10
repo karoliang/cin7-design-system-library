@@ -8183,6 +8183,424 @@ const Placeholder: React.FC<PlaceholderProps> = ({
   }
 };
 
+// LegacyStack Examples
+export const legacyStackExamples = {
+  'default': {
+    react: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+function LegacyStackExample() {
+  return (
+    <LegacyStack>
+      <Badge>Paid</Badge>
+      <Badge>Processing</Badge>
+      <Badge>Fulfilled</Badge>
+      <Badge>Completed</Badge>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: {
+    margin: '0 4px 0 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<span class="badge badge-success">Paid</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#00a047',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-warning">Processing</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#f59e0b',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-info">Fulfilled</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#3b82f6',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-primary">Completed</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#8b5cf6',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-stack">
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--success">Paid</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--warning">Processing</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--info">Fulfilled</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--primary">Completed</span>
+  </div>
+</div>`,
+    typescript: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+interface BadgeInfo {
+  label: string;
+  status?: 'success' | 'info' | 'attention' | 'warning' | 'critical';
+}
+
+interface LegacyStackExampleProps {
+  badges?: BadgeInfo[];
+  spacing?: 'extraTight' | 'tight' | 'baseTight' | 'loose' | 'extraLoose';
+}
+
+function LegacyStackExample({ 
+  badges = [
+    { label: 'Paid', status: 'success' },
+    { label: 'Processing', status: 'warning' },
+    { label: 'Fulfilled', status: 'info' },
+    { label: 'Completed' }
+  ],
+  spacing
+}: LegacyStackExampleProps): JSX.Element {
+  return (
+    <LegacyStack spacing={spacing}>
+      {badges.map((badge, index) => (
+        <Badge key={index} tone={badge.status}>
+          {badge.label}
+        </Badge>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  'spacing': {
+    react: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+function LegacyStackExample() {
+  return (
+    <LegacyStack spacing="loose">
+      <Badge>Paid</Badge>
+      <Badge>Fulfilled</Badge>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: {
+    margin: '0 16px 0 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<span class="badge badge-success">Paid</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#00a047',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-info">Fulfilled</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#3b82f6',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-stack polaris-legacy-stack--spacing-loose">
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--success">Paid</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--info">Fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+type StackSpacing = 'extraTight' | 'tight' | 'baseTight' | 'loose' | 'extraLoose';
+
+interface LegacyStackExampleProps {
+  spacing?: StackSpacing;
+  items?: Array<{
+    label: string;
+    tone?: 'success' | 'info' | 'attention' | 'warning' | 'critical';
+  }>;
+}
+
+function LegacyStackExample({ 
+  spacing = 'loose',
+  items = [
+    { label: 'Paid', tone: 'success' },
+    { label: 'Fulfilled', tone: 'info' }
+  ]
+}: LegacyStackExampleProps): JSX.Element {
+  return (
+    <LegacyStack spacing={spacing}>
+      {items.map((item, index) => (
+        <Badge key={index} tone={item.tone}>
+          {item.label}
+        </Badge>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  'vertical-centering': {
+    react: `import {LegacyStack, Badge, Text} from '@shopify/polaris';
+import React from 'react';
+
+function LegacyStackExample() {
+  return (
+    <LegacyStack alignment="center">
+      <Text variant="headingMd" as="h2">
+        Order
+        <br />
+        #1136
+        <br />
+        was paid
+      </Text>
+      <Badge>Paid</Badge>
+      <Badge>Fulfilled</Badge>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: {
+    margin: '0 8px 0 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<h2 style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.4;">Order<br/>#1136<br/>was paid</h2>'
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-success">Paid</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#00a047',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-info">Fulfilled</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#3b82f6',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px'
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-stack polaris-legacy-stack--alignment-center">
+  <div class="polaris-legacy-stack__item">
+    <h2 class="polaris-text polaris-text--variant-headingMd">
+      Order
+      <br />
+      #1136
+      <br />
+      was paid
+    </h2>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--success">Paid</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--info">Fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {LegacyStack, Badge, Text} from '@shopify/polaris';
+import React from 'react';
+
+type StackAlignment = 'leading' | 'trailing' | 'center' | 'fill' | 'baseline';
+
+interface OrderInfo {
+  orderNumber: string;
+  status: string;
+  badges: Array<{
+    label: string;
+    tone?: 'success' | 'info' | 'attention' | 'warning' | 'critical';
+  }>;
+}
+
+interface LegacyStackExampleProps {
+  alignment?: StackAlignment;
+  orderInfo?: OrderInfo;
+}
+
+function LegacyStackExample({ 
+  alignment = 'center',
+  orderInfo = {
+    orderNumber: '#1136',
+    status: 'was paid',
+    badges: [
+      { label: 'Paid', tone: 'success' },
+      { label: 'Fulfilled', tone: 'info' }
+    ]
+  }
+}: LegacyStackExampleProps): JSX.Element {
+  return (
+    <LegacyStack alignment={alignment}>
+      <Text variant="headingMd" as="h2">
+        Order
+        <br />
+        {orderInfo.orderNumber}
+        <br />
+        {orderInfo.status}
+      </Text>
+      {orderInfo.badges.map((badge, index) => (
+        <Badge key={index} tone={badge.tone}>
+          {badge.label}
+        </Badge>
+      ))}
+    </LegacyStack>
+  );
+}`
+  },
+  'vertical': {
+    react: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+function LegacyStackExample() {
+  return (
+    <LegacyStack vertical>
+      <Badge>Paid</Badge>
+      <Badge>Processing</Badge>
+      <Badge>Fulfilled</Badge>
+    </LegacyStack>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'left'
+  },
+  defaults: {
+    margin: '0 0 4px 0'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<span class="badge badge-success">Paid</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#00a047',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px',
+      display: 'inline-block'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-warning">Processing</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#f59e0b',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px',
+      display: 'inline-block'
+    }
+  }, {
+    xtype: 'component',
+    html: '<span class="badge badge-info">Fulfilled</span>',
+    style: {
+      padding: '4px 8px',
+      backgroundColor: '#3b82f6',
+      color: 'white',
+      borderRadius: '4px',
+      fontSize: '12px',
+      display: 'inline-block'
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-legacy-stack polaris-legacy-stack--vertical">
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--success">Paid</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--warning">Processing</span>
+  </div>
+  <div class="polaris-legacy-stack__item">
+    <span class="polaris-badge polaris-badge--info">Fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {LegacyStack, Badge} from '@shopify/polaris';
+import React from 'react';
+
+interface BadgeConfig {
+  label: string;
+  tone?: 'success' | 'info' | 'attention' | 'warning' | 'critical';
+}
+
+interface LegacyStackExampleProps {
+  vertical?: boolean;
+  badges?: BadgeConfig[];
+  spacing?: 'extraTight' | 'tight' | 'baseTight' | 'loose' | 'extraLoose';
+}
+
+function LegacyStackExample({ 
+  vertical = true,
+  badges = [
+    { label: 'Paid', tone: 'success' },
+    { label: 'Processing', tone: 'warning' },
+    { label: 'Fulfilled', tone: 'info' }
+  ],
+  spacing
+}: LegacyStackExampleProps): JSX.Element {
+  return (
+    <LegacyStack vertical={vertical} spacing={spacing}>
+      {badges.map((badge, index) => (
+        <Badge key={index} tone={badge.tone}>
+          {badge.label}
+        </Badge>
+      ))}
+    </LegacyStack>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -8209,6 +8627,7 @@ const componentExamples: Record<string, any> = {
   'text': textExamples,
   'block-stack': blockStackExamples,
   'inline-stack': inlineStackExamples,
+  'legacy-stack': legacyStackExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
