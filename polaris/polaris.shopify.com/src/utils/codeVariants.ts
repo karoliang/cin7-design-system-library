@@ -3254,6 +3254,740 @@ function CheckboxExample({
   }
 };
 
+// Page Examples
+export const pageExamples = {
+  default: {
+    react: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Products', url: '#'}}
+      title="3/4 inch Leather pet collar"
+      titleMetadata={<Badge tone="success">Paid</Badge>}
+      subtitle="Perfect for any pet"
+      compactTitle
+      primaryAction={{content: 'Save', disabled: true}}
+      secondaryActions={[
+        {
+          content: 'Duplicate',
+          accessibilityLabel: 'Secondary action label',
+          onAction: () => alert('Duplicate action'),
+        },
+        {
+          content: 'View on your store',
+          onAction: () => alert('View on your store action'),
+        },
+      ]}
+      actionGroups={[
+        {
+          title: 'Promote',
+          actions: [
+            {
+              content: 'Share on Facebook',
+              accessibilityLabel: 'Individual action label',
+              onAction: () => alert('Share on Facebook action'),
+            },
+          ],
+        },
+      ]}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+      }}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: '3/4 inch Leather pet collar',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Products',
+      handler: function() {
+        console.log('Back to products');
+      }
+    }, '->', {
+      xtype: 'label',
+      html: '<span style="background:#0a7700;color:white;padding:2px 8px;border-radius:4px;">Paid</span>'
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      xtype: 'label',
+      text: 'Perfect for any pet',
+      style: 'color:#6d7175;'
+    }, '->', {
+      text: 'Duplicate',
+      handler: function() {
+        alert('Duplicate action');
+      }
+    }, {
+      text: 'View on your store',
+      handler: function() {
+        alert('View on your store action');
+      }
+    }, {
+      text: 'Save',
+      ui: 'primary',
+      disabled: true
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: [{
+      text: '← Previous',
+      handler: function() {
+        console.log('Previous page');
+      }
+    }, '->', {
+      text: 'Next →',
+      handler: function() {
+        console.log('Next page');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Products
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">
+        3/4 inch Leather pet collar
+        <span class="badge badge--success">Paid</span>
+      </h1>
+      <p class="page__subtitle">Perfect for any pet</p>
+    </div>
+    <div class="page__actions">
+      <div class="page__secondary-actions">
+        <button class="button button--secondary">Duplicate</button>
+        <button class="button button--secondary">View on your store</button>
+        <div class="dropdown">
+          <button class="button button--secondary dropdown-toggle">
+            Promote
+            <svg class="icon" viewBox="0 0 20 20">
+              <path d="M7 8l3 3 3-3" stroke="currentColor" fill="none"/>
+            </svg>
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item">Share on Facebook</button>
+          </div>
+        </div>
+      </div>
+      <button class="button button--primary" disabled>Save</button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__header">
+        <h2 class="card__title">Credit card</h2>
+      </div>
+      <div class="card__body">
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+  <div class="page__pagination">
+    <button class="pagination__button">
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+      Previous
+    </button>
+    <button class="pagination__button">
+      Next
+      <svg class="icon" viewBox="0 0 20 20">
+        <path d="M8 4l6 6-6 6" stroke="currentColor" fill="none" stroke-width="2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+// CSS
+.page {
+  background: var(--p-color-bg);
+  min-height: 100vh;
+}
+
+.page__header {
+  background: var(--p-color-bg-surface);
+  border-bottom: 1px solid var(--p-color-border);
+  padding: var(--p-space-400) var(--p-space-600);
+}
+
+.page__breadcrumb {
+  margin-bottom: var(--p-space-200);
+}
+
+.breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  color: var(--p-color-text);
+  text-decoration: none;
+}
+
+.page__title-wrapper {
+  margin-bottom: var(--p-space-400);
+}
+
+.page__title {
+  font-size: var(--p-font-size-600);
+  font-weight: var(--p-font-weight-bold);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0 var(--p-space-200);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-200);
+}
+
+.badge--success {
+  background: var(--p-color-bg-fill-success);
+  color: white;
+}
+
+.page__subtitle {
+  color: var(--p-color-text-secondary);
+  margin: var(--p-space-100) 0 0 0;
+}
+
+.page__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page__secondary-actions {
+  display: flex;
+  gap: var(--p-space-200);
+}
+
+.button {
+  padding: var(--p-space-200) var(--p-space-400);
+  border-radius: var(--p-border-radius-200);
+  border: 1px solid var(--p-color-border);
+  background: white;
+  cursor: pointer;
+}
+
+.button--primary {
+  background: var(--p-color-bg-fill-brand);
+  color: white;
+  border-color: var(--p-color-bg-fill-brand);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page__content {
+  padding: var(--p-space-600);
+}
+
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+}
+
+.card__header {
+  padding: var(--p-space-400);
+  border-bottom: 1px solid var(--p-color-border);
+}
+
+.card__title {
+  font-size: var(--p-font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0;
+}
+
+.card__body {
+  padding: var(--p-space-400);
+}
+
+.page__pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--p-space-400) var(--p-space-600);
+  border-top: 1px solid var(--p-color-border);
+}
+
+.pagination__button {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  padding: var(--p-space-200) var(--p-space-300);
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--p-color-text);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+// JavaScript
+document.querySelectorAll('.button').forEach(button => {
+  if (!button.disabled) {
+    button.addEventListener('click', () => {
+      console.log(button.textContent + ' clicked');
+    });
+  }
+});`,
+    typescript: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface PageAction {
+  content: string;
+  accessibilityLabel?: string;
+  onAction: () => void;
+  disabled?: boolean;
+}
+
+interface PageExampleProps {
+  title: string;
+  subtitle?: string;
+  backUrl?: string;
+  primaryAction?: PageAction;
+  secondaryActions?: PageAction[];
+  children: React.ReactNode;
+}
+
+function PageExample({
+  title,
+  subtitle,
+  backUrl = '#',
+  primaryAction,
+  secondaryActions = [],
+  children
+}: PageExampleProps): JSX.Element {
+  return (
+    <Page
+      backAction={{content: 'Back', url: backUrl}}
+      title={title}
+      subtitle={subtitle}
+      compactTitle
+      primaryAction={primaryAction}
+      secondaryActions={secondaryActions}
+      pagination={{
+        hasPrevious: true,
+        hasNext: true,
+      }}
+    >
+      {children}
+    </Page>
+  );
+}`
+  },
+  'with-subtitle': {
+    react: `import {Page, LegacyCard} from '@shopify/polaris';
+import {ArrowDownIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      backAction={{content: 'Products', url: '#'}}
+      title="Invoice"
+      subtitle="Statement period: May 3, 2019 to June 2, 2019"
+      secondaryActions={[{content: 'Download', icon: ArrowDownIcon}]}
+    >
+      <LegacyCard title="Credit card" sectioned>
+        <p>Credit card information</p>
+      </LegacyCard>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Invoice',
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      text: '← Products',
+      handler: function() {
+        console.log('Back to products');
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      xtype: 'label',
+      text: 'Statement period: May 3, 2019 to June 2, 2019',
+      style: 'color:#6d7175;'
+    }, '->', {
+      text: 'Download',
+      iconCls: 'x-fa fa-download',
+      handler: function() {
+        console.log('Download invoice');
+      }
+    }]
+  }],
+  items: [{
+    xtype: 'panel',
+    title: 'Credit card',
+    bodyPadding: 16,
+    html: '<p>Credit card information</p>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="page">
+  <div class="page__header">
+    <div class="page__breadcrumb">
+      <a href="#" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M12 16l-6-6 6-6" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Products
+      </a>
+    </div>
+    <div class="page__title-wrapper">
+      <h1 class="page__title">Invoice</h1>
+      <p class="page__subtitle">Statement period: May 3, 2019 to June 2, 2019</p>
+    </div>
+    <div class="page__actions">
+      <button class="button button--secondary">
+        <svg class="icon" viewBox="0 0 20 20">
+          <path d="M10 3v10m0 0l-3-3m3 3l3-3M5 16h10" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
+  <div class="page__content">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Credit card</h2>
+        <p>Credit card information</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+// CSS (same as default example with minor additions)
+.button--secondary {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-100);
+}
+
+.card__body--section {
+  padding: var(--p-space-400);
+}
+
+.card__body--section .card__title {
+  margin-bottom: var(--p-space-200);
+}`,
+    typescript: `import {Page, LegacyCard} from '@shopify/polaris';
+import {ArrowDownIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface PageWithSubtitleProps {
+  title: string;
+  subtitle: string;
+  backAction?: {
+    content: string;
+    url: string;
+  };
+  onDownload?: () => void;
+  children: React.ReactNode;
+}
+
+function PageWithSubtitle({
+  title,
+  subtitle,
+  backAction = {content: 'Back', url: '#'},
+  onDownload,
+  children
+}: PageWithSubtitleProps): JSX.Element {
+  return (
+    <Page
+      backAction={backAction}
+      title={title}
+      subtitle={subtitle}
+      secondaryActions={[{
+        content: 'Download',
+        icon: ArrowDownIcon,
+        onAction: onDownload || (() => console.log('Download'))
+      }]}
+    >
+      {children}
+    </Page>
+  );
+}`
+  }
+};
+
+// Layout Examples
+export const layoutExamples = {
+  'one-column': {
+    react: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Page fullWidth>
+      <Layout>
+        <Layout.Section>
+          <LegacyCard title="Online store dashboard" sectioned>
+            <p>View a summary of your online store's performance.</p>
+          </LegacyCard>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    title: 'Online store dashboard',
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s performance.</p>'
+  }]
+});`,
+    vanilla: `// HTML
+<div class="layout">
+  <div class="layout__section">
+    <div class="card">
+      <div class="card__body card__body--section">
+        <h2 class="card__title">Online store dashboard</h2>
+        <p>View a summary of your online store's performance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+// CSS
+.layout {
+  display: grid;
+  gap: var(--p-space-500);
+  padding: var(--p-space-500);
+}
+
+.layout__section {
+  grid-column: 1 / -1;
+}
+
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-300);
+}
+
+.card__body--section {
+  padding: var(--p-space-400);
+}
+
+.card__title {
+  font-size: var(--p-font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0 0 var(--p-space-200) 0;
+}`,
+    typescript: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
+import React from 'react';
+
+interface LayoutExampleProps {
+  fullWidth?: boolean;
+  children: React.ReactNode;
+}
+
+function LayoutExample({ 
+  fullWidth = true,
+  children 
+}: LayoutExampleProps): JSX.Element {
+  return (
+    <Page fullWidth={fullWidth}>
+      <Layout>
+        <Layout.Section>
+          {children}
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`
+  }
+};
+
+// FormLayout Examples
+export const formLayoutExamples = {
+  default: {
+    react: `import {FormLayout, TextField} from '@shopify/polaris';
+import React from 'react';
+
+function Example() {
+  return (
+    <FormLayout>
+      <TextField label="Store name" onChange={() => {}} autoComplete="off" />
+      <TextField
+        type="email"
+        label="Account email"
+        onChange={() => {}}
+        autoComplete="email"
+      />
+    </FormLayout>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Store name',
+    labelWidth: 100
+  }, {
+    xtype: 'textfield',
+    fieldLabel: 'Account email',
+    labelWidth: 100,
+    vtype: 'email'
+  }]
+});`,
+    vanilla: `// HTML
+<form class="form-layout">
+  <div class="form-layout__item">
+    <label for="store-name" class="label">Store name</label>
+    <input 
+      type="text" 
+      id="store-name" 
+      class="text-field"
+      autocomplete="off"
+    />
+  </div>
+  <div class="form-layout__item">
+    <label for="account-email" class="label">Account email</label>
+    <input 
+      type="email" 
+      id="account-email" 
+      class="text-field"
+      autocomplete="email"
+    />
+  </div>
+</form>
+
+// CSS
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-400);
+}
+
+.form-layout__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.text-field {
+  padding: var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+}
+
+.text-field:focus {
+  outline: none;
+  border-color: var(--p-color-border-emphasis);
+  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
+}
+
+// JavaScript
+const form = document.querySelector('.form-layout');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('Form submitted');
+});`,
+    typescript: `import {FormLayout, TextField} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface FormData {
+  storeName: string;
+  accountEmail: string;
+}
+
+interface FormLayoutExampleProps {
+  onSubmit?: (data: FormData) => void;
+}
+
+function FormLayoutExample({ onSubmit }: FormLayoutExampleProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    storeName: '',
+    accountEmail: ''
+  });
+
+  const handleStoreNameChange = useCallback(
+    (value: string) => setFormData(prev => ({...prev, storeName: value})),
+    []
+  );
+
+  const handleEmailChange = useCallback(
+    (value: string) => setFormData(prev => ({...prev, accountEmail: value})),
+    []
+  );
+
+  return (
+    <FormLayout>
+      <TextField 
+        label="Store name" 
+        value={formData.storeName}
+        onChange={handleStoreNameChange} 
+        autoComplete="off" 
+      />
+      <TextField
+        type="email"
+        label="Account email"
+        value={formData.accountEmail}
+        onChange={handleEmailChange}
+        autoComplete="email"
+      />
+    </FormLayout>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -3265,6 +3999,9 @@ const componentExamples: Record<string, any> = {
   'select': selectExamples,
   'modal': modalExamples,
   'checkbox': checkboxExamples,
+  'page': pageExamples,
+  'layout': layoutExamples,
+  'form-layout': formLayoutExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
