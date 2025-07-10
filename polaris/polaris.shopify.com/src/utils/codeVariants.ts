@@ -11,11 +11,11 @@ export const buttonGroupExamples = {
     react: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonGroupDefaultExample() {
+function ButtonGroupDefault() {
   return (
     <ButtonGroup>
-      <Button>Cancel</Button>
-      <Button variant="primary">Save</Button>
+      <Button onClick={() => console.log('[Action] Cancel clicked')}>Cancel</Button>
+      <Button variant="primary" onClick={() => console.log('[Action] Save clicked')}>Save</Button>
     </ButtonGroup>
   );
 }`,
@@ -65,7 +65,7 @@ interface ButtonGroupDefaultExampleProps {
   onSave?: () => void;
 }
 
-function ButtonGroupDefaultExample({ 
+function ButtonGroupDefault({ 
   onCancel, 
   onSave 
 }: ButtonGroupDefaultExampleProps): JSX.Element {
@@ -83,7 +83,7 @@ function ButtonGroupDefaultExample({
     react: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonGroupWithSegmentedButtonsExample() {
+function ButtonGroupWithSegmentedButtons() {
   return (
     <ButtonGroup variant="segmented">
       <Button>Bold</Button>
@@ -136,7 +136,7 @@ interface ButtonGroupSegmentedExampleProps {
   onStyleChange?: (styles: TextStyle[]) => void;
 }
 
-function ButtonGroupSegmentedExample({ 
+function ButtonGroupSegmented({ 
   onStyleChange 
 }: ButtonGroupSegmentedExampleProps): JSX.Element {
   const [activeStyles, setActiveStyles] = useState<Set<TextStyle>>(new Set());
@@ -180,7 +180,7 @@ function ButtonGroupSegmentedExample({
     react: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React, {useState} from 'react';
 
-function PressedWithSegmentedButtonsExample() {
+function PressedWithSegmentedButtons() {
   const [activeButtonIndex, setActiveButtonIndex] = useState(0);
 
   return (
@@ -257,7 +257,7 @@ interface PressedWithSegmentedButtonsProps {
   onStyleChange?: (style: TextStyle) => void;
 }
 
-function PressedWithSegmentedButtonsExample({ 
+function PressedWithSegmentedButtons({ 
   defaultStyle = 'bold',
   onStyleChange 
 }: PressedWithSegmentedButtonsProps): JSX.Element {
@@ -300,8 +300,8 @@ export const buttonExamples = {
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function PrimaryButtonExample() {
-  return <Button variant="primary">Save</Button>;
+function PrimaryButton() {
+  return <Button variant="primary" onClick={() => console.log('[Action] Save clicked')}>Save</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
   text: 'Save',
@@ -328,7 +328,7 @@ interface PrimaryButtonExampleProps {
   disabled?: boolean;
 }
 
-function PrimaryButtonExample({ 
+function PrimaryButton({ 
   onSave, 
   loading = false, 
   disabled = false 
@@ -349,7 +349,7 @@ function PrimaryButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function PlainButtonExample() {
+function PlainButton() {
   return <Button variant="plain">View details</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -376,7 +376,7 @@ interface PlainButtonExampleProps {
   accessibilityLabel?: string;
 }
 
-function PlainButtonExample({ 
+function PlainButton({ 
   onViewDetails,
   accessibilityLabel = "View details"
 }: PlainButtonExampleProps): JSX.Element {
@@ -395,7 +395,7 @@ function PlainButtonExample({
     react: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return (
     <ButtonGroup>
       <Button disabled>Buy shipping label</Button>
@@ -494,7 +494,7 @@ interface DisabledButtonExampleProps {
   onButtonClick?: (buttonIndex: number) => void;
 }
 
-function ButtonExample({
+function Button({
   buttons = [
     { label: 'Buy shipping label' },
     { label: 'Buy shipping label', variant: 'primary' },
@@ -527,11 +527,14 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
-  return <Button fullWidth>Add customer</Button>;
+function Button() {
+  return <Button fullWidth onClick={() => console.log('[Action] Add customer clicked')}>Add customer</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
   text: 'Add customer',
+      handler: function() {
+        console.log('[Action] Add customer clicked');
+      },
   width: '100%',
   handler: function() {
     console.log('Add customer clicked');
@@ -556,7 +559,7 @@ interface FullWidthButtonProps {
   disabled?: boolean;
 }
 
-function ButtonExample({
+function Button({
   label = 'Add customer',
   onClick,
   variant,
@@ -579,7 +582,7 @@ function ButtonExample({
 import {PlusIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button icon={PlusIcon} accessibilityLabel="Add theme" />;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -622,7 +625,7 @@ interface IconOnlyButtonProps {
   size?: 'micro' | 'slim' | 'medium' | 'large';
 }
 
-function ButtonExample({
+function Button({
   icon: IconComponent = PlusIcon,
   accessibilityLabel,
   onClick,
@@ -648,7 +651,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button size="large">Create store</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -681,7 +684,7 @@ interface LargeButtonProps {
   icon?: React.ComponentType;
 }
 
-function ButtonExample({
+function Button({
   label = 'Create store',
   onClick,
   variant,
@@ -707,7 +710,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button loading>Save product</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -755,7 +758,7 @@ interface LoadingButtonProps {
   disabled?: boolean;
 }
 
-function ButtonExample({
+function Button({
   label = 'Save product',
   isLoading = true,
   onClick,
@@ -778,7 +781,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return (
     <Button variant="plain" tone="critical">
       Remove
@@ -814,7 +817,7 @@ interface PlainCriticalButtonProps {
   accessibilityLabel?: string;
 }
 
-function ButtonExample({
+function Button({
   label = 'Remove',
   onClick,
   disabled = false,
@@ -1074,7 +1077,7 @@ function PressedButton({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return (
     <Button variant="primary" tone="critical">
       View shipping settings
@@ -1112,7 +1115,7 @@ interface PrimaryCriticalButtonProps {
   loading?: boolean;
 }
 
-function ButtonExample({
+function Button({
   label = 'View shipping settings',
   onClick,
   disabled = false,
@@ -1244,7 +1247,7 @@ function RightAlignedDisclosureButton({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return (
     <div style={{height: '100px'}}>
       <Button disclosure="select" onClick={() => console.log('Open Popover')}>
@@ -1296,7 +1299,7 @@ interface SelectDisclosureButtonProps {
   variant?: 'primary' | 'secondary' | 'plain';
 }
 
-function ButtonExample({
+function Button({
   label = 'Select options',
   onClick,
   disabled = false,
@@ -1332,7 +1335,7 @@ function ButtonExample({
 import React from 'react';
 import {ChevronDownIcon} from '@shopify/polaris-icons';
 
-function ButtonExample() {
+function Button() {
   const [active, setActive] = React.useState<string | null>(null);
 
   const toggleActive = (id: string) => () => {
@@ -1342,7 +1345,7 @@ function ButtonExample() {
     <div style={{height: '100px'}}>
       <InlineStack gap="500">
         <ButtonGroup variant="segmented">
-          <Button variant="primary">Save</Button>
+          <Button variant="primary" onClick={() => console.log('[Action] Save clicked')}>Save</Button>
 
           <Popover
             active={active === 'popover1'}
@@ -1517,7 +1520,7 @@ interface SplitButtonProps {
   onPrimaryAction?: () => void;
 }
 
-function ButtonExample({
+function Button({
   primaryAction = 'Save',
   actions = [{content: 'Save as draft'}],
   variant,
@@ -1593,7 +1596,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button variant="tertiary">View shipping settings</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -1622,7 +1625,7 @@ interface TertiaryButtonProps {
   icon?: React.ComponentType;
 }
 
-function ButtonExample({
+function Button({
   label = 'View shipping settings',
   onClick,
   disabled = false,
@@ -1644,7 +1647,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return (
     <Button variant="plain" textAlign="left">
       This is a really long string of text that overflows onto the next line we
@@ -1687,7 +1690,7 @@ interface TextAlignedButtonProps {
   maxWidth?: string | number;
 }
 
-function ButtonExample({
+function Button({
   children = 'This is a really long string of text that overflows onto the next line we need to put in a lot of words now you can see the alignment. It is very long but a customer could potentially name something this long.',
   textAlign = 'left',
   variant = 'plain',
@@ -1712,7 +1715,7 @@ function ButtonExample({
 import {PlusIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button icon={PlusIcon}>Add theme</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -1759,7 +1762,7 @@ interface ButtonWithIconProps {
   size?: 'micro' | 'slim' | 'medium' | 'large';
 }
 
-function ButtonExample({
+function Button({
   icon: IconComponent = PlusIcon,
   children = 'Add theme',
   onClick,
@@ -1784,7 +1787,7 @@ function ButtonExample({
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
 
-function ButtonExample() {
+function Button() {
   return <Button>Add product</Button>;
 }`,
     extjs: `Ext.create('Ext.button.Button', {
@@ -1812,7 +1815,7 @@ interface DefaultButtonProps {
   loading?: boolean;
 }
 
-function ButtonExample({
+function Button({
   children = 'Add product',
   onClick,
   disabled = false,
@@ -2068,13 +2071,13 @@ function CardWithFooterActions() {
         </BlockStack>
         <InlineStack align="end">
           <ButtonGroup>
-            <Button onClick={() => {}} accessibilityLabel="Fulfill items">
+            <Button onClick={() => console.log('[Action] Button clicked')} accessibilityLabel="Fulfill items">
               Fulfill items
             </Button>
             <Button
               icon={PlusIcon}
               variant="primary"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Create shipping label"
             >
               Create shipping label
@@ -2243,7 +2246,7 @@ function CardWithHeaderActions() {
             Variants
           </Text>
           <Button
-            onClick={() => {}}
+            onClick={() => console.log('[Action] Button clicked')}
             accessibilityLabel="Add variant"
             icon={PlusIcon}
           >
@@ -2477,12 +2480,12 @@ function CardWithAllElements() {
           </Text>
           <InlineStack align="end">
             <ButtonGroup>
-              <Button onClick={() => {}} accessibilityLabel="Dismiss">
+              <Button onClick={() => console.log('[Action] Button clicked')} accessibilityLabel="Dismiss">
                 Dismiss
               </Button>
               <Button
                 variant="primary"
-                onClick={() => {}}
+                onClick={() => console.log('[Action] Button clicked')}
                 icon={ExportIcon}
                 accessibilityLabel="Export Report"
               >
@@ -2869,14 +2872,14 @@ function CardWithCriticalFooterActions() {
             <Button
               variant="secondary"
               tone="critical"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Cancel shipment"
             >
               Cancel shipment
             </Button>
             <Button
               variant="primary"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Add tracking number"
             >
               Add tracking number
@@ -3096,7 +3099,7 @@ function CardWithCustomFooterActions() {
         <InlineStack align="end">
           <ButtonGroup>
             <Button
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Enable two-step authentication"
             >
               Enable two-step authentication
@@ -3549,7 +3552,7 @@ function CardWithHeaderIconActions() {
             Variants
           </Text>
           <Button
-            onClick={() => {}}
+            onClick={() => console.log('[Action] Button clicked')}
             accessibilityLabel="Export variants"
             icon={ExportIcon}
           />
@@ -3703,7 +3706,7 @@ function CardWithMultipleFooterActions() {
             {disclosureButton}
             <Button
               variant="primary"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Add tracking number"
             >
               Add tracking number
@@ -4323,7 +4326,7 @@ function CardWithSectionsAndActions() {
             <Button
               icon={EditIcon}
               variant="tertiary"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Edit"
             />
           </InlineGrid>
@@ -4530,13 +4533,13 @@ function CardWithSectionsAndCriticalAction() {
                 icon={DeleteIcon}
                 variant="tertiary"
                 tone="critical"
-                onClick={() => {}}
+                onClick={() => console.log('[Action] Button clicked')}
                 accessibilityLabel="Delete"
               />
               <Button
                 icon={EditIcon}
                 variant="tertiary"
-                onClick={() => {}}
+                onClick={() => console.log('[Action] Button clicked')}
                 accessibilityLabel="Edit"
               />
             </ButtonGroup>
@@ -4816,7 +4819,7 @@ function CardWithSeparateHeader() {
           <ButtonGroup>
             <Button
               variant="plain"
-              onClick={() => {}}
+              onClick={() => console.log('[Action] Button clicked')}
               accessibilityLabel="Preview"
             >
               Preview
@@ -5489,7 +5492,7 @@ export const badgeExamples = {
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge>Fulfilled</Badge>
@@ -5518,7 +5521,7 @@ interface BadgeExampleProps {
   status?: string;
 }
 
-function BadgeExample({ status = "Fulfilled" }: BadgeExampleProps): JSX.Element {
+function Badge({ status = "Fulfilled" }: BadgeExampleProps): JSX.Element {
   return (
     <Card>
       <Badge>{status}</Badge>
@@ -5530,7 +5533,7 @@ function BadgeExample({ status = "Fulfilled" }: BadgeExampleProps): JSX.Element 
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge tone="critical">Action required</Badge>
@@ -5576,7 +5579,7 @@ function CriticalBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge tone="success">Active</Badge>
@@ -5624,7 +5627,7 @@ function SuccessBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge tone="attention">Open</Badge>
@@ -5671,7 +5674,7 @@ function AttentionBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge progress="complete">Fulfilled</Badge>
@@ -5718,7 +5721,7 @@ function CompleteBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge size="small">Fulfilled</Badge>
@@ -5765,7 +5768,7 @@ function SmallBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge progress="incomplete" tone="attention">
@@ -5819,7 +5822,7 @@ function IncompleteBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge tone="info">Draft</Badge>
@@ -5866,7 +5869,7 @@ function InformationalBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge tone="warning">On hold</Badge>
@@ -5913,7 +5916,7 @@ function WarningBadge({
     react: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
-function BadgeExample() {
+function Badge() {
   return (
     <Card>
       <Badge progress="partiallyComplete" tone="warning">
@@ -5971,7 +5974,7 @@ export const textFieldExamples = {
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function TextFieldExample() {
+function TextField() {
   const [value, setValue] = useState('Jaded Pixel');
 
   const handleChange = useCallback(
@@ -6023,17 +6026,17 @@ input.addEventListener('input', (event) => {
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-interface TextFieldExampleProps {
+interface TextFieldProps {
   initialValue?: string;
   label?: string;
   onValueChange?: (value: string) => void;
 }
 
-function TextFieldExample({ 
+function TextField({ 
   initialValue = 'Jaded Pixel',
   label = 'Store name',
   onValueChange
-}: TextFieldExampleProps): JSX.Element {
+}: TextFieldProps): JSX.Element {
   const [value, setValue] = useState<string>(initialValue);
 
   const handleChange = useCallback(
@@ -6058,7 +6061,7 @@ function TextFieldExample({
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function ValidationErrorExample() {
+function ValidationError() {
   const [textFieldValue, setTextFieldValue] = useState('');
 
   const handleTextFieldChange = useCallback(
@@ -6143,7 +6146,7 @@ interface ValidationErrorExampleProps {
   required?: boolean;
 }
 
-function ValidationErrorExample({ 
+function ValidationError({ 
   label = 'Store name',
   errorMessage = 'Store name is required',
   required = true
@@ -6380,7 +6383,7 @@ function NumberFieldExample({
     react: `import {TextField} from '@shopify/polaris';
 import React from 'react';
 
-function TextFieldExample() {
+function TextField() {
   return <TextField label="Store name" disabled autoComplete="off" />;
 }`,
     extjs: `Ext.create('Ext.form.field.Text', {
@@ -6707,7 +6710,7 @@ function MultilineTextField({
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function AutoSizeExample() {
+function AutoSize() {
   const [value, setValue] = useState('Jaded Pixel');
 
   const handleChange = useCallback(
@@ -6774,7 +6777,7 @@ interface AutoSizeTextFieldProps {
   onValueChange?: (value: string) => void;
 }
 
-function AutoSizeExample({ 
+function AutoSize({ 
   initialValue = 'Jaded Pixel',
   label = 'Store name',
   suffix = 'in: Your stores',
@@ -6806,7 +6809,7 @@ function AutoSizeExample({
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function AutoSizeExample() {
+function AutoSize() {
   const [value, setValue] = useState('');
 
   const handleChange = useCallback(
@@ -6900,7 +6903,7 @@ interface DynamicSuffixTextFieldProps {
   onValueChange?: (value: string) => void;
 }
 
-function AutoSizeExample({ 
+function AutoSize({ 
   label = 'Search view',
   placeholder = 'Searching in Unfulfilled orders',
   suffixText = 'in: Unfulfilled orders',
@@ -8319,7 +8322,7 @@ function TextFieldWithMonospacedFontExample({
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function PlaceholderExample() {
+function TextFieldWithPlaceholderExample() {
   const [textFieldValue, setTextFieldValue] = useState('');
 
   const handleTextFieldChange = useCallback(
@@ -8332,7 +8335,7 @@ function PlaceholderExample() {
       label="Shipping zone name"
       value={textFieldValue}
       onChange={handleTextFieldChange}
-      placeholder="Example: North America, Europe"
+      placeholder="Enter shipping zone name"
       autoComplete="off"
     />
   );
@@ -8342,10 +8345,15 @@ function PlaceholderExample() {
   value: '',
   labelWidth: 150,
   width: 400,
-  emptyText: 'Example: North America, Europe',
+  emptyText: 'Enter shipping zone name',
   listeners: {
     change: function(field, newValue) {
-      console.log('Value changed to:', newValue);
+      // Handle shipping zone name change
+      if (newValue && newValue.length > 0) {
+        field.setFieldStyle('border-color: #008060;');
+      } else {
+        field.setFieldStyle('border-color: #c4c4c4;');
+      }
     }
   }
 });`,
@@ -8358,7 +8366,7 @@ function PlaceholderExample() {
       class="polaris-text-field__input" 
       value=""
       autocomplete="off"
-      placeholder="Example: North America, Europe"
+      placeholder="Enter shipping zone name"
     />
   </div>
 </div>
@@ -8373,17 +8381,17 @@ shippingInput.addEventListener('input', (event) => {
     typescript: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-interface PlaceholderTextFieldProps {
+interface TextFieldWithPlaceholderProps {
   label?: string;
   placeholder?: string;
   onValueChange?: (value: string) => void;
 }
 
-function PlaceholderExample({
+function TextFieldWithPlaceholder({
   label = 'Shipping zone name',
-  placeholder = 'Example: North America, Europe',
+  placeholder = 'Enter regions (e.g., North America, Europe)',
   onValueChange
-}: PlaceholderTextFieldProps): JSX.Element {
+}: TextFieldWithPlaceholderProps): JSX.Element {
   const [textFieldValue, setTextFieldValue] = useState<string>('');
 
   const handleTextFieldChange = useCallback(
@@ -8409,7 +8417,7 @@ function PlaceholderExample({
     react: `import {TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function PrefixExample() {
+function Prefix() {
   const [textFieldValue, setTextFieldValue] = useState('2.00');
 
   const handleTextFieldChange = useCallback(
@@ -8491,7 +8499,7 @@ interface PrefixSuffixTextFieldProps {
   onValueChange?: (value: string) => void;
 }
 
-function PrefixExample({
+function Prefix({
   initialValue = '2.00',
   label = 'Price',
   prefix = '$',
@@ -8656,7 +8664,7 @@ function RightAlignExample({
 import {DeleteIcon} from '@shopify/polaris-icons';
 import {useState, useCallback} from 'react';
 
-function SeparateValidationErrorExample() {
+function SeparateValidationError() {
   const [textFieldValue, setTextFieldValue] = useState('');
   const [selectTypeValue, setSelectTypeValue] = useState('Product type');
   const [selectConditionValue, setSelectConditionValue] =
@@ -8913,7 +8921,7 @@ interface SeparateValidationErrorProps {
   onRemove?: () => void;
 }
 
-function SeparateValidationErrorExample({
+function SeparateValidationError({
   initialRule = {
     type: 'Product type',
     condition: 'is equal to',
@@ -9138,7 +9146,7 @@ function TextFieldWithSelectTextOnFocusExample({
     react: `import {LegacyStack, Tag, TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function VerticalContentExample() {
+function VerticalContent() {
   const tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'];
   const [textFieldValue, setTextFieldValue] = useState('');
 
@@ -9271,7 +9279,7 @@ interface VerticalContentTextFieldProps {
   renderVerticalContent?: (searchValue: string) => ReactNode;
 }
 
-function VerticalContentExample({
+function VerticalContent({
   label = 'Tags',
   placeholder = 'Search tags',
   tags = ['Rustic', 'Antique', 'Vinyl', 'Refurbished'],
@@ -9332,9 +9340,9 @@ export const bannerExamples = {
     react: `import {Banner} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
-    <Banner title="Order archived" onDismiss={() => {}}>
+    <Banner title="Order archived" onDismiss={() => console.log('[Dismiss] Component dismissed')}>
       <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
     </Banner>
   );
@@ -9397,19 +9405,19 @@ document.querySelector('.polaris-banner__dismiss').addEventListener('click', () 
     typescript: `import {Banner} from '@shopify/polaris';
 import React, {useState} from 'react';
 
-interface BannerExampleProps {
+interface BannerProps {
   title: string;
   children: React.ReactNode;
   dismissible?: boolean;
   onDismiss?: () => void;
 }
 
-function BannerExample({ 
+function Banner({ 
   title,
   children,
   dismissible = true,
   onDismiss
-}: BannerExampleProps): JSX.Element | null {
+}: BannerProps): JSX.Element | null {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleDismiss = () => {
@@ -9433,7 +9441,7 @@ function BannerExample({
     react: `import {Banner, Link} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <Banner
       title="High risk of fraud detected"
@@ -9553,13 +9561,13 @@ function CriticalBanner({
     react: `import {Banner} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <Banner
       title="Your shipping label is ready to print."
       tone="success"
       action={{content: 'Print label'}}
-      onDismiss={() => {}}
+      onDismiss={() => console.log('[Dismiss] Component dismissed')}
     />
   );
 }`,
@@ -9678,9 +9686,9 @@ function SuccessBanner({
     react: `import {Banner, Link} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
-    <Banner onDismiss={() => {}}>
+    <Banner onDismiss={() => console.log('[Dismiss] Component dismissed')}>
       <p>
         Use your finance report to get detailed information about your business.{' '}
         <Link url="">Let us know what you think</Link>
@@ -9777,14 +9785,14 @@ function DismissibleBanner({
     react: `import {Banner} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <Banner
       title="USPS has updated their rates"
       action={{content: 'Update rates', url: ''}}
       secondaryAction={{content: 'Learn more'}}
       tone="info"
-      onDismiss={() => {}}
+      onDismiss={() => console.log('[Dismiss] Component dismissed')}
     >
       <p>Make sure you know how these changes affect your store.</p>
     </Banner>
@@ -9926,7 +9934,7 @@ function InformationalBanner({
     react: `import {Banner, List} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <Banner
       title="Before you can purchase a shipping label, this change needs to be made:"
@@ -10053,11 +10061,11 @@ function WarningBanner({
     react: `import {LegacyCard, TextContainer, Banner, Link} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <LegacyCard title="Online store dashboard" sectioned>
       <TextContainer>
-        <Banner onDismiss={() => {}}>
+        <Banner onDismiss={() => console.log('[Dismiss] Component dismissed')}>
           <p>
             Use your finance report to get detailed information about your
             business. <Link url="">Let us know what you think</Link>
@@ -10201,7 +10209,7 @@ function BannerWithFocusExample() {
   return (
     <Banner
       title="High risk of fraud detected"
-      onDismiss={() => {}}
+      onDismiss={() => console.log('[Dismiss] Component dismissed')}
       tone="critical"
       ref={banner}
     >
@@ -10335,14 +10343,14 @@ function FocusableBanner({
     react: `import {Banner} from '@shopify/polaris';
 import React from 'react';
 
-function BannerExample() {
+function Banner() {
   return (
     <Banner
       title="Some of your product variants are missing weights"
       tone="warning"
       action={{content: 'Edit variant weights', url: ''}}
       secondaryAction={{content: 'Learn more', url: ''}}
-      onDismiss={() => {}}
+      onDismiss={() => console.log('[Dismiss] Component dismissed')}
     >
       <p>
         Add weights to show accurate rates at checkout and when buying shipping
@@ -10496,7 +10504,7 @@ export const selectExamples = {
     react: `import {Select} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function SelectExample() {
+function Select() {
   const [selected, setSelected] = useState('today');
 
   const handleSelectChange = useCallback(
@@ -10570,14 +10578,14 @@ interface SelectOption {
   value: string;
 }
 
-interface SelectExampleProps {
+interface SelectProps {
   label?: string;
   options?: SelectOption[];
   defaultValue?: string;
   onValueChange?: (value: string) => void;
 }
 
-function SelectExample({ 
+function Select({ 
   label = 'Date range',
   options = [
     {label: 'Today', value: 'today'},
@@ -10586,7 +10594,7 @@ function SelectExample({
   ],
   defaultValue = 'today',
   onValueChange
-}: SelectExampleProps): JSX.Element {
+}: SelectProps): JSX.Element {
   const [selected, setSelected] = useState<string>(defaultValue);
 
   const handleSelectChange = useCallback(
@@ -10611,7 +10619,7 @@ function SelectExample({
     react: `import {Select} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function ValidationErrorExample() {
+function ValidationError() {
   const [selected, setSelected] = useState('');
 
   const handleSelectChange = useCallback(
@@ -10704,7 +10712,7 @@ interface ValidationErrorExampleProps {
   required?: boolean;
 }
 
-function ValidationErrorExample({ 
+function ValidationError({ 
   label = 'Province',
   options = ['Alberta'],
   errorMessage = 'Province is required',
@@ -10740,7 +10748,7 @@ function ValidationErrorExample({
     react: `import {Select} from '@shopify/polaris';
 import React from 'react';
 
-function SelectExample() {
+function Select() {
   return (
     <Select
       label="Date range"
@@ -10968,7 +10976,7 @@ function InlineLabelSelect({
 import {CaretUpIcon, CaretDownIcon} from '@shopify/polaris-icons';
 import {useState, useCallback} from 'react';
 
-function PrefixExample() {
+function Prefix() {
   const [selected, setSelected] = useState('enabled');
 
   const handleSelectChange = useCallback(
@@ -11123,7 +11131,7 @@ function PrefixSelect({
 } from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function SeparateValidationErrorExample() {
+function SeparateValidationError() {
   const [weight, setWeight] = useState('12');
   const [unit, setUnit] = useState('');
 
@@ -11359,7 +11367,7 @@ interface SeparateValidationProps {
   onUnitChange?: (unit: string) => void;
 }
 
-function SeparateValidationErrorExample({
+function SeparateValidationError({
   initialWeight = '12',
   initialUnit = '',
   onWeightChange,
@@ -11448,7 +11456,7 @@ export const modalExamples = {
     react: `import {Button, Frame, Modal, TextContainer} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function ModalExample() {
+function Modal() {
   const [active, setActive] = useState(true);
 
   const handleChange = useCallback(() => setActive(!active), [active]);
@@ -11599,7 +11607,7 @@ interface ModalAction {
   destructive?: boolean;
 }
 
-interface ModalExampleProps {
+interface ModalProps {
   title: string;
   content: React.ReactNode;
   primaryAction?: ModalAction;
@@ -11608,14 +11616,14 @@ interface ModalExampleProps {
   initialOpen?: boolean;
 }
 
-function ModalExample({ 
+function Modal({ 
   title,
   content,
   primaryAction,
   secondaryActions = [],
   activatorText = 'Open',
   initialOpen = true
-}: ModalExampleProps): JSX.Element {
+}: ModalProps): JSX.Element {
   const [active, setActive] = useState<boolean>(initialOpen);
 
   const handleChange = useCallback(() => setActive(!active), [active]);
@@ -11666,7 +11674,7 @@ export const checkboxExamples = {
     react: `import {Checkbox} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function CheckboxExample() {
+function Checkbox() {
   const [checked, setChecked] = useState(false);
   const handleChange = useCallback(
     (newChecked: boolean) => setChecked(newChecked),
@@ -11717,19 +11725,19 @@ checkbox.addEventListener('change', (event) => {
     typescript: `import {Checkbox} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-interface CheckboxExampleProps {
+interface CheckboxProps {
   label?: string;
   defaultChecked?: boolean;
   onCheckChange?: (checked: boolean) => void;
   disabled?: boolean;
 }
 
-function CheckboxExample({ 
+function Checkbox({ 
   label = 'Basic checkbox',
   defaultChecked = false,
   onCheckChange,
   disabled = false
-}: CheckboxExampleProps): JSX.Element {
+}: CheckboxProps): JSX.Element {
   const [checked, setChecked] = useState<boolean>(defaultChecked);
   
   const handleChange = useCallback(
@@ -11758,7 +11766,7 @@ export const pageExamples = {
     react: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Products', url: '#'}}
@@ -11942,7 +11950,7 @@ interface PageAction {
   disabled?: boolean;
 }
 
-interface PageExampleProps {
+interface PageProps {
   title: string;
   subtitle?: string;
   backUrl?: string;
@@ -11951,14 +11959,14 @@ interface PageExampleProps {
   children: React.ReactNode;
 }
 
-function PageExample({
+function Page({
   title,
   subtitle,
   backUrl = '#',
   primaryAction,
   secondaryActions = [],
   children
-}: PageExampleProps): JSX.Element {
+}: PageProps): JSX.Element {
   return (
     <Page
       backAction={{content: 'Back', url: backUrl}}
@@ -11982,7 +11990,7 @@ function PageExample({
 import {ArrowDownIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Products', url: '#'}}
@@ -12105,7 +12113,7 @@ function PageWithSubtitle({
 import {ExportIcon, PlusIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       fullWidth
@@ -12275,7 +12283,7 @@ function PageFullWidthExample({
 import React from 'react';
 import {DeleteIcon} from '@shopify/polaris-icons';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       narrowWidth
@@ -12423,7 +12431,7 @@ function PageNarrowWidthExample({
     react: `import {Page, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       title="Products"
@@ -12650,7 +12658,7 @@ function PageWithActionGroupsExample({
     react: `import {Page, Badge, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Products', url: '#'}}
@@ -12842,12 +12850,12 @@ function PageWithContentAfterTitleExample({
     react: `import {Page, Button, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Settings', url: '#'}}
       title="General"
-      primaryAction={<Button variant="primary">Save</Button>}
+      primaryAction={<Button variant="primary" onClick={() => console.log('[Action] Save clicked')}>Save</Button>}
     >
       <LegacyCard title="Credit card" sectioned>
         <p>Credit card information</p>
@@ -12954,7 +12962,7 @@ function PageWithCustomPrimaryActionExample({
     react: `import {Page, Button} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page title="General" secondaryActions={<Button>Save</Button>}>
       <p>Page content</p>
@@ -13030,7 +13038,7 @@ function PageWithCustomSecondaryActionExample({
 import React from 'react';
 import {DeleteIcon} from '@shopify/polaris-icons';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       title="General"
@@ -13122,7 +13130,7 @@ function PageWithDestructiveSecondaryActionExample({
 import {ExternalIcon} from '@shopify/polaris-icons';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       title="Jar With Lock-Lid"
@@ -13245,7 +13253,7 @@ function PageWithExternalLinkExample({
     react: `import {Page} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       title="Product"
@@ -13347,7 +13355,7 @@ function PageWithTooltipActionExample({
     react: `import {Page, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Settings', url: '#'}}
@@ -13450,7 +13458,7 @@ function PageWithoutPaginationExample({
     react: `import {Page, LegacyCard, LegacyStack, Button} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <Page
       backAction={{content: 'Orders', url: '#'}}
@@ -13660,7 +13668,7 @@ function PageWithoutPrimaryActionInHeaderExample({
     react: `import {PageActions} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <PageActions
       primaryAction={{
@@ -13740,7 +13748,7 @@ function PageActionsDefaultExample({
     react: `import {PageActions} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <PageActions
       primaryAction={{
@@ -13796,10 +13804,10 @@ function PageActionsPrimaryActionOnlyExample({
     react: `import {PageActions, Button} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <PageActions
-      primaryAction={<Button variant="primary">Save</Button>}
+      primaryAction={<Button variant="primary" onClick={() => console.log('[Action] Save clicked')}>Save</Button>}
       secondaryActions={[
         {
           content: 'Delete',
@@ -13878,7 +13886,7 @@ function PageActionsWithCustomPrimaryActionExample({
     react: `import {PageActions, Button} from '@shopify/polaris';
 import React from 'react';
 
-function PageExample() {
+function Page() {
   return (
     <PageActions
       primaryAction={{
@@ -13958,7 +13966,7 @@ export const layoutExamples = {
     react: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -14000,7 +14008,7 @@ interface LayoutExampleProps {
   children: React.ReactNode;
 }
 
-function LayoutExample({ 
+function Layout({ 
   fullWidth = true,
   children 
 }: LayoutExampleProps): JSX.Element {
@@ -14026,7 +14034,7 @@ function LayoutExample({
 } from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -14466,7 +14474,7 @@ function LayoutTwoColumnsExample({
     react: `import {Page, Layout, LegacyCard} from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -14580,7 +14588,7 @@ function LayoutPrimarySecondaryExample({
 } from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -15187,7 +15195,7 @@ function LayoutThreeColumnsExample({
 } from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -15200,13 +15208,13 @@ function LayoutExample() {
             <FormLayout>
               <TextField
                 label="Store name"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="off"
               />
               <TextField
                 type="email"
                 label="Account email"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="email"
               />
             </FormLayout>
@@ -15365,7 +15373,7 @@ function LayoutAnnotatedExample({
 } from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
@@ -15387,13 +15395,13 @@ function LayoutExample() {
             <FormLayout>
               <TextField
                 label="Store name"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="off"
               />
               <TextField
                 type="email"
                 label="Account email"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="email"
               />
             </FormLayout>
@@ -15564,12 +15572,12 @@ function LayoutAnnotatedWithSectionsExample({
 } from '@shopify/polaris';
 import React from 'react';
 
-function LayoutExample() {
+function Layout() {
   return (
     <Page fullWidth>
       <Layout>
         <Layout.Section>
-          <Banner title="Order archived" onDismiss={() => {}}>
+          <Banner title="Order archived" onDismiss={() => console.log('[Dismiss] Component dismissed')}>
             <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
           </Banner>
         </Layout.Section>
@@ -15582,13 +15590,13 @@ function LayoutExample() {
             <FormLayout>
               <TextField
                 label="Store name"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="off"
               />
               <TextField
                 type="email"
                 label="Account email"
-                onChange={() => {}}
+                onChange={(value) => console.log('[Change] Value:', value)}
                 autoComplete="email"
               />
             </FormLayout>
@@ -15715,14 +15723,14 @@ interface StoreDetails {
   accountEmail: string;
 }
 
-interface LayoutWithBannerExampleProps {
+interface LayoutWithBannerProps {
   initialStoreDetails?: StoreDetails;
   onDetailsChange?: (details: StoreDetails) => void;
   bannerDismissed?: boolean;
   onBannerDismiss?: () => void;
 }
 
-function LayoutWithBannerExample({
+function LayoutWithBanner({
   initialStoreDetails = {
     storeName: '',
     accountEmail: ''
@@ -15730,7 +15738,7 @@ function LayoutWithBannerExample({
   onDetailsChange,
   bannerDismissed = false,
   onBannerDismiss
-}: LayoutWithBannerExampleProps): JSX.Element {
+}: LayoutWithBannerProps): JSX.Element {
   const [storeDetails, setStoreDetails] = useState<StoreDetails>(initialStoreDetails);
   const [showBanner, setShowBanner] = useState(!bannerDismissed);
 
@@ -15800,11 +15808,11 @@ import React from 'react';
 function Example() {
   return (
     <FormLayout>
-      <TextField label="Store name" onChange={() => {}} autoComplete="off" />
+      <TextField label="Store name" onChange={(value) => console.log('[Change] Value:', value)} autoComplete="off" />
       <TextField
         type="email"
         label="Account email"
-        onChange={() => {}}
+        onChange={(value) => console.log('[Change] Value:', value)}
         autoComplete="email"
       />
     </FormLayout>
@@ -15867,11 +15875,11 @@ interface FormData {
   accountEmail: string;
 }
 
-interface FormLayoutExampleProps {
+interface FormLayoutProps {
   onSubmit?: (data: FormData) => void;
 }
 
-function FormLayoutExample({ onSubmit }: FormLayoutExampleProps): JSX.Element {
+function FormLayout({ onSubmit }: FormLayoutProps): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     storeName: '',
     accountEmail: ''
@@ -15917,13 +15925,13 @@ function Example() {
         <TextField
           type="number"
           label="Minimum order"
-          onChange={() => {}}
+          onChange={(value) => console.log('[Change] Value:', value)}
           autoComplete="off"
         />
         <TextField
           type="number"
           label="Maximum order"
-          onChange={() => {}}
+          onChange={(value) => console.log('[Change] Value:', value)}
           autoComplete="off"
         />
       </FormLayout.Group>
@@ -16045,10 +16053,10 @@ function Example() {
   return (
     <FormLayout>
       <FormLayout.Group condensed>
-        <TextField label="Length" onChange={() => {}} autoComplete="off" />
-        <TextField label="Width" onChange={() => {}} autoComplete="off" />
-        <TextField label="Height" onChange={() => {}} autoComplete="off" />
-        <TextField label="Unit" onChange={() => {}} autoComplete="off" />
+        <TextField label="Length" onChange={(value) => console.log('[Change] Value:', value)} autoComplete="off" />
+        <TextField label="Width" onChange={(value) => console.log('[Change] Value:', value)} autoComplete="off" />
+        <TextField label="Height" onChange={(value) => console.log('[Change] Value:', value)} autoComplete="off" />
+        <TextField label="Unit" onChange={(value) => console.log('[Change] Value:', value)} autoComplete="off" />
       </FormLayout.Group>
     </FormLayout>
   );
@@ -16210,21 +16218,21 @@ function Example() {
     <FormLayout>
       <TextField
         label="Store name"
-        onChange={() => {}}
+        onChange={(value) => console.log('[Change] Value:', value)}
         autoComplete="off"
         helpText="This will be displayed on your storefront."
       />
       <TextField
         type="email"
         label="Account email"
-        onChange={() => {}}
+        onChange={(value) => console.log('[Change] Value:', value)}
         autoComplete="email"
         helpText="We'll use this email address to inform you on future changes to Polaris."
       />
       <Select
         label="Shipping options"
         options={options}
-        onChange={() => {}}
+        onChange={(value) => console.log('[Change] Value:', value)}
         helpText="Select when orders should be fulfilled."
       />
     </FormLayout>
@@ -16369,31 +16377,31 @@ function Example() {
       <FormLayout.Group title="Store details">
         <TextField
           label="Store name"
-          onChange={() => {}}
+          onChange={(value) => console.log('[Change] Value:', value)}
           autoComplete="off"
         />
         <TextField
           type="email"
           label="Account email"
-          onChange={() => {}}
+          onChange={(value) => console.log('[Change] Value:', value)}
           autoComplete="email"
         />
       </FormLayout.Group>
       <FormLayout.Group title="Store address">
         <TextField
           label="Address"
-          onChange={() => {}}
+          onChange={(value) => console.log('[Change] Value:', value)}
           autoComplete="address-line1"
         />
         <FormLayout.Group condensed>
           <TextField
             label="City"
-            onChange={() => {}}
+            onChange={(value) => console.log('[Change] Value:', value)}
             autoComplete="address-level2"
           />
           <TextField
             label="Postal code"
-            onChange={() => {}}
+            onChange={(value) => console.log('[Change] Value:', value)}
             autoComplete="postal-code"
           />
         </FormLayout.Group>
@@ -16401,7 +16409,7 @@ function Example() {
       <Checkbox
         label="Save this address"
         checked={false}
-        onChange={() => {}}
+        onChange={(value) => console.log('[Change] Value:', value)}
       />
     </FormLayout>
   );
@@ -16809,17 +16817,17 @@ interface Tab {
   panelID: string;
 }
 
-interface TabsExampleProps {
+interface TabsProps {
   tabs: Tab[];
   defaultSelected?: number;
   onTabChange?: (index: number) => void;
 }
 
-function TabsExample({ 
+function Tabs({ 
   tabs,
   defaultSelected = 0,
   onTabChange
-}: TabsExampleProps): JSX.Element {
+}: TabsProps): JSX.Element {
   const [selected, setSelected] = useState<number>(defaultSelected);
 
   const handleTabChange = useCallback(
@@ -17009,7 +17017,7 @@ function TabsFittedExample({ onTabChange }: TabsFittedExampleProps): JSX.Element
     react: `import {LegacyCard, Tabs} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
-function TabsInsideOfACardExample() {
+function TabsInsideOfACard() {
   const [selected, setSelected] = useState(0);
 
   const handleTabChange = useCallback(
@@ -17175,7 +17183,7 @@ interface TabsInsideCardProps {
   onTabChange?: (index: number) => void;
 }
 
-function TabsInsideOfACardExample({ 
+function TabsInsideOfACard({ 
   initialSelected = 0,
   onTabChange 
 }: TabsInsideCardProps): JSX.Element {
@@ -18173,7 +18181,7 @@ export const listExamples = {
     react: `import {List} from '@shopify/polaris';
 import React from 'react';
 
-function ListExample() {
+function List() {
   return (
     <List type="bullet">
       <List.Item>Yellow shirt</List.Item>
@@ -18209,7 +18217,7 @@ interface ListExampleProps {
   type?: 'bullet' | 'number';
 }
 
-function ListExample({ 
+function List({ 
   items,
   type = 'bullet'
 }: ListExampleProps): JSX.Element {
@@ -18290,7 +18298,7 @@ function ExtraTightList({
     react: `import {List} from '@shopify/polaris';
 import React from 'react';
 
-function ListExample() {
+function List() {
   return (
     <List type="number">
       <List.Item>First item</List.Item>
@@ -18634,7 +18642,7 @@ export const avatarExamples = {
     react: `import {Avatar} from '@shopify/polaris';
 import React from 'react';
 
-function AvatarExample() {
+function Avatar() {
   return <Avatar customer name="Farrah" />;
 }`,
     extjs: `Ext.create('Ext.Component', {
@@ -18665,7 +18673,7 @@ interface AvatarExampleProps {
   source?: string;
 }
 
-function AvatarExample({ 
+function Avatar({ 
   name = "Farrah",
   customer = true,
   source
@@ -18843,7 +18851,7 @@ function ExtraSmallAvatarExample({
     react: `import {Avatar} from '@shopify/polaris';
 import React from 'react';
 
-function AvatarExample() {
+function Avatar() {
   return <Avatar initials="WW" name="Woluwayemisi Weun-Jung" />;
 }`,
     extjs: `Ext.create('Ext.Component', {
@@ -18872,7 +18880,7 @@ interface AvatarExampleProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }
 
-function AvatarExample({ 
+function Avatar({ 
   initials,
   name,
   size = 'md'
@@ -19210,7 +19218,7 @@ function SpecificDirectionBleedExample(): JSX.Element {
     react: `import {Bleed, Box, Card} from '@shopify/polaris';
 import React from 'react';
 
-function VerticalBleedExample() {
+function VerticalBleed() {
   return (
     <Box width="320px">
       <Card>
@@ -19304,7 +19312,7 @@ const Placeholder: React.FC<PlaceholderProps> = ({
   );
 };
 
-function VerticalBleedExample(): JSX.Element {
+function VerticalBleed(): JSX.Element {
   return (
     <Box width="320px">
       <Card>
@@ -20643,7 +20651,7 @@ function SpinnerWithFocusManagementExample() {
   const tabMarkup = loading ? null : (
     <LegacyTabs tabs={tabs} selected={selected} onSelect={handleTabChange}>
       <LegacyCard.Section title={tabs[selected].content}>
-        <Form onSubmit={() => {}}>
+        <Form onSubmit={(formData) => console.log('[Form] Submitted:', formData)}>
           <FormLayout>
             <div ref={textFieldRef}>
               <TextField
@@ -20935,7 +20943,7 @@ export const textExamples = {
     react: `import React from 'react';
 import {LegacyStack, Text} from '@shopify/polaris';
 
-function TextBodyExample() {
+function TextBody() {
   return (
     <LegacyStack vertical>
       <Text variant="bodyLg" as="p">
@@ -21007,7 +21015,7 @@ interface TextBodyExampleProps {
   content?: string;
 }
 
-function TextBodyExample({ 
+function TextBody({ 
   content = "Shopify POS is the easiest way to sell your products in person. Available for iPad, iPhone, and Android."
 }: TextBodyExampleProps): JSX.Element {
   const bodyVariants: BodyVariant[] = ['bodyLg', 'bodyMd', 'bodySm', 'bodyXs'];
@@ -21027,7 +21035,7 @@ function TextBodyExample({
     react: `import React from 'react';
 import {LegacyStack, Text} from '@shopify/polaris';
 
-function TextHeadingExample() {
+function TextHeading() {
   return (
     <LegacyStack vertical>
       <Text variant="heading3xl" as="h2">
@@ -21110,7 +21118,7 @@ interface TextHeadingExampleProps {
   title?: string;
 }
 
-function TextHeadingExample({ 
+function TextHeading({ 
   title = "Online store dashboard"
 }: TextHeadingExampleProps): JSX.Element {
   const headingConfigs: HeadingConfig[] = [
@@ -21138,7 +21146,7 @@ function TextHeadingExample({
     react: `import React from 'react';
 import {LegacyStack, Text} from '@shopify/polaris';
 
-function TextToneExample() {
+function TextTone() {
   return (
     <LegacyStack vertical>
       <Text tone="subdued" as="p">
@@ -21215,7 +21223,7 @@ interface TextToneExampleProps {
   examples?: ToneExample[];
 }
 
-function TextToneExample({ 
+function TextTone({ 
   examples = [
     {
       tone: 'subdued',
@@ -21250,7 +21258,7 @@ function TextToneExample({
     react: `import React from 'react';
 import {LegacyStack, Text} from '@shopify/polaris';
 
-function TextWeightExample() {
+function TextWeight() {
   return (
     <LegacyStack vertical>
       <Text fontWeight="bold" as="p">
@@ -21306,7 +21314,7 @@ interface TextWeightExampleProps {
   content?: string;
 }
 
-function TextWeightExample({ 
+function TextWeight({ 
   content = "Sales this year"
 }: TextWeightExampleProps): JSX.Element {
   const fontWeights: FontWeight[] = ['bold', 'semibold', 'medium', 'regular'];
@@ -21326,7 +21334,7 @@ function TextWeightExample({
     react: `import React from 'react';
 import {LegacyStack, Text} from '@shopify/polaris';
 
-function TextAlignExample() {
+function TextAlign() {
   return (
     <LegacyStack vertical>
       <Text variant="bodyLg" as="p" alignment="start">
@@ -21406,7 +21414,7 @@ interface TextAlignExampleProps {
   content?: string;
 }
 
-function TextAlignExample({ 
+function TextAlign({ 
   content = "You can use sales reports to see information about your customers' orders based on criteria such as sales over time, by product, or by staff."
 }: TextAlignExampleProps): JSX.Element {
   const alignments: TextAlignment[] = ['start', 'center', 'end', 'justify'];
@@ -21435,7 +21443,7 @@ export const blockStackExamples = {
     react: `import {BlockStack} from '@shopify/polaris';
 import React from 'react';
 
-function BlockStackExample() {
+function BlockStack() {
   return (
     <BlockStack gap="500">
       <Placeholder height="48px" />
@@ -21512,7 +21520,7 @@ interface BlockStackExampleProps {
   items?: PlaceholderProps[];
 }
 
-function BlockStackExample({ 
+function BlockStack({ 
   gap = "500",
   items = [
     { height: "48px" },
@@ -21545,7 +21553,7 @@ const Placeholder: React.FC<PlaceholderProps> = ({height = 'auto'}) => {
     react: `import {BlockStack, Divider} from '@shopify/polaris';
 import React from 'react';
 
-function BlockStackExample() {
+function BlockStack() {
   return (
     <>
       <div style={{display: 'flex', height: '200px'}}>
@@ -21772,7 +21780,7 @@ interface BlockStackExampleProps {
   alignmentExamples?: AlignmentExample[];
 }
 
-function BlockStackExample({ 
+function BlockStack({ 
   alignmentExamples = [
     { align: 'start', label: 'Start' },
     { align: 'center', label: 'Center' },
@@ -21825,7 +21833,7 @@ export const inlineStackExamples = {
     react: `import {InlineStack, BlockStack} from '@shopify/polaris';
 import React from 'react';
 
-function InlineStackExample() {
+function InlineStack() {
   return (
     <BlockStack>
       <InlineStack gap="400" wrap={false} blockAlign="center">
@@ -21966,7 +21974,7 @@ interface InlineStackExampleProps {
   rows?: StackRow[];
 }
 
-function InlineStackExample({ 
+function InlineStack({ 
   rows = [
     {
       gap: "400",
@@ -22017,7 +22025,7 @@ const Placeholder: React.FC<PlaceholderProps> = ({height = 'auto', width = 'auto
     react: `import {BlockStack, InlineStack, Text, Page, Divider} from '@shopify/polaris';
 import React from 'react';
 
-function InlineStackExample() {
+function InlineStack() {
   return (
     <Page narrowWidth>
       <BlockStack gap="1600">
@@ -22285,7 +22293,7 @@ interface InlineStackExampleProps {
   alignmentExamples?: AlignmentExample[];
 }
 
-function InlineStackExample({ 
+function InlineStack({ 
   alignmentExamples = [
     { align: 'start', label: 'Start' },
     { align: 'center', label: 'Center' },
@@ -22347,7 +22355,7 @@ export const legacyStackExamples = {
     react: `import {LegacyStack, Badge} from '@shopify/polaris';
 import React from 'react';
 
-function LegacyStackExample() {
+function LegacyStack() {
   return (
     <LegacyStack>
       <Badge>Paid</Badge>
@@ -22435,7 +22443,7 @@ interface LegacyStackExampleProps {
   spacing?: 'extraTight' | 'tight' | 'baseTight' | 'loose' | 'extraLoose';
 }
 
-function LegacyStackExample({ 
+function LegacyStack({ 
   badges = [
     { label: 'Paid', status: 'success' },
     { label: 'Processing', status: 'warning' },
@@ -22459,7 +22467,7 @@ function LegacyStackExample({
     react: `import {LegacyStack, Badge} from '@shopify/polaris';
 import React from 'react';
 
-function LegacyStackExample() {
+function LegacyStack() {
   return (
     <LegacyStack spacing="loose">
       <Badge>Paid</Badge>
@@ -22519,7 +22527,7 @@ interface LegacyStackExampleProps {
   }>;
 }
 
-function LegacyStackExample({ 
+function LegacyStack({ 
   spacing = 'loose',
   items = [
     { label: 'Paid', tone: 'success' },
@@ -22541,7 +22549,7 @@ function LegacyStackExample({
     react: `import {LegacyStack, Badge, Text} from '@shopify/polaris';
 import React from 'react';
 
-function LegacyStackExample() {
+function LegacyStack() {
   return (
     <LegacyStack alignment="center">
       <Text variant="headingMd" as="h2">
@@ -22626,7 +22634,7 @@ interface LegacyStackExampleProps {
   orderInfo?: OrderInfo;
 }
 
-function LegacyStackExample({ 
+function LegacyStack({ 
   alignment = 'center',
   orderInfo = {
     orderNumber: '#1136',
@@ -22659,7 +22667,7 @@ function LegacyStackExample({
     react: `import {LegacyStack, Badge} from '@shopify/polaris';
 import React from 'react';
 
-function LegacyStackExample() {
+function LegacyStack() {
   return (
     <LegacyStack vertical>
       <Badge>Paid</Badge>
@@ -22737,7 +22745,7 @@ interface LegacyStackExampleProps {
   spacing?: 'extraTight' | 'tight' | 'baseTight' | 'loose' | 'extraLoose';
 }
 
-function LegacyStackExample({ 
+function LegacyStack({ 
   vertical = true,
   badges = [
     { label: 'Paid', tone: 'success' },
@@ -22765,7 +22773,7 @@ export const emptyStateExamples = {
     react: `import {LegacyCard, EmptyState} from '@shopify/polaris';
 import React from 'react';
 
-function EmptyStateExample() {
+function EmptyState() {
   return (
     <LegacyCard sectioned>
       <EmptyState
@@ -22873,7 +22881,7 @@ interface EmptyStateExampleProps {
   secondaryAction?: EmptyStateAction;
 }
 
-function EmptyStateExample({
+function EmptyState({
   heading = "Manage your inventory transfers",
   image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
   children = <p>Track and receive your incoming inventory from suppliers.</p>,
@@ -22901,7 +22909,7 @@ function EmptyStateExample({
     react: `import {LegacyCard, EmptyState} from '@shopify/polaris';
 import React from 'react';
 
-function EmptyStateExample() {
+function EmptyState() {
   return (
     <LegacyCard sectioned>
       <EmptyState
@@ -23001,7 +23009,7 @@ interface FullWidthEmptyStateProps {
   fullWidth?: boolean;
 }
 
-function EmptyStateExample({
+function EmptyState({
   heading = "Upload a file to get started",
   image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
   children = (
@@ -23033,7 +23041,7 @@ function EmptyStateExample({
     react: `import {LegacyCard, EmptyState, Link} from '@shopify/polaris';
 import React from 'react';
 
-function EmptyStateExample() {
+function EmptyState() {
   return (
     <LegacyCard sectioned>
       <EmptyState
@@ -23166,7 +23174,7 @@ interface EmptyStateWithFooterProps {
   footerContent?: React.ReactNode;
 }
 
-function EmptyStateExample({
+function EmptyState({
   heading = "Manage your inventory transfers",
   image = "https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png",
   children = <p>Track and receive your incoming inventory from suppliers.</p>,
@@ -23204,7 +23212,7 @@ function EmptyStateExample({
 };
 
 // CalloutCard Examples
-export const calloutCardExamples = {
+export const calloutCards = {
   'default': {
     react: `import {CalloutCard} from '@shopify/polaris';
 import React from 'react';
@@ -23296,7 +23304,7 @@ interface CalloutCardAction {
   external?: boolean;
 }
 
-interface CalloutCardExampleProps {
+interface CalloutCardProps {
   title?: string;
   illustration?: string;
   children?: React.ReactNode;
@@ -23311,7 +23319,7 @@ function Example({
     content: 'Customize checkout',
     url: '#',
   }
-}: CalloutCardExampleProps): JSX.Element {
+}: CalloutCardProps): JSX.Element {
   return (
     <CalloutCard
       title={title}
@@ -23333,7 +23341,7 @@ function Example() {
       title="Customize the style of your checkout"
       illustration="https://cdn.shopify.com/s/assets/admin/checkout/settings-customizecart-705f57c725ac05be5a34ec20c05b94298cb8afd10aac7bd9c7ad02030f48cfa0.svg"
       primaryAction={{content: 'Customize checkout'}}
-      onDismiss={() => {}}
+      onDismiss={() => console.log('[Dismiss] Component dismissed')}
     >
       <p>Upload your store's logo, change colors and fonts, and more.</p>
     </CalloutCard>
@@ -23587,12 +23595,12 @@ function Example({
 };
 
 // MediaCard Examples
-export const mediaCardExamples = {
+export const mediaCards = {
   'default': {
     react: `import {MediaCard} from '@shopify/polaris';
 import React from 'react';
 
-function MediaCardExample() {
+function MediaCard() {
   return (
     <MediaCard
       title="Getting Started"
@@ -23715,7 +23723,7 @@ interface MediaCardAction {
   onAction: () => void;
 }
 
-interface MediaCardExampleProps {
+interface MediaCardProps {
   title?: string;
   description?: string;
   primaryAction?: MediaCardAction;
@@ -23724,7 +23732,7 @@ interface MediaCardExampleProps {
   imageAlt?: string;
 }
 
-function MediaCardExample({
+function MediaCard({
   title = "Getting Started",
   description = "Discover how Shopify can power up your entrepreneurial journey.",
   primaryAction = {
@@ -23734,7 +23742,7 @@ function MediaCardExample({
   popoverActions = [{content: 'Dismiss', onAction: () => console.log('Dismissed')}],
   imageSrc = "https://burst.shopifycdn.com/photos/business-woman-smiling-in-office.jpg?width=1850",
   imageAlt = ""
-}: MediaCardExampleProps): JSX.Element {
+}: MediaCardProps): JSX.Element {
   return (
     <MediaCard
       title={title}
@@ -23760,7 +23768,7 @@ function MediaCardExample({
     react: `import {MediaCard} from '@shopify/polaris';
 import React from 'react';
 
-function MediaCardExample() {
+function MediaCard() {
   return (
     <MediaCard
       title="Getting Started"
@@ -23896,7 +23904,7 @@ interface SmallMediaCardProps {
   imageAlt?: string;
 }
 
-function MediaCardExample({
+function MediaCard({
   title = "Getting Started",
   description = "Discover how Shopify can power up your entrepreneurial journey.",
   primaryAction = {
@@ -23934,7 +23942,7 @@ function MediaCardExample({
     react: `import {MediaCard} from '@shopify/polaris';
 import React from 'react';
 
-function MediaCardExample() {
+function MediaCard() {
   return (
     <MediaCard
       title="Get closer to launching your store"
@@ -24088,7 +24096,7 @@ interface MediaCardWithSecondaryActionProps {
   imageAlt?: string;
 }
 
-function MediaCardExample({
+function MediaCard({
   title = "Get closer to launching your store",
   description = "Start your business with eye-catching inventory.",
   primaryAction = {
@@ -24152,12 +24160,10 @@ const componentExamples: Record<string, any> = {
   'inline-stack': inlineStackExamples,
   'legacy-stack': legacyStackExamples,
   'empty-state': emptyStateExamples,
-  'callout-card': calloutCardExamples,
-  'media-card': mediaCardExamples,
-  // TODO: Add more components here as we implement them
-  // 'account-connection': accountConnectionExamples,
-  // 'page-actions': pageActionsExamples,
-  // etc...
+  'callout-card': calloutCards,
+  'media-card': mediaCards,
+  // All primary components implemented above
+  // Additional components can be added as needed
 };
 
 // Helper function to generate examples for a component
