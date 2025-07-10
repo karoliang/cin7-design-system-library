@@ -2804,6 +2804,333 @@ function NumberFieldExample({
     />
   );
 }`
+  },
+  disabled: {
+    react: `import {TextField} from '@shopify/polaris';
+import React from 'react';
+
+function TextFieldExample() {
+  return <TextField label="Store name" disabled autoComplete="off" />;
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  name: 'storeName',
+  disabled: true,
+  emptyText: 'Enter store name',
+  cls: 'polaris-text-field',
+  labelAlign: 'top',
+  labelCls: 'polaris-label',
+  width: 300
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-text-field">
+    <label class="polaris-label" for="store-name">Store name</label>
+    <input 
+      id="store-name"
+      class="polaris-text-field__input" 
+      type="text" 
+      autocomplete="off"
+      disabled
+      aria-describedby="store-name-help"
+    />
+  </div>
+</div>
+
+<script>
+// JavaScript behavior (minimal for disabled field)
+const input = document.getElementById('store-name');
+console.log('Field is disabled:', input.disabled);
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import React from 'react';
+
+interface DisabledTextFieldProps {
+  label?: string;
+  value?: string;
+  placeholder?: string;
+  autoComplete?: string;
+}
+
+function DisabledTextField({ 
+  label = "Store name",
+  value = "",
+  placeholder,
+  autoComplete = "off"
+}: DisabledTextFieldProps): JSX.Element {
+  return (
+    <TextField 
+      label={label} 
+      value={value}
+      disabled 
+      autoComplete={autoComplete}
+      placeholder={placeholder}
+    />
+  );
+}`
+  },
+  email: {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function EmailFieldExample() {
+  const [value, setValue] = useState('bernadette.lapresse@jadedpixel.com');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Email"
+      type="email"
+      value={value}
+      onChange={handleChange}
+      autoComplete="email"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Email',
+  name: 'email',
+  inputType: 'email',
+  value: 'bernadette.lapresse@jadedpixel.com',
+  cls: 'polaris-text-field',
+  labelAlign: 'top',
+  labelCls: 'polaris-label',
+  width: 300,
+  vtype: 'email',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Email changed to:', newValue);
+    },
+    blur: function(field) {
+      if (!field.isValid()) {
+        Ext.Msg.alert('Validation Error', 'Please enter a valid email address');
+      }
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-text-field">
+    <label class="polaris-label" for="email-field">Email</label>
+    <input 
+      id="email-field"
+      class="polaris-text-field__input" 
+      type="email" 
+      value="bernadette.lapresse@jadedpixel.com"
+      autocomplete="email"
+      aria-describedby="email-field-help"
+    />
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const emailInput = document.getElementById('email-field');
+
+emailInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  console.log('Email changed to:', value);
+  
+  // Basic email validation
+  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+  if (value && !emailRegex.test(value)) {
+    emailInput.setAttribute('aria-invalid', 'true');
+  } else {
+    emailInput.removeAttribute('aria-invalid');
+  }
+});
+
+emailInput.addEventListener('blur', (event) => {
+  const value = event.target.value;
+  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+  if (value && !emailRegex.test(value)) {
+    console.warn('Invalid email format');
+  }
+});
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface EmailFieldProps {
+  label?: string;
+  initialValue?: string;
+  onEmailChange?: (email: string) => void;
+  onValidation?: (isValid: boolean) => void;
+  required?: boolean;
+}
+
+function EmailFieldExample({ 
+  label = "Email",
+  initialValue = "bernadette.lapresse@jadedpixel.com",
+  onEmailChange,
+  onValidation,
+  required = false
+}: EmailFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+  const [error, setError] = useState<string>('');
+
+  const validateEmail = useCallback((email: string): boolean => {
+    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    return emailRegex.test(email);
+  }, []);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onEmailChange?.(newValue);
+
+      // Validate email format
+      if (newValue && !validateEmail(newValue)) {
+        setError('Please enter a valid email address');
+        onValidation?.(false);
+      } else if (required && !newValue) {
+        setError('Email is required');
+        onValidation?.(false);
+      } else {
+        setError('');
+        onValidation?.(true);
+      }
+    },
+    [onEmailChange, onValidation, required, validateEmail],
+  );
+
+  return (
+    <TextField
+      label={label}
+      type="email"
+      value={value}
+      onChange={handleChange}
+      autoComplete="email"
+      error={error}
+      required={required}
+    />
+  );
+}`
+  },
+  multiline: {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function MultilineFieldExample() {
+  const [value, setValue] = useState('1776 Barnes Street\\nOrlando, FL 32801');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Shipping address"
+      value={value}
+      onChange={handleChange}
+      multiline={4}
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.TextArea', {
+  fieldLabel: 'Shipping address',
+  name: 'shippingAddress',
+  value: '1776 Barnes Street\\nOrlando, FL 32801',
+  cls: 'polaris-text-field',
+  labelAlign: 'top',
+  labelCls: 'polaris-label',
+  width: 300,
+  height: 100,
+  rows: 4,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Address changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-layout">
+  <div class="polaris-text-field">
+    <label class="polaris-label" for="address-field">Shipping address</label>
+    <textarea 
+      id="address-field"
+      class="polaris-text-field__input polaris-text-field__input--multiline" 
+      rows="4"
+      autocomplete="off"
+      aria-describedby="address-field-help"
+    >1776 Barnes Street
+Orlando, FL 32801</textarea>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const addressInput = document.getElementById('address-field');
+
+addressInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  console.log('Address changed to:', value);
+  
+  // Auto-resize textarea if needed
+  const textarea = event.target;
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+});
+
+// Set initial height
+addressInput.style.height = 'auto';
+addressInput.style.height = addressInput.scrollHeight + 'px';
+</script>`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface MultilineTextFieldProps {
+  label?: string;
+  initialValue?: string;
+  rows?: number;
+  maxLength?: number;
+  onValueChange?: (value: string) => void;
+  placeholder?: string;
+}
+
+function MultilineTextField({ 
+  label = "Shipping address",
+  initialValue = "1776 Barnes Street\\nOrlando, FL 32801",
+  rows = 4,
+  maxLength,
+  onValueChange,
+  placeholder
+}: MultilineTextFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+  const [characterCount, setCharacterCount] = useState<number>(initialValue.length);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      if (maxLength && newValue.length > maxLength) {
+        return; // Don't update if exceeds max length
+      }
+      
+      setValue(newValue);
+      setCharacterCount(newValue.length);
+      onValueChange?.(newValue);
+    },
+    [maxLength, onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={handleChange}
+      multiline={rows}
+      autoComplete="off"
+      placeholder={placeholder}
+      showCharacterCount={maxLength !== undefined}
+      maxLength={maxLength}
+    />
+  );
+}`
   }
 };
 
