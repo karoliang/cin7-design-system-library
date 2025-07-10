@@ -2382,6 +2382,208 @@ function SmallBadge({
     </Card>
   );
 }`
+  },
+  incomplete: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge progress="incomplete" tone="attention">
+        Unfulfilled
+      </Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--incomplete polaris-badge--attention">Unfulfilled</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--incomplete polaris-badge--attention">Unfulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete';
+type BadgeTone = 'success' | 'critical' | 'warning' | 'attention' | 'new' | 'info';
+
+interface IncompleteBadgeProps {
+  children: React.ReactNode;
+  progress?: BadgeProgress;
+  tone?: BadgeTone;
+}
+
+function IncompleteBadge({ 
+  children, 
+  progress = "incomplete",
+  tone = "attention"
+}: IncompleteBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge progress={progress} tone={tone}>
+        {children}
+      </Badge>
+    </Card>
+  );
+}`
+  },
+  informational: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge tone="info">Draft</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--info">Draft</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--info">Draft</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'critical' | 'warning' | 'attention' | 'new' | 'info';
+
+interface InformationalBadgeProps {
+  children: React.ReactNode;
+  tone?: BadgeTone;
+}
+
+function InformationalBadge({ 
+  children, 
+  tone = "info" 
+}: InformationalBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge tone={tone}>{children}</Badge>
+    </Card>
+  );
+}`
+  },
+  warning: {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge tone="warning">On hold</Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--warning">On hold</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--warning">On hold</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'critical' | 'warning' | 'attention' | 'new' | 'info';
+
+interface WarningBadgeProps {
+  children: React.ReactNode;
+  tone?: BadgeTone;
+}
+
+function WarningBadge({ 
+  children, 
+  tone = "warning" 
+}: WarningBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge tone={tone}>{children}</Badge>
+    </Card>
+  );
+}`
+  },
+  'partially-complete': {
+    react: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return (
+    <Card>
+      <Badge progress="partiallyComplete" tone="warning">
+        Partially fulfilled
+      </Badge>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'component',
+    html: '<span class="polaris-badge polaris-badge--partially-complete polaris-badge--warning">Partially fulfilled</span>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge polaris-badge--partially-complete polaris-badge--warning">Partially fulfilled</span>
+  </div>
+</div>`,
+    typescript: `import {Badge, Card} from '@shopify/polaris';
+import React from 'react';
+
+type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete';
+type BadgeTone = 'success' | 'critical' | 'warning' | 'attention' | 'new' | 'info';
+
+interface PartiallyCompleteBadgeProps {
+  children: React.ReactNode;
+  progress?: BadgeProgress;
+  tone?: BadgeTone;
+}
+
+function PartiallyCompleteBadge({ 
+  children, 
+  progress = "partiallyComplete",
+  tone = "warning"
+}: PartiallyCompleteBadgeProps): JSX.Element {
+  return (
+    <Card>
+      <Badge progress={progress} tone={tone}>
+        {children}
+      </Badge>
+    </Card>
+  );
+}`
   }
 };
 
