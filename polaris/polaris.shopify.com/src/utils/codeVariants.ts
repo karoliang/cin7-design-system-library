@@ -20586,7 +20586,11 @@ function SpinnerSmallExample({
     />
   );
 }`
-  },
+  }
+};
+
+// Spinner Examples with focus management
+export const spinnerFocusExamples = {
   'with-focus-management': {
     react: `import React, {useCallback, useRef, useState} from 'react';
 import {
