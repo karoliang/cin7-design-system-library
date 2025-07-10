@@ -162,7 +162,7 @@ function GlobalSearch() {
         setSearchResults(results);
         
         // Track search with enhanced analytics
-        const flatResults = results.flatMap(group => group.results);
+        const flatResults = results.flatMap((group: GroupedSearchResults) => group.results);
         trackEnhancedSearch(searchTerm, flatResults);
       });
 
