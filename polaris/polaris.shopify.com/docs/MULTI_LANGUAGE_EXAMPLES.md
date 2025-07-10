@@ -11,7 +11,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (40 examples)
+### ✅ Completed Components (45 examples)
 - **Button Group** (3/3 examples) ✅
   - default
   - with-segmented-buttons
@@ -66,8 +66,14 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - horizontal
   - specific-direction
   - vertical
+- **Box** (5/5 examples) ✅
+  - with-color
+  - with-border-radius
+  - with-border
+  - with-shadow
+  - with-padding
 
-### 📋 Components To Do (455 total examples across 96 components)
+### 📋 Components To Do (450 total examples across 96 components)
 
 High Priority Components:
 1. **Card** - 20 examples
@@ -122,11 +128,12 @@ This generates a template that you can fill in.
 - Use ExtJS patterns for data binding
 
 ### Vanilla JS
-- Separate HTML, CSS, and JavaScript sections
-- Use semantic HTML
+- Focus on HTML structure and JavaScript behavior only
+- Assume Polaris/Cin7 DSL CSS classes exist globally (e.g., `polaris-button`, `polaris-card`)
+- Use semantic HTML with proper class names
 - Include accessibility attributes (ARIA labels, roles)
 - Use modern JavaScript (ES6+)
-- Avoid inline styles
+- No CSS sections - styling is handled by the design system
 
 ### TypeScript
 - Define proper interfaces for props
@@ -196,6 +203,10 @@ The system automatically detects components from filenames using the parsing log
 - Polaris Button → Ext.button.Button
 - Polaris TextField → Ext.form.field.Text
 - etc.
+
+## Known Issues / TODO
+
+- **Vanilla JS Refactoring**: Some older vanilla JS examples still include CSS sections. These need to be refactored to follow the new pattern (HTML structure + JavaScript behavior only, assuming global CSS classes).
 
 ## Roadmap
 

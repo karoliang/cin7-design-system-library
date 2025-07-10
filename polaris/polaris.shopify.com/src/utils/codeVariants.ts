@@ -43,39 +43,20 @@ function ButtonGroupDefaultExample() {
     }
   }]
 });`,
-    vanilla: `// HTML
-<div class="button-group">
-  <button class="button">Cancel</button>
-  <button class="button button--primary">Save</button>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-button-group">
+  <button class="polaris-button">Cancel</button>
+  <button class="polaris-button polaris-button--primary">Save</button>
 </div>
 
-// CSS
-.button-group {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.button {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: white;
-  cursor: pointer;
-}
-
-.button--primary {
-  background: #008060;
-  color: white;
-  border-color: #008060;
-}
-
-// JavaScript
-document.querySelectorAll('.button').forEach(button => {
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-button').forEach(button => {
   button.addEventListener('click', (e) => {
     console.log(\`\${e.target.textContent} clicked\`);
   });
-});`,
+});
+</script>`,
     typescript: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React from 'react';
 
@@ -129,44 +110,23 @@ function ButtonGroupWithSegmentedButtonsExample() {
     }
   }]
 });`,
-    vanilla: `// HTML
-<div class="button-group button-group--segmented" role="group">
-  <button class="button-segment" aria-pressed="false">Bold</button>
-  <button class="button-segment" aria-pressed="false">Italic</button>
-  <button class="button-segment" aria-pressed="false">Underline</button>
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-button-group polaris-button-group--segmented" role="group">
+  <button class="polaris-button polaris-button--segmented" aria-pressed="false">Bold</button>
+  <button class="polaris-button polaris-button--segmented" aria-pressed="false">Italic</button>
+  <button class="polaris-button polaris-button--segmented" aria-pressed="false">Underline</button>
 </div>
 
-// CSS
-.button-group--segmented {
-  display: inline-flex;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.button-segment {
-  padding: 8px 16px;
-  border: none;
-  border-right: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-}
-
-.button-segment:last-child {
-  border-right: none;
-}
-
-.button-segment[aria-pressed="true"] {
-  background: #f0f0f0;
-}
-
-// JavaScript
-document.querySelectorAll('.button-segment').forEach(button => {
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-button--segmented').forEach(button => {
   button.addEventListener('click', () => {
     const isPressed = button.getAttribute('aria-pressed') === 'true';
     button.setAttribute('aria-pressed', !isPressed);
+    button.classList.toggle('polaris-button--pressed');
   });
-});`,
+});
+</script>`,
     typescript: `import {ButtonGroup, Button} from '@shopify/polaris';
 import React, {useState} from 'react';
 
@@ -1199,30 +1159,12 @@ function BadgeExample() {
     html: '<span class="polaris-badge">Fulfilled</span>'
   }]
 });`,
-    vanilla: `// HTML
-<div class="card">
-  <span class="badge">Fulfilled</span>
-</div>
-
-// CSS
-.card {
-  background: var(--p-color-bg-surface);
-  border-radius: var(--p-border-radius-300);
-  box-shadow: var(--p-shadow-300);
-  padding: var(--p-space-400);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0 var(--p-space-200);
-  min-height: var(--p-font-line-height-400);
-  background: var(--p-color-bg-fill-secondary);
-  border-radius: var(--p-border-radius-200);
-  font-size: var(--p-font-size-200);
-  font-weight: var(--p-font-weight-medium);
-  color: var(--p-color-text);
-}`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <span class="polaris-badge">Fulfilled</span>
+  </div>
+</div>`,
     typescript: `import {Badge, Card} from '@shopify/polaris';
 import React from 'react';
 
@@ -5222,6 +5164,688 @@ function VerticalBleedExample(): JSX.Element {
   }
 };
 
+// Box Examples
+export const boxExamples = {
+  'with-color': {
+    react: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+function BoxWithColorExample() {
+  return (
+    <Box background="bg-fill-info">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height: height,
+        width: width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-text)',
+        }}
+      >
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-box-info',
+  bodyStyle: {
+    background: 'var(--p-color-bg-fill-info)',
+    padding: 'var(--p-space-400)'
+  },
+  html: '<div class="placeholder">Content inside a box</div>',
+  listeners: {
+    afterrender: function(panel) {
+      panel.getEl().down('.placeholder').setStyle({
+        background: 'var(--p-color-border-interactive-subdued)',
+        color: 'var(--p-color-text)',
+        padding: 'var(--p-space-200)',
+        borderRadius: 'inherit'
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-box polaris-box--bg-info">
+  <div class="polaris-placeholder">
+    Content inside a box
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto'
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height,
+        width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div style={{ color: 'var(--p-color-text)' }}>
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function BoxWithColorExample(): JSX.Element {
+  return (
+    <Box background="bg-fill-info">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}`
+  },
+  'with-border-radius': {
+    react: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+function BoxWithBorderRadiusExample() {
+  return (
+    <Box borderRadius="100">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height: height,
+        width: width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-text)',
+        }}
+      >
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-box-rounded',
+  bodyStyle: {
+    borderRadius: 'var(--p-border-radius-100)',
+    overflow: 'hidden'
+  },
+  html: '<div class="placeholder">Content inside a box</div>',
+  listeners: {
+    afterrender: function(panel) {
+      panel.getEl().setStyle('border-radius', 'var(--p-border-radius-100)');
+      panel.getEl().down('.placeholder').setStyle({
+        background: 'var(--p-color-border-interactive-subdued)',
+        color: 'var(--p-color-text)',
+        padding: 'var(--p-space-200)',
+        borderRadius: 'inherit'
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-box polaris-box--border-radius-100">
+  <div class="polaris-placeholder">
+    Content inside a box
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto'
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height,
+        width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div style={{ color: 'var(--p-color-text)' }}>
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function BoxWithBorderRadiusExample(): JSX.Element {
+  return (
+    <Box borderRadius="100">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}`
+  },
+  'with-border': {
+    react: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+function BoxWithBorderExample() {
+  return (
+    <Box borderColor="border" borderWidth="025">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height: height,
+        width: width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-text)',
+        }}
+      >
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-box-bordered',
+  bodyStyle: {
+    border: 'var(--p-border-width-025) solid var(--p-color-border)',
+    padding: 'var(--p-space-400)'
+  },
+  html: '<div class="placeholder">Content inside a box</div>',
+  listeners: {
+    afterrender: function(panel) {
+      panel.getEl().down('.placeholder').setStyle({
+        background: 'var(--p-color-border-interactive-subdued)',
+        color: 'var(--p-color-text)',
+        padding: 'var(--p-space-200)',
+        borderRadius: 'inherit'
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-box polaris-box--border">
+  <div class="polaris-placeholder">
+    Content inside a box
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto'
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-border-interactive-subdued)',
+        height,
+        width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div style={{ color: 'var(--p-color-text)' }}>
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function BoxWithBorderExample(): JSX.Element {
+  return (
+    <Box borderColor="border" borderWidth="025">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}`
+  },
+  'with-shadow': {
+    react: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+function BoxWithShadowExample() {
+  return (
+    <Box shadow="300">
+      <Placeholder label="Content inside a box" />
+    </Box>
+  );
+}
+
+const Placeholder = ({label = '', height = 'auto', width = 'auto'}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div
+        style={{
+          color: 'var(--p-color-text-info-on-bg-fill)',
+        }}
+      >
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-box-shadow',
+  shadow: true,
+  bodyStyle: {
+    boxShadow: 'var(--p-shadow-300)',
+    padding: 'var(--p-space-400)'
+  },
+  html: '<div class="placeholder">Content inside a box</div>',
+  listeners: {
+    afterrender: function(panel) {
+      panel.getEl().down('.placeholder').setStyle({
+        background: 'var(--p-color-text-info)',
+        color: 'var(--p-color-text-info-on-bg-fill)',
+        padding: 'var(--p-space-200)',
+        borderRadius: 'inherit'
+      });
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-box polaris-box--shadow-300">
+  <div class="polaris-placeholder polaris-placeholder--info">
+    Content inside a box
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {Box, Text} from '@shopify/polaris';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string | number;
+  width?: string | number;
+  variant?: 'default' | 'info';
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '', 
+  height = 'auto', 
+  width = 'auto',
+  variant = 'default'
+}) => {
+  const backgroundColor = variant === 'info' 
+    ? 'var(--p-color-text-info)'
+    : 'var(--p-color-border-interactive-subdued)';
+  
+  const textColor = variant === 'info'
+    ? 'var(--p-color-text-info-on-bg-fill)'
+    : 'var(--p-color-text)';
+
+  return (
+    <div
+      style={{
+        background: backgroundColor,
+        height,
+        width,
+        borderRadius: 'inherit',
+      }}
+    >
+      <div style={{ color: textColor }}>
+        <Text as="p" variant="bodyMd">
+          {label}
+        </Text>
+      </div>
+    </div>
+  );
+};
+
+function BoxWithShadowExample(): JSX.Element {
+  return (
+    <Box shadow="300">
+      <Placeholder label="Content inside a box" variant="info" />
+    </Box>
+  );
+}`
+  },
+  'with-padding': {
+    react: `import React from 'react';
+import {BlockStack, Box, Text, InlineStack} from '@shopify/polaris';
+
+function BoxWithPaddingExample() {
+  return (
+    <BlockStack gap="400">
+      <div style={{ width: '586px' }}>
+        <Box padding="400" width="586px" background="bg-fill-info">
+          <Placeholder label="padding" childAlign="center" />
+        </Box>
+      </div>
+      <InlineStack gap="400">
+        <Box paddingInline="400" width="586px" background="bg-fill-info">
+          <Placeholder label="paddingInline" childAlign="center" />
+        </Box>
+        <Box paddingInlineStart="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingInlineStart" childAlign="start" />
+        </Box>
+        <Box paddingInlineEnd="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingInlineEnd" childAlign="end" />
+        </Box>
+      </InlineStack>
+      <InlineStack gap="400">
+        <Box paddingBlock="400" width="586px" background="bg-fill-info">
+          <Placeholder label="paddingBlock" childAlign="center" />
+        </Box>
+        <Box paddingBlockStart="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingBlockStart" childAlign="center" />
+        </Box>
+        <Box paddingBlockEnd="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingBlockEnd" childAlign="center" />
+        </Box>
+      </InlineStack>
+    </BlockStack>
+  );
+}
+
+const Placeholder = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+  childAlign,
+}: {
+  label?: string;
+  height?: string;
+  width?: string;
+  childAlign: 'start' | 'center' | 'end';
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        height: height,
+        width: width,
+      }}
+    >
+      <InlineStack gap="400" align={childAlign}>
+        <div
+          style={{
+            color: 'var(--p-color-text-info-on-bg-fill)',
+          }}
+        >
+          <Text
+            as="h2"
+            variant="bodyMd"
+            fontWeight="medium"
+            tone="text-inverse"
+          >
+            {label}
+          </Text>
+        </div>
+      </InlineStack>
+    </div>
+  );
+};`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'panel',
+    width: 586,
+    bodyStyle: {
+      background: 'var(--p-color-bg-fill-info)',
+      padding: 'var(--p-space-400)'
+    },
+    html: '<div class="placeholder center">padding</div>'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: { margin: '0 8 0 0' },
+    items: [{
+      xtype: 'panel',
+      width: 586,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingLeft: 'var(--p-space-400)',
+        paddingRight: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder center">paddingInline</div>'
+    }, {
+      xtype: 'panel',
+      width: 284,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingLeft: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder start">paddingInlineStart</div>'
+    }, {
+      xtype: 'panel',
+      width: 284,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingRight: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder end">paddingInlineEnd</div>'
+    }]
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: { margin: '0 8 0 0' },
+    items: [{
+      xtype: 'panel',
+      width: 586,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingTop: 'var(--p-space-400)',
+        paddingBottom: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder center">paddingBlock</div>'
+    }, {
+      xtype: 'panel',
+      width: 284,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingTop: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder center">paddingBlockStart</div>'
+    }, {
+      xtype: 'panel',
+      width: 284,
+      bodyStyle: {
+        background: 'var(--p-color-bg-fill-info)',
+        paddingBottom: 'var(--p-space-400)'
+      },
+      html: '<div class="placeholder center">paddingBlockEnd</div>'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack polaris-stack--vertical">
+  <div class="polaris-box polaris-box--bg-info polaris-box--padding-400" style="width: 586px;">
+    <div class="polaris-placeholder polaris-placeholder--center">padding</div>
+  </div>
+  
+  <div class="polaris-stack polaris-stack--horizontal">
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-inline-400" style="width: 586px;">
+      <div class="polaris-placeholder polaris-placeholder--center">paddingInline</div>
+    </div>
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-inline-start-400" style="width: 284px;">
+      <div class="polaris-placeholder polaris-placeholder--start">paddingInlineStart</div>
+    </div>
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-inline-end-400" style="width: 284px;">
+      <div class="polaris-placeholder polaris-placeholder--end">paddingInlineEnd</div>
+    </div>
+  </div>
+  
+  <div class="polaris-stack polaris-stack--horizontal">
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-block-400" style="width: 586px;">
+      <div class="polaris-placeholder polaris-placeholder--center">paddingBlock</div>
+    </div>
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-block-start-400" style="width: 284px;">
+      <div class="polaris-placeholder polaris-placeholder--center">paddingBlockStart</div>
+    </div>
+    <div class="polaris-box polaris-box--bg-info polaris-box--padding-block-end-400" style="width: 284px;">
+      <div class="polaris-placeholder polaris-placeholder--center">paddingBlockEnd</div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {BlockStack, Box, Text, InlineStack} from '@shopify/polaris';
+
+type PaddingVariant = 'padding' | 'paddingInline' | 'paddingInlineStart' | 'paddingInlineEnd' | 'paddingBlock' | 'paddingBlockStart' | 'paddingBlockEnd';
+
+interface PlaceholderProps {
+  label?: string;
+  height?: string;
+  width?: string;
+  childAlign: 'start' | 'center' | 'end';
+}
+
+const Placeholder: React.FC<PlaceholderProps> = ({
+  label = '',
+  height = 'auto',
+  width = 'auto',
+  childAlign,
+}) => {
+  return (
+    <div
+      style={{
+        background: 'var(--p-color-text-info)',
+        height,
+        width,
+      }}
+    >
+      <InlineStack gap="400" align={childAlign}>
+        <div style={{ color: 'var(--p-color-text-info-on-bg-fill)' }}>
+          <Text
+            as="h2"
+            variant="bodyMd"
+            fontWeight="medium"
+            tone="text-inverse"
+          >
+            {label}
+          </Text>
+        </div>
+      </InlineStack>
+    </div>
+  );
+};
+
+function BoxWithPaddingExample(): JSX.Element {
+  const paddingExamples: Array<{
+    variant: PaddingVariant;
+    width: string;
+    align: 'start' | 'center' | 'end';
+  }> = [
+    { variant: 'padding', width: '586px', align: 'center' },
+    { variant: 'paddingInline', width: '586px', align: 'center' },
+    { variant: 'paddingInlineStart', width: '284px', align: 'start' },
+    { variant: 'paddingInlineEnd', width: '284px', align: 'end' },
+    { variant: 'paddingBlock', width: '586px', align: 'center' },
+    { variant: 'paddingBlockStart', width: '284px', align: 'center' },
+    { variant: 'paddingBlockEnd', width: '284px', align: 'center' },
+  ];
+
+  return (
+    <BlockStack gap="400">
+      <div style={{ width: '586px' }}>
+        <Box padding="400" width="586px" background="bg-fill-info">
+          <Placeholder label="padding" childAlign="center" />
+        </Box>
+      </div>
+      <InlineStack gap="400">
+        <Box paddingInline="400" width="586px" background="bg-fill-info">
+          <Placeholder label="paddingInline" childAlign="center" />
+        </Box>
+        <Box paddingInlineStart="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingInlineStart" childAlign="start" />
+        </Box>
+        <Box paddingInlineEnd="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingInlineEnd" childAlign="end" />
+        </Box>
+      </InlineStack>
+      <InlineStack gap="400">
+        <Box paddingBlock="400" width="586px" background="bg-fill-info">
+          <Placeholder label="paddingBlock" childAlign="center" />
+        </Box>
+        <Box paddingBlockStart="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingBlockStart" childAlign="center" />
+        </Box>
+        <Box paddingBlockEnd="400" width="284px" background="bg-fill-info">
+          <Placeholder label="paddingBlockEnd" childAlign="center" />
+        </Box>
+      </InlineStack>
+    </BlockStack>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -5241,6 +5865,7 @@ const componentExamples: Record<string, any> = {
   'icon': iconExamples,
   'avatar': avatarExamples,
   'bleed': bleedExamples,
+  'box': boxExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
