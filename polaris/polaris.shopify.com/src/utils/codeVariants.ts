@@ -4362,6 +4362,445 @@ function WarningBanner({
     </Banner>
   );
 }`
+  },
+  'in-a-card': {
+    react: `import {LegacyCard, TextContainer, Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <LegacyCard title="Online store dashboard" sectioned>
+      <TextContainer>
+        <Banner onDismiss={() => {}}>
+          <p>
+            Use your finance report to get detailed information about your
+            business. <Link url="">Let us know what you think</Link>
+          </p>
+        </Banner>
+
+        <p>View a summary of your online store's performance.</p>
+      </TextContainer>
+    </LegacyCard>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Online store dashboard',
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  shadow: true,
+  items: [{
+    xtype: 'container',
+    html: '<div class="polaris-text-container">',
+    items: [{
+      xtype: 'panel',
+      cls: 'polaris-banner',
+      bodyPadding: 12,
+      layout: {
+        type: 'hbox',
+        align: 'stretch'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<div class="banner-icon">ℹ</div>',
+        width: 20
+      }, {
+        xtype: 'container',
+        flex: 1,
+        html: '<p>Use your finance report to get detailed information about your business. <a href="#" class="banner-link">Let us know what you think</a></p>'
+      }, {
+        xtype: 'button',
+        text: '×',
+        ui: 'plain',
+        handler: function() {
+          this.up('panel').destroy();
+        }
+      }]
+    }, {
+      xtype: 'component',
+      html: '<p>View a summary of your online store\\'s performance.</p>',
+      margin: '16 0 0 0'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__header">
+    <h2 class="polaris-card__title">Online store dashboard</h2>
+  </div>
+  <div class="polaris-card__section">
+    <div class="polaris-text-container">
+      <div class="polaris-banner" role="status" aria-live="polite">
+        <div class="polaris-banner__icon">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M10 7v3M10 14h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="polaris-banner__content">
+          <p>
+            Use your finance report to get detailed information about your
+            business. <a href="#" class="polaris-banner__link">Let us know what you think</a>
+          </p>
+        </div>
+        <button class="polaris-banner__dismiss" aria-label="Dismiss banner" id="dismiss-card-banner">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      
+      <p>View a summary of your online store's performance.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('dismiss-card-banner').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
+    typescript: `import {LegacyCard, TextContainer, Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+interface CardBannerProps {
+  cardTitle?: string;
+  bannerMessage?: React.ReactNode;
+  linkText?: string;
+  linkUrl?: string;
+  cardContent?: string;
+  onBannerDismiss?: () => void;
+}
+
+function CardWithBanner({
+  cardTitle = "Online store dashboard",
+  bannerMessage = "Use your finance report to get detailed information about your business.",
+  linkText = "Let us know what you think",
+  linkUrl = "",
+  cardContent = "View a summary of your online store's performance.",
+  onBannerDismiss
+}: CardBannerProps): JSX.Element {
+  const handleBannerDismiss = () => {
+    if (onBannerDismiss) {
+      onBannerDismiss();
+    } else {
+      console.log('Banner dismissed');
+    }
+  };
+
+  return (
+    <LegacyCard title={cardTitle} sectioned>
+      <TextContainer>
+        <Banner onDismiss={handleBannerDismiss}>
+          <p>
+            {bannerMessage} <Link url={linkUrl}>{linkText}</Link>
+          </p>
+        </Banner>
+
+        <p>{cardContent}</p>
+      </TextContainer>
+    </LegacyCard>
+  );
+}`
+  },
+  'with-focus': {
+    react: `import {Banner, BannerHandles} from '@shopify/polaris';
+import React, {useEffect, useRef} from 'react';
+
+function BannerWithFocusExample() {
+  const banner = useRef<BannerHandles>(null);
+
+  useEffect(() => banner.current?.focus(), []);
+
+  return (
+    <Banner
+      title="High risk of fraud detected"
+      onDismiss={() => {}}
+      tone="critical"
+      ref={banner}
+    >
+      <p>
+        Before fulfilling this order or capturing payment, please review the
+        fraud analysis and determine if this order is fraudulent
+      </p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--critical',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  listeners: {
+    afterrender: function() {
+      // Focus the banner after render
+      this.focus();
+    }
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">⚠</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">High risk of fraud detected</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p>Before fulfilling this order or capturing payment, please review the fraud analysis and determine if this order is fraudulent</p>'
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner polaris-banner--critical" role="alert" aria-live="assertive" tabindex="0" id="fraud-banner">
+  <div class="polaris-banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 2L2 18h16L10 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 8v4M10 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">High risk of fraud detected</h3>
+    <p>
+      Before fulfilling this order or capturing payment, please review the
+      fraud analysis and determine if this order is fraudulent
+    </p>
+  </div>
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner" id="dismiss-fraud-banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+// JavaScript behavior
+document.addEventListener('DOMContentLoaded', () => {
+  // Focus the banner when page loads
+  const banner = document.getElementById('fraud-banner');
+  if (banner) {
+    banner.focus();
+  }
+});
+
+document.getElementById('dismiss-fraud-banner').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
+    typescript: `import {Banner, BannerHandles} from '@shopify/polaris';
+import React, {useEffect, useRef} from 'react';
+
+interface FocusableBannerProps {
+  title?: string;
+  message?: string;
+  tone?: 'success' | 'info' | 'warning' | 'critical';
+  onDismiss?: () => void;
+  autoFocus?: boolean;
+}
+
+function FocusableBanner({
+  title = "High risk of fraud detected",
+  message = "Before fulfilling this order or capturing payment, please review the fraud analysis and determine if this order is fraudulent",
+  tone = "critical",
+  onDismiss,
+  autoFocus = true
+}: FocusableBannerProps): JSX.Element {
+  const banner = useRef<BannerHandles>(null);
+
+  useEffect(() => {
+    if (autoFocus) {
+      banner.current?.focus();
+    }
+  }, [autoFocus]);
+
+  const handleDismiss = () => {
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      console.log('Critical banner dismissed');
+    }
+  };
+
+  return (
+    <Banner
+      title={title}
+      onDismiss={handleDismiss}
+      tone={tone}
+      ref={banner}
+    >
+      <p>{message}</p>
+    </Banner>
+  );
+}`
+  },
+  'with-footer-call-to-action': {
+    react: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner
+      title="Some of your product variants are missing weights"
+      tone="warning"
+      action={{content: 'Edit variant weights', url: ''}}
+      secondaryAction={{content: 'Learn more', url: ''}}
+      onDismiss={() => {}}
+    >
+      <p>
+        Add weights to show accurate rates at checkout and when buying shipping
+        labels in Shopify.
+      </p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--warning',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">⚠</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">Some of your product variants are missing weights</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p>Add weights to show accurate rates at checkout and when buying shipping labels in Shopify.</p>'
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      margin: '8 0 0 0',
+      items: [{
+        xtype: 'button',
+        text: 'Edit variant weights',
+        handler: function() {
+          console.log('Edit variant weights clicked');
+        }
+      }, {
+        xtype: 'button',
+        text: 'Learn more',
+        ui: 'plain',
+        margin: '0 0 0 8',
+        handler: function() {
+          console.log('Learn more clicked');
+        }
+      }]
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-banner polaris-banner--warning" role="alert" aria-live="assertive">
+  <div class="polaris-banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 2L2 18h16L10 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 8v4M10 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="polaris-banner__content">
+    <h3 class="polaris-banner__title">Some of your product variants are missing weights</h3>
+    <p>
+      Add weights to show accurate rates at checkout and when buying shipping
+      labels in Shopify.
+    </p>
+    <div class="polaris-banner__actions">
+      <button class="polaris-button" id="edit-weights-btn">Edit variant weights</button>
+      <button class="polaris-button polaris-button--plain" id="weights-learn-more-btn">Learn more</button>
+    </div>
+  </div>
+  <button class="polaris-banner__dismiss" aria-label="Dismiss banner" id="dismiss-weights-banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+// JavaScript behavior
+document.getElementById('edit-weights-btn').addEventListener('click', () => {
+  console.log('Edit variant weights clicked');
+});
+
+document.getElementById('weights-learn-more-btn').addEventListener('click', () => {
+  console.log('Learn more clicked');
+});
+
+document.getElementById('dismiss-weights-banner').addEventListener('click', () => {
+  document.querySelector('.polaris-banner').remove();
+});
+</script>`,
+    typescript: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+interface BannerAction {
+  content: string;
+  url?: string;
+  onAction?: () => void;
+}
+
+interface FooterActionBannerProps {
+  title?: string;
+  message?: string;
+  primaryAction?: BannerAction;
+  secondaryAction?: BannerAction;
+  tone?: 'success' | 'info' | 'warning' | 'critical';
+  onDismiss?: () => void;
+}
+
+function FooterActionBanner({
+  title = "Some of your product variants are missing weights",
+  message = "Add weights to show accurate rates at checkout and when buying shipping labels in Shopify.",
+  primaryAction = { content: 'Edit variant weights', url: '' },
+  secondaryAction = { content: 'Learn more', url: '' },
+  tone = "warning",
+  onDismiss
+}: FooterActionBannerProps): JSX.Element {
+  const handleDismiss = () => {
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      console.log('Banner dismissed');
+    }
+  };
+
+  return (
+    <Banner
+      title={title}
+      tone={tone}
+      action={primaryAction}
+      secondaryAction={secondaryAction}
+      onDismiss={handleDismiss}
+    >
+      <p>{message}</p>
+    </Banner>
+  );
+}`
   }
 };
 
