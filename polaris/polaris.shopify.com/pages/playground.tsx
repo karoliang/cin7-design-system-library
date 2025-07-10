@@ -145,7 +145,7 @@ const componentExamples: Record<string, string> = {
             </tbody>
           </table>
         </div>
-        <Text variant="bodySm" tone="subdued">
+        <Text variant="bodySm" tone="subdued" as="p">
           Selected rows: {selectedRows.length} | Features: Sorting, Multi-select, Status badges
         </Text>
       </BlockStack>
@@ -596,7 +596,7 @@ const componentExamples: Record<string, string> = {
         </BlockStack>
         
         {filteredTasks.length === 0 && (
-          <Text tone="subdued" alignment="center">
+          <Text tone="subdued" alignment="center" as="p">
             No {store.filter !== 'all' ? store.filter : ''} tasks
           </Text>
         )}
@@ -651,7 +651,7 @@ const componentExamples: Record<string, string> = {
       <Card>
         <BlockStack gap="400" align="center">
           <Spinner accessibilityLabel="Loading products" />
-          <Text>Loading products...</Text>
+          <Text as="p">Loading products...</Text>
         </BlockStack>
       </Card>
     );
@@ -668,7 +668,7 @@ const componentExamples: Record<string, string> = {
   return (
     <Card title="Product Inventory (React Query Pattern)">
       <BlockStack gap="400">
-        <Text tone="subdued">
+        <Text tone="subdued" as="p">
           Demonstrating data fetching and caching patterns in Cin7 DSL
         </Text>
         
@@ -691,12 +691,12 @@ const componentExamples: Record<string, string> = {
               position={product.id}
             >
               <IndexTable.Cell>
-                <Text variant="bodyMd" fontWeight="semibold">
+                <Text variant="bodyMd" fontWeight="semibold" as="p">
                   {product.name}
                 </Text>
               </IndexTable.Cell>
               <IndexTable.Cell>
-                <Text alignment="end">${product.price.toFixed(2)}</Text>
+                <Text alignment="end" as="p">\${product.price.toFixed(2)}</Text>
               </IndexTable.Cell>
               <IndexTable.Cell>
                 {editingId === product.id ? (
@@ -709,7 +709,7 @@ const componentExamples: Record<string, string> = {
                     autoComplete="off"
                   />
                 ) : (
-                  <Text alignment="end">
+                  <Text alignment="end" as="p">
                     <Badge
                       tone={product.stock < 20 ? 'warning' : 'success'}
                     >
@@ -806,7 +806,7 @@ const componentExamples: Record<string, string> = {
         <Divider />
         
         <BlockStack gap="400">
-          <Text variant="headingMd">Key Metrics</Text>
+          <Text variant="headingMd" as="h3">Key Metrics</Text>
           <ButtonGroup segmented>
             {Object.keys(metrics).map(key => (
               <Button
@@ -834,7 +834,7 @@ const componentExamples: Record<string, string> = {
         <Divider />
         
         <BlockStack gap="400">
-          <Text variant="headingMd">Recent Activity</Text>
+          <Text variant="headingMd" as="h3">Recent Activity</Text>
           <Card sectioned>
             <BlockStack gap="300">
               {[
@@ -845,10 +845,10 @@ const componentExamples: Record<string, string> = {
               ].map((activity, index) => (
                 <InlineStack key={index} align="space-between" blockAlign="center">
                   <InlineStack gap="200" blockAlign="center">
-                    <Text variant="bodyLg">{activity.icon}</Text>
-                    <Text>{activity.action}</Text>
+                    <Text variant="bodyLg" as="p">{activity.icon}</Text>
+                    <Text as="p">{activity.action}</Text>
                   </InlineStack>
-                  <Text variant="bodySm" tone="subdued">
+                  <Text variant="bodySm" tone="subdued" as="p">
                     {activity.time}
                   </Text>
                 </InlineStack>
@@ -944,7 +944,7 @@ const componentExamples: Record<string, string> = {
         </Banner>
         
         <BlockStack gap="200">
-          <Text variant="headingMd">Canvas Animation</Text>
+          <Text variant="headingMd" as="h3">Canvas Animation</Text>
           <div style={{ 
             border: '1px solid var(--p-color-border-subdued)', 
             borderRadius: 'var(--p-border-radius-200)',
@@ -960,7 +960,7 @@ const componentExamples: Record<string, string> = {
         <Divider />
         
         <BlockStack gap="200">
-          <Text variant="headingMd">DOM Manipulation</Text>
+          <Text variant="headingMd" as="h3">DOM Manipulation</Text>
           <InlineStack gap="200">
             <Badge data-demo-element>ExtJS</Badge>
             <Badge data-demo-element tone="success">Vanilla JS</Badge>
@@ -975,7 +975,7 @@ const componentExamples: Record<string, string> = {
         <Divider />
         
         <BlockStack gap="200">
-          <Text variant="headingMd">Event Handling</Text>
+          <Text variant="headingMd" as="h3">Event Handling</Text>
           <TextField
             label="Debounced Input"
             placeholder="Type to see debouncing..."

@@ -41,7 +41,7 @@ export function ColorPalette() {
   return (
     <Card title="Color Palette">
       <BlockStack gap="300">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Semantic colors for consistent communication
         </Text>
         <div className={styles.ColorGrid}>
@@ -52,13 +52,13 @@ export function ColorPalette() {
                 style={{ backgroundColor: `var(${color.token})` }}
               />
               <BlockStack gap="100">
-                <Text variant="bodySm" fontWeight="semibold">
+                <Text variant="bodySm" fontWeight="semibold" as="p">
                   {color.name}
                 </Text>
-                <Text variant="bodySm" tone="subdued">
+                <Text variant="bodySm" tone="subdued" as="p">
                   {color.token}
                 </Text>
-                <Text variant="bodySm" tone="subdued">
+                <Text variant="bodySm" tone="subdued" as="p">
                   {color.hex}
                 </Text>
               </BlockStack>
@@ -84,7 +84,7 @@ export function TypographyScale() {
   return (
     <Card title="Typography Scale">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Consistent text hierarchy for clear communication
         </Text>
         {textVariants.map((item) => (
@@ -93,7 +93,7 @@ export function TypographyScale() {
               <Text variant={item.variant as any} as="p">
                 {item.label} - The quick brown fox jumps over the lazy dog
               </Text>
-              <Text variant="bodySm" tone="subdued">
+              <Text variant="bodySm" tone="subdued" as="p">
                 {item.size}
               </Text>
             </InlineStack>
@@ -109,13 +109,13 @@ export function ButtonVariants() {
   return (
     <Card title="Button Variants">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Different button styles for various actions
         </Text>
         
         <BlockStack gap="300">
           <div>
-            <Text variant="headingSm">Primary Actions</Text>
+            <Text variant="headingSm" as="h4">Primary Actions</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Button primary>Save Changes</Button>
@@ -127,7 +127,7 @@ export function ButtonVariants() {
           </div>
 
           <div>
-            <Text variant="headingSm">Secondary Actions</Text>
+            <Text variant="headingSm" as="h4">Secondary Actions</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Button>Cancel</Button>
@@ -139,7 +139,7 @@ export function ButtonVariants() {
           </div>
 
           <div>
-            <Text variant="headingSm">Destructive Actions</Text>
+            <Text variant="headingSm" as="h4">Destructive Actions</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Button destructive>Delete</Button>
@@ -151,7 +151,7 @@ export function ButtonVariants() {
           </div>
 
           <div>
-            <Text variant="headingSm">Plain Actions</Text>
+            <Text variant="headingSm" as="h4">Plain Actions</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Button plain>Learn more</Button>
@@ -170,13 +170,13 @@ export function BadgeExamples() {
   return (
     <Card title="Badge States">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Status indicators and labels
         </Text>
         
         <BlockStack gap="300">
           <div>
-            <Text variant="headingSm">Status Badges</Text>
+            <Text variant="headingSm" as="h4">Status Badges</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Badge tone="success">Active</Badge>
@@ -189,7 +189,7 @@ export function BadgeExamples() {
           </div>
 
           <div>
-            <Text variant="headingSm">With Status</Text>
+            <Text variant="headingSm" as="h4">With Status</Text>
             <Box paddingBlockStart="200">
               <InlineStack gap="200">
                 <Badge tone="success" progress="complete">Published</Badge>
@@ -213,7 +213,7 @@ export function FormElements() {
   return (
     <Card title="Form Elements">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Common form patterns and states
         </Text>
         
@@ -252,7 +252,7 @@ export function FormElements() {
         />
 
         <BlockStack gap="200">
-          <Text variant="headingSm">Radio Options</Text>
+          <Text variant="headingSm" as="h4">Radio Options</Text>
           <RadioButton
             label="Option 1"
             id="radio1"
@@ -288,7 +288,7 @@ export function SpacingExamples() {
   return (
     <Card title="Spacing Scale">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Consistent spacing for layouts
         </Text>
         
@@ -302,7 +302,7 @@ export function SpacingExamples() {
                 className={styles.SpacingBar}
                 style={{ width: space.value }}
               />
-              <Text variant="bodySm" tone="subdued">
+              <Text variant="bodySm" tone="subdued" as="p">
                 {space.value}
               </Text>
             </InlineStack>
@@ -328,7 +328,7 @@ export function IconLibrary() {
   return (
     <Card title="Common Icons">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           Frequently used icons in Cin7 DSL
         </Text>
         
@@ -337,7 +337,7 @@ export function IconLibrary() {
             <Tooltip key={name} content={name}>
               <div className={styles.IconItem}>
                 <Icon source={icon} />
-                <Text variant="bodySm">{name}</Text>
+                <Text variant="bodySm" as="p">{name}</Text>
               </div>
             </Tooltip>
           ))}
@@ -351,7 +351,7 @@ export function FeedbackPatterns() {
   return (
     <Card title="Feedback Patterns">
       <BlockStack gap="400">
-        <Text variant="bodyMd" tone="subdued">
+        <Text variant="bodyMd" tone="subdued" as="p">
           User feedback and messaging patterns
         </Text>
         

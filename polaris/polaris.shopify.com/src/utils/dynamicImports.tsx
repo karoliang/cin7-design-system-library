@@ -7,7 +7,7 @@ const LoadingComponent = ({ text }: { text: string }) => (
   <div style={{ padding: '20px', textAlign: 'center' }}>
     <BlockStack gap="400" align="center">
       <Spinner accessibilityLabel={text} />
-      <Text variant="bodySm" tone="subdued">{text}</Text>
+      <Text variant="bodySm" tone="subdued" as="p">{text}</Text>
     </BlockStack>
   </div>
 );

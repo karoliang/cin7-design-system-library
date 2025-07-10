@@ -17,7 +17,7 @@ export function LazyLoad({
     <div className={styles.LoadingContainer}>
       <BlockStack gap="400" align="center">
         <Spinner accessibilityLabel={loadingText} />
-        <Text variant="bodySm" tone="subdued">{loadingText}</Text>
+        <Text variant="bodySm" tone="subdued" as="p">{loadingText}</Text>
       </BlockStack>
     </div>
   );

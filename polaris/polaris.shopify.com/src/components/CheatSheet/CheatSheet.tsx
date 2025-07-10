@@ -53,8 +53,8 @@ export function CheatSheet({ title, items }: CheatSheetProps) {
                       <BlockStack gap="300">
                         <InlineStack align="space-between" blockAlign="start">
                           <BlockStack gap="100">
-                            <Text variant="headingSm">{item.title}</Text>
-                            <Text variant="bodySm" tone="subdued">
+                            <Text variant="headingSm" as="h4">{item.title}</Text>
+                            <Text variant="bodySm" tone="subdued" as="p">
                               {item.description}
                             </Text>
                           </BlockStack>

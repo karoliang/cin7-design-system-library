@@ -141,7 +141,7 @@ export function AnalyticsDashboard() {
           <BlockStack gap="500">
             <Card>
               <InlineStack align="space-between" blockAlign="center">
-                <Text variant="headingMd">Analytics Overview</Text>
+                <Text variant="headingMd" as="h3">Analytics Overview</Text>
                 <Select
                   label="Time Range"
                   labelInline
@@ -162,7 +162,7 @@ export function AnalyticsDashboard() {
               <Card>
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
-                    <Text variant="headingSm">Avg. Time on Page</Text>
+                    <Text variant="headingSm" as="h4">Avg. Time on Page</Text>
                     <EyeIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
@@ -175,7 +175,7 @@ export function AnalyticsDashboard() {
               <Card>
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
-                    <Text variant="headingSm">Avg. Scroll Depth</Text>
+                    <Text variant="headingSm" as="h4">Avg. Scroll Depth</Text>
                     <TrendingUpIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
@@ -188,7 +188,7 @@ export function AnalyticsDashboard() {
               <Card>
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
-                    <Text variant="headingSm">Bounce Rate</Text>
+                    <Text variant="headingSm" as="h4">Bounce Rate</Text>
                     <ClickIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
@@ -201,7 +201,7 @@ export function AnalyticsDashboard() {
               <Card>
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
-                    <Text variant="headingSm">Return Visitors</Text>
+                    <Text variant="headingSm" as="h4">Return Visitors</Text>
                     <BarChart />
                   </InlineStack>
                   <Text variant="headingXl" as="p">

@@ -47,7 +47,7 @@ export default function StyleGuidePage() {
                   <Text variant="headingLg" as="h2">
                     Foundation Elements
                   </Text>
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" tone="subdued" as="p">
                     Core design elements that form the foundation of Cin7 DSL applications
                   </Text>
                 </BlockStack>
@@ -70,7 +70,7 @@ export default function StyleGuidePage() {
                   <Text variant="headingLg" as="h2">
                     Component Patterns
                   </Text>
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" tone="subdued" as="p">
                     Common UI patterns and component variations
                   </Text>
                 </BlockStack>
@@ -101,7 +101,7 @@ export default function StyleGuidePage() {
                   <Text variant="headingLg" as="h2">
                     Implementation Guidelines
                   </Text>
-                  <Text variant="bodyMd">
+                  <Text variant="bodyMd" as="p">
                     These visual examples demonstrate the proper implementation of Cin7 DSL
                     components. For detailed usage instructions and code examples, refer to
                     the comprehensive style guide documentation.
