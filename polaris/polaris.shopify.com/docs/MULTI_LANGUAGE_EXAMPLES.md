@@ -11,7 +11,7 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
 
 ## Current Status
 
-### ✅ Completed Components (13 examples)
+### ✅ Completed Components (20 examples)
 - **Button Group** (3/3 examples)
   - default
   - with-segmented-buttons
@@ -29,8 +29,17 @@ The Cin7 DSL documentation now supports displaying code examples in multiple lan
   - default
   - critical
   - success
+- **Text Field** (4/23 examples)
+  - default
+  - with-validation-error
+  - with-help-text
+  - number
+- **Banner** (3/9 examples)
+  - default
+  - critical
+  - success
 
-### 📋 Components To Do (482 total examples across 96 components)
+### 📋 Components To Do (475 total examples across 96 components)
 
 High Priority Components:
 1. **Card** - 20 examples

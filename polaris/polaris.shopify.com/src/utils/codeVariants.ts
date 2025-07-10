@@ -1378,16 +1378,1093 @@ function SuccessBadge({
   }
 };
 
+// TextField Examples
+export const textFieldExamples = {
+  default: {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function TextFieldExample() {
+  const [value, setValue] = useState('Jaded Pixel');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: 'Jaded Pixel',
+  labelWidth: 100,
+  width: 320,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Value changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="text-field">
+  <label for="store-name" class="text-field__label">Store name</label>
+  <div class="text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name" 
+      class="text-field__input" 
+      value="Jaded Pixel"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+// CSS
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.text-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.text-field__input-wrapper {
+  position: relative;
+}
+
+.text-field__input {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+}
+
+.text-field__input:focus {
+  outline: none;
+  border-color: var(--p-color-border-emphasis);
+  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
+}
+
+// JavaScript
+const input = document.getElementById('store-name');
+input.addEventListener('input', (event) => {
+  console.log('Value changed to:', event.target.value);
+});`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TextFieldExampleProps {
+  initialValue?: string;
+  label?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function TextFieldExample({ 
+  initialValue = 'Jaded Pixel',
+  label = 'Store name',
+  onValueChange
+}: TextFieldExampleProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onValueChange?.(newValue);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-validation-error': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ValidationErrorExample() {
+  const [textFieldValue, setTextFieldValue] = useState('');
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Store name"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      error="Store name is required"
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  value: '',
+  labelWidth: 100,
+  width: 320,
+  msgTarget: 'under',
+  markInvalid: function() {
+    this.setActiveError('Store name is required');
+  },
+  listeners: {
+    afterrender: function(field) {
+      field.markInvalid();
+    },
+    change: function(field, newValue) {
+      if (newValue) {
+        field.clearInvalid();
+      } else {
+        field.markInvalid();
+      }
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="text-field text-field--error">
+  <label for="store-name" class="text-field__label">Store name</label>
+  <div class="text-field__input-wrapper">
+    <input 
+      type="text" 
+      id="store-name" 
+      class="text-field__input text-field__input--error" 
+      value=""
+      autocomplete="off"
+      aria-invalid="true"
+      aria-describedby="store-name-error"
+    />
+  </div>
+  <div id="store-name-error" class="text-field__error">
+    Store name is required
+  </div>
+</div>
+
+// CSS
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.text-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.text-field__input-wrapper {
+  position: relative;
+}
+
+.text-field__input {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+}
+
+.text-field__input--error {
+  border-color: var(--p-color-border-critical);
+}
+
+.text-field__input--error:focus {
+  border-color: var(--p-color-border-critical);
+  box-shadow: 0 0 0 1px var(--p-color-border-critical);
+}
+
+.text-field__error {
+  color: var(--p-color-text-critical);
+  font-size: var(--p-font-size-200);
+  margin-top: var(--p-space-100);
+}
+
+// JavaScript
+const input = document.getElementById('store-name');
+const errorDiv = document.getElementById('store-name-error');
+
+input.addEventListener('input', (event) => {
+  if (event.target.value) {
+    input.classList.remove('text-field__input--error');
+    input.setAttribute('aria-invalid', 'false');
+    errorDiv.style.display = 'none';
+  } else {
+    input.classList.add('text-field__input--error');
+    input.setAttribute('aria-invalid', 'true');
+    errorDiv.style.display = 'block';
+  }
+});`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ValidationErrorExampleProps {
+  label?: string;
+  errorMessage?: string;
+  required?: boolean;
+}
+
+function ValidationErrorExample({ 
+  label = 'Store name',
+  errorMessage = 'Store name is required',
+  required = true
+}: ValidationErrorExampleProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  const [error, setError] = useState<string | undefined>(errorMessage);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      if (required && !value) {
+        setError(errorMessage);
+      } else {
+        setError(undefined);
+      }
+    },
+    [required, errorMessage],
+  );
+
+  return (
+    <TextField
+      label={label}
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      error={error}
+      autoComplete="off"
+    />
+  );
+}`
+  },
+  'with-help-text': {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function HelpTextExample() {
+  const [textFieldValue, setTextFieldValue] = useState(
+    'bernadette.lapresse@jadedpixel.com',
+  );
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => setTextFieldValue(value),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Account email"
+      type="email"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      helpText="We'll use this address if we need to contact you about your account."
+      autoComplete="email"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Account email',
+  value: 'bernadette.lapresse@jadedpixel.com',
+  vtype: 'email',
+  labelWidth: 100,
+  width: 400,
+  afterLabelTextTpl: '<span class="help-text">We\\'ll use this address if we need to contact you about your account.</span>',
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Email changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="text-field">
+  <label for="account-email" class="text-field__label">Account email</label>
+  <div class="text-field__input-wrapper">
+    <input 
+      type="email" 
+      id="account-email" 
+      class="text-field__input" 
+      value="bernadette.lapresse@jadedpixel.com"
+      autocomplete="email"
+      aria-describedby="account-email-help"
+    />
+  </div>
+  <div id="account-email-help" class="text-field__help-text">
+    We'll use this address if we need to contact you about your account.
+  </div>
+</div>
+
+// CSS
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.text-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.text-field__input-wrapper {
+  position: relative;
+}
+
+.text-field__input {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+}
+
+.text-field__input:focus {
+  outline: none;
+  border-color: var(--p-color-border-emphasis);
+  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
+}
+
+.text-field__help-text {
+  color: var(--p-color-text-secondary);
+  font-size: var(--p-font-size-200);
+  line-height: var(--p-font-line-height-300);
+  margin-top: var(--p-space-100);
+}
+
+// JavaScript
+const emailInput = document.getElementById('account-email');
+emailInput.addEventListener('input', (event) => {
+  console.log('Email changed to:', event.target.value);
+});`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface HelpTextExampleProps {
+  initialEmail?: string;
+  helpText?: string;
+  onEmailChange?: (email: string) => void;
+}
+
+function HelpTextExample({ 
+  initialEmail = 'bernadette.lapresse@jadedpixel.com',
+  helpText = "We'll use this address if we need to contact you about your account.",
+  onEmailChange
+}: HelpTextExampleProps): JSX.Element {
+  const [textFieldValue, setTextFieldValue] = useState<string>(initialEmail);
+
+  const handleTextFieldChange = useCallback(
+    (value: string) => {
+      setTextFieldValue(value);
+      onEmailChange?.(value);
+    },
+    [onEmailChange],
+  );
+
+  return (
+    <TextField
+      label="Account email"
+      type="email"
+      value={textFieldValue}
+      onChange={handleTextFieldChange}
+      helpText={helpText}
+      autoComplete="email"
+    />
+  );
+}`
+  },
+  number: {
+    react: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function NumberFieldExample() {
+  const [value, setValue] = useState('1');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    [],
+  );
+
+  return (
+    <TextField
+      label="Quantity"
+      type="number"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Number', {
+  fieldLabel: 'Quantity',
+  value: 1,
+  minValue: 0,
+  labelWidth: 100,
+  width: 200,
+  listeners: {
+    change: function(field, newValue) {
+      console.log('Quantity changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="text-field">
+  <label for="quantity" class="text-field__label">Quantity</label>
+  <div class="text-field__input-wrapper">
+    <input 
+      type="number" 
+      id="quantity" 
+      class="text-field__input" 
+      value="1"
+      min="0"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+// CSS
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.text-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.text-field__input-wrapper {
+  position: relative;
+}
+
+.text-field__input {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+}
+
+.text-field__input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.text-field__input[type="number"]::-webkit-inner-spin-button,
+.text-field__input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.text-field__input:focus {
+  outline: none;
+  border-color: var(--p-color-border-emphasis);
+  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
+}
+
+// JavaScript
+const quantityInput = document.getElementById('quantity');
+quantityInput.addEventListener('input', (event) => {
+  const value = event.target.value;
+  if (value && !isNaN(value) && parseInt(value) >= 0) {
+    console.log('Quantity changed to:', value);
+  }
+});`,
+    typescript: `import {TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface NumberFieldExampleProps {
+  label?: string;
+  initialValue?: number;
+  min?: number;
+  max?: number;
+  onValueChange?: (value: number) => void;
+}
+
+function NumberFieldExample({ 
+  label = 'Quantity',
+  initialValue = 1,
+  min = 0,
+  max,
+  onValueChange
+}: NumberFieldExampleProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue.toString());
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      const numValue = parseInt(newValue, 10);
+      if (!isNaN(numValue)) {
+        onValueChange?.(numValue);
+      }
+    },
+    [onValueChange],
+  );
+
+  return (
+    <TextField
+      label={label}
+      type="number"
+      value={value}
+      onChange={handleChange}
+      autoComplete="off"
+      min={min}
+      max={max}
+    />
+  );
+}`
+  }
+};
+
+// Banner Examples
+export const bannerExamples = {
+  default: {
+    react: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner title="Order archived" onDismiss={() => {}}>
+      <p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">ⓘ</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">Order archived</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p>This order was archived on March 7, 2017 at 3:12pm EDT.</p>'
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `// HTML
+<div class="banner" role="status" aria-live="polite">
+  <div class="banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M10 6v4M10 14h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="banner__content">
+    <h3 class="banner__title">Order archived</h3>
+    <p class="banner__message">This order was archived on March 7, 2017 at 3:12pm EDT.</p>
+  </div>
+  <button class="banner__dismiss" aria-label="Dismiss banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+// CSS
+.banner {
+  display: flex;
+  gap: var(--p-space-300);
+  padding: var(--p-space-400);
+  background: var(--p-color-bg-fill-info);
+  border-radius: var(--p-border-radius-300);
+  position: relative;
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--p-color-icon-info);
+}
+
+.banner__content {
+  flex: 1;
+}
+
+.banner__title {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0 0 var(--p-space-100) 0;
+}
+
+.banner__message {
+  font-size: var(--p-font-size-300);
+  margin: 0;
+  color: var(--p-color-text);
+}
+
+.banner__dismiss {
+  position: absolute;
+  top: var(--p-space-300);
+  right: var(--p-space-300);
+  background: none;
+  border: none;
+  padding: var(--p-space-100);
+  cursor: pointer;
+  color: var(--p-color-icon);
+}
+
+.banner__dismiss svg {
+  width: 20px;
+  height: 20px;
+}
+
+// JavaScript
+document.querySelector('.banner__dismiss').addEventListener('click', () => {
+  document.querySelector('.banner').remove();
+});`,
+    typescript: `import {Banner} from '@shopify/polaris';
+import React, {useState} from 'react';
+
+interface BannerExampleProps {
+  title: string;
+  children: React.ReactNode;
+  dismissible?: boolean;
+  onDismiss?: () => void;
+}
+
+function BannerExample({ 
+  title,
+  children,
+  dismissible = true,
+  onDismiss
+}: BannerExampleProps): JSX.Element | null {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    onDismiss?.();
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <Banner 
+      title={title} 
+      onDismiss={dismissible ? handleDismiss : undefined}
+    >
+      {children}
+    </Banner>
+  );
+}`
+  },
+  critical: {
+    react: `import {Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner
+      title="High risk of fraud detected"
+      action={{content: 'Review risk analysis'}}
+      tone="critical"
+    >
+      <p>
+        Before fulfilling this order or capturing payment, please{' '}
+        <Link url="">review the Risk Analysis</Link> and determine if this order
+        is fraudulent.
+      </p>
+    </Banner>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--critical',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">⚠️</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">High risk of fraud detected</h3>'
+    }, {
+      xtype: 'component',
+      html: '<p>Before fulfilling this order or capturing payment, please <a href="#">review the Risk Analysis</a> and determine if this order is fraudulent.</p>'
+    }, {
+      xtype: 'button',
+      text: 'Review risk analysis',
+      margin: '8 0 0 0',
+      handler: function() {
+        console.log('Review risk analysis clicked');
+      }
+    }]
+  }]
+});`,
+    vanilla: `// HTML
+<div class="banner banner--critical" role="alert">
+  <div class="banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 12a1 1 0 102 0v-4a1 1 0 10-2 0v4zm1-7a1 1 0 110 2 1 1 0 010-2z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="banner__content">
+    <h3 class="banner__title">High risk of fraud detected</h3>
+    <p class="banner__message">
+      Before fulfilling this order or capturing payment, please 
+      <a href="#" class="banner__link">review the Risk Analysis</a> 
+      and determine if this order is fraudulent.
+    </p>
+    <button class="banner__action">Review risk analysis</button>
+  </div>
+</div>
+
+// CSS
+.banner {
+  display: flex;
+  gap: var(--p-space-300);
+  padding: var(--p-space-400);
+  border-radius: var(--p-border-radius-300);
+  position: relative;
+}
+
+.banner--critical {
+  background: var(--p-color-bg-fill-critical);
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.banner--critical .banner__icon {
+  color: var(--p-color-icon-critical);
+}
+
+.banner__content {
+  flex: 1;
+}
+
+.banner__title {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0 0 var(--p-space-100) 0;
+}
+
+.banner__message {
+  font-size: var(--p-font-size-300);
+  margin: 0;
+  color: var(--p-color-text);
+}
+
+.banner__link {
+  color: var(--p-color-text-link);
+  text-decoration: underline;
+}
+
+.banner__action {
+  margin-top: var(--p-space-200);
+  padding: var(--p-space-200) var(--p-space-400);
+  background: var(--p-color-bg-fill-transparent);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  cursor: pointer;
+  font-size: var(--p-font-size-300);
+}
+
+// JavaScript
+document.querySelector('.banner__action').addEventListener('click', () => {
+  console.log('Review risk analysis clicked');
+  window.location.href = '#risk-analysis';
+});`,
+    typescript: `import {Banner, Link} from '@shopify/polaris';
+import React from 'react';
+
+type BannerTone = 'info' | 'success' | 'warning' | 'critical';
+
+interface BannerAction {
+  content: string;
+  onAction?: () => void;
+  url?: string;
+}
+
+interface CriticalBannerProps {
+  title: string;
+  message: React.ReactNode;
+  action?: BannerAction;
+  tone?: BannerTone;
+}
+
+function CriticalBanner({ 
+  title,
+  message,
+  action,
+  tone = 'critical'
+}: CriticalBannerProps): JSX.Element {
+  const handleAction = () => {
+    if (action?.onAction) {
+      action.onAction();
+    } else if (action?.url) {
+      window.location.href = action.url;
+    }
+  };
+
+  return (
+    <Banner
+      title={title}
+      action={action ? {
+        content: action.content,
+        onAction: handleAction
+      } : undefined}
+      tone={tone}
+    >
+      {message}
+    </Banner>
+  );
+}`
+  },
+  success: {
+    react: `import {Banner} from '@shopify/polaris';
+import React from 'react';
+
+function BannerExample() {
+  return (
+    <Banner
+      title="Your shipping label is ready to print."
+      tone="success"
+      action={{content: 'Print label'}}
+      onDismiss={() => {}}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-banner polaris-banner--success',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'component',
+    html: '<div class="banner-icon">✓</div>',
+    width: 20
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'hbox',
+    items: [{
+      xtype: 'component',
+      html: '<h3 class="banner-title">Your shipping label is ready to print.</h3>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Print label',
+      handler: function() {
+        console.log('Print label clicked');
+      }
+    }]
+  }, {
+    xtype: 'button',
+    text: '×',
+    ui: 'plain',
+    handler: function() {
+      this.up('panel').destroy();
+    }
+  }]
+});`,
+    vanilla: `// HTML
+<div class="banner banner--success" role="status" aria-live="polite">
+  <div class="banner__icon">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+  <div class="banner__content">
+    <div class="banner__header">
+      <h3 class="banner__title">Your shipping label is ready to print.</h3>
+      <button class="banner__action">Print label</button>
+    </div>
+  </div>
+  <button class="banner__dismiss" aria-label="Dismiss banner">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+// CSS
+.banner {
+  display: flex;
+  gap: var(--p-space-300);
+  padding: var(--p-space-400);
+  border-radius: var(--p-border-radius-300);
+  position: relative;
+}
+
+.banner--success {
+  background: var(--p-color-bg-fill-success);
+}
+
+.banner__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.banner--success .banner__icon {
+  color: var(--p-color-icon-success);
+}
+
+.banner__content {
+  flex: 1;
+}
+
+.banner__header {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-300);
+}
+
+.banner__title {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0;
+  flex: 1;
+}
+
+.banner__action {
+  padding: var(--p-space-100) var(--p-space-300);
+  background: var(--p-color-bg-fill-transparent);
+  border: 1px solid var(--p-color-border-strong);
+  border-radius: var(--p-border-radius-200);
+  cursor: pointer;
+  font-size: var(--p-font-size-300);
+  white-space: nowrap;
+}
+
+.banner__dismiss {
+  position: absolute;
+  top: var(--p-space-300);
+  right: var(--p-space-300);
+  background: none;
+  border: none;
+  padding: var(--p-space-100);
+  cursor: pointer;
+  color: var(--p-color-icon);
+}
+
+.banner__dismiss svg {
+  width: 20px;
+  height: 20px;
+}
+
+// JavaScript
+document.querySelector('.banner__action').addEventListener('click', () => {
+  console.log('Print label clicked');
+  window.print();
+});
+
+document.querySelector('.banner__dismiss').addEventListener('click', () => {
+  document.querySelector('.banner').remove();
+});`,
+    typescript: `import {Banner} from '@shopify/polaris';
+import React, {useState} from 'react';
+
+interface SuccessBannerProps {
+  title: string;
+  actionText?: string;
+  onAction?: () => void;
+  dismissible?: boolean;
+  onDismiss?: () => void;
+}
+
+function SuccessBanner({ 
+  title,
+  actionText,
+  onAction,
+  dismissible = true,
+  onDismiss
+}: SuccessBannerProps): JSX.Element | null {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    onDismiss?.();
+  };
+
+  const handleAction = () => {
+    onAction?.();
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <Banner
+      title={title}
+      tone="success"
+      action={actionText ? {
+        content: actionText,
+        onAction: handleAction
+      } : undefined}
+      onDismiss={dismissible ? handleDismiss : undefined}
+    />
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
   'button': buttonExamples,
   'card': cardExamples,
   'badge': badgeExamples,
+  'text-field': textFieldExamples,
+  'banner': bannerExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
-  // 'banner': bannerExamples,
   // etc...
 };
 
