@@ -5846,6 +5846,494 @@ function BoxWithPaddingExample(): JSX.Element {
   }
 };
 
+// Divider Examples
+export const dividerExamples = {
+  'with-border-color': {
+    react: `import React from 'react';
+import {Card, Divider, Text, BlockStack} from '@shopify/polaris';
+
+function DividerWithBorderColorExample() {
+  return (
+    <Card>
+      <BlockStack gap="500">
+        <Text as="h1" variant="headingSm">
+          Default
+        </Text>
+        <Divider />
+        <Text as="h1" variant="headingSm">
+          Border
+        </Text>
+        <Divider borderColor="border" />
+        <Text as="h1" variant="headingSm">
+          Border inverse
+        </Text>
+        <Divider borderColor="border-inverse" />
+        <Text as="h1" variant="headingSm">
+          Transparent
+        </Text>
+        <Divider borderColor="transparent" />
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  bodyPadding: 16,
+  items: [{
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    defaults: {
+      margin: '0 0 20 0'
+    },
+    items: [{
+      xtype: 'component',
+      html: '<h3>Default</h3>',
+      cls: 'polaris-heading-sm'
+    }, {
+      xtype: 'component',
+      html: '<hr class="polaris-divider">',
+      cls: 'polaris-divider-container'
+    }, {
+      xtype: 'component',
+      html: '<h3>Border</h3>',
+      cls: 'polaris-heading-sm'
+    }, {
+      xtype: 'component',
+      html: '<hr class="polaris-divider polaris-divider--border">',
+      cls: 'polaris-divider-container'
+    }, {
+      xtype: 'component',
+      html: '<h3>Border inverse</h3>',
+      cls: 'polaris-heading-sm'
+    }, {
+      xtype: 'component',
+      html: '<hr class="polaris-divider polaris-divider--border-inverse">',
+      cls: 'polaris-divider-container'
+    }, {
+      xtype: 'component',
+      html: '<h3>Transparent</h3>',
+      cls: 'polaris-heading-sm'
+    }, {
+      xtype: 'component',
+      html: '<hr class="polaris-divider polaris-divider--transparent">',
+      cls: 'polaris-divider-container'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <div class="polaris-stack polaris-stack--vertical">
+      <h3 class="polaris-text polaris-text--heading-sm">Default</h3>
+      <hr class="polaris-divider">
+      
+      <h3 class="polaris-text polaris-text--heading-sm">Border</h3>
+      <hr class="polaris-divider polaris-divider--border">
+      
+      <h3 class="polaris-text polaris-text--heading-sm">Border inverse</h3>
+      <hr class="polaris-divider polaris-divider--border-inverse">
+      
+      <h3 class="polaris-text polaris-text--heading-sm">Transparent</h3>
+      <hr class="polaris-divider polaris-divider--transparent">
+    </div>
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {Card, Divider, Text, BlockStack} from '@shopify/polaris';
+
+type DividerBorderColor = 'border' | 'border-inverse' | 'transparent';
+
+interface DividerSectionProps {
+  title: string;
+  borderColor?: DividerBorderColor;
+}
+
+const DividerSection: React.FC<DividerSectionProps> = ({ 
+  title, 
+  borderColor 
+}) => (
+  <>
+    <Text as="h1" variant="headingSm">
+      {title}
+    </Text>
+    <Divider borderColor={borderColor} />
+  </>
+);
+
+function DividerWithBorderColorExample(): JSX.Element {
+  const dividerVariants: Array<{
+    title: string;
+    borderColor?: DividerBorderColor;
+  }> = [
+    { title: 'Default' },
+    { title: 'Border', borderColor: 'border' },
+    { title: 'Border inverse', borderColor: 'border-inverse' },
+    { title: 'Transparent', borderColor: 'transparent' },
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="500">
+        {dividerVariants.map((variant, index) => (
+          <DividerSection
+            key={index}
+            title={variant.title}
+            borderColor={variant.borderColor}
+          />
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}`
+  }
+};
+
+// Grid Examples
+export const gridExamples = {
+  'two-column': {
+    react: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+function GridTwoColumnExample() {
+  return (
+    <Grid>
+      <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+        <LegacyCard title="Sales" sectioned>
+          <p>View a summary of your online store's performance.</p>
+        </LegacyCard>
+      </Grid.Cell>
+      <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+        <LegacyCard title="Orders" sectioned>
+          <p>View a summary of your online store's orders.</p>
+        </LegacyCard>
+      </Grid.Cell>
+    </Grid>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'column'
+  },
+  defaults: {
+    margin: '0 10 10 0'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Sales',
+    columnWidth: 0.5,
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s performance.</p>',
+    cls: 'polaris-card'
+  }, {
+    xtype: 'panel',
+    title: 'Orders',
+    columnWidth: 0.5,
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s orders.</p>',
+    cls: 'polaris-card'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-grid">
+  <div class="polaris-grid__cell polaris-grid__cell--6-12 polaris-grid__cell--md-6-12">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Sales</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's performance.</p>
+      </div>
+    </div>
+  </div>
+  <div class="polaris-grid__cell polaris-grid__cell--6-12 polaris-grid__cell--md-6-12">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Orders</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's orders.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+interface GridCellData {
+  title: string;
+  description: string;
+  columnSpan: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  };
+}
+
+function GridTwoColumnExample(): JSX.Element {
+  const gridData: GridCellData[] = [
+    {
+      title: 'Sales',
+      description: 'View a summary of your online store\\'s performance.',
+      columnSpan: {xs: 6, sm: 3, md: 3, lg: 6, xl: 6}
+    },
+    {
+      title: 'Orders',
+      description: 'View a summary of your online store\\'s orders.',
+      columnSpan: {xs: 6, sm: 3, md: 3, lg: 6, xl: 6}
+    }
+  ];
+
+  return (
+    <Grid>
+      {gridData.map((cell, index) => (
+        <Grid.Cell key={index} columnSpan={cell.columnSpan}>
+          <LegacyCard title={cell.title} sectioned>
+            <p>{cell.description}</p>
+          </LegacyCard>
+        </Grid.Cell>
+      ))}
+    </Grid>
+  );
+}`
+  },
+  'three-one-third-column': {
+    react: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+function GridThreeOneThirdColumnExample() {
+  return (
+    <Grid columns={{sm: 3}}>
+      <Grid.Cell columnSpan={{xs: 6, sm: 4, md: 4, lg: 8, xl: 8}}>
+        <LegacyCard title="Sales" sectioned>
+          <p>View a summary of your online store's performance.</p>
+        </LegacyCard>
+      </Grid.Cell>
+      <Grid.Cell columnSpan={{xs: 6, sm: 2, md: 2, lg: 4, xl: 4}}>
+        <LegacyCard title="Orders" sectioned>
+          <p>View a summary of your online store's orders.</p>
+        </LegacyCard>
+      </Grid.Cell>
+    </Grid>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'column'
+  },
+  defaults: {
+    margin: '0 10 10 0'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Sales',
+    columnWidth: 0.667, // 2/3
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s performance.</p>',
+    cls: 'polaris-card'
+  }, {
+    xtype: 'panel',
+    title: 'Orders',
+    columnWidth: 0.333, // 1/3
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s orders.</p>',
+    cls: 'polaris-card'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-grid polaris-grid--columns-3">
+  <div class="polaris-grid__cell polaris-grid__cell--8-12 polaris-grid__cell--sm-4-6">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Sales</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's performance.</p>
+      </div>
+    </div>
+  </div>
+  <div class="polaris-grid__cell polaris-grid__cell--4-12 polaris-grid__cell--sm-2-6">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Orders</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's orders.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+interface GridCellConfig {
+  title: string;
+  description: string;
+  columnSpan: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+  };
+}
+
+function GridThreeOneThirdColumnExample(): JSX.Element {
+  const gridConfig: GridCellConfig[] = [
+    {
+      title: 'Sales',
+      description: 'View a summary of your online store\\'s performance.',
+      columnSpan: {xs: 6, sm: 4, md: 4, lg: 8, xl: 8}
+    },
+    {
+      title: 'Orders', 
+      description: 'View a summary of your online store\\'s orders.',
+      columnSpan: {xs: 6, sm: 2, md: 2, lg: 4, xl: 4}
+    }
+  ];
+
+  return (
+    <Grid columns={{sm: 3}}>
+      {gridConfig.map((cell, index) => (
+        <Grid.Cell key={index} columnSpan={cell.columnSpan}>
+          <LegacyCard title={cell.title} sectioned>
+            <p>{cell.description}</p>
+          </LegacyCard>
+        </Grid.Cell>
+      ))}
+    </Grid>
+  );
+}`
+  },
+  'two-thirds-and-one-third-column': {
+    react: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+function GridTwoThirdsAndOneThirdColumnExample() {
+  return (
+    <Grid columns={{sm: 3}}>
+      <Grid.Cell columnSpan={{xs: 6, sm: 4, md: 4, lg: 8, xl: 8}}>
+        <LegacyCard title="Sales" sectioned>
+          <p>View a summary of your online store's performance.</p>
+        </LegacyCard>
+      </Grid.Cell>
+      <Grid.Cell columnSpan={{xs: 6, sm: 2, md: 2, lg: 4, xl: 4}}>
+        <LegacyCard title="Orders" sectioned>
+          <p>View a summary of your online store's orders.</p>
+        </LegacyCard>
+      </Grid.Cell>
+    </Grid>
+  );
+}`,
+    extjs: `Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'column'
+  },
+  defaults: {
+    margin: '0 10 10 0'
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'Sales',
+    columnWidth: 0.667, // 2/3
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s performance.</p>',
+    cls: 'polaris-card'
+  }, {
+    xtype: 'panel',
+    title: 'Orders',
+    columnWidth: 0.333, // 1/3
+    bodyPadding: 16,
+    html: '<p>View a summary of your online store\\'s orders.</p>',
+    cls: 'polaris-card'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-grid polaris-grid--columns-3">
+  <div class="polaris-grid__cell polaris-grid__cell--8-12 polaris-grid__cell--sm-4-6">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Sales</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's performance.</p>
+      </div>
+    </div>
+  </div>
+  <div class="polaris-grid__cell polaris-grid__cell--4-12 polaris-grid__cell--sm-2-6">
+    <div class="polaris-card">
+      <div class="polaris-card__header">
+        <h3 class="polaris-card__title">Orders</h3>
+      </div>
+      <div class="polaris-card__section">
+        <p>View a summary of your online store's orders.</p>
+      </div>
+    </div>
+  </div>
+</div>`,
+    typescript: `import React from 'react';
+import {LegacyCard, Grid} from '@shopify/polaris';
+
+interface GridLayoutConfig {
+  mainColumn: {
+    title: string;
+    description: string;
+    columnSpan: {
+      xs: number;
+      sm: number;
+      md: number;
+      lg: number;
+      xl: number;
+    };
+  };
+  sidebarColumn: {
+    title: string;
+    description: string;
+    columnSpan: {
+      xs: number;
+      sm: number;
+      md: number;
+      lg: number;
+      xl: number;
+    };
+  };
+}
+
+function GridTwoThirdsAndOneThirdColumnExample(): JSX.Element {
+  const layoutConfig: GridLayoutConfig = {
+    mainColumn: {
+      title: 'Sales',
+      description: 'View a summary of your online store\\'s performance.',
+      columnSpan: {xs: 6, sm: 4, md: 4, lg: 8, xl: 8}
+    },
+    sidebarColumn: {
+      title: 'Orders',
+      description: 'View a summary of your online store\\'s orders.',
+      columnSpan: {xs: 6, sm: 2, md: 2, lg: 4, xl: 4}
+    }
+  };
+
+  return (
+    <Grid columns={{sm: 3}}>
+      <Grid.Cell columnSpan={layoutConfig.mainColumn.columnSpan}>
+        <LegacyCard title={layoutConfig.mainColumn.title} sectioned>
+          <p>{layoutConfig.mainColumn.description}</p>
+        </LegacyCard>
+      </Grid.Cell>
+      <Grid.Cell columnSpan={layoutConfig.sidebarColumn.columnSpan}>
+        <LegacyCard title={layoutConfig.sidebarColumn.title} sectioned>
+          <p>{layoutConfig.sidebarColumn.description}</p>
+        </LegacyCard>
+      </Grid.Cell>
+    </Grid>
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -5866,6 +6354,8 @@ const componentExamples: Record<string, any> = {
   'avatar': avatarExamples,
   'bleed': bleedExamples,
   'box': boxExamples,
+  'divider': dividerExamples,
+  'grid': gridExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
