@@ -2454,6 +2454,806 @@ function SuccessBanner({
   }
 };
 
+// Select Examples
+export const selectExamples = {
+  default: {
+    react: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function SelectExample() {
+  const [selected, setSelected] = useState('today');
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelected(value),
+    [],
+  );
+
+  const options = [
+    {label: 'Today', value: 'today'},
+    {label: 'Yesterday', value: 'yesterday'},
+    {label: 'Last 7 days', value: 'lastWeek'},
+  ];
+
+  return (
+    <Select
+      label="Date range"
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Date range',
+  value: 'today',
+  store: [
+    ['today', 'Today'],
+    ['yesterday', 'Yesterday'],
+    ['lastWeek', 'Last 7 days']
+  ],
+  queryMode: 'local',
+  displayField: 1,
+  valueField: 0,
+  forceSelection: true,
+  editable: false,
+  listeners: {
+    change: function(combo, newValue) {
+      console.log('Selected:', newValue);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="select-field">
+  <label for="date-range" class="select-field__label">Date range</label>
+  <div class="select-field__wrapper">
+    <select id="date-range" class="select-field__select">
+      <option value="today" selected>Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="lastWeek">Last 7 days</option>
+    </select>
+    <div class="select-field__icon">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+// CSS
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.select-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.select-field__wrapper {
+  position: relative;
+}
+
+.select-field__select {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-800) var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-field__select:focus {
+  outline: none;
+  border-color: var(--p-color-border-emphasis);
+  box-shadow: 0 0 0 1px var(--p-color-border-emphasis);
+}
+
+.select-field__icon {
+  position: absolute;
+  right: var(--p-space-300);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  color: var(--p-color-icon);
+}
+
+// JavaScript
+const select = document.getElementById('date-range');
+select.addEventListener('change', (event) => {
+  console.log('Selected:', event.target.value);
+});`,
+    typescript: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface SelectOption {
+  label: string;
+  value: string;
+}
+
+interface SelectExampleProps {
+  label?: string;
+  options?: SelectOption[];
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function SelectExample({ 
+  label = 'Date range',
+  options = [
+    {label: 'Today', value: 'today'},
+    {label: 'Yesterday', value: 'yesterday'},
+    {label: 'Last 7 days', value: 'lastWeek'},
+  ],
+  defaultValue = 'today',
+  onValueChange
+}: SelectExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string>(defaultValue);
+
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setSelected(value);
+      onValueChange?.(value);
+    },
+    [onValueChange],
+  );
+
+  return (
+    <Select
+      label={label}
+      options={options}
+      onChange={handleSelectChange}
+      value={selected}
+    />
+  );
+}`
+  },
+  'with-validation-error': {
+    react: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ValidationErrorExample() {
+  const [selected, setSelected] = useState('');
+
+  const handleSelectChange = useCallback(
+    (value: string) => setSelected(value),
+    [],
+  );
+
+  return (
+    <Select
+      label="Province"
+      options={['Alberta']}
+      value={selected}
+      onChange={handleSelectChange}
+      error="Province is required"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Province',
+  value: '',
+  store: ['Alberta'],
+  queryMode: 'local',
+  forceSelection: true,
+  editable: false,
+  msgTarget: 'under',
+  markInvalid: function() {
+    this.setActiveError('Province is required');
+  },
+  listeners: {
+    afterrender: function(field) {
+      field.markInvalid();
+    },
+    change: function(combo, newValue) {
+      if (newValue) {
+        combo.clearInvalid();
+      } else {
+        combo.markInvalid();
+      }
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="select-field select-field--error">
+  <label for="province" class="select-field__label">Province</label>
+  <div class="select-field__wrapper">
+    <select 
+      id="province" 
+      class="select-field__select select-field__select--error"
+      aria-invalid="true"
+      aria-describedby="province-error"
+    >
+      <option value="">Select a province</option>
+      <option value="Alberta">Alberta</option>
+    </select>
+    <div class="select-field__icon">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M7 8l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div id="province-error" class="select-field__error">
+    Province is required
+  </div>
+</div>
+
+// CSS
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-space-100);
+}
+
+.select-field__label {
+  font-size: var(--p-font-size-300);
+  font-weight: var(--p-font-weight-medium);
+  color: var(--p-color-text);
+}
+
+.select-field__wrapper {
+  position: relative;
+}
+
+.select-field__select {
+  width: 100%;
+  padding: var(--p-space-200) var(--p-space-800) var(--p-space-200) var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  line-height: var(--p-font-line-height-400);
+  background: var(--p-color-bg-surface);
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-field__select--error {
+  border-color: var(--p-color-border-critical);
+}
+
+.select-field__select--error:focus {
+  border-color: var(--p-color-border-critical);
+  box-shadow: 0 0 0 1px var(--p-color-border-critical);
+}
+
+.select-field__icon {
+  position: absolute;
+  right: var(--p-space-300);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  color: var(--p-color-icon);
+}
+
+.select-field__error {
+  color: var(--p-color-text-critical);
+  font-size: var(--p-font-size-200);
+  margin-top: var(--p-space-100);
+}
+
+// JavaScript
+const select = document.getElementById('province');
+const errorDiv = document.getElementById('province-error');
+
+select.addEventListener('change', (event) => {
+  if (event.target.value) {
+    select.classList.remove('select-field__select--error');
+    select.setAttribute('aria-invalid', 'false');
+    errorDiv.style.display = 'none';
+  } else {
+    select.classList.add('select-field__select--error');
+    select.setAttribute('aria-invalid', 'true');
+    errorDiv.style.display = 'block';
+  }
+});`,
+    typescript: `import {Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ValidationErrorExampleProps {
+  label?: string;
+  options?: string[];
+  errorMessage?: string;
+  required?: boolean;
+}
+
+function ValidationErrorExample({ 
+  label = 'Province',
+  options = ['Alberta'],
+  errorMessage = 'Province is required',
+  required = true
+}: ValidationErrorExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+  const [error, setError] = useState<string | undefined>(errorMessage);
+
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setSelected(value);
+      if (required && !value) {
+        setError(errorMessage);
+      } else {
+        setError(undefined);
+      }
+    },
+    [required, errorMessage],
+  );
+
+  return (
+    <Select
+      label={label}
+      options={options}
+      value={selected}
+      onChange={handleSelectChange}
+      error={error}
+    />
+  );
+}`
+  }
+};
+
+// Modal Examples
+export const modalExamples = {
+  default: {
+    react: `import {Button, Frame, Modal, TextContainer} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ModalExample() {
+  const [active, setActive] = useState(true);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  const activator = <Button onClick={handleChange}>Open</Button>;
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Modal
+          activator={activator}
+          open={active}
+          onClose={handleChange}
+          title="Reach more shoppers with Instagram product tags"
+          primaryAction={{
+            content: 'Add Instagram',
+            onAction: handleChange,
+          }}
+          secondaryActions={[
+            {
+              content: 'Learn more',
+              onAction: handleChange,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <TextContainer>
+              <p>
+                Use Instagram posts to share your products with millions of
+                people. Let shoppers buy from your store without leaving
+                Instagram.
+              </p>
+            </TextContainer>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'Reach more shoppers with Instagram product tags',
+  width: 600,
+  height: 200,
+  modal: true,
+  closable: true,
+  resizable: false,
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    html: '<p>Use Instagram posts to share your products with millions of people. Let shoppers buy from your store without leaving Instagram.</p>'
+  }],
+  buttons: [{
+    text: 'Learn more',
+    handler: function() {
+      console.log('Learn more clicked');
+    }
+  }, {
+    text: 'Add Instagram',
+    ui: 'primary',
+    handler: function() {
+      this.up('window').close();
+    }
+  }],
+  listeners: {
+    show: function() {
+      console.log('Modal opened');
+    },
+    close: function() {
+      console.log('Modal closed');
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="modal__header">
+      <h2 id="modal-title" class="modal__title">
+        Reach more shoppers with Instagram product tags
+      </h2>
+      <button class="modal__close" aria-label="Close modal">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M14.348 5.652a.5.5 0 010 .707L10.707 10l3.641 3.641a.5.5 0 11-.707.707L10 10.707l-3.641 3.641a.5.5 0 01-.707-.707L9.293 10 5.652 6.359a.5.5 0 01.707-.707L10 9.293l3.641-3.641a.5.5 0 01.707 0z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p>
+        Use Instagram posts to share your products with millions of
+        people. Let shoppers buy from your store without leaving
+        Instagram.
+      </p>
+    </div>
+    <div class="modal__footer">
+      <button class="button button--secondary">Learn more</button>
+      <button class="button button--primary">Add Instagram</button>
+    </div>
+  </div>
+</div>
+
+<button id="open-modal" class="button">Open</button>
+
+// CSS
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-600);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--p-space-500);
+  border-bottom: 1px solid var(--p-color-border);
+}
+
+.modal__title {
+  font-size: var(--p-font-size-500);
+  font-weight: var(--p-font-weight-semibold);
+  margin: 0;
+}
+
+.modal__close {
+  background: none;
+  border: none;
+  padding: var(--p-space-200);
+  cursor: pointer;
+  color: var(--p-color-icon);
+}
+
+.modal__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.modal__body {
+  padding: var(--p-space-500);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal__footer {
+  display: flex;
+  gap: var(--p-space-300);
+  justify-content: flex-end;
+  padding: var(--p-space-500);
+  border-top: 1px solid var(--p-color-border);
+}
+
+.button {
+  padding: var(--p-space-200) var(--p-space-400);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-300);
+  cursor: pointer;
+  border: 1px solid var(--p-color-border);
+}
+
+.button--primary {
+  background: var(--p-color-bg-fill-brand);
+  color: white;
+  border-color: var(--p-color-bg-fill-brand);
+}
+
+.button--secondary {
+  background: white;
+}
+
+// JavaScript
+const modal = document.getElementById('modal-backdrop');
+const openBtn = document.getElementById('open-modal');
+const closeBtn = document.querySelector('.modal__close');
+const primaryBtn = document.querySelector('.button--primary');
+const secondaryBtn = document.querySelector('.button--secondary');
+
+function openModal() {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+primaryBtn.addEventListener('click', closeModal);
+secondaryBtn.addEventListener('click', () => {
+  console.log('Learn more clicked');
+});
+
+// Close on backdrop click
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) {
+    closeModal();
+  }
+});`,
+    typescript: `import {Button, Frame, Modal, TextContainer} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ModalAction {
+  content: string;
+  onAction: () => void;
+  destructive?: boolean;
+}
+
+interface ModalExampleProps {
+  title: string;
+  content: React.ReactNode;
+  primaryAction?: ModalAction;
+  secondaryActions?: ModalAction[];
+  activatorText?: string;
+  initialOpen?: boolean;
+}
+
+function ModalExample({ 
+  title,
+  content,
+  primaryAction,
+  secondaryActions = [],
+  activatorText = 'Open',
+  initialOpen = true
+}: ModalExampleProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(initialOpen);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  const handlePrimaryAction = useCallback(() => {
+    primaryAction?.onAction();
+    handleChange();
+  }, [primaryAction, handleChange]);
+
+  const activator = <Button onClick={handleChange}>{activatorText}</Button>;
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Modal
+          activator={activator}
+          open={active}
+          onClose={handleChange}
+          title={title}
+          primaryAction={primaryAction ? {
+            ...primaryAction,
+            onAction: handlePrimaryAction
+          } : undefined}
+          secondaryActions={secondaryActions.map(action => ({
+            ...action,
+            onAction: () => {
+              action.onAction();
+              handleChange();
+            }
+          }))}
+        >
+          <Modal.Section>
+            <TextContainer>
+              {content}
+            </TextContainer>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  }
+};
+
+// Checkbox Examples
+export const checkboxExamples = {
+  default: {
+    react: `import {Checkbox} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function CheckboxExample() {
+  const [checked, setChecked] = useState(false);
+  const handleChange = useCallback(
+    (newChecked: boolean) => setChecked(newChecked),
+    [],
+  );
+
+  return (
+    <Checkbox
+      label="Basic checkbox"
+      checked={checked}
+      onChange={handleChange}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.field.Checkbox', {
+  boxLabel: 'Basic checkbox',
+  checked: false,
+  listeners: {
+    change: function(checkbox, newValue) {
+      console.log('Checkbox changed to:', newValue);
+    }
+  }
+});`,
+    vanilla: `// HTML
+<div class="checkbox-field">
+  <input 
+    type="checkbox" 
+    id="basic-checkbox" 
+    class="checkbox-field__input"
+  />
+  <label for="basic-checkbox" class="checkbox-field__label">
+    <span class="checkbox-field__box">
+      <svg class="checkbox-field__icon" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M13.527 3.84a1 1 0 0 1 0 1.414l-6.5 6.5a1 1 0 0 1-1.414 0l-2.5-2.5a1 1 0 1 1 1.414-1.414l1.793 1.793 5.793-5.793a1 1 0 0 1 1.414 0Z" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="checkbox-field__text">Basic checkbox</span>
+  </label>
+</div>
+
+// CSS
+.checkbox-field {
+  display: flex;
+  align-items: flex-start;
+}
+
+.checkbox-field__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.checkbox-field__label {
+  display: flex;
+  align-items: center;
+  gap: var(--p-space-200);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-field__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-100);
+  background: var(--p-color-bg-surface);
+  transition: all 0.1s ease;
+}
+
+.checkbox-field__icon {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.1s ease;
+}
+
+.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__box {
+  background: var(--p-color-bg-fill-brand);
+  border-color: var(--p-color-bg-fill-brand);
+}
+
+.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__icon {
+  opacity: 1;
+  transform: scale(1);
+  color: white;
+}
+
+.checkbox-field__input:focus + .checkbox-field__label .checkbox-field__box {
+  box-shadow: 0 0 0 2px var(--p-color-border-emphasis);
+}
+
+.checkbox-field__text {
+  font-size: var(--p-font-size-300);
+  color: var(--p-color-text);
+}
+
+// JavaScript
+const checkbox = document.getElementById('basic-checkbox');
+checkbox.addEventListener('change', (event) => {
+  console.log('Checkbox changed to:', event.target.checked);
+});`,
+    typescript: `import {Checkbox} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CheckboxExampleProps {
+  label?: string;
+  defaultChecked?: boolean;
+  onCheckChange?: (checked: boolean) => void;
+  disabled?: boolean;
+}
+
+function CheckboxExample({ 
+  label = 'Basic checkbox',
+  defaultChecked = false,
+  onCheckChange,
+  disabled = false
+}: CheckboxExampleProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(defaultChecked);
+  
+  const handleChange = useCallback(
+    (newChecked: boolean) => {
+      setChecked(newChecked);
+      onCheckChange?.(newChecked);
+    },
+    [onCheckChange],
+  );
+
+  return (
+    <Checkbox
+      label={label}
+      checked={checked}
+      onChange={handleChange}
+      disabled={disabled}
+    />
+  );
+}`
+  }
+};
+
 // Map of all component examples
 const componentExamples: Record<string, any> = {
   'button-group': buttonGroupExamples,
@@ -2462,6 +3262,9 @@ const componentExamples: Record<string, any> = {
   'badge': badgeExamples,
   'text-field': textFieldExamples,
   'banner': bannerExamples,
+  'select': selectExamples,
+  'modal': modalExamples,
+  'checkbox': checkboxExamples,
   // TODO: Add more components here as we implement them
   // 'account-connection': accountConnectionExamples,
   // 'page-actions': pageActionsExamples,
