@@ -15,7 +15,7 @@ import {
   Banner,
   Box,
 } from '@shopify/polaris';
-import { ChartVerticalIcon, TrendingUpIcon, EyeIcon, ClickIcon } from '@shopify/polaris-icons';
+import { ChartVerticalIcon, ChartPopularIcon, ViewIcon, CursorIcon } from '@shopify/polaris-icons';
 import styles from './AnalyticsDashboard.module.scss';
 
 interface AnalyticsData {
@@ -164,7 +164,7 @@ export function AnalyticsDashboard() {
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
                     <Text variant="headingSm" as="h4">Avg. Time on Page</Text>
-                    <EyeIcon />
+                    <ViewIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
                     {data.userEngagement.avgTimeOnPage}s
@@ -177,7 +177,7 @@ export function AnalyticsDashboard() {
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
                     <Text variant="headingSm" as="h4">Avg. Scroll Depth</Text>
-                    <TrendingUpIcon />
+                    <ChartPopularIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
                     {data.userEngagement.avgScrollDepth}%
@@ -190,7 +190,7 @@ export function AnalyticsDashboard() {
                 <BlockStack gap="200">
                   <InlineStack align="space-between">
                     <Text variant="headingSm" as="h4">Bounce Rate</Text>
-                    <ClickIcon />
+                    <CursorIcon />
                   </InlineStack>
                   <Text variant="headingXl" as="p">
                     {data.userEngagement.bounceRate}%
