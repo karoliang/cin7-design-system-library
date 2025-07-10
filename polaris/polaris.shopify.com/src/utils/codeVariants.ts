@@ -480,17 +480,131 @@ function PlainButtonExample({
   }
 };
 
+// Map of all component examples
+const componentExamples: Record<string, any> = {
+  'button-group': buttonGroupExamples,
+  'button': buttonExamples,
+  // TODO: Add more components here as we implement them
+  // 'account-connection': accountConnectionExamples,
+  // 'page-actions': pageActionsExamples,
+  // 'badge': badgeExamples,
+  // 'banner': bannerExamples,
+  // 'card': cardExamples,
+  // etc...
+};
+
 // Helper function to generate examples for a component
 export function getCodeExamples(componentName: string, exampleName: string): CodeExampleVariants | null {
-  const componentExamples: Record<string, any> = {
-    'button-group': buttonGroupExamples,
-    'button': buttonExamples,
-  };
-
   const component = componentExamples[componentName];
   if (!component || !component[exampleName]) {
     return null;
   }
 
   return component[exampleName];
+}
+
+// Helper to extract component and example names from filename
+export function parseExampleFileName(fileName: string): { component: string, example: string } | null {
+  // Remove .tsx extension
+  const nameWithoutExt = fileName.replace('.tsx', '');
+  
+  // List of known component prefixes (ordered by length to match longest first)
+  const componentPrefixes = [
+    'button-group',
+    'account-connection',
+    'page-actions',
+    'exception-list',
+    'progress-bar',
+    'skeleton-body-text',
+    'skeleton-display-text',
+    'skeleton-page',
+    'skeleton-tabs',
+    'skeleton-thumbnail',
+    'video-thumbnail',
+    'keyboard-key',
+    'block-stack',
+    'callout-card',
+    'empty-state',
+    'form-layout',
+    'inline-grid',
+    'inline-stack',
+    'media-card',
+    'action-list',
+    'description-list',
+    'option-list',
+    'resource-item',
+    'resource-list',
+    'footer-help',
+    'fullscreen-bar',
+    'choice-list',
+    'color-picker',
+    'date-picker',
+    'drop-zone',
+    'index-filters',
+    'index-table',
+    'inline-error',
+    'radio-button',
+    'range-slider',
+    'text-field',
+    'contextual-save-bar',
+    'legacy-card',
+    'legacy-filters',
+    'legacy-stack',
+    'legacy-tabs',
+    'setting-toggle',
+    'text-container',
+    'text-style',
+    'visually-hidden',
+    'top-bar',
+    // Single word components
+    'button',
+    'badge',
+    'banner',
+    'avatar',
+    'icon',
+    'thumbnail',
+    'bleed',
+    'box',
+    'card',
+    'divider',
+    'grid',
+    'layout',
+    'page',
+    'list',
+    'listbox',
+    'link',
+    'pagination',
+    'tabs',
+    'popover',
+    'tooltip',
+    'autocomplete',
+    'checkbox',
+    'combobox',
+    'filters',
+    'form',
+    'select',
+    'tag',
+    'spinner',
+    'caption',
+    'heading',
+    'loading',
+    'modal',
+    'navigation',
+    'sheet',
+    'subheading',
+    'toast',
+    'frame',
+  ];
+  
+  // Find matching component
+  for (const prefix of componentPrefixes) {
+    if (nameWithoutExt.startsWith(prefix + '-')) {
+      return {
+        component: prefix,
+        example: nameWithoutExt.substring(prefix.length + 1)
+      };
+    }
+  }
+  
+  return null;
 }

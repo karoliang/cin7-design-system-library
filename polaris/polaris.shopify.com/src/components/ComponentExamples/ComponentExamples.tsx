@@ -8,7 +8,7 @@ import {className} from '../../utils/various';
 import Markdown from '../Markdown';
 import {useRouter} from 'next/router';
 import {useSearchParams} from 'next/navigation';
-import {getCodeExamples} from '../../utils/codeVariants';
+import {getCodeExamples, parseExampleFileName} from '../../utils/codeVariants';
 
 const exampleIframeId = 'example-iframe';
 const iframePadding = 192;
@@ -59,41 +59,28 @@ const getMultiLanguageCode = (
   reactCode: string, 
   htmlCode: string
 ) => {
-  // Extract component name and example name from fileName
-  // e.g., "button-group-default.tsx" -> component: "button-group", example: "default"
-  const fileNameWithoutExt = fileName.replace('.tsx', '');
-  const parts = fileNameWithoutExt.split('-');
-  
-  // Try to match with known components
-  let componentKey = '';
-  let exampleKey = '';
-  
-  if (fileNameWithoutExt.startsWith('button-group-')) {
-    componentKey = 'button-group';
-    exampleKey = fileNameWithoutExt.replace('button-group-', '');
-  } else if (fileNameWithoutExt.startsWith('button-')) {
-    componentKey = 'button';
-    exampleKey = fileNameWithoutExt.replace('button-', '');
-  }
-  
-  // Get the code examples from our variants
-  const codeVariants = componentKey && exampleKey ? 
-    getCodeExamples(componentKey, exampleKey) : null;
+  // Parse the filename to extract component and example names
+  const parsed = parseExampleFileName(fileName);
   
   const codeTabs = [
     {title: 'React', code: reactCode.trim()},
     {title: 'HTML', code: htmlCode}
   ];
   
-  if (codeVariants) {
-    if (codeVariants.extjs) {
-      codeTabs.push({title: 'ExtJS', code: codeVariants.extjs.trim()});
-    }
-    if (codeVariants.vanilla) {
-      codeTabs.push({title: 'Vanilla JS', code: codeVariants.vanilla.trim()});
-    }
-    if (codeVariants.typescript) {
-      codeTabs.push({title: 'TypeScript', code: codeVariants.typescript.trim()});
+  // If we successfully parsed the filename, try to get additional code variants
+  if (parsed) {
+    const codeVariants = getCodeExamples(parsed.component, parsed.example);
+    
+    if (codeVariants) {
+      if (codeVariants.extjs) {
+        codeTabs.push({title: 'ExtJS', code: codeVariants.extjs.trim()});
+      }
+      if (codeVariants.vanilla) {
+        codeTabs.push({title: 'Vanilla JS', code: codeVariants.vanilla.trim()});
+      }
+      if (codeVariants.typescript) {
+        codeTabs.push({title: 'TypeScript', code: codeVariants.typescript.trim()});
+      }
     }
   }
   
