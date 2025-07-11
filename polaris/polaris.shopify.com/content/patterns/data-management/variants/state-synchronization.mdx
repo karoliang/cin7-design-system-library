@@ -1,0 +1,728 @@
+---
+title: State Synchronization Pattern
+url: /patterns/data-management/state-synchronization
+---
+
+<HowItHelps>
+
+## How it helps
+
+The State Synchronization pattern ensures data consistency across multiple layers and components by implementing a unified approach to state management. This pattern is crucial when the same data needs to be accessed and modified from React, ExtJS, and Vanilla JS layers.
+
+### Benefits:
+1. **Data Consistency**: Single source of truth across all layers
+2. **Real-time Updates**: Changes propagate automatically
+3. **Conflict Resolution**: Handle concurrent updates gracefully
+4. **Offline Support**: Queue changes when disconnected
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Multi-layer data access**: When the same data is displayed and modified across different technology layers.
+
+**Real-time collaboration**: When multiple users or components need to see updates immediately.
+
+**Complex state management**: When state changes have cascading effects across the application.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing state synchronization across layers.
+
+```typescript {"type":"livePreview","id":"state-sync-pattern","title":"State Synchronization Implementation"}
+// Step 1: Define state synchronization manager
+class StateSyncManager<T extends Record<string, any>> {
+  private state: T;
+  private subscribers = new Map<string, Set<(state: T, changes: Partial<T>) => void>>();
+  private pendingUpdates: Array<{ id: string; changes: Partial<T>; timestamp: number }> = [];
+  private syncInterval: number = 5000; // 5 seconds
+  private syncTimer?: NodeJS.Timeout;
+  private conflictResolver: ConflictResolver<T>;
+  
+  constructor(
+    initialState: T,
+    private options: {
+      persistKey?: string;
+      syncEndpoint?: string;
+      syncInterval?: number;
+      conflictStrategy?: 'lastWrite' | 'merge' | 'custom';
+      customResolver?: ConflictResolver<T>;
+    } = {}
+  ) {
+    this.state = this.loadPersistedState() || initialState;
+    this.syncInterval = options.syncInterval || this.syncInterval;
+    this.conflictResolver = options.customResolver || new DefaultConflictResolver(options.conflictStrategy);
+    
+    this.initialize();
+  }
+  
+  // Initialize synchronization
+  private initialize(): void {
+    // Listen for online/offline events
+    if (typeof window !== 'undefined') {
+      window.addEventListener('online', () => this.syncNow());
+      window.addEventListener('offline', () => this.pauseSync());
+      
+      // Listen for storage events (cross-tab sync)
+      window.addEventListener('storage', (e) => {
+        if (e.key === this.options.persistKey) {
+          this.handleStorageChange(e.newValue);
+        }
+      });
+    }
+    
+    // Start sync timer
+    this.startSync();
+    
+    // Set up unload handler to sync before closing
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', () => {
+        this.syncNow();
+      });
+    }
+  }
+  
+  // Get current state
+  getState(): Readonly<T> {
+    return Object.freeze({ ...this.state });
+  }
+  
+  // Update state with conflict resolution
+  async setState(
+    updates: Partial<T> | ((state: T) => Partial<T>),
+    source: string = 'local'
+  ): Promise<void> {
+    const changes = typeof updates === 'function' ? updates(this.state) : updates;
+    
+    // Create update record
+    const update = {
+      id: this.generateUpdateId(),
+      changes,
+      timestamp: Date.now(),
+      source
+    };
+    
+    // Apply optimistically
+    const previousState = { ...this.state };
+    this.state = { ...this.state, ...changes };
+    
+    // Notify subscribers
+    this.notifySubscribers(source, changes);
+    
+    // Persist locally
+    this.persistState();
+    
+    try {
+      // Sync with server
+      if (this.options.syncEndpoint && navigator.onLine) {
+        await this.syncUpdate(update);
+      } else {
+        // Queue for later sync
+        this.pendingUpdates.push(update);
+      }
+    } catch (error) {
+      // Handle sync failure
+      console.error('Sync failed:', error);
+      
+      // Rollback on critical errors
+      if (this.isCriticalError(error)) {
+        this.state = previousState;
+        this.notifySubscribers(source, previousState);
+        throw error;
+      }
+      
+      // Otherwise queue for retry
+      this.pendingUpdates.push(update);
+    }
+  }
+  
+  // Subscribe to state changes
+  subscribe(
+    layerId: string,
+    callback: (state: T, changes: Partial<T>) => void
+  ): () => void {
+    if (!this.subscribers.has(layerId)) {
+      this.subscribers.set(layerId, new Set());
+    }
+    
+    this.subscribers.get(layerId)!.add(callback);
+    
+    // Send initial state
+    callback(this.state, this.state);
+    
+    // Return unsubscribe function
+    return () => {
+      this.subscribers.get(layerId)?.delete(callback);
+    };
+  }
+  
+  // Sync with server
+  private async syncUpdate(update: any): Promise<void> {
+    if (!this.options.syncEndpoint) return;
+    
+    const response = await fetch(this.options.syncEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        update,
+        currentState: this.state,
+        clientId: this.getClientId()
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Sync failed: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    
+    // Handle conflicts
+    if (result.conflict) {
+      const resolved = await this.conflictResolver.resolve(
+        this.state,
+        result.serverState,
+        update.changes
+      );
+      
+      this.state = resolved;
+      this.notifySubscribers('conflict-resolution', resolved);
+      this.persistState();
+    }
+  }
+  
+  // Process pending updates
+  private async processPendingUpdates(): Promise<void> {
+    if (this.pendingUpdates.length === 0) return;
+    
+    const updates = [...this.pendingUpdates];
+    this.pendingUpdates = [];
+    
+    for (const update of updates) {
+      try {
+        await this.syncUpdate(update);
+      } catch (error) {
+        // Re-queue failed updates
+        this.pendingUpdates.push(update);
+      }
+    }
+  }
+  
+  // Start periodic sync
+  private startSync(): void {
+    if (this.syncTimer) return;
+    
+    this.syncTimer = setInterval(() => {
+      this.syncNow();
+    }, this.syncInterval);
+  }
+  
+  // Pause sync
+  private pauseSync(): void {
+    if (this.syncTimer) {
+      clearInterval(this.syncTimer);
+      this.syncTimer = undefined;
+    }
+  }
+  
+  // Sync immediately
+  async syncNow(): Promise<void> {
+    if (!navigator.onLine) return;
+    
+    await this.processPendingUpdates();
+    await this.fetchLatestState();
+  }
+  
+  // Fetch latest state from server
+  private async fetchLatestState(): Promise<void> {
+    if (!this.options.syncEndpoint) return;
+    
+    try {
+      const response = await fetch(`${this.options.syncEndpoint}/latest`);
+      const { state: serverState, version } = await response.json();
+      
+      // Merge with local state
+      const merged = await this.conflictResolver.merge(
+        this.state,
+        serverState,
+        this.pendingUpdates
+      );
+      
+      if (JSON.stringify(merged) !== JSON.stringify(this.state)) {
+        this.state = merged;
+        this.notifySubscribers('server-sync', merged);
+        this.persistState();
+      }
+    } catch (error) {
+      console.error('Failed to fetch latest state:', error);
+    }
+  }
+  
+  // Notify all subscribers
+  private notifySubscribers(source: string, changes: Partial<T>): void {
+    this.subscribers.forEach((callbacks, layerId) => {
+      callbacks.forEach(callback => {
+        try {
+          callback(this.state, changes);
+        } catch (error) {
+          console.error(`Error in subscriber ${layerId}:`, error);
+        }
+      });
+    });
+  }
+  
+  // Persist state locally
+  private persistState(): void {
+    if (!this.options.persistKey) return;
+    
+    try {
+      localStorage.setItem(
+        this.options.persistKey,
+        JSON.stringify({
+          state: this.state,
+          version: Date.now(),
+          clientId: this.getClientId()
+        })
+      );
+    } catch (error) {
+      console.error('Failed to persist state:', error);
+    }
+  }
+  
+  // Load persisted state
+  private loadPersistedState(): T | null {
+    if (!this.options.persistKey) return null;
+    
+    try {
+      const stored = localStorage.getItem(this.options.persistKey);
+      if (stored) {
+        const { state } = JSON.parse(stored);
+        return state;
+      }
+    } catch (error) {
+      console.error('Failed to load persisted state:', error);
+    }
+    
+    return null;
+  }
+  
+  // Handle storage changes (cross-tab sync)
+  private handleStorageChange(newValue: string | null): void {
+    if (!newValue) return;
+    
+    try {
+      const { state, clientId } = JSON.parse(newValue);
+      
+      // Ignore our own changes
+      if (clientId === this.getClientId()) return;
+      
+      // Apply changes from other tabs
+      const changes = this.diffStates(this.state, state);
+      this.state = state;
+      this.notifySubscribers('cross-tab', changes);
+    } catch (error) {
+      console.error('Failed to handle storage change:', error);
+    }
+  }
+  
+  // Generate unique update ID
+  private generateUpdateId(): string {
+    return `${this.getClientId()}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+  
+  // Get client ID
+  private getClientId(): string {
+    if (!this.clientId) {
+      this.clientId = localStorage.getItem('cin7-client-id') || 
+        `client-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem('cin7-client-id', this.clientId);
+    }
+    return this.clientId;
+  }
+  
+  private clientId?: string;
+  
+  // Diff two states
+  private diffStates(oldState: T, newState: T): Partial<T> {
+    const changes: Partial<T> = {};
+    
+    for (const key in newState) {
+      if (oldState[key] !== newState[key]) {
+        changes[key] = newState[key];
+      }
+    }
+    
+    return changes;
+  }
+  
+  // Check if error is critical
+  private isCriticalError(error: any): boolean {
+    return error.status === 409 || // Conflict
+           error.status === 422 || // Validation error
+           error.code === 'INVALID_STATE';
+  }
+}
+
+// Step 2: Conflict resolution strategies
+interface ConflictResolver<T> {
+  resolve(local: T, server: T, changes: Partial<T>): Promise<T>;
+  merge(local: T, server: T, pendingUpdates: any[]): Promise<T>;
+}
+
+class DefaultConflictResolver<T> implements ConflictResolver<T> {
+  constructor(private strategy: 'lastWrite' | 'merge' | 'custom' = 'lastWrite') {}
+  
+  async resolve(local: T, server: T, changes: Partial<T>): Promise<T> {
+    switch (this.strategy) {
+      case 'lastWrite':
+        return { ...server, ...changes };
+      
+      case 'merge':
+        return this.deepMerge(server, local, changes);
+      
+      default:
+        throw new Error('Custom resolver not implemented');
+    }
+  }
+  
+  async merge(local: T, server: T, pendingUpdates: any[]): Promise<T> {
+    // Apply pending updates to server state
+    let merged = { ...server };
+    
+    for (const update of pendingUpdates) {
+      merged = { ...merged, ...update.changes };
+    }
+    
+    return merged;
+  }
+  
+  private deepMerge(...objects: any[]): any {
+    const result = {};
+    
+    for (const obj of objects) {
+      for (const key in obj) {
+        if (obj[key] && typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+          result[key] = this.deepMerge(result[key] || {}, obj[key]);
+        } else {
+          result[key] = obj[key];
+        }
+      }
+    }
+    
+    return result;
+  }
+}
+
+// Step 3: Layer-specific adapters
+// React adapter
+function useSyncedState<T>(
+  syncManager: StateSyncManager<T>,
+  selector?: (state: T) => any
+) {
+  const [state, setState] = useState(() => {
+    const fullState = syncManager.getState();
+    return selector ? selector(fullState) : fullState;
+  });
+  
+  useEffect(() => {
+    const unsubscribe = syncManager.subscribe('react', (newState, changes) => {
+      setState(selector ? selector(newState) : newState);
+    });
+    
+    return unsubscribe;
+  }, [syncManager, selector]);
+  
+  const updateState = useCallback((updates: Partial<T> | ((state: T) => Partial<T>)) => {
+    syncManager.setState(updates, 'react');
+  }, [syncManager]);
+  
+  return [state, updateState] as const;
+}
+
+// ExtJS adapter
+Ext.define('Cin7.state.SyncAdapter', {
+  extend: 'Ext.Evented',
+  
+  constructor: function(config) {
+    this.syncManager = config.syncManager;
+    this.layerId = config.layerId || 'extjs';
+    
+    // Subscribe to state changes
+    this.unsubscribe = this.syncManager.subscribe(
+      this.layerId,
+      this.onStateChange.bind(this)
+    );
+    
+    this.callParent([config]);
+  },
+  
+  onStateChange: function(state, changes) {
+    this.fireEvent('statechange', state, changes);
+  },
+  
+  setState: function(updates) {
+    this.syncManager.setState(updates, this.layerId);
+  },
+  
+  getState: function() {
+    return this.syncManager.getState();
+  },
+  
+  destroy: function() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+    this.callParent();
+  }
+});
+
+// Vanilla JS adapter
+class VanillaSyncAdapter {
+  constructor(syncManager, elementSelector, renderer) {
+    this.syncManager = syncManager;
+    this.element = document.querySelector(elementSelector);
+    this.renderer = renderer;
+    
+    if (this.element) {
+      this.unsubscribe = syncManager.subscribe('vanilla', (state, changes) => {
+        this.render(state, changes);
+      });
+    }
+  }
+  
+  render(state, changes) {
+    if (!this.element) return;
+    this.renderer(this.element, state, changes);
+  }
+  
+  setState(updates) {
+    this.syncManager.setState(updates, 'vanilla');
+  }
+  
+  destroy() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
+}
+
+// Step 4: Usage example
+// Define application state
+interface AppState {
+  products: Product[];
+  filters: {
+    category: string | null;
+    priceRange: [number, number];
+    inStock: boolean;
+  };
+  ui: {
+    sidebarOpen: boolean;
+    selectedProductId: string | null;
+  };
+}
+
+// Create sync manager
+const syncManager = new StateSyncManager<AppState>(
+  {
+    products: [],
+    filters: {
+      category: null,
+      priceRange: [0, 1000],
+      inStock: true
+    },
+    ui: {
+      sidebarOpen: true,
+      selectedProductId: null
+    }
+  },
+  {
+    persistKey: 'cin7-app-state',
+    syncEndpoint: '/api/state-sync',
+    syncInterval: 10000,
+    conflictStrategy: 'merge'
+  }
+);
+
+// React component
+function ProductList() {
+  const [state, setState] = useSyncedState(syncManager);
+  
+  const handleFilterChange = (filters: Partial<AppState['filters']>) => {
+    setState(current => ({
+      filters: { ...current.filters, ...filters }
+    }));
+  };
+  
+  const filteredProducts = useMemo(() => {
+    return state.products.filter(product => {
+      if (state.filters.category && product.category !== state.filters.category) {
+        return false;
+      }
+      if (product.price < state.filters.priceRange[0] || 
+          product.price > state.filters.priceRange[1]) {
+        return false;
+      }
+      if (state.filters.inStock && product.stock === 0) {
+        return false;
+      }
+      return true;
+    });
+  }, [state.products, state.filters]);
+  
+  return (
+    <div>
+      {/* Render filtered products */}
+    </div>
+  );
+}
+
+// ExtJS grid
+Ext.create('Ext.grid.Panel', {
+  title: 'Products',
+  
+  initComponent: function() {
+    this.syncAdapter = Ext.create('Cin7.state.SyncAdapter', {
+      syncManager: syncManager,
+      layerId: 'product-grid'
+    });
+    
+    this.syncAdapter.on('statechange', this.onStateChange, this);
+    
+    this.callParent();
+  },
+  
+  onStateChange: function(state, changes) {
+    if (changes.products) {
+      this.getStore().loadData(state.products);
+    }
+    
+    if (changes.ui?.selectedProductId) {
+      const record = this.getStore().findRecord('id', state.ui.selectedProductId);
+      if (record) {
+        this.getSelectionModel().select(record);
+      }
+    }
+  },
+  
+  listeners: {
+    select: function(grid, record) {
+      this.syncAdapter.setState({
+        ui: { selectedProductId: record.getId() }
+      });
+    }
+  },
+  
+  destroy: function() {
+    this.syncAdapter.destroy();
+    this.callParent();
+  }
+});
+
+// Vanilla JS
+document.addEventListener('DOMContentLoaded', () => {
+  const filterAdapter = new VanillaSyncAdapter(
+    syncManager,
+    '#filter-form',
+    (element, state, changes) => {
+      // Update form values when state changes
+      if (changes.filters) {
+        const categorySelect = element.querySelector('[name="category"]');
+        if (categorySelect) {
+          categorySelect.value = state.filters.category || '';
+        }
+        
+        const priceMin = element.querySelector('[name="priceMin"]');
+        if (priceMin) {
+          priceMin.value = state.filters.priceRange[0];
+        }
+      }
+    }
+  );
+  
+  // Handle form changes
+  document.getElementById('filter-form')?.addEventListener('change', (e) => {
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    filterAdapter.setState({
+      filters: {
+        category: formData.get('category') as string || null,
+        priceRange: [
+          parseInt(formData.get('priceMin') as string) || 0,
+          parseInt(formData.get('priceMax') as string) || 1000
+        ]
+      }
+    });
+  });
+});
+```
+
+## Best Practices
+
+### 1. Optimize State Updates
+```typescript
+// Good: Batch related updates
+syncManager.setState({
+  products: newProducts,
+  ui: { loading: false, error: null }
+});
+
+// Bad: Multiple updates
+syncManager.setState({ products: newProducts });
+syncManager.setState({ ui: { loading: false } });
+syncManager.setState({ ui: { error: null } });
+```
+
+### 2. Use Selectors for Performance
+```typescript
+// Good: Select only needed data
+const [filters] = useSyncedState(syncManager, state => state.filters);
+
+// Bad: Subscribe to entire state
+const [state] = useSyncedState(syncManager);
+const filters = state.filters; // Re-renders on any state change
+```
+
+### 3. Handle Network Failures
+```typescript
+// Good: Graceful degradation
+const syncManager = new StateSyncManager(initialState, {
+  syncEndpoint: '/api/sync',
+  onSyncError: (error) => {
+    // Show offline indicator
+    // Queue updates for later
+  }
+});
+```
+
+### 4. Implement Optimistic Updates
+```typescript
+// Good: Immediate UI feedback
+async function updateProduct(id: string, changes: Partial<Product>) {
+  // Update UI immediately
+  syncManager.setState(state => ({
+    products: state.products.map(p => 
+      p.id === id ? { ...p, ...changes } : p
+    )
+  }));
+  
+  try {
+    await api.updateProduct(id, changes);
+  } catch (error) {
+    // Rollback on failure
+    syncManager.setState(previousState);
+  }
+}
+```
+
+## Common Pitfalls
+
+- **Over-syncing**: Don't sync every keystroke; debounce user input
+- **Large State Objects**: Keep state normalized and avoid deep nesting
+- **Missing Conflict Resolution**: Always plan for concurrent updates
+- **Memory Leaks**: Unsubscribe when components unmount
+
+</Usage>

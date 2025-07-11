@@ -1,0 +1,749 @@
+---
+title: Layer Boundaries Pattern
+url: /patterns/layer-integration/layer-boundaries
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Layer Boundaries pattern establishes clear interfaces and contracts between different technology layers, ensuring clean separation of concerns while enabling seamless communication. This pattern prevents tight coupling and makes it easier to modify or replace individual layers.
+
+### Benefits:
+1. **Clear Contracts**: Well-defined interfaces between layers
+2. **Maintainability**: Changes in one layer don't break others
+3. **Testability**: Mock layer boundaries for isolated testing
+4. **Flexibility**: Swap implementations without affecting other layers
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Enforce separation**: When you want to prevent layers from directly depending on each other.
+
+**Enable testing**: When you need to test layers in isolation.
+
+**Support multiple implementations**: When the same interface might have different implementations.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates how to create and enforce boundaries between layers.
+
+```typescript {"type":"livePreview","id":"layer-boundaries","title":"Layer Boundaries Implementation"}
+// Step 1: Define layer contracts
+namespace LayerContracts {
+  // Data layer contract
+  export interface DataLayer {
+    // Repository operations
+    repository<T>(name: string): Repository<T>;
+    
+    // Transaction support
+    transaction<T>(operation: (trx: Transaction) => Promise<T>): Promise<T>;
+    
+    // Cache operations
+    cache: CacheManager;
+    
+    // Event emissions
+    emit(event: string, data: any): void;
+    on(event: string, handler: (data: any) => void): () => void;
+  }
+  
+  export interface Repository<T> {
+    findById(id: string): Promise<T | null>;
+    findAll(filter?: any): Promise<T[]>;
+    create(data: Partial<T>): Promise<T>;
+    update(id: string, data: Partial<T>): Promise<T>;
+    delete(id: string): Promise<boolean>;
+  }
+  
+  export interface CacheManager {
+    get<T>(key: string): T | null;
+    set<T>(key: string, value: T, ttl?: number): void;
+    delete(key: string): void;
+    clear(): void;
+  }
+  
+  // Business layer contract
+  export interface BusinessLayer {
+    // Use case operations
+    useCase<T>(name: string): UseCase<T>;
+    
+    // Business rules
+    validate(entity: string, data: any): ValidationResult;
+    
+    // Workflow operations
+    workflow(name: string): Workflow;
+  }
+  
+  export interface UseCase<T> {
+    execute(command: any): Promise<T>;
+    canExecute(command: any): boolean;
+  }
+  
+  export interface ValidationResult {
+    valid: boolean;
+    errors?: Record<string, string>;
+  }
+  
+  export interface Workflow {
+    start(context: any): Promise<string>;
+    advance(workflowId: string, action: string): Promise<void>;
+    getState(workflowId: string): Promise<WorkflowState>;
+  }
+  
+  // Presentation layer contract
+  export interface PresentationLayer {
+    // Component registration
+    registerComponent(name: string, component: any): void;
+    
+    // State management
+    state: StateManager;
+    
+    // Navigation
+    navigate(route: string, params?: any): void;
+    
+    // Notifications
+    notify(message: string, type?: 'info' | 'success' | 'warning' | 'error'): void;
+  }
+  
+  export interface StateManager {
+    get<T>(key: string): T;
+    set<T>(key: string, value: T): void;
+    subscribe<T>(key: string, callback: (value: T) => void): () => void;
+  }
+}
+
+// Step 2: Layer boundary enforcement
+class LayerBoundary<TContract> {
+  private implementation: TContract;
+  private validators: Array<(impl: TContract) => void> = [];
+  private interceptors: Array<ProxyHandler<any>> = [];
+  
+  constructor(contract: new () => TContract) {
+    this.validateContract(contract);
+  }
+  
+  // Set implementation
+  setImplementation(impl: TContract): void {
+    // Validate implementation matches contract
+    this.validators.forEach(validator => validator(impl));
+    
+    // Create proxy to enforce boundaries
+    this.implementation = this.createBoundaryProxy(impl);
+  }
+  
+  // Get bounded implementation
+  get(): TContract {
+    if (!this.implementation) {
+      throw new Error('Layer implementation not set');
+    }
+    return this.implementation;
+  }
+  
+  // Add validation
+  addValidator(validator: (impl: TContract) => void): void {
+    this.validators.push(validator);
+  }
+  
+  // Add interceptor
+  addInterceptor(interceptor: ProxyHandler<any>): void {
+    this.interceptors.push(interceptor);
+  }
+  
+  private validateContract(contract: new () => TContract): void {
+    // Ensure contract has expected shape
+    const instance = new contract();
+    const proto = Object.getPrototypeOf(instance);
+    
+    if (!proto || Object.keys(proto).length === 0) {
+      throw new Error('Invalid contract: must define interface methods');
+    }
+  }
+  
+  private createBoundaryProxy(target: TContract): TContract {
+    let proxy = target;
+    
+    // Apply all interceptors
+    this.interceptors.forEach(interceptor => {
+      proxy = new Proxy(proxy, interceptor);
+    });
+    
+    // Add boundary enforcement
+    return new Proxy(proxy, {
+      get: (target, prop, receiver) => {
+        const value = Reflect.get(target, prop, receiver);
+        
+        // Log boundary crossings in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`Layer boundary crossed: ${String(prop)}`);
+        }
+        
+        // Wrap functions to add boundary checks
+        if (typeof value === 'function') {
+          return (...args: any[]) => {
+            // Pre-execution boundary check
+            this.checkBoundaryRules(prop, args);
+            
+            // Execute original function
+            const result = value.apply(target, args);
+            
+            // Handle async results
+            if (result instanceof Promise) {
+              return result.catch(error => {
+                this.handleBoundaryError(prop, error);
+                throw error;
+              });
+            }
+            
+            return result;
+          };
+        }
+        
+        return value;
+      }
+    });
+  }
+  
+  private checkBoundaryRules(method: string | symbol, args: any[]): void {
+    // Add custom boundary rules here
+    // Example: Check for valid arguments, permissions, etc.
+  }
+  
+  private handleBoundaryError(method: string | symbol, error: Error): void {
+    console.error(`Error at layer boundary in ${String(method)}:`, error);
+    // Add error reporting, metrics, etc.
+  }
+}
+
+// Step 3: Layer implementations
+
+// Data layer implementation
+class DataLayerImpl implements LayerContracts.DataLayer {
+  private repositories = new Map<string, any>();
+  private eventEmitter = new EventEmitter();
+  
+  repository<T>(name: string): LayerContracts.Repository<T> {
+    if (!this.repositories.has(name)) {
+      this.repositories.set(name, new RepositoryImpl<T>(name));
+    }
+    return this.repositories.get(name);
+  }
+  
+  async transaction<T>(operation: (trx: any) => Promise<T>): Promise<T> {
+    // Simple transaction simulation
+    const trx = { id: Date.now() };
+    try {
+      const result = await operation(trx);
+      console.log('Transaction committed:', trx.id);
+      return result;
+    } catch (error) {
+      console.log('Transaction rolled back:', trx.id);
+      throw error;
+    }
+  }
+  
+  cache = new CacheManagerImpl();
+  
+  emit(event: string, data: any): void {
+    this.eventEmitter.emit(event, data);
+  }
+  
+  on(event: string, handler: (data: any) => void): () => void {
+    this.eventEmitter.on(event, handler);
+    return () => this.eventEmitter.off(event, handler);
+  }
+}
+
+class RepositoryImpl<T> implements LayerContracts.Repository<T> {
+  private data = new Map<string, T>();
+  
+  constructor(private name: string) {}
+  
+  async findById(id: string): Promise<T | null> {
+    return this.data.get(id) || null;
+  }
+  
+  async findAll(filter?: any): Promise<T[]> {
+    return Array.from(this.data.values());
+  }
+  
+  async create(data: Partial<T>): Promise<T> {
+    const id = Date.now().toString();
+    const entity = { ...data, id } as T;
+    this.data.set(id, entity);
+    return entity;
+  }
+  
+  async update(id: string, data: Partial<T>): Promise<T> {
+    const existing = this.data.get(id);
+    if (!existing) throw new Error('Not found');
+    
+    const updated = { ...existing, ...data };
+    this.data.set(id, updated);
+    return updated;
+  }
+  
+  async delete(id: string): Promise<boolean> {
+    return this.data.delete(id);
+  }
+}
+
+class CacheManagerImpl implements LayerContracts.CacheManager {
+  private cache = new Map<string, { value: any; expires?: number }>();
+  
+  get<T>(key: string): T | null {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (item.expires && item.expires < Date.now()) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return item.value;
+  }
+  
+  set<T>(key: string, value: T, ttl?: number): void {
+    const expires = ttl ? Date.now() + ttl : undefined;
+    this.cache.set(key, { value, expires });
+  }
+  
+  delete(key: string): void {
+    this.cache.delete(key);
+  }
+  
+  clear(): void {
+    this.cache.clear();
+  }
+}
+
+// Business layer implementation
+class BusinessLayerImpl implements LayerContracts.BusinessLayer {
+  constructor(private dataLayer: LayerContracts.DataLayer) {}
+  
+  private useCases = new Map<string, LayerContracts.UseCase<any>>();
+  
+  useCase<T>(name: string): LayerContracts.UseCase<T> {
+    if (!this.useCases.has(name)) {
+      throw new Error(`Use case ${name} not registered`);
+    }
+    return this.useCases.get(name);
+  }
+  
+  registerUseCase(name: string, useCase: LayerContracts.UseCase<any>): void {
+    this.useCases.set(name, useCase);
+  }
+  
+  validate(entity: string, data: any): LayerContracts.ValidationResult {
+    // Simple validation example
+    const errors: Record<string, string> = {};
+    
+    if (entity === 'product') {
+      if (!data.name) errors.name = 'Name is required';
+      if (!data.price || data.price <= 0) errors.price = 'Price must be positive';
+    }
+    
+    return {
+      valid: Object.keys(errors).length === 0,
+      errors: Object.keys(errors).length > 0 ? errors : undefined
+    };
+  }
+  
+  workflow(name: string): LayerContracts.Workflow {
+    return new WorkflowImpl(name, this.dataLayer);
+  }
+}
+
+class WorkflowImpl implements LayerContracts.Workflow {
+  constructor(
+    private name: string,
+    private dataLayer: LayerContracts.DataLayer
+  ) {}
+  
+  async start(context: any): Promise<string> {
+    const workflowId = `wf-${Date.now()}`;
+    await this.dataLayer.cache.set(`workflow:${workflowId}`, {
+      name: this.name,
+      state: 'started',
+      context
+    });
+    return workflowId;
+  }
+  
+  async advance(workflowId: string, action: string): Promise<void> {
+    const workflow = this.dataLayer.cache.get(`workflow:${workflowId}`);
+    if (!workflow) throw new Error('Workflow not found');
+    
+    // Simple state machine
+    workflow.state = action;
+    workflow.lastAction = Date.now();
+    
+    this.dataLayer.cache.set(`workflow:${workflowId}`, workflow);
+    this.dataLayer.emit('workflow:advanced', { workflowId, action });
+  }
+  
+  async getState(workflowId: string): Promise<any> {
+    return this.dataLayer.cache.get(`workflow:${workflowId}`);
+  }
+}
+
+// Step 4: Layer wiring and dependency injection
+class LayerContainer {
+  private layers = new Map<string, LayerBoundary<any>>();
+  private instances = new Map<string, any>();
+  
+  // Register layer contract
+  register<T>(name: string, contract: new () => T): LayerBoundary<T> {
+    const boundary = new LayerBoundary(contract);
+    this.layers.set(name, boundary);
+    return boundary;
+  }
+  
+  // Bind implementation
+  bind<T>(name: string, implementation: T): void {
+    const boundary = this.layers.get(name);
+    if (!boundary) {
+      throw new Error(`Layer ${name} not registered`);
+    }
+    
+    boundary.setImplementation(implementation);
+    this.instances.set(name, implementation);
+  }
+  
+  // Get layer implementation
+  get<T>(name: string): T {
+    const boundary = this.layers.get(name);
+    if (!boundary) {
+      throw new Error(`Layer ${name} not registered`);
+    }
+    
+    return boundary.get();
+  }
+  
+  // Wire layers together
+  wire(): void {
+    // Example: Wire business layer with data layer dependency
+    const dataLayer = this.get<LayerContracts.DataLayer>('data');
+    const businessImpl = new BusinessLayerImpl(dataLayer);
+    this.bind('business', businessImpl);
+  }
+}
+
+// Step 5: Usage example
+const container = new LayerContainer();
+
+// Register contracts
+const dataBoundary = container.register('data', class implements LayerContracts.DataLayer {
+  repository<T>(name: string): LayerContracts.Repository<T> { throw 'Not implemented'; }
+  transaction<T>(operation: (trx: any) => Promise<T>): Promise<T> { throw 'Not implemented'; }
+  cache: LayerContracts.CacheManager = null!;
+  emit(event: string, data: any): void { throw 'Not implemented'; }
+  on(event: string, handler: (data: any) => void): () => void { throw 'Not implemented'; }
+});
+
+const businessBoundary = container.register('business', class implements LayerContracts.BusinessLayer {
+  useCase<T>(name: string): LayerContracts.UseCase<T> { throw 'Not implemented'; }
+  validate(entity: string, data: any): LayerContracts.ValidationResult { throw 'Not implemented'; }
+  workflow(name: string): LayerContracts.Workflow { throw 'Not implemented'; }
+});
+
+// Add validators
+dataBoundary.addValidator((impl) => {
+  if (!impl.repository || !impl.transaction) {
+    throw new Error('Data layer must implement repository and transaction methods');
+  }
+});
+
+// Add interceptors for logging
+dataBoundary.addInterceptor({
+  get(target, prop, receiver) {
+    const value = Reflect.get(target, prop, receiver);
+    if (typeof value === 'function') {
+      return (...args: any[]) => {
+        console.log(`Data layer method called: ${String(prop)}`);
+        return value.apply(target, args);
+      };
+    }
+    return value;
+  }
+});
+
+// Bind implementations
+container.bind('data', new DataLayerImpl());
+container.wire();
+
+// Step 6: React hooks for layer access
+const LayerContext = React.createContext<LayerContainer | null>(null);
+
+export const LayerProvider: React.FC<{ container: LayerContainer; children: React.ReactNode }> = ({
+  container,
+  children
+}) => {
+  return (
+    <LayerContext.Provider value={container}>
+      {children}
+    </LayerContext.Provider>
+  );
+};
+
+function useLayer<T>(name: string): T {
+  const container = useContext(LayerContext);
+  if (!container) {
+    throw new Error('useLayer must be used within LayerProvider');
+  }
+  
+  return container.get<T>(name);
+}
+
+// Usage in React component
+function ProductList() {
+  const dataLayer = useLayer<LayerContracts.DataLayer>('data');
+  const businessLayer = useLayer<LayerContracts.BusinessLayer>('business');
+  
+  const [products, setProducts] = useState<Product[]>([]);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  useEffect(() => {
+    loadProducts();
+  }, []);
+  
+  const loadProducts = async () => {
+    const repo = dataLayer.repository<Product>('products');
+    const products = await repo.findAll();
+    setProducts(products);
+  };
+  
+  const createProduct = async (data: Partial<Product>) => {
+    // Validate through business layer
+    const validation = businessLayer.validate('product', data);
+    
+    if (!validation.valid) {
+      setErrors(validation.errors || {});
+      return;
+    }
+    
+    // Create through data layer
+    const repo = dataLayer.repository<Product>('products');
+    await repo.create(data);
+    
+    // Reload products
+    await loadProducts();
+  };
+  
+  return (
+    <div>
+      {/* Render products */}
+    </div>
+  );
+}
+
+// Step 7: ExtJS integration
+Ext.define('Cin7.layer.LayerProxy', {
+  singleton: true,
+  
+  container: null,
+  
+  init: function(container) {
+    this.container = container;
+  },
+  
+  getLayer: function(name) {
+    if (!this.container) {
+      throw new Error('Layer container not initialized');
+    }
+    
+    return this.container.get(name);
+  },
+  
+  // Proxy methods for common operations
+  getRepository: function(entityName) {
+    const dataLayer = this.getLayer('data');
+    return dataLayer.repository(entityName);
+  },
+  
+  validate: function(entity, data) {
+    const businessLayer = this.getLayer('business');
+    return businessLayer.validate(entity, data);
+  }
+});
+
+// ExtJS component using layers
+Ext.define('Cin7.view.ProductGrid', {
+  extend: 'Ext.grid.Panel',
+  
+  initComponent: function() {
+    this.store = Ext.create('Ext.data.Store', {
+      proxy: {
+        type: 'memory'
+      }
+    });
+    
+    this.columns = [
+      { text: 'Name', dataIndex: 'name', flex: 1 },
+      { text: 'Price', dataIndex: 'price', width: 100 }
+    ];
+    
+    this.callParent();
+    
+    this.loadProducts();
+  },
+  
+  loadProducts: async function() {
+    const repo = Cin7.layer.LayerProxy.getRepository('products');
+    const products = await repo.findAll();
+    this.store.loadData(products);
+  },
+  
+  addProduct: async function(data) {
+    const validation = Cin7.layer.LayerProxy.validate('product', data);
+    
+    if (!validation.valid) {
+      Ext.Msg.alert('Validation Error', 
+        Object.values(validation.errors).join('<br>'));
+      return;
+    }
+    
+    const repo = Cin7.layer.LayerProxy.getRepository('products');
+    await repo.create(data);
+    
+    this.loadProducts();
+  }
+});
+
+// Step 8: Testing with mocked layers
+describe('Layer Boundaries', () => {
+  let container: LayerContainer;
+  
+  beforeEach(() => {
+    container = new LayerContainer();
+    
+    // Register contracts
+    container.register('data', class implements LayerContracts.DataLayer {
+      repository<T>(name: string): LayerContracts.Repository<T> { throw 'Not implemented'; }
+      transaction<T>(operation: (trx: any) => Promise<T>): Promise<T> { throw 'Not implemented'; }
+      cache: LayerContracts.CacheManager = null!;
+      emit(event: string, data: any): void { throw 'Not implemented'; }
+      on(event: string, handler: (data: any) => void): () => void { throw 'Not implemented'; }
+    });
+  });
+  
+  it('should enforce layer contracts', () => {
+    const invalidImpl = {
+      // Missing required methods
+      cache: new CacheManagerImpl()
+    };
+    
+    expect(() => {
+      container.bind('data', invalidImpl);
+    }).toThrow();
+  });
+  
+  it('should allow mocking layers', async () => {
+    const mockRepo = {
+      findAll: jest.fn().mockResolvedValue([
+        { id: '1', name: 'Test Product' }
+      ])
+    };
+    
+    const mockDataLayer: LayerContracts.DataLayer = {
+      repository: jest.fn().mockReturnValue(mockRepo),
+      transaction: jest.fn(),
+      cache: new CacheManagerImpl(),
+      emit: jest.fn(),
+      on: jest.fn()
+    };
+    
+    container.bind('data', mockDataLayer);
+    
+    const dataLayer = container.get<LayerContracts.DataLayer>('data');
+    const repo = dataLayer.repository('products');
+    const products = await repo.findAll();
+    
+    expect(products).toHaveLength(1);
+    expect(mockRepo.findAll).toHaveBeenCalled();
+  });
+});
+```
+
+## Best Practices
+
+### 1. Contract-First Design
+```typescript
+// Good: Define contracts before implementation
+interface DataContract {
+  query<T>(sql: string, params?: any[]): Promise<T[]>;
+}
+
+// Then implement
+class PostgresDataLayer implements DataContract {
+  async query<T>(sql: string, params?: any[]): Promise<T[]> {
+    // Implementation
+  }
+}
+```
+
+### 2. Dependency Injection
+```typescript
+// Good: Inject dependencies through constructor
+class BusinessLayer {
+  constructor(
+    private dataLayer: DataContract,
+    private cacheLayer: CacheContract
+  ) {}
+}
+
+// Bad: Direct instantiation
+class BusinessLayer {
+  private dataLayer = new PostgresDataLayer();
+}
+```
+
+### 3. Interface Segregation
+```typescript
+// Good: Specific interfaces
+interface ReadRepository<T> {
+  find(id: string): Promise<T>;
+  findAll(): Promise<T[]>;
+}
+
+interface WriteRepository<T> {
+  create(data: T): Promise<T>;
+  update(id: string, data: T): Promise<T>;
+}
+
+// Use only what's needed
+class ReadOnlyService {
+  constructor(private repo: ReadRepository<Product>) {}
+}
+```
+
+### 4. Boundary Validation
+```typescript
+// Good: Validate at boundaries
+class ServiceBoundary {
+  async createUser(data: unknown): Promise<User> {
+    // Validate input
+    const validated = validateUserInput(data);
+    
+    // Call internal service
+    const user = await this.userService.create(validated);
+    
+    // Validate output
+    return validateUserOutput(user);
+  }
+}
+```
+
+## Common Pitfalls
+
+- **Leaky Abstractions**: Don't expose implementation details through interfaces
+- **Over-Engineering**: Keep boundaries simple and focused
+- **Circular Dependencies**: Use dependency injection to avoid cycles
+- **Missing Validation**: Always validate data crossing boundaries
+
+</Usage>

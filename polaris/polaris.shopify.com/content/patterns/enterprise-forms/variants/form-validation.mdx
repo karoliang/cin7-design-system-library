@@ -1,0 +1,848 @@
+---
+title: Form Validation Pattern
+url: /patterns/enterprise-forms/form-validation
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Form Validation pattern provides a unified approach to validating user input across all technology layers. It ensures data integrity, provides immediate feedback, and maintains consistency whether validation happens in React, ExtJS, or Vanilla JS components.
+
+### Benefits:
+1. **Consistent Validation**: Same rules across all layers
+2. **Real-time Feedback**: Immediate validation as users type
+3. **Async Validation**: Support for server-side validation
+4. **Custom Rules**: Extensible validation framework
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Complex validation rules**: When forms require business logic validation beyond simple required fields.
+
+**Cross-field validation**: When validation depends on multiple field values.
+
+**Async validation**: When validation requires server checks (e.g., username availability).
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing a comprehensive validation system.
+
+```typescript {"type":"livePreview","id":"form-validation","title":"Form Validation Implementation"}
+// Step 1: Define validation framework
+type ValidatorFunction = (value: any, formData?: any) => string | Promise<string> | null;
+
+interface ValidationRule {
+  validator: ValidatorFunction;
+  message?: string;
+  trigger?: 'blur' | 'change' | 'submit';
+  debounce?: number;
+}
+
+interface FieldValidation {
+  required?: boolean | { message: string };
+  minLength?: number | { value: number; message: string };
+  maxLength?: number | { value: number; message: string };
+  pattern?: RegExp | { value: RegExp; message: string };
+  custom?: ValidationRule[];
+  async?: ValidationRule[];
+}
+
+// Step 2: Built-in validators
+const Validators = {
+  required: (message = 'This field is required'): ValidatorFunction => 
+    (value) => {
+      if (value === null || value === undefined || value === '' || 
+          (Array.isArray(value) && value.length === 0)) {
+        return message;
+      }
+      return null;
+    },
+  
+  minLength: (min: number, message?: string): ValidatorFunction => 
+    (value) => {
+      if (value && value.length < min) {
+        return message || `Minimum length is ${min} characters`;
+      }
+      return null;
+    },
+  
+  maxLength: (max: number, message?: string): ValidatorFunction => 
+    (value) => {
+      if (value && value.length > max) {
+        return message || `Maximum length is ${max} characters`;
+      }
+      return null;
+    },
+  
+  pattern: (regex: RegExp, message = 'Invalid format'): ValidatorFunction => 
+    (value) => {
+      if (value && !regex.test(value)) {
+        return message;
+      }
+      return null;
+    },
+  
+  email: (message = 'Please enter a valid email'): ValidatorFunction => 
+    Validators.pattern(
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message
+    ),
+  
+  phone: (message = 'Please enter a valid phone number'): ValidatorFunction => 
+    Validators.pattern(
+      /^\+?[\d\s-()]+$/,
+      message
+    ),
+  
+  url: (message = 'Please enter a valid URL'): ValidatorFunction => 
+    Validators.pattern(
+      /^https?:\/\/[^\s$.?#].[^\s]*$/,
+      message
+    ),
+  
+  number: (message = 'Please enter a valid number'): ValidatorFunction => 
+    (value) => {
+      if (value && isNaN(Number(value))) {
+        return message;
+      }
+      return null;
+    },
+  
+  min: (min: number, message?: string): ValidatorFunction => 
+    (value) => {
+      if (value && Number(value) < min) {
+        return message || `Minimum value is ${min}`;
+      }
+      return null;
+    },
+  
+  max: (max: number, message?: string): ValidatorFunction => 
+    (value) => {
+      if (value && Number(value) > max) {
+        return message || `Maximum value is ${max}`;
+      }
+      return null;
+    },
+  
+  date: (message = 'Please enter a valid date'): ValidatorFunction => 
+    (value) => {
+      if (value && isNaN(Date.parse(value))) {
+        return message;
+      }
+      return null;
+    },
+  
+  dateRange: (min?: Date, max?: Date): ValidatorFunction => 
+    (value) => {
+      if (!value) return null;
+      const date = new Date(value);
+      
+      if (min && date < min) {
+        return `Date must be after ${min.toLocaleDateString()}`;
+      }
+      if (max && date > max) {
+        return `Date must be before ${max.toLocaleDateString()}`;
+      }
+      return null;
+    },
+  
+  // Cross-field validators
+  match: (fieldName: string, message?: string): ValidatorFunction => 
+    (value, formData) => {
+      if (value !== formData?.[fieldName]) {
+        return message || `Must match ${fieldName}`;
+      }
+      return null;
+    },
+  
+  different: (fieldName: string, message?: string): ValidatorFunction => 
+    (value, formData) => {
+      if (value === formData?.[fieldName]) {
+        return message || `Must be different from ${fieldName}`;
+      }
+      return null;
+    },
+  
+  // Conditional validators
+  requiredIf: (condition: (formData: any) => boolean, message?: string): ValidatorFunction => 
+    (value, formData) => {
+      if (condition(formData)) {
+        return Validators.required(message)(value);
+      }
+      return null;
+    },
+  
+  // Async validators
+  unique: (checkFn: (value: any) => Promise<boolean>, message = 'This value is already taken'): ValidatorFunction => 
+    async (value) => {
+      if (!value) return null;
+      const isUnique = await checkFn(value);
+      return isUnique ? null : message;
+    }
+};
+
+// Step 3: Validation engine
+class ValidationEngine {
+  private validators = new Map<string, ValidatorFunction[]>();
+  private asyncValidators = new Map<string, ValidatorFunction[]>();
+  private errors = new Map<string, string>();
+  private touched = new Set<string>();
+  private validating = new Set<string>();
+  private debounceTimers = new Map<string, NodeJS.Timeout>();
+  
+  constructor(private validationConfig: Record<string, FieldValidation>) {
+    this.buildValidators();
+  }
+  
+  private buildValidators(): void {
+    Object.entries(this.validationConfig).forEach(([fieldName, config]) => {
+      const validators: ValidatorFunction[] = [];
+      const asyncValidators: ValidatorFunction[] = [];
+      
+      // Built-in validators
+      if (config.required) {
+        const message = typeof config.required === 'object' ? config.required.message : undefined;
+        validators.push(Validators.required(message));
+      }
+      
+      if (config.minLength) {
+        const { value, message } = typeof config.minLength === 'object' 
+          ? config.minLength 
+          : { value: config.minLength, message: undefined };
+        validators.push(Validators.minLength(value, message));
+      }
+      
+      if (config.maxLength) {
+        const { value, message } = typeof config.maxLength === 'object' 
+          ? config.maxLength 
+          : { value: config.maxLength, message: undefined };
+        validators.push(Validators.maxLength(value, message));
+      }
+      
+      if (config.pattern) {
+        const { value, message } = typeof config.pattern === 'object' 
+          ? config.pattern 
+          : { value: config.pattern, message: undefined };
+        validators.push(Validators.pattern(value, message));
+      }
+      
+      // Custom validators
+      if (config.custom) {
+        config.custom.forEach(rule => {
+          validators.push(rule.validator);
+        });
+      }
+      
+      // Async validators
+      if (config.async) {
+        config.async.forEach(rule => {
+          asyncValidators.push(rule.validator);
+        });
+      }
+      
+      if (validators.length > 0) {
+        this.validators.set(fieldName, validators);
+      }
+      
+      if (asyncValidators.length > 0) {
+        this.asyncValidators.set(fieldName, asyncValidators);
+      }
+    });
+  }
+  
+  // Validate single field
+  async validateField(
+    fieldName: string, 
+    value: any, 
+    formData?: any,
+    options?: { touch?: boolean; async?: boolean }
+  ): Promise<string | null> {
+    if (options?.touch) {
+      this.touched.add(fieldName);
+    }
+    
+    // Clear existing error
+    this.errors.delete(fieldName);
+    
+    // Run sync validators
+    const syncValidators = this.validators.get(fieldName) || [];
+    for (const validator of syncValidators) {
+      const error = validator(value, formData);
+      if (error) {
+        this.errors.set(fieldName, error);
+        return error;
+      }
+    }
+    
+    // Run async validators if requested
+    if (options?.async !== false) {
+      const asyncValidators = this.asyncValidators.get(fieldName) || [];
+      if (asyncValidators.length > 0) {
+        this.validating.add(fieldName);
+        
+        try {
+          for (const validator of asyncValidators) {
+            const error = await validator(value, formData);
+            if (error) {
+              this.errors.set(fieldName, error);
+              return error;
+            }
+          }
+        } finally {
+          this.validating.delete(fieldName);
+        }
+      }
+    }
+    
+    return null;
+  }
+  
+  // Validate all fields
+  async validateAll(
+    formData: Record<string, any>,
+    options?: { touch?: boolean }
+  ): Promise<Record<string, string>> {
+    const errors: Record<string, string> = {};
+    
+    // Mark all as touched if requested
+    if (options?.touch) {
+      Object.keys(formData).forEach(field => this.touched.add(field));
+    }
+    
+    // Validate all fields
+    const validationPromises = Object.entries(formData).map(async ([field, value]) => {
+      const error = await this.validateField(field, value, formData);
+      if (error) {
+        errors[field] = error;
+      }
+    });
+    
+    await Promise.all(validationPromises);
+    
+    return errors;
+  }
+  
+  // Validate with debounce
+  validateFieldDebounced(
+    fieldName: string,
+    value: any,
+    formData?: any,
+    delay: number = 300
+  ): void {
+    // Clear existing timer
+    const existingTimer = this.debounceTimers.get(fieldName);
+    if (existingTimer) {
+      clearTimeout(existingTimer);
+    }
+    
+    // Set new timer
+    const timer = setTimeout(() => {
+      this.validateField(fieldName, value, formData);
+      this.debounceTimers.delete(fieldName);
+    }, delay);
+    
+    this.debounceTimers.set(fieldName, timer);
+  }
+  
+  // Get field error
+  getError(fieldName: string): string | null {
+    return this.errors.get(fieldName) || null;
+  }
+  
+  // Get all errors
+  getErrors(): Record<string, string> {
+    const errors: Record<string, string> = {};
+    this.errors.forEach((error, field) => {
+      errors[field] = error;
+    });
+    return errors;
+  }
+  
+  // Check if field is valid
+  isFieldValid(fieldName: string): boolean {
+    return !this.errors.has(fieldName) && !this.validating.has(fieldName);
+  }
+  
+  // Check if form is valid
+  isFormValid(): boolean {
+    return this.errors.size === 0 && this.validating.size === 0;
+  }
+  
+  // Check if field is touched
+  isTouched(fieldName: string): boolean {
+    return this.touched.has(fieldName);
+  }
+  
+  // Check if field is validating
+  isValidating(fieldName: string): boolean {
+    return this.validating.has(fieldName);
+  }
+  
+  // Reset validation
+  reset(fields?: string[]): void {
+    if (fields) {
+      fields.forEach(field => {
+        this.errors.delete(field);
+        this.touched.delete(field);
+        this.validating.delete(field);
+      });
+    } else {
+      this.errors.clear();
+      this.touched.clear();
+      this.validating.clear();
+    }
+  }
+}
+
+// Step 4: React hook
+function useFormValidation(validationConfig: Record<string, FieldValidation>) {
+  const [engine] = useState(() => new ValidationEngine(validationConfig));
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Set<string>>(new Set());
+  const [validating, setValidating] = useState<Set<string>>(new Set());
+  
+  const validateField = useCallback(async (
+    fieldName: string,
+    value: any,
+    formData?: any
+  ) => {
+    setValidating(prev => new Set(prev).add(fieldName));
+    
+    const error = await engine.validateField(fieldName, value, formData, { touch: true });
+    
+    setErrors(engine.getErrors());
+    setTouched(new Set(engine.touched));
+    setValidating(prev => {
+      const next = new Set(prev);
+      next.delete(fieldName);
+      return next;
+    });
+    
+    return error;
+  }, [engine]);
+  
+  const validateForm = useCallback(async (formData: Record<string, any>) => {
+    const allErrors = await engine.validateAll(formData, { touch: true });
+    setErrors(allErrors);
+    setTouched(new Set(Object.keys(formData)));
+    return Object.keys(allErrors).length === 0;
+  }, [engine]);
+  
+  const getFieldProps = useCallback((fieldName: string) => ({
+    error: touched.has(fieldName) ? errors[fieldName] : undefined,
+    validating: validating.has(fieldName),
+    onBlur: () => setTouched(prev => new Set(prev).add(fieldName))
+  }), [errors, touched, validating]);
+  
+  const reset = useCallback((fields?: string[]) => {
+    engine.reset(fields);
+    setErrors({});
+    setTouched(new Set());
+    setValidating(new Set());
+  }, [engine]);
+  
+  return {
+    errors,
+    touched,
+    validating,
+    validateField,
+    validateForm,
+    getFieldProps,
+    reset,
+    isValid: Object.keys(errors).length === 0
+  };
+}
+
+// Usage example
+function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    age: '',
+    agreedToTerms: false
+  });
+  
+  const validationConfig: Record<string, FieldValidation> = {
+    username: {
+      required: true,
+      minLength: 3,
+      maxLength: 20,
+      pattern: { 
+        value: /^[a-zA-Z0-9_]+$/, 
+        message: 'Username can only contain letters, numbers, and underscores' 
+      },
+      async: [{
+        validator: Validators.unique(
+          async (username) => {
+            // Simulate API call
+            const response = await fetch(`/api/check-username/${username}`);
+            return response.ok;
+          }
+        ),
+        trigger: 'blur',
+        debounce: 500
+      }]
+    },
+    email: {
+      required: { message: 'Email is required' },
+      custom: [{ validator: Validators.email() }]
+    },
+    password: {
+      required: true,
+      minLength: { value: 8, message: 'Password must be at least 8 characters' },
+      custom: [{
+        validator: (value) => {
+          if (!/[A-Z]/.test(value)) return 'Password must contain uppercase letter';
+          if (!/[a-z]/.test(value)) return 'Password must contain lowercase letter';
+          if (!/[0-9]/.test(value)) return 'Password must contain number';
+          if (!/[!@#$%^&*]/.test(value)) return 'Password must contain special character';
+          return null;
+        }
+      }]
+    },
+    confirmPassword: {
+      required: true,
+      custom: [{
+        validator: Validators.match('password', 'Passwords do not match')
+      }]
+    },
+    age: {
+      required: true,
+      custom: [
+        { validator: Validators.number() },
+        { validator: Validators.min(18, 'Must be at least 18 years old') },
+        { validator: Validators.max(120, 'Please enter a valid age') }
+      ]
+    },
+    agreedToTerms: {
+      custom: [{
+        validator: (value) => value ? null : 'You must agree to the terms'
+      }]
+    }
+  };
+  
+  const {
+    errors,
+    validateField,
+    validateForm,
+    getFieldProps,
+    isValid
+  } = useFormValidation(validationConfig);
+  
+  const handleChange = (field: string, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    validateField(field, value, formData);
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const isFormValid = await validateForm(formData);
+    if (isFormValid) {
+      // Submit form
+      console.log('Form submitted:', formData);
+    }
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextField
+        label="Username"
+        value={formData.username}
+        onChange={(value) => handleChange('username', value)}
+        {...getFieldProps('username')}
+      />
+      
+      <TextField
+        label="Email"
+        type="email"
+        value={formData.email}
+        onChange={(value) => handleChange('email', value)}
+        {...getFieldProps('email')}
+      />
+      
+      <TextField
+        label="Password"
+        type="password"
+        value={formData.password}
+        onChange={(value) => handleChange('password', value)}
+        {...getFieldProps('password')}
+      />
+      
+      <TextField
+        label="Confirm Password"
+        type="password"
+        value={formData.confirmPassword}
+        onChange={(value) => handleChange('confirmPassword', value)}
+        {...getFieldProps('confirmPassword')}
+      />
+      
+      <TextField
+        label="Age"
+        type="number"
+        value={formData.age}
+        onChange={(value) => handleChange('age', value)}
+        {...getFieldProps('age')}
+      />
+      
+      <Checkbox
+        label="I agree to the terms and conditions"
+        checked={formData.agreedToTerms}
+        onChange={(checked) => handleChange('agreedToTerms', checked)}
+        error={errors.agreedToTerms}
+      />
+      
+      <Button submit disabled={!isValid}>
+        Register
+      </Button>
+    </form>
+  );
+}
+
+// Step 5: ExtJS implementation
+Ext.define('Cin7.form.validation.ValidatedForm', {
+  extend: 'Ext.form.Panel',
+  
+  initComponent: function() {
+    this.validationEngine = new ValidationEngine(this.validationConfig);
+    
+    this.items = this.buildFields();
+    
+    this.callParent();
+    
+    // Attach validation handlers
+    this.attachValidationHandlers();
+  },
+  
+  buildFields: function() {
+    return Object.entries(this.fieldsConfig).map(([name, config]) => {
+      return Ext.apply({
+        name: name,
+        listeners: {
+          change: this.onFieldChange.bind(this, name),
+          blur: this.onFieldBlur.bind(this, name)
+        }
+      }, config);
+    });
+  },
+  
+  attachValidationHandlers: function() {
+    this.getForm().getFields().each(field => {
+      const originalIsValid = field.isValid;
+      
+      field.isValid = () => {
+        const customError = this.validationEngine.getError(field.getName());
+        if (customError) {
+          field.markInvalid(customError);
+          return false;
+        }
+        return originalIsValid.call(field);
+      };
+    });
+  },
+  
+  onFieldChange: function(fieldName, field, newValue) {
+    const formData = this.getForm().getValues();
+    this.validationEngine.validateFieldDebounced(fieldName, newValue, formData);
+  },
+  
+  onFieldBlur: function(fieldName, field) {
+    const formData = this.getForm().getValues();
+    const value = field.getValue();
+    
+    this.validationEngine.validateField(fieldName, value, formData, { touch: true })
+      .then(() => {
+        field.validate();
+      });
+  },
+  
+  isValid: function() {
+    const formData = this.getForm().getValues();
+    const errors = this.validationEngine.validateAll(formData, { touch: true });
+    
+    return Object.keys(errors).length === 0 && this.callParent();
+  }
+});
+
+// Step 6: Vanilla JS implementation
+class VanillaFormValidator {
+  constructor(form, validationConfig) {
+    this.form = form;
+    this.engine = new ValidationEngine(validationConfig);
+    
+    this.attachEventListeners();
+  }
+  
+  attachEventListeners() {
+    this.form.addEventListener('input', (e) => {
+      if (e.target.name) {
+        this.validateField(e.target.name);
+      }
+    });
+    
+    this.form.addEventListener('blur', (e) => {
+      if (e.target.name) {
+        this.validateField(e.target.name, { touch: true });
+      }
+    }, true);
+    
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.validateForm();
+    });
+  }
+  
+  async validateField(fieldName, options = {}) {
+    const field = this.form.elements[fieldName];
+    if (!field) return;
+    
+    const formData = this.getFormData();
+    const value = this.getFieldValue(field);
+    
+    const error = await this.engine.validateField(
+      fieldName, 
+      value, 
+      formData, 
+      options
+    );
+    
+    this.displayFieldError(fieldName, error);
+  }
+  
+  async validateForm() {
+    const formData = this.getFormData();
+    const errors = await this.engine.validateAll(formData, { touch: true });
+    
+    // Display all errors
+    Object.keys(formData).forEach(fieldName => {
+      this.displayFieldError(fieldName, errors[fieldName] || null);
+    });
+    
+    if (Object.keys(errors).length === 0) {
+      // Submit form
+      this.form.submit();
+    }
+  }
+  
+  displayFieldError(fieldName, error) {
+    const field = this.form.elements[fieldName];
+    if (!field) return;
+    
+    // Find or create error element
+    let errorEl = field.parentElement.querySelector('.field-error');
+    if (!errorEl) {
+      errorEl = document.createElement('span');
+      errorEl.className = 'field-error';
+      field.parentElement.appendChild(errorEl);
+    }
+    
+    // Update error message
+    errorEl.textContent = error || '';
+    
+    // Update field styling
+    if (error) {
+      field.classList.add('error');
+    } else {
+      field.classList.remove('error');
+    }
+  }
+  
+  getFormData() {
+    const formData = {};
+    const elements = this.form.elements;
+    
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      if (element.name) {
+        formData[element.name] = this.getFieldValue(element);
+      }
+    }
+    
+    return formData;
+  }
+  
+  getFieldValue(field) {
+    if (field.type === 'checkbox') {
+      return field.checked;
+    } else if (field.type === 'radio') {
+      const checked = this.form.querySelector(`input[name="${field.name}"]:checked`);
+      return checked ? checked.value : null;
+    } else {
+      return field.value;
+    }
+  }
+}
+
+// Initialize validator
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('registration-form');
+  if (form) {
+    new VanillaFormValidator(form, validationConfig);
+  }
+});
+```
+
+## Best Practices
+
+### 1. Composition Over Configuration
+```typescript
+// Good: Compose validators
+const passwordValidator = compose(
+  Validators.required(),
+  Validators.minLength(8),
+  Validators.pattern(/[A-Z]/, 'Must contain uppercase'),
+  Validators.pattern(/[0-9]/, 'Must contain number')
+);
+
+// Use in multiple places
+const validationConfig = {
+  password: { custom: [{ validator: passwordValidator }] },
+  newPassword: { custom: [{ validator: passwordValidator }] }
+};
+```
+
+### 2. Async Validation Strategy
+```typescript
+// Good: Debounce and cache async validations
+const usernameValidator = withCache(
+  withDebounce(
+    Validators.unique(checkUsername),
+    500
+  )
+);
+```
+
+### 3. Error Message Localization
+```typescript
+// Good: Centralized error messages
+const errorMessages = {
+  required: (field: string) => t('validation.required', { field }),
+  minLength: (field: string, min: number) => t('validation.minLength', { field, min })
+};
+```
+
+### 4. Progressive Enhancement
+```typescript
+// Good: Show errors progressively
+const shouldShowError = (field: string) => {
+  return touched.has(field) && !validating.has(field);
+};
+```
+
+## Common Pitfalls
+
+- **Over-validation**: Don't validate on every keystroke for expensive operations
+- **Poor Error UX**: Show errors at the right time (not too early, not too late)
+- **Async Race Conditions**: Handle out-of-order validation responses
+- **Memory Leaks**: Clear timers and cancel pending validations on unmount
+
+</Usage>

@@ -1,0 +1,950 @@
+---
+title: Customer Portal Example
+url: /patterns/real-world-examples/customer-portal
+---
+
+<HowItHelps>
+
+## How it helps
+
+This real-world example demonstrates building a complete customer portal using the Cin7 DSL multi-layer architecture. It showcases how to combine React for modern UI, ExtJS for complex data grids, and Vanilla JS for lightweight interactions, all working together seamlessly.
+
+### What you'll learn:
+1. **Architecture Design**: Structure a real application using layers
+2. **Component Integration**: Mix technologies effectively
+3. **State Management**: Keep data synchronized across layers
+4. **Real Features**: Authentication, dashboards, and data management
+
+<DefinitionTable>
+
+### Key features demonstrated:
+
+**Authentication**: Secure login with role-based access control.
+
+**Dashboard**: Interactive metrics and charts using multiple technologies.
+
+**Order Management**: Complex grids with ExtJS, forms with React.
+
+**Profile Management**: User settings with real-time updates.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Building the Customer Portal
+
+This example shows a complete customer portal implementation.
+
+```typescript {"type":"livePreview","id":"customer-portal","title":"Customer Portal Implementation"}
+// Step 1: Define domain models and types
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: 'customer' | 'admin' | 'support';
+  company?: string;
+  avatar?: string;
+}
+
+interface Order {
+  id: string;
+  orderNumber: string;
+  customerId: string;
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  items: OrderItem[];
+  total: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface OrderItem {
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  subtotal: number;
+}
+
+interface DashboardMetrics {
+  totalOrders: number;
+  pendingOrders: number;
+  totalSpent: number;
+  averageOrderValue: number;
+  recentOrders: Order[];
+}
+
+// Step 2: Application architecture setup
+class CustomerPortalApp {
+  private container: LayerContainer;
+  private eventBus: EventBus;
+  private authService: AuthenticationService;
+  private stateManager: StateManager;
+  
+  constructor() {
+    this.initialize();
+  }
+  
+  private initialize(): void {
+    // Set up dependency injection
+    this.container = new LayerContainer();
+    this.setupLayers();
+    
+    // Initialize core services
+    this.eventBus = new EventBus();
+    this.authService = new AuthenticationService(this.eventBus);
+    this.stateManager = new StateManager();
+    
+    // Set up global error handling
+    window.addEventListener('error', this.handleGlobalError.bind(this));
+    
+    // Initialize routing
+    this.initializeRouting();
+  }
+  
+  private setupLayers(): void {
+    // Data layer
+    this.container.register('data', DataLayer);
+    this.container.bind('data', new DataLayerImpl());
+    
+    // Business layer
+    this.container.register('business', BusinessLayer);
+    this.container.bind('business', new BusinessLayerImpl(
+      this.container.get('data')
+    ));
+    
+    // Presentation layer
+    this.container.register('presentation', PresentationLayer);
+    this.container.bind('presentation', new PresentationLayerImpl());
+  }
+  
+  private initializeRouting(): void {
+    const router = new Router();
+    
+    router.on('/login', () => this.showLoginPage());
+    router.on('/dashboard', () => this.showDashboard());
+    router.on('/orders', () => this.showOrders());
+    router.on('/orders/:id', (params) => this.showOrderDetail(params.id));
+    router.on('/profile', () => this.showProfile());
+    
+    // Protected route middleware
+    router.beforeEach((to, from, next) => {
+      if (to.path !== '/login' && !this.authService.isAuthenticated()) {
+        next('/login');
+      } else {
+        next();
+      }
+    });
+    
+    router.start();
+  }
+  
+  private handleGlobalError(event: ErrorEvent): void {
+    console.error('Global error:', event.error);
+    // Send to error tracking service
+  }
+  
+  // Page rendering methods
+  private showLoginPage(): void {
+    const root = document.getElementById('app');
+    if (!root) return;
+    
+    ReactDOM.render(
+      <LayerProvider container={this.container}>
+        <LoginPage onSuccess={() => router.push('/dashboard')} />
+      </LayerProvider>,
+      root
+    );
+  }
+  
+  private showDashboard(): void {
+    const root = document.getElementById('app');
+    if (!root) return;
+    
+    root.innerHTML = `
+      <div class="dashboard-layout">
+        <div id="react-header"></div>
+        <div class="dashboard-content">
+          <div id="metrics-cards"></div>
+          <div id="orders-grid"></div>
+          <div id="activity-chart"></div>
+        </div>
+      </div>
+    `;
+    
+    // Render React header
+    ReactDOM.render(
+      <DashboardHeader user={this.authService.getCurrentUser()} />,
+      document.getElementById('react-header')
+    );
+    
+    // Render Vanilla JS metrics cards
+    new MetricsCards(
+      document.getElementById('metrics-cards')!,
+      this.container.get('business')
+    );
+    
+    // Render ExtJS orders grid
+    Ext.create('CustomerPortal.view.RecentOrdersGrid', {
+      renderTo: 'orders-grid',
+      height: 400,
+      businessLayer: this.container.get('business')
+    });
+    
+    // Render chart with vanilla JS
+    new ActivityChart(
+      document.getElementById('activity-chart')!,
+      this.container.get('data')
+    );
+  }
+}
+
+// Step 3: Authentication service
+class AuthenticationService {
+  private currentUser: User | null = null;
+  private token: string | null = null;
+  
+  constructor(private eventBus: EventBus) {
+    this.loadStoredAuth();
+  }
+  
+  private loadStoredAuth(): void {
+    const stored = localStorage.getItem('auth');
+    if (stored) {
+      try {
+        const { user, token } = JSON.parse(stored);
+        this.currentUser = user;
+        this.token = token;
+        this.eventBus.emit('auth:restored', user);
+      } catch (error) {
+        console.error('Failed to restore auth:', error);
+      }
+    }
+  }
+  
+  async login(email: string, password: string): Promise<User> {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Invalid credentials');
+      }
+      
+      const { user, token } = await response.json();
+      
+      this.currentUser = user;
+      this.token = token;
+      
+      // Store auth
+      localStorage.setItem('auth', JSON.stringify({ user, token }));
+      
+      // Emit login event
+      this.eventBus.emit('auth:login', user);
+      
+      return user;
+    } catch (error) {
+      this.eventBus.emit('auth:error', error);
+      throw error;
+    }
+  }
+  
+  logout(): void {
+    this.currentUser = null;
+    this.token = null;
+    localStorage.removeItem('auth');
+    this.eventBus.emit('auth:logout');
+  }
+  
+  isAuthenticated(): boolean {
+    return !!this.token;
+  }
+  
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+  
+  getAuthHeader(): Record<string, string> {
+    return this.token ? { Authorization: `Bearer ${this.token}` } : {};
+  }
+}
+
+// Step 4: React components
+
+// Login page
+const LoginPage: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  const businessLayer = useLayer<BusinessLayer>('business');
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    
+    try {
+      const user = await businessLayer.authenticate(email, password);
+      onSuccess();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  return (
+    <Page narrowWidth>
+      <Card sectioned>
+        <Form onSubmit={handleSubmit}>
+          <FormLayout>
+            <TextField
+              label="Email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              autoComplete="email"
+              error={error && !email ? 'Email is required' : ''}
+            />
+            
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              autoComplete="current-password"
+              error={error && !password ? 'Password is required' : ''}
+            />
+            
+            {error && (
+              <Banner status="critical">
+                <p>{error}</p>
+              </Banner>
+            )}
+            
+            <Button submit fullWidth loading={loading}>
+              Sign In
+            </Button>
+          </FormLayout>
+        </Form>
+      </Card>
+    </Page>
+  );
+};
+
+// Dashboard header
+const DashboardHeader: React.FC<{ user: User | null }> = ({ user }) => {
+  const [dropdownActive, setDropdownActive] = useState(false);
+  
+  if (!user) return null;
+  
+  const userMenuMarkup = (
+    <TopBar.UserMenu
+      actions={[
+        { items: [{ content: 'Profile', url: '/profile' }] },
+        { items: [{ content: 'Sign out', onAction: () => authService.logout() }] }
+      ]}
+      name={user.name}
+      detail={user.company}
+      initials={user.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+      open={dropdownActive}
+      onToggle={() => setDropdownActive(!dropdownActive)}
+    />
+  );
+  
+  return (
+    <TopBar
+      userMenu={userMenuMarkup}
+      searchField={
+        <TopBar.SearchField
+          onChange={() => {}}
+          value=""
+          placeholder="Search orders"
+        />
+      }
+    />
+  );
+};
+
+// Order detail modal
+const OrderDetailModal: React.FC<{ orderId: string; onClose: () => void }> = ({ 
+  orderId, 
+  onClose 
+}) => {
+  const [order, setOrder] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  const dataLayer = useLayer<DataLayer>('data');
+  
+  useEffect(() => {
+    loadOrder();
+  }, [orderId]);
+  
+  const loadOrder = async () => {
+    try {
+      const orderData = await dataLayer.repository('orders').findById(orderId);
+      setOrder(orderData);
+    } catch (error) {
+      console.error('Failed to load order:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  if (loading) {
+    return <Spinner />;
+  }
+  
+  if (!order) {
+    return <EmptyState heading="Order not found" />;
+  }
+  
+  return (
+    <Modal
+      open
+      onClose={onClose}
+      title={`Order ${order.orderNumber}`}
+      primaryAction={{
+        content: 'Close',
+        onAction: onClose
+      }}
+    >
+      <Modal.Section>
+        <TextContainer>
+          <p>Status: <Badge status={getStatusType(order.status)}>{order.status}</Badge></p>
+          <p>Total: ${order.total.toFixed(2)}</p>
+          <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
+        </TextContainer>
+      </Modal.Section>
+      
+      <Modal.Section>
+        <DataTable
+          columnContentTypes={['text', 'numeric', 'numeric', 'numeric']}
+          headings={['Product', 'Quantity', 'Price', 'Subtotal']}
+          rows={order.items.map(item => [
+            item.productName,
+            item.quantity,
+            `$${item.price.toFixed(2)}`,
+            `$${item.subtotal.toFixed(2)}`
+          ])}
+        />
+      </Modal.Section>
+    </Modal>
+  );
+};
+
+// Step 5: ExtJS components
+
+Ext.define('CustomerPortal.view.RecentOrdersGrid', {
+  extend: 'Ext.grid.Panel',
+  
+  title: 'Recent Orders',
+  
+  initComponent: function() {
+    const me = this;
+    
+    me.store = Ext.create('Ext.data.Store', {
+      fields: ['id', 'orderNumber', 'status', 'total', 'createdAt'],
+      proxy: {
+        type: 'memory'
+      }
+    });
+    
+    me.columns = [{
+      text: 'Order #',
+      dataIndex: 'orderNumber',
+      flex: 1
+    }, {
+      text: 'Status',
+      dataIndex: 'status',
+      width: 120,
+      renderer: function(value) {
+        const colors = {
+          pending: '#FFA500',
+          processing: '#1E90FF',
+          shipped: '#9370DB',
+          delivered: '#32CD32',
+          cancelled: '#DC143C'
+        };
+        
+        return `<span style="color: ${colors[value] || '#000'}">${value}</span>`;
+      }
+    }, {
+      text: 'Total',
+      dataIndex: 'total',
+      width: 100,
+      renderer: Ext.util.Format.usMoney
+    }, {
+      text: 'Date',
+      dataIndex: 'createdAt',
+      width: 120,
+      renderer: Ext.util.Format.dateRenderer('m/d/Y')
+    }];
+    
+    me.dockedItems = [{
+      xtype: 'toolbar',
+      dock: 'top',
+      items: ['->', {
+        xtype: 'textfield',
+        emptyText: 'Search orders...',
+        listeners: {
+          change: me.onSearchChange.bind(me)
+        }
+      }]
+    }];
+    
+    me.listeners = {
+      itemdblclick: me.onOrderDoubleClick
+    };
+    
+    me.callParent(arguments);
+    
+    me.loadOrders();
+  },
+  
+  loadOrders: async function() {
+    try {
+      const orders = await this.businessLayer.getRecentOrders();
+      this.store.loadData(orders);
+    } catch (error) {
+      Ext.Msg.alert('Error', 'Failed to load orders');
+    }
+  },
+  
+  onSearchChange: function(field, newValue) {
+    const store = this.getStore();
+    
+    if (newValue) {
+      store.filterBy(function(record) {
+        const orderNumber = record.get('orderNumber').toLowerCase();
+        const searchValue = newValue.toLowerCase();
+        return orderNumber.indexOf(searchValue) !== -1;
+      });
+    } else {
+      store.clearFilter();
+    }
+  },
+  
+  onOrderDoubleClick: function(grid, record) {
+    // Emit event for React modal
+    eventBus.emit('order:view', {
+      orderId: record.get('id')
+    });
+  }
+});
+
+// ExtJS form panel
+Ext.define('CustomerPortal.view.ProfileForm', {
+  extend: 'Ext.form.Panel',
+  
+  title: 'Profile Settings',
+  bodyPadding: 10,
+  
+  initComponent: function() {
+    const me = this;
+    
+    me.items = [{
+      xtype: 'textfield',
+      name: 'name',
+      fieldLabel: 'Name',
+      allowBlank: false
+    }, {
+      xtype: 'textfield',
+      name: 'email',
+      fieldLabel: 'Email',
+      vtype: 'email',
+      allowBlank: false
+    }, {
+      xtype: 'textfield',
+      name: 'company',
+      fieldLabel: 'Company'
+    }, {
+      xtype: 'textarea',
+      name: 'bio',
+      fieldLabel: 'Bio',
+      rows: 4
+    }];
+    
+    me.buttons = [{
+      text: 'Save',
+      handler: me.onSave.bind(me)
+    }, {
+      text: 'Cancel',
+      handler: me.onCancel.bind(me)
+    }];
+    
+    me.callParent(arguments);
+    
+    me.loadProfile();
+  },
+  
+  loadProfile: async function() {
+    const user = authService.getCurrentUser();
+    if (user) {
+      this.getForm().setValues(user);
+    }
+  },
+  
+  onSave: async function() {
+    const form = this.getForm();
+    
+    if (form.isValid()) {
+      const values = form.getValues();
+      
+      try {
+        await this.businessLayer.updateProfile(values);
+        Ext.Msg.alert('Success', 'Profile updated successfully');
+      } catch (error) {
+        Ext.Msg.alert('Error', 'Failed to update profile');
+      }
+    }
+  },
+  
+  onCancel: function() {
+    this.loadProfile();
+  }
+});
+
+// Step 6: Vanilla JS components
+
+// Metrics cards
+class MetricsCards {
+  constructor(
+    private container: HTMLElement,
+    private businessLayer: BusinessLayer
+  ) {
+    this.render();
+    this.loadMetrics();
+  }
+  
+  private async loadMetrics(): Promise<void> {
+    try {
+      const metrics = await this.businessLayer.getDashboardMetrics();
+      this.updateCards(metrics);
+    } catch (error) {
+      console.error('Failed to load metrics:', error);
+    }
+  }
+  
+  private render(): void {
+    this.container.innerHTML = `
+      <div class="metrics-grid">
+        <div class="metric-card" data-metric="totalOrders">
+          <div class="metric-icon">📦</div>
+          <div class="metric-value">-</div>
+          <div class="metric-label">Total Orders</div>
+        </div>
+        <div class="metric-card" data-metric="pendingOrders">
+          <div class="metric-icon">⏳</div>
+          <div class="metric-value">-</div>
+          <div class="metric-label">Pending Orders</div>
+        </div>
+        <div class="metric-card" data-metric="totalSpent">
+          <div class="metric-icon">💰</div>
+          <div class="metric-value">-</div>
+          <div class="metric-label">Total Spent</div>
+        </div>
+        <div class="metric-card" data-metric="averageOrderValue">
+          <div class="metric-icon">📊</div>
+          <div class="metric-value">-</div>
+          <div class="metric-label">Average Order</div>
+        </div>
+      </div>
+    `;
+    
+    // Add CSS
+    const style = document.createElement('style');
+    style.textContent = `
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      
+      .metric-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.2s;
+      }
+      
+      .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      .metric-icon {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+      
+      .metric-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+      
+      .metric-label {
+        color: #666;
+        font-size: 0.9em;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  private updateCards(metrics: DashboardMetrics): void {
+    const updates = {
+      totalOrders: metrics.totalOrders.toString(),
+      pendingOrders: metrics.pendingOrders.toString(),
+      totalSpent: `$${metrics.totalSpent.toFixed(2)}`,
+      averageOrderValue: `$${metrics.averageOrderValue.toFixed(2)}`
+    };
+    
+    Object.entries(updates).forEach(([metric, value]) => {
+      const card = this.container.querySelector(`[data-metric="${metric}"] .metric-value`);
+      if (card) {
+        // Animate value change
+        this.animateValue(card as HTMLElement, value);
+      }
+    });
+  }
+  
+  private animateValue(element: HTMLElement, newValue: string): void {
+    element.style.opacity = '0.5';
+    setTimeout(() => {
+      element.textContent = newValue;
+      element.style.opacity = '1';
+    }, 200);
+  }
+}
+
+// Activity chart using Chart.js
+class ActivityChart {
+  private chart: any;
+  
+  constructor(
+    private container: HTMLElement,
+    private dataLayer: DataLayer
+  ) {
+    this.render();
+    this.loadData();
+  }
+  
+  private render(): void {
+    this.container.innerHTML = `
+      <div class="chart-container">
+        <h3>Order Activity (Last 30 Days)</h3>
+        <canvas id="activity-chart-canvas"></canvas>
+      </div>
+    `;
+    
+    const ctx = (this.container.querySelector('#activity-chart-canvas') as HTMLCanvasElement).getContext('2d');
+    
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: 'Orders',
+          data: [],
+          borderColor: '#5c6ac4',
+          backgroundColor: 'rgba(92, 106, 196, 0.1)',
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+  }
+  
+  private async loadData(): Promise<void> {
+    try {
+      const data = await this.dataLayer.query(`
+        SELECT DATE(created_at) as date, COUNT(*) as count
+        FROM orders
+        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        GROUP BY DATE(created_at)
+        ORDER BY date
+      `);
+      
+      this.chart.data.labels = data.map(d => d.date);
+      this.chart.data.datasets[0].data = data.map(d => d.count);
+      this.chart.update();
+    } catch (error) {
+      console.error('Failed to load chart data:', error);
+    }
+  }
+}
+
+// Step 7: Initialize the application
+document.addEventListener('DOMContentLoaded', () => {
+  // Check for ExtJS
+  if (typeof Ext !== 'undefined') {
+    Ext.onReady(() => {
+      new CustomerPortalApp();
+    });
+  } else {
+    new CustomerPortalApp();
+  }
+});
+
+// Step 8: CSS styles
+const globalStyles = `
+  /* Global styles */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+  }
+  
+  /* Dashboard layout */
+  .dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .dashboard-content {
+      padding: 10px;
+    }
+  }
+  
+  /* Loading states */
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+  }
+  
+  .loading::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #5c6ac4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+// Add styles to document
+const styleElement = document.createElement('style');
+styleElement.textContent = globalStyles;
+document.head.appendChild(styleElement);
+```
+
+## Architecture Highlights
+
+### 1. Layer Separation
+- **Data Layer**: Handles all API calls and data persistence
+- **Business Layer**: Contains business logic and validation
+- **Presentation Layer**: Manages UI components across frameworks
+
+### 2. State Management
+- Global state shared across all layers
+- Event-driven updates for real-time synchronization
+- Cached data for performance optimization
+
+### 3. Security
+- Token-based authentication
+- Role-based access control
+- API request interceptors for auth headers
+
+### 4. Performance
+- Lazy loading of components
+- Data caching and pagination
+- Optimized re-renders
+
+## Deployment Considerations
+
+### 1. Build Process
+```bash
+# Build all layers
+npm run build:react
+npm run build:extjs
+npm run build:vanilla
+
+# Bundle for production
+npm run bundle:prod
+```
+
+### 2. Environment Configuration
+```typescript
+// config/environments.ts
+export const config = {
+  development: {
+    apiUrl: 'http://localhost:3000',
+    enableDebug: true
+  },
+  production: {
+    apiUrl: 'https://api.example.com',
+    enableDebug: false
+  }
+};
+```
+
+### 3. Monitoring
+```typescript
+// Add application monitoring
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  integrations: [
+    new Sentry.BrowserTracing(),
+  ],
+});
+```
+
+## Next Steps
+
+- Add real-time updates with WebSockets
+- Implement offline support with service workers
+- Add comprehensive test coverage
+- Optimize bundle sizes with code splitting
+
+</Usage>

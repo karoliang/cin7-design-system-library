@@ -1,0 +1,525 @@
+---
+title: Shared State Pattern
+url: /patterns/cross-layer-communication/shared-state
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Shared State pattern provides a centralized state management solution that all technology layers can access and update, ensuring data consistency across React, ExtJS, and Vanilla JS components.
+
+### Benefits:
+1. **Single Source of Truth**: One state store for all layers
+2. **Data Consistency**: Automatic synchronization across technologies
+3. **Predictability**: Clear state update patterns
+4. **Time Travel**: Debug with state history and rollback
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Maintain consistent data**: When the same data needs to be displayed and modified across different technology layers.
+
+**Synchronize state changes**: When updates in one layer must immediately reflect in all other layers.
+
+**Debug complex interactions**: When you need to track state changes across multiple components and layers.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing a shared state store accessible by all layers.
+
+```typescript {"type":"livePreview","id":"shared-state-pattern","title":"Shared State Implementation"}
+// Step 1: Define state shape and actions
+interface AppState {
+  // Data models
+  products: Product[];
+  selectedProductId: string | null;
+  
+  // UI state
+  theme: 'light' | 'dark';
+  sidebarOpen: boolean;
+  activeModal: string | null;
+  
+  // User state
+  currentUser: User | null;
+  permissions: string[];
+  
+  // Loading states
+  loading: {
+    products: boolean;
+    user: boolean;
+  };
+  
+  // Error states
+  errors: {
+    products: Error | null;
+    user: Error | null;
+  };
+}
+
+// Step 2: Create observable state store
+class StateStore<T extends object> {
+  private state: T;
+  private listeners = new Set<(state: T) => void>();
+  private history: T[] = [];
+  private maxHistorySize = 50;
+  private middleware: Array<(action: any, next: () => void) => void> = [];
+  
+  constructor(initialState: T) {
+    this.state = this.createProxy(initialState);
+    this.history.push(this.cloneState(initialState));
+  }
+  
+  // Create reactive proxy
+  private createProxy(target: T, path: string[] = []): T {
+    return new Proxy(target, {
+      get: (obj, prop) => {
+        const value = obj[prop as keyof T];
+        if (typeof value === 'object' && value !== null) {
+          return this.createProxy(value as any, [...path, String(prop)]);
+        }
+        return value;
+      },
+      set: (obj, prop, value) => {
+        const oldValue = obj[prop as keyof T];
+        if (oldValue !== value) {
+          obj[prop as keyof T] = value;
+          this.notifyListeners();
+          this.addToHistory();
+        }
+        return true;
+      }
+    });
+  }
+  
+  // Clone state for history
+  private cloneState(state: T): T {
+    return JSON.parse(JSON.stringify(state));
+  }
+  
+  // Add state to history
+  private addToHistory(): void {
+    this.history.push(this.cloneState(this.state));
+    if (this.history.length > this.maxHistorySize) {
+      this.history.shift();
+    }
+  }
+  
+  // Get current state
+  getState(): Readonly<T> {
+    return this.state;
+  }
+  
+  // Update state with partial updates
+  setState(updater: Partial<T> | ((state: T) => Partial<T>)): void {
+    const updates = typeof updater === 'function' ? updater(this.state) : updater;
+    
+    // Apply middleware
+    let index = 0;
+    const next = () => {
+      if (index < this.middleware.length) {
+        const fn = this.middleware[index++];
+        fn({ type: 'SET_STATE', payload: updates }, next);
+      } else {
+        Object.assign(this.state, updates);
+      }
+    };
+    
+    next();
+  }
+  
+  // Subscribe to state changes
+  subscribe(listener: (state: T) => void): () => void {
+    this.listeners.add(listener);
+    listener(this.state); // Call immediately with current state
+    
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+  
+  // Notify all listeners
+  private notifyListeners(): void {
+    this.listeners.forEach(listener => listener(this.state));
+  }
+  
+  // Time travel debugging
+  undo(): void {
+    if (this.history.length > 1) {
+      this.history.pop(); // Remove current
+      const previous = this.history[this.history.length - 1];
+      Object.assign(this.state, this.cloneState(previous));
+    }
+  }
+  
+  // Get state history
+  getHistory(): T[] {
+    return this.history.map(state => this.cloneState(state));
+  }
+  
+  // Add middleware
+  use(fn: (action: any, next: () => void) => void): void {
+    this.middleware.push(fn);
+  }
+  
+  // Create selector for derived state
+  select<R>(selector: (state: T) => R): () => R {
+    return () => selector(this.state);
+  }
+  
+  // Create memoized selector
+  createSelector<R>(
+    selector: (state: T) => R,
+    equalityFn?: (a: R, b: R) => boolean
+  ): () => R {
+    let lastResult: R;
+    let lastState: T;
+    
+    return () => {
+      if (lastState !== this.state) {
+        const newResult = selector(this.state);
+        if (!equalityFn || !equalityFn(lastResult, newResult)) {
+          lastResult = newResult;
+        }
+        lastState = this.state;
+      }
+      return lastResult;
+    };
+  }
+}
+
+// Step 3: Create global store instance
+const initialState: AppState = {
+  products: [],
+  selectedProductId: null,
+  theme: 'light',
+  sidebarOpen: true,
+  activeModal: null,
+  currentUser: null,
+  permissions: [],
+  loading: {
+    products: false,
+    user: false
+  },
+  errors: {
+    products: null,
+    user: null
+  }
+};
+
+export const Store = new StateStore(initialState);
+
+// Make available globally
+if (typeof window !== 'undefined') {
+  (window as any).Cin7Store = Store;
+}
+
+// Step 4: React integration with hooks
+function useStore<R = AppState>(selector?: (state: AppState) => R): R {
+  const [state, setState] = useState<R>(
+    selector ? selector(Store.getState()) : Store.getState() as any
+  );
+  
+  useEffect(() => {
+    const unsubscribe = Store.subscribe((newState) => {
+      const selectedState = selector ? selector(newState) : newState;
+      setState(selectedState as any);
+    });
+    
+    return unsubscribe;
+  }, [selector]);
+  
+  return state;
+}
+
+// Specific hooks
+export function useProducts() {
+  const products = useStore(state => state.products);
+  const loading = useStore(state => state.loading.products);
+  const error = useStore(state => state.errors.products);
+  
+  const addProduct = useCallback((product: Product) => {
+    Store.setState(state => ({
+      products: [...state.products, product]
+    }));
+  }, []);
+  
+  const updateProduct = useCallback((id: string, updates: Partial<Product>) => {
+    Store.setState(state => ({
+      products: state.products.map(p => 
+        p.id === id ? { ...p, ...updates } : p
+      )
+    }));
+  }, []);
+  
+  const deleteProduct = useCallback((id: string) => {
+    Store.setState(state => ({
+      products: state.products.filter(p => p.id !== id)
+    }));
+  }, []);
+  
+  return { products, loading, error, addProduct, updateProduct, deleteProduct };
+}
+
+// Step 5: ExtJS integration
+Ext.define('Cin7.store.SharedStore', {
+  extend: 'Ext.data.Store',
+  
+  constructor: function(config) {
+    this.callParent([config]);
+    
+    // Subscribe to state changes
+    Store.subscribe((state) => {
+      // Update ExtJS store data
+      this.loadData(state.products);
+      
+      // Update selection
+      if (state.selectedProductId) {
+        const record = this.findRecord('id', state.selectedProductId);
+        if (record) {
+          this.select(record);
+        }
+      }
+    });
+    
+    // Sync ExtJS changes back to state
+    this.on({
+      add: (store, records) => {
+        records.forEach(record => {
+          Store.setState(state => ({
+            products: [...state.products, record.getData()]
+          }));
+        });
+      },
+      update: (store, record) => {
+        const data = record.getData();
+        Store.setState(state => ({
+          products: state.products.map(p => 
+            p.id === data.id ? data : p
+          )
+        }));
+      },
+      remove: (store, records) => {
+        const ids = records.map(r => r.getId());
+        Store.setState(state => ({
+          products: state.products.filter(p => !ids.includes(p.id))
+        }));
+      }
+    });
+  }
+});
+
+// ExtJS component using shared store
+Ext.create('Ext.grid.Panel', {
+  store: Ext.create('Cin7.store.SharedStore'),
+  columns: [
+    { text: 'Name', dataIndex: 'name' },
+    { text: 'Price', dataIndex: 'price' }
+  ],
+  listeners: {
+    select: (grid, record) => {
+      Store.setState({ selectedProductId: record.getId() });
+    }
+  }
+});
+
+// Step 6: Vanilla JS integration
+class VanillaStoreBinding {
+  constructor(elementSelector: string, stateSelector: (state: AppState) => any) {
+    this.element = document.querySelector(elementSelector);
+    this.stateSelector = stateSelector;
+    
+    if (this.element) {
+      this.unsubscribe = Store.subscribe(this.handleStateChange.bind(this));
+    }
+  }
+  
+  handleStateChange(state: AppState): void {
+    const data = this.stateSelector(state);
+    this.render(data);
+  }
+  
+  render(data: any): void {
+    // Override in subclasses
+  }
+  
+  destroy(): void {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
+}
+
+// Product list binding
+class ProductListBinding extends VanillaStoreBinding {
+  constructor(elementSelector: string) {
+    super(elementSelector, state => state.products);
+  }
+  
+  render(products: Product[]): void {
+    if (!this.element) return;
+    
+    this.element.innerHTML = products.map(product => `
+      <div class="product-item" data-id="${product.id}">
+        <h3>${product.name}</h3>
+        <p>$${product.price}</p>
+        <button onclick="Cin7Store.setState({ selectedProductId: '${product.id}' })">
+          Select
+        </button>
+      </div>
+    `).join('');
+  }
+}
+
+// Initialize bindings
+document.addEventListener('DOMContentLoaded', () => {
+  new ProductListBinding('#product-list');
+  
+  // Theme binding
+  Store.subscribe(state => {
+    document.documentElement.setAttribute('data-theme', state.theme);
+  });
+  
+  // Form handling
+  document.getElementById('add-product-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    Store.setState(state => ({
+      products: [...state.products, {
+        id: Date.now().toString(),
+        name: formData.get('name') as string,
+        price: parseFloat(formData.get('price') as string)
+      }]
+    }));
+  });
+});
+
+// Step 7: Middleware for logging and persistence
+Store.use((action, next) => {
+  console.log('State update:', action);
+  next();
+});
+
+// Persist to localStorage
+Store.use((action, next) => {
+  next();
+  const state = Store.getState();
+  localStorage.setItem('cin7-state', JSON.stringify(state));
+});
+
+// Load from localStorage on startup
+const savedState = localStorage.getItem('cin7-state');
+if (savedState) {
+  try {
+    Store.setState(JSON.parse(savedState));
+  } catch (error) {
+    console.error('Failed to load saved state:', error);
+  }
+}
+
+// Step 8: DevTools integration
+export const connectDevTools = () => {
+  if (typeof window !== 'undefined' && (window as any).__REDUX_DEVTOOLS_EXTENSION__) {
+    const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect({
+      name: 'Cin7 Shared State'
+    });
+    
+    Store.subscribe(state => {
+      devTools.send({ type: 'STATE_UPDATE' }, state);
+    });
+    
+    devTools.subscribe((message: any) => {
+      if (message.type === 'DISPATCH' && message.state) {
+        Store.setState(JSON.parse(message.state));
+      }
+    });
+  }
+};
+
+// Initialize DevTools in development
+if (process.env.NODE_ENV === 'development') {
+  connectDevTools();
+}
+```
+
+## Best Practices
+
+### 1. Keep State Normalized
+```typescript
+// Good: Normalized state
+interface State {
+  products: { [id: string]: Product };
+  productIds: string[];
+}
+
+// Bad: Nested state
+interface State {
+  categories: {
+    products: Product[];
+  }[];
+}
+```
+
+### 2. Use Selectors for Derived State
+```typescript
+// Create reusable selectors
+const selectProductsByCategory = (category: string) => 
+  Store.createSelector(
+    state => state.products.filter(p => p.category === category)
+  );
+
+// Use in components
+const electronics = useStore(selectProductsByCategory('electronics'));
+```
+
+### 3. Batch Updates
+```typescript
+// Good: Single state update
+Store.setState({
+  products: newProducts,
+  loading: { ...state.loading, products: false },
+  errors: { ...state.errors, products: null }
+});
+
+// Bad: Multiple updates
+Store.setState({ products: newProducts });
+Store.setState({ loading: { products: false } });
+Store.setState({ errors: { products: null } });
+```
+
+### 4. Handle Async Operations
+```typescript
+async function loadProducts() {
+  Store.setState({ loading: { products: true } });
+  
+  try {
+    const products = await api.getProducts();
+    Store.setState({
+      products,
+      loading: { products: false },
+      errors: { products: null }
+    });
+  } catch (error) {
+    Store.setState({
+      loading: { products: false },
+      errors: { products: error }
+    });
+  }
+}
+```
+
+## Common Pitfalls
+
+- **State Mutations**: Always create new objects/arrays, never mutate
+- **Memory Leaks**: Unsubscribe when components unmount
+- **Performance**: Use selectors to prevent unnecessary re-renders
+- **Race Conditions**: Handle async operations carefully
+
+</Usage>

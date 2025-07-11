@@ -1,0 +1,714 @@
+---
+title: Dynamic Fields Pattern
+url: /patterns/enterprise-forms/dynamic-fields
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Dynamic Fields pattern enables forms to adapt in real-time based on user input, showing or hiding fields, changing validation rules, and updating options dynamically. This pattern is essential for complex enterprise forms that need to guide users through conditional workflows.
+
+### Benefits:
+1. **Improved UX**: Show only relevant fields based on context
+2. **Reduced Complexity**: Progressive disclosure of form fields
+3. **Dynamic Validation**: Apply rules based on field combinations
+4. **Performance**: Load options and data on-demand
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Conditional fields**: Show/hide fields based on other field values.
+
+**Dynamic options**: Load dropdown options based on previous selections.
+
+**Contextual validation**: Apply different validation rules based on form state.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing dynamic form fields across all layers.
+
+```typescript {"type":"livePreview","id":"dynamic-fields","title":"Dynamic Fields Implementation"}
+// Step 1: Define dynamic form configuration
+interface DynamicFormConfig {
+  fields: FormField[];
+  rules: VisibilityRule[];
+  validations: ValidationRule[];
+  dependencies: FieldDependency[];
+}
+
+interface FormField {
+  id: string;
+  type: 'text' | 'select' | 'checkbox' | 'radio' | 'date' | 'number';
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  defaultValue?: any;
+  options?: FieldOption[];
+  visible?: boolean;
+}
+
+interface VisibilityRule {
+  fieldId: string;
+  condition: (formData: any) => boolean;
+  action: 'show' | 'hide' | 'enable' | 'disable';
+}
+
+interface ValidationRule {
+  fieldId: string;
+  condition: (formData: any) => boolean;
+  validator: (value: any, formData: any) => string | null;
+}
+
+interface FieldDependency {
+  sourceField: string;
+  targetField: string;
+  handler: (sourceValue: any) => Promise<FieldOption[]> | FieldOption[];
+}
+
+// Step 2: Dynamic form engine
+class DynamicFormEngine {
+  private formData: Record<string, any> = {};
+  private fields: Map<string, FormField> = new Map();
+  private listeners: Set<(event: FormEvent) => void> = new Set();
+  private loadingFields: Set<string> = new Set();
+  
+  constructor(private config: DynamicFormConfig) {
+    this.initializeFields();
+  }
+  
+  private initializeFields(): void {
+    this.config.fields.forEach(field => {
+      this.fields.set(field.id, { ...field });
+      if (field.defaultValue !== undefined) {
+        this.formData[field.id] = field.defaultValue;
+      }
+    });
+    
+    // Apply initial visibility rules
+    this.applyVisibilityRules();
+  }
+  
+  // Get field configuration
+  getField(fieldId: string): FormField | undefined {
+    return this.fields.get(fieldId);
+  }
+  
+  // Get all visible fields
+  getVisibleFields(): FormField[] {
+    return Array.from(this.fields.values()).filter(field => 
+      field.visible !== false
+    );
+  }
+  
+  // Update field value
+  async updateField(fieldId: string, value: any): Promise<void> {
+    const oldValue = this.formData[fieldId];
+    this.formData[fieldId] = value;
+    
+    // Emit change event
+    this.emit({
+      type: 'field:changed',
+      fieldId,
+      value,
+      oldValue
+    });
+    
+    // Apply visibility rules
+    this.applyVisibilityRules();
+    
+    // Handle field dependencies
+    await this.handleDependencies(fieldId);
+    
+    // Validate all fields
+    this.validateAllFields();
+  }
+  
+  // Apply visibility rules
+  private applyVisibilityRules(): void {
+    this.config.rules.forEach(rule => {
+      const field = this.fields.get(rule.fieldId);
+      if (!field) return;
+      
+      const shouldApply = rule.condition(this.formData);
+      
+      switch (rule.action) {
+        case 'show':
+          field.visible = shouldApply;
+          break;
+        case 'hide':
+          field.visible = !shouldApply;
+          break;
+        case 'enable':
+          field.disabled = !shouldApply;
+          break;
+        case 'disable':
+          field.disabled = shouldApply;
+          break;
+      }
+      
+      // Clear hidden field values
+      if (!field.visible && this.formData[field.id] !== undefined) {
+        delete this.formData[field.id];
+        this.emit({
+          type: 'field:cleared',
+          fieldId: field.id
+        });
+      }
+    });
+    
+    this.emit({ type: 'visibility:changed' });
+  }
+  
+  // Handle field dependencies
+  private async handleDependencies(sourceFieldId: string): Promise<void> {
+    const dependencies = this.config.dependencies.filter(dep => 
+      dep.sourceField === sourceFieldId
+    );
+    
+    for (const dep of dependencies) {
+      const targetField = this.fields.get(dep.targetField);
+      if (!targetField) continue;
+      
+      // Mark as loading
+      this.loadingFields.add(dep.targetField);
+      this.emit({
+        type: 'field:loading',
+        fieldId: dep.targetField
+      });
+      
+      try {
+        // Load new options
+        const sourceValue = this.formData[sourceFieldId];
+        const options = await dep.handler(sourceValue);
+        
+        // Update field options
+        targetField.options = options;
+        
+        // Clear target field value if current value is not in new options
+        if (this.formData[dep.targetField]) {
+          const validOption = options.some(opt => 
+            opt.value === this.formData[dep.targetField]
+          );
+          
+          if (!validOption) {
+            delete this.formData[dep.targetField];
+            this.emit({
+              type: 'field:cleared',
+              fieldId: dep.targetField
+            });
+          }
+        }
+        
+        this.emit({
+          type: 'field:options:updated',
+          fieldId: dep.targetField,
+          options
+        });
+      } catch (error) {
+        console.error(`Failed to load options for ${dep.targetField}:`, error);
+        this.emit({
+          type: 'field:error',
+          fieldId: dep.targetField,
+          error
+        });
+      } finally {
+        this.loadingFields.delete(dep.targetField);
+      }
+    }
+  }
+  
+  // Validate all fields
+  private validateAllFields(): void {
+    const errors: Record<string, string> = {};
+    
+    // Standard validation
+    this.getVisibleFields().forEach(field => {
+      if (field.required && !this.formData[field.id]) {
+        errors[field.id] = `${field.label} is required`;
+      }
+    });
+    
+    // Custom validation rules
+    this.config.validations.forEach(rule => {
+      if (rule.condition(this.formData)) {
+        const error = rule.validator(this.formData[rule.fieldId], this.formData);
+        if (error) {
+          errors[rule.fieldId] = error;
+        }
+      }
+    });
+    
+    this.emit({
+      type: 'validation:changed',
+      errors
+    });
+  }
+  
+  // Get form data
+  getFormData(): Record<string, any> {
+    return { ...this.formData };
+  }
+  
+  // Subscribe to events
+  subscribe(listener: (event: FormEvent) => void): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+  
+  private emit(event: FormEvent): void {
+    this.listeners.forEach(listener => listener(event));
+  }
+}
+
+// Form events
+type FormEvent = 
+  | { type: 'field:changed'; fieldId: string; value: any; oldValue: any }
+  | { type: 'field:cleared'; fieldId: string }
+  | { type: 'field:loading'; fieldId: string }
+  | { type: 'field:options:updated'; fieldId: string; options: FieldOption[] }
+  | { type: 'field:error'; fieldId: string; error: any }
+  | { type: 'visibility:changed' }
+  | { type: 'validation:changed'; errors: Record<string, string> };
+
+// Step 3: React implementation
+function useDynamicForm(config: DynamicFormConfig) {
+  const [engine] = useState(() => new DynamicFormEngine(config));
+  const [fields, setFields] = useState(() => engine.getVisibleFields());
+  const [formData, setFormData] = useState(() => engine.getFormData());
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState<Set<string>>(new Set());
+  
+  useEffect(() => {
+    const unsubscribe = engine.subscribe((event) => {
+      switch (event.type) {
+        case 'field:changed':
+        case 'field:cleared':
+          setFormData(engine.getFormData());
+          break;
+          
+        case 'visibility:changed':
+          setFields(engine.getVisibleFields());
+          break;
+          
+        case 'validation:changed':
+          setErrors(event.errors);
+          break;
+          
+        case 'field:loading':
+          setLoading(prev => new Set(prev).add(event.fieldId));
+          break;
+          
+        case 'field:options:updated':
+        case 'field:error':
+          setLoading(prev => {
+            const next = new Set(prev);
+            next.delete(event.fieldId);
+            return next;
+          });
+          setFields([...engine.getVisibleFields()]);
+          break;
+      }
+    });
+    
+    return unsubscribe;
+  }, [engine]);
+  
+  const updateField = useCallback((fieldId: string, value: any) => {
+    engine.updateField(fieldId, value);
+  }, [engine]);
+  
+  return {
+    fields,
+    formData,
+    errors,
+    loading,
+    updateField
+  };
+}
+
+// Dynamic form component
+function DynamicForm({ config }: { config: DynamicFormConfig }) {
+  const { fields, formData, errors, loading, updateField } = useDynamicForm(config);
+  
+  return (
+    <form>
+      {fields.map(field => (
+        <div key={field.id}>
+          {field.type === 'text' && (
+            <TextField
+              label={field.label}
+              value={formData[field.id] || ''}
+              onChange={(value) => updateField(field.id, value)}
+              error={errors[field.id]}
+              disabled={field.disabled}
+              required={field.required}
+            />
+          )}
+          
+          {field.type === 'select' && (
+            <Select
+              label={field.label}
+              options={field.options || []}
+              selected={formData[field.id]}
+              onChange={(value) => updateField(field.id, value)}
+              error={errors[field.id]}
+              disabled={field.disabled || loading.has(field.id)}
+              required={field.required}
+            />
+          )}
+          
+          {field.type === 'checkbox' && (
+            <Checkbox
+              label={field.label}
+              checked={formData[field.id] || false}
+              onChange={(checked) => updateField(field.id, checked)}
+              disabled={field.disabled}
+            />
+          )}
+        </div>
+      ))}
+    </form>
+  );
+}
+
+// Step 4: Configuration example
+const orderFormConfig: DynamicFormConfig = {
+  fields: [
+    {
+      id: 'orderType',
+      type: 'select',
+      label: 'Order Type',
+      required: true,
+      options: [
+        { label: 'Standard', value: 'standard' },
+        { label: 'Express', value: 'express' },
+        { label: 'International', value: 'international' }
+      ]
+    },
+    {
+      id: 'country',
+      type: 'select',
+      label: 'Country',
+      visible: false,
+      required: true,
+      options: []
+    },
+    {
+      id: 'expressReason',
+      type: 'text',
+      label: 'Reason for Express Shipping',
+      visible: false,
+      required: true
+    },
+    {
+      id: 'customsDeclaration',
+      type: 'checkbox',
+      label: 'Include Customs Declaration',
+      visible: false
+    }
+  ],
+  
+  rules: [
+    {
+      fieldId: 'country',
+      condition: (data) => data.orderType === 'international',
+      action: 'show'
+    },
+    {
+      fieldId: 'expressReason',
+      condition: (data) => data.orderType === 'express',
+      action: 'show'
+    },
+    {
+      fieldId: 'customsDeclaration',
+      condition: (data) => data.orderType === 'international' && data.country,
+      action: 'show'
+    }
+  ],
+  
+  validations: [
+    {
+      fieldId: 'expressReason',
+      condition: (data) => data.orderType === 'express',
+      validator: (value) => {
+        if (!value || value.length < 10) {
+          return 'Please provide a detailed reason (min 10 characters)';
+        }
+        return null;
+      }
+    }
+  ],
+  
+  dependencies: [
+    {
+      sourceField: 'orderType',
+      targetField: 'country',
+      handler: async (orderType) => {
+        if (orderType === 'international') {
+          // Simulate API call
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve([
+                { label: 'Canada', value: 'CA' },
+                { label: 'United Kingdom', value: 'UK' },
+                { label: 'Australia', value: 'AU' }
+              ]);
+            }, 500);
+          });
+        }
+        return [];
+      }
+    }
+  ]
+};
+
+// Step 5: ExtJS implementation
+Ext.define('Cin7.form.DynamicForm', {
+  extend: 'Ext.form.Panel',
+  
+  initComponent: function() {
+    this.engine = new DynamicFormEngine(this.config);
+    
+    this.items = this.buildFields();
+    
+    this.engine.subscribe(this.handleFormEvent.bind(this));
+    
+    this.callParent();
+  },
+  
+  buildFields: function() {
+    return this.engine.getVisibleFields().map(field => {
+      const config = {
+        itemId: field.id,
+        fieldLabel: field.label,
+        allowBlank: !field.required,
+        disabled: field.disabled,
+        listeners: {
+          change: (cmp, value) => {
+            this.engine.updateField(field.id, value);
+          }
+        }
+      };
+      
+      switch (field.type) {
+        case 'text':
+          return Ext.apply(config, { xtype: 'textfield' });
+        case 'select':
+          return Ext.apply(config, {
+            xtype: 'combobox',
+            store: field.options?.map(opt => [opt.value, opt.label]),
+            queryMode: 'local'
+          });
+        case 'checkbox':
+          return Ext.apply(config, { xtype: 'checkbox' });
+        default:
+          return config;
+      }
+    });
+  },
+  
+  handleFormEvent: function(event) {
+    switch (event.type) {
+      case 'visibility:changed':
+        this.rebuildForm();
+        break;
+        
+      case 'field:options:updated':
+        const field = this.down(`#${event.fieldId}`);
+        if (field && field.isXType('combobox')) {
+          field.getStore().loadData(
+            event.options.map(opt => [opt.value, opt.label])
+          );
+        }
+        break;
+        
+      case 'validation:changed':
+        Object.entries(event.errors).forEach(([fieldId, error]) => {
+          const field = this.down(`#${fieldId}`);
+          if (field) {
+            field.markInvalid(error);
+          }
+        });
+        break;
+    }
+  },
+  
+  rebuildForm: function() {
+    this.removeAll();
+    this.add(this.buildFields());
+  }
+});
+
+// Step 6: Vanilla JS implementation
+class VanillaDynamicForm {
+  constructor(container, config) {
+    this.container = container;
+    this.engine = new DynamicFormEngine(config);
+    
+    this.render();
+    this.attachEventHandlers();
+    
+    this.engine.subscribe(this.handleFormEvent.bind(this));
+  }
+  
+  render() {
+    const fields = this.engine.getVisibleFields();
+    
+    this.container.innerHTML = fields.map(field => `
+      <div class="form-field" data-field-id="${field.id}">
+        <label for="${field.id}">
+          ${field.label}
+          ${field.required ? '<span class="required">*</span>' : ''}
+        </label>
+        ${this.renderField(field)}
+        <span class="error" data-error-for="${field.id}"></span>
+      </div>
+    `).join('');
+  }
+  
+  renderField(field) {
+    const value = this.engine.getFormData()[field.id] || '';
+    
+    switch (field.type) {
+      case 'text':
+        return `<input type="text" id="${field.id}" value="${value}" 
+                ${field.disabled ? 'disabled' : ''}>`;
+                
+      case 'select':
+        return `
+          <select id="${field.id}" ${field.disabled ? 'disabled' : ''}>
+            <option value="">Select...</option>
+            ${(field.options || []).map(opt => `
+              <option value="${opt.value}" ${value === opt.value ? 'selected' : ''}>
+                ${opt.label}
+              </option>
+            `).join('')}
+          </select>
+        `;
+        
+      case 'checkbox':
+        return `<input type="checkbox" id="${field.id}" 
+                ${value ? 'checked' : ''} 
+                ${field.disabled ? 'disabled' : ''}>`;
+    }
+  }
+  
+  attachEventHandlers() {
+    this.container.addEventListener('change', (e) => {
+      const field = e.target;
+      if (field.id) {
+        const value = field.type === 'checkbox' ? field.checked : field.value;
+        this.engine.updateField(field.id, value);
+      }
+    });
+  }
+  
+  handleFormEvent(event) {
+    switch (event.type) {
+      case 'visibility:changed':
+        this.render();
+        this.attachEventHandlers();
+        break;
+        
+      case 'field:loading':
+        const select = this.container.querySelector(`#${event.fieldId}`);
+        if (select) {
+          select.disabled = true;
+          select.innerHTML = '<option>Loading...</option>';
+        }
+        break;
+        
+      case 'field:options:updated':
+        const field = this.engine.getField(event.fieldId);
+        if (field) {
+          const fieldEl = this.container.querySelector(`#${event.fieldId}`);
+          if (fieldEl) {
+            fieldEl.outerHTML = this.renderField(field);
+          }
+        }
+        break;
+        
+      case 'validation:changed':
+        // Clear all errors first
+        this.container.querySelectorAll('.error').forEach(el => {
+          el.textContent = '';
+        });
+        
+        // Show new errors
+        Object.entries(event.errors).forEach(([fieldId, error]) => {
+          const errorEl = this.container.querySelector(`[data-error-for="${fieldId}"]`);
+          if (errorEl) {
+            errorEl.textContent = error;
+          }
+        });
+        break;
+    }
+  }
+}
+```
+
+## Best Practices
+
+### 1. Debounce Field Updates
+```typescript
+const debouncedUpdate = useMemo(() => 
+  debounce((fieldId: string, value: any) => {
+    engine.updateField(fieldId, value);
+  }, 300),
+  [engine]
+);
+```
+
+### 2. Cache Dependency Results
+```typescript
+const cachedHandler = useMemo(() => {
+  const cache = new Map();
+  
+  return async (value: any) => {
+    if (cache.has(value)) {
+      return cache.get(value);
+    }
+    
+    const result = await fetchOptions(value);
+    cache.set(value, result);
+    return result;
+  };
+}, []);
+```
+
+### 3. Progressive Loading
+```typescript
+// Load only visible field options
+const lazyLoadOptions = async (fieldId: string) => {
+  const field = engine.getField(fieldId);
+  if (field?.visible && !field.options) {
+    const options = await loadFieldOptions(fieldId);
+    engine.updateFieldOptions(fieldId, options);
+  }
+};
+```
+
+### 4. Validation Optimization
+```typescript
+// Validate only changed fields
+const validateField = (fieldId: string) => {
+  const rules = validations.filter(r => r.fieldId === fieldId);
+  // Run only relevant validations
+};
+```
+
+## Common Pitfalls
+
+- **Circular Dependencies**: Ensure field dependencies don't create infinite loops
+- **Performance**: Avoid re-rendering entire form on single field changes
+- **State Management**: Keep form state separate from UI state
+- **Memory Leaks**: Clean up subscriptions when components unmount
+
+</Usage>

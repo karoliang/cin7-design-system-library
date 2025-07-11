@@ -1,0 +1,651 @@
+---
+title: Hybrid Components Pattern
+url: /patterns/layer-integration/hybrid-components
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Hybrid Components pattern enables seamless integration of components from different technology layers within a single interface. This allows you to leverage the strengths of each framework - React's modern component model, ExtJS's enterprise features, and Vanilla JS's lightweight flexibility.
+
+### Benefits:
+1. **Best Tool for the Job**: Use React for modern UI, ExtJS for complex grids
+2. **Gradual Migration**: Mix technologies during transitions
+3. **Performance Optimization**: Use lightweight Vanilla JS where needed
+4. **Code Reuse**: Share components across different parts of the application
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Mix frameworks**: When different parts of your UI benefit from different technologies.
+
+**Migrate gradually**: When transitioning from one framework to another.
+
+**Optimize performance**: When certain components need to be lightweight.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates how to create hybrid components that work across layers.
+
+```typescript {"type":"livePreview","id":"hybrid-components","title":"Hybrid Components Implementation"}
+// Step 1: Define component bridge interface
+interface ComponentBridge {
+  mount(container: HTMLElement, props: any): void;
+  update(props: any): void;
+  unmount(): void;
+  on(event: string, handler: Function): void;
+  off(event: string, handler: Function): void;
+}
+
+// Step 2: React component wrapper
+class ReactComponentBridge implements ComponentBridge {
+  private root: any; // ReactDOM root
+  private component: React.ComponentType<any>;
+  private container: HTMLElement | null = null;
+  private eventHandlers = new Map<string, Set<Function>>();
+  
+  constructor(component: React.ComponentType<any>) {
+    this.component = component;
+  }
+  
+  mount(container: HTMLElement, props: any): void {
+    this.container = container;
+    
+    // Create React 18 root
+    if ('createRoot' in ReactDOM) {
+      this.root = ReactDOM.createRoot(container);
+    } else {
+      // Fallback for older React
+      this.root = container;
+    }
+    
+    this.render(props);
+  }
+  
+  update(props: any): void {
+    this.render(props);
+  }
+  
+  unmount(): void {
+    if ('createRoot' in ReactDOM && this.root) {
+      this.root.unmount();
+    } else if (this.container) {
+      ReactDOM.unmountComponentAtNode(this.container);
+    }
+    
+    this.eventHandlers.clear();
+  }
+  
+  on(event: string, handler: Function): void {
+    if (!this.eventHandlers.has(event)) {
+      this.eventHandlers.set(event, new Set());
+    }
+    this.eventHandlers.get(event)!.add(handler);
+  }
+  
+  off(event: string, handler: Function): void {
+    this.eventHandlers.get(event)?.delete(handler);
+  }
+  
+  private render(props: any): void {
+    const enhancedProps = {
+      ...props,
+      onEvent: (eventName: string, data: any) => {
+        this.emit(eventName, data);
+      }
+    };
+    
+    const element = React.createElement(this.component, enhancedProps);
+    
+    if ('createRoot' in ReactDOM && this.root?.render) {
+      this.root.render(element);
+    } else if (this.container) {
+      ReactDOM.render(element, this.container);
+    }
+  }
+  
+  private emit(event: string, data: any): void {
+    this.eventHandlers.get(event)?.forEach(handler => handler(data));
+  }
+}
+
+// Step 3: ExtJS component wrapper
+class ExtJSComponentBridge implements ComponentBridge {
+  private component: any; // ExtJS component instance
+  private config: any;
+  
+  constructor(componentClass: string, defaultConfig?: any) {
+    this.config = {
+      xtype: componentClass,
+      ...defaultConfig
+    };
+  }
+  
+  mount(container: HTMLElement, props: any): void {
+    this.component = Ext.create({
+      ...this.config,
+      ...this.propsToConfig(props),
+      renderTo: container
+    });
+  }
+  
+  update(props: any): void {
+    if (!this.component) return;
+    
+    const config = this.propsToConfig(props);
+    Object.entries(config).forEach(([key, value]) => {
+      if (typeof this.component[`set${key.charAt(0).toUpperCase()}${key.slice(1)}`] === 'function') {
+        this.component[`set${key.charAt(0).toUpperCase()}${key.slice(1)}`](value);
+      }
+    });
+  }
+  
+  unmount(): void {
+    if (this.component) {
+      this.component.destroy();
+    }
+  }
+  
+  on(event: string, handler: Function): void {
+    if (this.component) {
+      this.component.on(event, handler);
+    }
+  }
+  
+  off(event: string, handler: Function): void {
+    if (this.component) {
+      this.component.un(event, handler);
+    }
+  }
+  
+  private propsToConfig(props: any): any {
+    // Convert React-style props to ExtJS config
+    const config: any = {};
+    
+    Object.entries(props).forEach(([key, value]) => {
+      if (key.startsWith('on') && typeof value === 'function') {
+        // Convert event handlers
+        const eventName = key.charAt(2).toLowerCase() + key.slice(3);
+        config.listeners = config.listeners || {};
+        config.listeners[eventName] = value;
+      } else {
+        config[key] = value;
+      }
+    });
+    
+    return config;
+  }
+}
+
+// Step 4: Vanilla JS component wrapper
+class VanillaComponentBridge implements ComponentBridge {
+  private instance: any;
+  private container: HTMLElement | null = null;
+  private componentClass: new (container: HTMLElement, props: any) => any;
+  
+  constructor(componentClass: new (container: HTMLElement, props: any) => any) {
+    this.componentClass = componentClass;
+  }
+  
+  mount(container: HTMLElement, props: any): void {
+    this.container = container;
+    this.instance = new this.componentClass(container, props);
+  }
+  
+  update(props: any): void {
+    if (this.instance && typeof this.instance.update === 'function') {
+      this.instance.update(props);
+    }
+  }
+  
+  unmount(): void {
+    if (this.instance && typeof this.instance.destroy === 'function') {
+      this.instance.destroy();
+    }
+    if (this.container) {
+      this.container.innerHTML = '';
+    }
+  }
+  
+  on(event: string, handler: Function): void {
+    if (this.instance && typeof this.instance.on === 'function') {
+      this.instance.on(event, handler);
+    }
+  }
+  
+  off(event: string, handler: Function): void {
+    if (this.instance && typeof this.instance.off === 'function') {
+      this.instance.off(event, handler);
+    }
+  }
+}
+
+// Step 5: Universal component manager
+class HybridComponentManager {
+  private bridges = new Map<string, ComponentBridge>();
+  private instances = new Map<string, { bridge: ComponentBridge; container: HTMLElement }>();
+  
+  // Register component types
+  registerReactComponent(name: string, component: React.ComponentType<any>): void {
+    this.bridges.set(name, new ReactComponentBridge(component));
+  }
+  
+  registerExtJSComponent(name: string, xtype: string, config?: any): void {
+    this.bridges.set(name, new ExtJSComponentBridge(xtype, config));
+  }
+  
+  registerVanillaComponent(name: string, componentClass: any): void {
+    this.bridges.set(name, new VanillaComponentBridge(componentClass));
+  }
+  
+  // Create component instance
+  create(
+    componentName: string,
+    container: HTMLElement | string,
+    props: any = {},
+    instanceId?: string
+  ): string {
+    const bridge = this.bridges.get(componentName);
+    if (!bridge) {
+      throw new Error(`Component ${componentName} not registered`);
+    }
+    
+    const containerEl = typeof container === 'string' 
+      ? document.querySelector(container) as HTMLElement
+      : container;
+      
+    if (!containerEl) {
+      throw new Error('Container element not found');
+    }
+    
+    const id = instanceId || `${componentName}-${Date.now()}`;
+    
+    bridge.mount(containerEl, props);
+    this.instances.set(id, { bridge, container: containerEl });
+    
+    return id;
+  }
+  
+  // Update component
+  update(instanceId: string, props: any): void {
+    const instance = this.instances.get(instanceId);
+    if (instance) {
+      instance.bridge.update(props);
+    }
+  }
+  
+  // Destroy component
+  destroy(instanceId: string): void {
+    const instance = this.instances.get(instanceId);
+    if (instance) {
+      instance.bridge.unmount();
+      this.instances.delete(instanceId);
+    }
+  }
+  
+  // Event handling
+  on(instanceId: string, event: string, handler: Function): void {
+    const instance = this.instances.get(instanceId);
+    if (instance) {
+      instance.bridge.on(event, handler);
+    }
+  }
+  
+  off(instanceId: string, event: string, handler: Function): void {
+    const instance = this.instances.get(instanceId);
+    if (instance) {
+      instance.bridge.off(event, handler);
+    }
+  }
+}
+
+// Step 6: Example components
+
+// React component
+const ReactProductCard: React.FC<{
+  product: Product;
+  onSelect?: (product: Product) => void;
+  onEvent?: (event: string, data: any) => void;
+}> = ({ product, onSelect, onEvent }) => {
+  const handleClick = () => {
+    onSelect?.(product);
+    onEvent?.('select', product);
+  };
+  
+  return (
+    <Card sectioned onClick={handleClick}>
+      <Text variant="headingMd">{product.name}</Text>
+      <Text>${product.price}</Text>
+    </Card>
+  );
+};
+
+// ExtJS component (pre-configured)
+// Registered as 'extjs-product-grid'
+
+// Vanilla JS component
+class VanillaRatingComponent {
+  private container: HTMLElement;
+  private props: any;
+  private listeners = new Map<string, Set<Function>>();
+  
+  constructor(container: HTMLElement, props: any) {
+    this.container = container;
+    this.props = props;
+    this.render();
+  }
+  
+  update(props: any): void {
+    this.props = { ...this.props, ...props };
+    this.render();
+  }
+  
+  destroy(): void {
+    this.container.innerHTML = '';
+    this.listeners.clear();
+  }
+  
+  on(event: string, handler: Function): void {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, new Set());
+    }
+    this.listeners.get(event)!.add(handler);
+  }
+  
+  off(event: string, handler: Function): void {
+    this.listeners.get(event)?.delete(handler);
+  }
+  
+  private emit(event: string, data: any): void {
+    this.listeners.get(event)?.forEach(handler => handler(data));
+  }
+  
+  private render(): void {
+    const { rating = 0, max = 5, readonly = false } = this.props;
+    
+    this.container.innerHTML = `
+      <div class="rating-component">
+        ${Array.from({ length: max }, (_, i) => `
+          <span class="star ${i < rating ? 'filled' : ''}" 
+                data-rating="${i + 1}">
+            ★
+          </span>
+        `).join('')}
+      </div>
+    `;
+    
+    if (!readonly) {
+      this.container.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', (e) => {
+          const newRating = parseInt((e.target as HTMLElement).dataset.rating || '0');
+          this.emit('change', newRating);
+        });
+      });
+    }
+  }
+}
+
+// Step 7: Usage example
+const hybridManager = new HybridComponentManager();
+
+// Register components
+hybridManager.registerReactComponent('product-card', ReactProductCard);
+hybridManager.registerExtJSComponent('product-grid', 'grid.Panel', {
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Price', dataIndex: 'price', width: 100 }
+  ]
+});
+hybridManager.registerVanillaComponent('rating', VanillaRatingComponent);
+
+// Create hybrid interface
+class HybridProductView {
+  private selectedProduct: Product | null = null;
+  
+  constructor(private container: HTMLElement) {
+    this.render();
+    this.attachEventHandlers();
+  }
+  
+  private render(): void {
+    this.container.innerHTML = `
+      <div class="hybrid-view">
+        <div class="filters">
+          <h2>Filters</h2>
+          <div id="category-filter"></div>
+        </div>
+        <div class="main">
+          <div id="product-grid"></div>
+        </div>
+        <div class="sidebar">
+          <div id="selected-product"></div>
+          <div id="product-rating"></div>
+        </div>
+      </div>
+    `;
+    
+    // Create ExtJS grid
+    this.gridId = hybridManager.create(
+      'product-grid',
+      '#product-grid',
+      {
+        store: {
+          data: this.getProducts()
+        }
+      }
+    );
+    
+    // Create React filter component
+    this.filterId = hybridManager.create(
+      'category-filter',
+      '#category-filter',
+      {
+        categories: ['Electronics', 'Clothing', 'Books'],
+        onChange: this.handleFilterChange.bind(this)
+      }
+    );
+  }
+  
+  private attachEventHandlers(): void {
+    // Listen to grid selection
+    hybridManager.on(this.gridId, 'select', (grid: any, record: any) => {
+      this.selectProduct(record.getData());
+    });
+  }
+  
+  private selectProduct(product: Product): void {
+    this.selectedProduct = product;
+    
+    // Destroy existing components
+    if (this.cardId) {
+      hybridManager.destroy(this.cardId);
+    }
+    if (this.ratingId) {
+      hybridManager.destroy(this.ratingId);
+    }
+    
+    // Create React product card
+    this.cardId = hybridManager.create(
+      'product-card',
+      '#selected-product',
+      {
+        product,
+        onSelect: (p: Product) => console.log('Selected:', p)
+      }
+    );
+    
+    // Create Vanilla JS rating component
+    this.ratingId = hybridManager.create(
+      'rating',
+      '#product-rating',
+      {
+        rating: product.rating || 0,
+        readonly: false
+      }
+    );
+    
+    // Listen to rating changes
+    hybridManager.on(this.ratingId, 'change', (rating: number) => {
+      console.log('Rating changed:', rating);
+      // Update product rating
+      product.rating = rating;
+    });
+  }
+  
+  private handleFilterChange(category: string): void {
+    // Filter grid data
+    const filtered = category 
+      ? this.getProducts().filter(p => p.category === category)
+      : this.getProducts();
+      
+    hybridManager.update(this.gridId, {
+      store: { data: filtered }
+    });
+  }
+  
+  private getProducts(): Product[] {
+    return [
+      { id: '1', name: 'Laptop', price: 999, category: 'Electronics' },
+      { id: '2', name: 'T-Shirt', price: 29, category: 'Clothing' },
+      { id: '3', name: 'TypeScript Book', price: 45, category: 'Books' }
+    ];
+  }
+  
+  private gridId!: string;
+  private filterId!: string;
+  private cardId?: string;
+  private ratingId?: string;
+}
+
+// Initialize hybrid view
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('app');
+  if (container) {
+    new HybridProductView(container);
+  }
+});
+
+// Step 8: React hooks for hybrid components
+function useHybridComponent(
+  componentName: string,
+  props: any
+): {
+  ref: React.RefObject<HTMLDivElement>;
+  instance: string | null;
+} {
+  const ref = useRef<HTMLDivElement>(null);
+  const [instance, setInstance] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (!ref.current) return;
+    
+    const id = hybridManager.create(componentName, ref.current, props);
+    setInstance(id);
+    
+    return () => {
+      hybridManager.destroy(id);
+    };
+  }, [componentName]);
+  
+  useEffect(() => {
+    if (instance) {
+      hybridManager.update(instance, props);
+    }
+  }, [instance, props]);
+  
+  return { ref, instance };
+}
+
+// Usage in React component
+function ProductDashboard() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const { ref: gridRef, instance: gridInstance } = useHybridComponent('product-grid', {
+    store: { data: products }
+  });
+  
+  useEffect(() => {
+    if (gridInstance) {
+      hybridManager.on(gridInstance, 'select', handleProductSelect);
+      
+      return () => {
+        hybridManager.off(gridInstance, 'select', handleProductSelect);
+      };
+    }
+  }, [gridInstance]);
+  
+  const handleProductSelect = (grid: any, record: any) => {
+    console.log('Product selected:', record.getData());
+  };
+  
+  return (
+    <div>
+      <h1>Product Dashboard</h1>
+      <div ref={gridRef} style={{ height: 400 }} />
+    </div>
+  );
+}
+```
+
+## Best Practices
+
+### 1. Component Communication
+```typescript
+// Good: Use events for loose coupling
+hybridManager.on(componentId, 'change', (data) => {
+  // Update other components
+  hybridManager.update(otherComponentId, { relatedData: data });
+});
+
+// Bad: Direct component references
+component1.setOtherComponent(component2);
+```
+
+### 2. Lifecycle Management
+```typescript
+// Good: Clean up on unmount
+useEffect(() => {
+  const id = hybridManager.create(name, container, props);
+  
+  return () => {
+    hybridManager.destroy(id);
+  };
+}, []);
+```
+
+### 3. Type Safety
+```typescript
+// Good: Type-safe component registration
+interface ComponentRegistry {
+  'product-grid': { products: Product[]; onSelect: (p: Product) => void };
+  'rating': { rating: number; max?: number; onChange: (r: number) => void };
+}
+
+class TypedHybridManager<T extends ComponentRegistry> {
+  create<K extends keyof T>(name: K, container: HTMLElement, props: T[K]): string;
+}
+```
+
+### 4. Performance Optimization
+```typescript
+// Good: Lazy load heavy components
+const loadExtJSGrid = async () => {
+  await import('./extjs-grid');
+  hybridManager.registerExtJSComponent('heavy-grid', 'grid.Panel');
+};
+```
+
+## Common Pitfalls
+
+- **Memory Leaks**: Always destroy components when no longer needed
+- **Event Cleanup**: Remove event listeners to prevent memory leaks
+- **State Sync**: Keep component states synchronized across frameworks
+- **Style Conflicts**: Isolate styles between different framework components
+
+</Usage>

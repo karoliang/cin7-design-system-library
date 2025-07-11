@@ -1,0 +1,724 @@
+---
+title: Command Pattern
+url: /patterns/cross-layer-communication/command-pattern
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Command Pattern encapsulates operations as objects, enabling queuing, logging, and undo/redo functionality across different technology layers. This pattern is ideal for complex operations that need coordination between React, ExtJS, and Vanilla JS components.
+
+### Benefits:
+1. **Undo/Redo Support**: Built-in command history and reversal
+2. **Operation Queuing**: Execute commands in sequence or batch
+3. **Logging & Auditing**: Track all operations with metadata
+4. **Decoupling**: Separate command execution from implementation
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Support undo/redo**: When users need to reverse operations across different UI layers.
+
+**Queue operations**: When commands need to be executed in a specific order or batched for performance.
+
+**Audit trail**: When you need to log all operations for debugging or compliance.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing a command system for cross-layer operations.
+
+```typescript {"type":"livePreview","id":"command-pattern","title":"Command Pattern Implementation"}
+// Step 1: Define base command interface
+interface Command<T = any> {
+  id: string;
+  name: string;
+  timestamp: Date;
+  execute(): Promise<T> | T;
+  undo(): Promise<void> | void;
+  redo(): Promise<T> | T;
+  canExecute(): boolean;
+  metadata?: Record<string, any>;
+}
+
+// Step 2: Create abstract command class
+abstract class BaseCommand<T = any> implements Command<T> {
+  id: string;
+  name: string;
+  timestamp: Date;
+  metadata?: Record<string, any>;
+  
+  constructor(name: string, metadata?: Record<string, any>) {
+    this.id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    this.name = name;
+    this.timestamp = new Date();
+    this.metadata = metadata;
+  }
+  
+  abstract execute(): Promise<T> | T;
+  abstract undo(): Promise<void> | void;
+  
+  redo(): Promise<T> | T {
+    return this.execute();
+  }
+  
+  canExecute(): boolean {
+    return true;
+  }
+}
+
+// Step 3: Command manager for coordination
+class CommandManager {
+  private history: Command[] = [];
+  private currentIndex = -1;
+  private maxHistorySize = 100;
+  private listeners = new Set<(event: CommandEvent) => void>();
+  private executingCommand: Command | null = null;
+  
+  // Command execution
+  async execute<T>(command: Command<T>): Promise<T> {
+    if (!command.canExecute()) {
+      throw new Error(`Command ${command.name} cannot be executed`);
+    }
+    
+    // Set executing command for status tracking
+    this.executingCommand = command;
+    this.notifyListeners({ type: 'executing', command });
+    
+    try {
+      // Execute the command
+      const result = await command.execute();
+      
+      // Add to history (remove any commands after current index)
+      this.history = this.history.slice(0, this.currentIndex + 1);
+      this.history.push(command);
+      
+      // Maintain history size
+      if (this.history.length > this.maxHistorySize) {
+        const removed = this.history.shift()!;
+        this.currentIndex--;
+      } else {
+        this.currentIndex++;
+      }
+      
+      this.executingCommand = null;
+      this.notifyListeners({ type: 'executed', command, result });
+      
+      return result;
+    } catch (error) {
+      this.executingCommand = null;
+      this.notifyListeners({ type: 'failed', command, error });
+      throw error;
+    }
+  }
+  
+  // Undo last command
+  async undo(): Promise<void> {
+    if (!this.canUndo()) {
+      throw new Error('No commands to undo');
+    }
+    
+    const command = this.history[this.currentIndex];
+    this.notifyListeners({ type: 'undoing', command });
+    
+    try {
+      await command.undo();
+      this.currentIndex--;
+      this.notifyListeners({ type: 'undone', command });
+    } catch (error) {
+      this.notifyListeners({ type: 'undo-failed', command, error });
+      throw error;
+    }
+  }
+  
+  // Redo command
+  async redo(): Promise<void> {
+    if (!this.canRedo()) {
+      throw new Error('No commands to redo');
+    }
+    
+    const command = this.history[this.currentIndex + 1];
+    this.notifyListeners({ type: 'redoing', command });
+    
+    try {
+      await command.redo();
+      this.currentIndex++;
+      this.notifyListeners({ type: 'redone', command });
+    } catch (error) {
+      this.notifyListeners({ type: 'redo-failed', command, error });
+      throw error;
+    }
+  }
+  
+  // Batch execute commands
+  async executeBatch(commands: Command[]): Promise<any[]> {
+    const results: any[] = [];
+    const executed: Command[] = [];
+    
+    try {
+      for (const command of commands) {
+        const result = await this.execute(command);
+        results.push(result);
+        executed.push(command);
+      }
+      
+      return results;
+    } catch (error) {
+      // Rollback executed commands in reverse order
+      for (let i = executed.length - 1; i >= 0; i--) {
+        try {
+          await executed[i].undo();
+          this.currentIndex--;
+          this.history.pop();
+        } catch (undoError) {
+          console.error(`Failed to rollback command ${executed[i].name}:`, undoError);
+        }
+      }
+      
+      throw error;
+    }
+  }
+  
+  // Check if can undo/redo
+  canUndo(): boolean {
+    return this.currentIndex >= 0;
+  }
+  
+  canRedo(): boolean {
+    return this.currentIndex < this.history.length - 1;
+  }
+  
+  // Get command history
+  getHistory(): readonly Command[] {
+    return [...this.history];
+  }
+  
+  // Get undo/redo stacks
+  getUndoStack(): readonly Command[] {
+    return this.history.slice(0, this.currentIndex + 1);
+  }
+  
+  getRedoStack(): readonly Command[] {
+    return this.history.slice(this.currentIndex + 1);
+  }
+  
+  // Event subscription
+  subscribe(listener: (event: CommandEvent) => void): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+  
+  private notifyListeners(event: CommandEvent): void {
+    this.listeners.forEach(listener => listener(event));
+  }
+  
+  // Clear history
+  clear(): void {
+    this.history = [];
+    this.currentIndex = -1;
+    this.notifyListeners({ type: 'cleared' });
+  }
+}
+
+// Event types
+type CommandEvent = 
+  | { type: 'executing'; command: Command }
+  | { type: 'executed'; command: Command; result: any }
+  | { type: 'failed'; command: Command; error: any }
+  | { type: 'undoing'; command: Command }
+  | { type: 'undone'; command: Command }
+  | { type: 'undo-failed'; command: Command; error: any }
+  | { type: 'redoing'; command: Command }
+  | { type: 'redone'; command: Command }
+  | { type: 'redo-failed'; command: Command; error: any }
+  | { type: 'cleared' };
+
+// Step 4: Create global command manager
+export const Commands = new CommandManager();
+
+// Make available globally
+if (typeof window !== 'undefined') {
+  (window as any).Cin7Commands = Commands;
+}
+
+// Step 5: Implement specific commands
+
+// Add product command
+class AddProductCommand extends BaseCommand<Product> {
+  private product: Product;
+  private addedProduct?: Product;
+  
+  constructor(product: Omit<Product, 'id'>) {
+    super('AddProduct', { product });
+    this.product = { ...product, id: this.generateId() };
+  }
+  
+  async execute(): Promise<Product> {
+    // Add to backend
+    this.addedProduct = await api.createProduct(this.product);
+    
+    // Update all layers
+    Store.setState(state => ({
+      products: [...state.products, this.addedProduct!]
+    }));
+    
+    EventBus.emit('data:product:added', { product: this.addedProduct });
+    
+    return this.addedProduct;
+  }
+  
+  async undo(): Promise<void> {
+    if (!this.addedProduct) return;
+    
+    // Remove from backend
+    await api.deleteProduct(this.addedProduct.id);
+    
+    // Update all layers
+    Store.setState(state => ({
+      products: state.products.filter(p => p.id !== this.addedProduct!.id)
+    }));
+    
+    EventBus.emit('data:product:deleted', { id: this.addedProduct.id });
+  }
+  
+  private generateId(): string {
+    return `prod-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+}
+
+// Update product command
+class UpdateProductCommand extends BaseCommand<Product> {
+  private productId: string;
+  private updates: Partial<Product>;
+  private previousState?: Product;
+  
+  constructor(productId: string, updates: Partial<Product>) {
+    super('UpdateProduct', { productId, updates });
+    this.productId = productId;
+    this.updates = updates;
+  }
+  
+  async execute(): Promise<Product> {
+    // Save previous state
+    const state = Store.getState();
+    this.previousState = state.products.find(p => p.id === this.productId);
+    
+    if (!this.previousState) {
+      throw new Error(`Product ${this.productId} not found`);
+    }
+    
+    // Update backend
+    const updated = await api.updateProduct(this.productId, this.updates);
+    
+    // Update all layers
+    Store.setState(state => ({
+      products: state.products.map(p => 
+        p.id === this.productId ? updated : p
+      )
+    }));
+    
+    EventBus.emit('data:product:updated', { id: this.productId, changes: this.updates });
+    
+    return updated;
+  }
+  
+  async undo(): Promise<void> {
+    if (!this.previousState) return;
+    
+    // Restore previous state
+    await api.updateProduct(this.productId, this.previousState);
+    
+    Store.setState(state => ({
+      products: state.products.map(p => 
+        p.id === this.productId ? this.previousState! : p
+      )
+    }));
+    
+    EventBus.emit('data:product:updated', { 
+      id: this.productId, 
+      changes: this.previousState 
+    });
+  }
+}
+
+// Bulk operation command
+class BulkUpdateCommand extends BaseCommand<Product[]> {
+  private commands: UpdateProductCommand[];
+  
+  constructor(updates: Array<{ id: string; changes: Partial<Product> }>) {
+    super('BulkUpdate', { count: updates.length });
+    this.commands = updates.map(({ id, changes }) => 
+      new UpdateProductCommand(id, changes)
+    );
+  }
+  
+  async execute(): Promise<Product[]> {
+    const results: Product[] = [];
+    
+    for (const command of this.commands) {
+      const result = await command.execute();
+      results.push(result);
+    }
+    
+    return results;
+  }
+  
+  async undo(): Promise<void> {
+    // Undo in reverse order
+    for (let i = this.commands.length - 1; i >= 0; i--) {
+      await this.commands[i].undo();
+    }
+  }
+  
+  canExecute(): boolean {
+    return this.commands.every(cmd => cmd.canExecute());
+  }
+}
+
+// Step 6: React integration
+function useCommands() {
+  const [canUndo, setCanUndo] = useState(Commands.canUndo());
+  const [canRedo, setCanRedo] = useState(Commands.canRedo());
+  const [executing, setExecuting] = useState(false);
+  const [history, setHistory] = useState<Command[]>([]);
+  
+  useEffect(() => {
+    const unsubscribe = Commands.subscribe((event) => {
+      setCanUndo(Commands.canUndo());
+      setCanRedo(Commands.canRedo());
+      setHistory([...Commands.getHistory()]);
+      
+      if (event.type === 'executing') {
+        setExecuting(true);
+      } else if (event.type === 'executed' || event.type === 'failed') {
+        setExecuting(false);
+      }
+    });
+    
+    return unsubscribe;
+  }, []);
+  
+  const execute = useCallback(async (command: Command) => {
+    try {
+      return await Commands.execute(command);
+    } catch (error) {
+      console.error('Command failed:', error);
+      throw error;
+    }
+  }, []);
+  
+  const undo = useCallback(async () => {
+    try {
+      await Commands.undo();
+    } catch (error) {
+      console.error('Undo failed:', error);
+    }
+  }, []);
+  
+  const redo = useCallback(async () => {
+    try {
+      await Commands.redo();
+    } catch (error) {
+      console.error('Redo failed:', error);
+    }
+  }, []);
+  
+  return { execute, undo, redo, canUndo, canRedo, executing, history };
+}
+
+// Usage in React component
+function ProductForm() {
+  const { execute, undo, redo, canUndo, canRedo } = useCommands();
+  
+  const handleSubmit = async (formData: FormData) => {
+    const command = new AddProductCommand({
+      name: formData.get('name') as string,
+      price: parseFloat(formData.get('price') as string)
+    });
+    
+    try {
+      const product = await execute(command);
+      console.log('Product added:', product);
+    } catch (error) {
+      console.error('Failed to add product:', error);
+    }
+  };
+  
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        {/* Form fields */}
+      </form>
+      
+      <div>
+        <button onClick={undo} disabled={!canUndo}>Undo</button>
+        <button onClick={redo} disabled={!canRedo}>Redo</button>
+      </div>
+    </div>
+  );
+}
+
+// Step 7: ExtJS integration
+Ext.define('Cin7.command.CommandManager', {
+  singleton: true,
+  
+  execute: function(command) {
+    return Commands.execute(command);
+  },
+  
+  undo: function() {
+    return Commands.undo();
+  },
+  
+  redo: function() {
+    return Commands.redo();
+  },
+  
+  bindToComponent: function(component) {
+    const updateButtons = () => {
+      const undoBtn = component.down('#undoBtn');
+      const redoBtn = component.down('#redoBtn');
+      
+      if (undoBtn) undoBtn.setDisabled(!Commands.canUndo());
+      if (redoBtn) redoBtn.setDisabled(!Commands.canRedo());
+    };
+    
+    Commands.subscribe(updateButtons);
+    updateButtons();
+  }
+});
+
+// ExtJS toolbar with undo/redo
+Ext.create('Ext.toolbar.Toolbar', {
+  items: [{
+    text: 'Undo',
+    itemId: 'undoBtn',
+    handler: () => Cin7.command.CommandManager.undo()
+  }, {
+    text: 'Redo',
+    itemId: 'redoBtn',
+    handler: () => Cin7.command.CommandManager.redo()
+  }],
+  
+  listeners: {
+    afterrender: function() {
+      Cin7.command.CommandManager.bindToComponent(this);
+    }
+  }
+});
+
+// Step 8: Vanilla JS integration
+document.addEventListener('DOMContentLoaded', () => {
+  // Bind undo/redo buttons
+  const undoBtn = document.getElementById('undo-btn');
+  const redoBtn = document.getElementById('redo-btn');
+  
+  Commands.subscribe((event) => {
+    if (undoBtn) undoBtn.disabled = !Commands.canUndo();
+    if (redoBtn) redoBtn.disabled = !Commands.canRedo();
+  });
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        Commands.undo();
+      } else if (e.key === 'z' && e.shiftKey || e.key === 'y') {
+        e.preventDefault();
+        Commands.redo();
+      }
+    }
+  });
+  
+  // Form handling with commands
+  document.getElementById('product-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    const command = new AddProductCommand({
+      name: formData.get('name') as string,
+      price: parseFloat(formData.get('price') as string)
+    });
+    
+    try {
+      await Commands.execute(command);
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      alert('Failed to add product');
+    }
+  });
+});
+
+// Step 9: Advanced patterns
+
+// Macro command for complex operations
+class MacroCommand extends BaseCommand<any[]> {
+  private commands: Command[];
+  private results: any[] = [];
+  
+  constructor(name: string, commands: Command[]) {
+    super(name, { commandCount: commands.length });
+    this.commands = commands;
+  }
+  
+  async execute(): Promise<any[]> {
+    this.results = [];
+    
+    for (const command of this.commands) {
+      const result = await command.execute();
+      this.results.push(result);
+    }
+    
+    return this.results;
+  }
+  
+  async undo(): Promise<void> {
+    // Undo in reverse order
+    for (let i = this.commands.length - 1; i >= 0; i--) {
+      await this.commands[i].undo();
+    }
+  }
+}
+
+// Command validation
+class ValidatedCommand<T> extends BaseCommand<T> {
+  private command: Command<T>;
+  private validator: () => boolean | Promise<boolean>;
+  
+  constructor(command: Command<T>, validator: () => boolean | Promise<boolean>) {
+    super(`Validated(${command.name})`);
+    this.command = command;
+    this.validator = validator;
+  }
+  
+  async canExecute(): Promise<boolean> {
+    return await this.validator();
+  }
+  
+  execute(): Promise<T> | T {
+    return this.command.execute();
+  }
+  
+  undo(): Promise<void> | void {
+    return this.command.undo();
+  }
+}
+
+// Command with confirmation
+class ConfirmedCommand<T> extends BaseCommand<T> {
+  private command: Command<T>;
+  private message: string;
+  
+  constructor(command: Command<T>, message: string) {
+    super(`Confirmed(${command.name})`);
+    this.command = command;
+    this.message = message;
+  }
+  
+  async execute(): Promise<T> {
+    const confirmed = await this.confirm();
+    if (!confirmed) {
+      throw new Error('Command cancelled by user');
+    }
+    
+    return this.command.execute();
+  }
+  
+  undo(): Promise<void> | void {
+    return this.command.undo();
+  }
+  
+  private confirm(): Promise<boolean> {
+    return new Promise(resolve => {
+      if (typeof window !== 'undefined' && window.confirm) {
+        resolve(window.confirm(this.message));
+      } else {
+        resolve(true);
+      }
+    });
+  }
+}
+```
+
+## Best Practices
+
+### 1. Keep Commands Atomic
+```typescript
+// Good: Single responsibility
+class AddProductCommand extends BaseCommand {
+  execute() {
+    // Only adds a product
+  }
+}
+
+// Bad: Multiple responsibilities
+class AddProductAndNotifyCommand extends BaseCommand {
+  execute() {
+    // Adds product AND sends notifications
+  }
+}
+```
+
+### 2. Store Minimal State
+```typescript
+// Good: Store only what's needed for undo
+class UpdateCommand {
+  private previousValue: string;
+  private newValue: string;
+}
+
+// Bad: Store entire objects unnecessarily
+class UpdateCommand {
+  private entireStateBefore: AppState;
+  private entireStateAfter: AppState;
+}
+```
+
+### 3. Handle Async Operations
+```typescript
+class AsyncCommand extends BaseCommand {
+  async execute() {
+    try {
+      this.startLoading();
+      const result = await api.call();
+      this.stopLoading();
+      return result;
+    } catch (error) {
+      this.stopLoading();
+      throw error;
+    }
+  }
+}
+```
+
+### 4. Validate Before Execution
+```typescript
+class SafeCommand extends BaseCommand {
+  canExecute(): boolean {
+    return this.hasPermission() && this.isValidState();
+  }
+  
+  execute() {
+    if (!this.canExecute()) {
+      throw new Error('Invalid command state');
+    }
+    // Execute command
+  }
+}
+```
+
+## Common Pitfalls
+
+- **Memory Leaks**: Limit history size to prevent memory issues
+- **Side Effects**: Ensure undo truly reverses all changes
+- **Error Handling**: Always handle failures in execute/undo
+- **Race Conditions**: Be careful with concurrent command execution
+
+</Usage>

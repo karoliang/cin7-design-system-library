@@ -1,0 +1,659 @@
+---
+title: Use Case Pattern
+url: /patterns/data-management/use-case-pattern
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Use Case pattern encapsulates business logic into reusable, testable units that coordinate between the UI and data layers. This pattern promotes clean architecture by separating business rules from infrastructure concerns.
+
+### Benefits:
+1. **Business Logic Isolation**: Keep complex logic separate from UI and data access
+2. **Testability**: Easy to unit test without UI or database dependencies
+3. **Reusability**: Share business logic across different UI layers
+4. **Maintainability**: Clear separation of concerns
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Complex business logic**: When operations involve multiple steps, validations, or calculations.
+
+**Cross-layer coordination**: When an action needs to update multiple repositories or trigger various side effects.
+
+**Testable business rules**: When you need to test business logic independently of the UI or database.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing use cases for business logic encapsulation.
+
+```typescript {"type":"livePreview","id":"use-case-pattern","title":"Use Case Pattern Implementation"}
+// Step 1: Define base use case
+abstract class BaseUseCase {
+  protected logger: Logger;
+  protected eventBus: EventBus;
+  
+  constructor() {
+    this.logger = new Logger(this.constructor.name);
+    this.eventBus = EventBus.getInstance();
+  }
+  
+  protected async executeWithLogging<T>(
+    operation: () => Promise<T>,
+    operationName: string
+  ): Promise<T> {
+    this.logger.info(`Starting ${operationName}`);
+    const startTime = Date.now();
+    
+    try {
+      const result = await operation();
+      const duration = Date.now() - startTime;
+      this.logger.info(`Completed ${operationName} in ${duration}ms`);
+      return result;
+    } catch (error) {
+      this.logger.error(`Failed ${operationName}:`, error);
+      throw error;
+    }
+  }
+}
+
+// Step 2: Define command and result types
+interface Command {
+  validate(): ValidationResult;
+}
+
+interface ValidationResult {
+  isValid: boolean;
+  errors?: string[];
+}
+
+interface UseCaseResult<T> {
+  success: boolean;
+  data?: T;
+  error?: Error;
+  validationErrors?: string[];
+}
+
+// Step 3: Create product use cases
+class ProductUseCases extends BaseUseCase {
+  constructor(
+    private productRepository: ProductRepository,
+    private inventoryRepository: InventoryRepository,
+    private notificationService: NotificationService
+  ) {
+    super();
+  }
+  
+  // Create product with inventory
+  async createProductWithInventory(
+    command: CreateProductCommand
+  ): Promise<UseCaseResult<Product>> {
+    return this.executeWithLogging(async () => {
+      // Step 1: Validate command
+      const validation = command.validate();
+      if (!validation.isValid) {
+        return {
+          success: false,
+          validationErrors: validation.errors
+        };
+      }
+      
+      // Step 2: Check business rules
+      const existingProduct = await this.productRepository.findByName(command.name);
+      if (existingProduct) {
+        return {
+          success: false,
+          error: new Error('Product with this name already exists')
+        };
+      }
+      
+      // Step 3: Create product
+      const product = await this.productRepository.create({
+        name: command.name,
+        price: command.price,
+        category: command.category,
+        active: true
+      });
+      
+      // Step 4: Create initial inventory
+      if (command.initialStock > 0) {
+        await this.inventoryRepository.create({
+          productId: product.id,
+          quantity: command.initialStock,
+          warehouse: command.warehouse || 'MAIN'
+        });
+      }
+      
+      // Step 5: Emit event
+      this.eventBus.emit('product:created', {
+        product,
+        initialStock: command.initialStock
+      });
+      
+      // Step 6: Send notification
+      await this.notificationService.notifyNewProduct(product);
+      
+      return {
+        success: true,
+        data: product
+      };
+    }, 'createProductWithInventory');
+  }
+  
+  // Update product price with validation
+  async updateProductPrice(
+    productId: string,
+    newPrice: number,
+    reason: string
+  ): Promise<UseCaseResult<Product>> {
+    return this.executeWithLogging(async () => {
+      // Validate inputs
+      if (newPrice <= 0) {
+        return {
+          success: false,
+          validationErrors: ['Price must be greater than 0']
+        };
+      }
+      
+      if (!reason || reason.trim().length < 10) {
+        return {
+          success: false,
+          validationErrors: ['Price change reason must be at least 10 characters']
+        };
+      }
+      
+      // Get product
+      const product = await this.productRepository.findById(productId);
+      if (!product) {
+        return {
+          success: false,
+          error: new Error('Product not found')
+        };
+      }
+      
+      // Check price change limits (business rule)
+      const priceChangePercent = Math.abs((newPrice - product.price) / product.price) * 100;
+      if (priceChangePercent > 50) {
+        return {
+          success: false,
+          error: new Error('Price change cannot exceed 50%')
+        };
+      }
+      
+      // Store old price for audit
+      const oldPrice = product.price;
+      
+      // Update price
+      const updatedProduct = await this.productRepository.update(productId, {
+        price: newPrice,
+        lastPriceUpdate: new Date(),
+        priceUpdateReason: reason
+      });
+      
+      // Create price history record
+      await this.productRepository.addPriceHistory({
+        productId,
+        oldPrice,
+        newPrice,
+        reason,
+        updatedBy: 'current-user', // Get from context
+        updatedAt: new Date()
+      });
+      
+      // Emit event
+      this.eventBus.emit('product:price:updated', {
+        productId,
+        oldPrice,
+        newPrice,
+        reason
+      });
+      
+      return {
+        success: true,
+        data: updatedProduct
+      };
+    }, 'updateProductPrice');
+  }
+  
+  // Complex inventory transfer
+  async transferInventory(
+    command: TransferInventoryCommand
+  ): Promise<UseCaseResult<InventoryTransfer>> {
+    return this.executeWithLogging(async () => {
+      const validation = command.validate();
+      if (!validation.isValid) {
+        return {
+          success: false,
+          validationErrors: validation.errors
+        };
+      }
+      
+      // Start transaction
+      return await this.productRepository.transaction(async (trx) => {
+        // Check source inventory
+        const sourceInventory = await this.inventoryRepository.findByProductAndWarehouse(
+          command.productId,
+          command.sourceWarehouse,
+          trx
+        );
+        
+        if (!sourceInventory || sourceInventory.quantity < command.quantity) {
+          return {
+            success: false,
+            error: new Error('Insufficient inventory in source warehouse')
+          };
+        }
+        
+        // Deduct from source
+        await this.inventoryRepository.update(
+          sourceInventory.id,
+          { quantity: sourceInventory.quantity - command.quantity },
+          trx
+        );
+        
+        // Add to destination
+        let destInventory = await this.inventoryRepository.findByProductAndWarehouse(
+          command.productId,
+          command.destinationWarehouse,
+          trx
+        );
+        
+        if (destInventory) {
+          await this.inventoryRepository.update(
+            destInventory.id,
+            { quantity: destInventory.quantity + command.quantity },
+            trx
+          );
+        } else {
+          await this.inventoryRepository.create({
+            productId: command.productId,
+            warehouse: command.destinationWarehouse,
+            quantity: command.quantity
+          }, trx);
+        }
+        
+        // Create transfer record
+        const transfer = await this.inventoryRepository.createTransfer({
+          productId: command.productId,
+          sourceWarehouse: command.sourceWarehouse,
+          destinationWarehouse: command.destinationWarehouse,
+          quantity: command.quantity,
+          reason: command.reason,
+          status: 'completed',
+          completedAt: new Date()
+        }, trx);
+        
+        // Emit event
+        this.eventBus.emit('inventory:transferred', transfer);
+        
+        return {
+          success: true,
+          data: transfer
+        };
+      });
+    }, 'transferInventory');
+  }
+  
+  // Bulk operations
+  async bulkUpdateProductStatus(
+    productIds: string[],
+    active: boolean,
+    reason: string
+  ): Promise<UseCaseResult<BulkUpdateResult>> {
+    return this.executeWithLogging(async () => {
+      const results: BulkUpdateResult = {
+        successful: [],
+        failed: []
+      };
+      
+      // Process in batches to avoid overwhelming the database
+      const batchSize = 10;
+      for (let i = 0; i < productIds.length; i += batchSize) {
+        const batch = productIds.slice(i, i + batchSize);
+        
+        await Promise.all(batch.map(async (productId) => {
+          try {
+            const product = await this.productRepository.findById(productId);
+            if (!product) {
+              results.failed.push({
+                productId,
+                reason: 'Product not found'
+              });
+              return;
+            }
+            
+            // Check business rules
+            if (!active && product.hasActiveOrders) {
+              results.failed.push({
+                productId,
+                reason: 'Cannot deactivate product with active orders'
+              });
+              return;
+            }
+            
+            await this.productRepository.update(productId, {
+              active,
+              statusChangeReason: reason,
+              statusChangedAt: new Date()
+            });
+            
+            results.successful.push(productId);
+          } catch (error) {
+            results.failed.push({
+              productId,
+              reason: error.message
+            });
+          }
+        }));
+      }
+      
+      // Emit bulk update event
+      this.eventBus.emit('products:bulk:status:updated', {
+        results,
+        active,
+        reason
+      });
+      
+      return {
+        success: results.failed.length === 0,
+        data: results
+      };
+    }, 'bulkUpdateProductStatus');
+  }
+}
+
+// Step 4: Command objects with validation
+class CreateProductCommand implements Command {
+  constructor(
+    public name: string,
+    public price: number,
+    public category: string,
+    public initialStock: number = 0,
+    public warehouse?: string
+  ) {}
+  
+  validate(): ValidationResult {
+    const errors: string[] = [];
+    
+    if (!this.name || this.name.trim().length < 3) {
+      errors.push('Product name must be at least 3 characters');
+    }
+    
+    if (this.price <= 0) {
+      errors.push('Price must be greater than 0');
+    }
+    
+    if (!this.category) {
+      errors.push('Category is required');
+    }
+    
+    if (this.initialStock < 0) {
+      errors.push('Initial stock cannot be negative');
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+}
+
+class TransferInventoryCommand implements Command {
+  constructor(
+    public productId: string,
+    public sourceWarehouse: string,
+    public destinationWarehouse: string,
+    public quantity: number,
+    public reason: string
+  ) {}
+  
+  validate(): ValidationResult {
+    const errors: string[] = [];
+    
+    if (!this.productId) {
+      errors.push('Product ID is required');
+    }
+    
+    if (!this.sourceWarehouse) {
+      errors.push('Source warehouse is required');
+    }
+    
+    if (!this.destinationWarehouse) {
+      errors.push('Destination warehouse is required');
+    }
+    
+    if (this.sourceWarehouse === this.destinationWarehouse) {
+      errors.push('Source and destination warehouses must be different');
+    }
+    
+    if (this.quantity <= 0) {
+      errors.push('Quantity must be greater than 0');
+    }
+    
+    if (!this.reason || this.reason.trim().length < 10) {
+      errors.push('Transfer reason must be at least 10 characters');
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+}
+
+// Step 5: React integration
+function useProductUseCases() {
+  const productRepository = useProductRepository();
+  const inventoryRepository = useInventoryRepository();
+  const notificationService = useNotificationService();
+  
+  const useCases = useMemo(() => 
+    new ProductUseCases(
+      productRepository,
+      inventoryRepository,
+      notificationService
+    ),
+    [productRepository, inventoryRepository, notificationService]
+  );
+  
+  return useCases;
+}
+
+// Usage in component
+function ProductForm() {
+  const productUseCases = useProductUseCases();
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  
+  const handleSubmit = async (formData: FormData) => {
+    setLoading(true);
+    setErrors([]);
+    
+    const command = new CreateProductCommand(
+      formData.get('name') as string,
+      parseFloat(formData.get('price') as string),
+      formData.get('category') as string,
+      parseInt(formData.get('stock') as string) || 0
+    );
+    
+    const result = await productUseCases.createProductWithInventory(command);
+    
+    if (result.success) {
+      // Handle success
+      console.log('Product created:', result.data);
+    } else {
+      // Handle errors
+      setErrors(result.validationErrors || [result.error?.message || 'Unknown error']);
+    }
+    
+    setLoading(false);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((error, index) => (
+            <li key={index}>{error}</li>
+          ))}
+        </ul>
+      )}
+      <button type="submit" disabled={loading}>
+        Create Product
+      </button>
+    </form>
+  );
+}
+
+// Step 6: Testing use cases
+describe('ProductUseCases', () => {
+  let productUseCases: ProductUseCases;
+  let mockProductRepository: jest.Mocked<ProductRepository>;
+  let mockInventoryRepository: jest.Mocked<InventoryRepository>;
+  let mockNotificationService: jest.Mocked<NotificationService>;
+  
+  beforeEach(() => {
+    mockProductRepository = createMockRepository<ProductRepository>();
+    mockInventoryRepository = createMockRepository<InventoryRepository>();
+    mockNotificationService = createMockService<NotificationService>();
+    
+    productUseCases = new ProductUseCases(
+      mockProductRepository,
+      mockInventoryRepository,
+      mockNotificationService
+    );
+  });
+  
+  describe('createProductWithInventory', () => {
+    it('should create product and inventory', async () => {
+      const command = new CreateProductCommand(
+        'Test Product',
+        29.99,
+        'Electronics',
+        100,
+        'MAIN'
+      );
+      
+      mockProductRepository.findByName.mockResolvedValue(null);
+      mockProductRepository.create.mockResolvedValue({
+        id: '123',
+        name: 'Test Product',
+        price: 29.99,
+        category: 'Electronics',
+        active: true
+      });
+      
+      const result = await productUseCases.createProductWithInventory(command);
+      
+      expect(result.success).toBe(true);
+      expect(result.data).toBeDefined();
+      expect(mockInventoryRepository.create).toHaveBeenCalledWith({
+        productId: '123',
+        quantity: 100,
+        warehouse: 'MAIN'
+      });
+      expect(mockNotificationService.notifyNewProduct).toHaveBeenCalled();
+    });
+    
+    it('should handle validation errors', async () => {
+      const command = new CreateProductCommand('', -10, '', -5);
+      
+      const result = await productUseCases.createProductWithInventory(command);
+      
+      expect(result.success).toBe(false);
+      expect(result.validationErrors).toContain('Product name must be at least 3 characters');
+      expect(result.validationErrors).toContain('Price must be greater than 0');
+      expect(mockProductRepository.create).not.toHaveBeenCalled();
+    });
+  });
+});
+```
+
+## Best Practices
+
+### 1. Single Responsibility
+```typescript
+// Good: Focused use case
+class UpdateProductPriceUseCase {
+  async execute(productId: string, newPrice: number): Promise<Product> {
+    // Only handles price updates
+  }
+}
+
+// Bad: Too many responsibilities
+class ProductManagementUseCase {
+  async createProduct() { }
+  async updatePrice() { }
+  async deleteProduct() { }
+  async transferInventory() { }
+}
+```
+
+### 2. Command Pattern for Input
+```typescript
+// Good: Validated command object
+class UpdatePriceCommand {
+  constructor(
+    public productId: string,
+    public newPrice: number,
+    public reason: string
+  ) {}
+  
+  validate(): ValidationResult {
+    // Validation logic
+  }
+}
+
+// Bad: Raw parameters
+async updatePrice(id: string, price: number, reason: string) {
+  // No validation structure
+}
+```
+
+### 3. Return Rich Results
+```typescript
+// Good: Detailed result
+interface UseCaseResult<T> {
+  success: boolean;
+  data?: T;
+  error?: Error;
+  validationErrors?: string[];
+  warnings?: string[];
+}
+
+// Bad: Just throwing errors
+async execute(): Promise<Product> {
+  throw new Error('Validation failed');
+}
+```
+
+### 4. Transaction Management
+```typescript
+class ComplexUseCase {
+  async execute(command: Command): Promise<Result> {
+    return await this.repository.transaction(async (trx) => {
+      // All database operations use the transaction
+      await this.productRepo.update(id, data, trx);
+      await this.inventoryRepo.update(id, data, trx);
+      // Transaction auto-commits on success, rolls back on error
+    });
+  }
+}
+```
+
+## Common Pitfalls
+
+- **Anemic Use Cases**: Use cases should contain business logic, not just delegate to repositories
+- **UI Logic in Use Cases**: Keep presentation concerns out of business logic
+- **Missing Validation**: Always validate commands before executing business logic
+- **Poor Error Handling**: Provide meaningful error messages and handle all failure cases
+
+</Usage>
