@@ -1,0 +1,389 @@
+// ============================================
+// Cin7 DSL Example: E-commerce Product Page
+// ============================================
+
+import { Product, CartItem } from './models'
+import { Button, Card, Layout, Modal } from '@cin7/polaris-adapter'
+import { createEnterpriseGrid } from '@cin7/extjs-adapters'
+
+// Simple component mixing vanilla JS and React
+component ProductImage {
+  props {
+    src: string
+    alt: string
+    thumbnails: string[]
+  }
+  
+  state {
+    selectedIndex: number = 0
+    isZoomed: boolean = false
+  }
+  
+  render {
+    // Vanilla JS for performance-critical image viewer
+    @vanilla {
+      <div class="product-image-viewer">
+        <div class="main-image" 
+             onclick={() => this.isZoomed = !this.isZoomed}>
+          <img src={this.src} alt={this.alt} />
+          @if (this.isZoomed) {
+            <div class="zoom-overlay">
+              <img src={this.src} alt={this.alt} />
+            </div>
+          }
+        </div>
+        
+        <div class="thumbnails">
+          @for (thumb, index of this.thumbnails) {
+            <img src={thumb} 
+                 class={index === this.selectedIndex ? 'active' : ''}
+                 onclick={() => this.selectImage(index)} />
+          }
+        </div>
+      </div>
+    }
+  }
+  
+  methods {
+    selectImage(index: number) {
+      this.selectedIndex = index
+      this.src = this.thumbnails[index]
+    }
+  }
+}
+
+// Product page combining all layers
+page ProductDetail {
+  route: '/products/:id'
+  
+  state {
+    product: Product | null = null
+    relatedProducts: Product[] = []
+    isLoading: boolean = true
+    showInventory: boolean = false
+  }
+  
+  // Repository injection
+  inject {
+    productRepo: ProductRepository
+    cartService: CartService
+    analytics: AnalyticsService
+  }
+  
+  // Lifecycle
+  onMount {
+    this.loadProduct(this.params.id)
+    this.analytics.track('product_view', { id: this.params.id })
+  }
+  
+  methods {
+    async loadProduct(id: string) {
+      this.isLoading = true
+      
+      // Parallel data loading
+      const [product, related] = await Promise.all([
+        this.productRepo.findById(id),
+        this.productRepo.findRelated(id)
+      ])
+      
+      this.product = product
+      this.relatedProducts = related
+      this.isLoading = false
+    }
+    
+    async addToCart(quantity: number) {
+      if (!this.product) return
+      
+      await this.cartService.addItem({
+        productId: this.product.id,
+        quantity
+      })
+      
+      @emit CartUpdated { 
+        action: 'add',
+        product: this.product,
+        quantity 
+      }
+    }
+  }
+  
+  layout {
+    @react {
+      <Layout>
+        <Layout.Section oneThird>
+          @embed ProductImage {
+            src: this.product?.images[0]
+            alt: this.product?.name
+            thumbnails: this.product?.images
+          }
+        </Layout.Section>
+        
+        <Layout.Section>
+          <Card>
+            <Card.Header>
+              <Heading element="h1">{this.product?.name}</Heading>
+              <Badge status={this.product?.inStock ? 'success' : 'critical'}>
+                {this.product?.inStock ? 'In Stock' : 'Out of Stock'}
+              </Badge>
+            </Card.Header>
+            
+            <Card.Section>
+              <TextContainer>
+                <p>{this.product?.description}</p>
+                <TextStyle variation="strong" size="large">
+                  ${this.product?.price}
+                </TextStyle>
+              </TextContainer>
+            </Card.Section>
+            
+            <Card.Section>
+              <Stack>
+                <Button primary 
+                        disabled={!this.product?.inStock}
+                        onClick={() => this.addToCart(1)}>
+                  Add to Cart
+                </Button>
+                
+                <Button plain onClick={() => this.showInventory = true}>
+                  Check Store Inventory
+                </Button>
+              </Stack>
+            </Card.Section>
+          </Card>
+        </Layout.Section>
+      </Layout>
+      
+      @if (this.showInventory) {
+        <Modal
+          open={this.showInventory}
+          onClose={() => this.showInventory = false}
+          title="Store Inventory">
+          @embed InventoryGrid {
+            productId: this.product?.id
+          }
+        </Modal>
+      }
+    }
+  }
+}
+
+// ExtJS component for complex data display
+component InventoryGrid {
+  props {
+    productId: string
+  }
+  
+  state {
+    inventoryData: StoreInventory[] = []
+  }
+  
+  onMount {
+    this.loadInventory()
+  }
+  
+  methods {
+    async loadInventory() {
+      const response = await fetch(`/api/products/${this.productId}/inventory`)
+      this.inventoryData = await response.json()
+    }
+  }
+  
+  @extjs {
+    grid {
+      store: this.inventoryData
+      columns: [
+        { text: 'Store', dataIndex: 'storeName', flex: 1 },
+        { text: 'Location', dataIndex: 'location', width: 200 },
+        { text: 'In Stock', dataIndex: 'quantity', width: 100,
+          renderer: (val) => {
+            const color = val > 10 ? 'green' : val > 0 ? 'orange' : 'red'
+            return `<span style="color: ${color}">${val}</span>`
+          }
+        },
+        { text: 'Reserved', dataIndex: 'reserved', width: 100 },
+        { text: 'Available', dataIndex: 'available', width: 100,
+          calculate: (data) => data.quantity - data.reserved
+        }
+      ]
+      features: ['sorting', 'filtering']
+      height: 400
+    }
+  }
+}
+
+// Business logic layer
+repository ProductRepository {
+  endpoint: '/api/products'
+  
+  methods {
+    async findById(id: string): Product {
+      return this.get(`/${id}`)
+    }
+    
+    async findRelated(id: string): Product[] {
+      return this.get(`/${id}/related`)
+    }
+    
+    async checkInventory(id: string): StoreInventory[] {
+      return this.get(`/${id}/inventory`)
+    }
+  }
+}
+
+// Use case for complex business logic
+usecase ReserveProduct {
+  inject {
+    productRepo: ProductRepository
+    inventoryService: InventoryService
+    notificationService: NotificationService
+  }
+  
+  async execute(request: {
+    productId: string
+    storeId: string
+    quantity: number
+    customerId: string
+  }): Result<Reservation> {
+    // Check availability
+    const inventory = await this.inventoryService.getStoreInventory(
+      request.storeId,
+      request.productId
+    )
+    
+    if (inventory.available < request.quantity) {
+      return Result.failure('Insufficient inventory')
+    }
+    
+    // Create reservation
+    const reservation = await this.inventoryService.reserve({
+      ...request,
+      expiresAt: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+    })
+    
+    // Send notification
+    await this.notificationService.send({
+      to: request.customerId,
+      template: 'reservation-confirmed',
+      data: { reservation }
+    })
+    
+    return Result.success(reservation)
+  }
+}
+
+// Global state management
+store ProductStore {
+  state {
+    viewedProducts: Product[] = []
+    favorites: string[] = []
+    compareList: string[] = []
+  }
+  
+  actions {
+    addViewed(product: Product) {
+      this.viewedProducts = [
+        product,
+        ...this.viewedProducts.filter(p => p.id !== product.id)
+      ].slice(0, 10) // Keep last 10
+    }
+    
+    toggleFavorite(productId: string) {
+      if (this.favorites.includes(productId)) {
+        this.favorites = this.favorites.filter(id => id !== productId)
+      } else {
+        this.favorites.push(productId)
+      }
+    }
+    
+    addToCompare(productId: string) {
+      if (this.compareList.length < 4 && !this.compareList.includes(productId)) {
+        this.compareList.push(productId)
+      }
+    }
+  }
+  
+  selectors {
+    isFavorite(productId: string): boolean {
+      return this.favorites.includes(productId)
+    }
+    
+    canCompare(): boolean {
+      return this.compareList.length >= 2
+    }
+  }
+}
+
+// Event system for cross-component communication
+events {
+  CartUpdated {
+    action: 'add' | 'remove' | 'update'
+    product: Product
+    quantity: number
+  }
+  
+  ProductReserved {
+    reservation: Reservation
+    store: Store
+  }
+}
+
+// Styling with design tokens
+styles {
+  .product-image-viewer {
+    position: relative;
+    
+    .main-image {
+      cursor: zoom-in;
+      border: 1px solid var(--p-color-border);
+      border-radius: var(--p-border-radius-200);
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    
+    .zoom-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      
+      img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+    }
+    
+    .thumbnails {
+      display: flex;
+      gap: var(--p-spacing-200);
+      margin-top: var(--p-spacing-400);
+      
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border: 2px solid transparent;
+        border-radius: var(--p-border-radius-100);
+        cursor: pointer;
+        
+        &.active {
+          border-color: var(--p-color-border-emphasis);
+        }
+        
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

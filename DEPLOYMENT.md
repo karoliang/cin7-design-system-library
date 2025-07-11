@@ -97,9 +97,16 @@ NETLIFY_SITE_ID=392faf2b-75c4-442e-9efc-911816e64de5
 
 ## Automatic Deployment
 
-Deployments are triggered automatically when:
+**STATUS: TEMPORARILY DISABLED** (See DISABLE_AUTO_DEPLOY.md for details)
+
+Deployments are normally triggered automatically when:
 - Code is pushed to the `main` branch
 - The build completes successfully on Netlify
+
+Currently, automatic deployment is disabled while we restructure the repository. To deploy manually, use:
+```bash
+netlify deploy --prod
+```
 
 ## Monitoring Deployments
 

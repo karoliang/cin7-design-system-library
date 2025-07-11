@@ -5,12 +5,13 @@ showTOC: true
 keywords:
   - overview
   - cin7 dsl
-  - design system
+  - design system language
   - architecture
   - framework
   - polaris
   - extjs
   - typescript
+  - vanilla js
 order: 1
 icon: InfoIcon
 ---
@@ -21,12 +22,30 @@ icon: InfoIcon
 
 ## What is Cin7 DSL?
 
-Cin7 DSL (Design System Language) is a modern frontend framework that leverages the proven design principles of Shopify Polaris while incorporating enterprise-grade technologies to build robust, scalable applications. It provides a unified approach to building user interfaces with:
+Cin7 DSL (Design System Language) is a comprehensive framework that provides a layered approach to building enterprise applications. Unlike traditional single-framework solutions, Cin7 DSL embraces the philosophy of using the right tool for each layer of your application:
 
 - **Design Foundation**: Built on Shopify Polaris design tokens, components, and patterns
-- **Modern Architecture**: Modular, component-based architecture with clear separation of concerns
-- **Enterprise Technologies**: Integration with Ext JS for advanced form controls and data grids
-- **Developer Experience**: TypeScript-first development with comprehensive tooling
+- **Multi-Technology Approach**: Leverages Vanilla JS, TypeScript, React, and ExtJS where each excels
+- **Layered Architecture**: Clear separation between design system, UI interactions, components, and business logic
+- **Enterprise Focus**: Designed for complex, data-intensive business applications
+
+### The Four Layers of Cin7 DSL
+
+1. **Design System Layer** - Polaris foundation for consistent visual language
+2. **UI Interaction Layer** - Vanilla JavaScript for lightweight, performant interactions
+3. **Component Layer** - React + ExtJS for reusable UI components
+4. **Application Layer** - TypeScript for type-safe business logic
+
+### Current Implementation Status
+
+The Cin7 DSL is being developed as a true design system language:
+
+- ✅ **@cin7/core**: Core utilities usable across all layers
+- ✅ **@cin7/polaris-adapter**: React components with Polaris integration
+- 🚧 **@cin7/vanilla-js**: Lightweight UI interaction utilities (in progress)
+- 🚧 **@cin7/typescript-sdk**: Business logic patterns and utilities (planned)
+- 🚧 **@cin7/extjs-adapters**: ExtJS component integration (planned)
+- 🚧 **@cin7/design-tokens**: Extended design token system (planned)
 
 ## Key Features
 
@@ -37,10 +56,28 @@ Cin7 DSL (Design System Language) is a modern frontend framework that leverages 
 - **Icon Library**: 400+ carefully crafted icons for enterprise applications
 
 ### Technology Stack
-- **Ext JS Integration**: Advanced form controls, data grids, and complex UI widgets
-- **Vanilla JS**: Lightweight UI interactions and DOM manipulation
-- **TypeScript**: Type-safe business logic and application state management
+
+Cin7 DSL uses different technologies for different purposes:
+
+#### UI Interaction Layer
+- **Vanilla JavaScript**: Direct DOM manipulation for performance-critical operations
+- **Event Systems**: Lightweight event handling without framework overhead
+- **Progressive Enhancement**: Build up from a solid, framework-free foundation
+
+#### Component Layer  
 - **React**: Component composition and modern UI patterns
+- **ExtJS Integration**: Advanced form controls, data grids, and complex UI widgets
+- **Polaris Components**: Beautiful, accessible UI building blocks
+
+#### Application Layer
+- **TypeScript**: Type-safe business logic and application state management
+- **State Management**: Zustand for client state, React Query for server state
+- **API Integration**: Type-safe API clients and data transformation
+
+#### Build Tools
+- **Vite**: Fast development experience with HMR
+- **pnpm Workspaces**: Monorepo management for modular architecture
+- **TypeScript**: Compile-time type checking across all layers
 
 ### Architecture Benefits
 - **Modular Design**: Clear separation between design system, business logic, and UI interactions

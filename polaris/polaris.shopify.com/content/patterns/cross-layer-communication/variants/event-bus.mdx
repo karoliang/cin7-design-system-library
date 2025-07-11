@@ -1,0 +1,374 @@
+---
+title: Event Bus Pattern
+noIndex: true
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Event Bus pattern enables decoupled communication between different technology layers, allowing them to work together without direct dependencies.
+
+### Benefits:
+1. **Loose Coupling**: Layers don't need to know about each other
+2. **Flexibility**: Easy to add new listeners or emitters
+3. **Testability**: Mock events for isolated testing
+4. **Scalability**: Add new layers without changing existing code
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Coordinate multiple layers**: When React, ExtJS, and Vanilla JS components need to communicate without direct dependencies.
+
+**Broadcast updates**: When one action needs to update multiple parts of the application across different technologies.
+
+**Maintain separation**: When you want to keep layers independent while still enabling communication.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing a type-safe event bus for cross-layer communication.
+
+```typescript {"type":"livePreview","id":"event-bus-pattern","title":"Event Bus Implementation"}
+// Step 1: Define event types for type safety
+interface AppEvents {
+  // Data events
+  'data:product:added': { product: Product };
+  'data:product:updated': { id: string; changes: Partial<Product> };
+  'data:product:deleted': { id: string };
+  
+  // UI events
+  'ui:theme:changed': { theme: 'light' | 'dark' };
+  'ui:modal:open': { modalId: string; props?: any };
+  'ui:modal:close': { modalId: string };
+  
+  // Navigation events
+  'nav:route:changed': { path: string; params?: Record<string, string> };
+  
+  // Layer-specific events
+  'react:component:mounted': { componentName: string };
+  'extjs:grid:selected': { recordId: string; record: any };
+  'vanilla:form:submitted': { formId: string; data: FormData };
+}
+
+// Step 2: Create type-safe event bus
+class TypedEventBus<TEvents extends Record<string, any>> {
+  private events = new Map<keyof TEvents, Set<Function>>();
+  private eventHistory: Array<{ event: keyof TEvents; data: any; timestamp: Date }> = [];
+  private maxHistorySize = 100;
+  
+  // Subscribe to events
+  on<K extends keyof TEvents>(
+    event: K,
+    handler: (data: TEvents[K]) => void
+  ): () => void {
+    if (!this.events.has(event)) {
+      this.events.set(event, new Set());
+    }
+    
+    this.events.get(event)!.add(handler);
+    
+    // Return unsubscribe function
+    return () => this.off(event, handler);
+  }
+  
+  // Subscribe to event once
+  once<K extends keyof TEvents>(
+    event: K,
+    handler: (data: TEvents[K]) => void
+  ): void {
+    const wrappedHandler = (data: TEvents[K]) => {
+      handler(data);
+      this.off(event, wrappedHandler);
+    };
+    this.on(event, wrappedHandler);
+  }
+  
+  // Emit events
+  emit<K extends keyof TEvents>(event: K, data: TEvents[K]): void {
+    // Add to history
+    this.eventHistory.push({ event, data, timestamp: new Date() });
+    if (this.eventHistory.length > this.maxHistorySize) {
+      this.eventHistory.shift();
+    }
+    
+    // Call handlers
+    const handlers = this.events.get(event);
+    if (handlers) {
+      handlers.forEach(handler => {
+        try {
+          handler(data);
+        } catch (error) {
+          console.error(`Error in event handler for ${String(event)}:`, error);
+        }
+      });
+    }
+  }
+  
+  // Unsubscribe from events
+  off<K extends keyof TEvents>(
+    event: K,
+    handler: (data: TEvents[K]) => void
+  ): void {
+    this.events.get(event)?.delete(handler);
+  }
+  
+  // Clear all handlers for an event
+  clear(event?: keyof TEvents): void {
+    if (event) {
+      this.events.delete(event);
+    } else {
+      this.events.clear();
+    }
+  }
+  
+  // Get event history
+  getHistory(event?: keyof TEvents): typeof this.eventHistory {
+    if (event) {
+      return this.eventHistory.filter(item => item.event === event);
+    }
+    return [...this.eventHistory];
+  }
+  
+  // Wait for event (Promise-based)
+  waitFor<K extends keyof TEvents>(
+    event: K,
+    timeout?: number
+  ): Promise<TEvents[K]> {
+    return new Promise((resolve, reject) => {
+      const timer = timeout ? setTimeout(() => {
+        this.off(event, handler);
+        reject(new Error(`Timeout waiting for event: ${String(event)}`));
+      }, timeout) : null;
+      
+      const handler = (data: TEvents[K]) => {
+        if (timer) clearTimeout(timer);
+        resolve(data);
+      };
+      
+      this.once(event, handler);
+    });
+  }
+}
+
+// Step 3: Create global event bus instance
+export const EventBus = new TypedEventBus<AppEvents>();
+
+// Make available globally for non-module scripts
+if (typeof window !== 'undefined') {
+  (window as any).Cin7EventBus = EventBus;
+}
+
+// Step 4: React layer integration
+function useEventBus() {
+  useEffect(() => {
+    // Listen for theme changes
+    const unsubscribeTheme = EventBus.on('ui:theme:changed', ({ theme }) => {
+      document.documentElement.setAttribute('data-theme', theme);
+    });
+    
+    // Listen for product updates
+    const unsubscribeProduct = EventBus.on('data:product:updated', ({ id, changes }) => {
+      // Update local state
+      updateProduct(id, changes);
+    });
+    
+    return () => {
+      unsubscribeTheme();
+      unsubscribeProduct();
+    };
+  }, []);
+  
+  // Emit events from React
+  const addProduct = useCallback((product: Product) => {
+    EventBus.emit('data:product:added', { product });
+  }, []);
+  
+  return { addProduct };
+}
+
+// Step 5: ExtJS layer integration
+Ext.onReady(() => {
+  // Listen for product events
+  EventBus.on('data:product:added', ({ product }) => {
+    const grid = Ext.getCmp('product-grid');
+    if (grid) {
+      grid.getStore().add(product);
+    }
+  });
+  
+  // Emit selection events
+  const grid = Ext.create('Ext.grid.Panel', {
+    listeners: {
+      select: (grid, record) => {
+        EventBus.emit('extjs:grid:selected', {
+          recordId: record.getId(),
+          record: record.getData()
+        });
+      }
+    }
+  });
+});
+
+// Step 6: Vanilla JS layer integration
+document.addEventListener('DOMContentLoaded', () => {
+  // Listen for modal events
+  EventBus.on('ui:modal:open', ({ modalId, props }) => {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('active');
+      // Apply props if needed
+    }
+  });
+  
+  // Emit form events
+  document.querySelectorAll('form[data-event]').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form as HTMLFormElement);
+      
+      EventBus.emit('vanilla:form:submitted', {
+        formId: form.id,
+        data: formData
+      });
+    });
+  });
+});
+
+// Step 7: Advanced patterns
+
+// Middleware pattern
+class EventBusWithMiddleware<T extends Record<string, any>> extends TypedEventBus<T> {
+  private middleware: Array<(event: keyof T, data: any, next: () => void) => void> = [];
+  
+  use(fn: (event: keyof T, data: any, next: () => void) => void): void {
+    this.middleware.push(fn);
+  }
+  
+  emit<K extends keyof T>(event: K, data: T[K]): void {
+    let index = 0;
+    
+    const next = () => {
+      if (index < this.middleware.length) {
+        const fn = this.middleware[index++];
+        fn(event, data, next);
+      } else {
+        super.emit(event, data);
+      }
+    };
+    
+    next();
+  }
+}
+
+// Usage with middleware
+const BusWithMiddleware = new EventBusWithMiddleware<AppEvents>();
+
+// Log all events
+BusWithMiddleware.use((event, data, next) => {
+  console.log(`Event: ${String(event)}`, data);
+  next();
+});
+
+// Validate events
+BusWithMiddleware.use((event, data, next) => {
+  if (event === 'data:product:added' && !data.product.name) {
+    console.error('Invalid product: missing name');
+    return; // Don't call next() to stop propagation
+  }
+  next();
+});
+
+// Step 8: Testing utilities
+export const createMockEventBus = <T extends Record<string, any>>() => {
+  const emitted: Array<{ event: keyof T; data: any }> = [];
+  
+  return {
+    on: jest.fn(),
+    off: jest.fn(),
+    emit: jest.fn((event: keyof T, data: T[typeof event]) => {
+      emitted.push({ event, data });
+    }),
+    once: jest.fn(),
+    clear: jest.fn(),
+    getEmitted: () => emitted,
+    reset: () => {
+      emitted.length = 0;
+      jest.clearAllMocks();
+    }
+  };
+};
+
+// Test example
+test('should emit product added event', () => {
+  const mockBus = createMockEventBus<AppEvents>();
+  const component = new ProductManager(mockBus);
+  
+  component.addProduct({ name: 'Test Product', price: 29.99 });
+  
+  expect(mockBus.emit).toHaveBeenCalledWith('data:product:added', {
+    product: expect.objectContaining({ name: 'Test Product' })
+  });
+});
+```
+
+## Best Practices
+
+### 1. Use Namespaced Events
+```typescript
+// Good: Clear namespace and action
+'data:product:updated'
+'ui:modal:opened'
+'auth:user:loggedIn'
+
+// Bad: Ambiguous events
+'update'
+'open'
+'login'
+```
+
+### 2. Type Your Events
+```typescript
+// Define all events in one place
+interface AppEvents {
+  'product:added': { product: Product };
+  // ... more events
+}
+
+// Use throughout application
+const bus = new TypedEventBus<AppEvents>();
+```
+
+### 3. Handle Errors Gracefully
+```typescript
+EventBus.on('data:updated', (data) => {
+  try {
+    updateUI(data);
+  } catch (error) {
+    console.error('Failed to update UI:', error);
+    // Don't let one handler break others
+  }
+});
+```
+
+### 4. Clean Up Subscriptions
+```typescript
+useEffect(() => {
+  const unsubscribe = EventBus.on('event', handler);
+  return () => unsubscribe();
+}, []);
+```
+
+## Common Pitfalls
+
+- **Memory Leaks**: Always unsubscribe when components unmount
+- **Event Storms**: Avoid infinite loops from event chains
+- **Type Safety**: Use TypeScript for event definitions
+- **Error Handling**: One handler error shouldn't break others
+
+</Usage>

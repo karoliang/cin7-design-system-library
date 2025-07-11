@@ -1,0 +1,434 @@
+---
+title: DSL Syntax
+description: The Cin7 DSL provides a declarative syntax for building multi-layer applications
+icon: CodeIcon
+order: 8
+---
+
+import {
+  ResourceList,
+  ResourceItem,
+  Text,
+  Card,
+  BlockStack,
+  InlineCode,
+  Box,
+  InlineStack,
+  Badge,
+} from '@shopify/polaris';
+
+# Cin7 DSL Syntax
+
+<Text as="p" variant="bodyLg">
+  The Cin7 DSL (Domain Specific Language) provides a powerful, declarative syntax for building applications that seamlessly combine multiple technologies while maintaining clean separation of concerns.
+</Text>
+
+## Overview
+
+The DSL allows you to:
+- Mix Vanilla JS, React/Polaris, and ExtJS in a single component
+- Define type-safe props and state
+- Use familiar template syntax with performance optimizations
+- Leverage business logic patterns (repositories, use cases)
+- Manage global state declaratively
+
+## Basic Structure
+
+```cin7
+// product-card.cin7
+component ProductCard {
+  props {
+    product: Product
+    onSelect?: (product: Product) => void
+  }
+  
+  state {
+    isHovered: boolean = false
+  }
+  
+  render {
+    @vanilla {
+      <div class="product-card" 
+           onmouseenter={() => this.isHovered = true}
+           onmouseleave={() => this.isHovered = false}>
+        @slot content
+      </div>
+    }
+    
+    @react {
+      <Card highlighted={this.isHovered}>
+        <Text as="h3">{this.product.name}</Text>
+        <Text>${this.product.price}</Text>
+        <Button onClick={() => this.onSelect?.(this.product)}>
+          Select
+        </Button>
+      </Card>
+    }
+  }
+}
+```
+
+## Technology Layers
+
+<ResourceList
+  resourceName={{singular: 'layer', plural: 'layers'}}
+  items={[
+    {
+      id: '1',
+      name: '@vanilla',
+      description: 'Lightweight DOM manipulation and event handling',
+      badge: 'Performance',
+    },
+    {
+      id: '2', 
+      name: '@react',
+      description: 'Modern React components with Polaris integration',
+      badge: 'UI',
+    },
+    {
+      id: '3',
+      name: '@extjs',
+      description: 'Enterprise data grids and complex forms',
+      badge: 'Enterprise',
+    },
+    {
+      id: '4',
+      name: '@logic',
+      description: 'Business logic with TypeScript SDK patterns',
+      badge: 'Business',
+    },
+  ]}
+  renderItem={(item) => (
+    <ResourceItem id={item.id}>
+      <InlineStack align="space-between">
+        <Box>
+          <Text as="h3" variant="bodyMd" fontWeight="bold">
+            {item.name}
+          </Text>
+          <Text as="p" variant="bodySm" tone="subdued">
+            {item.description}
+          </Text>
+        </Box>
+        <Badge>{item.badge}</Badge>
+      </InlineStack>
+    </ResourceItem>
+  )}
+/>
+
+## Component Definition
+
+### Props and State
+
+```cin7
+component UserProfile {
+  // Type-safe props with TypeScript
+  props {
+    userId: string
+    editable?: boolean = false
+    onUpdate?: (user: User) => void
+  }
+  
+  // Reactive state management
+  state {
+    user: User | null = null
+    isLoading: boolean = true
+    errors: ValidationError[] = []
+  }
+  
+  // Computed properties
+  computed {
+    fullName(): string {
+      return `${this.user?.firstName} ${this.user?.lastName}`
+    }
+    
+    hasErrors(): boolean {
+      return this.errors.length > 0
+    }
+  }
+}
+```
+
+### Lifecycle Hooks
+
+```cin7
+component DataTable {
+  onMount {
+    // Called when component is mounted
+    this.loadData()
+  }
+  
+  onUpdate(prevProps: Props) {
+    // Called when props change
+    if (prevProps.filter !== this.props.filter) {
+      this.loadData()
+    }
+  }
+  
+  onUnmount {
+    // Cleanup when component unmounts
+    this.cancelRequests()
+  }
+}
+```
+
+## Page Definition
+
+Pages combine components with routing and data fetching:
+
+```cin7
+page ProductCatalog {
+  route: '/products/:category?'
+  
+  state {
+    products: Product[] = []
+    selectedCategory: string | null = null
+  }
+  
+  // Dependency injection
+  inject {
+    productRepo: ProductRepository
+    analytics: AnalyticsService
+  }
+  
+  onMount {
+    this.loadProducts()
+    this.analytics.pageView('product_catalog')
+  }
+  
+  layout {
+    @react {
+      <Page title="Products">
+        <Layout>
+          <Layout.Section secondary>
+            <CategoryFilter 
+              selected={this.selectedCategory}
+              onChange={(cat) => this.selectCategory(cat)} />
+          </Layout.Section>
+          
+          <Layout.Section>
+            @if (this.products.length > 100) {
+              // Use ExtJS for large datasets
+              @embed ProductGrid { products: this.products }
+            } @else {
+              // Use React for smaller datasets
+              @embed ProductCards { products: this.products }
+            }
+          </Layout.Section>
+        </Layout>
+      </Page>
+    }
+  }
+}
+```
+
+## Business Logic Patterns
+
+### Repository Pattern
+
+```cin7
+repository ProductRepository {
+  endpoint: '/api/products'
+  
+  methods {
+    async findAll(filters?: ProductFilters): Product[] {
+      return this.get('/', { params: filters })
+    }
+    
+    async create(data: CreateProductDTO): Product {
+      return this.post('/', data)
+    }
+    
+    async update(id: string, data: UpdateProductDTO): Product {
+      return this.patch(`/${id}`, data)
+    }
+  }
+}
+```
+
+### Use Case Pattern
+
+```cin7
+usecase UpdateInventory {
+  inject {
+    productRepo: ProductRepository
+    inventoryService: InventoryService
+    eventBus: EventBus
+  }
+  
+  async execute(request: {
+    productId: string
+    quantity: number
+    operation: 'add' | 'remove'
+  }): Result<Product> {
+    // Validation
+    if (request.quantity <= 0) {
+      return Result.failure('Invalid quantity')
+    }
+    
+    // Business logic
+    const product = await this.productRepo.findById(request.productId)
+    const newStock = this.calculateNewStock(product, request)
+    
+    // Update
+    const updated = await this.productRepo.update(product.id, {
+      stock: newStock
+    })
+    
+    // Side effects
+    this.eventBus.emit('inventory:updated', updated)
+    
+    return Result.success(updated)
+  }
+}
+```
+
+## State Management
+
+```cin7
+store AppStore {
+  slices {
+    products: ProductSlice
+    cart: CartSlice
+    user: UserSlice
+  }
+  
+  middleware: [logger, persist]
+}
+
+slice ProductSlice {
+  state {
+    items: Product[] = []
+    selectedId: string | null = null
+  }
+  
+  actions {
+    setProducts(products: Product[]) {
+      this.items = products
+    }
+    
+    selectProduct(id: string) {
+      this.selectedId = id
+    }
+  }
+  
+  selectors {
+    selectedProduct(): Product | undefined {
+      return this.items.find(p => p.id === this.selectedId)
+    }
+  }
+}
+```
+
+## Event System
+
+```cin7
+// Define events
+events {
+  ProductSelected {
+    productId: string
+    source: 'grid' | 'card' | 'search'
+  }
+}
+
+// Emit events
+component ProductCard {
+  @emit {
+    selectProduct(id: string) {
+      return ProductSelected {
+        productId: id
+        source: 'card'
+      }
+    }
+  }
+}
+
+// Handle events
+component ProductDetail {
+  @on ProductSelected {
+    if (event.productId === this.productId) {
+      this.highlight()
+    }
+  }
+}
+```
+
+## Performance Directives
+
+```cin7
+component LargeList {
+  @optimize {
+    virtualScroll: this.items.length > 100
+    lazyLoad: true
+    memoize: ['renderItem', 'calculateTotal']
+  }
+  
+  @lazy {
+    // Lazy load heavy components
+    import HeavyChart from './HeavyChart'
+    import ComplexForm from './ComplexForm'
+  }
+}
+```
+
+## Styling
+
+```cin7
+component StyledCard {
+  styles {
+    .card {
+      background: var(--p-color-bg);
+      border: 1px solid var(--p-color-border);
+      padding: var(--p-spacing-400);
+      
+      &:hover {
+        box-shadow: var(--p-shadow-200);
+      }
+    }
+  }
+  
+  render {
+    @vanilla {
+      <div class="card">
+        @slot content
+      </div>
+    }
+  }
+}
+```
+
+## Coming Soon
+
+The Cin7 DSL compiler is currently in design phase. Key features will include:
+
+<Card>
+  <BlockStack gap="400">
+    <Text as="h3" variant="headingMd">
+      Compiler Features
+    </Text>
+    <BlockStack gap="200">
+      <InlineStack gap="200">
+        <Badge status="info">Type Safety</Badge>
+        <Text>Full TypeScript support with type inference</Text>
+      </InlineStack>
+      <InlineStack gap="200">
+        <Badge status="info">Hot Reload</Badge>
+        <Text>HMR support for all technology layers</Text>
+      </InlineStack>
+      <InlineStack gap="200">
+        <Badge status="info">Optimization</Badge>
+        <Text>Automatic code splitting and tree shaking</Text>
+      </InlineStack>
+      <InlineStack gap="200">
+        <Badge status="info">DevTools</Badge>
+        <Text>Browser extension for debugging DSL components</Text>
+      </InlineStack>
+    </BlockStack>
+  </BlockStack>
+</Card>
+
+## Learn More
+
+- [DSL Design Document](/docs/dsl-syntax-design)
+- [Example Applications](/examples/dsl-examples)
+- [Migration Guide](/docs/guides/dsl-migration)
+- [API Reference](/api/dsl-compiler)

@@ -1,0 +1,7 @@
+packages:
+  # Core packages
+  - 'packages/*'
+  # Example applications
+  - 'apps/*'
+  # Exclude the Polaris submodule
+  - '!polaris/**'

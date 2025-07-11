@@ -1,0 +1,547 @@
+---
+title: Multi-Step Forms
+noIndex: true
+---
+
+<HowItHelps>
+
+## How it helps
+
+Multi-step forms break complex data entry into manageable chunks, improving user experience and data quality.
+
+### Benefits:
+1. **Reduced Cognitive Load**: Users focus on one section at a time
+2. **Progress Tracking**: Clear indication of completion status
+3. **Conditional Logic**: Show/hide steps based on previous answers
+4. **Save Progress**: Allow users to resume later
+5. **Validation Stages**: Validate each step before proceeding
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Collect complex data**: When forms have many fields across different categories (e.g., employee onboarding, loan applications).
+
+**Guide users**: When the order of data entry matters or when later fields depend on earlier choices.
+
+**Reduce abandonment**: When breaking up a long form improves completion rates.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates building a multi-step form wizard with ExtJS and Cin7 styling.
+
+```javascript {"type":"livePreview","id":"multi-step-form","title":"Multi-Step Form Wizard"}
+// Step 1: Define the wizard configuration
+Ext.define('Cin7.form.WizardPanel', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'cin7wizard',
+  
+  requires: [
+    'Ext.layout.container.Card',
+    'Ext.form.Panel',
+    'Ext.toolbar.Toolbar'
+  ],
+  
+  layout: 'card',
+  bodyPadding: 0,
+  
+  config: {
+    steps: [],
+    currentStep: 0,
+    allowSkip: false,
+    saveProgress: true
+  },
+  
+  initComponent: function() {
+    const me = this;
+    
+    // Create step indicator
+    me.tbar = {
+      xtype: 'container',
+      layout: 'hbox',
+      cls: 'wizard-steps',
+      items: me.createStepIndicators()
+    };
+    
+    // Create navigation toolbar
+    me.bbar = {
+      xtype: 'toolbar',
+      items: [
+        {
+          text: 'Previous',
+          itemId: 'prevBtn',
+          xtype: 'cin7button',
+          disabled: true,
+          handler: () => me.previousStep()
+        },
+        '->',
+        {
+          text: 'Save Draft',
+          xtype: 'cin7button',
+          variant: 'secondary',
+          hidden: !me.saveProgress,
+          handler: () => me.saveDraft()
+        },
+        {
+          text: 'Next',
+          itemId: 'nextBtn',
+          xtype: 'cin7button',
+          variant: 'primary',
+          handler: () => me.nextStep()
+        },
+        {
+          text: 'Submit',
+          itemId: 'submitBtn',
+          xtype: 'cin7button',
+          variant: 'primary',
+          hidden: true,
+          handler: () => me.submitForm()
+        }
+      ]
+    };
+    
+    // Create form panels for each step
+    me.items = me.steps.map((step, index) => ({
+      xtype: 'cin7form',
+      itemId: `step-${index}`,
+      title: step.title,
+      items: step.fields,
+      listeners: {
+        validitychange: function(form, valid) {
+          me.updateNavigation();
+        }
+      }
+    }));
+    
+    me.callParent();
+    
+    // Initialize first step
+    me.setActiveStep(0);
+  },
+  
+  createStepIndicators: function() {
+    const indicators = [];
+    
+    this.steps.forEach((step, index) => {
+      indicators.push({
+        xtype: 'component',
+        cls: 'step-indicator',
+        html: `
+          <div class="step-number">${index + 1}</div>
+          <div class="step-label">${step.title}</div>
+        `,
+        itemId: `indicator-${index}`
+      });
+      
+      if (index < this.steps.length - 1) {
+        indicators.push({
+          xtype: 'component',
+          cls: 'step-connector',
+          html: '<div class="connector-line"></div>'
+        });
+      }
+    });
+    
+    return indicators;
+  },
+  
+  setActiveStep: function(index) {
+    const me = this;
+    me.currentStep = index;
+    
+    // Update card layout
+    me.getLayout().setActiveItem(index);
+    
+    // Update indicators
+    me.steps.forEach((step, i) => {
+      const indicator = me.down(`#indicator-${i}`);
+      if (indicator) {
+        indicator.removeCls(['active', 'completed', 'error']);
+        
+        if (i < index) {
+          indicator.addCls('completed');
+        } else if (i === index) {
+          indicator.addCls('active');
+        }
+      }
+    });
+    
+    // Update navigation
+    me.updateNavigation();
+    
+    // Fire step change event
+    me.fireEvent('stepchange', me, index, me.steps[index]);
+  },
+  
+  updateNavigation: function() {
+    const me = this;
+    const prevBtn = me.down('#prevBtn');
+    const nextBtn = me.down('#nextBtn');
+    const submitBtn = me.down('#submitBtn');
+    const currentForm = me.getLayout().getActiveItem();
+    
+    // Update Previous button
+    prevBtn.setDisabled(me.currentStep === 0);
+    
+    // Update Next/Submit buttons
+    const isLastStep = me.currentStep === me.steps.length - 1;
+    const isValid = currentForm.isValid();
+    
+    if (isLastStep) {
+      nextBtn.hide();
+      submitBtn.show();
+      submitBtn.setDisabled(!isValid);
+    } else {
+      nextBtn.show();
+      submitBtn.hide();
+      nextBtn.setDisabled(!isValid && !me.allowSkip);
+    }
+  },
+  
+  previousStep: function() {
+    if (this.currentStep > 0) {
+      this.setActiveStep(this.currentStep - 1);
+    }
+  },
+  
+  nextStep: function() {
+    const me = this;
+    const currentForm = me.getLayout().getActiveItem();
+    
+    if (currentForm.isValid() || me.allowSkip) {
+      // Save current step data
+      const stepData = currentForm.getValues();
+      me.steps[me.currentStep].data = stepData;
+      
+      // Check for conditional logic
+      const nextStepIndex = me.getNextStepIndex();
+      if (nextStepIndex !== null) {
+        me.setActiveStep(nextStepIndex);
+      }
+    } else {
+      // Show validation errors
+      currentForm.markInvalid();
+    }
+  },
+  
+  getNextStepIndex: function() {
+    const me = this;
+    let nextIndex = me.currentStep + 1;
+    
+    // Check conditional logic
+    while (nextIndex < me.steps.length) {
+      const step = me.steps[nextIndex];
+      if (step.condition) {
+        const allData = me.getAllFormData();
+        if (!step.condition(allData)) {
+          nextIndex++;
+          continue;
+        }
+      }
+      return nextIndex;
+    }
+    
+    return null;
+  },
+  
+  getAllFormData: function() {
+    const data = {};
+    this.steps.forEach((step, index) => {
+      if (step.data) {
+        Object.assign(data, step.data);
+      }
+    });
+    return data;
+  },
+  
+  saveDraft: function() {
+    const me = this;
+    const data = me.getAllFormData();
+    
+    // Save to localStorage or server
+    localStorage.setItem('wizard-draft', JSON.stringify({
+      data: data,
+      currentStep: me.currentStep,
+      timestamp: new Date().toISOString()
+    }));
+    
+    Ext.toast('Draft saved successfully');
+  },
+  
+  loadDraft: function() {
+    const draft = localStorage.getItem('wizard-draft');
+    if (draft) {
+      const { data, currentStep } = JSON.parse(draft);
+      
+      // Restore form data
+      this.steps.forEach((step, index) => {
+        const form = this.down(`#step-${index}`);
+        if (form && data) {
+          form.setValues(data);
+        }
+      });
+      
+      // Restore current step
+      this.setActiveStep(currentStep);
+    }
+  },
+  
+  submitForm: function() {
+    const me = this;
+    const allData = me.getAllFormData();
+    
+    // Validate all steps
+    let allValid = true;
+    me.items.each((form) => {
+      if (!form.isValid()) {
+        allValid = false;
+      }
+    });
+    
+    if (allValid) {
+      me.fireEvent('submit', me, allData);
+      
+      // Clear draft
+      if (me.saveProgress) {
+        localStorage.removeItem('wizard-draft');
+      }
+    }
+  }
+});
+
+// Step 2: Example usage - Employee Onboarding Wizard
+const onboardingWizard = Ext.create('Cin7.form.WizardPanel', {
+  title: 'Employee Onboarding',
+  width: 800,
+  height: 600,
+  renderTo: Ext.getBody(),
+  
+  steps: [{
+    title: 'Personal Information',
+    fields: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'First Name',
+      name: 'firstName',
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Last Name',
+      name: 'lastName',
+      required: true
+    }, {
+      xtype: 'cin7emailfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      required: true
+    }, {
+      xtype: 'cin7datepicker',
+      fieldLabel: 'Date of Birth',
+      name: 'dateOfBirth',
+      required: true,
+      maxValue: new Date()
+    }]
+  }, {
+    title: 'Contact Details',
+    fields: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Phone',
+      name: 'phone',
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Address',
+      name: 'address',
+      required: true
+    }, {
+      xtype: 'cin7combobox',
+      fieldLabel: 'Country',
+      name: 'country',
+      store: ['United States', 'Canada', 'United Kingdom', 'Australia'],
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Postal Code',
+      name: 'postalCode'
+    }]
+  }, {
+    title: 'Employment Details',
+    fields: [{
+      xtype: 'cin7combobox',
+      fieldLabel: 'Department',
+      name: 'department',
+      store: ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance'],
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Job Title',
+      name: 'jobTitle',
+      required: true
+    }, {
+      xtype: 'cin7datepicker',
+      fieldLabel: 'Start Date',
+      name: 'startDate',
+      required: true,
+      minValue: new Date()
+    }, {
+      xtype: 'cin7combobox',
+      fieldLabel: 'Employment Type',
+      name: 'employmentType',
+      store: ['Full-time', 'Part-time', 'Contract', 'Intern'],
+      required: true
+    }]
+  }, {
+    title: 'Emergency Contact',
+    fields: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Contact Name',
+      name: 'emergencyName',
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Relationship',
+      name: 'emergencyRelationship',
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Contact Phone',
+      name: 'emergencyPhone',
+      required: true
+    }]
+  }, {
+    title: 'IT Setup',
+    condition: (data) => data.department === 'Engineering',
+    fields: [{
+      xtype: 'cin7checkboxgroup',
+      fieldLabel: 'Required Access',
+      columns: 2,
+      items: [
+        { boxLabel: 'GitHub', name: 'github' },
+        { boxLabel: 'AWS', name: 'aws' },
+        { boxLabel: 'Jira', name: 'jira' },
+        { boxLabel: 'Slack', name: 'slack' }
+      ]
+    }, {
+      xtype: 'cin7radiogroup',
+      fieldLabel: 'Laptop Type',
+      columns: 1,
+      items: [
+        { boxLabel: 'MacBook Pro 16"', name: 'laptop', inputValue: 'mbp16' },
+        { boxLabel: 'MacBook Pro 14"', name: 'laptop', inputValue: 'mbp14' },
+        { boxLabel: 'Windows Laptop', name: 'laptop', inputValue: 'windows' }
+      ]
+    }]
+  }],
+  
+  listeners: {
+    submit: function(wizard, data) {
+      // Submit to server
+      Ext.Ajax.request({
+        url: '/api/employees/onboard',
+        method: 'POST',
+        jsonData: data,
+        success: function() {
+          Ext.Msg.alert('Success', 'Employee onboarding completed!');
+        }
+      });
+    }
+  }
+});
+
+// Load any saved draft
+onboardingWizard.loadDraft();
+
+// Step 3: Styling with Cin7 design tokens
+const wizardStyles = `
+  .wizard-steps {
+    padding: 20px;
+    background: var(--p-color-bg-surface-secondary);
+    border-bottom: 1px solid var(--p-color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--p-color-bg-surface);
+    border: 2px solid var(--p-color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .step-indicator.active .step-number {
+    background: var(--p-color-bg-fill-emphasis);
+    color: var(--p-color-text-on-color);
+    border-color: transparent;
+  }
+  
+  .step-indicator.completed .step-number {
+    background: var(--p-color-bg-fill-success);
+    color: var(--p-color-text-on-color);
+    border-color: transparent;
+  }
+  
+  .step-label {
+    font-size: 14px;
+    color: var(--p-color-text-secondary);
+  }
+  
+  .step-indicator.active .step-label {
+    color: var(--p-color-text);
+    font-weight: 500;
+  }
+  
+  .step-connector {
+    flex: 1;
+    padding: 0 16px;
+  }
+  
+  .connector-line {
+    height: 2px;
+    background: var(--p-color-border);
+    position: relative;
+    top: -20px;
+  }
+`;
+```
+
+## Best Practices
+
+### 1. Clear Progress Indication
+- Show current step and total steps
+- Indicate completed and upcoming steps
+- Allow navigation to previous steps
+
+### 2. Smart Validation
+- Validate on step change, not just at end
+- Show clear error messages
+- Allow saving drafts with invalid data
+
+### 3. Conditional Logic
+- Skip irrelevant steps based on previous answers
+- Show/hide fields dynamically
+- Adjust validation rules conditionally
+
+### 4. Data Persistence
+- Auto-save progress
+- Allow resuming from saved state
+- Clear drafts after successful submission
+
+</Usage>

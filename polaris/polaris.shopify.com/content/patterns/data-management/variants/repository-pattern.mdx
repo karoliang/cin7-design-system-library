@@ -1,0 +1,370 @@
+---
+title: Repository Pattern
+noIndex: true
+---
+
+<HowItHelps>
+
+## How it helps
+
+The Repository pattern provides a clean abstraction for data access, making it easy to switch between different data sources and test your application.
+
+### Benefits:
+1. **Separation of Concerns**: Business logic is separate from data access
+2. **Testability**: Easy to mock repositories for testing
+3. **Flexibility**: Switch between API, localStorage, or mock data
+4. **Type Safety**: Full TypeScript support with generics
+
+<DefinitionTable>
+
+### Use when you need to:
+
+**Abstract data access**: When you need to separate how data is fetched from how it's used in your application.
+
+**Support multiple data sources**: When you might need to switch between API, local storage, or mock data.
+
+**Enable testing**: When you want to easily test business logic without real data access.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Using this pattern
+
+This pattern demonstrates implementing the Repository pattern with the TypeScript SDK.
+
+```typescript {"type":"livePreview","id":"repository-pattern","title":"Repository Pattern Implementation"}
+import { BaseEntity, BaseRepository, QueryParams, PaginatedResponse } from '@cin7/typescript-sdk';
+
+// Step 1: Define your domain entity
+interface Product extends BaseEntity {
+  name: string;
+  sku: string;
+  price: number;
+  stock: number;
+  category: string;
+  description?: string;
+  images?: string[];
+}
+
+// Step 2: Create DTO types for create/update operations
+interface CreateProductDTO {
+  name: string;
+  sku: string;
+  price: number;
+  stock: number;
+  category: string;
+  description?: string;
+}
+
+interface UpdateProductDTO extends Partial<CreateProductDTO> {}
+
+// Step 3: Implement the repository
+class ProductRepository extends BaseRepository<Product, CreateProductDTO, UpdateProductDTO> {
+  private apiUrl = '/api/products';
+  
+  async findAll(params?: QueryParams): Promise<PaginatedResponse<Product>> {
+    const query = this.buildQueryString(params);
+    const response = await fetch(`${this.apiUrl}?${query}`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    
+    const data = await response.json();
+    return {
+      data: data.items,
+      total: data.total,
+      page: params?.page || 1,
+      pageSize: params?.pageSize || 20
+    };
+  }
+  
+  async findById(id: string): Promise<Product | null> {
+    const response = await fetch(`${this.apiUrl}/${id}`);
+    
+    if (response.status === 404) {
+      return null;
+    }
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch product');
+    }
+    
+    return response.json();
+  }
+  
+  async create(data: CreateProductDTO): Promise<Product> {
+    const response = await fetch(this.apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to create product');
+    }
+    
+    return response.json();
+  }
+  
+  async update(id: string, data: UpdateProductDTO): Promise<Product> {
+    const response = await fetch(`${this.apiUrl}/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update product');
+    }
+    
+    return response.json();
+  }
+  
+  async delete(id: string): Promise<void> {
+    const response = await fetch(`${this.apiUrl}/${id}`, {
+      method: 'DELETE'
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete product');
+    }
+  }
+  
+  async count(params?: QueryParams): Promise<number> {
+    const query = this.buildQueryString({ ...params, count: true });
+    const response = await fetch(`${this.apiUrl}?${query}`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to count products');
+    }
+    
+    const data = await response.json();
+    return data.count;
+  }
+  
+  async exists(id: string): Promise<boolean> {
+    const response = await fetch(`${this.apiUrl}/${id}/exists`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to check existence');
+    }
+    
+    const data = await response.json();
+    return data.exists;
+  }
+  
+  // Custom repository methods
+  async findByCategory(category: string): Promise<Product[]> {
+    const result = await this.findAll({
+      filters: { category },
+      sort: { field: 'name', order: 'asc' }
+    });
+    return result.data;
+  }
+  
+  async findLowStock(threshold: number = 10): Promise<Product[]> {
+    const result = await this.findAll({
+      filters: { stock: { $lte: threshold } },
+      sort: { field: 'stock', order: 'asc' }
+    });
+    return result.data;
+  }
+  
+  async bulkUpdateStock(updates: { id: string; stock: number }[]): Promise<void> {
+    const response = await fetch(`${this.apiUrl}/bulk-update-stock`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ updates })
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to bulk update stock');
+    }
+  }
+  
+  private buildQueryString(params?: QueryParams): string {
+    if (!params) return '';
+    
+    const query = new URLSearchParams();
+    
+    if (params.page) query.append('page', params.page.toString());
+    if (params.pageSize) query.append('pageSize', params.pageSize.toString());
+    if (params.search) query.append('search', params.search);
+    
+    if (params.filters) {
+      query.append('filters', JSON.stringify(params.filters));
+    }
+    
+    if (params.sort) {
+      query.append('sort', `${params.sort.field}:${params.sort.order}`);
+    }
+    
+    return query.toString();
+  }
+}
+
+// Step 4: Use the repository in your application
+async function useProductRepository() {
+  const repository = new ProductRepository();
+  
+  // Get all products with pagination
+  const products = await repository.findAll({
+    page: 1,
+    pageSize: 20,
+    sort: { field: 'createdAt', order: 'desc' }
+  });
+  
+  // Search products
+  const searchResults = await repository.findAll({
+    search: 'wireless',
+    filters: { category: 'Electronics' }
+  });
+  
+  // Get single product
+  const product = await repository.findById('123');
+  
+  // Create new product
+  const newProduct = await repository.create({
+    name: 'Wireless Mouse',
+    sku: 'WM-001',
+    price: 29.99,
+    stock: 100,
+    category: 'Electronics'
+  });
+  
+  // Update product
+  await repository.update('123', {
+    price: 24.99,
+    stock: 150
+  });
+  
+  // Custom methods
+  const lowStockProducts = await repository.findLowStock(5);
+  const electronicsProducts = await repository.findByCategory('Electronics');
+}
+
+// Step 5: Create a mock repository for testing
+class MockProductRepository extends ProductRepository {
+  private products: Product[] = [
+    {
+      id: '1',
+      name: 'Test Product',
+      sku: 'TEST-001',
+      price: 29.99,
+      stock: 100,
+      category: 'Electronics',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ];
+  
+  async findAll(params?: QueryParams): Promise<PaginatedResponse<Product>> {
+    // Return mock data
+    return {
+      data: this.products,
+      total: this.products.length,
+      page: 1,
+      pageSize: 20
+    };
+  }
+  
+  async findById(id: string): Promise<Product | null> {
+    return this.products.find(p => p.id === id) || null;
+  }
+  
+  async create(data: CreateProductDTO): Promise<Product> {
+    const product: Product = {
+      ...data,
+      id: Date.now().toString(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.products.push(product);
+    return product;
+  }
+}
+
+// Step 6: Dependency injection for flexibility
+class ProductService {
+  constructor(private repository: BaseRepository<Product, CreateProductDTO, UpdateProductDTO>) {}
+  
+  async getActiveProducts(): Promise<Product[]> {
+    const result = await this.repository.findAll({
+      filters: { status: 'active' }
+    });
+    return result.data;
+  }
+}
+
+// Use real repository in production
+const productService = new ProductService(new ProductRepository());
+
+// Use mock repository in tests
+const testProductService = new ProductService(new MockProductRepository());
+```
+
+## Best Practices
+
+### 1. Keep Repositories Focused
+```typescript
+// Good: Single responsibility
+class ProductRepository extends BaseRepository<Product> {
+  // Only product-related data access
+}
+
+// Bad: Mixed concerns
+class DataRepository {
+  getProducts() {}
+  getUsers() {}
+  getOrders() {}
+}
+```
+
+### 2. Use DTOs for Data Transfer
+```typescript
+// Separate DTOs from entities
+interface CreateProductDTO {
+  name: string;
+  price: number;
+  // No id, createdAt, etc.
+}
+```
+
+### 3. Handle Errors Gracefully
+```typescript
+async findById(id: string): Promise<Product | null> {
+  try {
+    const response = await fetch(`/api/products/${id}`);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error('Failed to fetch');
+    return response.json();
+  } catch (error) {
+    // Log error
+    throw new RepositoryError('Failed to find product', error);
+  }
+}
+```
+
+### 4. Cache When Appropriate
+```typescript
+class CachedProductRepository extends ProductRepository {
+  private cache = new Map<string, Product>();
+  
+  async findById(id: string): Promise<Product | null> {
+    if (this.cache.has(id)) {
+      return this.cache.get(id)!;
+    }
+    
+    const product = await super.findById(id);
+    if (product) {
+      this.cache.set(id, product);
+    }
+    return product;
+  }
+}
+```
+
+</Usage>

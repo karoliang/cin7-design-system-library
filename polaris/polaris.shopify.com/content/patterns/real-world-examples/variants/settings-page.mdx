@@ -1,0 +1,500 @@
+---
+title: Settings Page
+noIndex: true
+---
+
+<HowItHelps>
+
+## How it helps
+
+This example demonstrates building a settings page that matches Polaris's app settings layout pattern while using ExtJS for complex form handling and vanilla JS for instant feedback.
+
+![Settings Layout](/images/patterns/app-settings-layout/pattern-thumbnail-settings@2x.png)
+
+### Technology Breakdown:
+1. **React Layout**: Polaris Page and navigation structure
+2. **ExtJS Forms**: Complex validation and field dependencies  
+3. **Vanilla JS**: Real-time preview and quick toggles
+4. **Event Bus**: Synchronize settings across all layers
+
+<DefinitionTable>
+
+### Perfect for:
+
+**Complex configurations**: When settings have interdependencies and complex validation rules.
+
+**Real-time preview**: When users need to see changes instantly without saving.
+
+**Multi-section forms**: When organizing many settings into logical groups.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Implementation
+
+This example shows how to build a settings page matching Polaris's visual design but leveraging our multi-layer architecture.
+
+```jsx {"type":"livePreview","id":"settings-page","title":"Settings Page with Multi-Layer Forms"}
+// Step 1: Page structure matching Polaris app settings layout
+import React, { useState, useEffect } from 'react';
+import {
+  Page,
+  Layout,
+  Card,
+  Text,
+  BlockStack,
+  InlineGrid,
+  Box,
+  Divider,
+  Button,
+  Banner,
+} from '@cin7/polaris-adapter';
+import { EventBus } from '@cin7/core/events';
+
+function SettingsPage() {
+  const [activeSection, setActiveSection] = useState('general');
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  // Navigation sections matching Polaris pattern
+  const sections = [
+    {
+      id: 'general',
+      title: 'General',
+      description: 'Basic store configuration',
+    },
+    {
+      id: 'checkout',
+      title: 'Checkout',
+      description: 'Payment and checkout options',
+    },
+    {
+      id: 'shipping',
+      title: 'Shipping',
+      description: 'Rates and delivery options',
+    },
+    {
+      id: 'taxes',
+      title: 'Taxes',
+      description: 'Tax rates and rules',
+    },
+    {
+      id: 'notifications',
+      title: 'Notifications',
+      description: 'Email and alert settings',
+    },
+  ];
+
+  // Listen for form changes
+  useEffect(() => {
+    const handleFormChange = () => setHasUnsavedChanges(true);
+    EventBus.on('form:changed', handleFormChange);
+    return () => EventBus.off('form:changed', handleFormChange);
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    EventBus.emit('settings:save');
+    
+    // Simulate save
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setSaving(false);
+    setHasUnsavedChanges(false);
+  };
+
+  return (
+    <Page
+      title="Settings"
+      divider
+      primaryAction={
+        hasUnsavedChanges ? {
+          content: 'Save',
+          loading: saving,
+          onAction: handleSave,
+        } : undefined
+      }
+    >
+      {hasUnsavedChanges && (
+        <Box paddingBlockEnd="400">
+          <Banner
+            title="You have unsaved changes"
+            status="warning"
+            action={{
+              content: 'Discard',
+              onAction: () => {
+                EventBus.emit('settings:reset');
+                setHasUnsavedChanges(false);
+              },
+            }}
+          />
+        </Box>
+      )}
+
+      <InlineGrid columns={{ xs: 1, md: ['twoThirds', 'oneThird'] }} gap="400">
+        {/* Left column - Navigation */}
+        <Box>
+          <BlockStack gap="400">
+            {sections.map((section) => (
+              <Card
+                key={section.id}
+                subdued={activeSection !== section.id}
+                sectioned
+                onClick={() => setActiveSection(section.id)}
+              >
+                <BlockStack gap="200">
+                  <Text variant="headingMd" as="h3">
+                    {section.title}
+                  </Text>
+                  <Text variant="bodySm" color="subdued">
+                    {section.description}
+                  </Text>
+                </BlockStack>
+              </Card>
+            ))}
+          </BlockStack>
+        </Box>
+
+        {/* Right column - Settings forms */}
+        <Box>
+          <div id={`settings-form-${activeSection}`} />
+        </Box>
+      </InlineGrid>
+    </Page>
+  );
+}
+
+// Step 2: Mount ExtJS forms for complex settings
+function mountSettingsForm(sectionId) {
+  // General settings form
+  if (sectionId === 'general') {
+    Ext.create('Cin7.form.Panel', {
+      renderTo: `settings-form-${sectionId}`,
+      border: false,
+      defaults: {
+        anchor: '100%',
+        labelAlign: 'top',
+      },
+      items: [
+        {
+          xtype: 'card',
+          padding: 0,
+          items: [{
+            xtype: 'container',
+            padding: 20,
+            items: [{
+              xtype: 'cin7textfield',
+              fieldLabel: 'Store name',
+              name: 'storeName',
+              value: 'My Store',
+              required: true,
+              listeners: {
+                change: () => EventBus.emit('form:changed'),
+                blur: (field) => updatePreview('storeName', field.getValue()),
+              }
+            }, {
+              xtype: 'cin7textfield',
+              fieldLabel: 'Store URL',
+              name: 'storeUrl',
+              value: 'mystore.cin7.com',
+              prefix: 'https://',
+              suffix: '.cin7.com',
+              regex: /^[a-z0-9-]+$/,
+              regexText: 'Only lowercase letters, numbers, and hyphens allowed',
+            }, {
+              xtype: 'cin7textarea',
+              fieldLabel: 'Store description',
+              name: 'storeDescription',
+              rows: 3,
+              maxLength: 160,
+              enforceMaxLength: true,
+              helpText: 'This description appears in search results',
+            }]
+          }]
+        },
+        
+        // Divider between sections
+        { xtype: 'component', html: '<hr class="Polaris-Divider">', margin: '20 0' },
+        
+        {
+          xtype: 'card',
+          padding: 0,
+          items: [{
+            xtype: 'container',
+            padding: 20,
+            items: [{
+              xtype: 'cin7combobox',
+              fieldLabel: 'Timezone',
+              name: 'timezone',
+              store: getTimezoneStore(),
+              value: 'America/New_York',
+              queryMode: 'local',
+              forceSelection: true,
+              listeners: {
+                change: () => EventBus.emit('form:changed'),
+              }
+            }, {
+              xtype: 'cin7combobox',
+              fieldLabel: 'Default currency',
+              name: 'currency',
+              store: ['USD', 'EUR', 'GBP', 'CAD', 'AUD'],
+              value: 'USD',
+              listeners: {
+                change: (field, newValue) => {
+                  // Update all price displays
+                  EventBus.emit('currency:changed', { currency: newValue });
+                }
+              }
+            }, {
+              xtype: 'cin7radiogroup',
+              fieldLabel: 'Weight unit',
+              columns: 3,
+              items: [
+                { boxLabel: 'kg', name: 'weightUnit', inputValue: 'kg' },
+                { boxLabel: 'lb', name: 'weightUnit', inputValue: 'lb' },
+                { boxLabel: 'oz', name: 'weightUnit', inputValue: 'oz' },
+              ],
+              value: { weightUnit: 'kg' },
+            }]
+          }]
+        }
+      ],
+    });
+  }
+  
+  // Checkout settings with field dependencies
+  else if (sectionId === 'checkout') {
+    Ext.create('Cin7.form.Panel', {
+      renderTo: `settings-form-${sectionId}`,
+      border: false,
+      items: [{
+        xtype: 'card',
+        padding: 20,
+        items: [{
+          xtype: 'cin7checkbox',
+          boxLabel: 'Require customer accounts',
+          name: 'requireAccount',
+          listeners: {
+            change: function(checkbox, checked) {
+              // Show/hide dependent fields
+              const guestCheckout = checkbox.up('form').down('[name=allowGuestCheckout]');
+              guestCheckout.setDisabled(checked);
+              if (checked) guestCheckout.setValue(false);
+            }
+          }
+        }, {
+          xtype: 'cin7checkbox',
+          boxLabel: 'Allow guest checkout',
+          name: 'allowGuestCheckout',
+          value: true,
+        }, {
+          xtype: 'cin7checkbox',
+          boxLabel: 'Enable express checkout',
+          name: 'expressCheckout',
+          helpText: 'Show PayPal and Apple Pay buttons',
+        }]
+      }, {
+        xtype: 'card',
+        padding: 20,
+        margin: '20 0 0 0',
+        items: [{
+          xtype: 'label',
+          text: 'Order processing',
+          cls: 'Polaris-Text--headingMd',
+        }, {
+          xtype: 'cin7radiogroup',
+          hideLabel: true,
+          columns: 1,
+          items: [
+            { 
+              boxLabel: 'Automatically fulfill orders',
+              name: 'fulfillment',
+              inputValue: 'auto',
+              helpText: 'Orders are fulfilled as soon as payment is received'
+            },
+            {
+              boxLabel: 'Manual fulfillment',
+              name: 'fulfillment', 
+              inputValue: 'manual',
+              helpText: 'You must manually mark orders as fulfilled'
+            }
+          ],
+          value: { fulfillment: 'auto' },
+        }]
+      }],
+    });
+  }
+}
+
+// Step 3: Vanilla JS for instant preview and interactions
+function initializePreview() {
+  // Create preview panel
+  const previewHtml = `
+    <div class="settings-preview">
+      <div class="preview-header">Live Preview</div>
+      <div class="preview-content">
+        <div class="store-header">
+          <h1 id="preview-store-name">My Store</h1>
+          <p id="preview-store-description">Welcome to our store</p>
+        </div>
+        <div class="preview-currency">
+          Prices shown in <span id="preview-currency">USD</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Insert preview where needed
+  document.getElementById('preview-container')?.insertAdjacentHTML('beforeend', previewHtml);
+}
+
+// Real-time preview updates
+function updatePreview(field, value) {
+  const previewElements = {
+    storeName: document.getElementById('preview-store-name'),
+    storeDescription: document.getElementById('preview-store-description'),
+    currency: document.getElementById('preview-currency'),
+  };
+  
+  if (previewElements[field]) {
+    // Smooth transition
+    previewElements[field].style.opacity = '0.5';
+    setTimeout(() => {
+      previewElements[field].textContent = value;
+      previewElements[field].style.opacity = '1';
+    }, 150);
+  }
+}
+
+// Step 4: Advanced form patterns with ExtJS
+Ext.define('Cin7.form.TaxRulesPanel', {
+  extend: 'Ext.form.Panel',
+  
+  initComponent: function() {
+    this.items = [{
+      xtype: 'grid',
+      title: 'Tax Rules',
+      height: 400,
+      store: {
+        fields: ['country', 'state', 'rate', 'shipping', 'digital'],
+        data: [
+          { country: 'US', state: 'NY', rate: 8.875, shipping: true, digital: true },
+          { country: 'US', state: 'CA', rate: 7.25, shipping: false, digital: true },
+        ]
+      },
+      columns: [{
+        text: 'Country',
+        dataIndex: 'country',
+        width: 100,
+        editor: {
+          xtype: 'combobox',
+          store: ['US', 'CA', 'GB', 'AU'],
+        }
+      }, {
+        text: 'State/Province',
+        dataIndex: 'state',
+        width: 120,
+        editor: 'textfield'
+      }, {
+        text: 'Rate (%)',
+        dataIndex: 'rate',
+        width: 100,
+        editor: {
+          xtype: 'numberfield',
+          minValue: 0,
+          maxValue: 100,
+          decimalPrecision: 3
+        }
+      }, {
+        text: 'Tax Shipping',
+        dataIndex: 'shipping',
+        width: 100,
+        xtype: 'checkcolumn'
+      }, {
+        text: 'Tax Digital',
+        dataIndex: 'digital',
+        width: 100,
+        xtype: 'checkcolumn'
+      }],
+      
+      plugins: [{
+        ptype: 'cellediting',
+        clicksToEdit: 1
+      }],
+      
+      tbar: [{
+        text: 'Add Rule',
+        iconCls: 'x-fa fa-plus',
+        handler: function() {
+          const store = this.up('grid').getStore();
+          store.add({ country: 'US', rate: 0, shipping: true, digital: true });
+        }
+      }, {
+        text: 'Import Rates',
+        iconCls: 'x-fa fa-upload'
+      }]
+    }];
+    
+    this.callParent();
+  }
+});
+
+// Step 5: Handle save across all forms
+EventBus.on('settings:save', async () => {
+  const allForms = Ext.ComponentQuery.query('form');
+  const allData = {};
+  
+  allForms.forEach(form => {
+    if (form.isValid()) {
+      Object.assign(allData, form.getValues());
+    }
+  });
+  
+  // Save via TypeScript SDK
+  const settingsRepository = new SettingsRepository();
+  await settingsRepository.updateSettings(allData);
+  
+  // Show success notification
+  EventBus.emit('notification:show', {
+    message: 'Settings saved successfully',
+    type: 'success'
+  });
+});
+```
+
+## Layer Benefits
+
+### Layout Structure (React)
+- Matches Polaris patterns exactly
+- Responsive navigation
+- Status banners and actions
+
+### Form Handling (ExtJS)  
+- Complex validation rules
+- Field dependencies
+- Dynamic form generation
+- Inline grid editing
+
+### Real-time Updates (Vanilla JS)
+- Instant preview
+- No re-renders needed
+- Smooth transitions
+- Minimal overhead
+
+### State Management (Event Bus)
+- Sync across all layers
+- Undo/redo capability
+- Change tracking
+- Auto-save drafts
+
+## Key Features
+
+1. **Visual Consistency**: Exact match to Polaris settings layout
+2. **Complex Forms**: ExtJS handles validation and dependencies
+3. **Live Preview**: Vanilla JS provides instant feedback
+4. **Performance**: Fast interactions with large forms
+5. **Accessibility**: Maintains all Polaris a11y features
+
+</Usage>

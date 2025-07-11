@@ -1,0 +1,90 @@
+---
+title: Cross-Layer Communication
+description: Event-driven patterns for communication between Cin7 DSL layers
+lede: Enable seamless communication between Vanilla JS, React, and ExtJS layers without tight coupling.
+url: /patterns/cross-layer-communication
+previewImg: /images/patterns/cross-layer-communication/pattern-thumbnail.png
+githubDiscussionsLink: https://github.com/Shopify/polaris/discussions/cin7-cross-layer
+hideChildren: true
+variants:
+  - 'variants/event-bus.mdx'
+  - 'variants/shared-state.mdx'
+  - 'variants/command-pattern.mdx'
+---
+
+<Variants variants={frontmatter.variants} />
+
+<Stack gap="400">
+
+## Core Concepts
+
+### Event-Driven Architecture
+
+Use events to decouple layers:
+
+```typescript
+// Event bus for cross-layer communication
+class EventBus {
+  private events = new Map<string, Set<Function>>();
+  
+  on(event: string, handler: Function): void {
+    if (!this.events.has(event)) {
+      this.events.set(event, new Set());
+    }
+    this.events.get(event)!.add(handler);
+  }
+  
+  emit(event: string, data?: any): void {
+    const handlers = this.events.get(event);
+    if (handlers) {
+      handlers.forEach(handler => handler(data));
+    }
+  }
+  
+  off(event: string, handler: Function): void {
+    this.events.get(event)?.delete(handler);
+  }
+}
+
+export const eventBus = new EventBus();
+```
+
+### Layer Communication Patterns
+
+1. **Direct Events**: For immediate actions
+2. **State Sync**: For data consistency
+3. **Command Queue**: For complex operations
+4. **Pub/Sub**: For broadcast updates
+
+### Type-Safe Events
+
+Define event types for safety:
+
+```typescript
+interface AppEvents {
+  'product:added': { product: Product };
+  'theme:changed': { theme: 'light' | 'dark' };
+  'user:login': { user: User };
+}
+
+class TypedEventBus<T extends Record<string, any>> {
+  on<K extends keyof T>(event: K, handler: (data: T[K]) => void): void;
+  emit<K extends keyof T>(event: K, data: T[K]): void;
+}
+```
+
+## Common Patterns
+
+- **React → ExtJS**: User actions trigger grid updates
+- **ExtJS → React**: Grid selections update React state
+- **Vanilla → All**: Global actions (theme, auth)
+- **All → Store**: Centralized state updates
+
+## Related Resources
+
+- [Event Bus Implementation](/examples/event-bus)
+- [State Management Guide](/guides/state-management)
+- [Full Stack Example](/examples/full-stack-integration)
+- [Layer Integration Patterns](/patterns/layer-integration)
+
+</Stack>

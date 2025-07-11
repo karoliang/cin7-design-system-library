@@ -1,0 +1,59 @@
+{
+  "name": "@cin7/extjs-adapters",
+  "version": "0.1.0",
+  "description": "ExtJS adapters for Cin7 DSL - bridges modern design system with enterprise components",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./grid": {
+      "types": "./dist/grid/index.d.ts",
+      "import": "./dist/grid/index.mjs",
+      "require": "./dist/grid/index.js"
+    },
+    "./form": {
+      "types": "./dist/form/index.d.ts",
+      "import": "./dist/form/index.mjs",
+      "require": "./dist/form/index.js"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "import": "./dist/charts/index.mjs",
+      "require": "./dist/charts/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "themes"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@cin7/core": "workspace:*",
+    "@cin7/design-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  },
+  "peerDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

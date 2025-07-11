@@ -1,0 +1,147 @@
+/**
+ * Cin7 DSL Design Tokens - SCSS
+ * Import this file in your SCSS to use design tokens
+ */
+
+// Import Polaris tokens as foundation
+@import '@shopify/polaris-tokens/dist/styles';
+
+// Enterprise tokens as SCSS variables
+$cin7-tokens: (
+  // Data Grid
+  'dataGrid-header-height': 48px,
+  'dataGrid-row-height': 40px,
+  'dataGrid-cell-padding': 12px 16px,
+  
+  // Form
+  'form-field-height': 36px,
+  'form-group-spacing': 24px,
+  'form-section-spacing': 32px,
+  
+  // Layout
+  'layout-sidebar-width': 280px,
+  'layout-sidebar-collapsed': 64px,
+  'layout-toolbar-height': 56px,
+  'layout-page-padding': 24px,
+  
+  // Animation durations
+  'duration-fast': 100ms,
+  'duration-base': 200ms,
+  'duration-slow': 300ms,
+  'duration-slower': 400ms,
+  
+  // Spacing scale
+  'space-0': 0,
+  'space-1': 4px,
+  'space-2': 8px,
+  'space-3': 12px,
+  'space-4': 16px,
+  'space-5': 20px,
+  'space-6': 24px,
+  'space-8': 32px,
+  'space-10': 40px,
+  'space-12': 48px,
+  'space-16': 64px,
+  'space-20': 80px,
+  'space-24': 96px,
+);
+
+// Generate CSS custom properties
+:root {
+  @each $name, $value in $cin7-tokens {
+    --cin7-#{$name}: #{$value};
+  }
+}
+
+// Mixins for common patterns
+@mixin cin7-text-style($style) {
+  @if $style == 'h1' {
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  } @else if $style == 'h2' {
+    font-size: 30px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  } @else if $style == 'h3' {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 600;
+  } @else if $style == 'body' {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+  } @else if $style == 'caption' {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+}
+
+@mixin cin7-card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  border: 1px solid var(--p-color-border);
+  padding: var(--cin7-space-6);
+}
+
+@mixin cin7-focus-ring {
+  outline: 2px solid var(--p-color-border-emphasis);
+  outline-offset: 2px;
+}
+
+@mixin cin7-transition($property: all, $duration: var(--cin7-duration-base)) {
+  transition: $property $duration cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Utility classes
+.cin7-grid {
+  display: grid;
+  gap: var(--cin7-space-4);
+  
+  &--cols-2 { grid-template-columns: repeat(2, 1fr); }
+  &--cols-3 { grid-template-columns: repeat(3, 1fr); }
+  &--cols-4 { grid-template-columns: repeat(4, 1fr); }
+  
+  @media (max-width: 768px) {
+    &--cols-2,
+    &--cols-3,
+    &--cols-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.cin7-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cin7-space-4);
+  
+  &--horizontal {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  &--spacing-tight { gap: var(--cin7-space-2); }
+  &--spacing-loose { gap: var(--cin7-space-6); }
+}
+
+// Animation utilities
+@each $name, $duration in (
+  'fast': 100ms,
+  'base': 200ms,
+  'slow': 300ms,
+  'slower': 400ms
+) {
+  .cin7-animate-#{$name} {
+    animation-duration: $duration;
+  }
+}
+
+// Dark mode adjustments
+[data-theme="dark"] {
+  --cin7-dataGrid-header-background: var(--p-color-bg-surface-secondary-experimental);
+  --cin7-dataGrid-row-stripedBackground: rgba(255, 255, 255, 0.02);
+}

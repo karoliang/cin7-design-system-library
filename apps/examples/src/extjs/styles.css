@@ -1,0 +1,194 @@
+/* Import Cin7 design tokens */
+@import '@cin7/design-tokens/css';
+
+/* ExtJS app styles with Cin7 tokens */
+body {
+  margin: 0;
+  font-family: var(--p-font-family-sans);
+}
+
+/* App header */
+.app-header {
+  background: var(--cin7-enterprise-extjs-panel-headerBackground);
+  color: var(--p-color-text);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--cin7-space-6);
+  border-bottom: 1px solid var(--p-color-border);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Metric cards */
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cin7-space-6);
+  height: 100%;
+}
+
+.metric-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--p-color-text-emphasis);
+  margin-bottom: var(--cin7-space-2);
+}
+
+.metric-change {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.metric-change.positive {
+  color: var(--p-color-text-success);
+}
+
+.metric-change.positive::before {
+  content: '↑ ';
+}
+
+.metric-change.negative {
+  color: var(--p-color-text-critical);
+}
+
+.metric-change.negative::before {
+  content: '↓ ';
+}
+
+/* Stock indicators */
+.stock-high {
+  color: var(--p-color-text-success);
+  font-weight: 500;
+}
+
+.stock-medium {
+  color: var(--p-color-text-warning);
+  font-weight: 500;
+}
+
+.stock-low {
+  color: var(--p-color-text-critical);
+  font-weight: 500;
+}
+
+/* Status badges */
+[class*="status-"] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cin7-space-1);
+  padding: var(--cin7-space-1) var(--cin7-space-3);
+  border-radius: var(--p-border-radius-300);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: var(--p-color-bg-fill-warning-secondary);
+  color: var(--p-color-text-warning);
+}
+
+.status-processing {
+  background: var(--p-color-bg-fill-info-secondary);
+  color: var(--p-color-text-info);
+}
+
+.status-shipped {
+  background: var(--p-color-bg-fill-emphasis-hover);
+  color: var(--p-color-text-emphasis);
+}
+
+.status-delivered {
+  background: var(--p-color-bg-fill-success-secondary);
+  color: var(--p-color-text-success);
+}
+
+.status-cancelled {
+  background: var(--p-color-bg-fill-critical-secondary);
+  color: var(--p-color-text-critical);
+}
+
+/* ExtJS overrides with Cin7 tokens */
+.x-panel-header-default {
+  background: var(--cin7-enterprise-extjs-panel-headerBackground) !important;
+  border-color: var(--p-color-border) !important;
+}
+
+.x-grid-cell-inner {
+  padding: var(--cin7-enterprise-dataGrid-cell-padding) !important;
+}
+
+.x-toolbar-default {
+  background: var(--p-color-bg-surface) !important;
+  border-color: var(--p-color-border) !important;
+}
+
+/* Dark theme support */
+[data-cin7-theme="dark"] {
+  .app-header {
+    background: var(--cin7-enterprise-extjs-panel-headerBackground);
+  }
+  
+  .x-panel-body-default {
+    background: var(--cin7-enterprise-dashboard-widget-background) !important;
+  }
+  
+  .x-grid-row-alt .x-grid-cell {
+    background: var(--cin7-enterprise-dataGrid-row-stripedBackground) !important;
+  }
+}
+
+/* Custom ExtJS component styles */
+.cin7-card {
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-300);
+  background: var(--p-color-bg-surface);
+}
+
+.cin7-card:hover {
+  box-shadow: var(--p-shadow-400);
+}
+
+/* Form field enhancements */
+.x-form-item-label-top {
+  padding-bottom: var(--cin7-space-1) !important;
+}
+
+.x-form-text-field-body-default {
+  border-radius: var(--p-border-radius-100) !important;
+}
+
+/* Button enhancements */
+.x-btn-default-toolbar-small {
+  border-radius: var(--p-border-radius-100) !important;
+  font-weight: 500 !important;
+}
+
+/* Tree panel styling */
+.x-tree-node-text {
+  font-size: 14px;
+  padding: var(--cin7-space-1) 0;
+}
+
+.x-tree-node-over {
+  background: var(--p-color-bg-surface-hover) !important;
+}
+
+/* Tab panel styling */
+.x-tab-bar-default {
+  background: var(--p-color-bg-surface) !important;
+  border-bottom: 1px solid var(--p-color-border) !important;
+}
+
+.x-tab-default {
+  border-radius: var(--p-border-radius-200) var(--p-border-radius-200) 0 0 !important;
+}
+
+.x-tab-active {
+  background: var(--p-color-bg-surface-selected) !important;
+}

@@ -1,0 +1,139 @@
+---
+title: Cin7 DSL Patterns
+description: Common patterns for building enterprise applications with Cin7 DSL
+lede: Learn how to effectively use Cin7 DSL's multi-layer architecture to build robust enterprise applications.
+order: 20
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.lede}</Lede>
+
+## Pattern Categories
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>Layer Integration</h3>
+          <p>Patterns for combining different technology layers effectively.</p>
+          <Link url="/patterns/layer-integration">View patterns</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>Data Management</h3>
+          <p>Best practices for handling data across layers using TypeScript SDK.</p>
+          <Link url="/patterns/data-management">View patterns</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>Enterprise Forms</h3>
+          <p>Complex form patterns using ExtJS with modern styling.</p>
+          <Link url="/patterns/enterprise-forms">View patterns</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>Cross-Layer Communication</h3>
+          <p>Event-driven patterns for layer synchronization.</p>
+          <Link url="/patterns/cross-layer-communication">View patterns</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Key Concepts
+
+### 1. Layer Selection
+
+Choose the right layer for each part of your application:
+
+- **Vanilla JS**: Lightweight interactions, DOM manipulation
+- **React + Polaris**: Modern UI components, state management
+- **ExtJS**: Enterprise data grids, complex forms
+- **TypeScript SDK**: Business logic, data management
+
+### 2. Shared State
+
+Use the TypeScript SDK patterns to maintain consistent state across layers:
+
+```typescript
+import { BaseRepository, BaseUseCase } from '@cin7/typescript-sdk';
+import { create } from 'zustand';
+
+// Shared store accessible by all layers
+export const useAppStore = create((set) => ({
+  // State and actions
+}));
+```
+
+### 3. Event Bus
+
+Enable communication between layers without tight coupling:
+
+```typescript
+import { EventBus } from '@cin7/core/events';
+
+// Emit from one layer
+EventBus.emit('data:updated', { id: 123, changes: {...} });
+
+// Listen in another layer
+EventBus.on('data:updated', (data) => {
+  // Handle update
+});
+```
+
+### 4. Design Token Consistency
+
+Ensure visual consistency across all layers:
+
+```css
+/* Works in all layers */
+.my-component {
+  background: var(--p-color-bg-surface);
+  padding: var(--cin7-space-4);
+  border-radius: var(--p-border-radius-300);
+}
+```
+
+## Common Patterns
+
+- [Progressive Enhancement](/patterns/progressive-enhancement) - Start simple with Vanilla JS, enhance with React
+- [Data Grid Patterns](/patterns/data-grid-patterns) - Enterprise data management with ExtJS
+- [Form Orchestration](/patterns/form-orchestration) - Complex multi-step forms
+- [State Synchronization](/patterns/state-synchronization) - Keep data consistent across layers
+- [Theme Management](/patterns/theme-management) - Consistent theming across technologies
+
+## Best Practices
+
+1. **Start Simple**: Begin with the lightest layer that meets your needs
+2. **Progressive Enhancement**: Add complexity only when necessary
+3. **Maintain Separation**: Keep business logic in the TypeScript SDK layer
+4. **Use Events**: Prefer events over direct coupling between layers
+5. **Consistent Styling**: Always use design tokens for styling
+
+## Related Resources
+
+- [Architecture Overview](/getting-started/overview)
+- [Choosing Layers](/getting-started/choosing-layers)
+- [TypeScript SDK Documentation](/getting-started/application-layer)
+- [Design System Layer](/getting-started/design-system-layer)

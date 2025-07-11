@@ -105,3 +105,7 @@ When this project is developed, update this file with:
 - Linting/formatting commands
 - Architecture overview
 - DSL syntax documentation references
+
+## Memories
+
+- Requested to add a memory, but no specific memory was provided

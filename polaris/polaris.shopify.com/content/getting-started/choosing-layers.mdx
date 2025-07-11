@@ -1,0 +1,397 @@
+---
+title: Choosing the Right Layer
+description: 'Learn when to use Vanilla JS, React, TypeScript, or ExtJS in your Cin7 DSL application.'
+showTOC: true
+keywords:
+  - layers
+  - vanilla js
+  - react
+  - typescript
+  - extjs
+  - architecture
+  - best practices
+order: 7
+icon: DecisionIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## The Cin7 DSL Philosophy
+
+Cin7 DSL embraces a "right tool for the job" philosophy. Instead of forcing everything into a single framework, we provide different technologies optimized for different parts of your application:
+
+- **Vanilla JavaScript** - UI Interaction Layer
+- **React + Polaris** - Component Layer
+- **ExtJS** - Enterprise Component Layer
+- **TypeScript** - Application/Business Logic Layer
+
+## Decision Matrix
+
+### When to Use Vanilla JavaScript
+
+Use the **@cin7/vanilla-js** package when:
+
+✅ **Performance is critical**
+- Animations need to run at 60fps
+- Large lists with frequent DOM updates
+- Real-time data visualization
+
+✅ **Progressive enhancement**
+- Server-rendered HTML that needs interactivity
+- Supporting users with JavaScript disabled
+- SEO-critical pages
+
+✅ **Simple interactions**
+- Toggle buttons, dropdowns, tabs
+- Form validation feedback
+- Hover effects and tooltips
+
+✅ **Third-party integrations**
+- Wrapping non-React libraries
+- Browser API interactions
+- Legacy code integration
+
+#### Example: Vanilla JS Toggle
+```javascript
+import { $, on, toggleClass } from '@cin7/vanilla-js';
+
+// Simple, performant toggle without framework overhead
+on($('#menu-button'), 'click', () => {
+  toggleClass($('#menu'), 'open');
+});
+```
+
+### When to Use React Components
+
+Use **@cin7/polaris-adapter** and React when:
+
+✅ **Complex state management**
+- Multi-step forms
+- Interactive dashboards
+- Real-time collaborative features
+
+✅ **Component composition**
+- Reusable UI patterns
+- Nested component hierarchies
+- Prop drilling or context needs
+
+✅ **Rich interactions**
+- Drag and drop interfaces
+- Complex filtering/sorting
+- Dynamic form builders
+
+✅ **Team familiarity**
+- Team knows React well
+- Existing React components
+- React ecosystem benefits
+
+#### Example: React Dashboard
+```tsx
+import { Page, Layout, Card } from '@cin7/polaris-adapter';
+import { DashboardMetrics } from './components/DashboardMetrics';
+import { ActivityFeed } from './components/ActivityFeed';
+
+function Dashboard() {
+  const [metrics, setMetrics] = useState(null);
+  const [activities, setActivities] = useState([]);
+
+  // Complex state management and composition
+  return (
+    <Page title="Dashboard">
+      <Layout>
+        <Layout.Section>
+          <DashboardMetrics data={metrics} />
+        </Layout.Section>
+        <Layout.Section secondary>
+          <ActivityFeed items={activities} />
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+```
+
+### When to Use ExtJS Components
+
+Use **@cin7/extjs-adapters** when:
+
+✅ **Enterprise data requirements**
+- Massive data grids (10,000+ rows)
+- Complex filtering and grouping
+- Excel-like editing capabilities
+- Advanced pivot tables
+
+✅ **Specialized components**
+- Gantt charts
+- Tree grids
+- Calendar views
+- Advanced form controls
+
+✅ **Legacy compatibility**
+- Migrating from ExtJS apps
+- Enterprise feature parity
+- Specific ExtJS components needed
+
+#### Example: ExtJS Data Grid
+```tsx
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+function InventoryGrid() {
+  return (
+    <ExtDataGrid
+      store={{
+        type: 'remote',
+        url: '/api/inventory',
+        pageSize: 100,
+      }}
+      columns={[
+        { text: 'SKU', dataIndex: 'sku', width: 100, filter: true },
+        { text: 'Product', dataIndex: 'name', flex: 1, filter: true },
+        { text: 'Stock', dataIndex: 'quantity', width: 80, editor: 'number' },
+        { text: 'Price', dataIndex: 'price', width: 100, renderer: 'currency' }
+      ]}
+      features={['grouping', 'filtering', 'editing', 'export']}
+      onEdit={(record, field, value) => {
+        // Handle inline editing
+      }}
+    />
+  );
+}
+```
+
+### When to Use TypeScript SDK
+
+Use **@cin7/typescript-sdk** for:
+
+✅ **Business logic**
+- Validation rules
+- Calculations and algorithms
+- Data transformations
+- Business rule enforcement
+
+✅ **API integration**
+- Type-safe API clients
+- Request/response mapping
+- Error handling
+- Retry logic
+
+✅ **State management**
+- Application state
+- Caching strategies
+- Offline support
+- State synchronization
+
+✅ **Reusable patterns**
+- Repository pattern
+- Use cases
+- Specifications
+- Domain models
+
+#### Example: Business Logic
+```typescript
+import { ValidatedUseCase, ValidationError } from '@cin7/typescript-sdk/patterns';
+import { z } from '@cin7/typescript-sdk/validation';
+
+const PricingRules = {
+  calculateDiscount(order: Order, customer: Customer): number {
+    let discount = 0;
+    
+    // Business rules independent of UI
+    if (customer.tier === 'premium') {
+      discount += 0.15;
+    }
+    
+    if (order.total > 1000) {
+      discount += 0.05;
+    }
+    
+    if (order.items.length > 10) {
+      discount += 0.03;
+    }
+    
+    return Math.min(discount, 0.25); // Max 25% discount
+  }
+};
+```
+
+## Combining Layers
+
+The real power of Cin7 DSL comes from combining layers effectively:
+
+### Example: Complete Feature Implementation
+
+```typescript
+// 1. Business Logic Layer (TypeScript SDK)
+class SearchProductsUseCase extends BaseUseCase<SearchInput, Product[]> {
+  async execute(input: SearchInput) {
+    const products = await this.productRepo.search(input.query);
+    return this.applyBusinessRules(products);
+  }
+}
+
+// 2. Component Layer (React)
+function ProductSearch() {
+  const [query, setQuery] = useState('');
+  const { data: products, loading } = useProducts(query);
+
+  return (
+    <Card>
+      <TextField
+        value={query}
+        onChange={setQuery}
+        placeholder="Search products..."
+      />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <ProductGrid products={products} />
+      )}
+    </Card>
+  );
+}
+
+// 3. UI Interaction Layer (Vanilla JS)
+import { onDebounced, $ } from '@cin7/vanilla-js';
+
+// Add keyboard shortcuts
+onKey(document, {
+  key: '/',
+  ctrl: true,
+  handler: () => {
+    const searchInput = $('#product-search');
+    searchInput?.focus();
+  }
+});
+
+// 4. Enterprise Components (ExtJS)
+function ProductGrid({ products }) {
+  return (
+    <ExtDataGrid
+      data={products}
+      columns={productColumns}
+      features={['sorting', 'grouping', 'export']}
+    />
+  );
+}
+```
+
+## Anti-Patterns to Avoid
+
+### ❌ Don't Mix Concerns
+
+```typescript
+// Bad: Business logic in React component
+function ProductList() {
+  const calculateTax = (price) => {
+    // Business logic doesn't belong here!
+    if (customer.region === 'CA') {
+      return price * 0.0725;
+    }
+    // ...
+  };
+}
+
+// Good: Business logic in Application Layer
+class TaxCalculator {
+  calculate(price: Money, customer: Customer): Money {
+    const rate = this.getTaxRate(customer.region);
+    return price.multiply(rate);
+  }
+}
+```
+
+### ❌ Don't Over-Engineer
+
+```typescript
+// Bad: Using React for simple toggle
+function Toggle() {
+  const [open, setOpen] = useState(false);
+  return <div onClick={() => setOpen(!open)}>...</div>;
+}
+
+// Good: Vanilla JS for simple interactions
+on($('.toggle'), 'click', (e) => {
+  toggleClass(e.target, 'open');
+});
+```
+
+### ❌ Don't Ignore Performance
+
+```typescript
+// Bad: React for performance-critical animations
+function AnimatedList({ items }) {
+  return items.map(item => (
+    <motion.div animate={{ x: item.x, y: item.y }}>
+      {item.content}
+    </motion.div>
+  ));
+}
+
+// Good: Vanilla JS for smooth animations
+items.forEach(item => {
+  animate(item.element, [
+    { transform: `translate(${item.x}px, ${item.y}px)` }
+  ], { duration: 200 });
+});
+```
+
+## Guidelines by Feature Type
+
+### Forms
+
+- **Simple forms**: Vanilla JS validation + server rendering
+- **Multi-step forms**: React with form state management
+- **Complex forms**: ExtJS FormPanel for enterprise features
+- **Validation logic**: TypeScript SDK patterns
+
+### Data Display
+
+- **Simple lists**: Server-rendered HTML + Vanilla JS enhancements
+- **Interactive lists**: React components with filtering/sorting
+- **Large datasets**: ExtJS DataGrid with virtual scrolling
+- **Data fetching**: TypeScript SDK repositories
+
+### Navigation
+
+- **Simple menus**: Vanilla JS + CSS
+- **Complex navigation**: React with routing
+- **Mega menus**: Combination of React structure + Vanilla JS performance
+- **Route guards**: TypeScript SDK for authorization logic
+
+### Real-time Features
+
+- **WebSocket handling**: TypeScript SDK for protocol
+- **UI updates**: Vanilla JS for performance
+- **State sync**: React for complex state
+- **Notifications**: Vanilla JS for non-blocking updates
+
+## Migration Strategies
+
+When migrating existing applications to Cin7 DSL:
+
+1. **Start with the Application Layer**: Extract business logic to TypeScript SDK
+2. **Add Vanilla JS progressively**: Enhance existing HTML without full rewrite
+3. **Introduce React gradually**: Component by component migration
+4. **Use ExtJS for specific needs**: Only where enterprise features required
+
+## Performance Considerations
+
+Choose layers based on performance needs:
+
+- **Vanilla JS**: ~5KB, instant execution
+- **React Component**: ~45KB (with React), virtual DOM overhead
+- **ExtJS Component**: ~200KB+, powerful but heavy
+- **TypeScript SDK**: No runtime overhead (just your logic)
+
+## Conclusion
+
+Cin7 DSL's multi-layer architecture lets you optimize each part of your application:
+
+- Use **Vanilla JS** for lightweight, performant interactions
+- Use **React** for complex, stateful UI components
+- Use **ExtJS** for enterprise-grade data components
+- Use **TypeScript SDK** for all business logic
+
+The key is choosing the right tool for each job, not forcing everything into a single paradigm.

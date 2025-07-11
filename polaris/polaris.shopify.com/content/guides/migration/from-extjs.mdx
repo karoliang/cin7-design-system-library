@@ -1,0 +1,658 @@
+---
+title: Migrating from ExtJS
+description: Modernize your ExtJS application with Polaris design system and Cin7 DSL
+showTOC: true
+keywords:
+  - migration
+  - extjs
+  - modernization
+  - polaris
+---
+
+# {frontmatter.title}
+
+<Lede>
+Transform your ExtJS application into a modern, responsive interface using Polaris components and Cin7 DSL's design tokens while preserving your complex business logic and data handling.
+</Lede>
+
+## Overview
+
+This guide helps you modernize ExtJS applications by:
+- Applying Polaris design system for modern UI
+- Reducing bundle size with selective loading
+- Improving developer experience with TypeScript
+- Maintaining enterprise features that ExtJS excels at
+
+## Step 1: Assess Your Application
+
+### Inventory Your Components
+
+Categorize your ExtJS components:
+
+```javascript
+// Components to modernize (UI-focused)
+- Ext.panel.Panel → Polaris Card
+- Ext.toolbar.Toolbar → Polaris Page actions
+- Ext.button.Button → Polaris Button
+- Ext.window.Window → Polaris Modal
+
+// Components to enhance (keep ExtJS, add styling)
+- Ext.grid.Panel → Keep for performance, apply Cin7 theme
+- Ext.form.Panel → Keep for validation, modernize appearance
+- Ext.chart.* → Keep for functionality, update colors
+
+// Components to replace (better alternatives exist)
+- Ext.MessageBox → Polaris Banner/Toast
+- Ext.LoadMask → Polaris Spinner/SkeletonPage
+- Ext.tab.Panel → Polaris Tabs
+```
+
+### Identify Integration Points
+
+Find where ExtJS components can be wrapped:
+
+```javascript
+// Before: Pure ExtJS viewport
+Ext.application({
+  name: 'MyApp',
+  launch: function() {
+    Ext.create('Ext.container.Viewport', {
+      layout: 'border',
+      items: [{
+        region: 'north',
+        xtype: 'app-header'
+      }, {
+        region: 'center',
+        xtype: 'tab-panel'
+      }]
+    });
+  }
+});
+
+// After: React shell with ExtJS content
+function App() {
+  return (
+    <Cin7ThemeProvider>
+      <AppFrame>
+        <div id="extjs-container" />
+      </AppFrame>
+    </Cin7ThemeProvider>
+  );
+}
+
+// Mount ExtJS inside React
+useEffect(() => {
+  Ext.create('Ext.panel.Panel', {
+    renderTo: 'extjs-container',
+    items: existingExtJSComponents
+  });
+}, []);
+```
+
+## Step 2: Set Up Cin7 DSL
+
+### Installation
+
+```bash
+# Add Cin7 DSL alongside ExtJS
+npm install @cin7/core @cin7/design-tokens @cin7/extjs-adapters @cin7/polaris-adapter
+npm install react react-dom @shopify/polaris
+```
+
+### Configure Build System
+
+Update your build to handle both ExtJS and React:
+
+```javascript
+// webpack.config.js
+module.exports = {
+  entry: {
+    app: './src/index.tsx',
+    extjs: './src/legacy/app.js'
+  },
+  resolve: {
+    alias: {
+      // Keep ExtJS paths working
+      'Ext': path.resolve(__dirname, 'ext/'),
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader'
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  }
+};
+```
+
+## Step 3: Apply Cin7 Theme to ExtJS
+
+### Initialize Theme System
+
+```javascript
+// theme-init.js
+import { configureExtJS } from '@cin7/extjs-adapters';
+import '@cin7/design-tokens/css';
+
+// Apply Cin7 theme to ExtJS
+Ext.onReady(() => {
+  configureExtJS({
+    theme: 'light',
+    autoRegister: true
+  });
+  
+  // Override ExtJS base colors
+  Ext.apply(Ext.theme, {
+    colors: {
+      base: getCSSVariable('--p-color-bg-surface'),
+      text: getCSSVariable('--p-color-text'),
+      border: getCSSVariable('--p-color-border')
+    }
+  });
+});
+```
+
+### Style Existing Components
+
+```css
+/* extjs-polaris-theme.css */
+
+/* Modernize panels */
+.x-panel {
+  background: var(--p-color-bg-surface);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-300);
+  box-shadow: var(--p-shadow-100);
+}
+
+.x-panel-header {
+  background: transparent;
+  border-bottom: 1px solid var(--p-color-border);
+  padding: var(--cin7-space-400);
+}
+
+.x-panel-header-title {
+  font-size: var(--p-font-size-400);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+}
+
+/* Modernize grids */
+.x-grid-header-ct {
+  background: var(--p-color-bg-surface-secondary);
+  border-bottom: 1px solid var(--p-color-border);
+}
+
+.x-grid-cell {
+  border-color: var(--p-color-border-subdued);
+  font-size: var(--p-font-size-200);
+}
+
+/* Modernize forms */
+.x-form-field {
+  background: var(--p-color-bg-surface);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-100);
+  padding: var(--cin7-space-200) var(--cin7-space-300);
+  font-size: var(--p-font-size-200);
+}
+
+.x-form-field:focus {
+  border-color: var(--p-color-border-emphasis);
+  outline: 2px solid var(--p-color-border-emphasis);
+  outline-offset: 1px;
+}
+```
+
+## Step 4: Gradual Component Migration
+
+### Phase 1: Create React Shell
+
+Start by wrapping your ExtJS app:
+
+```jsx
+// App.tsx
+import React, { useEffect, useState } from 'react';
+import { Cin7ThemeProvider, Page, Frame, Navigation } from '@cin7/polaris-adapter';
+import { initializeExtJS } from './legacy/init';
+
+function App() {
+  const [extjsReady, setExtjsReady] = useState(false);
+  
+  useEffect(() => {
+    // Initialize ExtJS app
+    initializeExtJS().then(() => {
+      setExtjsReady(true);
+    });
+  }, []);
+  
+  return (
+    <Cin7ThemeProvider>
+      <Frame
+        navigation={<ModernNavigation />}
+        topBar={<ModernTopBar />}
+      >
+        {extjsReady ? (
+          <div id="extjs-viewport" />
+        ) : (
+          <LoadingState />
+        )}
+      </Frame>
+    </Cin7ThemeProvider>
+  );
+}
+
+// Modern navigation using Polaris
+function ModernNavigation() {
+  return (
+    <Navigation location="/">
+      <Navigation.Section
+        items={[
+          { label: 'Dashboard', icon: HomeMajor, url: '/' },
+          { label: 'Orders', icon: OrdersMajor, url: '/orders' },
+          { label: 'Products', icon: ProductsMajor, url: '/products' },
+        ]}
+      />
+    </Navigation>
+  );
+}
+```
+
+### Phase 2: Replace Simple Components
+
+Start with straightforward replacements:
+
+```javascript
+// Before: ExtJS toolbar
+Ext.create('Ext.toolbar.Toolbar', {
+  items: [
+    { text: 'Add', iconCls: 'add-icon', handler: onAdd },
+    { text: 'Edit', iconCls: 'edit-icon', handler: onEdit },
+    '-',
+    { text: 'Delete', iconCls: 'delete-icon', handler: onDelete }
+  ]
+});
+
+// After: Polaris ButtonGroup
+function Toolbar() {
+  return (
+    <ButtonGroup>
+      <Button onClick={onAdd} icon={PlusMinor}>Add</Button>
+      <Button onClick={onEdit} icon={EditMinor}>Edit</Button>
+      <Button destructive onClick={onDelete} icon={DeleteMinor}>
+        Delete
+      </Button>
+    </ButtonGroup>
+  );
+}
+```
+
+### Phase 3: Modernize Complex Components
+
+Keep ExtJS functionality, modernize appearance:
+
+```javascript
+// Enhanced ExtJS grid with Polaris styling
+Ext.define('Modern.grid.Panel', {
+  extend: 'Ext.grid.Panel',
+  xtype: 'moderngrid',
+  
+  cls: 'polaris-index-table',
+  
+  initComponent: function() {
+    // Apply Polaris-style configuration
+    Ext.apply(this, {
+      headerBorders: false,
+      rowLines: false,
+      columnLines: false,
+      
+      // Modern selection model
+      selModel: {
+        type: 'checkboxmodel',
+        checkOnly: true,
+        showHeaderCheckbox: true
+      },
+      
+      // Polaris-style empty state
+      emptyText: `
+        <div class="Polaris-EmptyState">
+          <p>No data to display</p>
+        </div>
+      `,
+      
+      // Enhanced toolbar
+      tbar: this.createModernToolbar()
+    });
+    
+    this.callParent();
+  },
+  
+  createModernToolbar: function() {
+    return {
+      xtype: 'toolbar',
+      cls: 'polaris-card-header',
+      items: [
+        {
+          xtype: 'textfield',
+          emptyText: 'Search...',
+          cls: 'polaris-text-field',
+          width: 300,
+          listeners: {
+            change: this.onSearch
+          }
+        },
+        '->',
+        {
+          text: 'Actions',
+          cls: 'polaris-button',
+          menu: this.createActionsMenu()
+        }
+      ]
+    };
+  }
+});
+```
+
+### Phase 4: Hybrid Approach
+
+Mix Polaris and ExtJS in the same view:
+
+```jsx
+// Hybrid component
+function OrderManagement() {
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  
+  return (
+    <Page
+      title="Orders"
+      primaryAction={{
+        content: 'Create order',
+        onAction: () => showCreateOrderModal()
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <Card.Section>
+              {/* Polaris filters */}
+              <Filters
+                filters={filters}
+                onFiltersChange={handleFilterChange}
+              />
+            </Card.Section>
+            <Card.Section flush>
+              {/* ExtJS grid for performance */}
+              <ExtJSOrderGrid
+                onSelectionChange={setSelectedOrders}
+                filters={filters}
+              />
+            </Card.Section>
+          </Card>
+        </Layout.Section>
+        
+        <Layout.Section secondary>
+          {/* Polaris summary cards */}
+          <OrderSummary selected={selectedOrders} />
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+// ExtJS grid component
+function ExtJSOrderGrid({ filters, onSelectionChange }) {
+  useEffect(() => {
+    const grid = Ext.create('Modern.grid.OrderGrid', {
+      renderTo: 'order-grid',
+      height: 600,
+      listeners: {
+        selectionchange: (model, selected) => {
+          onSelectionChange(selected.map(r => r.data));
+        }
+      }
+    });
+    
+    // Apply filters
+    grid.getStore().filter(filters);
+    
+    return () => grid.destroy();
+  }, [filters]);
+  
+  return <div id="order-grid" />;
+}
+```
+
+## Step 5: Modernize Data Layer
+
+### Replace Ext.data with TypeScript SDK
+
+```typescript
+// Before: ExtJS store
+Ext.define('MyApp.store.Products', {
+  extend: 'Ext.data.Store',
+  model: 'MyApp.model.Product',
+  proxy: {
+    type: 'ajax',
+    url: '/api/products',
+    reader: {
+      type: 'json',
+      rootProperty: 'data'
+    }
+  }
+});
+
+// After: TypeScript repository pattern
+import { BaseRepository } from '@cin7/typescript-sdk';
+
+class ProductRepository extends BaseRepository<Product> {
+  async findAll(params?: QueryParams): Promise<PaginatedResponse<Product>> {
+    const response = await fetch('/api/products?' + new URLSearchParams(params));
+    return response.json();
+  }
+}
+
+// Use with ExtJS grid
+const repository = new ProductRepository();
+const products = await repository.findAll();
+
+grid.getStore().loadData(products.data);
+```
+
+## Step 6: Performance Optimization
+
+### Lazy Load ExtJS
+
+Only load ExtJS when needed:
+
+```javascript
+// Dynamic import
+async function loadExtJSComponent(componentName) {
+  await import(/* webpackChunkName: "extjs" */ './ext-all.js');
+  await import(`./components/${componentName}.js`);
+  
+  return Ext.create(componentName);
+}
+
+// Usage in React
+function HeavyDataView() {
+  const [gridReady, setGridReady] = useState(false);
+  
+  useEffect(() => {
+    loadExtJSComponent('MyApp.grid.DataGrid').then(grid => {
+      grid.render('grid-container');
+      setGridReady(true);
+    });
+  }, []);
+  
+  return gridReady ? <div id="grid-container" /> : <Spinner />;
+}
+```
+
+### Reduce Bundle Size
+
+Split ExtJS into modules:
+
+```javascript
+// webpack.config.js
+optimization: {
+  splitChunks: {
+    chunks: 'all',
+    cacheGroups: {
+      extjs: {
+        test: /[\\/]ext[\\/]/,
+        name: 'extjs',
+        priority: 10
+      },
+      polaris: {
+        test: /[\\/]@shopify[\\/]polaris[\\/]/,
+        name: 'polaris',
+        priority: 10
+      }
+    }
+  }
+}
+```
+
+## Step 7: Complete Migration Example
+
+### Before: Traditional ExtJS App
+
+```javascript
+Ext.application({
+  name: 'LegacyApp',
+  views: ['MainView', 'ProductGrid', 'OrderForm'],
+  stores: ['Products', 'Orders', 'Customers'],
+  
+  launch: function() {
+    Ext.create('Ext.container.Viewport', {
+      layout: 'fit',
+      items: [{
+        xtype: 'mainview'
+      }]
+    });
+  }
+});
+```
+
+### After: Modern Cin7 DSL App
+
+```jsx
+// Modern app structure
+function App() {
+  return (
+    <Cin7ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Cin7ThemeProvider>
+  );
+}
+
+// Hybrid products page
+function ProductsPage() {
+  return (
+    <Page
+      title="Products"
+      breadcrumbs={[{content: 'Dashboard', url: '/'}]}
+    >
+      <Layout>
+        <Layout.Section>
+          {/* ExtJS grid with modern styling */}
+          <EnhancedProductGrid />
+        </Layout.Section>
+        
+        <Layout.Section secondary>
+          {/* Pure Polaris components */}
+          <ProductStats />
+          <RecentActivity />
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+// Legacy grid with enhancements
+function EnhancedProductGrid() {
+  useEffect(() => {
+    // Create ExtJS grid with Cin7 theme
+    const grid = Ext.create('Cin7.grid.Panel', {
+      renderTo: 'product-grid',
+      store: modernStore,
+      columns: modernColumns,
+      features: ['cin7grouping', 'cin7filters']
+    });
+    
+    // Connect to React state
+    grid.on('selectionchange', (model, records) => {
+      EventBus.emit('products:selected', records);
+    });
+  }, []);
+  
+  return <div id="product-grid" className="cin7-grid-container" />;
+}
+```
+
+## Migration Checklist
+
+- [ ] Audit existing ExtJS components
+- [ ] Set up Cin7 DSL alongside ExtJS
+- [ ] Apply Cin7 theme to ExtJS
+- [ ] Create React shell application
+- [ ] Migrate navigation to Polaris
+- [ ] Replace simple components (buttons, toolbars)
+- [ ] Enhance complex components (grids, forms)
+- [ ] Modernize data layer with TypeScript SDK
+- [ ] Optimize bundle size
+- [ ] Remove unused ExtJS components
+- [ ] Complete visual consistency pass
+- [ ] Performance testing and optimization
+
+## Common Challenges
+
+### Managing Two Frameworks
+
+```javascript
+// Use event bus for communication
+EventBus.on('react:action', (data) => {
+  // Handle in ExtJS
+  const grid = Ext.getCmp('myGrid');
+  grid.handleAction(data);
+});
+
+// From ExtJS to React
+Ext.getCmp('myGrid').on('itemclick', (grid, record) => {
+  EventBus.emit('extjs:itemclick', record.data);
+});
+```
+
+### Maintaining State Sync
+
+```javascript
+// Shared state manager
+const stateManager = {
+  selection: new Set(),
+  filters: {},
+  
+  updateSelection(ids) {
+    this.selection = new Set(ids);
+    EventBus.emit('selection:changed', Array.from(this.selection));
+  }
+};
+```
+
+## Resources
+
+- [ExtJS to Polaris Component Map](/guides/migration/component-map)
+- [Hybrid Examples](/examples/extjs-polaris-hybrid)
+- [Performance Guide](/guides/performance/extjs)
+- [Community Support](https://github.com/Shopify/polaris/discussions)

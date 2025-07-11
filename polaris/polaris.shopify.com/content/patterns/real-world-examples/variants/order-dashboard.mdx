@@ -1,0 +1,615 @@
+---
+title: Order Processing Dashboard
+noIndex: true
+---
+
+<HowItHelps>
+
+## How it helps
+
+This example shows how to build an order processing dashboard that looks identical to Polaris patterns but uses Cin7 DSL's multi-layer architecture for real-time updates and high-performance data visualization.
+
+### Technology Breakdown:
+1. **React**: Dashboard layout and cards matching Polaris
+2. **ExtJS**: Order grid with inline editing
+3. **Vanilla JS**: Real-time status updates via WebSocket
+4. **ExtJS Charts**: Performance metrics visualization
+
+<DefinitionTable>
+
+### Perfect for:
+
+**Real-time dashboards**: When data updates frequently and performance matters.
+
+**Mixed content types**: When combining metrics, tables, and visualizations.
+
+**High-volume operations**: When processing hundreds of orders per minute.
+
+</DefinitionTable>
+</HowItHelps>
+
+<Usage>
+
+## Implementation
+
+This dashboard demonstrates the same visual design as Polaris examples but optimized for real-time order processing.
+
+```jsx {"type":"livePreview","id":"order-dashboard","title":"Real-time Order Dashboard"}
+// Step 1: Dashboard layout using React + Polaris components
+import React, { useState, useEffect } from 'react';
+import {
+  Page,
+  Layout,
+  Card,
+  Text,
+  BlockStack,
+  InlineStack,
+  DataTable,
+  Badge,
+  Button,
+  Popover,
+  ActionList,
+  Icon,
+} from '@cin7/polaris-adapter';
+import { EventBus } from '@cin7/core/events';
+import { formatCurrency } from '@cin7/core/utils';
+
+function OrderDashboard() {
+  const [metrics, setMetrics] = useState({
+    todayOrders: 0,
+    todayRevenue: 0,
+    averageOrderValue: 0,
+    pendingOrders: 0,
+  });
+  
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  // Real-time updates via WebSocket (vanilla JS)
+  useEffect(() => {
+    initializeRealTimeUpdates();
+    mountOrderGrid();
+    mountCharts();
+    
+    // Listen for metric updates
+    EventBus.on('metrics:updated', setMetrics);
+    EventBus.on('activity:new', (activity) => {
+      setRecentActivity(prev => [activity, ...prev].slice(0, 5));
+    });
+    
+    return () => {
+      EventBus.off('metrics:updated', setMetrics);
+    };
+  }, []);
+
+  return (
+    <Page
+      title="Orders"
+      subtitle="Real-time order processing"
+      primaryAction={{
+        content: 'Create order',
+        onAction: () => EventBus.emit('order:create:show'),
+      }}
+      secondaryActions={[
+        {
+          content: 'Export',
+          onAction: () => setPopoverActive(!popoverActive),
+          disclosure: popoverActive ? 'up' : 'down',
+        },
+      ]}
+    >
+      {/* Metrics cards - matching Polaris dashboard patterns */}
+      <Box paddingBlockEnd="400">
+        <InlineGrid columns={{ xs: 1, sm: 2, md: 2, lg: 4 }} gap="400">
+          <MetricCard
+            title="Orders today"
+            value={metrics.todayOrders}
+            change="+12.5%"
+            trend="positive"
+          />
+          <MetricCard
+            title="Revenue today"
+            value={formatCurrency(metrics.todayRevenue)}
+            change="+8.2%"
+            trend="positive"
+          />
+          <MetricCard
+            title="Average order"
+            value={formatCurrency(metrics.averageOrderValue)}
+            change="-2.1%"
+            trend="negative"
+          />
+          <MetricCard
+            title="Pending orders"
+            value={metrics.pendingOrders}
+            change="0%"
+            trend="neutral"
+            status="warning"
+          />
+        </InlineGrid>
+      </Box>
+
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <Card.Header>
+              <Text variant="headingMd" as="h2">
+                Active Orders
+              </Text>
+            </Card.Header>
+            <Card.Section padding="0">
+              {/* ExtJS Grid mounts here for performance */}
+              <div id="orders-grid" style={{ height: '500px' }} />
+            </Card.Section>
+          </Card>
+        </Layout.Section>
+
+        <Layout.Section variant="oneThird">
+          <BlockStack gap="400">
+            {/* Real-time activity feed */}
+            <Card>
+              <Card.Header>
+                <Text variant="headingMd" as="h2">
+                  Recent Activity
+                </Text>
+              </Card.Header>
+              <Card.Section>
+                <BlockStack gap="300">
+                  {recentActivity.map((activity, index) => (
+                    <ActivityItem key={index} {...activity} />
+                  ))}
+                </BlockStack>
+              </Card.Section>
+            </Card>
+
+            {/* Performance chart */}
+            <Card>
+              <Card.Header>
+                <Text variant="headingMd" as="h2">
+                  Order Volume
+                </Text>
+              </Card.Header>
+              <Card.Section padding="0">
+                <div id="volume-chart" style={{ height: '200px' }} />
+              </Card.Section>
+            </Card>
+          </BlockStack>
+        </Layout.Section>
+      </Layout>
+
+      {/* Export popover */}
+      <Popover
+        active={popoverActive}
+        activator={<div />}
+        onClose={() => setPopoverActive(false)}
+      >
+        <ActionList
+          items={[
+            { content: 'Export as CSV' },
+            { content: 'Export as Excel' },
+            { content: 'Export as PDF' },
+          ]}
+        />
+      </Popover>
+    </Page>
+  );
+}
+
+// Metric card component matching Polaris patterns
+function MetricCard({ title, value, change, trend, status }) {
+  const trendColor = {
+    positive: 'success',
+    negative: 'critical',
+    neutral: 'subdued',
+  }[trend];
+
+  return (
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text variant="bodySm" color="subdued">
+            {title}
+          </Text>
+          <InlineStack align="space-between" blockAlign="end">
+            <Text variant="headingXl" as="p">
+              {value}
+            </Text>
+            {status && <Badge status={status}>{change}</Badge>}
+            {!status && (
+              <Text variant="bodySm" color={trendColor}>
+                {change}
+              </Text>
+            )}
+          </InlineStack>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  );
+}
+
+// Step 2: Mount ExtJS grid for high-performance order management
+function mountOrderGrid() {
+  Ext.create('Cin7.grid.Panel', {
+    renderTo: 'orders-grid',
+    store: {
+      type: 'buffered',
+      pageSize: 50,
+      proxy: {
+        type: 'rest',
+        url: '/api/orders',
+        reader: {
+          type: 'json',
+          rootProperty: 'data',
+          totalProperty: 'total'
+        }
+      },
+      fields: [
+        'id', 'orderNumber', 'customer', 'items', 'total', 
+        'status', 'paymentStatus', 'fulfillmentStatus', 'createdAt'
+      ],
+      autoLoad: true,
+      remoteSort: true,
+      remoteFilter: true,
+    },
+    
+    columns: [{
+      text: 'Order',
+      dataIndex: 'orderNumber',
+      width: 120,
+      renderer: (value) => {
+        return `<a href="#" class="Polaris-Link">#${value}</a>`;
+      }
+    }, {
+      text: 'Date',
+      dataIndex: 'createdAt',
+      width: 150,
+      renderer: (value) => {
+        const date = new Date(value);
+        const time = date.toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        });
+        return `
+          <div class="Polaris-Text--root Polaris-Text--bodySm">
+            ${date.toLocaleDateString()}
+            <span class="Polaris-Text--subdued"> ${time}</span>
+          </div>
+        `;
+      }
+    }, {
+      text: 'Customer',
+      dataIndex: 'customer',
+      flex: 1,
+      renderer: (value, meta, record) => {
+        return `
+          <div class="customer-cell">
+            <div class="Polaris-Text--root">${value.name}</div>
+            <div class="Polaris-Text--root Polaris-Text--bodySm Polaris-Text--subdued">
+              ${value.email}
+            </div>
+          </div>
+        `;
+      }
+    }, {
+      text: 'Items',
+      dataIndex: 'items',
+      width: 80,
+      align: 'center'
+    }, {
+      text: 'Total',
+      dataIndex: 'total',
+      width: 100,
+      align: 'right',
+      renderer: (value) => formatCurrency(value)
+    }, {
+      text: 'Payment',
+      dataIndex: 'paymentStatus',
+      width: 120,
+      renderer: renderStatusBadge
+    }, {
+      text: 'Fulfillment',
+      dataIndex: 'fulfillmentStatus',
+      width: 120,
+      renderer: renderStatusBadge
+    }, {
+      text: 'Actions',
+      xtype: 'actioncolumn',
+      width: 100,
+      items: [{
+        iconCls: 'x-fa fa-eye',
+        tooltip: 'View order',
+        handler: (grid, rowIndex, colIndex, item, e, record) => {
+          EventBus.emit('order:view', { orderId: record.get('id') });
+        }
+      }, {
+        iconCls: 'x-fa fa-truck',
+        tooltip: 'Fulfill order',
+        isDisabled: (view, rowIndex, colIndex, item, record) => {
+          return record.get('fulfillmentStatus') === 'fulfilled';
+        },
+        handler: (grid, rowIndex, colIndex, item, e, record) => {
+          EventBus.emit('order:fulfill', { orderId: record.get('id') });
+        }
+      }]
+    }],
+    
+    // Enable row actions on hover
+    viewConfig: {
+      trackOver: true,
+      stripeRows: true,
+      getRowClass: (record) => {
+        if (record.get('status') === 'urgent') return 'order-urgent';
+        if (record.get('status') === 'cancelled') return 'order-cancelled';
+        return '';
+      }
+    },
+    
+    // Toolbar with quick filters
+    tbar: {
+      cls: 'Polaris-Filters',
+      items: [{
+        xtype: 'segmentedbutton',
+        items: [
+          { text: 'All', pressed: true },
+          { text: 'Unfulfilled', badge: '12' },
+          { text: 'Unpaid', badge: '3' },
+          { text: 'Open', badge: '15' },
+        ],
+        listeners: {
+          toggle: (button, pressed) => {
+            if (pressed) applyQuickFilter(button.text);
+          }
+        }
+      }, '->', {
+        xtype: 'textfield',
+        emptyText: 'Search orders...',
+        width: 250,
+        listeners: {
+          change: (field, value) => {
+            const store = field.up('grid').getStore();
+            store.filter('search', value);
+          }
+        }
+      }]
+    }
+  });
+}
+
+// Status badge renderer
+function renderStatusBadge(value) {
+  const statusMap = {
+    paid: { status: 'success', label: 'Paid' },
+    pending: { status: 'warning', label: 'Pending' },
+    refunded: { status: 'critical', label: 'Refunded' },
+    fulfilled: { status: 'success', label: 'Fulfilled' },
+    unfulfilled: { status: 'attention', label: 'Unfulfilled' },
+    partial: { status: 'warning', label: 'Partial' },
+  };
+  
+  const config = statusMap[value] || { status: 'default', label: value };
+  return `<span class="Polaris-Badge Polaris-Badge--status${capitalize(config.status)}">${config.label}</span>`;
+}
+
+// Step 3: Real-time updates with vanilla JS WebSocket
+function initializeRealTimeUpdates() {
+  // Connect to WebSocket for live updates
+  const ws = new WebSocket('wss://api.example.com/orders/live');
+  
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    
+    switch (data.type) {
+      case 'order:new':
+        // Update grid
+        const grid = Ext.getCmp('orders-grid');
+        if (grid) {
+          grid.getStore().insert(0, data.order);
+        }
+        
+        // Update metrics
+        updateMetrics(data.metrics);
+        
+        // Add to activity feed
+        EventBus.emit('activity:new', {
+          type: 'order',
+          message: `New order #${data.order.orderNumber}`,
+          timestamp: new Date(),
+          amount: data.order.total,
+        });
+        
+        // Show notification
+        showNotification('New order received!', 'success');
+        break;
+        
+      case 'order:updated':
+        updateOrderInGrid(data.orderId, data.changes);
+        break;
+        
+      case 'metrics:update':
+        updateMetrics(data.metrics);
+        break;
+    }
+  };
+  
+  // Heartbeat to keep connection alive
+  setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: 'ping' }));
+    }
+  }, 30000);
+}
+
+// Update metrics with smooth animation
+function updateMetrics(newMetrics) {
+  Object.keys(newMetrics).forEach(key => {
+    const element = document.querySelector(`[data-metric="${key}"]`);
+    if (element) {
+      // Animate number change
+      animateValue(element, element.textContent, newMetrics[key], 500);
+    }
+  });
+  
+  EventBus.emit('metrics:updated', newMetrics);
+}
+
+// Step 4: ExtJS charts for performance visualization
+function mountCharts() {
+  // Order volume chart
+  Ext.create('Ext.chart.CartesianChart', {
+    renderTo: 'volume-chart',
+    width: '100%',
+    height: 200,
+    insetPadding: '10 10 0 10',
+    
+    store: {
+      fields: ['hour', 'orders'],
+      data: generateHourlyData(),
+    },
+    
+    axes: [{
+      type: 'numeric',
+      position: 'left',
+      minimum: 0,
+      hidden: true,
+    }, {
+      type: 'category',
+      position: 'bottom',
+      hidden: true,
+    }],
+    
+    series: [{
+      type: 'area',
+      xField: 'hour',
+      yField: 'orders',
+      style: {
+        fill: 'var(--p-color-bg-fill-brand)',
+        fillOpacity: 0.6,
+        stroke: 'var(--p-color-border-brand)',
+        lineWidth: 2,
+      },
+      marker: {
+        radius: 3,
+        fill: 'var(--p-color-bg-fill-brand)',
+      },
+      tooltip: {
+        trackMouse: true,
+        renderer: (tooltip, record) => {
+          tooltip.setHtml(`${record.get('orders')} orders at ${record.get('hour')}:00`);
+        },
+      },
+    }],
+    
+    // Animate on load
+    animation: {
+      duration: 500,
+      easing: 'easeOut',
+    },
+  });
+  
+  // Update chart data every minute
+  setInterval(() => {
+    const chart = Ext.getCmp('volume-chart');
+    if (chart) {
+      chart.getStore().loadData(generateHourlyData());
+    }
+  }, 60000);
+}
+
+// Activity item component
+function ActivityItem({ type, message, timestamp, amount }) {
+  const icon = {
+    order: 'CartMajor',
+    payment: 'PaymentsMajor',
+    fulfillment: 'ShipmentMajor',
+  }[type];
+  
+  return (
+    <InlineStack gap="300">
+      <Icon source={icon} color="subdued" />
+      <BlockStack gap="100">
+        <Text variant="bodySm">{message}</Text>
+        <InlineStack gap="200">
+          <Text variant="bodySm" color="subdued">
+            {formatTime(timestamp)}
+          </Text>
+          {amount && (
+            <Text variant="bodySm" fontWeight="semibold">
+              {formatCurrency(amount)}
+            </Text>
+          )}
+        </InlineStack>
+      </BlockStack>
+    </InlineStack>
+  );
+}
+
+// Helper functions
+function animateValue(element, start, end, duration) {
+  const startValue = parseFloat(start.replace(/[^0-9.-]+/g, ''));
+  const endValue = parseFloat(end);
+  const startTime = performance.now();
+  
+  function update() {
+    const currentTime = performance.now();
+    const progress = Math.min((currentTime - startTime) / duration, 1);
+    const currentValue = startValue + (endValue - startValue) * progress;
+    
+    element.textContent = formatNumber(currentValue);
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+  
+  requestAnimationFrame(update);
+}
+
+function generateHourlyData() {
+  const data = [];
+  const now = new Date();
+  
+  for (let i = 23; i >= 0; i--) {
+    const hour = new Date(now);
+    hour.setHours(hour.getHours() - i);
+    
+    data.push({
+      hour: hour.getHours(),
+      orders: Math.floor(Math.random() * 50) + 10,
+    });
+  }
+  
+  return data;
+}
+```
+
+## Performance Optimizations
+
+### Real-time Updates (Vanilla JS)
+- WebSocket connection for instant updates
+- Direct DOM manipulation for metrics
+- Smooth animations without React re-renders
+
+### Data Grid (ExtJS)
+- Virtual scrolling for thousands of orders
+- Buffered store for optimal memory usage
+- Server-side filtering and sorting
+
+### Charts (ExtJS)
+- Hardware-accelerated rendering
+- Automatic data updates
+- Responsive design
+
+### Layout (React)
+- Maintains Polaris visual consistency
+- Lazy loads heavy components
+- Optimized re-renders
+
+## Key Features
+
+1. **Real-time Metrics**: Live order counts and revenue
+2. **Streaming Updates**: WebSocket for instant changes
+3. **High Performance**: Handles 1000+ orders smoothly
+4. **Visual Consistency**: Exact Polaris design patterns
+5. **Responsive Design**: Works on all screen sizes
+
+</Usage>

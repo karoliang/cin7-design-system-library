@@ -1,0 +1,84 @@
+---
+title: Data Management Patterns
+description: Best practices for managing data across Cin7 DSL layers
+lede: Learn how to effectively manage application state and data flow using TypeScript SDK patterns.
+url: /patterns/data-management
+previewImg: /images/patterns/data-management/pattern-thumbnail.png
+githubDiscussionsLink: https://github.com/Shopify/polaris/discussions/cin7-data-management
+hideChildren: true
+variants:
+  - 'variants/repository-pattern.mdx'
+  - 'variants/use-case-pattern.mdx'
+  - 'variants/state-synchronization.mdx'
+---
+
+<Variants variants={frontmatter.variants} />
+
+<Stack gap="400">
+
+## Core Concepts
+
+### Domain-Driven Design
+
+Structure your application around business domains:
+
+```typescript
+// Domain entities
+interface Product extends BaseEntity {
+  name: string;
+  price: number;
+  stock: number;
+}
+
+// Repository for data access
+class ProductRepository extends BaseRepository<Product> {
+  // Implementation
+}
+
+// Use case for business logic
+class ProductUseCase extends BaseUseCase {
+  constructor(private repository: ProductRepository) {
+    super();
+  }
+  
+  async updateStock(id: string, quantity: number): Promise<void> {
+    // Business logic here
+  }
+}
+```
+
+### State Management
+
+Use Zustand for cross-layer state management:
+
+```typescript
+import { create } from 'zustand';
+
+export const useAppStore = create((set, get) => ({
+  products: [],
+  loading: false,
+  
+  loadProducts: async () => {
+    set({ loading: true });
+    const products = await productRepository.findAll();
+    set({ products: products.data, loading: false });
+  }
+}));
+```
+
+### Data Flow
+
+1. **UI Layer** triggers actions
+2. **Use Cases** handle business logic
+3. **Repositories** manage data access
+4. **Store** maintains application state
+5. **Events** notify other layers
+
+## Related Resources
+
+- [TypeScript SDK Documentation](/getting-started/application-layer)
+- [State Management Guide](/guides/state-management)
+- [Repository Pattern](/patterns/repository-pattern)
+- [Cross-Layer Communication](/patterns/cross-layer-communication)
+
+</Stack>

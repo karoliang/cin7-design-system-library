@@ -1,0 +1,532 @@
+---
+title: Design System Layer
+description: 'Understand how Cin7 DSL extends Polaris design tokens to create a comprehensive design system for enterprise applications.'
+showTOC: true
+keywords:
+  - design system
+  - design tokens
+  - polaris
+  - theming
+  - css
+  - styling
+order: 8
+icon: PaintBrushIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Overview
+
+The Design System Layer is the foundation of Cin7 DSL, providing consistent visual language across all components and applications. It extends Shopify Polaris design tokens with enterprise-specific values while maintaining compatibility.
+
+## Design Token Philosophy
+
+Design tokens are the atomic design decisions that make up our design system:
+
+- **Colors**: Semantic color values for UI elements
+- **Typography**: Font families, sizes, weights, and line heights
+- **Spacing**: Consistent spacing scale for layouts
+- **Animation**: Motion design values for transitions
+- **Elevation**: Shadow and depth values
+- **Borders**: Radius and width values
+
+## Token Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Cin7 Design Tokens                       │
+│                  (@cin7/design-tokens)                      │
+├─────────────────────────────────────────────────────────────┤
+│                   Enterprise Extensions                      │
+│        (Data Grids, Charts, Advanced Forms)                │
+├─────────────────────────────────────────────────────────────┤
+│                    Polaris Foundation                       │
+│              (@shopify/polaris-tokens)                      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Using Design Tokens
+
+### Installation
+
+```bash
+pnpm add @cin7/design-tokens
+```
+
+### CSS Custom Properties
+
+All tokens are available as CSS custom properties:
+
+```css
+/* Polaris tokens (unchanged) */
+.card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  padding: var(--p-space-4);
+}
+
+/* Cin7 extended tokens */
+.data-grid {
+  height: var(--cin7-enterprise-dataGrid-row-height);
+  font-size: var(--cin7-enterprise-dataGrid-cell-fontSize);
+}
+
+/* Mix both token systems */
+.dashboard-widget {
+  background: var(--p-color-bg-surface);
+  padding: var(--cin7-layout-workspace-padding);
+  border-radius: var(--cin7-enterprise-dashboard-widget-borderRadius);
+}
+```
+
+### JavaScript/TypeScript Access
+
+```typescript
+import { enterpriseTokens, animationTokens } from '@cin7/design-tokens';
+
+// Use token values in JavaScript
+const gridConfig = {
+  rowHeight: enterpriseTokens.dataGrid.row.height,
+  headerHeight: enterpriseTokens.dataGrid.header.height,
+};
+
+// Apply animations
+element.style.animationDuration = animationTokens.duration.base;
+element.style.animationTimingFunction = animationTokens.easing.standard;
+```
+
+### SCSS Integration
+
+```scss
+@import '@cin7/design-tokens/scss';
+
+// Use token mixins
+.heading {
+  @include cin7-text-style('h2');
+}
+
+.card {
+  @include cin7-card;
+  @include cin7-transition(all);
+  
+  &:focus {
+    @include cin7-focus-ring;
+  }
+}
+
+// Access tokens as SCSS variables
+.custom-spacing {
+  margin: $cin7-space-4;
+  padding: $cin7-space-6;
+}
+```
+
+## Enterprise Token Extensions
+
+### Data Grid Tokens
+
+Optimized for large data sets and complex tables:
+
+```css
+.data-grid {
+  /* Header */
+  --header-height: var(--cin7-enterprise-dataGrid-header-height);
+  --header-bg: var(--cin7-enterprise-dataGrid-header-background);
+  --header-text: var(--cin7-enterprise-dataGrid-header-textColor);
+  
+  /* Rows */
+  --row-height: var(--cin7-enterprise-dataGrid-row-height);
+  --row-hover: var(--cin7-enterprise-dataGrid-row-hoverBackground);
+  --row-selected: var(--cin7-enterprise-dataGrid-row-selectedBackground);
+  --row-striped: var(--cin7-enterprise-dataGrid-row-stripedBackground);
+  
+  /* Cells */
+  --cell-padding: var(--cin7-enterprise-dataGrid-cell-padding);
+  --cell-font-size: var(--cin7-enterprise-dataGrid-cell-fontSize);
+}
+```
+
+### Chart Tokens
+
+Consistent data visualization:
+
+```typescript
+import { enterpriseTokens } from '@cin7/design-tokens';
+
+const chartConfig = {
+  colors: {
+    series: enterpriseTokens.charts.colors.primary,
+    positive: enterpriseTokens.charts.colors.semantic.positive,
+    negative: enterpriseTokens.charts.colors.semantic.negative,
+  },
+  grid: {
+    color: enterpriseTokens.charts.grid.color,
+    style: enterpriseTokens.charts.grid.style,
+  },
+  tooltip: {
+    background: enterpriseTokens.charts.tooltip.background,
+    padding: enterpriseTokens.charts.tooltip.padding,
+  },
+};
+```
+
+### Form Tokens
+
+Enhanced form styling for complex data entry:
+
+```css
+.enterprise-form {
+  /* Field styling */
+  --field-height: var(--cin7-enterprise-form-field-height);
+  --field-label-size: var(--cin7-enterprise-form-field-labelSize);
+  --field-error-color: var(--cin7-enterprise-form-field-errorColor);
+  
+  /* Layout */
+  --group-spacing: var(--cin7-enterprise-form-group-spacing);
+  --section-spacing: var(--cin7-enterprise-form-section-spacing);
+}
+```
+
+## Animation System
+
+Consistent motion design across all layers:
+
+### Duration Scale
+
+```typescript
+const durations = {
+  instant: '0ms',      // No animation
+  fast: '100ms',       // Micro-interactions
+  base: '200ms',       // Standard transitions
+  slow: '300ms',       // Deliberate animations
+  slower: '400ms',     // Complex transitions
+  slowest: '500ms',    // Page transitions
+};
+```
+
+### Easing Functions
+
+```css
+/* Standard easings */
+.transition-standard {
+  transition-timing-function: var(--cin7-animation-easing-standard);
+}
+
+/* Expressive easings */
+.bounce-in {
+  animation-timing-function: var(--cin7-animation-easing-bounce);
+}
+
+/* Custom patterns */
+.modal-enter {
+  animation: 
+    cin7-scaleIn var(--cin7-animation-duration-base) 
+    var(--cin7-animation-easing-modalOpen);
+}
+```
+
+### Motion Patterns
+
+```typescript
+import { animationTokens } from '@cin7/design-tokens';
+
+// Micro-interaction
+const buttonHover = {
+  duration: animationTokens.patterns.microInteraction.duration,
+  easing: animationTokens.patterns.microInteraction.easing,
+};
+
+// Page transition
+const pageChange = {
+  duration: animationTokens.patterns.complexTransition.duration,
+  easing: animationTokens.patterns.complexTransition.easing,
+};
+```
+
+## Theming
+
+### Built-in Themes
+
+```typescript
+import { applyTheme, themes } from '@cin7/design-tokens/themes';
+
+// Apply light theme (default)
+applyTheme('light');
+
+// Apply dark theme
+applyTheme('dark');
+
+// Toggle between themes
+toggleTheme();
+```
+
+### Custom Themes
+
+```typescript
+const customTheme = {
+  name: 'high-contrast',
+  isDark: false,
+  tokens: {
+    // Override specific tokens
+    'enterprise-dataGrid-header-background': '#000000',
+    'enterprise-dataGrid-header-textColor': '#FFFFFF',
+    'enterprise-form-field-borderColor': '#000000',
+  },
+};
+
+applyTheme(customTheme);
+```
+
+### Theme-aware Components
+
+```css
+/* Automatic theme adjustments */
+[data-theme="dark"] {
+  --cin7-enterprise-dataGrid-row-stripedBackground: rgba(255, 255, 255, 0.02);
+  --cin7-enterprise-dashboard-widget-background: var(--p-color-bg-surface-secondary);
+}
+
+/* Component that adapts to theme */
+.theme-aware-card {
+  background: var(--cin7-enterprise-dashboard-widget-background);
+  color: var(--p-color-text);
+  border: 1px solid var(--p-color-border);
+}
+```
+
+## Responsive Design
+
+### Breakpoint System
+
+```typescript
+import { matchesMediaQuery, watchMediaQuery } from '@cin7/design-tokens/utilities';
+
+// Check current breakpoint
+if (matchesMediaQuery('mobile')) {
+  // Mobile layout
+}
+
+// Watch for breakpoint changes
+const unwatch = watchMediaQuery('tablet', (matches) => {
+  if (matches) {
+    // Tablet layout
+  } else {
+    // Not tablet
+  }
+});
+```
+
+### Responsive Tokens
+
+```scss
+// Use different token values at different breakpoints
+.responsive-padding {
+  padding: var(--cin7-space-4); // 16px
+  
+  @media (min-width: 768px) {
+    padding: var(--cin7-space-6); // 24px
+  }
+  
+  @media (min-width: 1024px) {
+    padding: var(--cin7-space-8); // 32px
+  }
+}
+```
+
+## Utility Classes
+
+Pre-built utility classes for rapid development:
+
+### Spacing Utilities
+
+```html
+<!-- Margin utilities -->
+<div class="cin7-m-4">All sides margin</div>
+<div class="cin7-mt-6 cin7-mb-4">Top and bottom margin</div>
+<div class="cin7-mx-auto">Horizontal auto margin</div>
+
+<!-- Padding utilities -->
+<div class="cin7-p-6">All sides padding</div>
+<div class="cin7-px-4 cin7-py-2">Horizontal and vertical padding</div>
+```
+
+### Typography Utilities
+
+```html
+<!-- Text styles -->
+<h1 class="cin7-text-h1">Main Heading</h1>
+<p class="cin7-text-body">Body paragraph text</p>
+<span class="cin7-text-caption">Small caption text</span>
+
+<!-- Data text -->
+<td class="cin7-text-dataCell">Table cell</td>
+<th class="cin7-text-dataHeader">Table header</th>
+```
+
+### Animation Utilities
+
+```html
+<!-- Keyframe animations -->
+<div class="cin7-animate-fadeIn cin7-duration-slow">
+  Fade in slowly
+</div>
+
+<!-- Duration modifiers -->
+<button class="cin7-transition cin7-duration-fast">
+  Fast transition
+</button>
+```
+
+## Integration Patterns
+
+### With Vanilla JavaScript
+
+```javascript
+import { getTokenValue, setTokenValue } from '@cin7/design-tokens/utilities';
+
+// Read token values
+const rowHeight = getTokenValue('enterprise-dataGrid-row-height');
+
+// Dynamically update tokens
+setTokenValue('enterprise-dataGrid-row-height', '44px');
+
+// Apply to elements
+element.style.height = `calc(${rowHeight} * 10)`; // 10 rows
+```
+
+### With React Components
+
+```tsx
+import { enterpriseTokens } from '@cin7/design-tokens';
+import styled from 'styled-components';
+
+const DataGrid = styled.div`
+  .header {
+    height: ${enterpriseTokens.dataGrid.header.height};
+    background: ${enterpriseTokens.dataGrid.header.background};
+  }
+  
+  .row {
+    height: ${enterpriseTokens.dataGrid.row.height};
+    
+    &:hover {
+      background: ${enterpriseTokens.dataGrid.row.hoverBackground};
+    }
+  }
+`;
+```
+
+### With ExtJS
+
+```javascript
+// Configure ExtJS components with design tokens
+Ext.create('Ext.grid.Panel', {
+  cls: 'cin7-data-grid',
+  rowHeight: parseInt(getTokenValue('enterprise-dataGrid-row-height')),
+  headerHeight: parseInt(getTokenValue('enterprise-dataGrid-header-height')),
+});
+```
+
+## Best Practices
+
+### 1. Semantic Token Usage
+
+```css
+/* ❌ Bad: Using color values directly */
+.error { color: #D72C0D; }
+
+/* ✅ Good: Using semantic tokens */
+.error { color: var(--p-color-text-critical); }
+```
+
+### 2. Token Composition
+
+```css
+/* Compose tokens for complex values */
+.complex-spacing {
+  /* Combine different spacing tokens */
+  padding: var(--cin7-space-4) var(--cin7-space-6);
+  
+  /* Calculate relative values */
+  margin-top: calc(var(--cin7-space-4) * 2);
+  
+  /* Mix token systems */
+  gap: var(--p-space-4);
+}
+```
+
+### 3. Fallback Values
+
+```css
+/* Provide fallbacks for older browsers */
+.modern-layout {
+  /* Fallback */
+  padding: 16px;
+  
+  /* Modern browsers */
+  padding: var(--cin7-space-4, 16px);
+}
+```
+
+### 4. Documentation
+
+Always document custom token usage:
+
+```css
+/* 
+ * Custom dashboard widget
+ * Uses extended Cin7 tokens for consistent enterprise styling
+ * Falls back to Polaris tokens where appropriate
+ */
+.dashboard-widget {
+  /* Cin7 tokens for enterprise features */
+  min-height: var(--cin7-enterprise-dashboard-widget-minHeight);
+  
+  /* Polaris tokens for base styling */
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+}
+```
+
+## Migration Guide
+
+### From Pure Polaris
+
+```css
+/* Before: Polaris only */
+.data-table {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 16px;
+}
+
+/* After: Extended tokens */
+.data-table {
+  font-size: var(--cin7-enterprise-dataGrid-cell-fontSize);
+  line-height: var(--cin7-typography-lineHeight-data);
+  padding: var(--cin7-enterprise-dataGrid-cell-padding);
+}
+```
+
+### Custom Values to Tokens
+
+```javascript
+// Before: Magic numbers
+const HEADER_HEIGHT = 48;
+const ROW_HEIGHT = 40;
+
+// After: Design tokens
+import { enterpriseTokens } from '@cin7/design-tokens';
+
+const HEADER_HEIGHT = parseInt(enterpriseTokens.dataGrid.header.height);
+const ROW_HEIGHT = parseInt(enterpriseTokens.dataGrid.row.height);
+```
+
+## Next Steps
+
+- Explore the [@cin7/design-tokens documentation](/packages/design-tokens)
+- See [theming examples](/examples/theming)
+- Learn about [responsive patterns](/patterns/responsive-design)
+- Understand [CSS architecture](/guides/css-architecture)

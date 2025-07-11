@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full Stack Integration - Cin7 DSL</title>
+  
+  <!-- ExtJS CSS -->
+  <link rel="stylesheet" href="https://cdn.sencha.com/ext/gpl/7.6.0/build/classic/theme-material/resources/theme-material-all.css">
+  
+  <!-- Cin7 Design Tokens -->
+  <link rel="stylesheet" href="/src/full-stack/styles.css">
+</head>
+<body>
+  <div id="loading-indicator">
+    <div class="spinner"></div>
+    <p>Loading Cin7 Full Stack Example...</p>
+  </div>
+  
+  <!-- React mount point -->
+  <div id="react-root"></div>
+  
+  <!-- ExtJS mount point -->
+  <div id="extjs-root"></div>
+  
+  <!-- Load ExtJS -->
+  <script src="https://cdn.sencha.com/ext/gpl/7.6.0/build/ext-all.js"></script>
+  
+  <!-- Load application -->
+  <script type="module" src="/src/full-stack/main.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+---
+title: Layer Integration Patterns
+description: Patterns for effectively combining Cin7 DSL's technology layers
+lede: Learn how to integrate Vanilla JS, React, and ExtJS layers for optimal performance and user experience.
+url: /patterns/layer-integration
+previewImg: /images/patterns/layer-integration/pattern-thumbnail.png
+githubDiscussionsLink: https://github.com/Shopify/polaris/discussions/cin7-layer-integration
+hideChildren: true
+variants:
+  - 'variants/progressive-enhancement.mdx'
+  - 'variants/hybrid-components.mdx'
+  - 'variants/layer-boundaries.mdx'
+---
+
+<Variants variants={frontmatter.variants} />
+
+<Stack gap="400">
+
+## Key Principles
+
+### 1. Right Tool for the Job
+
+Each layer has its strengths:
+- **Vanilla JS**: Fast initial render, minimal bundle size
+- **React + Polaris**: Rich interactions, component ecosystem
+- **ExtJS**: Enterprise data handling, complex grids
+
+### 2. Progressive Enhancement
+
+Start with the simplest solution and enhance as needed:
+
+```javascript
+// Start with vanilla JS
+const button = document.querySelector('.enhance-me');
+button.addEventListener('click', handleClick);
+
+// Enhance with React when needed
+if (needsComplexInteraction) {
+  const root = ReactDOM.createRoot(button.parentElement);
+  root.render(<EnhancedButton />);
+}
+```
+
+### 3. Shared Infrastructure
+
+Use common utilities across all layers:
+
+```javascript
+import { formatCurrency, validateEmail } from '@cin7/core/utils';
+import { enterpriseTokens } from '@cin7/design-tokens';
+
+// Works in any layer
+const price = formatCurrency(29.99);
+const isValid = validateEmail('user@example.com');
+```
+
+## Related Resources
+
+- [Architecture Overview](/getting-started/overview)
+- [Choosing Layers Guide](/getting-started/choosing-layers)
+- [Cross-Layer Communication](/patterns/cross-layer-communication)
+- [Full Stack Example](/examples/full-stack-integration)
+
+</Stack>

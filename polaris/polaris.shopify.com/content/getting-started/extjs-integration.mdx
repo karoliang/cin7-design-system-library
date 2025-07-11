@@ -1,0 +1,533 @@
+---
+title: ExtJS Integration
+description: 'Learn how to integrate Cin7 DSL with ExtJS for enterprise data-heavy applications.'
+showTOC: true
+keywords:
+  - extjs
+  - enterprise
+  - grid
+  - data
+  - legacy
+order: 9
+icon: TableIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Why ExtJS?
+
+While modern frameworks excel at many things, ExtJS remains unmatched for:
+
+- **Data Grids**: The most powerful data grid component in the industry
+- **Enterprise Forms**: Complex form handling with built-in validation
+- **Data Management**: Robust data stores and models
+- **Legacy Systems**: Seamless integration with existing ExtJS applications
+
+## Installation
+
+```bash
+# Install the ExtJS adapters
+pnpm add @cin7/extjs-adapters
+
+# Peer dependency
+pnpm add ext@^7.0.0
+```
+
+## Quick Start
+
+### 1. Initialize Cin7 Theme
+
+```javascript
+import { configureExtJS, applyTheme } from '@cin7/extjs-adapters';
+
+// Initialize Cin7 + ExtJS
+configureExtJS({
+  theme: 'light',
+  autoRegister: true,
+});
+
+// Or manually
+applyTheme('light');
+```
+
+### 2. Use Enhanced Components
+
+```javascript
+import { Cin7Grid } from '@cin7/extjs-adapters/grid';
+
+// Create a modern-styled grid
+const grid = Cin7Grid.create({
+  title: 'Products',
+  store: {
+    fields: ['name', 'price', 'status'],
+    data: products,
+  },
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Price', dataIndex: 'price', xtype: 'cin7numbercolumn' },
+    { text: 'Status', dataIndex: 'status', xtype: 'cin7statuscolumn' }
+  ],
+});
+```
+
+## Core Components
+
+### Enhanced Grid
+
+The Cin7 Grid brings modern design to ExtJS's powerful data grid:
+
+```javascript
+Ext.create({
+  xtype: 'cin7grid',
+  title: 'Orders',
+  
+  // Modern features
+  striped: true,
+  hoverable: true,
+  
+  // Enhanced toolbar
+  tbar: {
+    xtype: 'cin7toolbar',
+    items: [
+      { 
+        xtype: 'cin7searchfield',
+        emptyText: 'Search orders...',
+        width: 300,
+      },
+      '->',
+      { 
+        xtype: 'cin7button',
+        text: 'Export',
+        icon: 'export',
+        handler: () => grid.exportData('csv'),
+      }
+    ]
+  },
+  
+  // Column configuration
+  columns: [
+    {
+      text: 'Order ID',
+      dataIndex: 'id',
+      width: 120,
+      renderer: (value) => `#${value}`,
+    },
+    {
+      text: 'Customer',
+      dataIndex: 'customer',
+      flex: 1,
+    },
+    {
+      text: 'Total',
+      dataIndex: 'total',
+      xtype: 'cin7currencycolumn',
+      width: 150,
+    },
+    {
+      text: 'Status',
+      dataIndex: 'status',
+      xtype: 'cin7statuscolumn',
+      width: 120,
+    },
+    {
+      xtype: 'cin7actioncolumn',
+      width: 100,
+      items: [{
+        icon: 'edit',
+        tooltip: 'Edit order',
+        handler: 'onEditOrder',
+      }, {
+        icon: 'delete',
+        tooltip: 'Delete order',
+        handler: 'onDeleteOrder',
+      }]
+    }
+  ],
+  
+  // Features
+  features: [{
+    ftype: 'cin7grouping',
+    groupHeaderTpl: '{name} ({rows.length} orders)',
+  }],
+  
+  // Store configuration
+  store: {
+    type: 'buffered',
+    pageSize: 50,
+    proxy: {
+      type: 'rest',
+      url: '/api/orders',
+      reader: {
+        type: 'json',
+        rootProperty: 'data',
+        totalProperty: 'total',
+      },
+    },
+  },
+});
+```
+
+### Modern Forms
+
+Enhanced form components with Cin7 styling:
+
+```javascript
+Ext.create({
+  xtype: 'cin7form',
+  title: 'Customer Information',
+  
+  // Sectioned layout
+  sections: [{
+    title: 'Basic Information',
+    items: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Company Name',
+      name: 'company',
+      required: true,
+    }, {
+      xtype: 'cin7emailfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      helpText: 'Primary contact email',
+    }, {
+      xtype: 'cin7phonefield',
+      fieldLabel: 'Phone',
+      name: 'phone',
+    }]
+  }, {
+    title: 'Address',
+    collapsed: true,
+    items: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Street',
+      name: 'street',
+    }, {
+      xtype: 'cin7combobox',
+      fieldLabel: 'Country',
+      name: 'country',
+      store: countryStore,
+    }]
+  }],
+  
+  // Form buttons
+  buttons: [{
+    text: 'Cancel',
+    xtype: 'cin7button',
+    variant: 'secondary',
+  }, {
+    text: 'Save Customer',
+    xtype: 'cin7button',
+    variant: 'primary',
+    formBind: true,
+  }],
+});
+```
+
+### Data Visualization
+
+Modern charts with Cin7 design tokens:
+
+```javascript
+Ext.create({
+  xtype: 'cin7linechart',
+  title: 'Revenue Trend',
+  height: 400,
+  
+  // Data store
+  store: {
+    fields: ['month', 'revenue', 'profit'],
+    data: financialData,
+  },
+  
+  // Axes configuration
+  axes: [{
+    type: 'numeric',
+    position: 'left',
+    title: 'Amount ($)',
+    grid: true,
+    renderer: (axis, value) => `$${value / 1000}k`,
+  }, {
+    type: 'category',
+    position: 'bottom',
+    title: 'Month',
+  }],
+  
+  // Series
+  series: [{
+    type: 'line',
+    xField: 'month',
+    yField: 'revenue',
+    title: 'Revenue',
+    smooth: true,
+    marker: true,
+    highlightCfg: {
+      scaling: 1.5,
+    },
+    tooltip: {
+      trackMouse: true,
+      renderer: (tooltip, record) => {
+        tooltip.setHtml(`Revenue: $${record.get('revenue').toLocaleString()}`);
+      },
+    },
+  }, {
+    type: 'line',
+    xField: 'month',
+    yField: 'profit',
+    title: 'Profit',
+    smooth: true,
+    marker: true,
+  }],
+  
+  // Legend
+  legend: {
+    docked: 'bottom',
+  },
+});
+```
+
+## Theme Integration
+
+### Automatic Theme Sync
+
+The adapters automatically sync with Cin7 design tokens:
+
+```javascript
+import { watchTheme } from '@cin7/extjs-adapters';
+
+// Watch for theme changes
+const unwatch = watchTheme((theme) => {
+  console.log('Theme changed to:', theme);
+  // Update any custom components
+});
+
+// Clean up when done
+unwatch();
+```
+
+### Custom Theme Overrides
+
+```javascript
+import { applyTheme } from '@cin7/extjs-adapters';
+
+applyTheme({
+  mode: 'light',
+  overrides: {
+    grid: {
+      headerHeight: 48,
+      rowHeight: 44,
+    },
+    form: {
+      fieldHeight: 40,
+      labelGap: 8,
+    },
+  },
+});
+```
+
+## Migration Strategy
+
+### Gradual Migration
+
+You can migrate ExtJS apps gradually:
+
+```javascript
+// Step 1: Apply Cin7 theme to existing app
+import { applyTheme } from '@cin7/extjs-adapters';
+applyTheme('light');
+
+// Step 2: Replace components one by one
+// Old
+Ext.create('Ext.grid.Panel', config);
+// New
+Cin7Grid.create(config);
+
+// Step 3: Mix Cin7 and ExtJS components
+Ext.create('Ext.panel.Panel', {
+  items: [
+    { xtype: 'grid' },        // Standard ExtJS
+    { xtype: 'cin7form' },    // Cin7 enhanced
+  ],
+});
+```
+
+### Component Mapping
+
+| ExtJS Component | Cin7 Component | Benefits |
+|-----------------|----------------|----------|
+| `Ext.grid.Panel` | `cin7grid` | Modern styling, enhanced features |
+| `Ext.form.Panel` | `cin7form` | Better validation, modern inputs |
+| `Ext.button.Button` | `cin7button` | Polaris variants, loading states |
+| `Ext.form.field.Text` | `cin7textfield` | Prefix/suffix, help text |
+| `Ext.chart.CartesianChart` | `cin7chart` | Cin7 color palette, smooth animations |
+
+## Advanced Patterns
+
+### Custom Column Types
+
+```javascript
+import { registerColumnType } from '@cin7/extjs-adapters/grid';
+
+// Register a custom status column
+registerColumnType('customstatus', {
+  renderer(value, meta, record) {
+    const statusMap = {
+      active: { color: 'success', icon: 'check' },
+      pending: { color: 'warning', icon: 'clock' },
+      inactive: { color: 'critical', icon: 'x' },
+    };
+    
+    const status = statusMap[value] || {};
+    meta.tdCls = `cin7-status-${status.color}`;
+    
+    return `<i class="x-fa fa-${status.icon}"></i> ${value}`;
+  },
+});
+```
+
+### Enhanced Validation
+
+```javascript
+import { Cin7Validators } from '@cin7/extjs-adapters/form';
+
+{
+  xtype: 'cin7textfield',
+  fieldLabel: 'Product Code',
+  name: 'code',
+  validators: [
+    Cin7Validators.required('Product code is required'),
+    Cin7Validators.pattern(/^[A-Z]{3}-\d{4}$/, 'Format: ABC-1234'),
+    Cin7Validators.unique('/api/validate/code', 'Code already exists'),
+  ],
+}
+```
+
+### Data Export
+
+```javascript
+const grid = Ext.getCmp('myGrid');
+
+// Export with formatting
+grid.exportData('excel', {
+  includeHeaders: true,
+  formatting: {
+    currency: ['price', 'total'],
+    date: ['createdAt', 'updatedAt'],
+  },
+  filename: 'orders-export.xlsx',
+});
+```
+
+## Performance Tips
+
+### 1. Use Buffered Rendering
+
+For large datasets:
+
+```javascript
+{
+  xtype: 'cin7bufferedgrid',
+  store: {
+    type: 'buffered',
+    pageSize: 100,
+    leadingBufferZone: 200,
+  },
+}
+```
+
+### 2. Lazy Component Loading
+
+```javascript
+// Load chart components only when needed
+Ext.require('Cin7.chart.*', () => {
+  // Create charts
+});
+```
+
+### 3. Store Optimization
+
+```javascript
+store: {
+  // Enable remote operations
+  remoteSort: true,
+  remoteFilter: true,
+  
+  // Batch operations
+  batchActions: true,
+  
+  // Configure proxy
+  proxy: {
+    type: 'rest',
+    batchActions: true,
+    limitParam: 'limit',
+    startParam: 'offset',
+  },
+}
+```
+
+## Debugging
+
+### Enable Debug Mode
+
+```javascript
+// In development
+if (process.env.NODE_ENV === 'development') {
+  Ext.Loader.setConfig({ enabled: true });
+  Cin7.debug = true;
+}
+```
+
+### Component Inspector
+
+```javascript
+// Log all Cin7 components
+Ext.ComponentQuery.query('[cls*=cin7]').forEach(cmp => {
+  console.log(cmp.xtype, cmp.getId());
+});
+```
+
+## Best Practices
+
+1. **Use Cin7 Components**: Prefer Cin7 components for consistency
+2. **Follow Naming Conventions**: Use `cin7` prefix for custom components
+3. **Leverage Design Tokens**: Use CSS variables for custom styling
+4. **Handle Loading States**: Use built-in loading methods
+5. **Validate on Client**: Use validators before server submission
+
+## Common Issues
+
+### ExtJS Not Found
+
+```javascript
+// Ensure ExtJS is loaded before Cin7 adapters
+if (typeof Ext === 'undefined') {
+  console.error('ExtJS must be loaded before Cin7 adapters');
+}
+```
+
+### Theme Not Applied
+
+```javascript
+// Apply theme after ExtJS is ready
+Ext.onReady(() => {
+  applyTheme('light');
+});
+```
+
+### Component Registration
+
+```javascript
+// Manually register if auto-register fails
+import { registerComponents } from '@cin7/extjs-adapters';
+Ext.onReady(() => {
+  registerComponents();
+});
+```
+
+## Next Steps
+
+- Explore [Grid Examples](/examples/extjs-grid)
+- Learn about [Form Patterns](/patterns/extjs-forms)
+- See [Chart Visualizations](/examples/extjs-charts)
+- Read [Migration Guide](/guides/extjs-migration)

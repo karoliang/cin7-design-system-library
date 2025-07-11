@@ -1,0 +1,423 @@
+---
+title: Application Layer
+description: 'Learn how to structure business logic using TypeScript in the Cin7 DSL Application Layer.'
+showTOC: true
+keywords:
+  - application layer
+  - business logic
+  - typescript
+  - patterns
+  - use cases
+  - repository
+  - state management
+order: 5
+icon: CodeIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Overview
+
+The Application Layer in Cin7 DSL is where your business logic lives, completely separated from UI concerns. This layer uses TypeScript to provide type-safe, testable, and maintainable business logic patterns.
+
+## Key Principles
+
+### 1. Separation of Concerns
+Business logic should be independent of UI frameworks. The Application Layer doesn't know about React, ExtJS, or DOM elements - it only deals with data and business rules.
+
+### 2. Type Safety
+TypeScript provides compile-time guarantees about data structures and function signatures, catching errors before runtime.
+
+### 3. Testability
+Business logic should be easily testable without UI dependencies. Pure functions and dependency injection make unit testing straightforward.
+
+### 4. Reusability
+Business logic patterns can be reused across different UI implementations or even different applications.
+
+## Core Patterns
+
+### Repository Pattern
+
+The Repository pattern abstracts data access logic, providing a clean interface for data operations:
+
+```typescript
+import { BaseRepository } from '@cin7/typescript-sdk/patterns';
+
+// Define your entity
+interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  stock: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Create repository
+class ProductRepository extends BaseRepository<Product> {
+  constructor(private apiClient: ApiClient) {
+    super('products');
+  }
+
+  async findAll(params?: QueryParams) {
+    return this.apiClient.getPaginated<Product>('/products', params);
+  }
+
+  async findById(id: string) {
+    const response = await this.apiClient.get<Product>(`/products/${id}`);
+    return response.data;
+  }
+
+  async findBySku(sku: string): Promise<Product | null> {
+    return this.findOne({ sku });
+  }
+
+  async updateStock(id: string, quantity: number) {
+    return this.update(id, { stock: quantity });
+  }
+}
+```
+
+### Use Case Pattern
+
+Use cases encapsulate business operations, ensuring consistent validation and error handling:
+
+```typescript
+import { ValidatedUseCase, ValidationError } from '@cin7/typescript-sdk/patterns';
+import { z } from '@cin7/typescript-sdk/validation';
+
+// Define input schema
+const CreateOrderSchema = z.object({
+  customerId: z.string().uuid(),
+  items: z.array(z.object({
+    productId: z.string().uuid(),
+    quantity: z.number().positive(),
+  })).min(1),
+  shippingAddress: z.object({
+    street: z.string(),
+    city: z.string(),
+    country: z.string(),
+    zipCode: z.string(),
+  }),
+});
+
+// Implement use case
+class CreateOrderUseCase extends ValidatedUseCase<
+  z.infer<typeof CreateOrderSchema>,
+  Order
+> {
+  constructor(
+    private orderRepo: OrderRepository,
+    private productRepo: ProductRepository,
+    private inventoryService: InventoryService,
+    private paymentService: PaymentService
+  ) {
+    super();
+  }
+
+  async validate(input: z.infer<typeof CreateOrderSchema>) {
+    // Validate schema
+    CreateOrderSchema.parse(input);
+
+    // Check product availability
+    for (const item of input.items) {
+      const product = await this.productRepo.findById(item.productId);
+      if (!product) {
+        throw new ValidationError(`Product ${item.productId} not found`);
+      }
+      if (product.stock < item.quantity) {
+        throw new ValidationError(`Insufficient stock for ${product.name}`);
+      }
+    }
+  }
+
+  async performOperation(input: z.infer<typeof CreateOrderSchema>) {
+    // Reserve inventory
+    const reservations = await this.inventoryService.reserve(input.items);
+    
+    try {
+      // Create order
+      const order = await this.orderRepo.create({
+        customerId: input.customerId,
+        items: input.items,
+        shippingAddress: input.shippingAddress,
+        status: 'pending',
+      });
+
+      // Process payment
+      await this.paymentService.processOrder(order);
+
+      // Confirm inventory
+      await this.inventoryService.confirm(reservations);
+
+      return order;
+    } catch (error) {
+      // Rollback on failure
+      await this.inventoryService.release(reservations);
+      throw error;
+    }
+  }
+}
+```
+
+### Specification Pattern
+
+Express complex business rules as reusable specifications:
+
+```typescript
+import { Specification, SpecificationBuilder } from '@cin7/typescript-sdk/patterns';
+
+// Define business rules
+class MinimumOrderValueSpec extends Specification<Order> {
+  constructor(private minValue: number) {
+    super();
+  }
+
+  isSatisfiedBy(order: Order): boolean {
+    return order.totalAmount >= this.minValue;
+  }
+}
+
+class PremiumCustomerSpec extends Specification<Customer> {
+  isSatisfiedBy(customer: Customer): boolean {
+    return customer.tier === 'premium' || customer.totalPurchases > 10000;
+  }
+}
+
+// Combine specifications
+const eligibleForFreeShipping = new MinimumOrderValueSpec(50)
+  .or(new PremiumCustomerSpec());
+
+// Use in business logic
+if (eligibleForFreeShipping.isSatisfiedBy(order)) {
+  order.shippingCost = 0;
+}
+```
+
+## State Management
+
+The Application Layer provides framework-agnostic state management patterns:
+
+```typescript
+import { createStore, createAsyncState } from '@cin7/typescript-sdk/state';
+
+// Define store
+interface InventoryState {
+  products: AsyncState<Product[]>;
+  selectedProduct: Product | null;
+  filters: ProductFilters;
+  
+  // Actions
+  loadProducts: (filters?: ProductFilters) => Promise<void>;
+  selectProduct: (product: Product | null) => void;
+  updateFilters: (filters: Partial<ProductFilters>) => void;
+  reset: () => void;
+}
+
+// Create store
+const useInventoryStore = createStore<InventoryState>(
+  {
+    name: 'inventory',
+    persist: true,
+    devtools: true,
+    initialState: {
+      products: createAsyncState<Product[]>([]),
+      selectedProduct: null,
+      filters: {},
+    },
+  },
+  (set, get) => ({
+    // State
+    products: createAsyncState<Product[]>([]),
+    selectedProduct: null,
+    filters: {},
+
+    // Actions
+    loadProducts: async (filters) => {
+      set(state => { state.products.loading = true; });
+      
+      try {
+        const response = await productRepo.findAll({ filters });
+        set(state => {
+          state.products.data = response.data;
+          state.products.loading = false;
+        });
+      } catch (error) {
+        set(state => {
+          state.products.error = error.message;
+          state.products.loading = false;
+        });
+      }
+    },
+
+    selectProduct: (product) => set(state => {
+      state.selectedProduct = product;
+    }),
+
+    updateFilters: (filters) => set(state => {
+      state.filters = { ...state.filters, ...filters };
+    }),
+
+    reset: () => set(state => {
+      state.products = createAsyncState<Product[]>([]);
+      state.selectedProduct = null;
+      state.filters = {};
+    }),
+  })
+);
+```
+
+## Data Transformation
+
+Use mappers to transform data between different representations:
+
+```typescript
+import { BaseMapper, PropertyMapper } from '@cin7/typescript-sdk/patterns';
+
+// API response format
+interface ProductApiResponse {
+  product_id: string;
+  product_name: string;
+  unit_price: number;
+  stock_quantity: number;
+  created_at: string;
+}
+
+// Domain model
+interface ProductModel {
+  id: string;
+  name: string;
+  price: Money;
+  stock: StockLevel;
+  createdAt: Date;
+}
+
+// Create mapper
+class ProductApiMapper extends BaseMapper<ProductApiResponse, ProductModel> {
+  map(api: ProductApiResponse): ProductModel {
+    return {
+      id: api.product_id,
+      name: api.product_name,
+      price: Money.fromCents(api.unit_price),
+      stock: new StockLevel(api.stock_quantity),
+      createdAt: new Date(api.created_at),
+    };
+  }
+}
+```
+
+## Error Handling
+
+The Application Layer provides specific error types for different scenarios:
+
+```typescript
+import { 
+  UseCaseError, 
+  ValidationError, 
+  NotFoundError, 
+  ConflictError 
+} from '@cin7/typescript-sdk/patterns';
+
+// In use cases
+class UpdateProductUseCase extends BaseUseCase<UpdateProductInput, Product> {
+  async execute(input: UpdateProductInput) {
+    const product = await this.productRepo.findById(input.id);
+    
+    if (!product) {
+      throw new NotFoundError('Product', input.id);
+    }
+    
+    if (input.sku && input.sku !== product.sku) {
+      const existing = await this.productRepo.findBySku(input.sku);
+      if (existing) {
+        throw new ConflictError('SKU already exists', { sku: input.sku });
+      }
+    }
+    
+    return this.productRepo.update(input.id, input);
+  }
+}
+
+// In UI layer
+try {
+  await updateProduct(data);
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    showError('Product not found');
+  } else if (error instanceof ConflictError) {
+    showError('SKU already in use');
+  } else if (error instanceof ValidationError) {
+    showValidationErrors(error.details);
+  }
+}
+```
+
+## Best Practices
+
+### 1. Keep Business Logic Pure
+Don't mix UI concerns with business logic. The Application Layer should not know about:
+- DOM elements
+- React components
+- UI state (loading spinners, etc.)
+- Browser APIs
+
+### 2. Use Dependency Injection
+```typescript
+class OrderService {
+  constructor(
+    private orderRepo: IOrderRepository,
+    private emailService: IEmailService,
+    private logger: ILogger
+  ) {}
+}
+```
+
+### 3. Validate at Boundaries
+Always validate data when it enters the Application Layer:
+```typescript
+const CreateProductSchema = z.object({
+  name: z.string().min(1).max(100),
+  sku: z.string().regex(/^[A-Z0-9-]+$/),
+  price: z.number().positive(),
+});
+
+class CreateProductUseCase {
+  async execute(input: unknown) {
+    const validated = CreateProductSchema.parse(input);
+    // Proceed with validated data
+  }
+}
+```
+
+### 4. Handle Errors Gracefully
+Use specific error types and provide meaningful error messages:
+```typescript
+if (!hasPermission(user, 'products.create')) {
+  throw new UnauthorizedError('Insufficient permissions to create products');
+}
+```
+
+### 5. Test Business Logic
+Write unit tests for your business logic:
+```typescript
+describe('CreateOrderUseCase', () => {
+  it('should reserve inventory before creating order', async () => {
+    const mockInventory = jest.fn();
+    const useCase = new CreateOrderUseCase(/* dependencies */);
+    
+    await useCase.execute(orderData);
+    
+    expect(mockInventory.reserve).toHaveBeenCalledWith(orderData.items);
+  });
+});
+```
+
+## Next Steps
+
+- Explore the [@cin7/typescript-sdk documentation](/packages/typescript-sdk)
+- See [examples of complex business logic](/examples/business-logic)
+- Learn about [testing strategies](/testing/application-layer)
+- Understand [state management patterns](/patterns/state-management)

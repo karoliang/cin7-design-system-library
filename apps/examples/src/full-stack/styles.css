@@ -1,0 +1,214 @@
+/* Import Cin7 design tokens */
+@import '@cin7/design-tokens/css';
+
+/* Loading indicator */
+#loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--p-color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--p-color-border);
+  border-top-color: var(--p-color-border-emphasis);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* React root styling */
+#react-root {
+  min-height: 100vh;
+}
+
+/* Vanilla component styles */
+.vanilla-component {
+  background: var(--p-color-bg-surface);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-300);
+  padding: var(--cin7-space-6);
+}
+
+.vanilla-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--cin7-space-4);
+}
+
+.vanilla-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vanilla-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: var(--cin7-space-3);
+  margin-bottom: var(--cin7-space-4);
+}
+
+.vanilla-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.vanilla-product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--cin7-space-3);
+  border-bottom: 1px solid var(--p-color-border-subdued);
+}
+
+.vanilla-product-item:last-child {
+  border-bottom: none;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cin7-space-1);
+}
+
+.product-meta {
+  font-size: 12px;
+  color: var(--p-color-text-secondary);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--p-color-text-secondary);
+  padding: var(--cin7-space-6);
+}
+
+/* Success animation */
+.cin7-input.success {
+  border-color: var(--p-color-border-success) !important;
+  animation: pulse 0.3s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Integrated view styles */
+.integrated-vanilla-view {
+  padding: var(--cin7-space-4);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cin7-space-4);
+  margin-bottom: var(--cin7-space-4);
+}
+
+.stat-card {
+  background: var(--p-color-bg-surface-secondary);
+  padding: var(--cin7-space-4);
+  border-radius: var(--p-border-radius-200);
+  text-align: center;
+}
+
+.stat-card h5 {
+  margin: 0 0 var(--cin7-space-2) 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--p-color-text-secondary);
+  font-weight: 500;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--p-color-text-emphasis);
+}
+
+/* ExtJS customizations */
+.cin7-mini-grid {
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+}
+
+/* Stock indicators */
+.stock-high {
+  color: var(--p-color-text-success);
+  font-weight: 500;
+}
+
+.stock-medium {
+  color: var(--p-color-text-warning);
+  font-weight: 500;
+}
+
+.stock-low {
+  color: var(--p-color-text-critical);
+  font-weight: 500;
+}
+
+/* Sync indicator */
+.sync-indicator {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--p-color-bg-fill-emphasis);
+  color: var(--p-color-text-on-color);
+  padding: var(--cin7-space-2) var(--cin7-space-4);
+  border-radius: var(--p-border-radius-300);
+  font-size: 14px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+  z-index: 1000;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Dark theme adjustments */
+[data-cin7-theme="dark"] {
+  .vanilla-component {
+    background: var(--cin7-enterprise-dashboard-widget-background);
+  }
+  
+  .stat-card {
+    background: var(--cin7-enterprise-extjs-panel-headerBackground);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vanilla-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

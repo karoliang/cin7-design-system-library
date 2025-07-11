@@ -1,0 +1,314 @@
+---
+title: Installation
+description: 'Get started with Cin7 DSL by installing the framework packages and setting up your development environment.'
+showTOC: true
+keywords:
+  - installation
+  - setup
+  - getting started
+  - npm
+  - pnpm
+  - packages
+order: 3
+icon: InstallIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.description}</Lede>
+
+## Prerequisites
+
+Before installing Cin7 DSL, ensure you have the following installed:
+
+- **Node.js** version 18 or higher
+- **pnpm** version 8 or higher (recommended) or npm
+- **Git** for version control
+- **VS Code** (recommended) with TypeScript support
+
+## Understanding Cin7 DSL Packages
+
+Cin7 DSL is composed of multiple packages, each serving a specific layer of your application:
+
+### Core Packages by Layer
+
+#### Design System Layer
+- **@cin7/design-tokens** - Extended design tokens beyond Polaris
+- **@cin7/core** - Core utilities usable across all layers
+
+#### UI Interaction Layer  
+- **@cin7/vanilla-js** - Lightweight DOM manipulation and event handling
+- **@cin7/animations** - Performance-optimized animation utilities
+
+#### Component Layer
+- **@cin7/react-components** - React wrapper for Polaris components
+- **@cin7/extjs-adapters** - ExtJS component integration
+
+#### Application Layer
+- **@cin7/typescript-sdk** - Business logic patterns and utilities
+- **@cin7/state-management** - State management solutions
+
+## Quick Start
+
+### Create a New Project
+
+Choose your approach based on your needs:
+
+```bash
+# Full stack with all layers (coming soon)
+npx @cin7/create-app my-app --template=full
+
+# Vanilla JS only for lightweight apps
+npx @cin7/create-app my-app --template=vanilla
+
+# React + TypeScript for modern SPAs
+npx @cin7/create-app my-app --template=react
+```
+
+### Manual Installation
+
+Install only the packages you need for your use case:
+
+#### 1. Create Project Structure
+
+```bash
+mkdir my-cin7-app
+cd my-cin7-app
+pnpm init
+```
+
+#### 2. Install by Use Case
+
+##### For Vanilla JavaScript UI Interactions
+```bash
+# Core utilities and vanilla JS tools
+pnpm add @cin7/core @cin7/vanilla-js
+```
+
+##### For React Component Development
+```bash
+# React components and Polaris integration
+pnpm add @cin7/core @cin7/react-components
+pnpm add react react-dom @shopify/polaris
+```
+
+##### For Full Enterprise Stack
+```bash
+# All layers for complex applications
+pnpm add @cin7/core @cin7/vanilla-js @cin7/react-components @cin7/typescript-sdk @cin7/extjs-adapters
+pnpm add react react-dom @shopify/polaris
+```
+
+#### 3. Install Development Dependencies
+
+```bash
+pnpm add -D @types/react @types/react-dom typescript vite @vitejs/plugin-react
+```
+
+#### 4. Configure TypeScript
+
+Create `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+#### 5. Configure Vite
+
+Create `vite.config.ts`:
+
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    open: true,
+  },
+});
+```
+
+#### 6. Choose Your Architecture
+
+Cin7 DSL supports multiple architectural approaches:
+
+##### Vanilla JS First (Progressive Enhancement)
+```javascript
+// src/interactions.js
+import { DOMUtils, EventUtils } from '@cin7/vanilla-js';
+
+// Lightweight interactions without framework overhead
+EventUtils.delegate(document.body, '[data-toggle]', 'click', (e, target) => {
+  const targetId = target.dataset.toggle;
+  DOMUtils.toggleClass(document.getElementById(targetId), 'active');
+});
+```
+
+##### React for Complex UIs
+Create `src/App.tsx`:
+
+```tsx
+import { Cin7ThemeProvider, Page, Card, Text } from '@cin7/polaris-adapter';
+import enTranslations from '@shopify/polaris/locales/en.json';
+import '@shopify/polaris/build/esm/styles.css';
+
+function App() {
+  return (
+    <Cin7ThemeProvider i18n={enTranslations}>
+      <Page title="My Cin7 App">
+        <Card>
+          <Text variant="headingMd" as="h2">
+            Welcome to Cin7 DSL
+          </Text>
+          <Text as="p">
+            Your app is ready to build!
+          </Text>
+        </Card>
+      </Page>
+    </Cin7ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+Create `src/main.tsx`:
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+## Package Overview
+
+### Core Packages
+
+#### @cin7/core
+Core utilities and TypeScript types used across the framework:
+- DOM manipulation utilities
+- Event handling helpers
+- Validation utilities
+- Common TypeScript types
+
+#### @cin7/polaris-adapter
+Enhanced Polaris components with Cin7 DSL integrations:
+- Theme provider with ExtJS support
+- Extended design tokens
+- TypeScript enhancements
+
+#### @cin7/extjs-react (Coming Soon)
+React wrappers for ExtJS components:
+- ExtDataGrid for enterprise data tables
+- ExtFormPanel for complex forms
+- Chart components
+
+#### @cin7/cli (Coming Soon)
+Command-line tools for development:
+- Project scaffolding
+- Component generation
+- Build optimization
+
+## Development Setup
+
+### VS Code Extensions
+
+Install these recommended extensions for the best development experience:
+
+```json
+{
+  "recommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "shopify.polaris-for-vscode"
+  ]
+}
+```
+
+### Environment Configuration
+
+Create `.env` for environment variables:
+
+```bash
+# API endpoints
+VITE_API_URL=http://localhost:3001
+
+# Feature flags
+VITE_ENABLE_EXTJS=true
+VITE_ENABLE_ANALYTICS=false
+```
+
+## Next Steps
+
+Now that you have Cin7 DSL installed, explore:
+
+- [Quick Start Guide](./quick-start) - Build your first component
+- [Architecture](./architecture) - Understand the framework structure
+- [Components](../components) - Browse available components
+- [Examples](./examples) - See real-world implementations
+
+## Troubleshooting
+
+### Common Issues
+
+#### Module Resolution Errors
+If you encounter module resolution errors, ensure your `tsconfig.json` has the correct `moduleResolution` setting:
+
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler"
+  }
+}
+```
+
+#### Polaris Styles Not Loading
+Make sure to import Polaris styles in your main entry file:
+
+```tsx
+import '@shopify/polaris/build/esm/styles.css';
+```
+
+#### pnpm Installation Issues
+If pnpm install fails, try clearing the cache:
+
+```bash
+pnpm store prune
+pnpm install
+```
+
+## Getting Help
+
+- [GitHub Issues](https://github.com/cin7/dsl/issues) - Report bugs or request features
+- [Discord Community](https://discord.gg/cin7dsl) - Chat with other developers
+- [Documentation](/) - Browse the full documentation

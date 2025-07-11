@@ -1,0 +1,465 @@
+---
+title: Migrating from Pure Polaris
+description: Enhance your React + Polaris application with Cin7 DSL's performance optimizations
+showTOC: true
+keywords:
+  - migration
+  - polaris
+  - react
+  - performance
+---
+
+# {frontmatter.title}
+
+<Lede>
+Learn how to gradually enhance your existing Polaris application with Cin7 DSL's multi-layer architecture for better performance while maintaining the same visual design.
+</Lede>
+
+## Overview
+
+This guide shows you how to identify performance bottlenecks in your Polaris app and selectively replace them with optimized Cin7 DSL implementations.
+
+## Step 1: Analyze Your Application
+
+### Identify Performance Bottlenecks
+
+Use React DevTools Profiler to find components that:
+- Render frequently with large datasets
+- Cause long interaction delays
+- Use excessive memory
+
+Common bottlenecks:
+- **IndexTable** with 1000+ rows
+- Complex forms with many fields
+- Real-time dashboards
+- Heavy data visualizations
+
+### Example Analysis
+
+```javascript
+// Before: Slow Polaris IndexTable
+function ProductList() {
+  const [products] = useState(loadProducts()); // 5000 products
+  
+  // This will be slow with large datasets
+  return (
+    <IndexTable
+      resourceName={resourceName}
+      items={products}
+      headings={[
+        {title: 'Product'},
+        {title: 'Status'},
+        {title: 'Inventory'},
+        {title: 'Type'},
+        {title: 'Vendor'},
+      ]}
+      renderItem={(product) => (
+        <IndexTable.Row id={product.id}>
+          <IndexTable.Cell>{product.title}</IndexTable.Cell>
+          <IndexTable.Cell><Badge>{product.status}</Badge></IndexTable.Cell>
+          <IndexTable.Cell>{product.inventory}</IndexTable.Cell>
+          <IndexTable.Cell>{product.type}</IndexTable.Cell>
+          <IndexTable.Cell>{product.vendor}</IndexTable.Cell>
+        </IndexTable.Row>
+      )}
+    />
+  );
+}
+```
+
+## Step 2: Set Up Cin7 DSL
+
+### Installation
+
+```bash
+# Keep your existing dependencies
+npm install react @shopify/polaris
+
+# Add Cin7 DSL packages
+npm install @cin7/core @cin7/design-tokens @cin7/polaris-adapter @cin7/extjs-adapters
+```
+
+### Update App Provider
+
+```jsx
+// Before
+import {AppProvider} from '@shopify/polaris';
+
+function App() {
+  return (
+    <AppProvider i18n={enTranslations}>
+      <MyApp />
+    </AppProvider>
+  );
+}
+
+// After - Use Cin7 theme provider for enhanced features
+import {Cin7ThemeProvider} from '@cin7/polaris-adapter';
+
+function App() {
+  return (
+    <Cin7ThemeProvider i18n={enTranslations}>
+      <MyApp />
+    </Cin7ThemeProvider>
+  );
+}
+```
+
+## Step 3: Progressive Enhancement
+
+### Pattern 1: Replace Heavy Tables
+
+Keep your Polaris page layout but use ExtJS for the data table:
+
+```jsx
+// After: Hybrid approach
+import {Page, Card, Filters} from '@shopify/polaris';
+import {mountExtJSGrid} from './optimized-grid';
+
+function ProductList() {
+  const [filters, setFilters] = useState({});
+  
+  useEffect(() => {
+    // Mount high-performance grid
+    const cleanup = mountExtJSGrid('product-grid', {
+      data: loadProducts(), // 5000 products render smoothly
+      onSelect: (ids) => setSelected(ids),
+    });
+    
+    return cleanup;
+  }, []);
+  
+  // Keep Polaris for UI chrome
+  return (
+    <Page title="Products">
+      <Card>
+        <Filters
+          filters={filters}
+          onFiltersChange={setFilters}
+        />
+        {/* ExtJS grid renders here */}
+        <div id="product-grid" style={{height: 600}} />
+      </Card>
+    </Page>
+  );
+}
+
+// optimized-grid.js
+export function mountExtJSGrid(elementId, config) {
+  const grid = Ext.create('Cin7.grid.Panel', {
+    renderTo: elementId,
+    store: {
+      data: config.data,
+      pageSize: 50,
+    },
+    columns: [
+      {text: 'Product', dataIndex: 'title', flex: 1},
+      {text: 'Status', dataIndex: 'status', renderer: statusRenderer},
+      {text: 'Inventory', dataIndex: 'inventory', width: 100},
+      {text: 'Type', dataIndex: 'type', width: 150},
+      {text: 'Vendor', dataIndex: 'vendor', width: 150},
+    ],
+    // Virtual scrolling for performance
+    bufferedRenderer: true,
+  });
+  
+  return () => grid.destroy();
+}
+```
+
+### Pattern 2: Optimize Forms
+
+Replace complex forms while keeping Polaris modals:
+
+```jsx
+// Before: Complex Polaris form
+function ProductForm({product, onSave}) {
+  const [formData, setFormData] = useState(product);
+  
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Title"
+          value={formData.title}
+          onChange={(value) => setFormData({...formData, title: value})}
+        />
+        {/* 50+ more fields with complex validation */}
+      </FormLayout>
+    </Form>
+  );
+}
+
+// After: ExtJS form in Polaris modal
+function ProductForm({product, onSave}) {
+  const [active, setActive] = useState(true);
+  
+  return (
+    <Modal
+      open={active}
+      onClose={() => setActive(false)}
+      title="Edit Product"
+      primaryAction={{
+        content: 'Save',
+        onAction: () => {
+          const form = Ext.getCmp('product-form');
+          if (form.isValid()) {
+            onSave(form.getValues());
+          }
+        },
+      }}
+    >
+      <Modal.Section>
+        <div id="product-form-container" />
+      </Modal.Section>
+    </Modal>
+  );
+}
+
+// Mount ExtJS form
+useEffect(() => {
+  Ext.create('Cin7.form.Panel', {
+    renderTo: 'product-form-container',
+    id: 'product-form',
+    items: createFormFields(product),
+    // Complex validation rules
+    validators: productValidators,
+  });
+}, []);
+```
+
+### Pattern 3: Real-time Updates
+
+Use vanilla JS for performance-critical updates:
+
+```jsx
+// Before: React re-renders on every update
+function Dashboard() {
+  const [metrics, setMetrics] = useState({});
+  
+  useEffect(() => {
+    const ws = new WebSocket('/metrics');
+    ws.onmessage = (e) => {
+      setMetrics(JSON.parse(e.data)); // Causes re-render
+    };
+  }, []);
+  
+  return <MetricCards metrics={metrics} />;
+}
+
+// After: Direct DOM updates for metrics
+function Dashboard() {
+  useEffect(() => {
+    initializeMetrics();
+    
+    const ws = new WebSocket('/metrics');
+    ws.onmessage = (e) => {
+      updateMetricsDOM(JSON.parse(e.data)); // No React re-render
+    };
+  }, []);
+  
+  return (
+    <div id="metrics-container">
+      <MetricCard id="revenue" title="Revenue" />
+      <MetricCard id="orders" title="Orders" />
+    </div>
+  );
+}
+
+// Vanilla JS updates
+function updateMetricsDOM(data) {
+  Object.entries(data).forEach(([key, value]) => {
+    const element = document.querySelector(`#metric-${key}`);
+    if (element) {
+      // Smooth animation without React
+      animateValue(element, element.textContent, value);
+    }
+  });
+}
+```
+
+## Step 4: Maintain Consistency
+
+### Use Cin7 Design Tokens
+
+Ensure visual consistency across all layers:
+
+```css
+/* Works with ExtJS components */
+.x-grid-cell {
+  font-family: var(--p-font-family-sans);
+  font-size: var(--p-font-size-200);
+  color: var(--p-color-text);
+}
+
+/* Works with vanilla JS */
+.metric-card {
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-300);
+  padding: var(--cin7-space-400);
+}
+```
+
+### Event Bus Integration
+
+Connect layers seamlessly:
+
+```javascript
+import {EventBus} from '@cin7/core/events';
+
+// From React
+function ProductActions() {
+  const handleBulkEdit = () => {
+    EventBus.emit('products:bulk-edit', {ids: selected});
+  };
+}
+
+// In ExtJS
+EventBus.on('products:bulk-edit', ({ids}) => {
+  const grid = Ext.getCmp('product-grid');
+  grid.showBulkEditDialog(ids);
+});
+```
+
+## Step 5: Measure Results
+
+### Performance Metrics
+
+Track improvements:
+
+```javascript
+// Before migration
+{
+  initialLoad: '3.2s',
+  largeTableRender: '2.8s',
+  formValidation: '450ms',
+  memoryUsage: '285MB'
+}
+
+// After selective optimization
+{
+  initialLoad: '1.8s', // 44% improvement
+  largeTableRender: '0.3s', // 89% improvement
+  formValidation: '50ms', // 89% improvement
+  memoryUsage: '125MB' // 56% improvement
+}
+```
+
+### User Experience Metrics
+
+- Time to Interactive (TTI)
+- First Contentful Paint (FCP)
+- Cumulative Layout Shift (CLS)
+- Response time for user actions
+
+## Common Patterns
+
+### 1. Table Enhancement
+
+```jsx
+// Wrapper component
+function EnhancedTable({data, columns, onSelect}) {
+  const [gridMounted, setGridMounted] = useState(false);
+  
+  useEffect(() => {
+    if (data.length > 500) {
+      // Use ExtJS for large datasets
+      mountExtJSGrid({data, columns, onSelect});
+      setGridMounted(true);
+    }
+  }, [data]);
+  
+  // Fall back to Polaris for small datasets
+  if (!gridMounted && data.length <= 500) {
+    return <IndexTable {...props} />;
+  }
+  
+  return <div id="enhanced-grid" />;
+}
+```
+
+### 2. Form Enhancement
+
+```jsx
+// Progressive form enhancement
+function SmartForm({fields, onSubmit}) {
+  const complexity = calculateComplexity(fields);
+  
+  if (complexity > THRESHOLD) {
+    return <ExtJSForm fields={fields} onSubmit={onSubmit} />;
+  }
+  
+  return <PolarisForm fields={fields} onSubmit={onSubmit} />;
+}
+```
+
+### 3. Hybrid Components
+
+```jsx
+// Polaris wrapper with optimized content
+function HybridDataView() {
+  return (
+    <Page title="Analytics">
+      <Layout>
+        <Layout.Section>
+          <Card title="Filters">
+            <PolarisFilters /> {/* Keep Polaris for UI */}
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card title="Data">
+            <ExtJSGrid /> {/* Optimize heavy lifting */}
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+```
+
+## Troubleshooting
+
+### Style Conflicts
+
+```css
+/* Scope ExtJS styles */
+.cin7-extjs-container {
+  /* ExtJS specific overrides */
+}
+
+/* Ensure Polaris styles take precedence */
+.Polaris-Card {
+  /* !important if needed */
+}
+```
+
+### Event Handling
+
+```javascript
+// Ensure cleanup
+useEffect(() => {
+  const handler = () => {};
+  EventBus.on('event', handler);
+  
+  return () => {
+    EventBus.off('event', handler);
+    // Clean up ExtJS components
+    Ext.destroy(Ext.getCmp('my-component'));
+  };
+}, []);
+```
+
+## Next Steps
+
+1. Start with your slowest component
+2. Implement hybrid solution
+3. Measure performance gains
+4. Iterate on other bottlenecks
+5. Share your success story!
+
+## Resources
+
+- [Performance Profiling Guide](/guides/performance)
+- [Component Examples](/examples/hybrid-components)
+- [Migration Checklist](/guides/migration/checklist)
+- [Community Forum](https://github.com/Shopify/polaris/discussions)

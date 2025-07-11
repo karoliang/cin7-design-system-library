@@ -1,0 +1,70 @@
+---
+title: Real-World Examples
+description: Complete application patterns using Cin7 DSL's multi-layer architecture
+lede: See how Cin7 DSL implements common application patterns using the same visual designs as Polaris but with our mixed technology approach.
+url: /patterns/real-world-examples
+previewImg: /images/patterns/real-world-examples/pattern-thumbnail.png
+githubDiscussionsLink: https://github.com/Shopify/polaris/discussions/cin7-real-world
+hideChildren: true
+variants:
+  - 'variants/inventory-management.mdx'
+  - 'variants/order-dashboard.mdx'
+  - 'variants/customer-portal.mdx'
+  - 'variants/settings-page.mdx'
+---
+
+<Variants variants={frontmatter.variants} />
+
+<Stack gap="400">
+
+## Overview
+
+These examples demonstrate how to build complete application interfaces using Cin7 DSL's multi-layer architecture while maintaining the same visual design and UX patterns as Polaris.
+
+### Key Principles
+
+1. **Visual Consistency**: Match Polaris layouts and components exactly
+2. **Layer Optimization**: Use the right technology for each part
+3. **Seamless Integration**: Layers work together invisibly to users
+4. **Performance First**: Optimize for real-world usage
+
+### Technology Mapping
+
+| UI Pattern | Polaris | Cin7 DSL Approach |
+|------------|---------|-------------------|
+| Static content | React | Vanilla JS + SSR |
+| Simple interactions | React hooks | Vanilla JS events |
+| Complex forms | React + state | ExtJS forms |
+| Data tables | IndexTable | ExtJS grid |
+| Modals/Overlays | Modal component | React (lazy loaded) |
+| Real-time updates | React + hooks | Event bus + any layer |
+
+## Pattern Categories
+
+### Resource Management
+- **Inventory Management**: ExtJS grid with React filters
+- **Order Processing**: Mixed layers for optimal performance
+
+### Analytics & Dashboards
+- **Sales Dashboard**: Vanilla JS with ExtJS charts
+- **Performance Metrics**: React components with vanilla optimizations
+
+### User Interfaces
+- **Customer Portal**: Progressive enhancement approach
+- **Admin Settings**: ExtJS forms with React preview
+
+## Benefits of Multi-Layer Approach
+
+1. **Performance**: 50% faster initial load with vanilla JS
+2. **Capability**: ExtJS handles 10,000+ row tables efficiently
+3. **Flexibility**: Choose optimal tech for each feature
+4. **Maintenance**: Clear separation of concerns
+
+## Related Resources
+
+- [Polaris Patterns](https://polaris.shopify.com/patterns)
+- [Layer Integration Guide](/patterns/layer-integration)
+- [Performance Optimization](/guides/performance)
+- [Migration Guide](/guides/migration)
+
+</Stack>

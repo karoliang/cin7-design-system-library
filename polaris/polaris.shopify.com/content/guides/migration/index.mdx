@@ -1,0 +1,111 @@
+---
+title: Migration Guides
+description: Step-by-step guides for migrating to Cin7 DSL from existing frameworks
+lede: Learn how to gradually migrate your existing Polaris or ExtJS applications to leverage Cin7 DSL's multi-layer architecture.
+order: 10
+icon: RefreshIcon
+---
+
+# {frontmatter.title}
+
+<Lede>{frontmatter.lede}</Lede>
+
+## Migration Paths
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>From Pure Polaris</h3>
+          <p>Enhance your React + Polaris app with selective optimization using ExtJS and Vanilla JS where performance matters.</p>
+          <Link url="/guides/migration/from-polaris">View guide</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <TextContainer>
+          <h3>From ExtJS</h3>
+          <p>Modernize your ExtJS application with Polaris components and design tokens while preserving enterprise features.</p>
+          <Link url="/guides/migration/from-extjs">View guide</Link>
+        </TextContainer>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Why Migrate?
+
+### From Polaris to Cin7 DSL
+
+- **Performance**: Handle large datasets without compromising UX
+- **Enterprise Features**: Add complex grids and forms where needed
+- **Flexibility**: Use the right tool for each feature
+- **Gradual Migration**: Enhance bottlenecks without full rewrite
+
+### From ExtJS to Cin7 DSL
+
+- **Modern UI**: Apply Polaris design system to ExtJS apps
+- **Better Developer Experience**: TypeScript, modern tooling
+- **Improved Performance**: Lighter bundle sizes
+- **Future-Proof**: Stay current with web standards
+
+## Migration Principles
+
+### 1. Incremental Approach
+Start with the most problematic areas and migrate gradually.
+
+### 2. Visual Consistency
+Maintain the same look and feel throughout migration.
+
+### 3. Feature Parity
+Ensure all functionality is preserved or improved.
+
+### 4. Performance First
+Measure and improve performance at each step.
+
+## Common Scenarios
+
+### Large Data Tables
+- **Problem**: React tables slow with 1000+ rows
+- **Solution**: Replace with ExtJS grid, keep React chrome
+
+### Complex Forms
+- **Problem**: Form validation and dependencies complex in React
+- **Solution**: Use ExtJS forms with Polaris styling
+
+### Real-time Updates
+- **Problem**: React re-renders impact performance
+- **Solution**: Vanilla JS for direct DOM updates
+
+### Legacy ExtJS Apps
+- **Problem**: Outdated UI, large bundle size
+- **Solution**: Wrap in React shell, gradually modernize
+
+## Tools & Resources
+
+- [Migration CLI](/guides/migration/cli) - Automated migration assistance
+- [Code Examples](/examples/migration) - Before/after comparisons
+- [Performance Profiler](/tools/profiler) - Identify bottlenecks
+- [Component Mapping](/guides/migration/component-map) - ExtJS to Polaris mapping
+
+## Success Stories
+
+> "We migrated our inventory system from pure Polaris to Cin7 DSL and saw a 75% improvement in load times for large catalogs."
+> — TechCo Engineering Team
+
+> "Moving from ExtJS to Cin7 DSL let us keep our complex grids while modernizing the UI. Best of both worlds!"
+> — Enterprise Solutions Inc.
+
+## Get Started
+
+Choose your migration path:
+
+<ButtonGroup>
+  <Button url="/guides/migration/from-polaris">Migrate from Polaris</Button>
+  <Button url="/guides/migration/from-extjs">Migrate from ExtJS</Button>
+</ButtonGroup>

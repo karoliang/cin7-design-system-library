@@ -1,0 +1,72 @@
+---
+title: Enterprise Form Patterns
+description: Complex form patterns using ExtJS with modern Cin7 styling
+lede: Build sophisticated enterprise forms that handle complex validation, dynamic fields, and multi-step workflows.
+url: /patterns/enterprise-forms
+previewImg: /images/patterns/enterprise-forms/pattern-thumbnail.png
+githubDiscussionsLink: https://github.com/Shopify/polaris/discussions/cin7-enterprise-forms
+hideChildren: true
+variants:
+  - 'variants/multi-step-forms.mdx'
+  - 'variants/dynamic-fields.mdx'
+  - 'variants/form-validation.mdx'
+---
+
+<Variants variants={frontmatter.variants} />
+
+<Stack gap="400">
+
+## Why ExtJS for Enterprise Forms?
+
+ExtJS excels at complex form scenarios:
+
+### Built-in Features
+- **Field Validation**: Comprehensive validation rules
+- **Dynamic Forms**: Add/remove fields at runtime
+- **Data Binding**: Two-way binding with models
+- **Field Dependencies**: Conditional logic between fields
+- **Form Layouts**: Complex multi-column layouts
+
+### Enhanced with Cin7
+- **Modern Styling**: Polaris design tokens
+- **Consistent UX**: Matches React components
+- **Event Integration**: Works with event bus
+- **Type Safety**: TypeScript definitions
+
+## Form Patterns
+
+### 1. Master-Detail Forms
+```javascript
+{
+  xtype: 'cin7form',
+  layout: 'border',
+  items: [{
+    region: 'west',
+    xtype: 'grid',
+    title: 'Select Item',
+    width: 300
+  }, {
+    region: 'center',
+    xtype: 'form',
+    title: 'Item Details'
+  }]
+}
+```
+
+### 2. Wizard Forms
+Multi-step forms with validation at each step
+
+### 3. Dynamic Field Sets
+Fields that appear/disappear based on conditions
+
+### 4. Batch Editing
+Edit multiple records simultaneously
+
+## Related Resources
+
+- [ExtJS Integration Guide](/getting-started/extjs-integration)
+- [Form Validation Patterns](/patterns/form-validation)
+- [Multi-Step Form Example](/examples/multi-step-form)
+- [Dynamic Form Builder](/examples/dynamic-form-builder)
+
+</Stack>

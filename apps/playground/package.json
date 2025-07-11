@@ -1,0 +1,32 @@
+{
+  "name": "@cin7/playground",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive playground for Cin7 DSL",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cin7/core": "workspace:*",
+    "@cin7/vanilla-js": "workspace:*",
+    "@cin7/typescript-sdk": "workspace:*",
+    "@cin7/design-tokens": "workspace:*",
+    "@cin7/polaris-adapter": "workspace:*",
+    "@cin7/extjs-adapters": "workspace:*",
+    "@monaco-editor/react": "^4.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
+  }
+}
