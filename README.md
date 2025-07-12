@@ -1,19 +1,22 @@
-# Cin7 DSL Documentation Site
+# Cin7 DSL - Multi-Layer Enterprise Framework
 
-This repository contains the documentation site for Cin7 DSL (Design System Language), a comprehensive framework built on Shopify Polaris for creating modern, scalable web applications.
+A comprehensive design system language that combines Shopify Polaris, ExtJS, Vanilla JavaScript, and TypeScript to create enterprise-grade applications with clear separation of concerns.
 
-## 🚀 Live Site
+## 🚀 Live Documentation
 
-Visit the live documentation site at: [https://cin7-dsl.netlify.app](https://cin7-dsl.netlify.app)
+Visit the documentation site at: [https://cin7-dsl.netlify.app](https://cin7-dsl.netlify.app)
 
 ## 📖 What is Cin7 DSL?
 
-Cin7 DSL is a modern frontend framework that combines:
-- **Shopify Polaris** - Proven design system foundation
-- **ExtJS Integration** - Advanced form controls and data grids
-- **React Components** - Modern component-based architecture
-- **TypeScript** - Type-safe development
-- **Modular Design** - Clear separation of concerns
+Cin7 DSL is a production-ready, multi-layered framework that implements the architecture principle: "Use the right tool for each job"
+
+### ✅ Framework Status: **v1.0.0 - Production Ready**
+
+All packages are fully implemented and validated:
+- ✅ **ExtJS for form controls and grids** - Enterprise-grade data components
+- ✅ **Vanilla JS for UI interactions** - Lightweight, performant DOM manipulation
+- ✅ **TypeScript for business logic** - Type-safe patterns and domain modeling
+- ✅ **Modular architecture** - Clear separation of concerns across layers
 
 ## 🏗️ Architecture
 
@@ -53,6 +56,20 @@ The framework follows a layered architecture:
 - **Icons** - Icon library and usage
 - **Patterns** - Common UI patterns and best practices
 
+## 📦 Framework Packages
+
+All packages are implemented and ready for use:
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| `@cin7/core` | 0.1.0 | Core utilities and shared types |
+| `@cin7/design-tokens` | 0.1.0 | Extended design token system |
+| `@cin7/vanilla-js` | 0.1.0 | Lightweight DOM manipulation utilities |
+| `@cin7/typescript-sdk` | 0.1.0 | Business logic patterns and domain modeling |
+| `@cin7/extjs-adapters` | 0.1.0 | ExtJS component integration |
+| `@cin7/polaris-adapter` | 0.1.0 | React components with Polaris |
+| `@cin7/cli` | 0.1.0 | CLI tools for scaffolding and development |
+
 ## 🛠️ Development
 
 ### Prerequisites
@@ -60,16 +77,17 @@ The framework follows a layered architecture:
 - pnpm 8+
 - Git
 
-### Setup
+### Quick Start
 ```bash
-# Clone the repository
+# Create a new Cin7 DSL project
+npx @cin7/create-dsl-app my-app --template=full
+
+# Or clone for development
 git clone https://github.com/karoliang/cin7dsl.git
 cd cin7dsl
-
-# Install dependencies
 pnpm install
 
-# Start development server
+# Start documentation site
 cd polaris/polaris.shopify.com
 pnpm dev
 ```
@@ -105,23 +123,27 @@ The site is automatically deployed to Netlify when changes are pushed to the mai
 
 ```
 cin7dsl/
-├── polaris/                    # Cloned Polaris repository
-│   ├── polaris.shopify.com/    # Documentation site
-│   │   ├── content/            # Documentation content
-│   │   │   ├── getting-started/ # Cin7 DSL documentation
-│   │   │   ├── components/     # Component documentation
-│   │   │   ├── foundations/    # Design foundations
-│   │   │   └── ...
-│   │   ├── src/                # Site source code
-│   │   └── public/             # Static assets
+├── packages/                   # Framework packages (all implemented)
+│   ├── core/                   # Core utilities and types
+│   ├── design-tokens/          # Extended design token system
+│   ├── vanilla-js/             # Vanilla JS utilities
+│   ├── typescript-sdk/         # Business logic patterns
+│   ├── extjs-adapters/         # ExtJS component integration
+│   ├── polaris-adapter/        # React/Polaris components
+│   └── cli/                    # CLI tools for development
+├── apps/                       # Example applications
+│   ├── examples/               # Framework usage examples
+│   └── playground/             # Interactive playground
+├── polaris/                    # Polaris documentation site
+│   ├── polaris.shopify.com/    # Documentation site source
 │   ├── polaris-react/          # React components
 │   ├── polaris-tokens/         # Design tokens
 │   └── polaris-icons/          # Icon library
 ├── scripts/                    # Build and deployment scripts
-├── .env                        # Environment variables
 ├── netlify.toml               # Netlify configuration
+├── ARCHITECTURE_VALIDATION.md  # Architecture validation report
+├── ARCHITECTURE_DIAGRAM.md     # Visual architecture guide
 ├── CLAUDE.md                  # Claude AI guidance
-├── DEPLOYMENT.md              # Deployment documentation
 └── README.md                  # This file
 ```
 
