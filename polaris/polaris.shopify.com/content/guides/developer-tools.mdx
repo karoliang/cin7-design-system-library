@@ -36,41 +36,21 @@ code --install-extension ms-vscode.vscode-typescript-next
 
 ### Essential Extensions
 
-<Grid>
-  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
-    <Card>
-      <Card.Section>
-        <BlockStack gap="300">
-          <Text as="h3" variant="headingMd">Core Extensions</Text>
-          <List>
-            <List.Item>**ESLint** - JavaScript/TypeScript linting</List.Item>
-            <List.Item>**Prettier** - Code formatting</List.Item>
-            <List.Item>**TypeScript Vue Plugin** - Enhanced TS support</List.Item>
-            <List.Item>**Error Lens** - Inline error display</List.Item>
-            <List.Item>**GitLens** - Git supercharged</List.Item>
-          </List>
-        </BlockStack>
-      </Card.Section>
-    </Card>
-  </Grid.Cell>
-  
-  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
-    <Card>
-      <Card.Section>
-        <BlockStack gap="300">
-          <Text as="h3" variant="headingMd">Framework-Specific</Text>
-          <List>
-            <List.Item>**ES7+ React Snippets** - React productivity</List.Item>
-            <List.Item>**Tailwind CSS IntelliSense** - CSS utilities</List.Item>
-            <List.Item>**Sencha Ext JS** - ExtJS support</List.Item>
-            <List.Item>**MDX** - MDX syntax highlighting</List.Item>
-            <List.Item>**Polaris Toolkit** - Polaris snippets</List.Item>
-          </List>
-        </BlockStack>
-      </Card.Section>
-    </Card>
-  </Grid.Cell>
-</Grid>
+#### Core Extensions
+
+- **ESLint** - JavaScript/TypeScript linting
+- **Prettier** - Code formatting
+- **TypeScript Vue Plugin** - Enhanced TS support
+- **Error Lens** - Inline error display
+- **GitLens** - Git supercharged
+
+#### Framework-Specific
+
+- **ES7+ React Snippets** - React productivity
+- **Tailwind CSS IntelliSense** - CSS utilities
+- **Sencha Ext JS** - ExtJS support
+- **MDX** - MDX syntax highlighting
+- **Polaris Toolkit** - Polaris snippets
 
 ### VS Code Settings
 
@@ -165,43 +145,14 @@ Create `.vscode/cin7dsl.code-snippets`:
 
 ### Chrome Extensions
 
-<BlockStack gap="400">
-  <Card>
-    <Card.Section>
-      <InlineStack gap="400" align="space-between">
-        <BlockStack gap="200">
-          <Text as="h4" variant="headingMd">React Developer Tools</Text>
-          <Text as="p" variant="bodySm">Inspect React component hierarchy and state</Text>
-        </BlockStack>
-        <Link url="https://chrome.google.com/webstore/detail/react-developer-tools" external>Install</Link>
-      </InlineStack>
-    </Card.Section>
-  </Card>
-  
-  <Card>
-    <Card.Section>
-      <InlineStack gap="400" align="space-between">
-        <BlockStack gap="200">
-          <Text as="h4" variant="headingMd">Redux DevTools</Text>
-          <Text as="p" variant="bodySm">Debug state management (works with Zustand)</Text>
-        </BlockStack>
-        <Link url="https://chrome.google.com/webstore/detail/redux-devtools" external>Install</Link>
-      </InlineStack>
-    </Card.Section>
-  </Card>
-  
-  <Card>
-    <Card.Section>
-      <InlineStack gap="400" align="space-between">
-        <BlockStack gap="200">
-          <Text as="h4" variant="headingMd">Lighthouse</Text>
-          <Text as="p" variant="bodySm">Performance and accessibility auditing</Text>
-        </BlockStack>
-        <Badge>Built-in</Badge>
-      </InlineStack>
-    </Card.Section>
-  </Card>
-</BlockStack>
+#### React Developer Tools
+Inspect React component hierarchy and state. [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/react-developer-tools)
+
+#### Redux DevTools
+Debug state management (works with Zustand). [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/redux-devtools)
+
+#### Lighthouse
+Performance and accessibility auditing (built into Chrome DevTools)
 
 ### Console Helpers
 
@@ -427,31 +378,17 @@ npx playwright test --debug
 
 ### Common Issues
 
-<BlockStack gap="400">
-  <Card>
-    <Card.Section>
-      <Text as="h4" variant="headingMd">TypeScript Errors</Text>
-      <Text as="p" variant="bodySm">Run `npm run type-check` to see all errors</Text>
-      <Text as="p" variant="bodySm">Restart TS server: `Cmd+Shift+P` → "Restart TS Server"</Text>
-    </Card.Section>
-  </Card>
-  
-  <Card>
-    <Card.Section>
-      <Text as="h4" variant="headingMd">Build Failures</Text>
-      <Text as="p" variant="bodySm">Clear cache: `rm -rf node_modules/.vite`</Text>
-      <Text as="p" variant="bodySm">Reinstall deps: `rm -rf node_modules && npm install`</Text>
-    </Card.Section>
-  </Card>
-  
-  <Card>
-    <Card.Section>
-      <Text as="h4" variant="headingMd">ExtJS Issues</Text>
-      <Text as="p" variant="bodySm">Check ExtJS version compatibility</Text>
-      <Text as="p" variant="bodySm">Verify theme integration in `app.json`</Text>
-    </Card.Section>
-  </Card>
-</BlockStack>
+#### TypeScript Errors
+- Run `npm run type-check` to see all errors
+- Restart TS server: `Cmd+Shift+P` → "Restart TS Server"
+
+#### Build Failures
+- Clear cache: `rm -rf node_modules/.vite`
+- Reinstall deps: `rm -rf node_modules && npm install`
+
+#### ExtJS Issues
+- Check ExtJS version compatibility
+- Verify theme integration in `app.json`
 
 ## Resources
 
