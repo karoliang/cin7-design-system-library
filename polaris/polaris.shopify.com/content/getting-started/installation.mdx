@@ -41,7 +41,7 @@ Cin7 DSL is composed of multiple packages, each serving a specific layer of your
 - **@cin7/animations** - Performance-optimized animation utilities
 
 #### Component Layer
-- **@cin7/react-components** - React wrapper for Polaris components
+- **@cin7/polaris-adapter** - React components with Polaris integration
 - **@cin7/extjs-adapters** - ExtJS component integration
 
 #### Application Layer
@@ -55,14 +55,14 @@ Cin7 DSL is composed of multiple packages, each serving a specific layer of your
 Choose your approach based on your needs:
 
 ```bash
-# Full stack with all layers (coming soon)
-npx @cin7/create-app my-app --template=full
+# Full stack with all layers
+npx @cin7/create-dsl-app my-app --template=full
 
 # Vanilla JS only for lightweight apps
-npx @cin7/create-app my-app --template=vanilla
+npx @cin7/create-dsl-app my-app --template=vanilla
 
 # React + TypeScript for modern SPAs
-npx @cin7/create-app my-app --template=react
+npx @cin7/create-dsl-app my-app --template=react
 ```
 
 ### Manual Installation
@@ -88,14 +88,14 @@ pnpm add @cin7/core @cin7/vanilla-js
 ##### For React Component Development
 ```bash
 # React components and Polaris integration
-pnpm add @cin7/core @cin7/react-components
+pnpm add @cin7/core @cin7/polaris-adapter
 pnpm add react react-dom @shopify/polaris
 ```
 
 ##### For Full Enterprise Stack
 ```bash
 # All layers for complex applications
-pnpm add @cin7/core @cin7/vanilla-js @cin7/react-components @cin7/typescript-sdk @cin7/extjs-adapters
+pnpm add @cin7/core @cin7/vanilla-js @cin7/polaris-adapter @cin7/typescript-sdk @cin7/extjs-adapters @cin7/design-tokens
 pnpm add react react-dom @shopify/polaris
 ```
 
@@ -225,17 +225,19 @@ Enhanced Polaris components with Cin7 DSL integrations:
 - Extended design tokens
 - TypeScript enhancements
 
-#### @cin7/extjs-react (Coming Soon)
-React wrappers for ExtJS components:
+#### @cin7/extjs-adapters
+ExtJS component integration with Polaris design system:
 - ExtDataGrid for enterprise data tables
 - ExtFormPanel for complex forms
 - Chart components
+- Theme integration utilities
 
-#### @cin7/cli (Coming Soon)
+#### @cin7/cli
 Command-line tools for development:
-- Project scaffolding
-- Component generation
-- Build optimization
+- Project scaffolding with `create` command
+- Component generation with `generate` command
+- Migration utilities with `migrate` command
+- Code analysis with `analyze` command
 
 ## Development Setup
 
