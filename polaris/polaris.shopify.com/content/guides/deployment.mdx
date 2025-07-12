@@ -1,0 +1,683 @@
+---
+title: Deployment Guide
+description: Comprehensive guide for deploying Cin7 DSL applications to production
+showTOC: true
+keywords:
+  - deployment
+  - production
+  - hosting
+  - ci/cd
+  - devops
+  - infrastructure
+order: 5
+icon: UploadIcon
+---
+
+# Deployment Guide
+
+<Lede>Learn how to deploy Cin7 DSL applications to production with best practices for performance, security, and reliability.</Lede>
+
+## Overview
+
+Cin7 DSL applications can be deployed to various hosting platforms. This guide covers deployment strategies, optimization techniques, and production best practices.
+
+## Pre-Deployment Checklist
+
+Before deploying to production, ensure:
+
+<Card>
+  <Card.Section>
+    <BlockStack gap="300">
+      <Text variant="headingMd">Essential Checks</Text>
+      
+      <List type="checkbox">
+        <List.Item>All tests pass (`pnpm test`)</List.Item>
+        <List.Item>Build completes without errors (`pnpm build`)</List.Item>
+        <List.Item>No TypeScript errors (`pnpm typecheck`)</List.Item>
+        <List.Item>Code is linted (`pnpm lint`)</List.Item>
+        <List.Item>Environment variables are configured</List.Item>
+        <List.Item>API endpoints are updated for production</List.Item>
+        <List.Item>Security headers are configured</List.Item>
+        <List.Item>Error tracking is set up</List.Item>
+      </List>
+    </BlockStack>
+  </Card.Section>
+</Card>
+
+## Build Configuration
+
+### Production Build
+
+```bash
+# Install dependencies
+pnpm install --frozen-lockfile
+
+# Run production build
+pnpm build
+
+# Output structure
+dist/
+├── client/          # Client-side bundles
+│   ├── js/         # JavaScript bundles
+│   ├── css/        # CSS bundles
+│   └── assets/     # Static assets
+├── server/          # Server-side code
+└── static/          # Public files
+```
+
+### Build Optimization
+
+```javascript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    visualizer() // Analyze bundle size
+  ],
+  build: {
+    // Code splitting
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'polaris': ['@shopify/polaris'],
+          'extjs': ['@cin7/extjs-adapter'],
+          'utils': ['lodash', 'date-fns']
+        }
+      }
+    },
+    // Tree shaking
+    treeShake: {
+      moduleSideEffects: false
+    },
+    // Minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  }
+});
+```
+
+## Deployment Platforms
+
+### Vercel
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 12, sm: 8, md: 8, lg: 8, xl: 8}}>
+    ```json
+    // vercel.json
+    {
+      "buildCommand": "pnpm build",
+      "outputDirectory": "dist",
+      "installCommand": "pnpm install",
+      "framework": "vite",
+      "regions": ["iad1"],
+      "functions": {
+        "api/[...path].ts": {
+          "memory": 1024,
+          "maxDuration": 30
+        }
+      },
+      "headers": [
+        {
+          "source": "/(.*)",
+          "headers": [
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "1; mode=block"
+            }
+          ]
+        }
+      ]
+    }
+    ```
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text variant="headingSm">Vercel Features</Text>
+          <List type="bullet">
+            <List.Item>Zero-config deployment</List.Item>
+            <List.Item>Edge functions</List.Item>
+            <List.Item>Automatic HTTPS</List.Item>
+            <List.Item>Global CDN</List.Item>
+            <List.Item>Preview deployments</List.Item>
+          </List>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+### AWS
+
+#### S3 + CloudFront
+
+```bash
+# Build the application
+pnpm build
+
+# Sync to S3
+aws s3 sync dist/client s3://your-bucket-name \
+  --delete \
+  --cache-control "public, max-age=31536000" \
+  --exclude "index.html" \
+  --exclude "*.map"
+
+# Upload index.html with no cache
+aws s3 cp dist/client/index.html s3://your-bucket-name/ \
+  --cache-control "no-cache, no-store, must-revalidate"
+
+# Invalidate CloudFront
+aws cloudfront create-invalidation \
+  --distribution-id YOUR_DISTRIBUTION_ID \
+  --paths "/*"
+```
+
+#### ECS Deployment
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
+COPY . .
+RUN pnpm build
+
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+
+EXPOSE 3000
+CMD ["node", "dist/server/index.js"]
+```
+
+### Netlify
+
+```toml
+# netlify.toml
+[build]
+  command = "pnpm build"
+  publish = "dist/client"
+  functions = "dist/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+```
+
+## Environment Configuration
+
+### Environment Variables
+
+```bash
+# .env.production
+# API Configuration
+VITE_API_URL=https://api.cin7.com
+VITE_API_VERSION=v1
+
+# Authentication
+VITE_AUTH_DOMAIN=auth.cin7.com
+VITE_AUTH_CLIENT_ID=your-client-id
+
+# Analytics
+VITE_GA_TRACKING_ID=UA-XXXXXXXXX-X
+VITE_SENTRY_DSN=https://xxx@sentry.io/xxx
+
+# Feature Flags
+VITE_FEATURE_DARK_MODE=false
+VITE_FEATURE_BETA=false
+
+# ExtJS License
+VITE_EXTJS_LICENSE_KEY=your-license-key
+```
+
+### Configuration Management
+
+```typescript
+// config/production.ts
+export const config = {
+  api: {
+    baseURL: process.env.VITE_API_URL,
+    timeout: 30000,
+    retry: {
+      attempts: 3,
+      delay: 1000
+    }
+  },
+  
+  cache: {
+    defaultTTL: 300000, // 5 minutes
+    maxSize: 100 // MB
+  },
+  
+  security: {
+    csp: {
+      'default-src': ["'self'"],
+      'script-src': ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+      'style-src': ["'self'", "'unsafe-inline'"],
+      'img-src': ["'self'", "data:", "https:"],
+      'connect-src': ["'self'", "https://api.cin7.com"]
+    }
+  },
+  
+  performance: {
+    enableServiceWorker: true,
+    enablePrefetch: true,
+    lazyLoadThreshold: 0.1
+  }
+};
+```
+
+## Performance Optimization
+
+### Code Splitting
+
+```typescript
+// Lazy load routes
+import { lazy, Suspense } from 'react';
+import { Spinner } from '@shopify/polaris';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Products = lazy(() => import('./pages/Products'));
+const ExtJSGrid = lazy(() => import('@cin7/extjs-adapter/Grid'));
+
+function App() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
+    </Suspense>
+  );
+}
+```
+
+### Asset Optimization
+
+```javascript
+// Image optimization
+import { imageOptimizer } from 'vite-plugin-image-optimizer';
+
+export default {
+  plugins: [
+    imageOptimizer({
+      jpg: {
+        quality: 80,
+        progressive: true
+      },
+      png: {
+        quality: 90,
+        compressionLevel: 9
+      },
+      webp: {
+        quality: 80
+      }
+    })
+  ]
+};
+```
+
+### Service Worker
+
+```javascript
+// sw.js
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+
+// Precache assets
+precacheAndRoute(self.__WB_MANIFEST);
+
+// Cache API responses
+registerRoute(
+  ({ url }) => url.pathname.startsWith('/api/'),
+  new StaleWhileRevalidate({
+    cacheName: 'api-cache',
+    plugins: [
+      {
+        cacheWillUpdate: async ({ response }) => {
+          if (response && response.headers) {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              return response;
+            }
+          }
+          return null;
+        }
+      }
+    ]
+  })
+);
+
+// Cache static assets
+registerRoute(
+  ({ request }) => 
+    request.destination === 'style' ||
+    request.destination === 'script' ||
+    request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'static-cache',
+    plugins: [
+      {
+        expiration: {
+          maxEntries: 60,
+          maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
+        }
+      }
+    ]
+  })
+);
+```
+
+## Security Best Practices
+
+### Headers Configuration
+
+```typescript
+// middleware/security.ts
+export function securityHeaders(req: Request, res: Response, next: NextFunction) {
+  // Security headers
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  
+  // Content Security Policy
+  const csp = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: https:",
+    "connect-src 'self' https://api.cin7.com wss://api.cin7.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "upgrade-insecure-requests"
+  ].join('; ');
+  
+  res.setHeader('Content-Security-Policy', csp);
+  next();
+}
+```
+
+### API Security
+
+```typescript
+// Rate limiting
+import rateLimit from 'express-rate-limit';
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP'
+});
+
+app.use('/api/', apiLimiter);
+
+// Input validation
+import { body, validationResult } from 'express-validator';
+
+app.post('/api/products',
+  body('name').isString().trim().isLength({ min: 3, max: 100 }),
+  body('price').isFloat({ min: 0 }),
+  body('sku').matches(/^[A-Z0-9-]+$/),
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    // Process request
+  }
+);
+```
+
+## Monitoring & Logging
+
+### Error Tracking
+
+```typescript
+// Sentry configuration
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+
+Sentry.init({
+  dsn: process.env.VITE_SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  integrations: [
+    new BrowserTracing(),
+    new Sentry.Replay()
+  ],
+  tracesSampleRate: 0.1,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+  beforeSend(event, hint) {
+    // Filter sensitive data
+    if (event.request?.cookies) {
+      delete event.request.cookies;
+    }
+    return event;
+  }
+});
+```
+
+### Performance Monitoring
+
+```typescript
+// Web Vitals
+import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+
+function sendToAnalytics(metric: Metric) {
+  // Send to your analytics service
+  gtag('event', metric.name, {
+    value: Math.round(metric.value),
+    event_category: 'Web Vitals',
+    event_label: metric.id,
+    non_interaction: true
+  });
+}
+
+getCLS(sendToAnalytics);
+getFID(sendToAnalytics);
+getFCP(sendToAnalytics);
+getLCP(sendToAnalytics);
+getTTFB(sendToAnalytics);
+```
+
+## CI/CD Pipeline
+
+### GitHub Actions
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm typecheck
+      - run: pnpm lint
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist/
+      
+      # Deploy to your platform
+      - name: Deploy to Vercel
+        run: |
+          npm i -g vercel
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+```
+
+## Post-Deployment
+
+### Health Checks
+
+```typescript
+// Health check endpoint
+app.get('/health', async (req, res) => {
+  const health = {
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    version: process.env.npm_package_version,
+    checks: {
+      database: await checkDatabase(),
+      cache: await checkCache(),
+      extjs: checkExtJSLicense()
+    }
+  };
+  
+  const isHealthy = Object.values(health.checks).every(c => c.status === 'ok');
+  res.status(isHealthy ? 200 : 503).json(health);
+});
+```
+
+### Rollback Strategy
+
+```bash
+# Tag releases
+git tag -a v1.2.3 -m "Release version 1.2.3"
+git push origin v1.2.3
+
+# Rollback script
+#!/bin/bash
+PREVIOUS_VERSION=${1:-$(git describe --tags --abbrev=0 HEAD^)}
+echo "Rolling back to $PREVIOUS_VERSION"
+
+# Checkout previous version
+git checkout $PREVIOUS_VERSION
+
+# Rebuild and deploy
+pnpm install --frozen-lockfile
+pnpm build
+pnpm deploy:production
+```
+
+## Troubleshooting
+
+### Common Issues
+
+<Table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Cause</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Build fails</td>
+      <td>Missing dependencies</td>
+      <td>Run `pnpm install --frozen-lockfile`</td>
+    </tr>
+    <tr>
+      <td>Styles not loading</td>
+      <td>Incorrect publicPath</td>
+      <td>Set `base` in vite.config.ts</td>
+    </tr>
+    <tr>
+      <td>API calls fail</td>
+      <td>CORS issues</td>
+      <td>Configure proxy or CORS headers</td>
+    </tr>
+    <tr>
+      <td>ExtJS not loading</td>
+      <td>License issue</td>
+      <td>Verify ExtJS license key</td>
+    </tr>
+  </tbody>
+</Table>
+
+## Resources
+
+- [Deployment Checklist](/guides/deployment-checklist)
+- [Performance Guide](/guides/performance)
+- [Security Guide](/guides/security)
+- [Monitoring Setup](/guides/monitoring)

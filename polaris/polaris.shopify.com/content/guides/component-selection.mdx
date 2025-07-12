@@ -1,0 +1,595 @@
+---
+title: Component Selection Guide
+description: Interactive decision tree to help you choose the right component for your use case
+showTOC: true
+keywords:
+  - components
+  - selection
+  - decision tree
+  - guide
+  - patterns
+order: 4
+icon: DecisionTreeIcon
+---
+
+# Component Selection Guide
+
+<Lede>Find the perfect component for your use case with our interactive decision guide.</Lede>
+
+## Decision Tree
+
+<Card>
+  <Card.Section>
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingLg">What are you trying to build?</Text>
+      
+      <Grid>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card subdued>
+            <Card.Section>
+              <BlockStack gap="200">
+                <Icon source={DataTableIcon} />
+                <Text as="h3" variant="headingMd">Data Display</Text>
+                <Text as="p" variant="bodySm">Tables, lists, or data visualization</Text>
+                <Link url="#data-display">View options →</Link>
+              </BlockStack>
+            </Card.Section>
+          </Card>
+        </Grid.Cell>
+        
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card subdued>
+            <Card.Section>
+              <BlockStack gap="200">
+                <Icon source={EditIcon} />
+                <Text as="h3" variant="headingMd">Forms & Input</Text>
+                <Text as="p" variant="bodySm">Collect user input or preferences</Text>
+                <Link url="#forms-input">View options →</Link>
+              </BlockStack>
+            </Card.Section>
+          </Card>
+        </Grid.Cell>
+        
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card subdued>
+            <Card.Section>
+              <BlockStack gap="200">
+                <Icon source={LayoutColumns3Icon} />
+                <Text as="h3" variant="headingMd">Layout & Structure</Text>
+                <Text as="p" variant="bodySm">Organize content and create hierarchy</Text>
+                <Link url="#layout-structure">View options →</Link>
+              </BlockStack>
+            </Card.Section>
+          </Card>
+        </Grid.Cell>
+        
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card subdued>
+            <Card.Section>
+              <BlockStack gap="200">
+                <Icon source={AlertCircleIcon} />
+                <Text as="h3" variant="headingMd">Feedback & Status</Text>
+                <Text as="p" variant="bodySm">Communicate state or provide feedback</Text>
+                <Link url="#feedback-status">View options →</Link>
+              </BlockStack>
+            </Card.Section>
+          </Card>
+        </Grid.Cell>
+      </Grid>
+    </BlockStack>
+  </Card.Section>
+</Card>
+
+<div id="data-display" />
+
+## Data Display Components
+
+### How much data do you need to display?
+
+<BlockStack gap="400">
+  <Card>
+    <Card.Section>
+      <BlockStack gap="300">
+        <Badge status="info">Small Dataset (< 50 items)</Badge>
+        
+        **Use Polaris Components:**
+        - `ResourceList` - For product lists, customer lists
+        - `DataTable` - For simple tabular data
+        - `DescriptionList` - For key-value pairs
+        
+        ```jsx
+        <ResourceList
+          items={products}
+          renderItem={(item) => (
+            <ResourceItem id={item.id}>
+              {item.name}
+            </ResourceItem>
+          )}
+        />
+        ```
+      </BlockStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <BlockStack gap="300">
+        <Badge status="warning">Medium Dataset (50-1000 items)</Badge>
+        
+        **Use Polaris with Optimization:**
+        - `IndexTable` - For sortable, selectable data
+        - `DataTable` with pagination
+        - Consider virtual scrolling
+        
+        ```jsx
+        <IndexTable
+          resourceName={{singular: 'order', plural: 'orders'}}
+          items={orders}
+          headings={[
+            {title: 'Order'},
+            {title: 'Date'},
+            {title: 'Customer'},
+            {title: 'Total'},
+          ]}
+          pagination={{
+            hasNext: true,
+            onNext: loadMore,
+          }}
+        />
+        ```
+      </BlockStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <BlockStack gap="300">
+        <Badge status="critical">Large Dataset (> 1000 items)</Badge>
+        
+        **Use ExtJS Components:**
+        - `ExtDataGrid` - High-performance grid
+        - `ExtTreeGrid` - Hierarchical data
+        - `ExtPivotGrid` - Data analysis
+        
+        ```jsx
+        <ExtDataGrid
+          store={largeDataStore}
+          columns={columns}
+          features={[
+            'virtualScrolling',
+            'bufferedRendering',
+            'remoteSort',
+            'remoteFilter'
+          ]}
+        />
+        ```
+      </BlockStack>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+### Do you need data visualization?
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <Text as="h4" variant="headingMd">Simple Metrics</Text>
+        <Text as="p" variant="bodySm">Use Polaris metric cards</Text>
+        
+```jsx
+<Card>
+  <Text variant="headingMd">Revenue</Text>
+  <Text variant="heading2xl">$12,345</Text>
+</Card>
+```
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <Text as="h4" variant="headingMd">Charts & Graphs</Text>
+        <Text as="p" variant="bodySm">Use ExtJS charts</Text>
+
+```jsx
+<ExtChart
+  type="line"
+  data={salesData}
+  axes={chartAxes}
+/>
+```
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <Text as="h4" variant="headingMd">Real-time Data</Text>
+        <Text as="p" variant="bodySm">Use WebSocket + ExtJS</Text>
+
+```jsx
+<ExtLiveGrid
+  websocket={wsUrl}
+  updateInterval={1000}
+/>
+```
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+<div id="forms-input" />
+
+## Form & Input Components
+
+### What type of input do you need?
+
+<BlockStack gap="400">
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">Simple Forms</Text>
+          <Text as="p" variant="bodySm">Basic input fields, dropdowns, checkboxes</Text>
+        </BlockStack>
+        <BlockStack gap="200">
+          <Text as="p" variant="bodySm" fontWeight="semibold">Recommended:</Text>
+          <Badge>Polaris Form Components</Badge>
+        </BlockStack>
+      </InlineStack>
+      
+      <BlockStack gap="200">
+        <Text as="p" variant="bodySm">Best for:</Text>
+        <List type="bullet">
+          <List.Item>User profiles</List.Item>
+          <List.Item>Settings pages</List.Item>
+          <List.Item>Basic data entry</List.Item>
+        </List>
+      </BlockStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">Complex Forms</Text>
+          <Text as="p" variant="bodySm">Multi-step, conditional logic, validation</Text>
+        </BlockStack>
+        <BlockStack gap="200">
+          <Text as="p" variant="bodySm" fontWeight="semibold">Recommended:</Text>
+          <Badge>ExtJS Form Panel</Badge>
+        </BlockStack>
+      </InlineStack>
+      
+      <BlockStack gap="200">
+        <Text as="p" variant="bodySm">Best for:</Text>
+        <List type="bullet">
+          <List.Item>Order forms</List.Item>
+          <List.Item>Product configuration</List.Item>
+          <List.Item>Wizard interfaces</List.Item>
+        </List>
+      </BlockStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">Data Entry Grids</Text>
+          <Text as="p" variant="bodySm">Inline editing, bulk operations</Text>
+        </BlockStack>
+        <BlockStack gap="200">
+          <Text as="p" variant="bodySm" fontWeight="semibold">Recommended:</Text>
+          <Badge>ExtJS Editable Grid</Badge>
+        </BlockStack>
+      </InlineStack>
+      
+      <BlockStack gap="200">
+        <Text as="p" variant="bodySm">Best for:</Text>
+        <List type="bullet">
+          <List.Item>Inventory management</List.Item>
+          <List.Item>Bulk price updates</List.Item>
+          <List.Item>Spreadsheet-like interfaces</List.Item>
+        </List>
+      </BlockStack>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+### Form Validation Requirements
+
+<Table>
+  <thead>
+    <tr>
+      <th>Validation Type</th>
+      <th>Polaris</th>
+      <th>ExtJS</th>
+      <th>Recommendation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic (required, email)</td>
+      <td>✅ Built-in</td>
+      <td>✅ Built-in</td>
+      <td>Use Polaris</td>
+    </tr>
+    <tr>
+      <td>Custom patterns</td>
+      <td>⚡ Manual</td>
+      <td>✅ Built-in</td>
+      <td>Use ExtJS</td>
+    </tr>
+    <tr>
+      <td>Cross-field validation</td>
+      <td>⚡ Manual</td>
+      <td>✅ Built-in</td>
+      <td>Use ExtJS</td>
+    </tr>
+    <tr>
+      <td>Async validation</td>
+      <td>⚡ Manual</td>
+      <td>✅ Built-in</td>
+      <td>Use ExtJS</td>
+    </tr>
+  </tbody>
+</Table>
+
+<div id="layout-structure" />
+
+## Layout & Structure Components
+
+### Page Layout
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <Text as="h4" variant="headingMd">Standard Pages</Text>
+        
+```jsx
+<Page
+  title="Products"
+  primaryAction={{
+    content: 'Add product',
+    onAction: () => {}
+  }}
+>
+  <Layout>
+    <Layout.Section>
+      {/* Main content */}
+    </Layout.Section>
+    <Layout.Section secondary>
+      {/* Sidebar */}
+    </Layout.Section>
+  </Layout>
+</Page>
+```
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <Text as="h4" variant="headingMd">Dashboard Layout</Text>
+        
+```jsx
+<Page fullWidth>
+  <Grid>
+    <Grid.Cell columnSpan={{xs: 12, lg: 8}}>
+      {/* Main dashboard */}
+    </Grid.Cell>
+    <Grid.Cell columnSpan={{xs: 12, lg: 4}}>
+      {/* Metrics sidebar */}
+    </Grid.Cell>
+  </Grid>
+</Page>
+```
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+### Content Organization
+
+<BlockStack gap="400">
+  <Card>
+    <Card.Section>
+      <Text as="h4" variant="headingMd">Cards vs. Sections</Text>
+      <BlockStack gap="300">
+        <InlineStack gap="400">
+          <BlockStack gap="200" inlineAlign="start">
+            <Badge>Use Cards when:</Badge>
+            <List type="bullet">
+              <List.Item>Content is self-contained</List.Item>
+              <List.Item>Actions relate to specific content</List.Item>
+              <List.Item>Visual separation is needed</List.Item>
+            </List>
+          </BlockStack>
+          
+          <BlockStack gap="200" inlineAlign="start">
+            <Badge>Use Sections when:</Badge>
+            <List type="bullet">
+              <List.Item>Content flows together</List.Item>
+              <List.Item>Less visual weight needed</List.Item>
+              <List.Item>Inside modal or popover</List.Item>
+            </List>
+          </BlockStack>
+        </InlineStack>
+      </BlockStack>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+<div id="feedback-status" />
+
+## Feedback & Status Components
+
+### User Feedback
+
+<Table>
+  <thead>
+    <tr>
+      <th>Feedback Type</th>
+      <th>Component</th>
+      <th>Use Case</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Success</td>
+      <td>`Toast`</td>
+      <td>Action completed</td>
+      <td>"Product saved successfully"</td>
+    </tr>
+    <tr>
+      <td>Error</td>
+      <td>`Banner`</td>
+      <td>Form errors</td>
+      <td>"Please fix the errors below"</td>
+    </tr>
+    <tr>
+      <td>Warning</td>
+      <td>`Banner`</td>
+      <td>Important info</td>
+      <td>"This will affect 25 products"</td>
+    </tr>
+    <tr>
+      <td>Loading</td>
+      <td>`Spinner`</td>
+      <td>Async operations</td>
+      <td>Data loading indicator</td>
+    </tr>
+    <tr>
+      <td>Progress</td>
+      <td>`ProgressBar`</td>
+      <td>Multi-step process</td>
+      <td>Upload progress</td>
+    </tr>
+  </tbody>
+</Table>
+
+### Status Indicators
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Badge status="success">Active</Badge>
+          <Text as="p" variant="bodySm">For active/enabled states</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Badge status="warning">Pending</Badge>
+          <Text as="p" variant="bodySm">For pending/processing states</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Badge status="critical">Error</Badge>
+          <Text as="p" variant="bodySm">For error/failed states</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Badge status="info">Info</Badge>
+          <Text as="p" variant="bodySm">For informational states</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Quick Reference
+
+### Component Comparison Matrix
+
+<div style={{overflowX: 'auto'}}>
+<Table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Polaris</th>
+      <th>ExtJS</th>
+      <th>When to Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Performance (< 100 items)</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>Polaris</td>
+    </tr>
+    <tr>
+      <td>Performance (> 1000 items)</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>ExtJS</td>
+    </tr>
+    <tr>
+      <td>Mobile Responsiveness</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+      <td>Polaris</td>
+    </tr>
+    <tr>
+      <td>Complex Data Features</td>
+      <td>⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>ExtJS</td>
+    </tr>
+    <tr>
+      <td>Accessibility</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>Both</td>
+    </tr>
+    <tr>
+      <td>Learning Curve</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐</td>
+      <td>Start with Polaris</td>
+    </tr>
+  </tbody>
+</Table>
+</div>
+
+## Need More Help?
+
+<Card>
+  <Card.Section>
+    <BlockStack gap="300">
+      <Text as="h3" variant="headingMd">Can't find what you're looking for?</Text>
+      <BlockStack gap="200">
+        <Link url="/components">Browse all components</Link>
+        <Link url="/patterns">View design patterns</Link>
+        <Link url="https://github.com/cin7/dsl/discussions">Ask the community</Link>
+      </BlockStack>
+    </BlockStack>
+  </Card.Section>
+</Card>

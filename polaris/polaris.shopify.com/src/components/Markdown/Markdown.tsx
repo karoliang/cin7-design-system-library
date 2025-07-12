@@ -320,6 +320,7 @@ function Markdown<
         Grid,
         TextContainer,
         Link: PolarisLink,
+        Icon,
         Tip: ({children}) => (
           <div className="tip-banner">
             <div className="tip-banner__header">

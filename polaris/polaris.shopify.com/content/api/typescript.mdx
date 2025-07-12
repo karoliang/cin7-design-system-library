@@ -1,0 +1,699 @@
+---
+title: TypeScript SDK Reference
+description: Complete TypeScript SDK reference for Cin7 DSL, including core classes, interfaces, and utilities
+showTOC: true
+keywords:
+  - typescript
+  - sdk
+  - api
+  - reference
+  - types
+order: 2
+icon: CodeIcon
+---
+
+# TypeScript SDK Reference
+
+<Lede>The Cin7 DSL TypeScript SDK provides a comprehensive set of classes, interfaces, and utilities for building enterprise applications.</Lede>
+
+## Core Architecture
+
+The SDK follows a modular architecture with clear separation of concerns:
+
+```typescript
+import { 
+  Repository,
+  UseCase,
+  EventBus,
+  StateManager,
+  ValidationService
+} from '@cin7/dsl-core';
+```
+
+## Repository Pattern
+
+### Base Repository
+
+The base repository provides common data access patterns:
+
+```typescript
+import { Repository, Model } from '@cin7/dsl-core';
+
+export interface Product extends Model {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  stock: number;
+}
+
+export class ProductRepository extends Repository<Product> {
+  constructor() {
+    super({
+      endpoint: '/api/products',
+      cache: true,
+      cacheTimeout: 300000 // 5 minutes
+    });
+  }
+
+  // Custom methods
+  async findBySku(sku: string): Promise<Product | null> {
+    return this.findOne({ sku });
+  }
+
+  async updateStock(id: string, quantity: number): Promise<Product> {
+    return this.patch(id, { stock: quantity });
+  }
+
+  async findLowStock(threshold = 10): Promise<Product[]> {
+    return this.find({ 
+      stock: { $lte: threshold } 
+    });
+  }
+}
+```
+
+### Repository API
+
+```typescript
+interface Repository<T extends Model> {
+  // Basic CRUD
+  find(query?: Query<T>): Promise<T[]>;
+  findOne(query: Query<T>): Promise<T | null>;
+  findById(id: string): Promise<T | null>;
+  create(data: Partial<T>): Promise<T>;
+  update(id: string, data: Partial<T>): Promise<T>;
+  patch(id: string, data: Partial<T>): Promise<T>;
+  delete(id: string): Promise<void>;
+  
+  // Batch operations
+  createMany(data: Partial<T>[]): Promise<T[]>;
+  updateMany(query: Query<T>, data: Partial<T>): Promise<number>;
+  deleteMany(query: Query<T>): Promise<number>;
+  
+  // Pagination
+  paginate(options: PaginationOptions): Promise<PaginatedResult<T>>;
+  
+  // Aggregation
+  count(query?: Query<T>): Promise<number>;
+  aggregate(pipeline: AggregationPipeline): Promise<any[]>;
+  
+  // Cache management
+  invalidateCache(): void;
+  preload(query?: Query<T>): Promise<void>;
+}
+```
+
+## Use Case Pattern
+
+### Base Use Case
+
+Use cases encapsulate business logic:
+
+```typescript
+import { UseCase, Result } from '@cin7/dsl-core';
+
+export interface UpdateInventoryRequest {
+  productId: string;
+  quantity: number;
+  operation: 'add' | 'subtract' | 'set';
+  reason?: string;
+}
+
+export class UpdateInventoryUseCase extends UseCase<UpdateInventoryRequest, Product> {
+  constructor(
+    private productRepo: ProductRepository,
+    private eventBus: EventBus,
+    private validator: ValidationService
+  ) {
+    super();
+  }
+
+  async execute(request: UpdateInventoryRequest): Promise<Result<Product>> {
+    // Validate request
+    const validation = this.validator.validate(request, {
+      productId: 'required|uuid',
+      quantity: 'required|integer|min:0',
+      operation: 'required|in:add,subtract,set'
+    });
+
+    if (!validation.valid) {
+      return Result.fail(validation.errors);
+    }
+
+    try {
+      // Get current product
+      const product = await this.productRepo.findById(request.productId);
+      if (!product) {
+        return Result.fail('Product not found');
+      }
+
+      // Calculate new stock
+      let newStock: number;
+      switch (request.operation) {
+        case 'add':
+          newStock = product.stock + request.quantity;
+          break;
+        case 'subtract':
+          newStock = Math.max(0, product.stock - request.quantity);
+          break;
+        case 'set':
+          newStock = request.quantity;
+          break;
+      }
+
+      // Update product
+      const updated = await this.productRepo.updateStock(
+        request.productId, 
+        newStock
+      );
+
+      // Emit event
+      this.eventBus.emit('inventory:updated', {
+        productId: request.productId,
+        oldStock: product.stock,
+        newStock: newStock,
+        operation: request.operation,
+        quantity: request.quantity,
+        reason: request.reason
+      });
+
+      return Result.ok(updated);
+    } catch (error) {
+      return Result.fail('Failed to update inventory', error);
+    }
+  }
+}
+```
+
+### Result Pattern
+
+```typescript
+interface Result<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  errors?: ValidationError[];
+  metadata?: Record<string, any>;
+}
+
+class Result<T> {
+  static ok<T>(data: T, metadata?: Record<string, any>): Result<T>;
+  static fail<T>(error: string, errors?: any): Result<T>;
+  
+  map<U>(fn: (data: T) => U): Result<U>;
+  mapError(fn: (error: string) => string): Result<T>;
+  unwrap(): T; // Throws if failed
+  unwrapOr(defaultValue: T): T;
+}
+```
+
+## Event Bus
+
+### Event System
+
+```typescript
+import { EventBus, EventHandler } from '@cin7/dsl-core';
+
+// Define events
+interface InventoryEvents {
+  'inventory:updated': {
+    productId: string;
+    oldStock: number;
+    newStock: number;
+  };
+  'inventory:low': {
+    productId: string;
+    stock: number;
+    threshold: number;
+  };
+}
+
+// Create typed event bus
+const eventBus = new EventBus<InventoryEvents>();
+
+// Subscribe to events
+eventBus.on('inventory:updated', (event) => {
+  console.log(`Stock updated: ${event.oldStock} -> ${event.newStock}`);
+});
+
+// Subscribe with filters
+eventBus.on('inventory:low', 
+  (event) => event.stock < 5,
+  (event) => {
+    // Critical low stock handler
+  }
+);
+
+// Emit events
+eventBus.emit('inventory:updated', {
+  productId: '123',
+  oldStock: 100,
+  newStock: 95
+});
+```
+
+### Event Bus API
+
+```typescript
+interface EventBus<T extends EventMap = any> {
+  // Subscription
+  on<K extends keyof T>(
+    event: K, 
+    handler: EventHandler<T[K]>
+  ): Unsubscribe;
+  
+  on<K extends keyof T>(
+    event: K,
+    filter: (data: T[K]) => boolean,
+    handler: EventHandler<T[K]>
+  ): Unsubscribe;
+  
+  once<K extends keyof T>(
+    event: K, 
+    handler: EventHandler<T[K]>
+  ): Unsubscribe;
+  
+  // Emission
+  emit<K extends keyof T>(event: K, data: T[K]): void;
+  emitAsync<K extends keyof T>(event: K, data: T[K]): Promise<void>;
+  
+  // Management
+  off<K extends keyof T>(event: K, handler?: EventHandler<T[K]>): void;
+  removeAllListeners(event?: keyof T): void;
+  
+  // History
+  getHistory(event?: keyof T, limit?: number): EventHistoryEntry[];
+  clearHistory(): void;
+  
+  // Middleware
+  use(middleware: EventMiddleware<T>): void;
+}
+```
+
+## State Management
+
+### Store Definition
+
+```typescript
+import { createStore, Store } from '@cin7/dsl-state';
+
+interface ProductState {
+  products: Product[];
+  selectedProduct: Product | null;
+  filters: ProductFilters;
+  loading: boolean;
+  error: string | null;
+}
+
+interface ProductActions {
+  loadProducts: (filters?: ProductFilters) => Promise<void>;
+  selectProduct: (id: string) => void;
+  updateProduct: (id: string, data: Partial<Product>) => Promise<void>;
+  setFilters: (filters: ProductFilters) => void;
+}
+
+export const useProductStore = createStore<ProductState, ProductActions>({
+  // Initial state
+  state: {
+    products: [],
+    selectedProduct: null,
+    filters: {},
+    loading: false,
+    error: null
+  },
+  
+  // Actions
+  actions: (set, get) => ({
+    loadProducts: async (filters) => {
+      set({ loading: true, error: null });
+      
+      try {
+        const products = await productRepo.find(filters);
+        set({ products, loading: false });
+      } catch (error) {
+        set({ 
+          error: error.message, 
+          loading: false 
+        });
+      }
+    },
+    
+    selectProduct: (id) => {
+      const product = get().products.find(p => p.id === id);
+      set({ selectedProduct: product });
+    },
+    
+    updateProduct: async (id, data) => {
+      const updated = await productRepo.update(id, data);
+      set(state => ({
+        products: state.products.map(p => 
+          p.id === id ? updated : p
+        ),
+        selectedProduct: state.selectedProduct?.id === id 
+          ? updated 
+          : state.selectedProduct
+      }));
+    },
+    
+    setFilters: (filters) => {
+      set({ filters });
+    }
+  }),
+  
+  // Computed values
+  computed: {
+    activeProducts: (state) => 
+      state.products.filter(p => p.status === 'active'),
+    
+    lowStockProducts: (state) => 
+      state.products.filter(p => p.stock < 10)
+  },
+  
+  // Persistence
+  persist: {
+    key: 'product-store',
+    storage: localStorage,
+    partialize: (state) => ({ 
+      filters: state.filters 
+    })
+  }
+});
+```
+
+## Validation Service
+
+### Validation Rules
+
+```typescript
+import { ValidationService, ValidationRules } from '@cin7/dsl-validation';
+
+const validator = new ValidationService();
+
+// Define validation schema
+const productSchema: ValidationRules = {
+  name: 'required|string|min:3|max:100',
+  sku: 'required|string|regex:/^[A-Z0-9-]+$/',
+  price: 'required|numeric|min:0',
+  stock: 'required|integer|min:0',
+  category: 'required|in:electronics,clothing,food',
+  description: 'string|max:500',
+  tags: 'array|max:5',
+  'tags.*': 'string|max:20',
+  supplier: {
+    name: 'required|string',
+    email: 'required|email',
+    phone: 'string|regex:/^\\+?[0-9-]+$/'
+  }
+};
+
+// Validate data
+const result = validator.validate(productData, productSchema);
+
+if (!result.valid) {
+  console.error('Validation errors:', result.errors);
+}
+```
+
+### Custom Validators
+
+```typescript
+// Register custom validator
+validator.register('stockCode', {
+  validate: (value: any) => {
+    return /^STK-[0-9]{6}$/.test(value);
+  },
+  message: 'Stock code must be in format STK-000000'
+});
+
+// Use in schema
+const schema = {
+  stockCode: 'required|stockCode'
+};
+
+// Async validators
+validator.register('uniqueSku', {
+  validate: async (value: string) => {
+    const exists = await productRepo.findOne({ sku: value });
+    return !exists;
+  },
+  message: 'SKU already exists'
+});
+```
+
+## HTTP Client
+
+### API Client
+
+```typescript
+import { ApiClient, RequestConfig } from '@cin7/dsl-http';
+
+const api = new ApiClient({
+  baseURL: 'https://api.cin7.com',
+  timeout: 30000,
+  headers: {
+    'X-API-Key': process.env.API_KEY
+  },
+  retry: {
+    attempts: 3,
+    delay: 1000,
+    multiplier: 2
+  }
+});
+
+// Request interceptor
+api.interceptors.request.use((config) => {
+  config.headers['X-Request-ID'] = generateRequestId();
+  return config;
+});
+
+// Response interceptor
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      await refreshToken();
+      return api.retry(error.config);
+    }
+    throw error;
+  }
+);
+
+// Make requests
+const products = await api.get<Product[]>('/products', {
+  params: { category: 'electronics' },
+  cache: true,
+  cacheTimeout: 60000
+});
+```
+
+## Utility Functions
+
+### Data Utilities
+
+```typescript
+import { 
+  deepClone,
+  deepMerge,
+  omit,
+  pick,
+  groupBy,
+  sortBy,
+  debounce,
+  throttle,
+  memoize
+} from '@cin7/dsl-utils';
+
+// Deep operations
+const cloned = deepClone(complexObject);
+const merged = deepMerge(defaults, overrides);
+
+// Object manipulation
+const filtered = omit(user, ['password', 'token']);
+const subset = pick(product, ['id', 'name', 'price']);
+
+// Array operations
+const grouped = groupBy(products, 'category');
+const sorted = sortBy(products, ['category', '-price']);
+
+// Function helpers
+const search = debounce(performSearch, 300);
+const save = throttle(saveData, 1000);
+const calculate = memoize(expensiveCalculation);
+```
+
+### Date Utilities
+
+```typescript
+import { 
+  formatDate,
+  parseDate,
+  addDays,
+  diffDays,
+  startOfDay,
+  endOfMonth
+} from '@cin7/dsl-utils/date';
+
+// Date formatting
+formatDate(new Date(), 'YYYY-MM-DD'); // 2024-01-15
+formatDate(new Date(), 'relative'); // 2 hours ago
+
+// Date manipulation
+const tomorrow = addDays(new Date(), 1);
+const monthEnd = endOfMonth(new Date());
+const daysBetween = diffDays(startDate, endDate);
+```
+
+### Currency Utilities
+
+```typescript
+import { 
+  formatCurrency,
+  parseCurrency,
+  convertCurrency,
+  CurrencyRates
+} from '@cin7/dsl-utils/currency';
+
+// Format currency
+formatCurrency(1234.56, 'USD'); // $1,234.56
+formatCurrency(1234.56, 'EUR'); // €1.234,56
+
+// Parse currency strings
+parseCurrency('$1,234.56'); // 1234.56
+parseCurrency('€1.234,56'); // 1234.56
+
+// Currency conversion
+const rates: CurrencyRates = await fetchRates();
+const converted = convertCurrency(100, 'USD', 'EUR', rates);
+```
+
+## Type Definitions
+
+### Common Types
+
+```typescript
+// Model base
+interface Model {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Query types
+type Query<T> = {
+  [K in keyof T]?: T[K] | QueryOperator<T[K]>;
+} & {
+  $or?: Query<T>[];
+  $and?: Query<T>[];
+  $not?: Query<T>;
+};
+
+interface QueryOperator<T> {
+  $eq?: T;
+  $ne?: T;
+  $gt?: T;
+  $gte?: T;
+  $lt?: T;
+  $lte?: T;
+  $in?: T[];
+  $nin?: T[];
+  $regex?: string | RegExp;
+  $exists?: boolean;
+}
+
+// Pagination
+interface PaginationOptions {
+  page: number;
+  limit: number;
+  sort?: string | string[];
+  fields?: string[];
+}
+
+interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+}
+```
+
+## Error Handling
+
+### Custom Errors
+
+```typescript
+import { 
+  ApiError,
+  ValidationError,
+  BusinessError,
+  NotFoundError,
+  UnauthorizedError
+} from '@cin7/dsl-errors';
+
+// Throw typed errors
+throw new NotFoundError('Product not found', { productId });
+throw new ValidationError('Invalid input', validationErrors);
+throw new BusinessError('Insufficient stock', { required, available });
+
+// Error handling
+try {
+  await updateInventory(request);
+} catch (error) {
+  if (error instanceof ValidationError) {
+    // Handle validation errors
+  } else if (error instanceof BusinessError) {
+    // Handle business logic errors
+  } else if (error instanceof ApiError) {
+    // Handle API errors
+  } else {
+    // Handle unexpected errors
+  }
+}
+```
+
+## Testing Utilities
+
+### Test Helpers
+
+```typescript
+import { 
+  createMockRepository,
+  createMockEventBus,
+  createMockStore,
+  TestFixtures
+} from '@cin7/dsl-testing';
+
+// Mock repository
+const mockRepo = createMockRepository<Product>({
+  data: TestFixtures.products
+});
+
+// Mock event bus
+const mockEventBus = createMockEventBus();
+mockEventBus.expectEmit('inventory:updated', { 
+  productId: '123' 
+});
+
+// Mock store
+const mockStore = createMockStore({
+  initialState: { products: [] }
+});
+```
+
+## Migration Guide
+
+For migrating from older versions or other frameworks:
+
+- [Migrating from v0.x](/api/migration/v0)
+- [Migrating from Redux](/api/migration/redux)
+- [Migrating from MobX](/api/migration/mobx)
+- [TypeScript strict mode](/api/migration/strict-mode)
+
+## Resources
+
+- [API Playground](/playground/api) - Interactive API explorer
+- [TypeScript Configuration](/guides/typescript-config) - Recommended tsconfig
+- [Code Examples](https://github.com/cin7/dsl-examples) - Example projects
+- [API Changelog](/api/changelog) - Version history

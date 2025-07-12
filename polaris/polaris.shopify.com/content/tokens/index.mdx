@@ -3,7 +3,7 @@ title: Tokens
 description: Tokens are variables that represent design decisions such as color, typography, and spacing, in a consistent and reusable way.
 order: 8
 icon: EyeDropperIcon
-showTOC: false
+showTOC: true
 ---
 
 # Tokens
@@ -11,3 +11,197 @@ showTOC: false
 <Lede>{frontmatter.description}</Lede>
 
 <TokensNav />
+
+## Overview
+
+Design tokens are the foundational elements of the Cin7 DSL design system. They ensure consistency across all layers of your application - from Vanilla JS to React/Polaris to ExtJS components.
+
+## Token Categories
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={ColorIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Color</Text>
+          <Text as="p" variant="bodySm">Semantic color values for backgrounds, text, borders, and interactive states.</Text>
+          <Link url="/tokens/color">View color tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={TextAlignLeftIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Typography</Text>
+          <Text as="p" variant="bodySm">Font families, sizes, line heights, and weights for consistent text styling.</Text>
+          <Link url="/tokens/font">View typography tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={SpacingIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Spacing</Text>
+          <Text as="p" variant="bodySm">Consistent spacing scale for margins, padding, and layout gaps.</Text>
+          <Link url="/tokens/space">View spacing tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={ShadowIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Shadow</Text>
+          <Text as="p" variant="bodySm">Elevation values for creating depth and visual hierarchy.</Text>
+          <Link url="/tokens/shadow">View shadow tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={BorderIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Border</Text>
+          <Text as="p" variant="bodySm">Border widths, radii, and styles for consistent shapes.</Text>
+          <Link url="/tokens/border">View border tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Icon source={ClockIcon} tone="interactive" />
+          <Text as="h3" variant="headingMd">Motion</Text>
+          <Text as="p" variant="bodySm">Animation durations and easing functions for smooth interactions.</Text>
+          <Link url="/tokens/motion">View motion tokens</Link>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Using Tokens
+
+### In CSS/Vanilla JS
+
+```css
+.my-component {
+  /* Polaris tokens */
+  background: var(--p-color-bg-surface);
+  padding: var(--p-space-400);
+  border-radius: var(--p-border-radius-300);
+  
+  /* Cin7 DSL extensions */
+  margin-bottom: var(--cin7-space-section);
+  box-shadow: var(--cin7-shadow-card);
+}
+```
+
+### In React Components
+
+```jsx
+import { Box, Text } from '@shopify/polaris';
+import { tokens } from '@cin7/dsl-core';
+
+function MyComponent() {
+  return (
+    <Box padding="400" background="surface" borderRadius="300">
+      <Text>Content with design tokens</Text>
+    </Box>
+  );
+}
+```
+
+### In ExtJS Components
+
+```javascript
+Ext.define('MyApp.view.Card', {
+  extend: 'Ext.panel.Panel',
+  style: {
+    // Use CSS custom properties
+    backgroundColor: 'var(--p-color-bg-surface)',
+    padding: 'var(--p-space-400)',
+    borderRadius: 'var(--p-border-radius-300)'
+  }
+});
+```
+
+## Token Naming Convention
+
+Tokens follow a consistent naming pattern:
+
+- **Polaris tokens**: `--p-{category}-{property}-{variant}`
+- **Cin7 extensions**: `--cin7-{category}-{property}-{variant}`
+
+Examples:
+- `--p-color-bg-surface` - Polaris surface background color
+- `--p-space-400` - Polaris spacing scale 400
+- `--cin7-grid-gutter` - Cin7 specific grid gutter
+- `--cin7-shadow-modal` - Cin7 specific modal shadow
+
+## Cin7 DSL Token Extensions
+
+The Cin7 DSL extends Polaris tokens with enterprise-specific values:
+
+### Enterprise Spacing
+- `--cin7-space-section`: Larger spacing between sections (32px)
+- `--cin7-space-subsection`: Medium section spacing (24px)
+- `--cin7-grid-gutter`: Standard grid gutter (16px)
+
+### Enterprise Shadows
+- `--cin7-shadow-card`: Card elevation shadow
+- `--cin7-shadow-modal`: Modal overlay shadow
+- `--cin7-shadow-dropdown`: Dropdown menu shadow
+
+### Enterprise Colors
+- `--cin7-color-data-positive`: Positive data visualization
+- `--cin7-color-data-negative`: Negative data visualization
+- `--cin7-color-data-neutral`: Neutral data visualization
+
+## Best Practices
+
+1. **Always use tokens** instead of hardcoded values
+2. **Prefer semantic tokens** over raw values (e.g., `--p-color-text` over `#202223`)
+3. **Maintain consistency** across all technology layers
+4. **Document custom tokens** when extending the system
+5. **Test token changes** across all supported themes
+
+## Theme Support
+
+Tokens automatically adapt to different themes:
+
+```javascript
+// Light theme
+document.body.setAttribute('data-theme', 'light');
+
+// Dark theme (future support)
+document.body.setAttribute('data-theme', 'dark');
+
+// High contrast (accessibility)
+document.body.setAttribute('data-theme', 'high-contrast');
+```
+
+## Resources
+
+- [Token Playground](/playground/tokens) - Interactive token explorer
+- [Migration Guide](/guides/token-migration) - Migrating from hardcoded values
+- [Custom Tokens](/guides/custom-tokens) - Creating your own tokens
+- [Polaris Tokens Reference](https://polaris.shopify.com/tokens) - Original Polaris tokens

@@ -1,11 +1,364 @@
 ---
 title: Space
-showTOC: false
+showTOC: true
+description: Consistent spacing scale for margins, padding, and layout gaps
 ---
 
-# Tokens &rarr; {frontmatter.title}
+# Space Tokens
+
+<Lede>Space tokens provide a consistent spacing system that creates visual rhythm and hierarchy throughout your application.</Lede>
 
 <TokensNav selected="space" />
+
+## Understanding Space Tokens
+
+The Cin7 DSL spacing system is based on a 4px base unit, creating a harmonious scale that works across all screen sizes and components. This systematic approach ensures:
+
+- **Visual Consistency**: Predictable spacing throughout the UI
+- **Responsive Design**: Scales appropriately on different devices
+- **Easy Maintenance**: Change spacing globally by updating tokens
+- **Better Collaboration**: Designers and developers use the same values
+
+## Spacing Scale
+
+### Visual Reference
+
+<Card>
+  <Card.Section>
+    <BlockStack gap="400">
+      <Text variant="headingMd">Spacing Scale Visualization</Text>
+      
+      <BlockStack gap="200">
+        <InlineStack gap="200" align="start">
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">Token</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">Value</Text>
+          </div>
+          <div style={{flex: 1}}>
+            <Text variant="bodySm" tone="subdued">Visual Size</Text>
+          </div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">025</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">1px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-025)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">050</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">2px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-050)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">100</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">4px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-100)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">150</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">6px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-150)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">200</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">8px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-200)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">300</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">12px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-300)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">400</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">16px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-400)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">500</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">20px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-500)'}}></div>
+        </InlineStack>
+        
+        <InlineStack gap="200" align="center">
+          <div style={{width: '60px'}}>
+            <Text variant="bodyMd">600</Text>
+          </div>
+          <div style={{width: '60px'}}>
+            <Text variant="bodySm" tone="subdued">24px</Text>
+          </div>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--p-space-600)'}}></div>
+        </InlineStack>
+      </BlockStack>
+    </BlockStack>
+  </Card.Section>
+</Card>
+
+## Common Use Cases
+
+### Component Spacing
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <Text variant="headingSm">Card Padding</Text>
+        <div style={{background: 'var(--p-color-bg-surface-secondary)', padding: 'var(--p-space-400)', marginTop: 'var(--p-space-200)'}}>
+          <Text>Standard card content uses `--p-space-400` (16px)</Text>
+        </div>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <Text variant="headingSm">Button Group Spacing</Text>
+        <InlineStack gap="200">
+          <Button>Save</Button>
+          <Button variant="plain">Cancel</Button>
+        </InlineStack>
+        <Text variant="bodySm" tone="subdued">Uses `gap="200"` (8px)</Text>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+### Layout Spacing
+
+<Card>
+  <Card.Section>
+    <BlockStack gap="600">
+      <div>
+        <Text variant="headingMd">Page Sections</Text>
+        <Text variant="bodySm" tone="subdued">Use larger gaps (600/800) between major sections</Text>
+      </div>
+      
+      <div style={{background: 'var(--p-color-bg-surface-tertiary)', padding: 'var(--p-space-400)', borderRadius: 'var(--p-border-radius-200)'}}>
+        <Text>Section 1</Text>
+      </div>
+      
+      <div style={{background: 'var(--p-color-bg-surface-tertiary)', padding: 'var(--p-space-400)', borderRadius: 'var(--p-border-radius-200)'}}>
+        <Text>Section 2</Text>
+      </div>
+    </BlockStack>
+  </Card.Section>
+</Card>
+
+## Implementation Examples
+
+### CSS Usage
+
+```css
+/* Component spacing */
+.card {
+  padding: var(--p-space-400);
+  margin-bottom: var(--p-space-300);
+}
+
+/* Inline elements */
+.button-group {
+  display: flex;
+  gap: var(--p-space-200);
+}
+
+/* Section spacing */
+.page-section {
+  padding-top: var(--p-space-800);
+  padding-bottom: var(--p-space-800);
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .page-section {
+    padding-top: var(--p-space-600);
+    padding-bottom: var(--p-space-600);
+  }
+}
+```
+
+### React Component Usage
+
+```jsx
+import { BlockStack, InlineStack, Box } from '@shopify/polaris';
+
+function ProductCard({ product }) {
+  return (
+    <Box padding="400" background="surface" borderRadius="200">
+      <BlockStack gap="300">
+        <img src={product.image} alt={product.name} />
+        
+        <BlockStack gap="100">
+          <Text variant="headingMd">{product.name}</Text>
+          <Text variant="bodySm" tone="subdued">{product.category}</Text>
+        </BlockStack>
+        
+        <InlineStack gap="200" align="space-between">
+          <Text variant="headingLg">${product.price}</Text>
+          <Button size="slim">Add to Cart</Button>
+        </InlineStack>
+      </BlockStack>
+    </Box>
+  );
+}
+```
+
+### ExtJS Integration
+
+```javascript
+Ext.define('MyApp.view.ProductPanel', {
+  extend: 'Ext.panel.Panel',
+  
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  
+  defaults: {
+    margin: '0 0 var(--p-space-300) 0' // Bottom margin using token
+  },
+  
+  bodyPadding: 'var(--p-space-400)', // Panel padding
+  
+  items: [{
+    xtype: 'container',
+    padding: 'var(--p-space-200)',
+    html: 'Content with consistent spacing'
+  }]
+});
+```
+
+## Cin7 DSL Space Extensions
+
+Cin7 DSL adds enterprise-specific spacing tokens:
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text variant="headingSm">Section Spacing</Text>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--cin7-space-section)'}}></div>
+          <Text variant="bodySm" tone="subdued">--cin7-space-section (32px)</Text>
+          <Text variant="bodySm">For major page sections</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text variant="headingSm">Subsection Spacing</Text>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--cin7-space-subsection)'}}></div>
+          <Text variant="bodySm" tone="subdued">--cin7-space-subsection (24px)</Text>
+          <Text variant="bodySm">For subsections within pages</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text variant="headingSm">Grid Gutter</Text>
+          <div style={{background: 'var(--p-color-bg-fill-brand)', height: '16px', width: 'var(--cin7-grid-gutter)'}}></div>
+          <Text variant="bodySm" tone="subdued">--cin7-grid-gutter (16px)</Text>
+          <Text variant="bodySm">Standard grid column gaps</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Spacing Guidelines
+
+### When to Use Each Token
+
+<Table>
+  <thead>
+    <tr>
+      <th>Token Range</th>
+      <th>Pixel Value</th>
+      <th>Common Use Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>025-100</td>
+      <td>1-4px</td>
+      <td>Icon spacing, border widths, micro adjustments</td>
+    </tr>
+    <tr>
+      <td>150-300</td>
+      <td>6-12px</td>
+      <td>Text spacing, form field gaps, inline elements</td>
+    </tr>
+    <tr>
+      <td>400-600</td>
+      <td>16-24px</td>
+      <td>Card padding, section spacing, component gaps</td>
+    </tr>
+    <tr>
+      <td>800-1600</td>
+      <td>32-64px</td>
+      <td>Page sections, major layout divisions</td>
+    </tr>
+  </tbody>
+</Table>
+
+## Best Practices
+
+1. **Use the spacing scale**: Stick to defined tokens rather than arbitrary values
+2. **Be consistent**: Use the same spacing for similar UI patterns
+3. **Consider context**: Tighter spacing for related items, looser for separate sections
+4. **Test responsively**: Ensure spacing works on all screen sizes
+5. **Avoid mixing units**: Use tokens instead of mixing px, rem, or em values
+
+## All Space Tokens
 
 <TokenList>
   {tokens.space

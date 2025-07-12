@@ -1,0 +1,682 @@
+---
+title: Testing Guide
+description: Comprehensive testing strategies for Cin7 DSL applications across all technology layers
+showTOC: true
+keywords:
+  - testing
+  - unit tests
+  - integration tests
+  - e2e tests
+  - jest
+  - cypress
+  - extjs testing
+order: 3
+icon: ChecklistIcon
+---
+
+# Testing Guide
+
+<Lede>Learn how to effectively test Cin7 DSL applications across React, ExtJS, and Vanilla JS layers.</Lede>
+
+## Overview
+
+Testing in a multi-layer architecture requires different strategies for each technology. This guide covers:
+
+- Unit testing for individual components and functions
+- Integration testing for cross-layer communication
+- End-to-end testing for complete user flows
+- Performance testing for large datasets
+- Accessibility testing for compliance
+
+## Testing Stack
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingMd">Jest</Text>
+          <Text as="p" variant="bodySm">Unit and integration testing for React components and TypeScript code.</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingMd">React Testing Library</Text>
+          <Text as="p" variant="bodySm">Component testing with user-centric approach.</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingMd">Cypress</Text>
+          <Text as="p" variant="bodySm">End-to-end testing across all technology layers.</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="200">
+          <Text as="h3" variant="headingMd">Siesta</Text>
+          <Text as="p" variant="bodySm">ExtJS component testing framework.</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Unit Testing
+
+### React Components
+
+Test React components with Jest and React Testing Library:
+
+```typescript
+// ProductCard.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ProductCard } from './ProductCard';
+
+describe('ProductCard', () => {
+  const mockProduct = {
+    id: '1',
+    name: 'Test Product',
+    price: 99.99,
+    image: '/test.jpg'
+  };
+
+  it('renders product information', () => {
+    render(<ProductCard product={mockProduct} />);
+    
+    expect(screen.getByText('Test Product')).toBeInTheDocument();
+    expect(screen.getByText('$99.99')).toBeInTheDocument();
+  });
+
+  it('calls onSelect when clicked', () => {
+    const handleSelect = jest.fn();
+    render(
+      <ProductCard 
+        product={mockProduct} 
+        onSelect={handleSelect} 
+      />
+    );
+    
+    fireEvent.click(screen.getByRole('button'));
+    expect(handleSelect).toHaveBeenCalledWith(mockProduct);
+  });
+
+  it('shows loading skeleton when loading', () => {
+    render(<ProductCard loading />);
+    
+    expect(screen.getByTestId('skeleton')).toBeInTheDocument();
+  });
+});
+```
+
+### TypeScript SDK
+
+Test business logic and utilities:
+
+```typescript
+// ProductRepository.test.ts
+import { ProductRepository } from './ProductRepository';
+import { mockAxios } from '../test-utils';
+
+describe('ProductRepository', () => {
+  let repository: ProductRepository;
+
+  beforeEach(() => {
+    repository = new ProductRepository();
+    mockAxios.reset();
+  });
+
+  describe('findByCategory', () => {
+    it('fetches products by category', async () => {
+      const mockProducts = [
+        { id: '1', name: 'Product 1', category: 'electronics' },
+        { id: '2', name: 'Product 2', category: 'electronics' }
+      ];
+
+      mockAxios.onGet('/api/products?category=electronics')
+        .reply(200, mockProducts);
+
+      const result = await repository.findByCategory('electronics');
+      
+      expect(result).toEqual(mockProducts);
+    });
+
+    it('handles errors gracefully', async () => {
+      mockAxios.onGet('/api/products?category=invalid')
+        .reply(404);
+
+      await expect(repository.findByCategory('invalid'))
+        .rejects.toThrow('Not found');
+    });
+  });
+});
+```
+
+### Use Cases
+
+Test business logic in isolation:
+
+```typescript
+// UpdateInventoryUseCase.test.ts
+import { UpdateInventoryUseCase } from './UpdateInventoryUseCase';
+import { ProductRepository } from '../repositories';
+import { EventBus } from '@cin7/core/events';
+
+describe('UpdateInventoryUseCase', () => {
+  let useCase: UpdateInventoryUseCase;
+  let productRepo: jest.Mocked<ProductRepository>;
+  let eventBus: jest.Mocked<EventBus>;
+
+  beforeEach(() => {
+    productRepo = createMockRepository();
+    eventBus = createMockEventBus();
+    useCase = new UpdateInventoryUseCase(productRepo, eventBus);
+  });
+
+  it('adds inventory successfully', async () => {
+    const product = { id: '1', name: 'Product', stock: 10 };
+    productRepo.findById.mockResolvedValue(product);
+    productRepo.update.mockResolvedValue({ ...product, stock: 15 });
+
+    const result = await useCase.execute({
+      productId: '1',
+      quantity: 5,
+      operation: 'add'
+    });
+
+    expect(result.success).toBe(true);
+    expect(result.data.stock).toBe(15);
+    expect(eventBus.emit).toHaveBeenCalledWith('inventory:updated', 
+      expect.objectContaining({ stock: 15 })
+    );
+  });
+
+  it('validates quantity', async () => {
+    const result = await useCase.execute({
+      productId: '1',
+      quantity: -5,
+      operation: 'add'
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBe('Invalid quantity');
+  });
+});
+```
+
+## Integration Testing
+
+### Cross-Layer Communication
+
+Test event bus and layer bridges:
+
+```typescript
+// EventBus.integration.test.ts
+import { EventBus } from '@cin7/core/events';
+import { renderHook, act } from '@testing-library/react-hooks';
+import { useEventBus } from '@cin7/hooks';
+
+describe('EventBus Integration', () => {
+  it('communicates between React and Vanilla JS', async () => {
+    const eventBus = new EventBus();
+    const handler = jest.fn();
+
+    // React hook subscribes
+    const { result } = renderHook(() => 
+      useEventBus('data:updated', handler)
+    );
+
+    // Vanilla JS emits
+    act(() => {
+      eventBus.emit('data:updated', { id: '123' });
+    });
+
+    expect(handler).toHaveBeenCalledWith({ id: '123' });
+  });
+});
+```
+
+### Store Integration
+
+Test state management across components:
+
+```typescript
+// Store.integration.test.ts
+import { render, screen } from '@testing-library/react';
+import { StoreProvider } from '@cin7/store';
+import { ProductList } from './ProductList';
+import { ProductDetail } from './ProductDetail';
+
+describe('Store Integration', () => {
+  it('shares state between components', () => {
+    render(
+      <StoreProvider>
+        <ProductList />
+        <ProductDetail />
+      </StoreProvider>
+    );
+
+    // Select product in list
+    fireEvent.click(screen.getByText('Product 1'));
+
+    // Verify detail shows selected product
+    expect(screen.getByTestId('detail'))
+      .toHaveTextContent('Product 1 Details');
+  });
+});
+```
+
+## ExtJS Testing
+
+### Component Testing with Siesta
+
+```javascript
+// DataGrid.t.js
+describe('ExtJS DataGrid', function(t) {
+  let grid;
+
+  t.beforeEach(function() {
+    grid = Ext.create('Cin7.grid.DataGrid', {
+      renderTo: Ext.getBody(),
+      store: {
+        data: [
+          { id: 1, name: 'Product 1', price: 100 },
+          { id: 2, name: 'Product 2', price: 200 }
+        ]
+      }
+    });
+  });
+
+  t.afterEach(function() {
+    grid.destroy();
+  });
+
+  t.it('renders grid with data', function(t) {
+    t.expect(grid.getStore().getCount()).toBe(2);
+    t.contentLike(grid, 'Product 1');
+    t.contentLike(grid, '$100');
+  });
+
+  t.it('handles row selection', function(t) {
+    const selModel = grid.getSelectionModel();
+    
+    t.click(grid.getView().getRow(0));
+    t.expect(selModel.getSelection().length).toBe(1);
+    t.expect(selModel.getSelection()[0].get('name')).toBe('Product 1');
+  });
+
+  t.it('supports inline editing', async function(t) {
+    const plugin = grid.findPlugin('cellediting');
+    
+    await t.doubleClick(grid.getView().getCell(0, 1));
+    t.type('New Name[ENTER]');
+    
+    t.expect(grid.getStore().getAt(0).get('name')).toBe('New Name');
+  });
+});
+```
+
+### ExtJS-React Bridge Testing
+
+```javascript
+// Bridge.t.js
+describe('ExtJS-React Bridge', function(t) {
+  t.it('syncs data between layers', async function(t) {
+    // Create ExtJS grid
+    const grid = Ext.create('Cin7.grid.BridgedGrid', {
+      renderTo: Ext.getBody()
+    });
+
+    // Mount React component
+    const reactContainer = document.getElementById('react-root');
+    ReactDOM.render(<DataTable bridgeId="grid-1" />, reactContainer);
+
+    // Load data in ExtJS
+    grid.getStore().loadData([
+      { id: 1, name: 'Test' }
+    ]);
+
+    // Wait for React update
+    await t.waitFor(() => {
+      return reactContainer.textContent.includes('Test');
+    });
+
+    t.pass('Data synced to React');
+  });
+});
+```
+
+## End-to-End Testing
+
+### Cypress Tests
+
+Test complete user flows:
+
+```typescript
+// inventory-management.cy.ts
+describe('Inventory Management', () => {
+  beforeEach(() => {
+    cy.login('admin@example.com', 'password');
+    cy.visit('/inventory');
+  });
+
+  it('completes full inventory update flow', () => {
+    // Search for product
+    cy.get('[data-testid="search-input"]')
+      .type('Widget A');
+    
+    cy.get('[data-testid="search-button"]')
+      .click();
+
+    // Select product from grid
+    cy.get('.ext-grid-row')
+      .contains('Widget A')
+      .click();
+
+    // Open edit modal
+    cy.get('[data-testid="edit-button"]')
+      .click();
+
+    // Update quantity
+    cy.get('[data-testid="quantity-input"]')
+      .clear()
+      .type('150');
+
+    // Add note
+    cy.get('[data-testid="note-input"]')
+      .type('Restocked from warehouse B');
+
+    // Save changes
+    cy.get('[data-testid="save-button"]')
+      .click();
+
+    // Verify success
+    cy.get('[data-testid="toast"]')
+      .should('contain', 'Inventory updated successfully');
+
+    // Verify grid updated
+    cy.get('.ext-grid-row')
+      .contains('Widget A')
+      .parent()
+      .should('contain', '150');
+  });
+
+  it('handles validation errors', () => {
+    cy.get('[data-testid="quick-add-button"]').click();
+    
+    // Try to submit empty form
+    cy.get('[data-testid="submit-button"]').click();
+    
+    // Verify validation messages
+    cy.get('[data-testid="error-message"]')
+      .should('contain', 'Product name is required');
+  });
+});
+```
+
+### Multi-Layer Testing
+
+Test interactions across all layers:
+
+```typescript
+// multi-layer.cy.ts
+describe('Multi-Layer Integration', () => {
+  it('updates data across all layers', () => {
+    cy.visit('/dashboard');
+
+    // Vanilla JS search triggers update
+    cy.get('#vanilla-search')
+      .type('laptop{enter}');
+
+    // React component shows loading
+    cy.get('[data-testid="react-results"]')
+      .should('have.class', 'loading');
+
+    // ExtJS grid receives data
+    cy.get('.x-grid-item')
+      .should('have.length.greaterThan', 0);
+
+    // React component updates
+    cy.get('[data-testid="result-count"]')
+      .should('contain', 'Found 5 results');
+
+    // Event bus shows activity
+    cy.window().then((win) => {
+      const events = win.Cin7DSL.eventBus.getHistory();
+      expect(events).to.include.deep.members([
+        { event: 'search:initiated', data: { query: 'laptop' } },
+        { event: 'data:loaded', data: { count: 5 } }
+      ]);
+    });
+  });
+});
+```
+
+## Performance Testing
+
+### Load Testing
+
+```typescript
+// performance.test.ts
+import { performanceTest } from '@cin7/test-utils';
+
+describe('Performance', () => {
+  performanceTest('renders 10,000 items', async ({ measure }) => {
+    const items = generateLargeDataset(10000);
+    
+    const renderTime = await measure(() => {
+      render(<DataTable data={items} virtualScroll />);
+    });
+    
+    expect(renderTime).toBeLessThan(1000); // Under 1 second
+  });
+
+  performanceTest('handles rapid updates', async ({ measure }) => {
+    const { rerender } = render(<Dashboard />);
+    
+    const updateTime = await measure(async () => {
+      for (let i = 0; i < 100; i++) {
+        rerender(<Dashboard data={generateData()} />);
+        await waitForNextFrame();
+      }
+    });
+    
+    expect(updateTime).toBeLessThan(3000); // Under 3 seconds
+  });
+});
+```
+
+## Accessibility Testing
+
+### Component Accessibility
+
+```typescript
+// accessibility.test.tsx
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
+
+describe('Accessibility', () => {
+  it('has no accessibility violations', async () => {
+    const { container } = render(
+      <ProductCard product={mockProduct} />
+    );
+    
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it('supports keyboard navigation', () => {
+    render(<ProductList products={products} />);
+    
+    // Tab to first item
+    userEvent.tab();
+    expect(screen.getByText('Product 1')).toHaveFocus();
+    
+    // Arrow down to next item
+    userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByText('Product 2')).toHaveFocus();
+    
+    // Enter to select
+    userEvent.keyboard('{Enter}');
+    expect(onSelect).toHaveBeenCalledWith(products[1]);
+  });
+
+  it('announces changes to screen readers', () => {
+    render(<InventoryUpdate />);
+    
+    fireEvent.click(screen.getByText('Update Stock'));
+    
+    expect(screen.getByRole('status'))
+      .toHaveTextContent('Stock updated successfully');
+  });
+});
+```
+
+## Test Configuration
+
+### Jest Configuration
+
+```javascript
+// jest.config.js
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+  moduleNameMapper: {
+    '@cin7/(.*)': '<rootDir>/packages/$1/src',
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  },
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    }
+  }
+};
+```
+
+### Cypress Configuration
+
+```javascript
+// cypress.config.ts
+import { defineConfig } from 'cypress';
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    viewportWidth: 1280,
+    viewportHeight: 720,
+    video: true,
+    screenshotOnRunFailure: true,
+    setupNodeEvents(on, config) {
+      // Custom tasks
+      on('task', {
+        'db:seed': () => seedDatabase(),
+        'db:reset': () => resetDatabase()
+      });
+    }
+  }
+});
+```
+
+## CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+name: Test Suite
+on: [push, pull_request]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: pnpm install
+      - run: pnpm test:unit
+      - uses: codecov/codecov-action@v3
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pnpm install
+      - run: pnpm test:integration
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+```
+
+## Best Practices
+
+1. **Test Pyramid**: More unit tests, fewer E2E tests
+2. **Test Isolation**: Each test should be independent
+3. **Descriptive Names**: Test names should explain what and why
+4. **Arrange-Act-Assert**: Clear test structure
+5. **Mock External Dependencies**: Keep tests fast and reliable
+6. **Test User Behavior**: Not implementation details
+7. **Continuous Testing**: Run tests on every commit
+
+## Debugging Tests
+
+### Visual Debugging
+
+```typescript
+// Enable Cypress visual debugging
+it('debug inventory flow', () => {
+  cy.visit('/inventory');
+  cy.pause(); // Pause execution
+  
+  cy.get('[data-testid="search"]')
+    .debug() // Log element info
+    .type('test');
+});
+```
+
+### Jest Debugging
+
+```bash
+# Run single test in watch mode
+pnpm test:unit ProductCard --watch
+
+# Debug in VS Code
+# Add breakpoint and run "Debug Jest Tests"
+```
+
+## Resources
+
+- [Jest Documentation](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/react)
+- [Cypress Documentation](https://docs.cypress.io/)
+- [Testing Best Practices](/guides/testing-best-practices)
+- [Example Test Suite](https://github.com/cin7/dsl-examples/tree/main/tests)

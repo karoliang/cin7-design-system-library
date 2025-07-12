@@ -1,11 +1,286 @@
 ---
 title: Color
-showTOC: false
+showTOC: true
+description: Semantic color tokens for consistent visual design across all components
 ---
 
-# Tokens &rarr; {frontmatter.title}
+# Color Tokens
+
+<Lede>Color tokens provide semantic meaning to color values, ensuring consistency and accessibility across your application.</Lede>
 
 <TokensNav selected="color" />
+
+## Understanding Color Tokens
+
+Color tokens in Cin7 DSL are organized by their semantic purpose rather than their visual appearance. This approach ensures:
+
+- **Consistency**: Same semantic meaning across all components
+- **Accessibility**: Automatic contrast ratios for text and backgrounds
+- **Themability**: Easy switching between light/dark themes
+- **Maintainability**: Change colors globally by updating tokens
+
+## Color Categories
+
+### Background Colors
+
+Background tokens define surface colors for different UI contexts:
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <div style={{background: 'var(--p-color-bg)', padding: '20px', borderRadius: '8px'}}>
+        <Text>Default Background</Text>
+        <Text variant="bodySm" tone="subdued">--p-color-bg</Text>
+      </div>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <div style={{background: 'var(--p-color-bg-surface)', padding: '20px', borderRadius: '8px'}}>
+        <Text>Surface Background</Text>
+        <Text variant="bodySm" tone="subdued">--p-color-bg-surface</Text>
+      </div>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <div style={{background: 'var(--p-color-bg-surface-secondary)', padding: '20px', borderRadius: '8px'}}>
+        <Text>Secondary Surface</Text>
+        <Text variant="bodySm" tone="subdued">--p-color-bg-surface-secondary</Text>
+      </div>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+    <Card>
+      <div style={{background: 'var(--p-color-bg-surface-tertiary)', padding: '20px', borderRadius: '8px'}}>
+        <Text>Tertiary Surface</Text>
+        <Text variant="bodySm" tone="subdued">--p-color-bg-surface-tertiary</Text>
+      </div>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+### Interactive Colors
+
+Interactive tokens communicate actionable elements:
+
+<BlockStack gap="400">
+  <InlineStack gap="400" wrap>
+    <Button variant="primary">Primary Action</Button>
+    <Button>Default Action</Button>
+    <Button variant="plain">Plain Action</Button>
+    <Button tone="critical">Critical Action</Button>
+  </InlineStack>
+  
+  <Card>
+    <Card.Section>
+      <BlockStack gap="200">
+        <Text variant="headingSm">Token Usage:</Text>
+        <List type="bullet">
+          <List.Item>Primary: `--p-color-bg-fill-brand`</List.Item>
+          <List.Item>Default: `--p-color-bg-fill`</List.Item>
+          <List.Item>Hover: `--p-color-bg-fill-hover`</List.Item>
+          <List.Item>Critical: `--p-color-bg-fill-critical`</List.Item>
+        </List>
+      </BlockStack>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+### Status Colors
+
+Status tokens communicate different states:
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Banner tone="success">
+      <p>Success state using `--p-color-bg-fill-success`</p>
+    </Banner>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Banner tone="warning">
+      <p>Warning state using `--p-color-bg-fill-warning`</p>
+    </Banner>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Banner tone="critical">
+      <p>Error state using `--p-color-bg-fill-critical`</p>
+    </Banner>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Banner tone="info">
+      <p>Info state using `--p-color-bg-fill-info`</p>
+    </Banner>
+  </Grid.Cell>
+</Grid>
+
+## Implementation Examples
+
+### CSS Usage
+
+```css
+.product-card {
+  background: var(--p-color-bg-surface);
+  border: 1px solid var(--p-color-border);
+  color: var(--p-color-text);
+}
+
+.product-card:hover {
+  background: var(--p-color-bg-surface-hover);
+  border-color: var(--p-color-border-hover);
+}
+
+.product-price {
+  color: var(--p-color-text-success);
+}
+
+.out-of-stock {
+  color: var(--p-color-text-critical);
+}
+```
+
+### React Component Usage
+
+```jsx
+import { Box, Text } from '@shopify/polaris';
+
+function StatusIndicator({ status }) {
+  const toneMap = {
+    active: 'success',
+    pending: 'warning',
+    error: 'critical',
+    info: 'info'
+  };
+  
+  return (
+    <Box 
+      background={`bg-fill-${toneMap[status]}`}
+      padding="200"
+      borderRadius="100"
+    >
+      <Text tone={toneMap[status]}>{status}</Text>
+    </Box>
+  );
+}
+```
+
+### ExtJS Integration
+
+```javascript
+Ext.define('MyApp.view.StatusPanel', {
+  extend: 'Ext.panel.Panel',
+  
+  setStatus: function(status) {
+    const colorMap = {
+      success: 'var(--p-color-bg-fill-success)',
+      warning: 'var(--p-color-bg-fill-warning)',
+      error: 'var(--p-color-bg-fill-critical)'
+    };
+    
+    this.setStyle({
+      backgroundColor: colorMap[status] || 'var(--p-color-bg-surface)'
+    });
+  }
+});
+```
+
+## Cin7 DSL Color Extensions
+
+Cin7 DSL extends Polaris colors for enterprise data visualization:
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <div style={{background: 'var(--cin7-color-data-positive)', height: '40px', borderRadius: '4px'}}></div>
+        <BlockStack gap="100">
+          <Text variant="headingSm">Positive Data</Text>
+          <Text variant="bodySm" tone="subdued">--cin7-color-data-positive</Text>
+          <Text variant="bodySm">For positive trends, gains</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <div style={{background: 'var(--cin7-color-data-negative)', height: '40px', borderRadius: '4px'}}></div>
+        <BlockStack gap="100">
+          <Text variant="headingSm">Negative Data</Text>
+          <Text variant="bodySm" tone="subdued">--cin7-color-data-negative</Text>
+          <Text variant="bodySm">For negative trends, losses</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 4, xl: 4}}>
+    <Card>
+      <Card.Section>
+        <div style={{background: 'var(--cin7-color-data-neutral)', height: '40px', borderRadius: '4px'}}></div>
+        <BlockStack gap="100">
+          <Text variant="headingSm">Neutral Data</Text>
+          <Text variant="bodySm" tone="subdued">--cin7-color-data-neutral</Text>
+          <Text variant="bodySm">For neutral/stable values</Text>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+## Color Accessibility
+
+### Contrast Requirements
+
+All color combinations meet WCAG AA standards:
+
+<Table>
+  <thead>
+    <tr>
+      <th>Text Color</th>
+      <th>Background</th>
+      <th>Contrast Ratio</th>
+      <th>WCAG Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>--p-color-text</td>
+      <td>--p-color-bg</td>
+      <td>14.5:1</td>
+      <td>AAA</td>
+    </tr>
+    <tr>
+      <td>--p-color-text-subdued</td>
+      <td>--p-color-bg</td>
+      <td>7.2:1</td>
+      <td>AA</td>
+    </tr>
+    <tr>
+      <td>--p-color-text-critical</td>
+      <td>--p-color-bg</td>
+      <td>8.1:1</td>
+      <td>AA</td>
+    </tr>
+  </tbody>
+</Table>
+
+## Best Practices
+
+1. **Use semantic tokens**: Choose tokens based on purpose, not appearance
+2. **Avoid hardcoding**: Never use hex values directly in components
+3. **Test in all themes**: Ensure your UI works in light and dark modes
+4. **Consider context**: Use appropriate color intensity for the importance
+5. **Maintain consistency**: Use the same token for similar purposes
+
+## All Color Tokens
 
 <TokenList>
   {tokens.color
