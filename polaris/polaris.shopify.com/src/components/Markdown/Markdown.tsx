@@ -32,7 +32,8 @@ import {
   InlineCode as PolarisInlineCode,
   Grid,
   TextContainer,
-  Link as PolarisLink
+  Link as PolarisLink,
+  List
 } from '@shopify/polaris';
 
 import styles from './Markdown.module.scss';
@@ -321,6 +322,7 @@ function Markdown<
         TextContainer,
         Link: PolarisLink,
         Icon,
+        List,
         Tip: ({children}) => (
           <div className="tip-banner">
             <div className="tip-banner__header">
