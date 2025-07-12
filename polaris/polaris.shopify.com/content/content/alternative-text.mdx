@@ -126,7 +126,7 @@ But if you’re using this image in a product listing, ensure shoppers know the 
 
 ```jsx
 <Button accessibilityLabel="search" onClick={() => search()}>
-  <Icon source={SearchIcon} accessibilityLabel="" />
+  <Icon source="SearchIcon" accessibilityLabel="" />
 </Button>
 ```
 
@@ -150,11 +150,11 @@ Images with more complexity need some consideration. For example, groups of imag
 ```jsx
 <div role="img" aria-labelledby="star_id">
   <LegacyStack>
-    <Icon source={StarFilledIcon} alt="">
-    <Icon source={StarFilledIcon} alt="">
-    <Icon source={StarFilledIcon} alt="">
-    <Icon source={StarIcon} alt="">
-    <Icon source={StarIcon} alt="">
+    <Icon source="StarFilledIcon" alt="">
+    <Icon source="StarFilledIcon" alt="">
+    <Icon source="StarFilledIcon" alt="">
+    <Icon source="StarIcon" alt="">
+    <Icon source="StarIcon" alt="">
   </LegacyStack>
 </div>
 <div id="star_id">3 of 5 stars</div>

@@ -8,7 +8,8 @@ import React, {
   type PropsWithChildren,
 } from 'react';
 import {MDXRemote, type MDXRemoteProps} from './next-mdx-importer';
-import {ClipboardIcon} from '@shopify/polaris-icons';
+import {ClipboardIcon, DataTableIcon} from '@shopify/polaris-icons';
+import * as polarisIcons from '@shopify/polaris-icons';
 import {
   InlineGrid, 
   Badge, 
@@ -265,6 +266,11 @@ function Markdown<
             <Box as="table" {...props} className={styles.Table} />
           </Box>
         ),
+        Table: (props) => (
+          <Box className={styles.TableWrapper}>
+            <Box as="table" {...props} className={styles.Table} />
+          </Box>
+        ),
         Box,
         Stack,
         InlineGrid,
@@ -347,6 +353,10 @@ function Markdown<
             {children}
           </div>
         ),
+        // Add all Polaris icons
+        ...polarisIcons,
+        // Ensure DataTableIcon is available (explicitly for clarity)
+        DataTableIcon,
         ...props.components,
       }}
     />
