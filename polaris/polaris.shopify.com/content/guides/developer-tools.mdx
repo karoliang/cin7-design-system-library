@@ -1,0 +1,468 @@
+---
+title: Developer Tools & Setup
+description: Essential tools and setup guide for productive Cin7 DSL development
+showTOC: true
+keywords:
+  - developer tools
+  - setup
+  - productivity
+  - IDE
+  - debugging
+order: 11
+icon: WrenchIcon
+---
+
+# Developer Tools & Setup
+
+<Lede>Set up your development environment with essential tools and extensions for productive Cin7 DSL development.</Lede>
+
+## Quick Setup
+
+```bash
+# Install Cin7 DSL CLI globally
+npm install -g @cin7/cli
+
+# Create a new project
+npx @cin7/create-dsl-app my-app --template=full
+
+# Install recommended VS Code extensions
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension esbenp.prettier-vscode
+code --install-extension bradlc.vscode-tailwindcss
+code --install-extension ms-vscode.vscode-typescript-next
+```
+
+## VS Code Setup
+
+### Essential Extensions
+
+<Grid>
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="300">
+          <Text as="h3" variant="headingMd">Core Extensions</Text>
+          <List>
+            <List.Item>**ESLint** - JavaScript/TypeScript linting</List.Item>
+            <List.Item>**Prettier** - Code formatting</List.Item>
+            <List.Item>**TypeScript Vue Plugin** - Enhanced TS support</List.Item>
+            <List.Item>**Error Lens** - Inline error display</List.Item>
+            <List.Item>**GitLens** - Git supercharged</List.Item>
+          </List>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+  
+  <Grid.Cell columnSpan={{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}}>
+    <Card>
+      <Card.Section>
+        <BlockStack gap="300">
+          <Text as="h3" variant="headingMd">Framework-Specific</Text>
+          <List>
+            <List.Item>**ES7+ React Snippets** - React productivity</List.Item>
+            <List.Item>**Tailwind CSS IntelliSense** - CSS utilities</List.Item>
+            <List.Item>**Sencha Ext JS** - ExtJS support</List.Item>
+            <List.Item>**MDX** - MDX syntax highlighting</List.Item>
+            <List.Item>**Polaris Toolkit** - Polaris snippets</List.Item>
+          </List>
+        </BlockStack>
+      </Card.Section>
+    </Card>
+  </Grid.Cell>
+</Grid>
+
+### VS Code Settings
+
+Create `.vscode/settings.json` in your project:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
+}
+```
+
+### Code Snippets
+
+Create `.vscode/cin7dsl.code-snippets`:
+
+```json
+{
+  "Cin7 Component": {
+    "prefix": "cin7comp",
+    "body": [
+      "import { ${1:Component} } from '@shopify/polaris';",
+      "import { EventBus } from '@cin7/core';",
+      "",
+      "interface ${TM_FILENAME_BASE}Props {",
+      "  ${2:prop}: ${3:type};",
+      "}",
+      "",
+      "export function ${TM_FILENAME_BASE}({ ${2:prop} }: ${TM_FILENAME_BASE}Props) {",
+      "  return (",
+      "    <${1:Component}>",
+      "      $0",
+      "    </${1:Component}>",
+      "  );",
+      "}"
+    ]
+  },
+  "ExtJS Grid": {
+    "prefix": "extgrid",
+    "body": [
+      "import { ExtDataGrid } from '@cin7/extjs-adapters';",
+      "",
+      "const grid = ExtDataGrid.create({",
+      "  store: {",
+      "    type: 'json',",
+      "    proxy: {",
+      "      type: 'ajax',",
+      "      url: '${1:/api/data}'",
+      "    }",
+      "  },",
+      "  columns: [",
+      "    { text: '${2:Name}', dataIndex: '${3:name}', flex: 1 },",
+      "    $0",
+      "  ],",
+      "  features: ['${4:sorting}', '${5:filtering}']",
+      "});"
+    ]
+  },
+  "Repository Pattern": {
+    "prefix": "repo",
+    "body": [
+      "import { Repository, BaseEntity } from '@cin7/typescript-sdk';",
+      "",
+      "interface ${1:Model} extends BaseEntity {",
+      "  ${2:field}: ${3:type};",
+      "}",
+      "",
+      "export class ${1:Model}Repository extends Repository<${1:Model}> {",
+      "  protected endpoint = '/${4:models}';",
+      "  ",
+      "  async findBy${2/(.*)/${1:/capitalize}/}(${2:field}: ${3:type}): Promise<${1:Model}[]> {",
+      "    return this.findAll({ ${2:field} });",
+      "  }",
+      "}"
+    ]
+  }
+}
+```
+
+## Browser DevTools
+
+### Chrome Extensions
+
+<BlockStack gap="400">
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">React Developer Tools</Text>
+          <Text as="p" variant="bodySm">Inspect React component hierarchy and state</Text>
+        </BlockStack>
+        <Link url="https://chrome.google.com/webstore/detail/react-developer-tools" external>Install</Link>
+      </InlineStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">Redux DevTools</Text>
+          <Text as="p" variant="bodySm">Debug state management (works with Zustand)</Text>
+        </BlockStack>
+        <Link url="https://chrome.google.com/webstore/detail/redux-devtools" external>Install</Link>
+      </InlineStack>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <InlineStack gap="400" align="space-between">
+        <BlockStack gap="200">
+          <Text as="h4" variant="headingMd">Lighthouse</Text>
+          <Text as="p" variant="bodySm">Performance and accessibility auditing</Text>
+        </BlockStack>
+        <Badge>Built-in</Badge>
+      </InlineStack>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+### Console Helpers
+
+Add these to your development environment:
+
+```javascript
+// Debug event bus
+window.debugEventBus = () => {
+  import('@cin7/core').then(({ EventBus }) => {
+    EventBus.on('*', (event, data) => {
+      console.log(`[EventBus] ${event}:`, data);
+    });
+  });
+};
+
+// Performance monitoring
+window.measureComponent = (componentName) => {
+  performance.mark(`${componentName}-start`);
+  return () => {
+    performance.mark(`${componentName}-end`);
+    performance.measure(
+      componentName,
+      `${componentName}-start`,
+      `${componentName}-end`
+    );
+    console.log(performance.getEntriesByName(componentName));
+  };
+};
+```
+
+## CLI Tools
+
+### Cin7 DSL CLI
+
+```bash
+# Install globally
+npm install -g @cin7/cli
+
+# Available commands
+cin7 create <app-name>      # Create new project
+cin7 generate <type>        # Generate components/repositories
+cin7 migrate                # Migrate from Polaris/ExtJS
+cin7 analyze                # Analyze codebase
+cin7 add <package>          # Add Cin7 packages
+```
+
+### Project Scripts
+
+Add to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,md}\"",
+    "type-check": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "analyze": "vite-bundle-visualizer",
+    "generate:component": "cin7 generate component",
+    "generate:repo": "cin7 generate repository",
+    "validate": "npm run lint && npm run type-check && npm run test"
+  }
+}
+```
+
+## Development Workflow
+
+### 1. Component Development
+
+```bash
+# Generate new component
+cin7 generate component MyComponent
+
+# Start development server
+npm run dev
+
+# Run tests in watch mode
+npm run test:ui
+```
+
+### 2. Git Hooks
+
+Install husky for automated checks:
+
+```bash
+npm install -D husky lint-staged
+npx husky init
+
+# Add pre-commit hook
+echo "npx lint-staged" > .husky/pre-commit
+```
+
+Configure in `package.json`:
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{css,md}": "prettier --write"
+  }
+}
+```
+
+### 3. Debugging Setup
+
+#### VS Code Launch Configuration
+
+Create `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug in Chrome",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMaps": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Tests",
+      "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+      "args": ["--inspect-brk", "--no-coverage"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
+```
+
+## Performance Tools
+
+### Bundle Analysis
+
+```bash
+# Analyze bundle size
+npm run analyze
+
+# Generate performance report
+npx lighthouse http://localhost:5173 --view
+```
+
+### Runtime Performance
+
+```javascript
+// Add to main.tsx for development
+if (import.meta.env.DEV) {
+  // React Profiler
+  import { Profiler } from 'react';
+  
+  window.logProfile = (id, phase, actualDuration) => {
+    console.log(`⏱️ ${id} (${phase}): ${actualDuration}ms`);
+  };
+  
+  // Wrap components
+  <Profiler id="App" onRender={window.logProfile}>
+    <App />
+  </Profiler>
+}
+```
+
+## Testing Tools
+
+### Unit Testing
+
+```bash
+# Run tests
+npm run test
+
+# Watch mode with UI
+npm run test:ui
+
+# Coverage report
+npm run test:coverage
+```
+
+### E2E Testing
+
+```bash
+# Install Playwright
+npm install -D @playwright/test
+
+# Run E2E tests
+npx playwright test
+
+# Debug mode
+npx playwright test --debug
+```
+
+## Productivity Tips
+
+### 1. **Use Snippets**
+- Install snippet extensions
+- Create custom snippets for patterns
+- Use Emmet for HTML
+
+### 2. **Keyboard Shortcuts**
+- `Cmd+P` - Quick file open
+- `Cmd+Shift+P` - Command palette
+- `Cmd+B` - Toggle sidebar
+- `Cmd+J` - Toggle terminal
+
+### 3. **Multi-Cursor Editing**
+- `Alt+Click` - Add cursor
+- `Cmd+D` - Select next occurrence
+- `Cmd+Shift+L` - Select all occurrences
+
+### 4. **Refactoring**
+- `F2` - Rename symbol
+- `Cmd+.` - Quick fixes
+- `Shift+Alt+O` - Organize imports
+
+## Troubleshooting
+
+### Common Issues
+
+<BlockStack gap="400">
+  <Card>
+    <Card.Section>
+      <Text as="h4" variant="headingMd">TypeScript Errors</Text>
+      <Text as="p" variant="bodySm">Run `npm run type-check` to see all errors</Text>
+      <Text as="p" variant="bodySm">Restart TS server: `Cmd+Shift+P` → "Restart TS Server"</Text>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <Text as="h4" variant="headingMd">Build Failures</Text>
+      <Text as="p" variant="bodySm">Clear cache: `rm -rf node_modules/.vite`</Text>
+      <Text as="p" variant="bodySm">Reinstall deps: `rm -rf node_modules && npm install`</Text>
+    </Card.Section>
+  </Card>
+  
+  <Card>
+    <Card.Section>
+      <Text as="h4" variant="headingMd">ExtJS Issues</Text>
+      <Text as="p" variant="bodySm">Check ExtJS version compatibility</Text>
+      <Text as="p" variant="bodySm">Verify theme integration in `app.json`</Text>
+    </Card.Section>
+  </Card>
+</BlockStack>
+
+## Resources
+
+- [VS Code Tips](https://code.visualstudio.com/docs/getstarted/tips-and-tricks)
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools)
+- [React DevTools](https://react.dev/learn/react-developer-tools)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs)
+
+## Next Steps
+
+- [Architecture Examples](/guides/architecture-examples) - See the framework in action
+- [Testing Guide](/guides/testing) - Write tests for your components
+- [Performance Guide](/guides/performance) - Optimize your application
+- [Deployment Guide](/guides/deployment) - Deploy to production
