@@ -9,7 +9,31 @@ import React, {
 } from 'react';
 import {MDXRemote, type MDXRemoteProps} from './next-mdx-importer';
 import {ClipboardIcon} from '@shopify/polaris-icons';
-import {InlineGrid} from '@shopify/polaris';
+import {
+  InlineGrid, 
+  Badge, 
+  Button, 
+  BlockStack, 
+  ResourceList, 
+  ResourceItem, 
+  Text as PolarisText,
+  Card as PolarisCard,
+  InlineStack,
+  ButtonGroup,
+  AppProvider,
+  Avatar,
+  Banner,
+  DataTable,
+  Filters,
+  Layout,
+  Page,
+  Spinner,
+  TextField,
+  InlineCode as PolarisInlineCode,
+  Grid,
+  TextContainer,
+  Link as PolarisLink
+} from '@shopify/polaris';
 
 import styles from './Markdown.module.scss';
 import Code, {InlineCode} from '../../components/Code';
@@ -244,7 +268,14 @@ function Markdown<
         Stack,
         InlineGrid,
         SideBySide,
-        Card,
+        Card: Object.assign(PolarisCard, {
+          Section: ({children, title}: {children: React.ReactNode, title?: string}) => (
+            <div style={{padding: '20px'}}>
+              {title && <h3 style={{marginBottom: '12px'}}>{title}</h3>}
+              {children}
+            </div>
+          )
+        }),
         DirectiveCard,
         FeaturedCardGrid,
         YoutubeVideo,
@@ -267,6 +298,28 @@ function Markdown<
         ExtraLarge,
         TokenList,
         TokensNav,
+        Badge,
+        Button,
+        BlockStack,
+        ResourceList,
+        ResourceItem,
+        PolarisText,
+        PolarisCard,
+        InlineStack,
+        ButtonGroup,
+        AppProvider,
+        Avatar,
+        Banner,
+        DataTable,
+        Filters,
+        Layout,
+        Page,
+        Spinner,
+        TextField,
+        PolarisInlineCode,
+        Grid,
+        TextContainer,
+        Link: PolarisLink,
         Tip: ({children}) => (
           <div className="tip-banner">
             <div className="tip-banner__header">
