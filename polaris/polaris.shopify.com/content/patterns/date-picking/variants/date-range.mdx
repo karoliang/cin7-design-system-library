@@ -53,7 +53,14 @@ This pattern uses the [`BlockStack`](/components/layout-and-structure/block-stac
 
 ```javascript {"type":"livePreview","id":"example","title":"Date picking > Date range"}
 function DateRangePicker() {
-  const {mdDown, lgUp} = useBreakpoints();
+  const React = window.React;
+  const {useState, useRef, useEffect} = React;
+  const {BlockStack, Box, Button, DatePicker, Divider, Icon, InlineGrid, InlineStack, OptionList, Popover, Scrollable, Select, TextField} = window.Polaris;
+  const {CalendarIcon, ArrowRightIcon} = window.PolarisIcons;
+  
+  // Mock useBreakpoints for this example
+  const mdDown = true;
+  const lgUp = false;
   const shouldShowMultiMonth = lgUp;
   const today = new Date(new Date().setHours(0, 0, 0, 0));
   const yesterday = new Date(

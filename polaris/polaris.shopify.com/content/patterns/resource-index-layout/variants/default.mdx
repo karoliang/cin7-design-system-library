@@ -43,6 +43,10 @@ This pattern uses the [`Card`](/components/layout-and-structure/card), [`Badge`]
 
 ```javascript {"type":"livePreview","id":"example","title":"Resource index layout"}
 function IndexFiltersDefault() {
+  const React = window.React;
+  const {useState, useCallback} = React;
+  const {Badge, Card, ChoiceList, IndexFilters, IndexTable, Page} = window.Polaris;
+  const {useIndexResourceState} = window.Polaris;
   function disambiguateLabel(key, value) {
     switch (key) {
       case 'type':
@@ -143,7 +147,8 @@ function IndexFiltersDefault() {
     {label: 'Vendor', value: 'vendor desc', directionLabel: 'Descending'},
   ];
   const [sortSelected, setSortSelected] = useState(['product asc']);
-  const {mode, setMode} = useSetIndexFiltersMode();
+  // Mock useSetIndexFiltersMode for this example
+  const [mode, setMode] = useState('filtering');
   const onHandleCancel = () => {};
   const onHandleSave = async () => {
     await sleep(1);

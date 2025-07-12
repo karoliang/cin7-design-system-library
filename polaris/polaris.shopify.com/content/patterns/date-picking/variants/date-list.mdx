@@ -49,6 +49,11 @@ This pattern uses the [`Button`](/components/actions/button), [`OptionList`](/co
 
 ```javascript {"type":"livePreview","id":"example","title":"Date picking > Date list"}
 function DateListPicker() {
+  const React = window.React;
+  const {useState} = React;
+  const {Button, OptionList, Popover} = window.Polaris;
+  const {CalendarIcon} = window.PolarisIcons;
+  
   const ranges = [
     {
       title: 'No Date',

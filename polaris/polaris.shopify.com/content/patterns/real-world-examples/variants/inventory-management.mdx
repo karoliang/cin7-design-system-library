@@ -308,12 +308,12 @@ function InventoryManagement() {
       secondaryActions={[
         {
           content: 'Import',
-          icon: ImportMinor,
+          icon: ImportIcon,
           onAction: () => EventBus.emit('import:start'),
         },
         {
           content: 'Export',
-          icon: ExportMinor,
+          icon: ExportIcon,
           onAction: () => EventBus.emit('export:start'),
         },
       ]}

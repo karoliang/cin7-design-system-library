@@ -543,14 +543,14 @@ The [updated split example](/components/actions/button) can also be referenced a
 ```diff
 - <Button
 -   connectedDisclosure={{
--     icon: ChevronDownMinor,
+-     icon: ChevronDownIcon,
 -   }}
 - >
 -   Save
 - </Button>
 + <ButtonGroup variant="segmented">
 +   <Button>Save</Button>
-+   <Popover activator={<Button icon={ChevronDownMinor} />}/>
++   <Popover activator={<Button icon={ChevronDownIcon} />}/>
 + </ButtonGroup>
 ```
 

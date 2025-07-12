@@ -44,6 +44,11 @@ This pattern uses the [`Card`](/components/layout-and-structure/card), [`DatePic
 
 ```javascript {"type":"livePreview","id":"example","title":"Date picking > Single date"}
 function DatePickerExample() {
+  const React = window.React;
+  const {useState, useRef, useEffect} = React;
+  const {BlockStack, Box, Card, DatePicker, Icon, Popover, TextField} = window.Polaris;
+  const {CalendarIcon} = window.PolarisIcons;
+  
   function nodeContainsDescendant(rootNode, descendant) {
     if (rootNode === descendant) {
       return true;

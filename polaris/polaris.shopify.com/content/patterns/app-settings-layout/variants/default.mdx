@@ -43,7 +43,11 @@ This pattern uses the [`BlockStack`](/components/layout-and-structure/block-stac
 
 ```javascript {"type":"livePreview","id":"example","title":"App settings layout"}
 function AppSettingsLayoutExample() {
-  const {smUp} = useBreakpoints();
+  const {BlockStack, Box, Card, Divider, InlineGrid, Page, Text, TextField} = window.Polaris;
+  
+  // Mock useBreakpoints for this example
+  const smUp = true;
+  
   return (
     <Page
       divider
