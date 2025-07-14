@@ -108,6 +108,14 @@ function HomePage({}: Props) {
             </p>
           </Link>
 
+          <Link href="/changelog" className={styles.EntryPoint}>
+            <h3>Changelog</h3>
+            <p>
+              Track the evolution of Cin7 DSL with release notes and development
+              history
+            </p>
+          </Link>
+
           <Link href="/style-guide" className={styles.EntryPoint}>
             <h3>Style Guide</h3>
             <p>
