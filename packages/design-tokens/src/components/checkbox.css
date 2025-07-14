@@ -1,0 +1,101 @@
+/**
+ * Checkbox Component Styles
+ * Using design tokens for consistency
+ */
+
+.checkbox-field {
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox-field__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-field__label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: var(--space-200, 0.5rem);
+}
+
+.checkbox-field__box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-border, #8c9196);
+  border-radius: var(--border-radius-100, 0.25rem);
+  background: var(--color-bg-surface, #ffffff);
+  transition: all 0.2s ease;
+}
+
+.checkbox-field__icon {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-bg-surface, #ffffff);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.checkbox-field__text {
+  color: var(--color-text, #202223);
+  font-size: var(--font-size-300, 0.875rem);
+  line-height: var(--font-line-height-300, 1.25rem);
+}
+
+/* Checked state */
+.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__box {
+  background-color: var(--color-bg-primary, #008060);
+  border-color: var(--color-bg-primary, #008060);
+}
+
+.checkbox-field__input:checked + .checkbox-field__label .checkbox-field__icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Focus state */
+.checkbox-field__input:focus + .checkbox-field__label .checkbox-field__box {
+  outline: 2px solid var(--color-border-focus, #005bd3);
+  outline-offset: 2px;
+}
+
+/* Hover state */
+.checkbox-field__label:hover .checkbox-field__box {
+  border-color: var(--color-border-hover, #5c6064);
+}
+
+.checkbox-field__input:checked + .checkbox-field__label:hover .checkbox-field__box {
+  background-color: var(--color-bg-primary-hover, #006e52);
+  border-color: var(--color-bg-primary-hover, #006e52);
+}
+
+/* Disabled state */
+.checkbox-field__input:disabled + .checkbox-field__label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.checkbox-field__input:disabled + .checkbox-field__label .checkbox-field__box {
+  background-color: var(--color-bg-surface-disabled, #f6f6f7);
+  border-color: var(--color-border-disabled, #c9cccf);
+}
+
+.checkbox-field__input:disabled + .checkbox-field__label .checkbox-field__text {
+  color: var(--color-text-disabled, #8c9196);
+}
+
+/* Container disabled state */
+.checkbox-field.disabled .checkbox-field__label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

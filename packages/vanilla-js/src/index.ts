@@ -9,6 +9,7 @@ export * from './dom';
 export * from './events';
 export * from './animations';
 export * from './utils';
+export * from './components';
 
 // Re-export from core for convenience
 export { DOMUtils, EventUtils } from '@cin7/core/utils';

@@ -1,0 +1,64 @@
+/**
+ * Badge Component Styles
+ * Using design tokens for consistency
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-050, 0.125rem) var(--space-200, 0.5rem);
+  background: var(--color-bg-surface-subdued, #f6f6f7);
+  color: var(--color-text, #202223);
+  border-radius: var(--border-radius-100, 0.25rem);
+  font-size: var(--font-size-200, 0.8125rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--font-line-height-200, 1.125rem);
+  white-space: nowrap;
+}
+
+/* Badge variants */
+.badge--critical {
+  background: var(--color-bg-critical-subdued, #fbeae7);
+  color: var(--color-text-critical, #d72c0d);
+}
+
+.badge--success {
+  background: var(--color-bg-success-subdued, #e3f1df);
+  color: var(--color-text-success, #008060);
+}
+
+.badge--warning {
+  background: var(--color-bg-warning-subdued, #ffea8a);
+  color: var(--color-text-warning, #916a00);
+}
+
+.badge--info {
+  background: var(--color-bg-info-subdued, #e0f5ff);
+  color: var(--color-text-info, #006fbb);
+}
+
+.badge--attention {
+  background: var(--color-bg-attention-subdued, #ffea8a);
+  color: var(--color-text-attention, #916a00);
+}
+
+.badge--new {
+  background: var(--color-bg-primary, #008060);
+  color: var(--color-text-on-primary, #ffffff);
+}
+
+/* Progress badges */
+.badge--incomplete {
+  background: var(--color-bg-surface-subdued, #f6f6f7);
+  color: var(--color-text-subdued, #6d7175);
+}
+
+.badge--partially-complete {
+  background: var(--color-bg-warning-subdued, #ffea8a);
+  color: var(--color-text-warning, #916a00);
+}
+
+.badge--complete {
+  background: var(--color-bg-success-subdued, #e3f1df);
+  color: var(--color-text-success, #008060);
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cin7 DSL - Complete Form Example</title>
+  <link rel="stylesheet" href="../../design-tokens/src/components/index.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f6f6f7;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 2rem;
+      color: #202223;
+    }
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e1e3e5;
+    }
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .form-section h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+      color: #202223;
+    }
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Create New Product</h1>
+    
+    <form id="product-form">
+      <div class="form-section">
+        <h2>Basic Information</h2>
+        <div id="name-field"></div>
+        <div id="description-field"></div>
+        <div id="category-field"></div>
+      </div>
+
+      <div class="form-section">
+        <h2>Pricing & Inventory</h2>
+        <div id="price-field"></div>
+        <div id="quantity-field"></div>
+        <div id="track-inventory"></div>
+      </div>
+
+      <div class="form-section">
+        <h2>Visibility</h2>
+        <div id="visibility-options"></div>
+        <div id="featured-product"></div>
+      </div>
+
+      <div class="form-actions" id="form-actions"></div>
+    </form>
+  </div>
+
+  <script type="module">
+    import { 
+      TextFieldComponent,
+      SelectComponent,
+      CheckboxComponent,
+      RadioGroupComponent,
+      ButtonComponent,
+      ButtonGroupComponent,
+      Toast,
+      confirm
+    } from '../src/components/index.js';
+
+    // Form fields
+    const fields = {
+      name: new TextFieldComponent({
+        label: 'Product Name',
+        required: true,
+        placeholder: 'Enter product name',
+        helpText: 'This will be displayed to customers'
+      }),
+      
+      description: new TextFieldComponent({
+        label: 'Description',
+        multiline: true,
+        rows: 4,
+        placeholder: 'Describe your product...'
+      }),
+      
+      category: new SelectComponent({
+        label: 'Category',
+        required: true,
+        placeholder: 'Select a category',
+        options: [
+          { label: 'Electronics', value: 'electronics' },
+          { label: 'Clothing', value: 'clothing' },
+          { label: 'Books', value: 'books' },
+          { label: 'Home & Garden', value: 'home-garden' },
+          { label: 'Toys & Games', value: 'toys-games' }
+        ]
+      }),
+      
+      price: new TextFieldComponent({
+        label: 'Price',
+        type: 'number',
+        required: true,
+        prefix: '$',
+        placeholder: '0.00',
+        helpText: 'Enter price in dollars'
+      }),
+      
+      quantity: new TextFieldComponent({
+        label: 'Quantity',
+        type: 'number',
+        value: '0',
+        suffix: 'units'
+      }),
+      
+      trackInventory: new CheckboxComponent({
+        label: 'Track inventory for this product',
+        checked: true,
+        onChange: (checked) => {
+          fields.quantity.setDisabled(!checked);
+        }
+      }),
+      
+      visibility: new RadioGroupComponent({
+        name: 'visibility',
+        options: [
+          { label: 'Visible', value: 'visible' },
+          { label: 'Hidden', value: 'hidden' },
+          { label: 'Scheduled', value: 'scheduled' }
+        ],
+        defaultValue: 'visible'
+      }),
+      
+      featured: new CheckboxComponent({
+        label: 'Feature this product on the homepage'
+      })
+    };
+
+    // Mount fields
+    fields.name.mount('#name-field');
+    fields.description.mount('#description-field');
+    fields.category.mount('#category-field');
+    fields.price.mount('#price-field');
+    fields.quantity.mount('#quantity-field');
+    fields.trackInventory.mount('#track-inventory');
+    fields.visibility.mount('#visibility-options');
+    fields.featured.mount('#featured-product');
+
+    // Form actions
+    const formActions = new ButtonGroupComponent({
+      buttons: [
+        {
+          label: 'Cancel',
+          variant: 'secondary'
+        },
+        {
+          label: 'Save Product',
+          variant: 'primary'
+        }
+      ]
+    });
+    
+    formActions.mount('#form-actions');
+
+    // Handle form submission
+    formActions.on('change', async (values) => {
+      if (values.includes('Save Product')) {
+        await handleSubmit();
+      } else if (values.includes('Cancel')) {
+        await handleCancel();
+      }
+    });
+
+    async function handleSubmit() {
+      // Validate required fields
+      const isValid = [
+        fields.name.validate(),
+        fields.category.validate(),
+        fields.price.validate()
+      ].every(valid => valid);
+
+      if (!isValid) {
+        Toast.error('Please fill in all required fields');
+        return;
+      }
+
+      // Get form data
+      const formData = {
+        name: fields.name.get(),
+        description: fields.description.get(),
+        category: fields.category.get(),
+        price: parseFloat(fields.price.get()),
+        quantity: fields.trackInventory.get() ? parseInt(fields.quantity.get()) : null,
+        trackInventory: fields.trackInventory.get(),
+        visibility: fields.visibility.get(),
+        featured: fields.featured.get()
+      };
+
+      // Simulate API call
+      const saveButton = formActions.buttons[1];
+      saveButton.setLoading(true);
+      
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        Toast.success('Product created successfully', {
+          action: {
+            label: 'View',
+            onClick: () => console.log('Navigate to product:', formData)
+          }
+        });
+        
+        // Reset form
+        resetForm();
+      } catch (error) {
+        Toast.error('Failed to create product. Please try again.');
+      } finally {
+        saveButton.setLoading(false);
+      }
+    }
+
+    async function handleCancel() {
+      const hasChanges = fields.name.get() || 
+                        fields.description.get() || 
+                        fields.category.get() || 
+                        fields.price.get() !== '';
+
+      if (hasChanges) {
+        const confirmed = await confirm({
+          title: 'Discard changes?',
+          message: 'You have unsaved changes. Are you sure you want to discard them?',
+          confirmLabel: 'Discard',
+          cancelLabel: 'Keep editing',
+          dangerous: true
+        });
+
+        if (confirmed) {
+          resetForm();
+          Toast.show('Changes discarded');
+        }
+      } else {
+        resetForm();
+      }
+    }
+
+    function resetForm() {
+      fields.name.set('');
+      fields.description.set('');
+      fields.category.set('');
+      fields.price.set('');
+      fields.quantity.set('0');
+      fields.trackInventory.set(true);
+      fields.visibility.set('visible');
+      fields.featured.set(false);
+      
+      // Clear any errors
+      Object.values(fields).forEach(field => {
+        if (field.clearError) {
+          field.clearError();
+        }
+      });
+    }
+
+    // Add some validation
+    fields.price.on('blur', () => {
+      const value = fields.price.get();
+      if (value && parseFloat(value) < 0) {
+        fields.price.setError('Price must be a positive number');
+      } else {
+        fields.price.clearError();
+      }
+    });
+
+    fields.quantity.on('blur', () => {
+      const value = fields.quantity.get();
+      if (value && parseInt(value) < 0) {
+        fields.quantity.setError('Quantity must be a positive number');
+      } else {
+        fields.quantity.clearError();
+      }
+    });
+  </script>
+</body>
+</html>

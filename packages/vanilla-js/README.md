@@ -1,6 +1,15 @@
 # @cin7/vanilla-js
 
-Lightweight vanilla JavaScript utilities for the UI Interaction Layer of Cin7 DSL. Zero framework dependencies, optimized for performance.
+Lightweight, reusable UI components and utilities for the Cin7 DSL framework. Pure vanilla JavaScript with no framework dependencies.
+
+## Overview
+
+The Vanilla JS package provides:
+- **Component Classes**: Reusable UI components with consistent APIs
+- **DOM Utilities**: jQuery-like helpers for DOM manipulation
+- **Event System**: Simplified event handling and delegation
+- **Animation Helpers**: Smooth transitions and effects
+- **TypeScript Support**: Full type definitions included
 
 ## Philosophy
 
@@ -17,27 +26,112 @@ This package embraces the Cin7 DSL philosophy of using the right tool for the jo
 pnpm add @cin7/vanilla-js
 ```
 
-## Usage
+## Component System
 
-### DOM Manipulation
+### Available Components
+
+- `CheckboxComponent` - Checkbox with label and callbacks
+- `RadioButtonComponent` - Radio button for single selection
+- `RadioGroupComponent` - Manage multiple radio buttons
+- `TextFieldComponent` - Text input with validation
+- `SelectComponent` - Dropdown selection
+- `ButtonComponent` - Versatile button component
+- `ButtonGroupComponent` - Group buttons together
+
+### Basic Usage
 
 ```javascript
-import { $, $$, addClass, removeClass, show, hide } from '@cin7/vanilla-js';
+import { 
+  CheckboxComponent, 
+  TextFieldComponent, 
+  ButtonComponent 
+} from '@cin7/vanilla-js';
+
+// Create a checkbox
+const termsCheckbox = new CheckboxComponent({
+  label: 'I agree to the terms and conditions',
+  onChange: (checked) => {
+    submitButton.setDisabled(!checked);
+  }
+});
+
+// Create a text field
+const emailField = new TextFieldComponent({
+  label: 'Email',
+  type: 'email',
+  required: true,
+  placeholder: 'you@example.com',
+  onChange: (value) => validateEmail(value)
+});
+
+// Create a button
+const submitButton = new ButtonComponent({
+  label: 'Submit',
+  variant: 'primary',
+  disabled: true,
+  onClick: async () => {
+    submitButton.setLoading(true);
+    await handleSubmit();
+    submitButton.setLoading(false);
+  }
+});
+
+// Mount components
+termsCheckbox.mount('#terms-container');
+emailField.mount('#email-container');
+submitButton.mount('#submit-container');
+```
+
+### Component API
+
+All components share a consistent API:
+
+```javascript
+// Common methods
+component.mount(parent);          // Mount to DOM
+component.unmount();              // Remove from DOM
+component.getElement();           // Get root element
+component.setDisabled(disabled);  // Enable/disable
+component.isDisabled();           // Check state
+component.destroy();              // Cleanup
+
+// Event subscription
+const unsubscribe = component.on('change', handler);
+unsubscribe(); // Remove listener
+
+// Get/set values
+const value = component.get();
+component.set(newValue);
+```
+
+## DOM Utilities
+
+```javascript
+import { $, $$, on, addClass, removeClass } from '@cin7/vanilla-js';
 
 // Query elements
 const button = $('#submit-button');
-const cards = $$('.card');
+const inputs = $$('input[type="text"]');
+
+// Add event listeners
+on('#form', 'submit', (e) => {
+  e.preventDefault();
+  handleSubmit();
+});
 
 // Manipulate classes
-addClass(button, 'primary', 'large');
-removeClass(cards[0], 'hidden');
+addClass('#modal', 'active');
+removeClass('#modal', 'active');
 
-// Show/hide elements
-show(button);
-hide($('#loading-spinner'));
+// Chain operations
+$('#notification')
+  .addClass('show')
+  .on('click', '.close', () => {
+    $('#notification').addClass('hide');
+  });
 ```
 
-### Event Handling
+## Event Handling
 
 ```javascript
 import { on, delegate, onKey } from '@cin7/vanilla-js';
@@ -60,26 +154,144 @@ onKey(document, {
 });
 ```
 
-### Animations
+## Animation Utilities
 
 ```javascript
-import { animate, fadeIn, slideDown, Easing } from '@cin7/vanilla-js';
+import { fadeIn, fadeOut, slideDown, slideUp } from '@cin7/vanilla-js';
 
-// Keyframe animation
-animate(element, [
-  { opacity: 0, transform: 'translateY(-20px)' },
-  { opacity: 1, transform: 'translateY(0)' }
-], {
-  duration: 300,
-  easing: Easing.easeOut
+// Fade effects
+await fadeIn('#modal', 300);
+await fadeOut('#modal', 300);
+
+// Slide effects
+await slideDown('#dropdown', 200);
+await slideUp('#dropdown', 200);
+
+// Custom animations
+import { animate } from '@cin7/vanilla-js';
+
+animate('#box', {
+  transform: 'translateX(100px)',
+  opacity: 0.5
+}, {
+  duration: 500,
+  easing: 'ease-out'
 });
-
-// Built-in animations
-await fadeIn(element, 400);
-await slideDown(dropdown, 200);
 ```
 
-### Progressive Enhancement
+## Form Building Example
+
+```javascript
+import { 
+  TextFieldComponent,
+  SelectComponent,
+  CheckboxComponent,
+  ButtonComponent 
+} from '@cin7/vanilla-js';
+
+class ContactForm {
+  constructor(container) {
+    this.container = container;
+    this.fields = {};
+    this.build();
+  }
+
+  build() {
+    // Create form fields
+    this.fields.name = new TextFieldComponent({
+      label: 'Full Name',
+      required: true,
+      placeholder: 'John Doe'
+    });
+
+    this.fields.email = new TextFieldComponent({
+      label: 'Email',
+      type: 'email',
+      required: true,
+      placeholder: 'john@example.com'
+    });
+
+    this.fields.subject = new SelectComponent({
+      label: 'Subject',
+      options: [
+        { label: 'General Inquiry', value: 'general' },
+        { label: 'Support', value: 'support' },
+        { label: 'Sales', value: 'sales' }
+      ],
+      required: true
+    });
+
+    this.fields.message = new TextFieldComponent({
+      label: 'Message',
+      multiline: true,
+      rows: 5,
+      required: true
+    });
+
+    this.fields.newsletter = new CheckboxComponent({
+      label: 'Subscribe to newsletter'
+    });
+
+    this.submitButton = new ButtonComponent({
+      label: 'Send Message',
+      variant: 'primary',
+      fullWidth: true,
+      onClick: () => this.handleSubmit()
+    });
+
+    // Mount all components
+    Object.values(this.fields).forEach(field => {
+      field.mount(this.container);
+    });
+    this.submitButton.mount(this.container);
+  }
+
+  async handleSubmit() {
+    // Validate all fields
+    const isValid = Object.values(this.fields)
+      .filter(field => field.validate) // Only validatable fields
+      .every(field => field.validate());
+
+    if (!isValid) {
+      return;
+    }
+
+    // Get form data
+    const data = this.getFormData();
+
+    // Submit
+    this.submitButton.setLoading(true);
+    try {
+      await this.submitForm(data);
+      this.showSuccess();
+      this.reset();
+    } catch (error) {
+      this.showError(error.message);
+    } finally {
+      this.submitButton.setLoading(false);
+    }
+  }
+
+  getFormData() {
+    return Object.entries(this.fields).reduce((data, [key, field]) => {
+      data[key] = field.get();
+      return data;
+    }, {});
+  }
+
+  reset() {
+    Object.values(this.fields).forEach(field => {
+      field.set(field.constructor === CheckboxComponent ? false : '');
+      field.clearError?.();
+    });
+  }
+}
+
+// Initialize form
+const form = new ContactForm('#contact-form');
+```
+
+## Progressive Enhancement
 
 ```javascript
 import { ready, isInViewport, on } from '@cin7/vanilla-js';
@@ -102,6 +314,32 @@ ready(() => {
 });
 ```
 
+## TypeScript Support
+
+Full TypeScript support with type definitions:
+
+```typescript
+import { 
+  CheckboxComponent,
+  CheckboxOptions,
+  TextFieldComponent,
+  TextFieldOptions,
+  EventListener 
+} from '@cin7/vanilla-js';
+
+const handleChange: EventListener<boolean> = (checked) => {
+  console.log('Checked:', checked);
+};
+
+const options: CheckboxOptions = {
+  label: 'Remember me',
+  checked: true,
+  onChange: handleChange
+};
+
+const checkbox = new CheckboxComponent(options);
+```
+
 ## Browser Usage
 
 Include the browser build for direct usage without bundlers:
@@ -111,15 +349,25 @@ Include the browser build for direct usage without bundlers:
 <script>
   // Global object available as Cin7VanillaJS or C7
   C7.ready(() => {
-    const button = C7.$('#my-button');
-    C7.on(button, 'click', () => {
-      C7.addClass(button, 'clicked');
+    const checkbox = new C7.CheckboxComponent({
+      label: 'Accept terms',
+      onChange: (checked) => console.log(checked)
     });
+    checkbox.mount('#checkbox-container');
   });
 </script>
 ```
 
 ## API Reference
+
+### Components
+- `CheckboxComponent` - Checkbox input with label
+- `RadioButtonComponent` - Radio button input
+- `RadioGroupComponent` - Group of radio buttons
+- `TextFieldComponent` - Text/email/password input
+- `SelectComponent` - Dropdown select
+- `ButtonComponent` - Button with variants
+- `ButtonGroupComponent` - Button group/segmented control
 
 ### DOM Query
 - `$(selector)` - Query single element
@@ -133,8 +381,6 @@ Include the browser build for direct usage without bundlers:
 - `toggleClass(element, class, force?)` - Toggle class
 - `show(element)` - Show element
 - `hide(element)` - Hide element
-- `fadeIn(element, duration?)` - Fade in animation
-- `fadeOut(element, duration?)` - Fade out animation
 
 ### Events
 - `on(element, event, handler)` - Add event listener
@@ -144,24 +390,38 @@ Include the browser build for direct usage without bundlers:
 - `onClickOutside(element, handler)` - Click outside detection
 
 ### Animations
-- `animate(element, keyframes, options)` - Web Animations API wrapper
-- `animateSequence(animations)` - Animate in sequence
-- `animateParallel(animations)` - Animate in parallel
+- `fadeIn(element, duration?)` - Fade in animation
+- `fadeOut(element, duration?)` - Fade out animation
+- `slideDown(element, duration?)` - Slide down animation
+- `slideUp(element, duration?)` - Slide up animation
+- `animate(element, keyframes, options)` - Custom animation
 
 ## When to Use
 
-Use @cin7/vanilla-js when:
-- Building lightweight interactions
+Use @cin7/vanilla-js components when:
+- Building lightweight, reusable UI elements
+- Need consistent behavior across your app
+- Want type-safe component APIs
 - Enhancing server-rendered HTML
 - Optimizing performance-critical paths
-- Creating reusable UI behaviors
 
 Use React components when:
 - Building complex, stateful UIs
 - Managing application state
 - Creating data-driven interfaces
-- Need component composition
+- Need advanced component composition
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers (iOS Safari, Chrome)
+
+## Contributing
+
+See the main [Cin7 DSL Contributing Guide](../../CONTRIBUTING.md).
 
 ## License
 
-MIT
+MIT © Cin7
