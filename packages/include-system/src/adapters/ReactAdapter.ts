@@ -42,7 +42,8 @@ export class ReactAdapter implements LanguageAdapter {
       case 'Page':
         return this.generatePageCode(componentName, variationName);
       default:
-        return `<${componentName} {...${variationName}} />`;
+        // Generate a generic component for unknown components
+        return this.generateGenericComponentCode(componentName, variationName);
     }
   }
 
@@ -144,6 +145,13 @@ export class ReactAdapter implements LanguageAdapter {
       <Text variant="headingLg">Page content</Text>
     </Layout.Section>
   </Layout>
+</${componentName}>`;
+  }
+
+  private generateGenericComponentCode(componentName: string, config: Record<string, any>): string {
+    const props = this.formatProps(config);
+    return `<${componentName}${props}>
+  <Text variant="bodyMd">Generic component content</Text>
 </${componentName}>`;
   }
 

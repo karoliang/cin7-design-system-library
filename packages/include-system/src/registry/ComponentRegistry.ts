@@ -14,7 +14,7 @@ import {
 
 export class RegistryManager {
   private registry: ComponentRegistry;
-  private instance: RegistryManager;
+  private static instance: RegistryManager;
 
   constructor() {
     this.registry = {
