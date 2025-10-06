@@ -48,84 +48,436 @@ include "typescript" "ProductRepository" "standard"
 
 ## Enhanced Features (v2.0+)
 
-The include system has been enhanced with advanced features for enterprise development:
+The include system has been completely enhanced with enterprise-grade features that provide unprecedented flexibility while maintaining simplicity. These features address real-world development needs for large-scale applications.
 
-### Design Token Support
-Configure components with design tokens for consistent theming:
+### Design Token System
 
+The enhanced include system introduces a comprehensive design token system that ensures visual consistency across all components while allowing for deep customization.
+
+#### Core Design Tokens
+
+**Theme Tokens** - Define the overall visual appearance:
+```typescript
+// Available themes: light, dark, brand, neutral
+include "react" "Card" "default" {
+  designTokens: {
+    theme: "dark"        // Dark mode theme
+  }
+}
+
+include "react" "Button" "primary" {
+  designTokens: {
+    theme: "brand"       // Brand-specific theming
+  }
+}
+```
+
+**Size Tokens** - Control component dimensions:
+```typescript
+// Available sizes: small, medium, large, extra-large
+include "react" "Card" "default" {
+  designTokens: {
+    size: "large",       // Larger component size
+    theme: "light"
+  }
+}
+```
+
+**Spacing Tokens** - Manage internal and external spacing:
+```typescript
+// Available spacing: none, tight, base, loose, extra-loose
+include "react" "Card" "default" {
+  designTokens: {
+    spacing: "loose",    // More generous spacing
+    theme: "light"
+  }
+}
+```
+
+**Advanced Tokens** - Fine-tune visual appearance:
 ```typescript
 include "react" "Card" "default" {
   designTokens: {
-    theme: "dark",
-    spacing: "loose",
-    elevation: "medium",
-    colorScheme: "brand"
+    theme: "brand",
+    spacing: "base",
+    elevation: "medium",     // Shadow depth
+    borderRadius: "rounded", // Border style
+    colorScheme: "brand-primary" // Color variation
   }
 }
 ```
 
 ### Type-Safe Builder Pattern
-Get full IntelliSense support and compile-time safety:
+
+The type-safe builder pattern provides complete IntelliSense support and compile-time validation, making component discovery and configuration error-free.
+
+#### Creating a Typed Builder
 
 ```typescript
-import { createTypedIncludeBuilder, DesignTokens } from '@cin7/include-system';
+import { createTypedIncludeBuilder, DesignTokens, Presets } from '@cin7/include-system';
 
+// Initialize with default configuration
 const builder = createTypedIncludeBuilder({
-  designTokens: { theme: "light", spacing: "base" }
+  designTokens: {
+    theme: "light",
+    spacing: "base"
+  }
 });
+```
 
-// Type-safe includes with autocomplete
-const includes = [
+#### Type-Safe Component Declaration
+
+```typescript
+// Full IntelliSense support - no more guessing component names!
+const pageIncludes = [
+  // React components with full type safety
   builder.react.Card.default({
     designTokens: DesignTokens.brand,
-    responsive: {
-      small: { size: "small" },
-      large: { size: "large" }
+    sectioned: true,
+    title: "Product Information"
+  }),
+
+  builder.react.Button.primary({
+    designTokens: Presets.primaryButton,
+    onClick: "handleSubmit",
+    accessibility: {
+      ariaLabel: "Submit product form"
     }
   }),
-  builder.react.Button.primary({
-    designTokens: Presets.primaryButton
+
+  // ExtJS components with enterprise features
+  builder.extjs.DataGrid.enterprise({
+    designTokens: {
+      theme: "dark",
+      spacing: "tight"
+    },
+    features: ["grouping", "filtering", "export"],
+    store: "productStore"
+  }),
+
+  // Vanilla JS components for lightweight interactions
+  builder.vanilla.Badge.success({
+    designTokens: DesignTokens.small,
+    text: "In Stock"
+  }),
+
+  // TypeScript patterns for business logic
+  builder.typescript.Repository.standard({
+    entity: "Product",
+    designTokens: {
+      theme: "neutral"
+    }
   })
 ];
 ```
 
-### Theme System Integration
-Built-in theme support for light, dark, brand, and neutral themes:
+#### Design Token Presets
+
+Pre-defined token combinations for common patterns:
 
 ```typescript
-// Theme presets
+// Individual design tokens
+const designTokens = {
+  light: DesignTokens.light,      // { theme: "light" }
+  dark: DesignTokens.dark,        // { theme: "dark" }
+  brand: DesignTokens.brand,      // { theme: "brand" }
+  neutral: DesignTokens.neutral,  // { theme: "neutral" }
+
+  small: DesignTokens.small,      // { size: "small" }
+  medium: DesignTokens.medium,    // { size: "medium" }
+  large: DesignTokens.large,      // { size: "large" }
+
+  tight: DesignTokens.tight,      // { spacing: "tight" }
+  base: DesignTokens.base,        // { spacing: "base" }
+  loose: DesignTokens.loose,      // { spacing: "loose" }
+
+  elevated: DesignTokens.elevated,  // { elevation: "medium" }
+  flat: DesignTokens.flat          // { elevation: "none" }
+};
+
+// Combined presets for common patterns
+const combinedPresets = {
+  primaryButton: Presets.primaryButton,    // Brand + medium + base
+  secondaryCard: Presets.secondaryCard,    // Light + loose + elevated
+  successBadge: Presets.successBadge,      // Brand + small
+  largeGrid: Presets.largeGrid            // Dark + large + loose
+};
+```
+
+### Theme System Integration
+
+The theme system provides comprehensive support for multiple visual themes that can be applied globally or at the component level.
+
+#### Available Themes
+
+**Light Theme** - Clean, minimal interface:
+```typescript
 include "react" "Page" "dashboard" {
   designTokens: {
-    theme: "dark",
-    spacing: "base",
-    size: "medium"
+    theme: "light",
+    spacing: "base"
   }
 }
 ```
 
-### Responsive Design Support
-Configure components for different screen sizes:
+**Dark Theme** - Reduced eye strain for low-light environments:
+```typescript
+include "react" "DataGrid" "enterprise" {
+  designTokens: {
+    theme: "dark",
+    spacing: "tight",
+    elevation: "medium"
+  }
+}
+```
+
+**Brand Theme** - Incorporates brand colors and styling:
+```typescript
+include "react" "Button" "primary" {
+  designTokens: {
+    theme: "brand",
+    size: "medium",
+    colorScheme: "brand-primary"
+  }
+}
+```
+
+**Neutral Theme** - Subtle, professional appearance:
+```typescript
+include "react" "Card" "default" {
+  designTokens: {
+    theme: "neutral",
+    spacing: "loose",
+    elevation: "none"
+  }
+}
+```
+
+#### Theme Mixing and Matching
+
+```typescript
+// Different themes for different components
+const themedPage = [
+  builder.react.Page.dashboard({
+    designTokens: { theme: "dark" }      // Dark page background
+  }),
+
+  builder.react.Card.default({
+    designTokens: { theme: "light" }     // Light cards on dark background
+  }),
+
+  builder.react.Button.primary({
+    designTokens: { theme: "brand" }     // Brand-colored buttons
+  }),
+
+  builder.vanilla.Badge.success({
+    designTokens: { theme: "neutral" }   // Neutral badges
+  })
+];
+```
+
+### Responsive Design System
+
+The responsive design system allows components to adapt their appearance and behavior based on screen size, ensuring optimal user experience across all devices.
+
+#### Breakpoint-Based Configuration
 
 ```typescript
 include "react" "Card" "default" {
+  designTokens: {
+    theme: "light",
+    size: "medium"
+  },
   responsive: {
-    small: { size: "small", spacing: "tight" },
-    medium: { size: "medium", spacing: "base" },
-    large: { size: "large", spacing: "loose" }
+    small: {
+      size: "small",           // Compact on mobile
+      spacing: "tight"
+    },
+    medium: {
+      size: "medium",          // Standard on tablets
+      spacing: "base"
+    },
+    large: {
+      size: "large",           // Spacious on desktop
+      spacing: "loose"
+    }
+  }
+}
+```
+
+#### Advanced Responsive Patterns
+
+```typescript
+include "react" "MediaCard" "video-card" {
+  designTokens: {
+    theme: "brand",
+    spacing: "base"
+  },
+  responsive: {
+    small: {
+      // Mobile-first approach
+      size: "small",
+      spacing: "tight",
+      elevation: "none",
+      config: {
+        showThumbnail: false,
+        compactLayout: true
+      }
+    },
+    medium: {
+      // Tablet optimization
+      size: "medium",
+      spacing: "base",
+      elevation: "low",
+      config: {
+        showThumbnail: true,
+        compactLayout: false
+      }
+    },
+    large: {
+      // Desktop experience
+      size: "large",
+      spacing: "loose",
+      elevation: "medium",
+      config: {
+        showThumbnail: true,
+        compactLayout: false,
+        enhancedControls: true
+      }
+    }
+  }
+}
+```
+
+#### Container Queries Support
+
+```typescript
+include "extjs" "DataGrid" "enterprise" {
+  designTokens: {
+    theme: "dark"
+  },
+  responsive: {
+    // Based on container width, not viewport
+    container: {
+      narrow: {
+        density: "compact",
+        visibleColumns: 3
+      },
+      normal: {
+        density: "normal",
+        visibleColumns: 6
+      },
+      wide: {
+        density: "comfortable",
+        visibleColumns: 10
+      }
+    }
   }
 }
 ```
 
 ### Accessibility Features
-Built-in accessibility configuration:
+
+The enhanced include system provides built-in accessibility features that help create inclusive user experiences that comply with WCAG guidelines.
+
+#### ARIA Configuration
 
 ```typescript
 include "react" "Button" "primary" {
+  designTokens: {
+    theme: "brand",
+    size: "medium"
+  },
   accessibility: {
-    ariaLabel: "Submit form",
+    ariaLabel: "Submit product order",
     describedBy: "form-instructions",
-    role: "button"
+    role: "button",
+    expanded: false,
+    pressed: false
+  },
+  onClick: "handleSubmit"
+}
+```
+
+#### Screen Reader Support
+
+```typescript
+include "react" "Card" "product-info" {
+  designTokens: {
+    theme: "light",
+    spacing: "base"
+  },
+  accessibility: {
+    role: "article",
+    ariaLabel: "Product information card",
+    describedBy: ["product-title", "product-description"],
+    liveRegion: "polite"           // For dynamic content
+  },
+  title: "Product Details",
+  children: "product-content"
+}
+```
+
+#### Keyboard Navigation
+
+```typescript
+include "extjs" "DataGrid" "enterprise" {
+  designTokens: {
+    theme: "dark"
+  },
+  accessibility: {
+    ariaLabel: "Product inventory table",
+    colCount: 8,
+    rowCount: 50,
+    navigation: {
+      arrowKeys: true,
+      homeEnd: true,
+      pageUpDown: true,
+      enterToActivate: true
+    },
+    announcement: {
+      sortChanges: true,
+      filterChanges: true,
+      selectionChanges: true
+    }
   }
+}
+```
+
+#### Focus Management
+
+```typescript
+include "vanilla" "Modal" "default" {
+  designTokens: {
+    theme: "light",
+    elevation: "high"
+  },
+  accessibility: {
+    role: "dialog",
+    ariaModal: true,
+    ariaLabel: "Confirm product deletion",
+    focusManagement: {
+      trapFocus: true,
+      restoreFocus: true,
+      initialFocus: "confirm-button"
+    }
+  }
+}
+```
+
+### Backward Compatibility
+
+All enhanced features maintain 100% backward compatibility with existing include statements. Your current code continues to work without any changes.
+
+```typescript
+// These still work exactly as before
+include "react" "Card" "default"
+include "extjs" "DataGrid" "enterprise"
+include "vanilla" "Badge" "success"
+
+// And can be gradually enhanced
+include "react" "Card" "default" {
+  designTokens: { theme: "dark" }    // Add theming
 }
 ```
 
