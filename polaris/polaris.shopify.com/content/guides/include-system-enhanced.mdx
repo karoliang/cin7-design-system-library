@@ -1,0 +1,643 @@
+---
+title: Enhanced Include System
+description: Advanced features for the revolutionary include system including design tokens, type-safe builders, and theme support
+showTOC: true
+keywords:
+  - include system enhanced
+  - design tokens
+  - type safe builders
+  - theme system
+  - responsive design
+  - accessibility
+order: 6
+icon: AdvancedSettingsIcon
+---
+
+# Enhanced Include System
+
+<Lede>
+Advanced features that take the revolutionary include system to the next level with design tokens, type-safe builders, theme support, and enterprise-grade capabilities.
+</Lede>
+
+The enhanced include system builds upon the revolutionary foundation to provide enterprise-grade features for modern application development.
+
+## Type-Safe Builder Pattern
+
+Get full IntelliSense support and compile-time type checking with the enhanced builder pattern.
+
+### Basic Usage
+
+```typescript
+import { createTypedIncludeBuilder, DesignTokens, Presets } from '@cin7/include-system';
+
+// Create a builder with default configuration
+const builder = createTypedIncludeBuilder({
+  designTokens: {
+    theme: 'light',
+    spacing: 'base'
+  }
+});
+
+// Type-safe includes with full autocomplete
+const includes = [
+  builder.react.Card.default({
+    designTokens: DesignTokens.brand,
+    sectioned: true
+  }),
+  builder.react.Button.primary({
+    designTokens: Presets.primaryButton,
+    onClick: 'handleClick'
+  }),
+  builder.extjs.DataGrid.enterprise({
+    features: ['grouping', 'filtering', 'export']
+  })
+];
+```
+
+### Preset Configurations
+
+```typescript
+// Use built-in presets for common patterns
+const quickIncludes = [
+  // Primary button with brand theming
+  builder.react.Button.primary(Presets.primaryButton),
+
+  // Success badge with optimal sizing
+  builder.react.Badge.success(Presets.successBadge),
+
+  // Large data grid for dashboard use
+  builder.extjs.DataGrid.enterprise(Presets.largeGrid)
+];
+```
+
+## Design Token System
+
+### Core Design Tokens
+
+The enhanced include system includes a comprehensive design token system:
+
+```typescript
+include "react" "Card" "default" {
+  designTokens: {
+    theme: "dark",           // light, dark, brand, neutral
+    size: "medium",          // small, medium, large, extra-large
+    spacing: "loose",        // none, tight, base, loose, extra-loose
+    elevation: "medium",     // none, small, medium, large, extra-large
+    borderRadius: "medium",  // none, small, medium, large, extra-large
+    colorScheme: "brand"     // Any valid color scheme
+  }
+}
+```
+
+### Design Token Presets
+
+```typescript
+import { DesignTokens } from '@cin7/include-system';
+
+// Available presets
+const themeTokens = {
+  light: DesignTokens.light,
+  dark: DesignTokens.dark,
+  brand: DesignTokens.brand,
+  neutral: DesignTokens.neutral
+};
+
+const sizeTokens = {
+  small: DesignTokens.small,
+  medium: DesignTokens.medium,
+  large: DesignTokens.large
+};
+
+const spacingTokens = {
+  tight: DesignTokens.tight,
+  base: DesignTokens.base,
+  loose: DesignTokens.loose
+};
+```
+
+## Theme System Integration
+
+### Dark Theme Dashboard
+
+```typescript
+// Dark-themed analytics dashboard
+const dashboardIncludes = [
+  include "react" "Page" "dashboard" {
+    designTokens: {
+      theme: "dark",
+      spacing: "base",
+      size: "medium"
+    }
+  },
+
+  include "extjs" "DataGrid" "enterprise" {
+    designTokens: {
+      theme: "dark",
+      spacing: "tight",
+      elevation: "large"
+    },
+    features: ["grouping", "filtering", "sorting"]
+  },
+
+  include "react" "Card" "metric-card" {
+    designTokens: {
+      theme: "dark",
+      colorScheme: "data-visualization"
+    }
+  }
+];
+```
+
+### Brand Theme Landing Page
+
+```typescript
+// Brand-themed landing page
+const landingPageIncludes = [
+  include "react" "Page" "full-width" {
+    designTokens: {
+      theme: "brand",
+      spacing: "loose",
+      size: "large"
+    }
+  },
+
+  include "react" "MediaCard" "default" {
+    designTokens: {
+      theme: "brand",
+      colorScheme: "brand-accent",
+      borderRadius: "large"
+    },
+    primaryAction: {
+      content: "Get Started",
+      onAction: "handleGetStarted"
+    }
+  },
+
+  include "react" "Button" "primary" {
+    designTokens: Presets.primaryButton,
+    onClick: "handleCallToAction"
+  }
+];
+```
+
+## Responsive Design Support
+
+### Responsive Component Configuration
+
+```typescript
+include "react" "Card" "default" {
+  responsive: {
+    small: {
+      size: "small",
+      spacing: "tight",
+      designTokens: { elevation: "none" }
+    },
+    medium: {
+      size: "medium",
+      spacing: "base",
+      designTokens: { elevation: "small" }
+    },
+    large: {
+      size: "large",
+      spacing: "loose",
+      designTokens: { elevation: "medium" }
+    }
+  }
+}
+```
+
+### Mobile-First Approach
+
+```typescript
+const mobileFirstIncludes = [
+  include "react" "Button" "primary" {
+    designTokens: {
+      size: "small",
+      spacing: "tight",
+      theme: "light"
+    },
+    responsive: {
+      medium: { size: "medium", spacing: "base" },
+      large: { size: "large", spacing: "loose" }
+    }
+  },
+
+  include "vanilla" "Badge" "success" {
+    designTokens: {
+      size: "small",
+      theme: "brand"
+    },
+    responsive: {
+      large: { size: "medium" }
+    }
+  }
+];
+```
+
+## Accessibility Features
+
+### Built-in Accessibility Support
+
+```typescript
+include "react" "Button" "primary" {
+  accessibility: {
+    ariaLabel: "Submit form and save changes",
+    describedBy: "form-instructions",
+    role: "button"
+  },
+  designTokens: Presets.primaryButton,
+  onClick: "handleSubmit"
+}
+
+include "react" "Card" "default" {
+  accessibility: {
+    ariaLabel: "Product information card",
+    role: "article",
+    describedBy: "product-description"
+  },
+  sectioned: true
+}
+
+include "vanilla" "Badge" "success" {
+  accessibility: {
+    ariaLabel: "Status: Available",
+    role: "status"
+  },
+  text: "In Stock"
+}
+```
+
+### Screen Reader Optimization
+
+```typescript
+const accessibleIncludes = [
+  include "react" "MediaCard" "video-card" {
+    accessibility: {
+      ariaLabel: "Product demonstration video",
+      role: "article",
+      describedBy: "video-transcript"
+    },
+    title: "Product Demo",
+    primaryAction: {
+      content: "Play Video",
+      ariaLabel: "Play product demonstration video",
+      onAction: "handlePlayVideo"
+    }
+  },
+
+  include "extjs" "DataGrid" "enterprise" {
+    accessibility: {
+      ariaLabel: "Customer data table",
+      role: "table",
+      describedBy: "table-summary"
+    },
+    features: ["keyboard-navigation", "screen-reader-support"]
+  }
+];
+```
+
+## Component Category Organization
+
+### Layout Components
+
+```typescript
+const layoutIncludes = [
+  include "react" "Card" "default" {
+    designTokens: Presets.secondaryCard,
+    responsive: {
+      small: { size: "small", spacing: "tight" },
+      large: { size: "medium", spacing: "base" }
+    }
+  },
+
+  include "react" "Page" "full-width" {
+    designTokens: { theme: "light", spacing: "base" }
+  },
+
+  include "react" "MediaCard" "small" {
+    designTokens: { size: "small", elevation: "small" }
+  }
+];
+```
+
+### Action Components
+
+```typescript
+const actionIncludes = [
+  include "react" "Button" "primary" {
+    designTokens: Presets.primaryButton,
+    accessibility: { ariaLabel: "Primary action button" }
+  },
+
+  include "vanilla" "Button" "primary" {
+    designTokens: { theme: "brand", size: "medium" },
+    onClick: "handleVanillaAction"
+  }
+];
+```
+
+### Feedback Components
+
+```typescript
+const feedbackIncludes = [
+  include "react" "Badge" "success" {
+    designTokens: Presets.successBadge,
+    accessibility: { role: "status" }
+  },
+
+  include "vanilla" "Spinner" "small" {
+    designTokens: { theme: "dark", size: "small" },
+    accessibility: {
+      ariaLabel: "Loading content",
+      role: "progressbar"
+    }
+  }
+];
+```
+
+## Real-World Application Scenarios
+
+### E-commerce Product Page
+
+```typescript
+const productPageIncludes = [
+  include "react" "Page" "default" {
+    designTokens: { theme: "light", spacing: "loose" },
+    title: "Product Details"
+  },
+
+  include "react" "Card" "product-info" {
+    designTokens: {
+      theme: "brand",
+      spacing: "base",
+      elevation: "medium"
+    },
+    responsive: {
+      small: { spacing: "tight" },
+      large: { spacing: "loose" }
+    },
+    accessibility: {
+      ariaLabel: "Product information",
+      role: "article"
+    }
+  },
+
+  include "react" "Button" "primary" {
+    designTokens: Presets.primaryButton,
+    accessibility: {
+      ariaLabel: "Add product to shopping cart",
+      describedBy: "product-price"
+    },
+    onClick: "handleAddToCart"
+  },
+
+  include "vanilla" "Badge" "success" {
+    designTokens: { theme: "light", size: "small" },
+    text: "In Stock"
+  }
+];
+```
+
+### Analytics Dashboard
+
+```typescript
+const analyticsIncludes = [
+  include "react" "Page" "dashboard" {
+    designTokens: { theme: "dark", spacing: "base" },
+    title: "Analytics Dashboard"
+  },
+
+  include "extjs" "DataGrid" "enterprise" {
+    designTokens: {
+      theme: "dark",
+      spacing: "tight",
+      elevation: "large"
+    },
+    features: ["grouping", "filtering", "sorting", "export"],
+    accessibility: {
+      ariaLabel: "Analytics data table",
+      role: "table"
+    }
+  },
+
+  include "react" "Card" "metric-card" {
+    designTokens: {
+      theme: "dark",
+      colorScheme: "data-visualization"
+    },
+    title: "Revenue Metrics"
+  },
+
+  include "typescript" "Repository" "standard" {
+    designTokens: { theme: "neutral" },
+    entity: "AnalyticsData"
+  }
+];
+```
+
+### Mobile Settings Form
+
+```typescript
+const mobileSettingsIncludes = [
+  include "react" "Page" "full-width" {
+    designTokens: {
+      theme: "light",
+      spacing: "tight",
+      size: "small"
+    },
+    title: "Settings"
+  },
+
+  include "extjs" "FormPanel" "settings" {
+    designTokens: {
+      theme: "light",
+      spacing: "base",
+      size: "small"
+    },
+    fields: [
+      {
+        name: "notifications",
+        type: "checkbox",
+        label: "Push Notifications",
+        accessibility: { describedBy: "notifications-help" }
+      },
+      {
+        name: "theme",
+        type: "combobox",
+        label: "Theme Preference",
+        accessibility: { ariaLabel: "Choose theme" }
+      },
+      {
+        name: "language",
+        type: "combobox",
+        label: "Language",
+        accessibility: { ariaLabel: "Select language" }
+      }
+    ]
+  },
+
+  include "react" "Button" "primary" {
+    designTokens: { size: "small", theme: "brand" },
+    text: "Save Settings",
+    accessibility: { ariaLabel: "Save all settings" },
+    onClick: "handleSaveSettings"
+  }
+];
+```
+
+## Performance Considerations
+
+### Design Token Caching
+
+The enhanced include system automatically caches design token calculations:
+
+```typescript
+// Tokens are cached for optimal performance
+const cachedIncludes = [
+  include "react" "Card" "default" {
+    designTokens: { theme: "dark", spacing: "base" }  // Cached
+  },
+  include "react" "Button" "primary" {
+    designTokens: { theme: "dark", spacing: "base" }  // Reuses cached tokens
+  }
+];
+```
+
+### Lazy Loading Support
+
+Configure components to load only when needed:
+
+```typescript
+include "extjs" "DataGrid" "enterprise" {
+  designTokens: { theme: "dark" },
+  lazy: true,  // Load on demand
+  placeholder: "Loading data..."
+}
+```
+
+## Migration from Basic Include System
+
+### From Basic Syntax
+
+```typescript
+// Basic include (still supported)
+include "react" "Card" "default"
+```
+
+### To Enhanced Syntax
+
+```typescript
+// Enhanced include with configuration
+include "react" "Card" "default" {
+  designTokens: {
+    theme: "light",
+    spacing: "base"
+  },
+  accessibility: {
+    ariaLabel: "Card content"
+  }
+}
+```
+
+### Type-Safe Migration
+
+```typescript
+// Step 1: Import builder
+import { createTypedIncludeBuilder } from '@cin7/include-system';
+
+// Step 2: Create builder
+const builder = createTypedIncludeBuilder();
+
+// Step 3: Replace includes
+// Old: include "react" "Card" "default"
+// New: builder.react.Card.default()
+```
+
+## Best Practices
+
+### 1. Use Design Tokens Consistently
+
+```typescript
+// Good: Use design tokens for theming
+include "react" "Card" "default" {
+  designTokens: Presets.secondaryCard
+}
+
+// Avoid: Hardcoded values
+include "react" "Card" "default" {
+  backgroundColor: "#ffffff"  // Avoid direct styling
+}
+```
+
+### 2. Leverage Responsive Design
+
+```typescript
+// Good: Responsive configuration
+include "react" "Button" "primary" {
+  responsive: {
+    small: { size: "small" },
+    large: { size: "large" }
+  }
+}
+```
+
+### 3. Include Accessibility Features
+
+```typescript
+// Good: Include accessibility
+include "react" "Button" "primary" {
+  accessibility: {
+    ariaLabel: "Submit form",
+    describedBy: "form-help"
+  }
+}
+```
+
+### 4. Use Type-Safe Builders When Possible
+
+```typescript
+// Good: Type-safe with IntelliSense
+const builder = createTypedIncludeBuilder();
+const includes = [builder.react.Button.primary()];
+
+// Acceptable: String-based includes for dynamic scenarios
+const dynamicInclude = {
+  language: "react",
+  component: "Button",
+  variation: "primary"
+};
+```
+
+## Getting Started
+
+1. **Install Enhanced Include System**
+   ```bash
+   npm install @cin7/include-system@latest
+   ```
+
+2. **Import Enhanced Features**
+   ```typescript
+   import {
+     createTypedIncludeBuilder,
+     DesignTokens,
+     Presets
+   } from '@cin7/include-system';
+   ```
+
+3. **Create Your First Enhanced Include**
+   ```typescript
+   const builder = createTypedIncludeBuilder();
+   const button = builder.react.Button.primary(Presets.primaryButton);
+   ```
+
+4. **Configure Design Tokens**
+   ```typescript
+   include "react" "Card" "default" {
+     designTokens: {
+       theme: "brand",
+       spacing: "loose"
+     }
+   }
+   ```
+
+The enhanced include system provides enterprise-grade capabilities while maintaining the simplicity and revolutionary approach that made the original include system so powerful.

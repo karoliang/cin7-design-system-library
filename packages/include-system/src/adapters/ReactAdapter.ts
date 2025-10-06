@@ -28,22 +28,29 @@ export class ReactAdapter implements LanguageAdapter {
     const { component, variation, statement } = resolved;
     const componentName = statement.alias || component.name;
     const variationName = this.getVariationConfig(statement.variation);
+    const config = statement.config || {};
+
+    // Merge variation config with user config
+    let mergedConfig = { ...variationName, ...config };
+
+    // Apply design tokens if present
+    mergedConfig = this.applyDesignTokens(mergedConfig);
 
     // Generate React component usage based on variation
     switch (component.name) {
       case 'Card':
-        return this.generateCardCode(componentName, variationName);
+        return this.generateCardCode(componentName, mergedConfig);
       case 'Button':
-        return this.generateButtonCode(componentName, variationName);
+        return this.generateButtonCode(componentName, mergedConfig);
       case 'Badge':
-        return this.generateBadgeCode(componentName, variationName);
+        return this.generateBadgeCode(componentName, mergedConfig);
       case 'MediaCard':
-        return this.generateMediaCardCode(componentName, variationName);
+        return this.generateMediaCardCode(componentName, mergedConfig);
       case 'Page':
-        return this.generatePageCode(componentName, variationName);
+        return this.generatePageCode(componentName, mergedConfig);
       default:
         // Generate a generic component for unknown components
-        return this.generateGenericComponentCode(componentName, variationName);
+        return this.generateGenericComponentCode(componentName, mergedConfig);
     }
   }
 
@@ -90,6 +97,63 @@ export class ReactAdapter implements LanguageAdapter {
     };
 
     return configs[variation] || {};
+  }
+
+  private applyDesignTokens(config: Record<string, any>): Record<string, any> {
+    const { designTokens } = config;
+    if (!designTokens) return config;
+
+    const tokenProps: Record<string, any> = {};
+
+    // Map design tokens to React props
+    if (designTokens.theme) {
+      // Apply theme-specific props
+      if (designTokens.theme === 'dark') {
+        tokenProps.background = 'bg-surface-dark';
+        tokenProps.color = 'text-on-dark';
+      } else if (designTokens.theme === 'brand') {
+        tokenProps.background = 'bg-surface-brand';
+        tokenProps.color = 'text-on-brand';
+      }
+    }
+
+    if (designTokens.size) {
+      tokenProps.size = designTokens.size;
+    }
+
+    if (designTokens.spacing) {
+      // Convert spacing to padding/margin as appropriate
+      tokenProps.padding = this.mapSpacing(designTokens.spacing);
+    }
+
+    if (designTokens.elevation) {
+      tokenProps.shadow = this.mapElevation(designTokens.elevation);
+    }
+
+    // Merge design token props with existing config
+    return { ...config, ...tokenProps };
+  }
+
+  private mapSpacing(spacing: string): string {
+    const spacingMap: Record<string, string> = {
+      'none': '0',
+      'tight': '2',
+      'base': '4',
+      'loose': '6',
+      'extra-loose': '8'
+    };
+    return spacingMap[spacing] || '4';
+  }
+
+  private mapElevation(elevation: string): string {
+    const elevationMap: Record<string, string> = {
+      'none': 'none',
+      'small': 'shadow-sm',
+      'medium': 'shadow-md',
+      'large': 'shadow-lg',
+      'extra-large': 'shadow-xl'
+    };
+    return elevationMap[elevation] || 'shadow-md';
   }
 
   private generateCardCode(componentName: string, config: Record<string, any>): string {

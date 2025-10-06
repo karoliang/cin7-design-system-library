@@ -4,6 +4,41 @@
 
 export type SupportedLanguage = 'react' | 'vanilla' | 'extjs' | 'typescript';
 
+export enum ComponentCategory {
+  LAYOUT = 'layout',
+  FEEDBACK = 'feedback',
+  INPUT = 'input',
+  DISPLAY = 'display',
+  NAVIGATION = 'navigation',
+  ACTIONS = 'actions',
+  IMAGES = 'images',
+  FORMS = 'forms',
+  OVERLAYS = 'overlays',
+  TYPOGRAPHY = 'typography'
+}
+
+export enum Theme {
+  LIGHT = 'light',
+  DARK = 'dark',
+  BRAND = 'brand',
+  NEUTRAL = 'neutral'
+}
+
+export enum Size {
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
+  EXTRA_LARGE = 'extra-large'
+}
+
+export enum Spacing {
+  NONE = 'none',
+  TIGHT = 'tight',
+  BASE = 'base',
+  LOOSE = 'loose',
+  EXTRA_LOOSE = 'extra-loose'
+}
+
 export interface ComponentVariation {
   name: string;
   description: string;
@@ -15,10 +50,12 @@ export interface ComponentVariation {
 export interface ComponentDefinition {
   name: string;
   description: string;
-  category: string;
+  category: ComponentCategory;
   variations: ComponentVariation[];
   defaultVariation: string;
   framework?: string;
+  metadata?: ComponentMetadata;
+  importPath?: string;
 }
 
 export interface LanguageDefinition {
@@ -29,11 +66,16 @@ export interface LanguageDefinition {
   components: Record<string, ComponentDefinition>;
 }
 
+export interface ComponentConfiguration {
+  [key: string]: string | number | boolean | Record<string, any> | DesignTokenPreset | Record<string, any>;
+}
+
 export interface IncludeStatement {
   language: SupportedLanguage;
   component: string;
   variation: string;
   alias?: string;
+  config?: ComponentConfiguration;
   metadata?: Record<string, any>;
 }
 
@@ -147,3 +189,70 @@ export type ComponentPath = string;
 export type ImportPath = string;
 export type ComponentName = string;
 export type VariationName = string;
+
+// Type-safe builder pattern types
+export type ComponentNames<T extends SupportedLanguage> = T extends 'react'
+  ? 'Card' | 'Button' | 'Badge' | 'MediaCard' | 'Page'
+  : T extends 'vanilla'
+  ? 'Card' | 'Button' | 'Badge' | 'Spinner'
+  : T extends 'extjs'
+  ? 'DataGrid' | 'ComboBox' | 'FormPanel'
+  : T extends 'typescript'
+  ? 'Repository' | 'UseCase' | 'EventBus'
+  : never;
+
+export type IncludeBuilder<T extends SupportedLanguage> = {
+  [K in ComponentNames<T>]: {
+    [V in string]: (config?: ComponentConfiguration) => IncludeStatement;
+  };
+};
+
+export interface TypedIncludeBuilder {
+  react: {
+    Card: { default: (config?: ComponentConfiguration) => IncludeStatement };
+    Button: { primary: (config?: ComponentConfiguration) => IncludeStatement };
+    Badge: { success: (config?: ComponentConfiguration) => IncludeStatement };
+    MediaCard: { 'video-card': (config?: ComponentConfiguration) => IncludeStatement };
+    Page: { dashboard: (config?: ComponentConfiguration) => IncludeStatement };
+  };
+  vanilla: {
+    Card: { default: (config?: ComponentConfiguration) => IncludeStatement };
+    Button: { primary: (config?: ComponentConfiguration) => IncludeStatement };
+    Badge: { success: (config?: ComponentConfiguration) => IncludeStatement };
+    Spinner: { small: (config?: ComponentConfiguration) => IncludeStatement };
+  };
+  extjs: {
+    DataGrid: { enterprise: (config?: ComponentConfiguration) => IncludeStatement };
+    ComboBox: { abc: (config?: ComponentConfiguration) => IncludeStatement };
+    FormPanel: { settings: (config?: ComponentConfiguration) => IncludeStatement };
+  };
+  typescript: {
+    Repository: { standard: (config?: ComponentConfiguration) => IncludeStatement };
+    UseCase: { crud: (config?: ComponentConfiguration) => IncludeStatement };
+    EventBus: { typed: (config?: ComponentConfiguration) => IncludeStatement };
+  };
+}
+
+// Enhanced configuration presets
+export interface DesignTokenPreset {
+  theme?: Theme;
+  size?: Size;
+  spacing?: Spacing;
+  elevation?: string;
+  borderRadius?: string;
+  colorScheme?: string;
+}
+
+export interface EnhancedIncludeConfiguration extends ComponentConfiguration {
+  designTokens?: DesignTokenPreset;
+  responsive?: {
+    small?: ComponentConfiguration;
+    medium?: ComponentConfiguration;
+    large?: ComponentConfiguration;
+  };
+  accessibility?: {
+    ariaLabel?: string;
+    role?: string;
+    describedBy?: string;
+  };
+}

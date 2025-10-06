@@ -46,6 +46,89 @@ include "vanilla" "Badge" "success"
 include "typescript" "ProductRepository" "standard"
 ```
 
+## Enhanced Features (v2.0+)
+
+The include system has been enhanced with advanced features for enterprise development:
+
+### Design Token Support
+Configure components with design tokens for consistent theming:
+
+```typescript
+include "react" "Card" "default" {
+  designTokens: {
+    theme: "dark",
+    spacing: "loose",
+    elevation: "medium",
+    colorScheme: "brand"
+  }
+}
+```
+
+### Type-Safe Builder Pattern
+Get full IntelliSense support and compile-time safety:
+
+```typescript
+import { createTypedIncludeBuilder, DesignTokens } from '@cin7/include-system';
+
+const builder = createTypedIncludeBuilder({
+  designTokens: { theme: "light", spacing: "base" }
+});
+
+// Type-safe includes with autocomplete
+const includes = [
+  builder.react.Card.default({
+    designTokens: DesignTokens.brand,
+    responsive: {
+      small: { size: "small" },
+      large: { size: "large" }
+    }
+  }),
+  builder.react.Button.primary({
+    designTokens: Presets.primaryButton
+  })
+];
+```
+
+### Theme System Integration
+Built-in theme support for light, dark, brand, and neutral themes:
+
+```typescript
+// Theme presets
+include "react" "Page" "dashboard" {
+  designTokens: {
+    theme: "dark",
+    spacing: "base",
+    size: "medium"
+  }
+}
+```
+
+### Responsive Design Support
+Configure components for different screen sizes:
+
+```typescript
+include "react" "Card" "default" {
+  responsive: {
+    small: { size: "small", spacing: "tight" },
+    medium: { size: "medium", spacing: "base" },
+    large: { size: "large", spacing: "loose" }
+  }
+}
+```
+
+### Accessibility Features
+Built-in accessibility configuration:
+
+```typescript
+include "react" "Button" "primary" {
+  accessibility: {
+    ariaLabel: "Submit form",
+    describedBy: "form-instructions",
+    role: "button"
+  }
+}
+```
+
 ## Basic Syntax
 
 The include system uses a simple, declarative syntax:

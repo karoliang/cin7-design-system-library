@@ -6,6 +6,13 @@
 // Core types
 export * from './types/IncludeSystem';
 
+// Import classes for use in convenience functions
+import { IncludeResolver } from './core/IncludeResolver';
+import { ReactAdapter } from './adapters/ReactAdapter';
+import { VanillaAdapter } from './adapters/VanillaAdapter';
+import { ExtJSAdapter } from './adapters/ExtJSAdapter';
+import { TypeScriptAdapter } from './adapters/TypeScriptAdapter';
+
 // Core classes
 export { IncludeResolver, defaultResolver } from './core/IncludeResolver';
 export { RegistryManager, componentRegistry } from './registry/ComponentRegistry';
@@ -15,6 +22,14 @@ export { ReactAdapter } from './adapters/ReactAdapter';
 export { VanillaAdapter } from './adapters/VanillaAdapter';
 export { ExtJSAdapter } from './adapters/ExtJSAdapter';
 export { TypeScriptAdapter } from './adapters/TypeScriptAdapter';
+
+// Type-safe builders
+export {
+  IncludeBuilderInstance,
+  createTypedIncludeBuilder,
+  DesignTokens,
+  Presets
+} from './builders/TypedIncludeBuilder';
 
 // Convenience functions
 export function createIncludeResolver(config?: any): IncludeResolver {
