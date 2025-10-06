@@ -32778,7 +32778,10 @@ export function getIncludeExample(name: string, framework: keyof CodeExampleVari
     return \`// Example "\${name}" not found\`;
   }
   const frameworkExample = example[framework];
-  return frameworkExample || \`// Framework "\${framework}" not supported for example "\${name}"\`;
+  if (frameworkExample) {
+    return frameworkExample;
+  }
+  return \`// Framework "\${framework}" not supported for example "\${name}"\`;
 }
 
 export function listIncludeExamples(): string[] {
