@@ -32781,14 +32781,17 @@ export function getIncludeExample(name: string, framework: keyof CodeExampleVari
   // Check if the example has the expected framework structure
   if (typeof example === 'object' && framework in example) {
     const frameworkExample = (example as any)[framework];
-    if (frameworkExample) {
+    if (typeof frameworkExample === 'string' && frameworkExample.length > 0) {
       return frameworkExample;
     }
   }
 
-  return \`// Framework "\${framework}" not supported for example "\${name}"\`;
+  // Always return a string (this satisfies TypeScript's strict mode)
+  const fallbackMessage = \`// Framework "\${framework}" not supported for example "\${name}"\`;
+  return fallbackMessage;
 }
 
 export function listIncludeExamples(): string[] {
   return Object.keys(includeSystemExamples);
 }
+// TypeScript build cache clear - Tue  7 Oct 2025 09:12:38 NZDT
