@@ -1,0 +1,439 @@
+---
+title: Include System Guide
+description: Revolutionary component declaration system for unified multi-framework development
+showTOC: true
+keywords:
+  - include system
+  - component declaration
+  - multi-framework
+  - unified syntax
+  - framework agnostic
+  - component registry
+order: 5
+icon: CodeIcon
+---
+
+# Include System Guide
+
+<Lede>
+A revolutionary approach to component development that lets you declare components across multiple frameworks using a unified syntax. Stop thinking about frameworks and start thinking about components.
+</Lede>
+
+The Cin7 DSL Include System transforms how you work with components. Instead of worrying about which framework a component comes from, you simply declare what you need using our intuitive include syntax.
+
+## What is the Include System?
+
+The Include System is a framework-agnostic way to declare and use components across all layers of the Cin7 DSL framework. It allows you to mix and match components from React, ExtJS, Vanilla JavaScript, and TypeScript using a single, consistent syntax.
+
+### The Problem We Solve
+
+**Before** (Traditional approach):
+```typescript
+// Multiple imports from different frameworks
+import {Card, Button} from '@shopify/polaris';
+import {ExtDataGrid} from '@cin7/extjs-adapters';
+import {BadgeComponent} from '@cin7/vanilla-js';
+import {ProductRepository} from '@cin7/typescript-sdk';
+```
+
+**After** (Include System):
+```typescript
+// Framework-agnostic component declarations
+include "react" "Card" "default"
+include "react" "Button" "primary"
+include "extjs" "DataGrid" "enterprise"
+include "vanilla" "Badge" "success"
+include "typescript" "ProductRepository" "standard"
+```
+
+## Basic Syntax
+
+The include system uses a simple, declarative syntax:
+
+```
+include "<language>" "<component>" "<variation>"
+```
+
+### Parameters
+
+- **language**: The framework/language (`react`, `vanilla`, `extjs`, `typescript`)
+- **component**: The component name (`Card`, `Button`, `DataGrid`, etc.)
+- **variation**: The specific variant (`default`, `small`, `primary`, `enterprise`, etc.)
+
+## Supported Languages
+
+### React Components
+```typescript
+include "react" "Card" "default"
+include "react" "Button" "primary"
+include "react" "MediaCard" "video-card"
+include "react" "Badge" "success"
+```
+
+### Vanilla JavaScript Components
+```typescript
+include "vanilla" "Card" "default"
+include "vanilla" "Button" "primary"
+include "vanilla" "Badge" "success"
+include "vanilla" "Modal" "default"
+```
+
+### ExtJS Components
+```typescript
+include "extjs" "DataGrid" "enterprise"
+include "extjs" "ComboBox" "abc"
+include "extjs" "FormPanel" "standard"
+include "extjs" "TreeGrid" "hierarchical"
+```
+
+### TypeScript Patterns
+```typescript
+include "typescript" "Repository" "standard"
+include "typescript" "UseCase" "crud"
+include "typescript" "Specification" "query"
+include "typescript" "EventBus" "typed"
+```
+
+## Real-World Examples
+
+### Mixed Framework Page
+Here's how you can create a complex page using components from different frameworks:
+
+```typescript
+// Page wrapper
+include "react" "Page" "full-width"
+
+// Header section
+include "react" "Card" "header"
+include "vanilla" "Badge" "new-feature"
+
+// Main content area
+include "react" "Grid" "two-column"
+
+// Left column
+include "react" "Card" "product-info"
+include "extjs" "DataGrid" "product-inventory"
+
+// Right column
+include "react" "Form" "product-edit"
+include "vanilla" "ButtonGroup" "actions"
+include "extjs" "ComboBox" "category-selector"
+
+// Footer
+include "vanilla" "Toast" "notification"
+include "typescript" "EventBus" "page-events"
+```
+
+### Dashboard Example
+```typescript
+// Dashboard layout
+include "react" "Page" "dashboard"
+
+// Metrics cards
+include "react" "Card" "metric-card"  // 4x
+include "vanilla" "Badge" "trend-indicator"  // 4x
+
+// Main data table
+include "extjs" "DataGrid" "sales-data"
+include "vanilla" "Spinner" "loading"
+
+// Filters and controls
+include "react" "Form" "filters"
+include "extjs" "ComboBox" "date-range"
+include "vanilla" "Button" "export"
+
+// State management
+include "typescript" "Repository" "sales-data"
+include "typescript" "UseCase" "filter-sales"
+```
+
+## Component Variations
+
+Each component in the include system supports multiple variations to handle different use cases:
+
+### Card Variations
+```typescript
+include "react" "Card" "default"        // Standard card
+include "react" "Card" "header"         // Header card
+include "react" "Card" "product-info"   // Product information
+include "react" "Card" "metric-card"    // Metrics display
+include "vanilla" "Card" "simple"       // Lightweight card
+```
+
+### Button Variations
+```typescript
+include "react" "Button" "primary"      // Primary action
+include "react" "Button" "secondary"    // Secondary action
+include "react" "Button" "destructive"  // Destructive action
+include "vanilla" "Button" "link"       // Link-style button
+include "extjs" "Button" "toolbar"      // Toolbar button
+```
+
+### Badge Variations
+```typescript
+include "react" "Badge" "success"       // Success indicator
+include "react" "Badge" "warning"       // Warning indicator
+include "react" "Badge" "info"          // Info indicator
+include "vanilla" "Badge" "new"         // New feature badge
+include "vanilla" "Badge" "trend-up"    // Trend indicator
+```
+
+## Available Components
+
+### Layout Components
+- **Page**: Page layouts (`full-width`, `dashboard`, `settings`)
+- **Card**: Content containers (`default`, `header`, `product-info`, `metric-card`)
+- **Grid**: Layout grids (`two-column`, `three-column`, `responsive`)
+- **Divider**: Visual separators (`horizontal`, `vertical`)
+
+### Navigation Components
+- **Tabs**: Tab navigation (`default`, `pills`, `vertical`)
+- **Link**: Navigation links (`default`, `back`, `external`)
+- **Pagination**: Page navigation (`default`, `compact`)
+
+### Form Components
+- **Form**: Form containers (`default`, `settings`, `filters`)
+- **TextField**: Text input (`default`, `multiline`, `search`)
+- **Select**: Dropdown selection (`default`, `multi-select`, `searchable`)
+- **ComboBox**: Enhanced dropdown (`default`, `abc`, `xyz`)
+
+### Data Display Components
+- **DataGrid**: Data tables (`enterprise`, `standard`, `compact`)
+- **Badge**: Status indicators (`success`, `warning`, `info`, `new`)
+- **Avatar**: User avatars (`default`, `small`, `large`)
+- **MediaCard**: Media content (`default`, `video-card`, `portrait-video-card`)
+
+### Feedback Components
+- **Spinner**: Loading indicators (`default`, `small`, `large`)
+- **Toast**: Notifications (`default`, `success`, `error`)
+- **Banner**: Page alerts (`info`, `warning`, `critical`)
+- **Modal**: Dialog boxes (`default`, `confirmation`, `custom`)
+
+## How It Works
+
+### 1. Declaration
+When you write an include statement, you're declaring what you need:
+
+```typescript
+include "react" "Card" "default"
+```
+
+### 2. Resolution
+The include system resolves this to the appropriate implementation:
+
+```typescript
+// Generated automatically
+import {Card} from '@cin7/polaris-adapter';
+```
+
+### 3. Registration
+All components are registered in a global registry that tracks:
+- Available frameworks
+- Component variations
+- Dependencies and relationships
+- Import paths and configurations
+
+### 4. Code Generation
+The system generates the appropriate import statements and configurations based on your declarations.
+
+## Migration Guide
+
+### From Traditional Imports
+
+**Step 1: Identify your current imports**
+```typescript
+import {Card, Button} from '@shopify/polaris';
+import {ExtDataGrid} from '@cin7/extjs-adapters';
+import {BadgeComponent} from '@cin7/vanilla-js';
+```
+
+**Step 2: Replace with include statements**
+```typescript
+include "react" "Card" "default"
+include "react" "Button" "primary"
+include "extjs" "DataGrid" "enterprise"
+include "vanilla" "Badge" "success"
+```
+
+**Step 3: Remove import statements**
+The include system handles all imports automatically.
+
+### Benefits of Migration
+
+1. **Framework Agnostic**: Focus on components, not frameworks
+2. **Unified Syntax**: Single approach across all Cin7 DSL layers
+3. **Auto-completion**: Better IDE support with component discovery
+4. **Type Safety**: Full TypeScript support for all includes
+5. **Future Proof**: Easy to add new frameworks and components
+
+## Advanced Usage
+
+### Conditional Includes
+```typescript
+// Based on user permissions
+include "extjs" "DataGrid" hasAdmin ? "admin" : "readonly"
+
+// Based on device type
+include "vanilla" "Card" isMobile ? "compact" : "default"
+```
+
+### Dynamic Includes
+```typescript
+// From configuration
+const componentConfig = {
+  header: {framework: "react", component: "Card", variation: "header"},
+  table: {framework: "extjs", component: "DataGrid", variation: "enterprise"}
+};
+
+// Generate includes dynamically
+Object.values(componentConfig).forEach(({framework, component, variation}) => {
+  include `${framework}` `${component}` `${variation}`;
+});
+```
+
+### Custom Component Registration
+```typescript
+// Register custom components
+registerComponent("custom", "MyWidget", {
+  react: {path: "./widgets/MyWidget.tsx", variations: ["default", "mini"]},
+  vanilla: {path: "./widgets/MyWidget.js", variations: ["default"]}
+});
+
+// Use custom components
+include "custom" "MyWidget" "default"
+```
+
+## Best Practices
+
+### 1. Use Specific Variations
+```typescript
+// Good: Specific variation
+include "react" "Button" "primary"
+
+// Avoid: Generic default when specific is better
+include "react" "Button" "default"
+```
+
+### 2. Group Related Includes
+```typescript
+// Group includes by purpose
+// Layout
+include "react" "Page" "dashboard"
+include "react" "Grid" "two-column"
+
+// Data
+include "extjs" "DataGrid" "sales-data"
+include "vanilla" "Spinner" "loading"
+
+// Actions
+include "react" "Button" "primary"
+include "vanilla" "Toast" "notification"
+```
+
+### 3. Consider Framework Strengths
+```typescript
+// Use React for UI components
+include "react" "Card" "default"
+include "react" "Button" "primary"
+
+// Use ExtJS for data-heavy components
+include "extjs" "DataGrid" "enterprise"
+include "extjs" "ComboBox" "search"
+
+// Use Vanilla JS for lightweight interactions
+include "vanilla" "Badge" "success"
+include "vanilla" "Spinner" "small"
+```
+
+### 4. Leverage TypeScript for Business Logic
+```typescript
+// Use TypeScript patterns for data and business logic
+include "typescript" "Repository" "product"
+include "typescript" "UseCase" "order-management"
+include "typescript" "EventBus" "typed"
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Issue**: Component not found
+```typescript
+// Error: Component "DataGrid" not found in framework "vanilla"
+include "vanilla" "DataGrid" "default"  // DataGrid is only available in extjs
+```
+
+**Solution**: Use the correct framework for the component
+```typescript
+include "extjs" "DataGrid" "default"  // Correct
+```
+
+**Issue**: Variation not supported
+```typescript
+// Error: Variation "abc" not found for component "Button" in framework "react"
+include "react" "Button" "abc"
+```
+
+**Solution**: Check available variations
+```typescript
+include "react" "Button" "primary"  // Correct
+```
+
+**Issue**: Missing dependencies
+```typescript
+// Error: Component "ComboBox" requires additional setup
+include "extjs" "ComboBox" "abc"
+```
+
+**Solution**: Include required dependencies
+```typescript
+include "extjs" "Store" "local"      // Required for ComboBox
+include "extjs" "ComboBox" "abc"
+```
+
+### Debugging Includes
+
+Use the include system debugger to trace resolutions:
+
+```typescript
+// Enable debug mode
+debugIncludes(true);
+
+// Check component availability
+isAvailable("react", "Card", "default"); // true
+isAvailable("vanilla", "DataGrid", "default"); // false
+
+// List all variations for a component
+listVariations("react", "Button"); // ["primary", "secondary", "destructive"]
+```
+
+## Performance Considerations
+
+### Bundle Size Optimization
+The include system automatically:
+- Tree-shakes unused components
+- Splits bundles by framework
+- Loads components on-demand when possible
+
+### Runtime Performance
+- Component resolution happens at build time
+- No runtime overhead for includes
+- Framework-specific optimizations applied automatically
+
+## Next Steps
+
+1. **Start Small**: Replace a few imports with includes to understand the system
+2. **Explore Components**: Browse the component registry to discover available options
+3. **Build Mixed Pages**: Try combining components from different frameworks
+4. **Custom Components**: Register your own components in the include system
+
+## Resources
+
+- [Component Registry](/components) - Browse all available components
+- [Architecture Guide](/getting-started/architecture) - Understand the underlying architecture
+- [Examples](/getting-started/examples) - See mixed-framework examples in action
+- [API Reference](/api/include-system) - Detailed API documentation
+
+---
+
+*Ready to revolutionize how you build components? Start using the include system today!*

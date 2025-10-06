@@ -32388,3 +32388,398 @@ export function parseExampleFileName(fileName: string): { component: string, exa
   
   return null;
 }
+// Include System Examples
+export const includeSystemExamples = {
+  'mixed-framework-page': {
+    react: `// Traditional React imports
+import {Card, Button, Badge, Page} from '@shopify/polaris';
+import {ExtDataGrid} from '@cin7/extjs-adapters';
+import {BadgeComponent} from '@cin7/vanilla-js';
+import React from 'react';
+
+function MixedFrameworkPage() {
+  return (
+    <Page title="Mixed Framework Demo">
+      <Card sectioned>
+        <React.Fragment>
+          <Badge status="new">New Feature</Badge>
+          <Card>React Card Content</Card>
+          <Button variant="primary">React Button</Button>
+        </React.Fragment>
+      </Card>
+    </Page>
+  );
+}`,
+    extjs: `// Traditional ExtJS imports
+Ext.require(['Ext.grid.Panel', 'Ext.form.field.ComboBox']);
+
+Ext.define('MyApp.view.MixedPage', {
+  extend: 'Ext.container.Container',
+  layout: 'vbox',
+  items: [{
+    xtype: 'panel',
+    title: 'Mixed Framework Demo',
+    items: [{
+      xtype: 'grid',
+      store: Ext.create('Ext.data.Store', {
+        data: [{name: 'Item 1'}, {name: 'Item 2'}]
+      }),
+      columns: [{text: 'Name', dataIndex: 'name'}]
+    }]
+  }]
+});`,
+    vanilla: `// Traditional Vanilla JS imports
+import {CardComponent, ButtonComponent, BadgeComponent} from '@cin7/vanilla-js';
+
+// Traditional approach
+const card = new CardComponent({
+  title: 'Vanilla JS Card',
+  content: 'Card content'
+});
+
+const button = new ButtonComponent({
+  label: 'Vanilla Button',
+  onClick: () => console.log('Clicked')
+});`,
+    typescript: `// Traditional TypeScript imports
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+}
+
+class ProductRepository extends Repository<Product> {
+  async findAll(): Promise<Product[]> {
+    return this.apiClient.get('/products');
+  }
+}
+
+class CreateProductUseCase extends UseCase<any, any> {
+  constructor(private repo: ProductRepository) {
+    super();
+  }
+}`
+  },
+
+  'include-system-declaration': {
+    react: `// Include System - Framework agnostic declarations
+include "react" "Page" "full-width"
+include "react" "Card" "header"
+include "vanilla" "Badge" "new-feature"
+include "extjs" "DataGrid" "enterprise"
+include "typescript" "Repository" "standard"
+include "vanilla" "Button" "primary"
+
+// Generated imports (automatically added)
+import {Page, Card} from '@shopify/polaris';
+import {Repository} from '@cin7/typescript-sdk';
+import {BadgeComponent, ButtonComponent} from '@cin7/vanilla-js';
+import {ExtDataGrid} from '@cin7/extjs-adapters';
+
+function MixedFrameworkPage() {
+  return (
+    <Page fullWidth title="Include System Demo">
+      <Card sectioned>
+        <BadgeComponent status="new">New Feature</Badge>
+        <Card>React Card Content</Card>
+        <ButtonComponent variant="primary">Vanilla Button</Button>
+        <ExtDataGrid
+          data={[]}
+          features={['sorting', 'filtering', 'export']}
+        />
+      </Card>
+    </Page>
+  );
+}`,
+    extjs: `// Include System - Framework agnostic declarations
+include "react" "Page" "full-width"
+include "extjs" "DataGrid" "enterprise"
+include "vanilla" "Badge" "success"
+include "typescript" "Repository" "standard"
+
+// Generated code (automatically added)
+import {Page} from '@shopify/polaris';
+import {Repository} from '@cin7/typescript-sdk';
+import {BadgeComponent} from '@cin7/vanilla-js';
+
+Ext.define('MyApp.view.IncludeSystemPage', {
+  extend: 'Ext.container.Container',
+  layout: 'vbox',
+  items: [{
+    xtype: 'panel',
+    title: 'Include System Demo',
+    items: [{
+      xtype: 'grid',
+      features: ['grouping', 'sorting', 'export'],
+      store: Ext.create('Ext.data.Store', {
+        model: 'Product'
+      })
+    }]
+  }]
+});`,
+    vanilla: `// Include System - Framework agnostic declarations
+include "vanilla" "Card" "default"
+include "vanilla" "Button" "primary"
+include "vanilla" "Badge" "success"
+include "typescript" "EventBus" "typed"
+
+// Generated code (automatically added)
+import {CardComponent, ButtonComponent, BadgeComponent} from '@cin7/vanilla-js';
+import {EventBus} from '@cin7/typescript-sdk';
+
+// Component instantiation
+const card = new CardComponent({
+  title: 'Include System Card',
+  content: 'Card content with badge',
+  badge: { status: 'success', text: 'Active' }
+});
+
+const button = new ButtonComponent({
+  label: 'Include Button',
+  onClick: () => {
+    eventBus.emit('button.clicked', { source: 'include-system' });
+  }
+});
+
+const eventBus = new EventBus();
+eventBus.on('button.clicked', (data) => {
+  console.log('Button clicked:', data);
+});`,
+    typescript: `// Include System - Framework agnostic declarations
+include "typescript" "Repository" "standard"
+include "typescript" "UseCase" "crud"
+include "typescript" "EventBus" "typed"
+include "react" "Card" "default"
+
+// Generated code (automatically added)
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+import {Card} from '@shopify/polaris';
+
+// Entity interface
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+}
+
+// Repository implementation
+class ProductRepository extends Repository<Product> {
+  async findAll(): Promise<Product[]> {
+    return this.apiClient.get('/products');
+  }
+}
+
+// Use case implementation
+class ProductUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: ProductRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+}
+
+// Event bus integration
+const eventBus = new EventBus();
+eventBus.on('product.created', (product: Product) => {
+  console.log('Product created:', product.name);
+});`
+  },
+
+  'component-variations': {
+    react: `// Include System - Component Variations
+include "react" "Card" "default"
+include "react" "Card" "header"
+include "react" "Card" "metric-card"
+include "react" "Button" "primary"
+include "react" "Button" "destructive"
+include "react" "Badge" "success"
+include "react" "Badge" "warning"
+include "react" "MediaCard" "video-card"
+
+// Generated imports
+import {Card, Button, Badge, MediaCard} from '@shopify/polaris';
+
+function VariationDemo() {
+  return (
+    <div>
+      {/* Different Card variations */}
+      <Card>Default Card</Card>
+      <Card sectioned>Header Card</Card>
+      <Card title="Metrics">Metric Card</Card>
+
+      {/* Different Button variations */}
+      <Button>Default Button</Button>
+      <Button variant="primary">Primary Button</Button>
+      <Button variant="destructive">Destructive Button</Button>
+
+      {/* Different Badge variations */}
+      <Badge status="success">Success</Badge>
+      <Badge status="warning">Warning</Badge>
+
+      {/* Media Card variation */}
+      <MediaCard
+        title="Video Tutorial"
+        description="Learn how to use the include system"
+        size="small"
+      >
+        <video controls width="100%">
+          <source src="tutorial.mp4" type="video/mp4" />
+        </video>
+      </MediaCard>
+    </div>
+  );
+}`,
+    vanilla: `// Include System - Component Variations
+include "vanilla" "Card" "default"
+include "vanilla" "Card" "simple"
+include "vanilla" "Button" "primary"
+include "vanilla" "Button" "link"
+include "vanilla" "Badge" "success"
+include "vanilla" "Badge" "trend-up"
+
+// Generated imports
+import {CardComponent, ButtonComponent, BadgeComponent} from '@cin7/vanilla-js';
+
+// Component variations
+const defaultCard = new CardComponent({
+  title: 'Default Card',
+  variant: 'default'
+});
+
+const simpleCard = new CardComponent({
+  title: 'Simple Card',
+  variant: 'simple'
+});
+
+const primaryButton = new ButtonComponent({
+  label: 'Primary Action',
+  variant: 'primary'
+});
+
+const linkButton = new ButtonComponent({
+  label: 'Link Button',
+  variant: 'link'
+});
+
+const successBadge = new BadgeComponent({
+  text: 'Success',
+  status: 'success'
+});
+
+const trendBadge = new BadgeComponent({
+  text: '↑ 12%',
+  status: 'trend-up'
+});`,
+    extjs: `// Include System - Component Variations
+include "extjs" "DataGrid" "default"
+include "extjs" "DataGrid" "enterprise"
+include "extjs" "DataGrid" "compact"
+include "extjs" "ComboBox" "default"
+include "extjs" "ComboBox" "abc"
+include "extjs" "FormPanel" "settings"
+
+// Generated code
+const defaultGrid = Ext.create('Ext.grid.Panel', {
+  title: 'Default Grid',
+  columns: [{ text: 'Name', dataIndex: 'name' }],
+  store: Ext.create('Ext.data.Store', { data: [] })
+});
+
+const enterpriseGrid = Ext.create('Ext.grid.Panel', {
+  title: 'Enterprise Grid',
+  features: ['grouping', 'filters', 'summary'],
+  columns: [{ text: 'Name', dataIndex: 'name' }],
+  store: Ext.create('Ext.data.Store', { data: [] })
+});
+
+const compactGrid = Ext.create('Ext.grid.Panel', {
+  title: 'Compact Grid',
+  height: 200,
+  columns: [{ text: 'Name', dataIndex: 'name', flex: 1 }],
+  store: Ext.create('Ext.data.Store', { data: [] })
+});
+
+const defaultCombo = Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Select Option',
+  store: ['Option 1', 'Option 2', 'Option 3']
+});
+
+const abcCombo = Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'ABC Config',
+  store: ['A', 'B', 'C'],
+  value: 'A'
+});`,
+    typescript: `// Include System - Component Variations
+include "typescript" "Repository" "standard"
+include "typescript" "UseCase" "crud"
+include "typescript" "EventBus" "typed"
+
+// Generated imports
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+
+// Standard Repository
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+class UserRepository extends Repository<User> {
+  async findByEmail(email: string): Promise<User | null> {
+    const users = await this.findAll();
+    return users.find(user => user.email === email) || null;
+  }
+}
+
+// CRUD Use Case
+class UserUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: UserRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+
+  async createUser(userData: any): Promise<User> {
+    const user = await this.repository.create(userData);
+    this.eventBus.emit('user.created', user);
+    return user;
+  }
+
+  async updateUser(id: string, changes: any): Promise<User> {
+    const user = await this.repository.update(id, changes);
+    this.eventBus.emit('user.updated', user);
+    return user;
+  }
+}
+
+// Typed Event Bus
+interface UserEvents {
+  'user.created': User;
+  'user.updated': User;
+  'user.deleted': { id: string };
+}
+
+const typedEventBus = new EventBus<UserEvents>();
+typedEventBus.on('user.created', (user) => {
+  console.log('User created:', user.name);
+});`
+  }
+};
+
+// Include System Utility Functions
+export function getIncludeExample(name: string, framework: keyof CodeExampleVariants): string {
+  const example = includeSystemExamples[name as keyof typeof includeSystemExamples];
+  if (!example) {
+    return \`// Example "\${name}" not found\`;
+  }
+  return example[framework] || \`// Framework "\${framework}" not supported for example "\${name}"\`;
+}
+
+export function listIncludeExamples(): string[] {
+  return Object.keys(includeSystemExamples);
+}

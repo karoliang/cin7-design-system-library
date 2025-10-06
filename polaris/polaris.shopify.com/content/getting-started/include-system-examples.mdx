@@ -1,0 +1,1174 @@
+---
+title: Include System Examples
+description: Real-world examples showing how to use the revolutionary include system for mixed-framework development
+showTOC: true
+keywords:
+  - include system
+  - examples
+  - mixed framework
+  - real-world
+  - component declaration
+order: 15
+icon: CodeIcon
+---
+
+# Include System Examples
+
+<Lede>
+Real-world examples demonstrating the power of the include system for building complex applications using multiple frameworks seamlessly.
+</Lede>
+
+The include system revolutionizes how you build applications by allowing you to declare components without worrying about the underlying framework. Here are comprehensive examples showing real-world usage patterns.
+
+---
+
+## Example 1: E-commerce Dashboard
+
+This example shows a complete e-commerce dashboard using components from multiple frameworks:
+
+### Include Declarations
+
+```typescript
+// Page layout
+include "react" "Page" "dashboard"
+include "react" "Grid" "two-column"
+
+// Header section
+include "react" "Card" "header"
+include "vanilla" "Badge" "new-feature"
+include "vanilla" "Badge" "trend-up"
+
+// Metrics display
+include "react" "Card" "metric-card"  // 4x
+include "vanilla" "Badge" "trend-indicator"  // 4x
+
+// Main data grid
+include "extjs" "DataGrid" "enterprise"
+include "vanilla" "Spinner" "loading"
+
+// Filters and controls
+include "react" "Form" "filters"
+include "extjs" "ComboBox" "date-range"
+include "vanilla" "Button" "export"
+
+// State management
+include "typescript" "Repository" "sales-data"
+include "typescript" "UseCase" "filter-sales"
+include "typescript" "EventBus" "page-events"
+```
+
+### Generated Implementation
+
+```typescript
+// Generated imports (automatically added)
+import {Page, Card, Grid, Form} from '@shopify/polaris';
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+import {BadgeComponent, ButtonComponent, SpinnerComponent} from '@cin7/vanilla-js';
+import {ExtDataGrid, ExtComboBox} from '@cin7/extjs-adapters';
+
+// Business logic implementation
+interface SalesData {
+  id: string;
+  date: string;
+  revenue: number;
+  orders: number;
+  customers: number;
+}
+
+class SalesRepository extends Repository<SalesData> {
+  async findByDateRange(startDate: string, endDate: string): Promise<SalesData[]> {
+    return this.apiClient.get('/sales', { startDate, endDate });
+  }
+}
+
+class FilterSalesUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: SalesRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+
+  async execute(params: { startDate: string; endDate: string }): Promise<SalesData[]> {
+    const data = await this.repository.findByDateRange(params.startDate, params.endDate);
+    this.eventBus.emit('sales.filtered', data);
+    return data;
+  }
+}
+
+// React component
+function EcommerceDashboard() {
+  const [salesData, setSalesData] = useState<SalesData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const eventBus = new EventBus();
+
+  // Initialize repositories and use cases
+  const salesRepo = new SalesRepository(apiClient);
+  const filterUseCase = new FilterSalesUseCase(salesRepo, eventBus);
+
+  useEffect(() => {
+    eventBus.on('sales.filtered', (data) => {
+      setSalesData(data);
+      setLoading(false);
+    });
+
+    // Load initial data
+    handleFilterChange({
+      startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      endDate: new Date().toISOString()
+    });
+  }, []);
+
+  const handleFilterChange = async (filters: any) => {
+    setLoading(true);
+    await filterUseCase.execute(filters);
+  };
+
+  return (
+    <Page
+      title="E-commerce Dashboard"
+      breadcrumbs={[
+        { content: 'Home', url: '/' },
+        { content: 'Dashboard', url: '/dashboard' }
+      ]}
+    >
+      {/* Header Section */}
+      <Card sectioned>
+        <Grid>
+          <Grid.Cell columnSpan={{xs: 6, sm: 3}}>
+            <BadgeComponent status="new">New Dashboard Available</BadgeComponent>
+          </Grid.Cell>
+          <Grid.Cell columnSpan={{xs: 6, sm: 9}}>
+            <BadgeComponent status="trend-up">Revenue up 12% this month</BadgeComponent>
+          </Grid.Cell>
+        </Grid>
+      </Card>
+
+      {/* Metrics Cards */}
+      <Grid>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+          <Card title="Total Revenue">
+            <BadgeComponent status="trend-indicator">↑ 15%</BadgeComponent>
+            <Text variant="heading2xl">$45,678</Text>
+          </Card>
+        </Grid.Cell>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+          <Card title="Total Orders">
+            <BadgeComponent status="trend-indicator">↑ 8%</BadgeComponent>
+            <Text variant="heading2xl">1,234</Text>
+          </Card>
+        </Grid.Cell>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+          <Card title="New Customers">
+            <BadgeComponent status="trend-indicator">↑ 22%</BadgeComponent>
+            <Text variant="heading2xl">89</Text>
+          </Card>
+        </Grid.Cell>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 3, xl: 3}}>
+          <Card title="Conversion Rate">
+            <BadgeComponent status="trend-indicator">↑ 3%</BadgeComponent>
+            <Text variant="heading2xl">3.4%</Text>
+          </Card>
+        </Grid.Cell>
+      </Grid>
+
+      {/* Data Grid Section */}
+      <Card>
+        <Card.Section title="Sales Data">
+          {loading && <SpinnerComponent />}
+
+          <Form>
+            <Grid>
+              <Grid.Cell columnSpan={{xs: 6, sm: 3}}>
+                <ExtComboBox
+                  fieldLabel="Date Range"
+                  store={['Last 7 days', 'Last 30 days', 'Last 90 days']}
+                  onChange={handleDateRangeChange}
+                />
+              </Grid.Cell>
+              <Grid.Cell columnSpan={{xs: 6, sm: 3}}>
+                <ButtonComponent
+                  variant="primary"
+                  label="Export Data"
+                  onClick={handleExport}
+                />
+              </Grid.Cell>
+            </Grid>
+          </Form>
+
+          <ExtDataGrid
+            data={salesData}
+            features={['grouping', 'sorting', 'filtering', 'export']}
+            columns={[
+              { text: 'Date', dataIndex: 'date', width: 120 },
+              { text: 'Revenue', dataIndex: 'revenue', width: 100, renderer: renderCurrency },
+              { text: 'Orders', dataIndex: 'orders', width: 80 },
+              { text: 'Customers', dataIndex: 'customers', width: 100 }
+            ]}
+          />
+        </Card.Section>
+      </Card>
+    </Page>
+  );
+}
+
+// Helper functions
+function renderCurrency(value: number) {
+  return `$${value.toLocaleString()}`;
+}
+
+function handleDateRangeChange(range: string) {
+  // Calculate date range based on selection
+  const now = new Date();
+  let startDate: Date;
+
+  switch (range) {
+    case 'Last 7 days':
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      break;
+    case 'Last 30 days':
+      startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      break;
+    case 'Last 90 days':
+      startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+      break;
+  }
+
+  handleFilterChange({
+    startDate: startDate.toISOString(),
+    endDate: now.toISOString()
+  });
+}
+
+function handleExport() {
+  eventBus.emit('export.requested', salesData);
+}
+```
+
+---
+
+## Example 2: Product Management System
+
+This example demonstrates a product management interface with mixed framework components:
+
+### Include Declarations
+
+```typescript
+// Main layout
+include "react" "Page" "full-width"
+include "react" "Tabs" "default"
+
+// Product listing
+include "extjs" "DataGrid" "product-catalog"
+include "vanilla" "Badge" "inventory-status"
+
+// Product editing
+include "react" "Form" "product-edit"
+include "extjs" "ComboBox" "category-selector"
+include "vanilla" "ButtonGroup" "actions"
+
+// Data management
+include "typescript" "Repository" "product"
+include "typescript" "UseCase" "product-crud"
+include "typescript" "EventBus" "product-events"
+```
+
+### Generated Implementation
+
+```typescript
+// Generated imports
+import {Page, Tabs, Form} from '@shopify/polaris';
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+import {BadgeComponent, ButtonGroupComponent} from '@cin7/vanilla-js';
+import {ExtDataGrid, ExtComboBox} from '@cin7/extjs-adapters';
+
+// Product entities and business logic
+interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  category: string;
+  stock: number;
+  status: 'active' | 'inactive' | 'out-of-stock';
+}
+
+class ProductRepository extends Repository<Product> {
+  async findByCategory(category: string): Promise<Product[]> {
+    return this.apiClient.get('/products', { category });
+  }
+
+  async updateStock(id: string, stock: number): Promise<Product> {
+    return this.apiClient.patch(`/products/${id}`, { stock });
+  }
+}
+
+class ProductCRUDUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: ProductRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+
+  async createProduct(productData: any): Promise<Product> {
+    const product = await this.repository.create(productData);
+    this.eventBus.emit('product.created', product);
+    return product;
+  }
+
+  async updateProduct(id: string, changes: any): Promise<Product> {
+    const product = await this.repository.update(id, changes);
+    this.eventBus.emit('product.updated', product);
+    return product;
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    await this.repository.delete(id);
+    this.eventBus.emit('product.deleted', { id });
+  }
+}
+
+// React component
+function ProductManagementSystem() {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // Initialize business logic
+  const productRepo = new ProductRepository(apiClient);
+  const productCRUD = new ProductCRUDUseCase(productRepo, new EventBus());
+
+  const tabs = [
+    {
+      id: 'all-products',
+      content: 'All Products',
+      panelID: 'all-products-panel',
+      badge: products.length.toString()
+    },
+    {
+      id: 'add-product',
+      content: 'Add Product',
+      panelID: 'add-product-panel'
+    }
+  ];
+
+  return (
+    <Page
+      title="Product Management"
+      primaryAction={{
+        content: 'Add Product',
+        onAction: () => setSelectedTab(1)
+      }}
+    >
+      <Tabs tabs={tabs} selected={selectedTab} onSelect={setSelectedTab}>
+        <Tabs.Panel id="all-products-panel">
+          <Card>
+            <Card.Section title="Product Catalog">
+              <ExtDataGrid
+                data={products}
+                features={['paging', 'sorting', 'filtering']}
+                columns={[
+                  {
+                    text: 'Product',
+                    dataIndex: 'name',
+                    flex: 2,
+                    renderer: (value: string, record: Product) => (
+                      <div>
+                        <Text variant="bodySm" fontWeight="semibold">{value}</Text>
+                        <Text variant="bodySm" color="subdued">SKU: {record.sku}</Text>
+                      </div>
+                    )
+                  },
+                  {
+                    text: 'Price',
+                    dataIndex: 'price',
+                    width: 100,
+                    renderer: (value: number) => `$${value.toFixed(2)}`
+                  },
+                  {
+                    text: 'Stock',
+                    dataIndex: 'stock',
+                    width: 80,
+                    renderer: (value: number, record: Product) => (
+                      <BadgeComponent
+                        status={record.status}
+                        text={value.toString()}
+                      />
+                    )
+                  },
+                  {
+                    text: 'Category',
+                    dataIndex: 'category',
+                    width: 120
+                  },
+                  {
+                    text: 'Actions',
+                    width: 100,
+                    renderer: (value: any, record: Product) => (
+                      <ButtonGroupComponent
+                        buttons={[
+                          { label: 'Edit', onClick: () => setSelectedProduct(record) },
+                          { label: 'Delete', onClick: () => handleDeleteProduct(record.id) }
+                        ]}
+                      />
+                    )
+                  }
+                ]}
+              />
+            </Card.Section>
+          </Card>
+        </Tabs.Panel>
+
+        <Tabs.Panel id="add-product-panel">
+          <Card>
+            <Card.Section title="Add New Product">
+              <ProductEditForm
+                product={selectedProduct}
+                onSave={handleSaveProduct}
+                onCancel={() => setSelectedProduct(null)}
+              />
+            </Card.Section>
+          </Card>
+        </Tabs.Panel>
+      </Tabs>
+    </Page>
+  );
+
+  async function handleSaveProduct(productData: any) {
+    try {
+      if (selectedProduct) {
+        await productCRUD.updateProduct(selectedProduct.id, productData);
+      } else {
+        await productCRUD.createProduct(productData);
+      }
+      setSelectedProduct(null);
+      // Refresh product list
+      loadProducts();
+    } catch (error) {
+      console.error('Failed to save product:', error);
+    }
+  }
+
+  async function handleDeleteProduct(id: string) {
+    try {
+      await productCRUD.deleteProduct(id);
+      loadProducts();
+    } catch (error) {
+      console.error('Failed to delete product:', error);
+    }
+  }
+
+  async function loadProducts() {
+    try {
+      const allProducts = await productRepo.findAll();
+      setProducts(allProducts);
+    } catch (error) {
+      console.error('Failed to load products:', error);
+    }
+  }
+}
+
+// Product Edit Form Component
+function ProductEditForm({ product, onSave, onCancel }: any) {
+  const [formData, setFormData] = useState({
+    name: product?.name || '',
+    sku: product?.sku || '',
+    price: product?.price || 0,
+    category: product?.category || '',
+    stock: product?.stock || 0
+  });
+
+  return (
+    <Form>
+      <FormLayout>
+        <TextField
+          label="Product Name"
+          value={formData.name}
+          onChange={(value) => setFormData({ ...formData, name: value })}
+        />
+
+        <TextField
+          label="SKU"
+          value={formData.sku}
+          onChange={(value) => setFormData({ ...formData, sku: value })}
+        />
+
+        <TextField
+          label="Price"
+          type="number"
+          prefix="$"
+          value={formData.price}
+          onChange={(value) => setFormData({ ...formData, price: parseFloat(value) })}
+        />
+
+        <ExtComboBox
+          fieldLabel="Category"
+          store={['Electronics', 'Clothing', 'Home & Garden', 'Sports', 'Books']}
+          value={formData.category}
+          onChange={(value) => setFormData({ ...formData, category: value })}
+        />
+
+        <TextField
+          label="Stock"
+          type="number"
+          value={formData.stock}
+          onChange={(value) => setFormData({ ...formData, stock: parseInt(value) })}
+        />
+
+        <ButtonGroupComponent
+          buttons={[
+            { label: 'Save', variant: 'primary', onClick: () => onSave(formData) },
+            { label: 'Cancel', onClick: onCancel }
+          ]}
+        />
+      </FormLayout>
+    </Form>
+  );
+}
+```
+
+---
+
+## Example 3: User Management with Workflow
+
+This example shows a user management system with complex workflow components:
+
+### Include Declarations
+
+```typescript
+// Main interface
+include "react" "Page" "settings"
+include "react" "Card" "user-profile"
+include "react" "Tabs" "vertical"
+
+// User listing
+include "extjs" "DataGrid" "user-management"
+include "vanilla" "Badge" "user-role"
+include "vanilla" "Badge" "user-status"
+
+// User form
+include "react" "Form" "user-edit"
+include "extjs" "ComboBox" "role-selector"
+include "vanilla" "ButtonGroup" "workflow-actions"
+
+// Workflow and events
+include "typescript" "Repository" "user"
+include "typescript" "UseCase" "user-workflow"
+include "typescript" "EventBus" "user-workflow-events"
+```
+
+### Generated Implementation
+
+```typescript
+// Generated imports
+import {Page, Card, Tabs, Form} from '@shopify/polaris';
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+import {BadgeComponent, ButtonGroupComponent} from '@cin7/vanilla-js';
+import {ExtDataGrid, ExtComboBox} from '@cin7/extjs-adapters';
+
+// User entities and workflow
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'manager' | 'user';
+  status: 'active' | 'inactive' | 'pending';
+  department: string;
+  lastLogin?: Date;
+}
+
+interface UserWorkflowEvent {
+  type: 'USER_CREATED' | 'USER_UPDATED' | 'USER_ACTIVATED' | 'USER_DEACTIVATED';
+  userId: string;
+  timestamp: Date;
+  actor: string;
+  changes?: any;
+}
+
+class UserRepository extends Repository<User> {
+  async findByRole(role: string): Promise<User[]> {
+    return this.apiClient.get('/users', { role });
+  }
+
+  async findByDepartment(department: string): Promise<User[]> {
+    return this.apiClient.get('/users', { department });
+  }
+
+  async updateStatus(id: string, status: string): Promise<User> {
+    return this.apiClient.patch(`/users/${id}`, { status });
+  }
+}
+
+class UserWorkflowUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: UserRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+
+  async createUser(userData: any, actor: string): Promise<User> {
+    const user = await this.repository.create(userData);
+
+    // Emit workflow event
+    this.eventBus.emit('user.workflow', {
+      type: 'USER_CREATED',
+      userId: user.id,
+      timestamp: new Date(),
+      actor,
+      changes: userData
+    });
+
+    return user;
+  }
+
+  async updateUserRole(userId: string, newRole: string, actor: string): Promise<User> {
+    const user = await this.repository.update(userId, { role: newRole });
+
+    this.eventBus.emit('user.workflow', {
+      type: 'USER_UPDATED',
+      userId,
+      timestamp: new Date(),
+      actor,
+      changes: { role: newRole }
+    });
+
+    return user;
+  }
+
+  async activateUser(userId: string, actor: string): Promise<User> {
+    const user = await this.repository.updateStatus(userId, 'active');
+
+    this.eventBus.emit('user.workflow', {
+      type: 'USER_ACTIVATED',
+      userId,
+      timestamp: new Date(),
+      actor
+    });
+
+    return user;
+  }
+
+  async deactivateUser(userId: string, actor: string): Promise<User> {
+    const user = await this.repository.updateStatus(userId, 'inactive');
+
+    this.eventBus.emit('user.workflow', {
+      type: 'USER_DEACTIVATED',
+      userId,
+      timestamp: new Date(),
+      actor
+    });
+
+    return user;
+  }
+}
+
+// React component
+function UserManagementSystem() {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [users, setUsers] = useState<User[]>([]);
+  const [workflowEvents, setWorkflowEvents] = useState<UserWorkflowEvent[]>([]);
+
+  // Initialize business logic
+  const userRepo = new UserRepository(apiClient);
+  const userWorkflow = new UserWorkflowUseCase(userRepo, new EventBus());
+
+  const tabs = [
+    {
+      id: 'all-users',
+      content: 'All Users',
+      panelID: 'all-users-panel'
+    },
+    {
+      id: 'user-roles',
+      content: 'User Roles',
+      panelID: 'user-roles-panel'
+    },
+    {
+      id: 'workflow-log',
+      content: 'Workflow Log',
+      panelID: 'workflow-log-panel',
+      badge: workflowEvents.length.toString()
+    }
+  ];
+
+  return (
+    <Page title="User Management">
+      <Grid>
+        <Grid.Cell columnSpan={{xs: 6, sm: 4, md: 3, lg: 2, xl: 2}}>
+          <Tabs tabs={tabs} selected={selectedTab} onSelect={setSelectedTab} orientation="vertical">
+            {tabs.map((tab, index) => (
+              <Tabs.Panel key={tab.id} id={tab.panelID}>
+                {tab.content}
+              </Tabs.Panel>
+            ))}
+          </Tabs>
+        </Grid.Cell>
+
+        <Grid.Cell columnSpan={{xs: 6, sm: 8, md: 9, lg: 10, xl: 10}}>
+          {selectedTab === 0 && (
+            <Card>
+              <Card.Section title="All Users">
+                <ExtDataGrid
+                  data={users}
+                  features={['paging', 'filtering', 'grouping']}
+                  groupField="department"
+                  columns={[
+                    {
+                      text: 'User',
+                      dataIndex: 'name',
+                      flex: 2,
+                      renderer: (value: string, record: User) => (
+                        <div>
+                          <Text variant="bodySm" fontWeight="semibold">{value}</Text>
+                          <Text variant="bodySm" color="subdued">{record.email}</Text>
+                        </div>
+                      )
+                    },
+                    {
+                      text: 'Role',
+                      dataIndex: 'role',
+                      width: 120,
+                      renderer: (value: string) => (
+                        <BadgeComponent status={getRoleBadgeStatus(value)} text={value} />
+                      )
+                    },
+                    {
+                      text: 'Status',
+                      dataIndex: 'status',
+                      width: 120,
+                      renderer: (value: string) => (
+                        <BadgeComponent status={getStatusBadgeStatus(value)} text={value} />
+                      )
+                    },
+                    {
+                      text: 'Department',
+                      dataIndex: 'department',
+                      width: 150
+                    },
+                    {
+                      text: 'Last Login',
+                      dataIndex: 'lastLogin',
+                      width: 120,
+                      renderer: (value: Date) => value ? formatDate(value) : 'Never'
+                    },
+                    {
+                      text: 'Actions',
+                      width: 150,
+                      renderer: (value: any, record: User) => (
+                        <ButtonGroupComponent
+                          buttons={[
+                            { label: 'Edit', onClick: () => handleEditUser(record) },
+                            record.status === 'active'
+                              ? { label: 'Deactivate', onClick: () => handleDeactivateUser(record.id) }
+                              : { label: 'Activate', onClick: () => handleActivateUser(record.id) }
+                          ]}
+                        />
+                      )
+                    }
+                  ]}
+                />
+              </Card.Section>
+            </Card>
+          )}
+
+          {selectedTab === 1 && (
+            <Card>
+              <Card.Section title="User Roles Management">
+                <RoleManagementSection />
+              </Card.Section>
+            </Card>
+          )}
+
+          {selectedTab === 2 && (
+            <Card>
+              <Card.Section title="Workflow Log">
+                <WorkflowLog events={workflowEvents} />
+              </Card.Section>
+            </Card>
+          )}
+        </Grid.Cell>
+      </Grid>
+    </Page>
+  );
+
+  function getRoleBadgeStatus(role: string): string {
+    switch (role) {
+      case 'admin': return 'critical';
+      case 'manager': return 'warning';
+      case 'user': return 'success';
+      default: return 'info';
+    }
+  }
+
+  function getStatusBadgeStatus(status: string): string {
+    switch (status) {
+      case 'active': return 'success';
+      case 'inactive': return 'warning';
+      case 'pending': return 'info';
+      default: return 'subdued';
+    }
+  }
+
+  async function handleActivateUser(userId: string) {
+    try {
+      await userWorkflow.activateUser(userId, 'current-user');
+      loadUsers();
+    } catch (error) {
+      console.error('Failed to activate user:', error);
+    }
+  }
+
+  async function handleDeactivateUser(userId: string) {
+    try {
+      await userWorkflow.deactivateUser(userId, 'current-user');
+      loadUsers();
+    } catch (error) {
+      console.error('Failed to deactivate user:', error);
+    }
+  }
+
+  async function loadUsers() {
+    try {
+      const allUsers = await userRepo.findAll();
+      setUsers(allUsers);
+    } catch (error) {
+      console.error('Failed to load users:', error);
+    }
+  }
+
+  function loadWorkflowEvents() {
+    userWorkflow.eventBus.on('user.workflow', (event: UserWorkflowEvent) => {
+      setWorkflowEvents(prev => [event, ...prev].slice(0, 100)); // Keep last 100 events
+    });
+  }
+}
+
+// Helper components
+function RoleManagementSection() {
+  const [selectedRole, setSelectedRole] = useState('');
+  const [roleUsers, setRoleUsers] = useState<User[]>([]);
+
+  return (
+    <div>
+      <Card sectioned>
+        <Text variant="headingMd">Filter by Role</Text>
+        <ExtComboBox
+          fieldLabel="Select Role"
+          store={['admin', 'manager', 'user']}
+          value={selectedRole}
+          onChange={handleRoleChange}
+        />
+      </Card>
+
+      {selectedRole && (
+        <Card>
+          <Card.Section title={`Users with role: ${selectedRole}`}>
+            <Text>{roleUsers.length} users found</Text>
+            {/* List of users with this role */}
+          </Card.Section>
+        </Card>
+      )}
+    </div>
+  );
+
+  async function handleRoleChange(role: string) {
+    setSelectedRole(role);
+    if (role) {
+      const users = await userRepo.findByRole(role);
+      setRoleUsers(users);
+    } else {
+      setRoleUsers([]);
+    }
+  }
+}
+
+function WorkflowLog({ events }: { events: UserWorkflowEvent[] }) {
+  return (
+    <div>
+      {events.length === 0 ? (
+        <Text color="subdued">No workflow events recorded</Text>
+      ) : (
+        <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+          {events.map((event, index) => (
+            <Card key={index} sectioned>
+              <Grid>
+                <Grid.Cell columnSpan={{xs: 6, sm: 4}}>
+                  <Text variant="bodySm" fontWeight="semibold">
+                    {event.type.replace('_', ' ')}
+                  </Text>
+                  <Text variant="bodySm" color="subdued">
+                    {formatDate(event.timestamp)}
+                  </Text>
+                </Grid.Cell>
+                <Grid.Cell columnSpan={{xs: 6, sm: 4}}>
+                  <Text variant="bodySm">User ID: {event.userId}</Text>
+                  <Text variant="bodySm">Actor: {event.actor}</Text>
+                </Grid.Cell>
+                <Grid.Cell columnSpan={{xs: 12, sm: 4}}>
+                  {event.changes && (
+                    <Text variant="bodySm">
+                      Changes: {JSON.stringify(event.changes)}
+                    </Text>
+                  )}
+                </Grid.Cell>
+              </Grid>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Utility functions
+function formatDate(date: Date): string {
+  return new Date(date).toLocaleDateString();
+}
+```
+
+---
+
+## Example 4: Multi-Language Form Builder
+
+This example shows a dynamic form builder that can generate forms using components from different frameworks:
+
+### Include Declarations
+
+```typescript
+// Form builder interface
+include "react" "Page" "full-width"
+include "react" "Card" "form-builder"
+
+// Form components
+include "vanilla" "TextField" "dynamic"
+include "vanilla" "Select" "dynamic"
+include "vanilla" "Checkbox" "dynamic"
+include "extjs" "ComboBox" "form-field"
+
+// Form logic
+include "typescript" "Repository" "form-template"
+include "typescript" "UseCase" "form-generation"
+include "typescript" "EventBus" "form-events"
+```
+
+### Generated Implementation
+
+```typescript
+// Generated imports
+import {Page, Card} from '@shopify/polaris';
+import {Repository, UseCase, EventBus} from '@cin7/typescript-sdk';
+import {TextFieldComponent, SelectComponent, CheckboxComponent} from '@cin7/vanilla-js';
+import {ExtComboBox} from '@cin7/extjs-adapters';
+
+// Form entities and logic
+interface FormField {
+  id: string;
+  type: 'text' | 'select' | 'checkbox' | 'number';
+  label: string;
+  required: boolean;
+  options?: string[];
+  validation?: any;
+}
+
+interface FormTemplate {
+  id: string;
+  name: string;
+  description: string;
+  fields: FormField[];
+}
+
+class FormTemplateRepository extends Repository<FormTemplate> {
+  async findByName(name: string): Promise<FormTemplate | null> {
+    const templates = await this.findAll();
+    return templates.find(t => t.name === name) || null;
+  }
+}
+
+class FormGenerationUseCase extends UseCase<any, any> {
+  constructor(
+    private repository: FormTemplateRepository,
+    private eventBus: EventBus
+  ) {
+    super();
+  }
+
+  async generateForm(templateId: string): Promise<any> {
+    const template = await this.repository.findById(templateId);
+
+    this.eventBus.emit('form.generated', {
+      templateId,
+      fieldCount: template.fields.length
+    });
+
+    return template;
+  }
+}
+
+// React component
+function DynamicFormBuilder() {
+  const [templates, setTemplates] = useState<FormTemplate[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<FormTemplate | null>(null);
+  const [formData, setFormData] = useState<any>({});
+
+  const formRepo = new FormTemplateRepository(apiClient);
+  const formGenerator = new FormGenerationUseCase(formRepo, new EventBus());
+
+  return (
+    <Page title="Dynamic Form Builder">
+      <Grid>
+        <Grid.Cell columnSpan={{xs: 12, sm: 4, md: 4, lg: 3, xl: 3}}>
+          <Card>
+            <Card.Section title="Form Templates">
+              <SelectComponent
+                label="Select Template"
+                options={templates.map(t => ({ value: t.id, label: t.name }))}
+                onChange={handleTemplateChange}
+              />
+
+              {templates.map(template => (
+                <Card key={template.id} sectioned subdued>
+                  <Text variant="bodySm" fontWeight="semibold">{template.name}</Text>
+                  <Text variant="bodySm" color="subdued">{template.description}</Text>
+                  <Text variant="bodyXs">{template.fields.length} fields</Text>
+                </Card>
+              ))}
+            </Card.Section>
+          </Card>
+        </Grid.Cell>
+
+        <Grid.Cell columnSpan={{xs: 12, sm: 8, md: 8, lg: 9, xl: 9}}>
+          {selectedTemplate && (
+            <Card>
+              <Card.Section
+                title={`Form: ${selectedTemplate.name}`}
+                actions={[
+                  {
+                    content: 'Save Form',
+                    onAction: handleSaveForm
+                  },
+                  {
+                    content: 'Preview',
+                    onAction: handlePreviewForm
+                  }
+                ]}
+              >
+                <Text>{selectedTemplate.description}</Text>
+
+                <div style={{ marginTop: '16px' }}>
+                  {selectedTemplate.fields.map(field => (
+                    <div key={field.id} style={{ marginBottom: '16px' }}>
+                      {renderFormField(field, formData, setFormData)}
+                    </div>
+                  ))}
+                </div>
+              </Card.Section>
+            </Card>
+          )}
+        </Grid.Cell>
+      </Grid>
+    </Page>
+  );
+
+  function renderFormField(field: FormField, data: any, setData: any) {
+    const value = data[field.id] || '';
+
+    switch (field.type) {
+      case 'text':
+      case 'number':
+        return (
+          <TextFieldComponent
+            label={field.label}
+            value={value}
+            type={field.type}
+            required={field.required}
+            onChange={(newValue) => setData({ ...data, [field.id]: newValue })}
+          />
+        );
+
+      case 'select':
+        return (
+          <SelectComponent
+            label={field.label}
+            value={value}
+            options={field.options || []}
+            required={field.required}
+            onChange={(newValue) => setData({ ...data, [field.id]: newValue })}
+          />
+        );
+
+      case 'checkbox':
+        return (
+          <CheckboxComponent
+            label={field.label}
+            checked={value}
+            required={field.required}
+            onChange={(checked) => setData({ ...data, [field.id]: checked })}
+          />
+        );
+
+      default:
+        return (
+          <ExtComboBox
+            fieldLabel={field.label}
+            value={value}
+            store={field.options || []}
+            required={field.required}
+            onChange={(newValue) => setData({ ...data, [field.id]: newValue })}
+          />
+        );
+    }
+  }
+
+  async function handleTemplateChange(templateId: string) {
+    try {
+      const template = await formGenerator.generateForm(templateId);
+      setSelectedTemplate(template);
+      setFormData({});
+    } catch (error) {
+      console.error('Failed to load template:', error);
+    }
+  }
+
+  function handleSaveForm() {
+    console.log('Form data:', formData);
+    // Save form data to backend
+  }
+
+  function handlePreviewForm() {
+    console.log('Preview form:', selectedTemplate);
+    // Show form preview
+  }
+
+  async function loadTemplates() {
+    try {
+      const allTemplates = await formRepo.findAll();
+      setTemplates(allTemplates);
+    } catch (error) {
+      console.error('Failed to load templates:', error);
+    }
+  }
+
+  // Load templates on mount
+  useEffect(() => {
+    loadTemplates();
+  }, []);
+}
+```
+
+---
+
+## Benefits Demonstrated
+
+These examples showcase the key benefits of the include system:
+
+1. **Framework Agnostic Development**: Focus on components, not frameworks
+2. **Unified Syntax**: Single include statement syntax across all frameworks
+3. **Mixed Framework Pages**: Seamlessly combine React, ExtJS, Vanilla JS, and TypeScript
+4. **Type Safety**: Full TypeScript support with proper type definitions
+5. **Business Logic Separation**: Clean separation between UI and business logic
+6. **Event-Driven Architecture**: Proper event handling across framework boundaries
+7. **Rapid Development**: Component declarations automatically generate proper imports
+
+The include system enables developers to build complex applications using the best tool for each specific job while maintaining a consistent and intuitive development experience.
