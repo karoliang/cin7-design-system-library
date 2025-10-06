@@ -32777,10 +32777,15 @@ export function getIncludeExample(name: string, framework: keyof CodeExampleVari
   if (!example) {
     return \`// Example "\${name}" not found\`;
   }
-  const frameworkExample = example[framework];
-  if (frameworkExample) {
-    return frameworkExample;
+
+  // Check if the example has the expected framework structure
+  if (typeof example === 'object' && framework in example) {
+    const frameworkExample = (example as any)[framework];
+    if (frameworkExample) {
+      return frameworkExample;
+    }
   }
+
   return \`// Framework "\${framework}" not supported for example "\${name}"\`;
 }
 
