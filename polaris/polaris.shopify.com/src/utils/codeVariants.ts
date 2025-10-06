@@ -32774,21 +32774,30 @@ typedEventBus.on('user.created', (user) => {
 // Include System Utility Functions
 export function getIncludeExample(name: string, framework: keyof CodeExampleVariants): string {
   const example = includeSystemExamples[name as keyof typeof includeSystemExamples];
+
+  // First return point: example not found
   if (!example) {
-    return \`// Example "\${name}" not found\`;
+    return `// Example "${name}" not found`;
   }
 
-  // Check if the example has the expected framework structure
-  if (typeof example === 'object' && framework in example) {
-    const frameworkExample = (example as any)[framework];
-    if (typeof frameworkExample === 'string' && frameworkExample.length > 0) {
-      return frameworkExample;
-    }
+  // Second return point: example exists but has wrong type
+  if (typeof example !== 'object' || example === null) {
+    return `// Example "${name}" has invalid type`;
   }
 
-  // Always return a string (this satisfies TypeScript's strict mode)
-  const fallbackMessage = \`// Framework "\${framework}" not supported for example "\${name}"\`;
-  return fallbackMessage;
+  // Third return point: framework not found in example
+  if (!(framework in example)) {
+    return `// Framework "${framework}" not supported for example "${name}"`;
+  }
+
+  // Fourth return point: framework example is not a string
+  const frameworkExample = (example as any)[framework];
+  if (typeof frameworkExample !== 'string') {
+    return `// Framework "${framework}" example is not a string for "${name}"`;
+  }
+
+  // Final return point: valid framework example
+  return frameworkExample;
 }
 
 export function listIncludeExamples(): string[] {
