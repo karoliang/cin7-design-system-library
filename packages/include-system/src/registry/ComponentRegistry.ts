@@ -9,7 +9,8 @@ import {
   ComponentVariation,
   SupportedLanguage,
   ComponentNotFoundError,
-  VariationNotFoundError
+  VariationNotFoundError,
+  ComponentCategory
 } from '../types/IncludeSystem';
 
 export class RegistryManager {
@@ -149,7 +150,7 @@ export class RegistryManager {
         Card: {
           name: 'Card',
           description: 'Container for related information',
-          category: 'Layout',
+          category: ComponentCategory.LAYOUT,
           defaultVariation: 'default',
           variations: [
             {
@@ -181,7 +182,7 @@ export class RegistryManager {
         Button: {
           name: 'Button',
           description: 'Interactive button component',
-          category: 'Actions',
+          category: ComponentCategory.ACTIONS,
           defaultVariation: 'primary',
           variations: [
             {
@@ -213,7 +214,7 @@ export class RegistryManager {
         Badge: {
           name: 'Badge',
           description: 'Status indicator badge',
-          category: 'Feedback',
+          category: ComponentCategory.FEEDBACK,
           defaultVariation: 'info',
           variations: [
             {
@@ -245,7 +246,7 @@ export class RegistryManager {
         MediaCard: {
           name: 'MediaCard',
           description: 'Card with media content',
-          category: 'Layout',
+          category: ComponentCategory.LAYOUT,
           defaultVariation: 'default',
           variations: [
             {
@@ -277,7 +278,7 @@ export class RegistryManager {
         Page: {
           name: 'Page',
           description: 'Page layout wrapper',
-          category: 'Layout',
+          category: ComponentCategory.LAYOUT,
           defaultVariation: 'default',
           variations: [
             {
@@ -317,7 +318,7 @@ export class RegistryManager {
         Card: {
           name: 'Card',
           description: 'Lightweight card component',
-          category: 'Layout',
+          category: ComponentCategory.LAYOUT,
           defaultVariation: 'default',
           variations: [
             {
@@ -337,7 +338,7 @@ export class RegistryManager {
         Button: {
           name: 'Button',
           description: 'JavaScript button component',
-          category: 'Actions',
+          category: ComponentCategory.ACTIONS,
           defaultVariation: 'default',
           variations: [
             {
@@ -363,7 +364,7 @@ export class RegistryManager {
         Badge: {
           name: 'Badge',
           description: 'Lightweight badge component',
-          category: 'Feedback',
+          category: ComponentCategory.FEEDBACK,
           defaultVariation: 'default',
           variations: [
             {
@@ -395,7 +396,7 @@ export class RegistryManager {
         Spinner: {
           name: 'Spinner',
           description: 'Loading spinner component',
-          category: 'Feedback',
+          category: ComponentCategory.FEEDBACK,
           defaultVariation: 'default',
           variations: [
             {
@@ -429,7 +430,7 @@ export class RegistryManager {
         DataGrid: {
           name: 'DataGrid',
           description: 'Enterprise data grid component',
-          category: 'Data Display',
+          category: ComponentCategory.DISPLAY,
           defaultVariation: 'default',
           variations: [
             {
@@ -455,7 +456,7 @@ export class RegistryManager {
         ComboBox: {
           name: 'ComboBox',
           description: 'ExtJS combo box component',
-          category: 'Selection',
+          category: ComponentCategory.INPUT,
           defaultVariation: 'default',
           variations: [
             {
@@ -481,7 +482,7 @@ export class RegistryManager {
         FormPanel: {
           name: 'FormPanel',
           description: 'ExtJS form panel component',
-          category: 'Forms',
+          category: ComponentCategory.FORMS,
           defaultVariation: 'default',
           variations: [
             {
@@ -515,7 +516,7 @@ export class RegistryManager {
         Repository: {
           name: 'Repository',
           description: 'Repository pattern implementation',
-          category: 'Patterns',
+          category: ComponentCategory.DISPLAY,
           defaultVariation: 'default',
           variations: [
             {
@@ -535,7 +536,7 @@ export class RegistryManager {
         UseCase: {
           name: 'UseCase',
           description: 'Use case pattern implementation',
-          category: 'Patterns',
+          category: ComponentCategory.DISPLAY,
           defaultVariation: 'default',
           variations: [
             {
@@ -555,7 +556,7 @@ export class RegistryManager {
         EventBus: {
           name: 'EventBus',
           description: 'Event bus implementation',
-          category: 'Patterns',
+          category: ComponentCategory.DISPLAY,
           defaultVariation: 'default',
           variations: [
             {
