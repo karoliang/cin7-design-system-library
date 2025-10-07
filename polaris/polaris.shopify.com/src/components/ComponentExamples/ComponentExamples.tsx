@@ -9,7 +9,6 @@ import Markdown from '../Markdown';
 import {useRouter} from 'next/router';
 import {useSearchParams} from 'next/navigation';
 import {getCodeExamples, parseExampleFileName} from '../../utils/codeVariants';
-import {componentRegistry, type SupportedLanguage} from '@cin7/include-system';
 
 const exampleIframeId = 'example-iframe';
 const iframePadding = 192;
@@ -312,14 +311,12 @@ type IncludeTab = {
   className?: string;
 };
 
-const includeLanguages: readonly {id: SupportedLanguage; label: string}[] = [
+const includeLanguages = [
   {id: 'react', label: 'React'},
   {id: 'vanilla', label: 'Vanilla'},
   {id: 'extjs', label: 'ExtJS'},
   {id: 'typescript', label: 'TypeScript'},
 ] as const;
-
-const missingCombinationLog = new Set<string>();
 
 function IncludePanel({componentTitle, fileName}: {componentTitle: string; fileName: string}) {
   const includeData = buildIncludeTabs(componentTitle, fileName);
@@ -371,37 +368,12 @@ function buildIncludeTabs(componentTitle: string, fileName: string): {tabs: Incl
   const componentName = toPascalCase(componentSlug);
   const variationName = normalizeVariation(componentSlug, variationSlug);
 
-  const tabs: IncludeTab[] = [];
-  const missingLanguages: string[] = [];
+  const tabs = includeLanguages.map(({id, label}) => ({
+    title: label,
+    code: `include "${id}" "${componentName}" "${variationName}"`,
+  }));
 
-  includeLanguages.forEach(({id, label}) => {
-    const available = componentRegistry.isAvailable(id, componentName, variationName);
-
-    if (available) {
-      tabs.push({
-        title: label,
-        code: `include "${id}" "${componentName}" "${variationName}"`,
-      });
-      return;
-    }
-
-    const logKey = `${componentName}.${variationName}.${id}`;
-    if (!missingCombinationLog.has(logKey)) {
-      missingCombinationLog.add(logKey);
-      console.warn(`[IncludePanel] Missing include mapping for ${logKey}`);
-    }
-
-    missingLanguages.push(label);
-    tabs.push({
-      title: label,
-      code: [
-        `// ${label} include pending`,
-        `// Planned syntax: include "${id}" "${componentName}" "${variationName}"`,
-      ].join('\n'),
-    });
-  });
-
-  return {tabs, missingLanguages};
+  return {tabs, missingLanguages: []};
 }
 
 function normalizeVariation(componentSlug: string, exampleSlug: string): string {
