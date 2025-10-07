@@ -78,3 +78,42 @@
 .SandboxButton {
   float: right;
 }
+
+.IncludePanel {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border-subdued);
+  border-radius: var(--border-radius-600);
+  background: var(--surface-app);
+  padding: 1rem;
+  box-shadow: var(--card-shadow);
+}
+
+.IncludeHeader {
+  margin-bottom: 0.75rem;
+}
+
+.IncludeTitle {
+  margin: 0;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-600);
+  color: var(--text-strong);
+}
+
+.IncludeDescription {
+  margin: 0.25rem 0 0;
+  font-size: var(--font-size-100);
+  color: var(--text-subdued);
+}
+
+.IncludeNotice {
+  margin-top: 0.75rem;
+  font-size: var(--font-size-100);
+  color: var(--text-subdued);
+  font-style: italic;
+}
+
+.IncludeMeta {
+  margin-top: 0.75rem;
+  font-size: var(--font-size-100);
+  color: var(--text-subdued);
+}

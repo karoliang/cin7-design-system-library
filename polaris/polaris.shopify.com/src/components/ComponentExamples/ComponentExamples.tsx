@@ -9,6 +9,7 @@ import Markdown from '../Markdown';
 import {useRouter} from 'next/router';
 import {useSearchParams} from 'next/navigation';
 import {getCodeExamples, parseExampleFileName} from '../../utils/codeVariants';
+import {componentRegistry, type SupportedLanguage} from '@cin7/include-system';
 
 const exampleIframeId = 'example-iframe';
 const iframePadding = 192;
@@ -275,6 +276,10 @@ const ComponentExamples = ({examples, componentTitle}: Props) => {
           <Code
             code={getMultiLanguageCode(componentTitle, fileName, code, htmlCode)}
           />
+          <IncludePanel
+            componentTitle={componentTitle}
+            fileName={fileName}
+          />
         </div>
       );
     },
@@ -300,3 +305,130 @@ const ComponentExamples = ({examples, componentTitle}: Props) => {
 };
 
 export default ComponentExamples;
+
+type IncludeTab = {
+  title: string;
+  code: string;
+  className?: string;
+};
+
+const includeLanguages: readonly {id: SupportedLanguage; label: string}[] = [
+  {id: 'react', label: 'React'},
+  {id: 'vanilla', label: 'Vanilla'},
+  {id: 'extjs', label: 'ExtJS'},
+  {id: 'typescript', label: 'TypeScript'},
+] as const;
+
+const missingCombinationLog = new Set<string>();
+
+function IncludePanel({componentTitle, fileName}: {componentTitle: string; fileName: string}) {
+  const includeData = buildIncludeTabs(componentTitle, fileName);
+
+  if (!includeData) {
+    return null;
+  }
+
+  const {tabs, missingLanguages} = includeData;
+  const hasMissing = missingLanguages.length > 0;
+
+  return (
+    <div className={styles.IncludePanel}>
+      <div className={styles.IncludeHeader}>
+        <h4 className={styles.IncludeTitle}>Include snippets</h4>
+        <p className={styles.IncludeDescription}>
+          Use the Cin7 DSL Include System to embed this variation across each layer.
+        </p>
+      </div>
+      <Code code={tabs} />
+      {hasMissing ? (
+        <p className={styles.IncludeNotice}>
+          We&apos;re still wiring up include support for {missingLanguages.join(', ')}. The snippets above show the intended syntax.
+        </p>
+      ) : (
+        <p className={styles.IncludeMeta}>
+          All four languages support this variation. Copy the snippet you need from the tabs above.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function buildIncludeTabs(componentTitle: string, fileName: string): {tabs: IncludeTab[]; missingLanguages: string[]} | null {
+  const parsed = parseExampleFileName(fileName);
+  let componentSlug: string;
+  let variationSlug: string;
+
+  if (parsed) {
+    componentSlug = parsed.component;
+    variationSlug = parsed.example;
+  } else {
+    const nameWithoutExt = fileName.replace('.tsx', '');
+    const [slug, ...rest] = nameWithoutExt.split('-');
+    componentSlug = slug || toKebabCase(componentTitle);
+    variationSlug = rest.length > 0 ? rest.join('-') : 'default';
+  }
+
+  const componentName = toPascalCase(componentSlug);
+  const variationName = normalizeVariation(componentSlug, variationSlug);
+
+  const tabs: IncludeTab[] = [];
+  const missingLanguages: string[] = [];
+
+  includeLanguages.forEach(({id, label}) => {
+    const available = componentRegistry.isAvailable(id, componentName, variationName);
+
+    if (available) {
+      tabs.push({
+        title: label,
+        code: `include "${id}" "${componentName}" "${variationName}"`,
+      });
+      return;
+    }
+
+    const logKey = `${componentName}.${variationName}.${id}`;
+    if (!missingCombinationLog.has(logKey)) {
+      missingCombinationLog.add(logKey);
+      console.warn(`[IncludePanel] Missing include mapping for ${logKey}`);
+    }
+
+    missingLanguages.push(label);
+    tabs.push({
+      title: label,
+      code: [
+        `// ${label} include pending`,
+        `// Planned syntax: include "${id}" "${componentName}" "${variationName}"`,
+      ].join('\n'),
+    });
+  });
+
+  return {tabs, missingLanguages};
+}
+
+function normalizeVariation(componentSlug: string, exampleSlug: string): string {
+  if (!exampleSlug || exampleSlug === componentSlug) {
+    return 'default';
+  }
+
+  if (exampleSlug.startsWith(`${componentSlug}-`)) {
+    const suffix = exampleSlug.substring(componentSlug.length + 1);
+    return suffix || 'default';
+  }
+
+  return exampleSlug;
+}
+
+function toPascalCase(value: string): string {
+  return value
+    .split(/[^a-zA-Z0-9]/)
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join('');
+}
+
+function toKebabCase(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}

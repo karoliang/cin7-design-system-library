@@ -10,8 +10,9 @@ import {
   SupportedLanguage,
   ComponentNotFoundError,
   VariationNotFoundError,
-  ComponentCategory
+  ComponentCategory,
 } from '../types/IncludeSystem';
+import {componentVariationDataset} from '../generated/componentVariations';
 
 export class RegistryManager {
   private registry: ComponentRegistry;
@@ -146,162 +147,7 @@ export class RegistryManager {
       description: 'React components from Polaris',
       importStyle: 'named',
       defaultExport: false,
-      components: {
-        Card: {
-          name: 'Card',
-          description: 'Container for related information',
-          category: ComponentCategory.LAYOUT,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard card container',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'header',
-              description: 'Header card with emphasized styling',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'product-info',
-              description: 'Card optimized for product information display',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'metric-card',
-              description: 'Card for displaying metrics and KPIs',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            }
-          ]
-        },
-        Button: {
-          name: 'Button',
-          description: 'Interactive button component',
-          category: ComponentCategory.ACTIONS,
-          defaultVariation: 'primary',
-          variations: [
-            {
-              name: 'primary',
-              description: 'Primary action button',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'secondary',
-              description: 'Secondary action button',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'destructive',
-              description: 'Destructive action button',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'plain',
-              description: 'Plain button without styling',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            }
-          ]
-        },
-        Badge: {
-          name: 'Badge',
-          description: 'Status indicator badge',
-          category: ComponentCategory.FEEDBACK,
-          defaultVariation: 'info',
-          variations: [
-            {
-              name: 'success',
-              description: 'Success status badge',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'warning',
-              description: 'Warning status badge',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'info',
-              description: 'Information status badge',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'new',
-              description: 'New feature badge',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            }
-          ]
-        },
-        MediaCard: {
-          name: 'MediaCard',
-          description: 'Card with media content',
-          category: ComponentCategory.LAYOUT,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard media card',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'small',
-              description: 'Compact media card',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'video-card',
-              description: 'Video content card',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'portrait-video-card',
-              description: 'Portrait video card',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            }
-          ]
-        },
-        Page: {
-          name: 'Page',
-          description: 'Page layout wrapper',
-          category: ComponentCategory.LAYOUT,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard page layout',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'full-width',
-              description: 'Full width page layout',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            },
-            {
-              name: 'dashboard',
-              description: 'Dashboard page layout',
-              importPath: '@shopify/polaris',
-              dependencies: []
-            }
-          ]
-        }
-      }
+      components: buildComponentsFromDataset('react', '@shopify/polaris'),
     };
   }
 
@@ -314,106 +160,7 @@ export class RegistryManager {
       description: 'Vanilla JavaScript components',
       importStyle: 'default',
       defaultExport: true,
-      components: {
-        Card: {
-          name: 'Card',
-          description: 'Lightweight card component',
-          category: ComponentCategory.LAYOUT,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard card',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'simple',
-              description: 'Minimal card styling',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            }
-          ]
-        },
-        Button: {
-          name: 'Button',
-          description: 'JavaScript button component',
-          category: ComponentCategory.ACTIONS,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard button',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'primary',
-              description: 'Primary button styling',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'link',
-              description: 'Link-style button',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            }
-          ]
-        },
-        Badge: {
-          name: 'Badge',
-          description: 'Lightweight badge component',
-          category: ComponentCategory.FEEDBACK,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'success',
-              description: 'Success badge',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'warning',
-              description: 'Warning badge',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'new',
-              description: 'New feature badge',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'trend-up',
-              description: 'Trend up indicator',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            }
-          ]
-        },
-        Spinner: {
-          name: 'Spinner',
-          description: 'Loading spinner component',
-          category: ComponentCategory.FEEDBACK,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard spinner',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            },
-            {
-              name: 'small',
-              description: 'Small spinner',
-              importPath: '@cin7/vanilla-js',
-              dependencies: []
-            }
-          ]
-        }
-      }
+      components: buildComponentsFromDataset('vanilla', '@cin7/vanilla-js'),
     };
   }
 
@@ -426,80 +173,7 @@ export class RegistryManager {
       description: 'ExtJS enterprise components',
       importStyle: 'named',
       defaultExport: false,
-      components: {
-        DataGrid: {
-          name: 'DataGrid',
-          description: 'Enterprise data grid component',
-          category: ComponentCategory.DISPLAY,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard data grid',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            },
-            {
-              name: 'enterprise',
-              description: 'Enterprise-grade data grid with advanced features',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            },
-            {
-              name: 'compact',
-              description: 'Compact data grid for space-constrained layouts',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            }
-          ]
-        },
-        ComboBox: {
-          name: 'ComboBox',
-          description: 'ExtJS combo box component',
-          category: ComponentCategory.INPUT,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard combo box',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            },
-            {
-              name: 'abc',
-              description: 'ABC configuration combo box',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            },
-            {
-              name: 'search',
-              description: 'Searchable combo box',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            }
-          ]
-        },
-        FormPanel: {
-          name: 'FormPanel',
-          description: 'ExtJS form panel component',
-          category: ComponentCategory.FORMS,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard form panel',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            },
-            {
-              name: 'settings',
-              description: 'Settings form panel',
-              importPath: '@cin7/extjs-adapters',
-              dependencies: []
-            }
-          ]
-        }
-      }
+      components: buildComponentsFromDataset('extjs', '@cin7/extjs-adapters'),
     };
   }
 
@@ -512,71 +186,178 @@ export class RegistryManager {
       description: 'TypeScript business logic patterns',
       importStyle: 'named',
       defaultExport: false,
-      components: {
-        Repository: {
-          name: 'Repository',
-          description: 'Repository pattern implementation',
-          category: ComponentCategory.DISPLAY,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard repository',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            },
-            {
-              name: 'standard',
-              description: 'Standard repository configuration',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            }
-          ]
-        },
-        UseCase: {
-          name: 'UseCase',
-          description: 'Use case pattern implementation',
-          category: ComponentCategory.DISPLAY,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard use case',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            },
-            {
-              name: 'crud',
-              description: 'CRUD operations use case',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            }
-          ]
-        },
-        EventBus: {
-          name: 'EventBus',
-          description: 'Event bus implementation',
-          category: ComponentCategory.DISPLAY,
-          defaultVariation: 'default',
-          variations: [
-            {
-              name: 'default',
-              description: 'Standard event bus',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            },
-            {
-              name: 'typed',
-              description: 'Type-safe event bus',
-              importPath: '@cin7/typescript-sdk',
-              dependencies: []
-            }
-          ]
-        }
-      }
+      components: buildComponentsFromDataset('typescript', '@cin7/typescript-sdk'),
     };
   }
 }
 
 // Singleton instance
 export const componentRegistry = RegistryManager.getInstance();
+
+type DatasetComponent = (typeof componentVariationDataset.components)[number];
+type DatasetVariation = DatasetComponent['variations'][number];
+
+function buildComponentsFromDataset(
+  language: SupportedLanguage,
+  importPath: string,
+): Record<string, ComponentDefinition> {
+  const components: Record<string, ComponentDefinition> = {};
+
+  for (const item of componentVariationDataset.components) {
+    const componentName = toPascalCase(item.slug);
+    const variations = buildVariations(item, importPath, language);
+
+    const existing = components[componentName];
+    if (existing) {
+      const variationMap = new Map<string, ComponentVariation>();
+      for (const variation of existing.variations) {
+        variationMap.set(variation.name, variation);
+      }
+      for (const variation of variations) {
+        if (!variationMap.has(variation.name)) {
+          variationMap.set(variation.name, variation);
+        }
+      }
+
+      const mergedVariations = Array.from(variationMap.values());
+      existing.variations = mergedVariations;
+      existing.defaultVariation =
+        mergedVariations.find((variation) => variation.name === 'default')?.name ??
+        (mergedVariations[0] ? mergedVariations[0].name : 'default');
+      continue;
+    }
+
+    const defaultVariation =
+      variations.find((variation) => variation.name === 'default')?.name ||
+      (variations[0] ? variations[0].name : 'default');
+
+    components[componentName] = {
+      name: componentName,
+      description:
+        language === 'react'
+          ? item.title ?? componentName
+          : `${componentName} include for ${language.toUpperCase()}`,
+      category: mapGroupToCategory(item.group),
+      defaultVariation,
+      variations,
+    };
+  }
+
+  return components;
+}
+
+function buildVariations(
+  component: DatasetComponent,
+  importPath: string,
+  language: SupportedLanguage,
+): ComponentVariation[] {
+  const variations: ComponentVariation[] = [];
+  const seen = new Set<string>();
+
+  for (const variation of component.variations) {
+    const name = deriveVariationName(component.slug, variation);
+    if (seen.has(name)) continue;
+    seen.add(name);
+
+    const description = buildVariationDescription(
+      component,
+      variation,
+      name,
+      language,
+    );
+
+    variations.push({
+      name,
+      description,
+      importPath,
+      dependencies: [],
+    });
+  }
+
+  if (!seen.has('default')) {
+    variations.unshift({
+      name: 'default',
+      description:
+        language === 'react'
+          ? `Default variation for ${component.title ?? component.slug}`
+          : `Default ${language.toUpperCase()} include for ${
+              component.title ?? component.slug
+            }`,
+      importPath,
+      dependencies: [],
+    });
+  }
+
+  return variations;
+}
+
+function deriveVariationName(
+  componentSlug: string,
+  variation: DatasetVariation,
+): string {
+  const exampleSlug = variation.exampleSlug ?? '';
+  if (!exampleSlug || exampleSlug === componentSlug) {
+    return 'default';
+  }
+
+  if (exampleSlug.startsWith(`${componentSlug}-`)) {
+    const suffix = exampleSlug.substring(componentSlug.length + 1);
+    return suffix || 'default';
+  }
+
+  return exampleSlug;
+}
+
+function buildVariationDescription(
+  component: DatasetComponent,
+  variation: DatasetVariation,
+  name: string,
+  language: SupportedLanguage,
+): string {
+  const parts: string[] = [];
+  if (variation.title) parts.push(variation.title);
+  if (variation.description) parts.push(variation.description);
+
+  if (parts.length === 0) {
+    return language === 'react'
+      ? `${toPascalCase(component.slug)} variation "${name}"`
+      : `${toPascalCase(component.slug)} ${language.toUpperCase()} include "${name}"`;
+  }
+
+  if (language === 'react') {
+    return parts.join(' — ');
+  }
+
+  return `${parts.join(' — ')} (${language.toUpperCase()} include)`;
+}
+
+function toPascalCase(value: string): string {
+  return value
+    .split(/[^a-zA-Z0-9]/)
+    .filter(Boolean)
+    .map(
+      (segment) =>
+        segment.charAt(0).toUpperCase() + segment.slice(1),
+    )
+    .join('');
+}
+
+function mapGroupToCategory(group: string): ComponentCategory {
+  const mapping: Record<string, ComponentCategory> = {
+    actions: ComponentCategory.ACTIONS,
+    'feedback-indicators': ComponentCategory.FEEDBACK,
+    'images-and-icons': ComponentCategory.IMAGES,
+    'layout-and-structure': ComponentCategory.LAYOUT,
+    navigation: ComponentCategory.NAVIGATION,
+    overlays: ComponentCategory.OVERLAYS,
+    'selection-and-input': ComponentCategory.INPUT,
+    tables: ComponentCategory.DISPLAY,
+    typography: ComponentCategory.TYPOGRAPHY,
+    lists: ComponentCategory.DISPLAY,
+    'internal-only': ComponentCategory.DISPLAY,
+    deprecated: ComponentCategory.DISPLAY,
+    utilities: ComponentCategory.DISPLAY,
+  };
+
+  return mapping[group] ?? ComponentCategory.DISPLAY;
+}

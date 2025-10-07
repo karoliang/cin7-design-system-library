@@ -25,6 +25,17 @@
 - Validate adapters inside the relevant `apps/*` sandbox before submitting.
 - New features must include regression tests covering both happy paths and failure states; keep tests deterministic.
 
+## BMAD Agent
+- Decisions:
+  - Keep the existing HTML code tab unchanged; include guidance will live in a new dedicated section.
+  - Apply include coverage to every documented component and variation, including deprecated and internal-only pages.
+  - Surface graceful fallback copy in the UI when an include mapping is missing, while logging gaps for follow-up.
+- Tasks:
+  - [ ] Extend `polaris/polaris.shopify.com/src/components/ComponentExamples/ComponentExamples.tsx` (and related styles/utilities) to render an Include System panel per example with React, ExtJS, Vanilla, and TypeScript include snippets derived from `parseExampleFileName`.
+  - [ ] Expand the include registry in `packages/include-system/src/registry/ComponentRegistry.ts` (and supporting tests) so every documented component variation in the MDX frontmatter resolves across all four languages.
+  - [ ] Create an automated data source (script or generated JSON under `scripts/`) that exports the component→variation matrix from the MDX frontmatter and use it to validate registry coverage in CI.
+  - [ ] Update documentation (`docs/include-system-guide.mdx`, relevant getting-started pages, and `CHANGELOG.md`) to describe the new include panels and workflow.
+
 ## Commit & Pull Request Guidelines
 - Follow Conventional Commits (`type: succinct summary`) as seen in history (e.g., `feat: add include system schema`).
 - Squash related work into logical commits; include workspace package scope when helpful.

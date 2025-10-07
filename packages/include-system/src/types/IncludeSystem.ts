@@ -67,7 +67,14 @@ export interface LanguageDefinition {
 }
 
 export interface ComponentConfiguration {
-  [key: string]: string | number | boolean | Record<string, any> | DesignTokenPreset | Record<string, any>;
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | Record<string, any>
+    | DesignTokenPreset
+    | ComponentConfiguration
+    | undefined;
 }
 
 export interface IncludeStatement {
@@ -159,7 +166,11 @@ export class ComponentNotFoundError extends IncludeError {
     super(
       `Component "${component}"${variationText} not found in framework "${language}"`,
       'COMPONENT_NOT_FOUND',
-      { language, component, variation }
+      {
+        language,
+        component,
+        variation: variation ?? 'default',
+      } as IncludeStatement
     );
   }
 }
@@ -179,7 +190,7 @@ export class VariationNotFoundError extends IncludeError {
     super(
       `Variation "${variation}" not found for component "${component}" in framework "${language}"`,
       'VARIATION_NOT_FOUND',
-      { language, component, variation }
+      { language, component, variation } as IncludeStatement
     );
   }
 }

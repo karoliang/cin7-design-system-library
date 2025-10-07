@@ -30,6 +30,23 @@ The Cin7 DSL framework is now production-ready with a complete multi-layer archi
 
 ## Development History
 
+### 2025-10-07
+
+#### Added
+- **Include dataset automation**
+  - Added `pnpm collect:variations` to generate component/variation metadata for both the docs site and the include registry.
+  - Auto-generated dataset now lives at `polaris/polaris.shopify.com/generated/component-variations.json` and `packages/include-system/src/generated/componentVariations.ts`.
+- **Registry coverage tests**
+  - Dynamically populate the include registry with every documented component variation.
+  - Added `packages/include-system/src/__tests__/registryCoverage.test.ts` to guarantee React, Vanilla, ExtJS, and TypeScript mappings stay in sync with the docs.
+
+#### Improved
+- **Component docs**
+  - Each component example now surfaces an *Include snippets* panel with copy-ready include statements across all supported languages.
+  - When a language mapping is missing, the panel shows a placeholder message and logs the gap for follow-up.
+- **Documentation**
+  - Documented the new workflow in `docs/include-system-guide.mdx` and the Getting Started overview, including when to rerun `pnpm collect:variations`.
+
 ### 2025-07-15
 
 #### Fixed

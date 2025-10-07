@@ -70,6 +70,11 @@ Cin7 DSL uses different technologies for different purposes:
 - **ExtJS Integration**: Advanced form controls, data grids, and complex UI widgets
 - **Polaris Components**: Beautiful, accessible UI building blocks
 
+### Include System Integration
+- **Inline guidance**: Every component example now ships with an *Include snippets* panel showing the exact syntax for React, Vanilla, ExtJS, and TypeScript.
+- **Automatic fallbacks**: When an include mapping is still in progress, the panel surfaces a placeholder and the docs console logs a reminder for follow-up.
+- **Source of truth**: Run `pnpm collect:variations` whenever you add or rename examples so the include registry and docs stay aligned.
+
 #### Application Layer
 - **TypeScript**: Type-safe business logic and application state management
 - **State Management**: Zustand for client state, React Query for server state

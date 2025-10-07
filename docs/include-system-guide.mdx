@@ -177,6 +177,25 @@ include "typescript" "Specification" "query"
 include "typescript" "EventBus" "typed"
 ```
 
+## Component documentation integration
+
+Every component example in the design system docs now exposes a dedicated **Include snippets** panel. The panel renders live include statements for React, Vanilla, ExtJS, and TypeScript, and automatically falls back to placeholder copy when a language has not been wired up yet.
+
+Under the hood:
+
+- `pnpm collect:variations` parses MDX frontmatter and emits two artefacts:
+  - `polaris/polaris.shopify.com/generated/component-variations.json` powers the docs site
+  - `packages/include-system/src/generated/componentVariations.ts` feeds the include registry and tests
+- The include registry (`@cin7/include-system`) auto-registers every component/variation pair, so Include System lookups stay in sync with the docs.
+- A Jest coverage check (`packages/include-system/src/__tests__/registryCoverage.test.ts`) guards against missing mappings across all four languages.
+
+When adding or editing docs examples:
+
+1. Run `pnpm collect:variations` to refresh the dataset files.
+2. Update or extend the include registry if a new component or variation appears.
+3. Re-run `pnpm --filter @cin7/include-system test` to confirm coverage.
+4. Inspect the component page locally to ensure the Include snippets panel renders as expected.
+
 ## Real-World Examples
 
 ### Mixed Framework Page
