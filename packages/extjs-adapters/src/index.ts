@@ -5,7 +5,7 @@
  */
 
 import { enterpriseTokens, animationTokens, spacingTokens } from '@cin7/design-tokens';
-import { initializeTheme, applyTheme, watchTheme } from './utilities/theme';
+import { initializeTheme, applyTheme } from './utilities/theme';
 import { registerComponents } from './components';
 
 // Auto-initialize on import

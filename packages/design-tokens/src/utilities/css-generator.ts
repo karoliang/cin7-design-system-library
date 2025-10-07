@@ -153,7 +153,7 @@ function generateSpacingUtilities(): string {
     // Individual sides
     properties.forEach(prop => {
       const prefix = prop === 'margin' ? 'm' : 'p';
-      sides.forEach((side, index) => {
+      sides.forEach(side => {
         const sidePrefix = side[0];
         classes.push(`.cin7-${prefix}${sidePrefix}-${scale} { ${prop}-${side}: ${value}; }`);
       });

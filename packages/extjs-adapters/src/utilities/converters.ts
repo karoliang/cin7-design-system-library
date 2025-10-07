@@ -74,7 +74,7 @@ export function validationToValidators(validation?: {
   if (validation.url) {
     validators.push({
       type: 'format',
-      matcher: /^https?:\\/\\/.+/,
+      matcher: /^https?:\/\/.+/,
       message: 'Must be a valid URL',
     });
   }
@@ -138,7 +138,7 @@ export function spacingToPixels(spacing?: string | number): number {
   }
   
   // Extract number from CSS value
-  const match = spacing.match(/^(\\d+)/);
+  const match = spacing.match(/^(\d+)/);
   return match ? parseInt(match[1], 10) : 0;
 }
 
@@ -153,7 +153,7 @@ export function colorToHex(color: string): string {
   
   // If CSS variable, try to resolve it
   if (color.startsWith('var(')) {
-    const varName = color.match(/var\\(([^)]+)\\)/)?.[1];
+    const varName = color.match(/var\(([^)]+)\)/)?.[1];
     if (varName) {
       const computed = getComputedStyle(document.documentElement).getPropertyValue(varName);
       return computed.trim() || color;
