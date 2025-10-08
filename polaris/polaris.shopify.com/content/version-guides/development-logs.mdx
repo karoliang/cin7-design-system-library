@@ -160,6 +160,17 @@ The Cin7 DSL framework represents an **exceptional achievement** in enterprise f
 - Clear architectural boundaries
 - Enterprise-focused feature set
 
+### October 7, 2025 – Include System Automation & Docs Integration
+
+Following the strategic review, we automated the Include System end to end:
+- Added `pnpm collect:variations` to harvest component/variation metadata directly from MDX frontmatter.
+- Generated dual artefacts powering the docs and include registry (`polaris/polaris.shopify.com/generated/component-variations.json`, `packages/include-system/src/generated/componentVariations.ts`).
+- Updated the include registry to ingest the dataset and enforced coverage via `packages/include-system/src/__tests__/registryCoverage.test.ts`.
+- Surfaced *Include snippets* tabs across every component page, documenting the workflow in the updated Include guide ([docs/include-system-guide.mdx](../../docs/include-system-guide.mdx)).
+- Highlighted the cross-framework include flow in the Getting Started overview.
+
+**Benefit:** A single source of truth now keeps documentation and code in sync, with copy-ready snippets that empower teams to mix React, Vanilla, ExtJS, and TypeScript includes confidently.
+
 **Recommendation: IMMEDIATE ADOPTION 🚀**
 
 This framework is ready for immediate production use in enterprise applications and sets a new standard for multi-layer JavaScript frameworks.
