@@ -27,7 +27,6 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@cin7/include-system": "workspace:*",
     "@floating-ui/react-dom-interactions": "^0.10.1",
     "@headlessui/react": "^1.6.5",
     "@juggle/resize-observer": "^3.4.0",
