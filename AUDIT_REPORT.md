@@ -179,7 +179,7 @@ The Cin7 DSL project has achieved approximately 85% completion of the planned fe
 ## Recommendations
 
 1. **Run fresh install**: `pnpm install --no-frozen-lockfile`
-2. **Build all packages**: `./test-build-comprehensive.sh`
+2. **Build all packages**: `./test-full-build.sh`
 3. **Re-enable Netlify**: Update `netlify.toml`
 4. **Create release notes**: Document all features
 5. **Tag release**: `v1.0.0`

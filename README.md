@@ -55,6 +55,7 @@ The framework follows a layered architecture:
 - **Tokens** - Design tokens and theming
 - **Icons** - Icon library and usage
 - **Patterns** - Common UI patterns and best practices
+- **Archive** - Historical planning docs (`docs/archive/2025-foundation`)
 
 ## 📦 Framework Packages
 
@@ -111,6 +112,7 @@ pnpm build
   - `polaris/polaris.shopify.com/generated/component-variations.json`
   - `packages/include-system/src/generated/componentVariations.ts`
 - The include registry and coverage test use this dataset, and the docs pull the same information to render the *Include snippets* tabs.
+- Run `pnpm check:variations` before submitting to ensure the dataset is in sync.
 
 ## 🚀 Deployment
 

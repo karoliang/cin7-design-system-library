@@ -78,13 +78,15 @@ ref={(el) => {
 ### Quick Test
 Tests only the documentation site:
 ```bash
-./test-build-local.sh
+cd polaris/polaris.shopify.com
+pnpm build
 ```
 
 ### Comprehensive Test
-Mimics the complete Netlify build process:
+Mimics the complete Netlify build process and verifies include datasets:
 ```bash
 ./test-full-build.sh
+pnpm check:variations
 ```
 
 ## Environment Variables

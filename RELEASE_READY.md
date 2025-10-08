@@ -58,7 +58,8 @@ I have completed a comprehensive audit of all 24 completed todo items. Here's th
 **Note**: Full local build test requires running:
 ```bash
 pnpm install --no-frozen-lockfile
-./test-build-comprehensive.sh
+./test-full-build.sh
+pnpm check:variations
 ```
 
 Due to the large monorepo and dependencies, a complete build test may take significant time. The structure and configuration are correct for building.

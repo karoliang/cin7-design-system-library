@@ -34,10 +34,10 @@ Run the comprehensive build test script:
 
 ```bash
 # Make executable
-chmod +x test-build-comprehensive.sh
+chmod +x test-full-build.sh
 
 # Run build test
-./test-build-comprehensive.sh
+./test-full-build.sh
 ```
 
 Or manually test individual packages:
@@ -66,7 +66,8 @@ cd polaris && pnpm install && cd polaris.shopify.com && pnpm build
 
 ### 1. Local Testing
 - [ ] Run `pnpm install --no-frozen-lockfile` from root
-- [ ] Execute `./test-build-comprehensive.sh`
+- [ ] Execute `./test-full-build.sh`
+- [ ] Run `pnpm check:variations`
 - [ ] Fix any build errors
 - [ ] Verify all packages have `dist` folders
 

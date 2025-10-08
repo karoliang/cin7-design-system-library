@@ -67,11 +67,16 @@ The project deploys to: https://cin7-dsl.netlify.app
 ### Testing Builds Locally
 
 ```bash
-# Quick test (documentation only)
-./test-build-local.sh
+# Quick docs-only check
+cd polaris/polaris.shopify.com
+pnpm build
 
-# Full test (matches Netlify build)
+# Full pipeline test (matches Netlify build)
+cd ../..
 ./test-full-build.sh
+
+# Verify include dataset is up to date
+pnpm check:variations
 ```
 
 ## Recent Updates (2025-07-13)
@@ -217,9 +222,9 @@ See "Next Steps" section at the end of this file for current priorities.
 - Fixed documentation styling inconsistencies (removed Grid/Card overuse)
 - Updated all package statuses from "planned" to "implemented"
 - Created comprehensive validation and architecture documentation
-- All builds tested and working (./test-build-local.sh and ./test-full-build.sh)
+- All builds tested and working (`pnpm build` in `polaris/polaris.shopify.com` and `./test-full-build.sh`)
 - Fixed TypeScript build error in codeVariants.ts (restored from commit db833e2)
-- Created comprehensive changelog documentation (CHANGELOG.md, DEVELOPMENT_TIMELINE.md)
+- Created comprehensive changelog documentation (CHANGELOG.md, docs/archive/2025-foundation/DEVELOPMENT_TIMELINE.md)
 - Added changelog pages to documentation site with proper navigation
 - Created detailed development logs page under version guides
 - Fixed Divider component error by replacing with markdown horizontal rules

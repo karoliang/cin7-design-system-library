@@ -27,14 +27,14 @@
 
 ## BMAD Agent
 - Decisions:
-  - Keep the existing HTML code tab unchanged; include guidance will live in a new dedicated section.
-  - Apply include coverage to every documented component and variation, including deprecated and internal-only pages.
-  - Surface graceful fallback copy in the UI when an include mapping is missing, while logging gaps for follow-up.
+  - Component include snippets in the docs are rendered statically; rely on the generated dataset plus registry coverage tests rather than runtime lookups.
+  - Run `pnpm collect:variations` (or `pnpm check:variations` in CI) whenever MDX examples change to keep dataset outputs committed.
+  - Keep include coverage aligned with all documented components, including deprecated/internal pages, via the registry + tests.
 - Tasks:
-  - [ ] Extend `polaris/polaris.shopify.com/src/components/ComponentExamples/ComponentExamples.tsx` (and related styles/utilities) to render an Include System panel per example with React, ExtJS, Vanilla, and TypeScript include snippets derived from `parseExampleFileName`.
-  - [ ] Expand the include registry in `packages/include-system/src/registry/ComponentRegistry.ts` (and supporting tests) so every documented component variation in the MDX frontmatter resolves across all four languages.
-  - [ ] Create an automated data source (script or generated JSON under `scripts/`) that exports the component→variation matrix from the MDX frontmatter and use it to validate registry coverage in CI.
-  - [ ] Update documentation (`docs/include-system-guide.mdx`, relevant getting-started pages, and `CHANGELOG.md`) to describe the new include panels and workflow.
+  - [ ] Maintain the static include panel in `polaris/polaris.shopify.com/src/components/ComponentExamples/ComponentExamples.tsx` and its styling.
+  - [ ] Extend `packages/include-system` registry/test coverage when new examples ship.
+  - [ ] Refresh docs (`docs/include-system-guide.mdx`, Getting Started) whenever the include workflow evolves.
+  - [ ] Verify `scripts/collect-component-variations.js`, the JSON snapshot, and the TS export are current before submitting changes.
 
 ## Commit & Pull Request Guidelines
 - Follow Conventional Commits (`type: succinct summary`) as seen in history (e.g., `feat: add include system schema`).
