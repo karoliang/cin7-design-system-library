@@ -102,6 +102,16 @@ cd polaris/polaris.shopify.com
 pnpm build
 ```
 
+### Include System workflow
+- Regenerate component/variation metadata after changing MDX examples:
+  ```bash
+  pnpm collect:variations
+  ```
+- Commit both generated artefacts:
+  - `polaris/polaris.shopify.com/generated/component-variations.json`
+  - `packages/include-system/src/generated/componentVariations.ts`
+- The include registry and coverage test use this dataset, and the docs pull the same information to render the *Include snippets* tabs.
+
 ## 🚀 Deployment
 
 The site is automatically deployed to Netlify when changes are pushed to the main branch.

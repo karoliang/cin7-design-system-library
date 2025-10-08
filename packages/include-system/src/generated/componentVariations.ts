@@ -26,7 +26,7 @@ export interface ComponentVariationDataset {
 }
 
 export const componentVariationDataset: ComponentVariationDataset = {
-  "generatedAt": "2025-10-07T23:37:16.230Z",
+  "generatedAt": "2025-10-08T00:24:26.781Z",
   "root": "polaris/polaris.shopify.com/content/components",
   "totals": {
     "componentCount": 96,

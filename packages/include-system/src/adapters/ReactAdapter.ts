@@ -27,11 +27,11 @@ export class ReactAdapter implements LanguageAdapter {
   generateCode(resolved: ResolvedInclude): string {
     const { component, variation, statement } = resolved;
     const componentName = statement.alias || component.name;
-    const variationName = this.getVariationConfig(statement.variation);
+    const variationConfig = this.getVariationConfig(component.name, statement.variation);
     const config = statement.config || {};
 
     // Merge variation config with user config
-    let mergedConfig = { ...variationName, ...config };
+    let mergedConfig = { ...variationConfig, ...config };
 
     // Apply design tokens if present
     mergedConfig = this.applyDesignTokens(mergedConfig);
@@ -64,39 +64,48 @@ export class ReactAdapter implements LanguageAdapter {
     return [];
   }
 
-  private getVariationConfig(variation: string): Record<string, any> {
-    const configs: Record<string, Record<string, any>> = {
-      // Card variations
-      'default': {},
-      'header': { sectioned: true },
-      'product-info': { sectioned: true },
-      'metric-card': { sectioned: true },
-
-      // Button variations
-      'primary': { variant: 'primary' },
-      'secondary': {},
-      'destructive': { variant: 'destructive' },
-      'plain': { plain: true },
-
-      // Badge variations
-      'success': { status: 'success' },
-      'warning': { status: 'warning' },
-      'info': { status: 'info' },
-      'new': { status: 'new' },
-
-      // MediaCard variations
-      'default': {},
-      'small': { size: 'small' },
-      'video-card': {},
-      'portrait-video-card': { portrait: true },
-
-      // Page variations
-      'default': {},
-      'full-width': { fullWidth: true },
-      'dashboard': { title: 'Dashboard' }
-    };
-
-    return configs[variation] || {};
+  private getVariationConfig(componentName: string, variation: string): Record<string, any> {
+    switch (componentName) {
+      case 'Card':
+        if (variation === 'header' || variation === 'product-info' || variation === 'metric-card') {
+          return { sectioned: true };
+        }
+        return {};
+      case 'Button':
+        if (variation === 'primary') {
+          return { variant: 'primary' };
+        }
+        if (variation === 'destructive') {
+          return { variant: 'destructive' };
+        }
+        if (variation === 'plain') {
+          return { plain: true };
+        }
+        return {};
+      case 'Badge':
+        if (variation === 'success' || variation === 'warning' || variation === 'info' || variation === 'new') {
+          return { status: variation };
+        }
+        return {};
+      case 'MediaCard':
+        if (variation === 'small') {
+          return { size: 'small' };
+        }
+        if (variation === 'portrait-video-card') {
+          return { portrait: true };
+        }
+        return {};
+      case 'Page':
+        if (variation === 'full-width') {
+          return { fullWidth: true };
+        }
+        if (variation === 'dashboard') {
+          return { title: 'Dashboard' };
+        }
+        return {};
+      default:
+        return {};
+    }
   }
 
   private applyDesignTokens(config: Record<string, any>): Record<string, any> {
@@ -221,7 +230,7 @@ export class ReactAdapter implements LanguageAdapter {
 
   private formatProps(props: Record<string, any>): string {
     const propsList = Object.entries(props)
-      .filter(([_, value]) => value !== undefined && value !== {})
+      .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => {
         if (typeof value === 'function') {
           return `${key}={${value.toString()}}`;

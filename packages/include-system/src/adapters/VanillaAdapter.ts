@@ -96,33 +96,31 @@ ${instanceName}.mount('#app');`;
   }
 
   private getVariationConfig(variation: string): Record<string, any> {
-    const configs: Record<string, Record<string, any>> = {
-      // Card variations
-      'default': { variant: 'default' },
-      'simple': { variant: 'simple' },
-
-      // Button variations
-      'default': { variant: 'default' },
-      'primary': { variant: 'primary' },
-      'link': { variant: 'link' },
-
-      // Badge variations
-      'success': { status: 'success' },
-      'warning': { status: 'warning' },
-      'new': { status: 'new' },
-      'trend-up': { status: 'trend-up' },
-
-      // Spinner variations
-      'default': { size: 'medium' },
-      'small': { size: 'small' }
-    };
-
-    return configs[variation] || {};
+    switch (variation) {
+      case 'simple':
+        return { variant: 'simple' };
+      case 'primary':
+        return { variant: 'primary' };
+      case 'link':
+        return { variant: 'link' };
+      case 'success':
+        return { status: 'success' };
+      case 'warning':
+        return { status: 'warning' };
+      case 'new':
+        return { status: 'new' };
+      case 'trend-up':
+        return { status: 'trend-up' };
+      case 'small':
+        return { size: 'small' };
+      default:
+        return {};
+    }
   }
 
   private formatConfig(config: Record<string, any>): string {
     return Object.entries(config)
-      .filter(([_, value]) => value !== undefined && value !== {})
+      .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => {
         if (typeof value === 'string') {
           return `${key}: '${value}'`;

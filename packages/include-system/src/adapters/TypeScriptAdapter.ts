@@ -250,48 +250,58 @@ const ${instanceName}Instance = new ${instanceName}(${config.usageParams || ''})
   }
 
   private getVariationConfig(variation: string, component: string): Record<string, any> {
-    const configs: Record<string, Record<string, any>> = {
-      // Repository variations
-      'default': {
+    if (component === 'Repository') {
+      if (variation === 'standard') {
+        return {
+          entityName: 'Product',
+          interfaceName: 'ProductEntity',
+          additionalFields: 'name: string;\n  price: number;\n  category: string;'
+        };
+      }
+
+      return {
         entityName: 'Entity',
         interfaceName: 'EntityEntity',
         additionalFields: 'name: string;\n  status: string;'
-      },
-      'standard': {
-        entityName: 'Product',
-        interfaceName: 'ProductEntity',
-        additionalFields: 'name: string;\n  price: number;\n  category: string;'
-      },
+      };
+    }
 
-      // UseCase variations
-      'default': {
+    if (component === 'UseCase') {
+      if (variation === 'crud') {
+        return {
+          name: 'CrudUseCase',
+          entityName: 'Product',
+          requestFields: 'action: "create" | "update" | "delete"; data?: any',
+          responseFields: 'success: boolean; data?: any; message?: string',
+          repositoryName: 'productRepository'
+        };
+      }
+
+      return {
         name: 'UseCase',
         entityName: 'Entity',
         requestFields: 'data: any',
         responseFields: 'success: boolean; data?: any',
         repositoryName: 'repository'
-      },
-      'crud': {
-        name: 'CrudUseCase',
-        entityName: 'Product',
-        requestFields: 'action: "create" | "update" | "delete"; data?: any',
-        responseFields: 'success: boolean; data?: any; message?: string',
-        repositoryName: 'productRepository'
-      },
+      };
+    }
 
-      // EventBus variations
-      'default': {
+    if (component === 'EventBus') {
+      if (variation === 'typed') {
+        return {
+          additionalEvents: "'order.created': { id: string; total: number };\n'order.updated': { id: string; changes: Partial<Order> };"
+        };
+      }
+
+      return {
         constructorParams: '',
         customMethods: 'emitCustomEvent(data: any): void {\n    this.emit("custom", data);\n  }',
         usageParams: '',
         additionalEvents: "'custom.event': { data: any };"
-      },
-      'typed': {
-        additionalEvents: "'order.created': { id: string; total: number };\n'order.updated': { id: string; changes: Partial<Order> };"
-      }
-    };
+      };
+    }
 
-    return configs[variation] || {};
+    return {};
   }
 
   private toCamelCase(str: string): string {

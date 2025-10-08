@@ -98,7 +98,7 @@ export class IncludeResolver implements IIncludeResolver {
       const variations = componentRegistry.listVariations(language, component);
       return variations.includes(variation);
     } catch (error) {
-      this.debug(`Error checking availability: ${error.message}`);
+      this.debug(`Error checking availability: ${getErrorMessage(error)}`);
       return false;
     }
   }
@@ -110,7 +110,7 @@ export class IncludeResolver implements IIncludeResolver {
     try {
       return componentRegistry.listVariations(language, component);
     } catch (error) {
-      this.debug(`Error listing variations: ${error.message}`);
+      this.debug(`Error listing variations: ${getErrorMessage(error)}`);
       return [];
     }
   }
@@ -122,7 +122,7 @@ export class IncludeResolver implements IIncludeResolver {
     try {
       return componentRegistry.listComponents(language);
     } catch (error) {
-      this.debug(`Error listing components: ${error.message}`);
+      this.debug(`Error listing components: ${getErrorMessage(error)}`);
       return [];
     }
   }
@@ -146,7 +146,7 @@ export class IncludeResolver implements IIncludeResolver {
         const resolvedInclude = this.resolve(statement);
         resolved.push(resolvedInclude);
       } catch (error) {
-        const errorMsg = `Failed to resolve include "${statement.language}.${statement.component}.${statement.variation}": ${error.message}`;
+        const errorMsg = `Failed to resolve include "${statement.language}.${statement.component}.${statement.variation}": ${getErrorMessage(error)}`;
         errors.push(errorMsg);
         this.debug(errorMsg);
 
@@ -192,7 +192,7 @@ export class IncludeResolver implements IIncludeResolver {
 
     for (const item of resolved) {
       imports.push(item.importStatement);
-      dependencies.add(...item.dependencies);
+      item.dependencies.forEach((dep) => dependencies.add(dep));
 
       const adapter = this.getAdapter(item.statement.language);
       const usageCode = adapter.generateCode(item);
@@ -323,3 +323,14 @@ export const defaultResolver = new IncludeResolver({
   strictMode: true,
   autoLoadDependencies: true
 });
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+}

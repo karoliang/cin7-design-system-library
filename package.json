@@ -12,7 +12,8 @@
     "test": "pnpm --filter \"@cin7/*\" test",
     "lint": "pnpm --filter \"@cin7/*\" lint",
     "typecheck": "pnpm --filter \"@cin7/*\" typecheck",
-    "collect:variations": "node scripts/collect-component-variations.js"
+    "collect:variations": "node scripts/collect-component-variations.js",
+    "check:variations": "node scripts/collect-component-variations.js --check"
   },
   "engines": {
     "node": ">=20.10.0",

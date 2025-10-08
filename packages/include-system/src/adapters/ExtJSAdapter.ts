@@ -9,6 +9,8 @@ import {
   ComponentVariation
 } from '../types/IncludeSystem';
 
+declare const Ext: any;
+
 export class ExtJSAdapter implements LanguageAdapter {
   language: SupportedLanguage = 'extjs';
 
@@ -87,11 +89,52 @@ export class ExtJSAdapter implements LanguageAdapter {
   }
 
   private getVariationConfig(variation: string, component: string): Record<string, any> {
-    const configs: Record<string, Record<string, any>> = {
-      // DataGrid variations
-      'default': {
+    if (component === 'DataGrid') {
+      if (variation === 'enterprise') {
+        return {
+          title: 'Enterprise Data Grid',
+          features: ['grouping', 'filters', 'summary'],
+          store: (Ext as any).create('Ext.data.Store', {
+            fields: ['name', 'email', 'phone', 'department'],
+            groupField: 'department',
+            data: [
+              { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224', department: 'IT' },
+              { name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234', department: 'Sales' }
+            ]
+          }),
+          columns: [
+            { text: 'Name', dataIndex: 'name', flex: 1 },
+            { text: 'Email', dataIndex: 'email', flex: 1 },
+            { text: 'Phone', dataIndex: 'phone', flex: 1 },
+            { text: 'Department', dataIndex: 'department', flex: 1 }
+          ],
+          height: 400,
+          width: 800
+        };
+      }
+
+      if (variation === 'compact') {
+        return {
+          title: 'Compact Grid',
+          store: (Ext as any).create('Ext.data.Store', {
+            fields: ['name', 'status'],
+            data: [
+              { name: 'Task 1', status: 'Complete' },
+              { name: 'Task 2', status: 'In Progress' }
+            ]
+          }),
+          columns: [
+            { text: 'Task', dataIndex: 'name', flex: 2 },
+            { text: 'Status', dataIndex: 'status', flex: 1 }
+          ],
+          height: 200,
+          width: 400
+        };
+      }
+
+      return {
         title: 'Data Grid',
-        store: Ext.create('Ext.data.Store', {
+        store: (Ext as any).create('Ext.data.Store', {
           fields: ['name', 'email', 'phone'],
           data: [
             { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224' },
@@ -105,75 +148,59 @@ export class ExtJSAdapter implements LanguageAdapter {
         ],
         height: 300,
         width: 600
-      },
-      'enterprise': {
-        title: 'Enterprise Data Grid',
-        features: ['grouping', 'filters', 'summary'],
-        store: Ext.create('Ext.data.Store', {
-          fields: ['name', 'email', 'phone', 'department'],
-          groupField: 'department',
-          data: [
-            { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224', department: 'IT' },
-            { name: 'Bart', email: 'bart@simpsons.com', phone: '555-222-1234', department: 'Sales' }
-          ]
-        }),
-        columns: [
-          { text: 'Name', dataIndex: 'name', flex: 1 },
-          { text: 'Email', dataIndex: 'email', flex: 1 },
-          { text: 'Phone', dataIndex: 'phone', flex: 1 },
-          { text: 'Department', dataIndex: 'department', flex: 1 }
-        ],
-        height: 400,
-        width: 800
-      },
-      'compact': {
-        title: 'Compact Grid',
-        store: Ext.create('Ext.data.Store', {
-          fields: ['name', 'status'],
-          data: [
-            { name: 'Task 1', status: 'Complete' },
-            { name: 'Task 2', status: 'In Progress' }
-          ]
-        }),
-        columns: [
-          { text: 'Task', dataIndex: 'name', flex: 2 },
-          { text: 'Status', dataIndex: 'status', flex: 1 }
-        ],
-        height: 200,
-        width: 400
-      },
+      };
+    }
 
-      // ComboBox variations
-      'default': {
+    if (component === 'ComboBox') {
+      if (variation === 'abc') {
+        return {
+          fieldLabel: 'ABC Configuration',
+          store: ['A', 'B', 'C'],
+          queryMode: 'local',
+          editable: false,
+          value: 'A'
+        };
+      }
+
+      if (variation === 'search') {
+        return {
+          fieldLabel: 'Search',
+          store: (Ext as any).create('Ext.data.Store', {
+            fields: ['name', 'value'],
+            data: [
+              { name: 'Option 1', value: 'opt1' },
+              { name: 'Option 2', value: 'opt2' }
+            ]
+          }),
+          displayField: 'name',
+          valueField: 'value',
+          queryMode: 'local',
+          typeAhead: true
+        };
+      }
+
+      return {
         fieldLabel: 'Select Option',
         store: ['Option 1', 'Option 2', 'Option 3'],
         queryMode: 'local',
         editable: false
-      },
-      'abc': {
-        fieldLabel: 'ABC Configuration',
-        store: ['A', 'B', 'C'],
-        queryMode: 'local',
-        editable: false,
-        value: 'A'
-      },
-      'search': {
-        fieldLabel: 'Search',
-        store: Ext.create('Ext.data.Store', {
-          fields: ['name', 'value'],
-          data: [
-            { name: 'Option 1', value: 'opt1' },
-            { name: 'Option 2', value: 'opt2' }
-          ]
-        }),
-        displayField: 'name',
-        valueField: 'value',
-        queryMode: 'local',
-        typeAhead: true
-      },
+      };
+    }
 
-      // FormPanel variations
-      'default': {
+    if (component === 'FormPanel') {
+      if (variation === 'settings') {
+        return {
+          title: 'Settings',
+          bodyPadding: 10,
+          items: [
+            { xtype: 'checkboxfield', fieldLabel: 'Enable notifications', name: 'notifications' },
+            { xtype: 'numberfield', fieldLabel: 'Items per page', name: 'pageSize', value: 25 },
+            { xtype: 'button', text: 'Save Settings', formBind: true }
+          ]
+        };
+      }
+
+      return {
         title: 'Form',
         bodyPadding: 10,
         items: [
@@ -181,24 +208,15 @@ export class ExtJSAdapter implements LanguageAdapter {
           { xtype: 'textfield', fieldLabel: 'Email', name: 'email' },
           { xtype: 'button', text: 'Submit', formBind: true }
         ]
-      },
-      'settings': {
-        title: 'Settings',
-        bodyPadding: 10,
-        items: [
-          { xtype: 'checkboxfield', fieldLabel: 'Enable notifications', name: 'notifications' },
-          { xtype: 'numberfield', fieldLabel: 'Items per page', name: 'pageSize', value: 25 },
-          { xtype: 'button', text: 'Save Settings', formBind: true }
-        ]
-      }
-    };
+      };
+    }
 
-    return configs[variation] || {};
+    return {};
   }
 
   private formatExtJSConfig(config: Record<string, any>): string {
     return Object.entries(config)
-      .filter(([_, value]) => value !== undefined && value !== {})
+      .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => {
         if (typeof value === 'string') {
           return `${key}: '${value}'`;
