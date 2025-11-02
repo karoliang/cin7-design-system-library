@@ -141,7 +141,7 @@ export function updateBarChartData(
     if (chart.series[index]) {
       chart.series[index].setData(data.data, false);
       if (data.name) {
-        chart.series[index].update({ name: data.name }, false);
+        chart.series[index].update({ type: chart.series[index].type, name: data.name } as Highcharts.SeriesOptionsType, false);
       }
     }
   });

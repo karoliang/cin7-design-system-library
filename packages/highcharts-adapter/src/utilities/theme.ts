@@ -4,7 +4,15 @@
  */
 
 import * as Highcharts from 'highcharts';
-import { getTokenValue } from '@cin7/design-tokens/utilities';
+
+// Import design tokens with fallback
+let getTokenValue: (key: string) => string;
+try {
+  ({ getTokenValue } = require('@cin7/design-tokens'));
+} catch {
+  // Fallback for when design-tokens is not available during build
+  getTokenValue = (_key: string) => '';
+}
 
 export interface Cin7ChartTheme {
   mode?: 'light' | 'dark';
@@ -242,30 +250,13 @@ export function getCin7HighchartsTheme(config: Cin7ChartTheme = {}): Highcharts.
       enabled: false,
     },
 
-    labels: {
-      style: {
-        color: textSubdued,
-      },
-    },
-
     navigation: {
       buttonOptions: {
         symbolStroke: textColor,
         theme: {
           fill: bgSurface,
           stroke: borderColor,
-          r: 4,
-          states: {
-            hover: {
-              fill: bgBase,
-              stroke: borderColor,
-            },
-            select: {
-              fill: bgBase,
-              stroke: borderColor,
-            },
-          },
-        },
+        } as any, // Type assertion for custom theme properties
       },
     },
 

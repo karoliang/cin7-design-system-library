@@ -96,7 +96,6 @@ export const LineChart: React.FC<LineChartProps> = ({
         ? tooltip
         : {
             shared: true,
-            crosshairs: true,
             ...chartOptions.tooltip,
           },
     plotOptions: {

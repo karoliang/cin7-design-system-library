@@ -203,10 +203,10 @@ export class BarChartBuilder {
     this.config.plotOptions = {
       ...this.config.plotOptions,
       [chartType]: {
-        ...this.config.plotOptions?.[chartType],
+        ...(this.config.plotOptions as any)?.[chartType],
         dataLabels: { enabled: true },
       },
-    };
+    } as Highcharts.PlotOptions;
     return this;
   }
 
@@ -218,10 +218,10 @@ export class BarChartBuilder {
     this.config.plotOptions = {
       ...this.config.plotOptions,
       [chartType]: {
-        ...this.config.plotOptions?.[chartType],
+        ...(this.config.plotOptions as any)?.[chartType],
         stacking: mode,
       },
-    };
+    } as Highcharts.PlotOptions;
     return this;
   }
 
