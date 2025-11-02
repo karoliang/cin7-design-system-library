@@ -294,7 +294,7 @@ export const CommonTransformers = {
    */
   salesByPeriod(
     salesData: Array<{ date: Date | string; amount: number }>,
-    period: 'day' | 'week' | 'month' = 'day'
+    _period: 'day' | 'week' | 'month' = 'day'
   ) {
     // Implementation for sales transformation
     return DataTransformers.transformTimeSeries(

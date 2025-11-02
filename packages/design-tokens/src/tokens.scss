@@ -1,10 +1,10 @@
 /**
  * Cin7 DSL Design Tokens - SCSS
  * Import this file in your SCSS to use design tokens
+ *
+ * Note: This assumes Polaris tokens are already loaded in your application.
+ * Make sure to include Polaris styles in your app for CSS variable references to work.
  */
-
-// Import Polaris tokens as foundation
-@import '@shopify/polaris-tokens/dist/styles';
 
 // Enterprise tokens as SCSS variables
 $cin7-tokens: (

@@ -72,51 +72,65 @@ export function formatDate(
 
 /**
  * Export chart to image
+ * Note: Requires Highcharts exporting module to be loaded
  */
 export function exportChartToImage(
-  chart: Highcharts.Chart,
+  chart: any,
   filename: string = 'chart',
   type: 'image/png' | 'image/jpeg' | 'image/svg+xml' = 'image/png'
 ): void {
-  chart.exportChart({
-    type,
-    filename,
-  });
+  if (chart.exportChart) {
+    chart.exportChart({
+      type,
+      filename,
+    });
+  }
 }
 
 /**
  * Export chart data to CSV
+ * Note: Requires Highcharts exporting module to be loaded
  */
-export function exportChartToCSV(chart: Highcharts.Chart, filename: string = 'chart-data'): void {
-  chart.downloadCSV();
+export function exportChartToCSV(chart: any): void {
+  if (chart.downloadCSV) {
+    chart.downloadCSV();
+  }
 }
 
 /**
  * Print chart
+ * Note: Requires Highcharts exporting module to be loaded
  */
-export function printChart(chart: Highcharts.Chart): void {
-  chart.print();
+export function printChart(chart: any): void {
+  if (chart.print) {
+    chart.print();
+  }
 }
 
 /**
  * Get chart image as data URL
+ * Note: Requires Highcharts exporting module to be loaded
  */
 export async function getChartDataURL(
-  chart: Highcharts.Chart,
+  chart: any,
   type: 'image/png' | 'image/jpeg' = 'image/png',
   scale: number = 2
-): Promise<string> {
+): Promise<string | null> {
   return new Promise((resolve) => {
-    chart.exportChartLocal(
-      {
-        type,
-        scale,
-      },
-      {},
-      (dataURL: string) => {
-        resolve(dataURL);
-      }
-    );
+    if (chart.exportChartLocal) {
+      chart.exportChartLocal(
+        {
+          type,
+          scale,
+        },
+        {},
+        (dataURL: string) => {
+          resolve(dataURL);
+        }
+      );
+    } else {
+      resolve(null);
+    }
   });
 }
 
@@ -205,9 +219,12 @@ export function transformToSeriesData(
   xKey: string = 'x',
   yKey: string = 'y'
 ): Highcharts.PointOptionsObject[] {
-  return data.map((item) => ({
-    x: item[xKey],
-    y: item[yKey],
-    ...item,
-  }));
+  return data.map((item) => {
+    const { [xKey]: x, [yKey]: y, ...rest } = item;
+    return {
+      x,
+      y,
+      ...rest,
+    };
+  });
 }
