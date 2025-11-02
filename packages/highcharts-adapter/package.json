@@ -1,0 +1,90 @@
+{
+  "name": "@cin7/highcharts-adapter",
+  "version": "0.1.0",
+  "description": "Highcharts integration for Cin7 DSL with multi-language support (React, ExtJS, Vanilla JS, TypeScript)",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.mjs",
+      "require": "./dist/react/index.js"
+    },
+    "./extjs": {
+      "types": "./dist/extjs/index.d.ts",
+      "import": "./dist/extjs/index.mjs",
+      "require": "./dist/extjs/index.js"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla/index.d.ts",
+      "import": "./dist/vanilla/index.mjs",
+      "require": "./dist/vanilla/index.js"
+    },
+    "./typescript": {
+      "types": "./dist/typescript/index.d.ts",
+      "import": "./dist/typescript/index.mjs",
+      "require": "./dist/typescript/index.js"
+    },
+    "./utilities": {
+      "types": "./dist/utilities/index.d.ts",
+      "import": "./dist/utilities/index.mjs",
+      "require": "./dist/utilities/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@cin7/core": "workspace:*",
+    "@cin7/design-tokens": "workspace:*",
+    "highcharts": "^11.4.0",
+    "highcharts-react-official": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "react": "^18.2.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "keywords": [
+    "cin7",
+    "design-system",
+    "highcharts",
+    "charts",
+    "data-visualization",
+    "react",
+    "extjs",
+    "vanilla-js",
+    "typescript"
+  ]
+}
