@@ -127,6 +127,16 @@ async function main() {
     components,
   };
 
+  const existingPayload = await readExistingJson(OUTPUT_FILE);
+  if (existingPayload) {
+    const normalizedExisting = normalizeDataset(existingPayload);
+    const normalizedCurrent = normalizeDataset(payload);
+
+    if (normalizedExisting === normalizedCurrent) {
+      payload.generatedAt = existingPayload.generatedAt;
+    }
+  }
+
   if (IS_CHECK_MODE) {
     await runCheck(payload);
     return;
@@ -252,3 +262,24 @@ main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
+
+async function readExistingJson(filePath) {
+  try {
+    const raw = await fs.promises.readFile(filePath, 'utf8');
+    return JSON.parse(raw);
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return null;
+    }
+    throw error;
+  }
+}
+
+function normalizeDataset(data) {
+  return JSON.stringify(
+    {
+      ...data,
+      generatedAt: null,
+    },
+  );
+}

@@ -92,18 +92,18 @@ export const animationTokens = {
   // Transition presets
   transitions: {
     // Property-specific transitions
-    opacity: 'opacity var(--animation-duration-base) var(--animation-easing-standard)',
-    transform: 'transform var(--animation-duration-base) var(--animation-easing-standard)',
-    color: 'color var(--animation-duration-fast) var(--animation-easing-standard)',
-    background: 'background-color var(--animation-duration-base) var(--animation-easing-standard)',
-    border: 'border-color var(--animation-duration-fast) var(--animation-easing-standard)',
-    shadow: 'box-shadow var(--animation-duration-slow) var(--animation-easing-standard)',
+    opacity: 'opacity var(--cin7-animation-duration-base) var(--cin7-animation-easing-standard)',
+    transform: 'transform var(--cin7-animation-duration-base) var(--cin7-animation-easing-standard)',
+    color: 'color var(--cin7-animation-duration-fast) var(--cin7-animation-easing-standard)',
+    background: 'background-color var(--cin7-animation-duration-base) var(--cin7-animation-easing-standard)',
+    border: 'border-color var(--cin7-animation-duration-fast) var(--cin7-animation-easing-standard)',
+    shadow: 'box-shadow var(--cin7-animation-duration-slow) var(--cin7-animation-easing-standard)',
 
     // Common combinations
-    fade: 'opacity var(--animation-duration-base) var(--animation-easing-standard)',
-    move: 'transform var(--animation-duration-base) var(--animation-easing-decelerate)',
-    scale: 'transform var(--animation-duration-fast) var(--animation-easing-elastic)',
-    all: 'all var(--animation-duration-base) var(--animation-easing-standard)',
+    fade: 'opacity var(--cin7-animation-duration-base) var(--cin7-animation-easing-standard)',
+    move: 'transform var(--cin7-animation-duration-base) var(--cin7-animation-easing-decelerate)',
+    scale: 'transform var(--cin7-animation-duration-fast) var(--cin7-animation-easing-elastic)',
+    all: 'all var(--cin7-animation-duration-base) var(--cin7-animation-easing-standard)',
   },
 
   // Motion patterns

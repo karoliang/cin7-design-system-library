@@ -16,7 +16,7 @@ const themeListeners: ((theme: string) => void)[] = [];
  * Initialize Cin7 theme for ExtJS
  */
 export function initializeTheme(): void {
-  if (typeof window === 'undefined' || !(window as any).Ext) {
+  if (typeof window === 'undefined' || typeof document === 'undefined' || !(window as any).Ext) {
     return;
   }
 
@@ -59,6 +59,10 @@ export function initializeTheme(): void {
  * Apply theme to ExtJS components
  */
 export function applyTheme(themeOrConfig: string | ThemeConfig): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   const config = typeof themeOrConfig === 'string' 
     ? { mode: themeOrConfig as 'light' | 'dark' } 
     : themeOrConfig;
@@ -85,7 +89,7 @@ export function applyTheme(themeOrConfig: string | ThemeConfig): void {
   themeListeners.forEach(listener => listener(currentTheme));
 
   // Refresh ExtJS components if available
-  if ((window as any).Ext?.ComponentQuery) {
+  if (typeof window !== 'undefined' && (window as any).Ext?.ComponentQuery) {
     const Ext = (window as any).Ext;
     Ext.ComponentQuery.query('panel').forEach((panel: any) => {
       if (panel.updateLayout) {
@@ -111,7 +115,7 @@ export function watchTheme(callback: (theme: string) => void): () => void {
 /**
  * Generate theme CSS for ExtJS components
  */
-function generateThemeCSS(): string {
+export function generateThemeCSS(): string {
   return `
     /* ExtJS + Cin7 Theme Integration */
     
@@ -199,14 +203,12 @@ function generateThemeCSS(): string {
     }
     
     /* Dark theme adjustments */
-    [data-cin7-theme="dark"] {
-      .x-grid-header-ct {
-        background: var(--cin7-enterprise-dataGrid-header-background) !important;
-      }
-      
-      .x-grid-row-alt .x-grid-cell {
-        background: var(--cin7-enterprise-dataGrid-row-stripedBackground) !important;
-      }
+    [data-cin7-theme="dark"] .x-grid-header-ct {
+      background: var(--cin7-enterprise-dataGrid-header-background) !important;
+    }
+    
+    [data-cin7-theme="dark"] .x-grid-row-alt .x-grid-cell {
+      background: var(--cin7-enterprise-dataGrid-row-stripedBackground) !important;
     }
   `;
 }

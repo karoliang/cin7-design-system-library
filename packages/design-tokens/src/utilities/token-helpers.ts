@@ -6,6 +6,10 @@
  * Get CSS variable value at runtime
  */
 export function getTokenValue(tokenName: string, element?: HTMLElement): string {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return '';
+  }
+
   const target = element || document.documentElement;
   return getComputedStyle(target).getPropertyValue(`--cin7-${tokenName}`).trim();
 }
@@ -14,6 +18,10 @@ export function getTokenValue(tokenName: string, element?: HTMLElement): string 
  * Set CSS variable value at runtime
  */
 export function setTokenValue(tokenName: string, value: string, element?: HTMLElement): void {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
+  }
+
   const target = element || document.documentElement;
   target.style.setProperty(`--cin7-${tokenName}`, value);
 }
@@ -22,6 +30,10 @@ export function setTokenValue(tokenName: string, value: string, element?: HTMLEl
  * Apply theme tokens to element
  */
 export function applyTheme(theme: 'light' | 'dark', element?: HTMLElement): void {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   const target = element || document.documentElement;
   target.setAttribute('data-theme', theme);
 }
@@ -53,6 +65,10 @@ export const mediaQueries = {
  * Check if media query matches
  */
 export function matchesMediaQuery(query: keyof typeof mediaQueries | string): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
   const mediaQuery = query in mediaQueries 
     ? mediaQueries[query as keyof typeof mediaQueries]
     : query;
@@ -67,6 +83,11 @@ export function watchMediaQuery(
   query: keyof typeof mediaQueries | string,
   callback: (matches: boolean) => void
 ): () => void {
+  if (typeof window === 'undefined') {
+    callback(false);
+    return () => {};
+  }
+
   const mediaQuery = query in mediaQueries 
     ? mediaQueries[query as keyof typeof mediaQueries]
     : query;

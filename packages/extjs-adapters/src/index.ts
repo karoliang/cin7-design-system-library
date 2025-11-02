@@ -32,7 +32,7 @@ export function configureExtJS(config?: {
   theme?: 'light' | 'dark';
   autoRegister?: boolean;
   tokenPrefix?: string;
-}) {
+}): any {
   const options = {
     theme: 'light',
     autoRegister: true,
@@ -45,13 +45,16 @@ export function configureExtJS(config?: {
     applyTheme(options.theme);
   }
 
+  const hasExt =
+    typeof window !== 'undefined' && (window as any).Ext;
+
   // Register components
-  if (options.autoRegister) {
+  if (options.autoRegister && hasExt) {
     registerComponents();
   }
 
   // Return Ext reference for chaining
-  return (window as any).Ext;
+  return hasExt ? (window as any).Ext : undefined;
 }
 
 // Version

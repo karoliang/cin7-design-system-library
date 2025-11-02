@@ -1,3 +1,4 @@
+import {describe, expect, it} from 'vitest';
 import {componentRegistry} from '../registry/ComponentRegistry';
 import {componentVariationDataset} from '../generated/componentVariations';
 import {SupportedLanguage} from '../types/IncludeSystem';
