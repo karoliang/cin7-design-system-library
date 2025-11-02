@@ -32,7 +32,7 @@ export const darkTheme: Cin7Theme = {
   },
 };
 
-export const themes = {
+export const cin7Themes = {
   light: lightTheme,
   dark: darkTheme,
 } as const;
@@ -40,9 +40,9 @@ export const themes = {
 /**
  * Apply theme to element
  */
-export function applyTheme(theme: Cin7Theme | keyof typeof themes, element?: HTMLElement): void {
+export function applyTheme(theme: Cin7Theme | keyof typeof cin7Themes, element?: HTMLElement): void {
   const target = element || document.documentElement;
-  const themeObj = typeof theme === 'string' ? themes[theme] : theme;
+  const themeObj = typeof theme === 'string' ? cin7Themes[theme] : theme;
   
   // Set theme attribute
   target.setAttribute('data-theme', themeObj.name);
