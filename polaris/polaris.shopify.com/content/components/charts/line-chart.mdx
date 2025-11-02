@@ -1,0 +1,262 @@
+---
+title: Line Chart
+shortDescription: Display time series data and trends with line or spline charts
+category: Charts
+keywords:
+  - time series
+  - trend
+  - line graph
+  - spline
+  - data visualization
+  - analytics
+  - metrics
+  - performance
+  - smooth curve
+  - markers
+  - stacking
+---
+
+# {frontmatter.title}
+
+<Lede>
+
+Line charts are ideal for showing trends over time, comparing multiple data series, and visualizing continuous data. Use smooth curves (splines) for more polished visualizations or straight lines for precise data representation.
+
+</Lede>
+
+## React Component
+
+```tsx
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+function RevenueChart() {
+  return (
+    <LineChart
+      title="Quarterly Revenue"
+      subtitle="2024-2025"
+      series={[
+        {
+          name: 'Q1',
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0]
+        },
+        {
+          name: 'Q2',
+          data: [45.2, 82.3, 98.7, 115.4, 138.2, 152.8]
+        }
+      ]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' }
+      }}
+    />
+  );
+}
+```
+
+## Props
+
+### Required props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `series` | `SeriesLineOptions[]` | Array of data series to display |
+
+### Optional props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | - | Chart title |
+| `subtitle` | `string` | - | Chart subtitle |
+| `xAxis` | `XAxisOptions` | `{}` | X-axis configuration |
+| `yAxis` | `YAxisOptions` | `{}` | Y-axis configuration |
+| `smooth` | `boolean` | `false` | Enable smooth spline curves |
+| `markers` | `boolean` | `false` | Show data point markers |
+| `stacking` | `'normal' \| 'percent'` | - | Enable data stacking |
+| `legend` | `boolean` | `true` | Show legend |
+| `tooltip` | `boolean \| TooltipOptions` | `true` | Configure tooltips |
+| `theme` | `Cin7ChartTheme` | `{ mode: 'light' }` | Theme configuration |
+| `height` | `number \| string` | `400` | Chart height |
+| `width` | `number \| string` | `'100%'` | Chart width |
+| `responsive` | `boolean` | `true` | Enable responsive behavior |
+| `loading` | `boolean` | `false` | Show loading state |
+| `error` | `string \| null` | `null` | Show error state |
+
+## ExtJS Integration
+
+```javascript
+import { Cin7HighchartsLine } from '@cin7/highcharts-adapter/extjs';
+
+// Register the component
+Cin7HighchartsLine.register();
+
+// Create chart panel
+const chart = Cin7HighchartsLine.create({
+  title: 'Sales Trend',
+  width: 800,
+  height: 400,
+  series: [{
+    name: 'Sales',
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+  },
+  smooth: true,
+  renderTo: Ext.getBody()
+});
+```
+
+## Vanilla JavaScript
+
+```javascript
+import { initLineChart } from '@cin7/highcharts-adapter/vanilla';
+
+const chart = initLineChart({
+  container: '#my-chart',
+  title: 'Website Traffic',
+  series: [{
+    name: 'Visitors',
+    data: [1200, 1500, 1800, 2000, 1900, 2200]
+  }],
+  xAxis: {
+    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  },
+  smooth: true,
+  markers: true
+});
+```
+
+## TypeScript SDK
+
+```typescript
+import { ChartBuilderFactory } from '@cin7/highcharts-adapter/typescript';
+
+const config = ChartBuilderFactory.createLineChart()
+  .setTitle('Product Performance')
+  .addSeries('Product A', [12, 15, 18, 20, 19, 22])
+  .addSeries('Product B', [8, 11, 14, 16, 15, 18])
+  .setCategories(['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'])
+  .enableSmooth()
+  .enableMarkers()
+  .build();
+```
+
+## Variations
+
+### Smooth curves (Spline)
+
+Use smooth curves for a more polished, professional appearance:
+
+```tsx
+<LineChart
+  smooth={true}
+  series={[{ name: 'Sales', data: [1, 2, 3, 4, 5] }]}
+/>
+```
+
+### With markers
+
+Display data point markers for precise value identification:
+
+```tsx
+<LineChart
+  markers={true}
+  series={[{ name: 'Orders', data: [10, 15, 12, 18, 20] }]}
+/>
+```
+
+### Stacked area
+
+Show cumulative values over time:
+
+```tsx
+<LineChart
+  stacking="normal"
+  series={[
+    { name: 'Product A', data: [100, 120, 140, 160] },
+    { name: 'Product B', data: [80, 90, 100, 110] }
+  ]}
+/>
+```
+
+### Multi-series comparison
+
+Compare multiple data sets:
+
+```tsx
+<LineChart
+  title="Regional Sales Comparison"
+  series={[
+    { name: 'North America', data: [120, 150, 180, 200] },
+    { name: 'Europe', data: [100, 130, 160, 190] },
+    { name: 'Asia Pacific', data: [80, 110, 140, 170] }
+  ]}
+/>
+```
+
+## Best practices
+
+Line charts should:
+
+- **Show trends over time**: Use for time series data and trend analysis
+- **Use appropriate granularity**: Choose time intervals that match your data density
+- **Limit series count**: Avoid showing more than 5-7 series for readability
+- **Label axes clearly**: Include units and descriptive titles
+- **Use smooth curves sparingly**: Reserve for presentation; use straight lines for precise data
+
+Line charts should not:
+
+- Compare unrelated categories (use bar charts instead)
+- Show part-to-whole relationships (use pie charts instead)
+- Display too many overlapping series (causes visual clutter)
+
+## Accessibility
+
+Line charts include:
+
+- ARIA labels describing the chart purpose
+- Keyboard navigation for interactive elements
+- High contrast color palettes
+- Screen reader compatibility
+
+Provide meaningful `ariaLabel` prop:
+
+```tsx
+<LineChart
+  ariaLabel="Quarterly revenue trend showing growth from Q1 to Q4 2025"
+  // ... other props
+/>
+```
+
+## Data transformation
+
+Convert business data to line chart format:
+
+```typescript
+import { DataTransformers } from '@cin7/highcharts-adapter/typescript';
+
+// Time series data
+const salesData = [
+  { timestamp: '2025-01-01', value: 1200 },
+  { timestamp: '2025-01-02', value: 1500 },
+  // ...
+];
+
+const chartData = DataTransformers.transformTimeSeries(salesData);
+
+// Moving average smoothing
+const smoothedData = DataTransformers.movingAverage(rawData, 7);
+```
+
+## Related components
+
+- [Bar Chart](/components/charts/bar-chart) - For comparing categories
+- [Pie Chart](/components/charts/pie-chart) - For part-to-whole relationships
+
+## Related resources
+
+- [Data Visualization Guidelines](/design/data-visualizations)
+- [Highcharts Line Chart API](https://api.highcharts.com/highcharts/series.line)
+- [Design Tokens](/tokens) - Color and typography tokens

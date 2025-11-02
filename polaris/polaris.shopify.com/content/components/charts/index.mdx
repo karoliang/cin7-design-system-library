@@ -1,0 +1,171 @@
+---
+title: Charts
+description: Data visualization components powered by Highcharts with Cin7 design token integration
+icon: ChartVerticalFilledIcon
+order: 11
+---
+
+# Charts
+
+Cin7 DSL provides comprehensive charting capabilities through the `@cin7/highcharts-adapter` package, which integrates Highcharts with Cin7 design tokens and provides unified APIs across all framework layers (React, ExtJS, Vanilla JS, TypeScript).
+
+## Available components
+
+<ComponentGrid>
+
+[Line Chart](/components/charts/line-chart)
+Create time series visualizations and trend analysis with line and spline charts.
+
+[Bar Chart](/components/charts/bar-chart)
+Compare categories with vertical column charts or horizontal bar charts.
+
+[Pie Chart](/components/charts/pie-chart)
+Show part-to-whole relationships with pie, donut, or semi-circle charts.
+
+</ComponentGrid>
+
+## Key features
+
+### Multi-language support
+Every chart type is available in all four framework layers:
+- **React**: Component-based with hooks and lifecycle management
+- **ExtJS**: Panel-based integration for enterprise grids
+- **Vanilla JS**: Lightweight DOM manipulation functions
+- **TypeScript**: Type-safe builders and data transformers
+
+### Design token integration
+All charts automatically use Cin7 design tokens for:
+- **Colors**: Data visualization color palettes (light/dark mode)
+- **Typography**: Consistent font families and sizes
+- **Spacing**: Proper padding and margins
+- **Themes**: Automatic light/dark mode switching
+
+### Accessibility built-in
+- ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- High contrast color palettes
+
+## Installation
+
+```bash
+pnpm add @cin7/highcharts-adapter
+```
+
+## Quick start
+
+### React
+
+```tsx
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+function SalesChart() {
+  return (
+    <LineChart
+      title="Monthly Sales"
+      series={[{
+        name: 'Revenue',
+        data: [120, 150, 180, 200, 190, 220]
+      }]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      }}
+    />
+  );
+}
+```
+
+### ExtJS
+
+```javascript
+import { Cin7HighchartsLine } from '@cin7/highcharts-adapter/extjs';
+
+Cin7HighchartsLine.register();
+
+const chart = Cin7HighchartsLine.create({
+  title: 'Monthly Sales',
+  series: [{
+    name: 'Revenue',
+    data: [120, 150, 180, 200, 190, 220]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+  }
+});
+```
+
+### Vanilla JavaScript
+
+```javascript
+import { initLineChart } from '@cin7/highcharts-adapter/vanilla';
+
+const chart = initLineChart({
+  container: '#chart-container',
+  title: 'Monthly Sales',
+  series: [{
+    name: 'Revenue',
+    data: [120, 150, 180, 200, 190, 220]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+  }
+});
+```
+
+### TypeScript SDK
+
+```typescript
+import { ChartBuilderFactory } from '@cin7/highcharts-adapter/typescript';
+
+const config = ChartBuilderFactory.createLineChart()
+  .setTitle('Monthly Sales')
+  .addSeries('Revenue', [120, 150, 180, 200, 190, 220])
+  .setCategories(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'])
+  .enableSmooth()
+  .build();
+```
+
+## Data transformation
+
+The TypeScript SDK includes powerful data transformers for converting business data to chart-ready formats:
+
+```typescript
+import { DataTransformers } from '@cin7/highcharts-adapter/typescript';
+
+// Transform time series data
+const salesData = [
+  { date: new Date('2025-01-01'), amount: 1200 },
+  { date: new Date('2025-01-02'), amount: 1500 },
+  // ...
+];
+
+const chartData = DataTransformers.transformTimeSeries(salesData);
+
+// Group and aggregate
+const grouped = DataTransformers.sumBy(salesData, 'product', 'amount');
+
+// Calculate percentages
+const withPercentages = DataTransformers.calculatePercentage(data, 'value');
+```
+
+## Theme customization
+
+```tsx
+<LineChart
+  theme={{
+    mode: 'dark',
+    colors: ['#5C6AC4', '#006FBB', '#47C1BF']
+  }}
+  // ... other props
+/>
+```
+
+## Licensing
+
+Highcharts requires a commercial license for commercial use. See the [LICENSING.md](https://github.com/karoliang/cin7-design-system-library/blob/main/packages/highcharts-adapter/LICENSING.md) file for details.
+
+## Related resources
+
+- [Highcharts Official Documentation](https://www.highcharts.com/docs)
+- [Data Visualization Design Guidelines](/design/data-visualizations)
+- [@cin7/highcharts-adapter Package README](https://github.com/karoliang/cin7-design-system-library/tree/main/packages/highcharts-adapter)

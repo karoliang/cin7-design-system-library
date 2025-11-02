@@ -14,7 +14,8 @@ export enum ComponentCategory {
   IMAGES = 'images',
   FORMS = 'forms',
   OVERLAYS = 'overlays',
-  TYPOGRAPHY = 'typography'
+  TYPOGRAPHY = 'typography',
+  CHARTS = 'charts'
 }
 
 export enum Theme {
