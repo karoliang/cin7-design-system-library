@@ -1,3 +1,6 @@
+// Import localStorage polyfill FIRST before any other imports
+import './localStorage-polyfill.js';
+
 import React, {useEffect, useRef, useState} from 'react';
 import {AppProvider, FrameContext} from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
