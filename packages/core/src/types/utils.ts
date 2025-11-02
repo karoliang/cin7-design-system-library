@@ -2,6 +2,8 @@
  * Utility types for the Cin7 DSL framework
  */
 
+import type { QueryParams, PaginatedResponse } from './common';
+
 // Validation types
 export type ValidationRule<T> = {
   required?: boolean;
