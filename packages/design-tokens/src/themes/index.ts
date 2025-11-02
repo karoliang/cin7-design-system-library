@@ -2,13 +2,13 @@
  * Theme definitions for Cin7 DSL
  */
 
-export interface Theme {
+export interface Cin7Theme {
   name: string;
   tokens: Record<string, string>;
   isDark: boolean;
 }
 
-export const lightTheme: Theme = {
+export const lightTheme: Cin7Theme = {
   name: 'light',
   isDark: false,
   tokens: {
@@ -20,7 +20,7 @@ export const lightTheme: Theme = {
   },
 };
 
-export const darkTheme: Theme = {
+export const darkTheme: Cin7Theme = {
   name: 'dark',
   isDark: true,
   tokens: {
@@ -40,7 +40,7 @@ export const themes = {
 /**
  * Apply theme to element
  */
-export function applyTheme(theme: Theme | keyof typeof themes, element?: HTMLElement): void {
+export function applyTheme(theme: Cin7Theme | keyof typeof themes, element?: HTMLElement): void {
   const target = element || document.documentElement;
   const themeObj = typeof theme === 'string' ? themes[theme] : theme;
   

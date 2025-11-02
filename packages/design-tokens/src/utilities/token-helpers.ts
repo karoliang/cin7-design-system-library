@@ -27,18 +27,6 @@ export function setTokenValue(tokenName: string, value: string, element?: HTMLEl
 }
 
 /**
- * Apply theme tokens to element
- */
-export function applyTheme(theme: 'light' | 'dark', element?: HTMLElement): void {
-  if (typeof document === 'undefined') {
-    return;
-  }
-
-  const target = element || document.documentElement;
-  target.setAttribute('data-theme', theme);
-}
-
-/**
  * Media query helpers
  */
 export const mediaQueries = {
