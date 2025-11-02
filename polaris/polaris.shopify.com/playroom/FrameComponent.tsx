@@ -4,27 +4,6 @@ import '@shopify/polaris/build/esm/styles.css';
 import enTranslations from '@shopify/polaris/locales/en.json';
 import {updateGrowFrameHeight} from '../src/components/GrowFrame';
 
-// Setup localStorage mock immediately for sandboxed iframe
-if (typeof window !== 'undefined') {
-  try {
-    window.localStorage.getItem('test');
-  } catch (e) {
-    const mockStorage: Record<string, string> = {};
-    Object.defineProperty(window, 'localStorage', {
-      value: {
-        getItem: (key: string) => mockStorage[key] || null,
-        setItem: (key: string, value: string) => { mockStorage[key] = String(value); },
-        removeItem: (key: string) => { delete mockStorage[key]; },
-        clear: () => { Object.keys(mockStorage).forEach(key => delete mockStorage[key]); },
-        get length() { return Object.keys(mockStorage).length; },
-        key: (index: number) => Object.keys(mockStorage)[index] || null
-      },
-      writable: true,
-      configurable: true
-    });
-  }
-}
-
 const mockFrameContext = {
   toastMessages: [],
   showToast: () => {
