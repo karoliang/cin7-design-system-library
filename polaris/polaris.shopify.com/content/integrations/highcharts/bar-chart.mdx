@@ -23,6 +23,31 @@ Bar charts are ideal for comparing values across categories, showing rankings, a
 
 </Lede>
 
+## Example
+
+```tsx {"type":"livePreview","isCodeVisible":false}
+<BarChart
+  title="Sales by Product Category"
+  orientation="vertical"
+  series={[
+    {
+      name: 'Q1 2025',
+      data: [450, 320, 580, 410, 290]
+    },
+    {
+      name: 'Q2 2025',
+      data: [510, 380, 620, 450, 340]
+    }
+  ]}
+  xAxis={{
+    categories: ['Electronics', 'Clothing', 'Food', 'Books', 'Toys']
+  }}
+  yAxis={{
+    title: { text: 'Sales ($K)' }
+  }}
+/>
+```
+
 ## React Component
 
 ```tsx

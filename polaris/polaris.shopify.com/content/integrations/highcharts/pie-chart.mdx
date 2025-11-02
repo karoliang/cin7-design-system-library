@@ -23,6 +23,23 @@ Pie charts are ideal for showing part-to-whole relationships, composition breakd
 
 </Lede>
 
+## Example
+
+```tsx {"type":"livePreview","isCodeVisible":false}
+<PieChart
+  title="Market Share by Product"
+  subtitle="Q1 2025"
+  data={[
+    { name: 'Product A', y: 45.0, color: '#5C6AC4' },
+    { name: 'Product B', y: 26.8, color: '#006FBB' },
+    { name: 'Product C', y: 18.2, color: '#47C1BF' },
+    { name: 'Product D', y: 10.0, color: '#955BA5' }
+  ]}
+  legend={true}
+  dataLabels={true}
+/>
+```
+
 ## React Component
 
 ```tsx
