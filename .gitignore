@@ -45,3 +45,4 @@ pnpm-debug.log*
 
 *storybook.log
 storybook-static
+polaris/polaris.shopify.com/public/storybook

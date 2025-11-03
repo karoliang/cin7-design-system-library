@@ -1,7 +1,7 @@
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
-  command = "cd ../.. && pnpm install && cd packages/core && pnpm build && cd ../design-tokens && pnpm build && cd ../../polaris/polaris-tokens && pnpm build && cd ../polaris-icons && pnpm build && cd ../polaris-react && pnpm build && cd ../../packages/highcharts-adapter && pnpm build && cd ../../storybook && pnpm build && cd ../polaris/polaris.shopify.com && pnpm gen-colors && pnpm gen-assets && pnpm next-build && mkdir -p .next/standalone/polaris.shopify.com/public/storybook && cp -r ../../storybook/storybook-static/* .next/standalone/polaris.shopify.com/public/storybook/"
+  command = "cd ../.. && pnpm install && cd packages/core && pnpm build && cd ../design-tokens && pnpm build && cd ../../polaris/polaris-tokens && pnpm build && cd ../polaris-icons && pnpm build && cd ../polaris-react && pnpm build && cd ../../packages/highcharts-adapter && pnpm build && cd ../../storybook && pnpm build && cd ../polaris/polaris.shopify.com && mkdir -p public/storybook && cp -r ../../storybook/storybook-static/* public/storybook/ && pnpm gen-colors && pnpm gen-assets && pnpm next-build"
 
 [build.environment]
   NODE_VERSION = "20.10.0"
