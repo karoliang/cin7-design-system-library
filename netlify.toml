@@ -10,20 +10,21 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Allow Storybook to use iframes (for component previews)
-[[headers]]
-  for = "/storybook/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
-    X-Robots-Tag = "noai, noimageai"
-
-# Deny iframe embedding for all other pages
+# Deny iframe embedding for all pages by default
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"
+
+# Allow Storybook to use iframes (for component previews)
+# This must come AFTER /* to override the DENY setting
+[[headers]]
+  for = "/storybook/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     X-Robots-Tag = "noai, noimageai"
