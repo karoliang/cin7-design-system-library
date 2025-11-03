@@ -25,9 +25,11 @@ cin7dsl/
 │   ├── typescript-sdk/         # Business logic patterns (v0.1.0)
 │   ├── extjs-adapters/         # ExtJS component integration (v0.1.0)
 │   ├── polaris-adapter/        # React/Polaris components (v0.1.0)
+│   ├── highcharts-adapter/     # Highcharts integration (v0.1.0)
 │   └── cli/                    # CLI tools for development (v0.1.0)
 ├── apps/                       # Example applications
 ├── polaris/                    # Polaris documentation site
+├── storybook/                  # Interactive component demos (v0.1.0)
 └── scripts/                    # Build and deployment scripts
 ```
 
@@ -54,6 +56,56 @@ pnpm install && pnpm build
 pnpm turbo run dev --filter=@shopify/polaris    # Component storybook
 pnpm turbo run dev --filter=polaris.shopify.com  # Documentation site
 ```
+
+## Storybook Integration
+
+The project includes Storybook 8.6.14 for interactive component demonstrations, deployed at https://cin7-dsl.netlify.app/storybook/
+
+### Key Features
+- **Interactive Demos**: Live, interactive examples of all chart components
+- **19 Story Variations**: Comprehensive coverage of LineChart, BarChart, and PieChart
+- **Self-Hosted**: Fully integrated with the documentation site, no external dependencies
+- **Version Control**: Stories are tracked in git alongside component code
+
+### Working with Storybook
+
+```bash
+# Development mode (with hot reload)
+cd storybook
+pnpm dev  # Runs on http://localhost:6006
+
+# Build for production
+cd storybook
+pnpm build  # Output to storybook-static/
+
+# The build is automatically copied to the docs site during Netlify deployment
+```
+
+### Story Structure
+
+Stories are organized by component type:
+- `/storybook/stories/charts/LineChart.stories.tsx` - 5 variations
+- `/storybook/stories/charts/BarChart.stories.tsx` - 6 variations
+- `/storybook/stories/charts/PieChart.stories.tsx` - 8 variations
+
+Each story showcases different configurations and use cases for the component.
+
+### Adding New Stories
+
+1. Create a new `.stories.tsx` file in `/storybook/stories/`
+2. Follow the existing pattern with Meta and Story types
+3. Run `pnpm dev` to preview locally
+4. Build and deploy via Netlify
+
+### Deployment Integration
+
+The Storybook build is integrated into the Netlify pipeline:
+1. Storybook builds to `storybook-static/`
+2. Output is copied to `polaris.shopify.com/public/storybook/`
+3. Next.js includes it as static assets during standalone build
+4. Custom headers allow iframe usage for component previews
+
+**Important**: The `/storybook/*` path has `X-Frame-Options: SAMEORIGIN` to allow Storybook's iframe-based component previews, while all other paths maintain `X-Frame-Options: DENY` for security.
 
 ## Deployment to Netlify
 
@@ -105,14 +157,20 @@ The following components are configured in `Markdown.tsx`:
 # Install dependencies
 pnpm install
 
-# Start development
+# Start documentation site
 cd polaris/polaris.shopify.com && pnpm dev
+
+# Start Storybook (interactive demos)
+cd storybook && pnpm dev
 
 # Run tests
 pnpm test
 
 # Build for production
 ./test-full-build.sh
+
+# Build Storybook only
+cd storybook && pnpm build
 
 # Create new project
 npx @cin7/create-dsl-app my-app --template=full
@@ -229,6 +287,15 @@ See "Next Steps" section at the end of this file for current priorities.
 - Created detailed development logs page under version guides
 - Fixed Divider component error by replacing with markdown horizontal rules
 - Refactored development logs with meaningful context and reasoning behind changes
+
+### Recent Completed Work (November 3, 2025)
+- Implemented Storybook 8.6.14 for interactive component demonstrations
+- Created 19 interactive story variations across LineChart, BarChart, and PieChart
+- Integrated Storybook into Netlify deployment pipeline
+- Fixed Storybook deployment path for proper static asset serving
+- Resolved X-Frame-Options header configuration for iframe support
+- Added interactive demo links to all chart documentation pages
+- Self-hosted solution with zero external dependencies
 
 ### Documentation Patterns
 - Follow simple markdown patterns over complex component structures

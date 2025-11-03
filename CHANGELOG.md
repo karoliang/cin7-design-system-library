@@ -28,6 +28,83 @@ The Cin7 DSL framework is now production-ready with a complete multi-layer archi
 
 ---
 
+## [1.1.0] - 2025-11-03
+
+### 🎨 Interactive Component Demonstrations
+
+Added Storybook 8.6.14 for interactive, self-hosted component demonstrations with zero external dependencies.
+
+#### Major Features
+
+- **Interactive Demos**: Live component playground at https://cin7-dsl.netlify.app/storybook/
+- **19 Story Variations**: Comprehensive examples across chart components
+  - LineChart: 5 variations (default, multiple series, area chart, stepped line, time series)
+  - BarChart: 6 variations (vertical, horizontal, stacked, percentage stacked, grouped, with data labels)
+  - PieChart: 8 variations (standard, donut, semi-circle, custom colors, legend only, percentage labels, multiple series, custom inner size)
+- **Self-Hosted Solution**: Fully integrated with documentation site, no external CDN dependencies
+- **Version Control**: All stories tracked in git alongside component code
+
+#### Technical Implementation
+
+##### Added
+- **Storybook Package** (e0c2f98)
+  - Created `/storybook` workspace package
+  - Configured Storybook 8.6.14 with React and Vite
+  - Added 19 comprehensive story files for chart components
+  - Integrated with Netlify deployment pipeline
+
+##### Fixed
+- **Deployment Path** (fe64eb0)
+  - Fixed Storybook asset serving by copying to `public/storybook/` before Next.js build
+  - Ensured standalone mode properly includes Storybook as static assets
+  - Added proper .gitignore exclusions for build artifacts
+
+- **X-Frame-Options Configuration** (5d9654e, b150fa1)
+  - Configured path-specific security headers in netlify.toml
+  - Set `X-Frame-Options: SAMEORIGIN` for `/storybook/*` to allow iframe previews
+  - Maintained `X-Frame-Options: DENY` for all other paths for security
+  - Resolved header precedence issue to ensure proper override order
+
+##### Documentation
+- **Chart Documentation Updates**
+  - Added interactive demo links to all Highcharts documentation pages
+  - Line Chart: `/storybook/?path=/docs/charts-linechart--docs`
+  - Bar Chart: `/storybook/?path=/docs/charts-barchart--docs`
+  - Pie Chart: `/storybook/?path=/docs/charts-piechart--docs`
+
+#### Build Pipeline Integration
+
+The Storybook build is now part of the Netlify deployment:
+1. Storybook builds to `storybook-static/` (~3 seconds)
+2. Output copied to `polaris.shopify.com/public/storybook/`
+3. Next.js includes as static assets during standalone build
+4. Deployed to https://cin7-dsl.netlify.app/storybook/
+
+#### Developer Experience
+
+```bash
+# Start Storybook development server
+cd storybook && pnpm dev  # http://localhost:6006
+
+# Build for production
+cd storybook && pnpm build
+```
+
+#### Story Organization
+
+Stories are organized by component type in `/storybook/stories/charts/`:
+- `LineChart.stories.tsx` - Time series, trends, multiple data series
+- `BarChart.stories.tsx` - Category comparisons, rankings, stacking
+- `PieChart.stories.tsx` - Part-to-whole relationships, composition
+
+Each story includes:
+- Component configuration examples
+- Interactive controls for customization
+- Code snippets for implementation
+- Visual variants demonstrating different use cases
+
+---
+
 ## Development History
 
 ### 2025-10-07

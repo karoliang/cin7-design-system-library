@@ -1,0 +1,348 @@
+---
+title: Storybook Integration
+description: Create and manage interactive component demonstrations with Storybook
+showTOC: true
+keywords:
+  - storybook
+  - interactive demos
+  - component playground
+  - examples
+  - documentation
+order: 12
+icon: PlayIcon
+---
+
+# Storybook Integration
+
+<Lede>Learn how to create interactive, self-hosted component demonstrations using Storybook 8.6.14.</Lede>
+
+## Overview
+
+The Cin7 DSL framework includes Storybook for creating interactive component demonstrations. All stories are self-hosted, version-controlled, and automatically deployed with the documentation site.
+
+**Live demos**: [https://cin7-dsl.netlify.app/storybook/](https://cin7-dsl.netlify.app/storybook/)
+
+## Quick Start
+
+### Local Development
+
+```bash
+# Start Storybook development server
+cd storybook
+pnpm dev  # Opens on http://localhost:6006
+
+# Build for production
+pnpm build  # Output to storybook-static/
+```
+
+### Project Structure
+
+```
+storybook/
+├── .storybook/
+│   ├── main.ts          # Storybook configuration
+│   └── preview.ts       # Global settings and decorators
+├── stories/
+│   └── charts/
+│       ├── LineChart.stories.tsx
+│       ├── BarChart.stories.tsx
+│       └── PieChart.stories.tsx
+├── package.json
+└── .gitignore
+```
+
+## Creating Stories
+
+### Basic Story Structure
+
+Stories use TypeScript and follow a consistent pattern:
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+const meta = {
+  title: 'Charts/LineChart',
+  component: LineChart,
+  tags: ['autodocs'],
+} satisfies Meta<typeof LineChart>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    title: 'Sales Trend',
+    series: [
+      { name: 'Revenue', data: [100, 150, 200, 180, 220, 250] }
+    ],
+    xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'] },
+  },
+};
+```
+
+### Story Naming Conventions
+
+Follow these conventions for consistency:
+
+- **File names**: `ComponentName.stories.tsx`
+- **Story names**: PascalCase (e.g., `Default`, `WithMultipleSeries`, `SteppedLine`)
+- **Title path**: `Category/ComponentName` (e.g., `Charts/LineChart`)
+
+### Story Variations
+
+Create multiple variations to showcase different configurations:
+
+```tsx
+export const WithMarkers: Story = {
+  args: {
+    title: 'Product Performance',
+    markers: true,
+    series: [{ name: 'Sales', data: [10, 15, 12, 18, 20, 16] }],
+  },
+};
+
+export const SmoothCurve: Story = {
+  args: {
+    title: 'Revenue Trend',
+    smooth: true,
+    series: [{ name: 'Revenue', data: [100, 120, 140, 160, 180, 200] }],
+  },
+};
+
+export const MultiSeries: Story = {
+  args: {
+    title: 'Regional Comparison',
+    series: [
+      { name: 'North', data: [100, 120, 140, 160, 180] },
+      { name: 'South', data: [80, 100, 120, 140, 160] },
+      { name: 'East', data: [90, 110, 130, 150, 170] },
+    ],
+  },
+};
+```
+
+## Best Practices
+
+### Story Organization
+
+- **Group by category**: Use the `title` field to organize stories (e.g., `Charts/`, `Components/`, `Forms/`)
+- **Meaningful names**: Use descriptive story names that explain the variation
+- **Default first**: Always include a `Default` story showing basic usage
+- **Progressive complexity**: Order stories from simple to complex
+
+### Data Guidelines
+
+- **Use realistic data**: Provide meaningful examples that users can understand
+- **Keep it simple**: Avoid overly complex datasets that obscure the component behavior
+- **Show edge cases**: Include stories for empty states, errors, and loading states
+- **Variety**: Demonstrate different data patterns (positive/negative, sparse/dense, etc.)
+
+### Documentation
+
+Add descriptions to your stories using the `parameters` property:
+
+```tsx
+export const WithCustomColors: Story = {
+  args: {
+    title: 'Status Distribution',
+    data: [
+      { name: 'Success', y: 80, color: '#108043' },
+      { name: 'Warning', y: 15, color: '#FFC453' },
+      { name: 'Error', y: 5, color: '#DE3618' },
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Apply custom colors to specific segments using the `color` property in data points.',
+      },
+    },
+  },
+};
+```
+
+## Deployment
+
+### Automatic Deployment
+
+Storybook is automatically deployed with the documentation site via Netlify:
+
+1. Stories are built to `storybook-static/`
+2. Output is copied to `polaris.shopify.com/public/storybook/`
+3. Next.js includes it as static assets during standalone build
+4. Deployed to https://cin7-dsl.netlify.app/storybook/
+
+### Build Pipeline
+
+The full deployment process in `netlify.toml`:
+
+```toml
+command = "
+  cd storybook &&
+  pnpm build &&
+  cd ../polaris/polaris.shopify.com &&
+  mkdir -p public/storybook &&
+  cp -r ../../storybook/storybook-static/* public/storybook/ &&
+  pnpm next-build
+"
+```
+
+### Security Configuration
+
+Storybook requires specific headers to function correctly:
+
+```toml
+# Allow Storybook to use iframes for component previews
+[[headers]]
+  for = "/storybook/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+
+# All other pages remain protected
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+```
+
+## Linking to Stories
+
+### From Documentation Pages
+
+Link to specific stories from your MDX documentation:
+
+```markdown
+[View interactive demos →](/storybook/?path=/docs/charts-linechart--docs)
+```
+
+### Story URLs
+
+Storybook URLs follow this pattern:
+
+- **Docs page**: `/storybook/?path=/docs/category-componentname--docs`
+- **Canvas view**: `/storybook/?path=/story/category-componentname--storyname`
+
+Examples:
+- Line Chart docs: `/storybook/?path=/docs/charts-linechart--docs`
+- Specific story: `/storybook/?path=/story/charts-linechart--with-markers`
+
+## Adding New Components
+
+### Step-by-Step Guide
+
+1. **Create story file** in `/storybook/stories/`
+
+```bash
+touch storybook/stories/components/Button.stories.tsx
+```
+
+2. **Write stories** following the pattern above
+
+3. **Test locally** with `pnpm dev`
+
+4. **Build and verify** with `pnpm build`
+
+5. **Commit and push** - automatic deployment via Netlify
+
+### Example: Adding a New Component
+
+```tsx
+// storybook/stories/components/Button.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from '@cin7/polaris-adapter';
+
+const meta = {
+  title: 'Components/Button',
+  component: Button,
+  tags: ['autodocs'],
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    children: 'Click me',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: 'Primary Button',
+    variant: 'primary',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Disabled',
+    disabled: true,
+  },
+};
+```
+
+## Troubleshooting
+
+### Build Failures
+
+**Symptom**: Storybook build hangs or fails
+
+**Solution**: Check for circular dependencies and ensure all imports are valid:
+
+```bash
+cd storybook
+pnpm build --debug
+```
+
+### Assets Not Loading
+
+**Symptom**: 404 errors for fonts, icons, or images
+
+**Solution**: Ensure assets are in `public/` directory and referenced with absolute paths:
+
+```tsx
+<img src="/storybook/assets/icon.svg" alt="Icon" />
+```
+
+### Iframe Errors
+
+**Symptom**: "Refused to display in a frame" error
+
+**Solution**: Verify `netlify.toml` has correct header configuration for `/storybook/*` path
+
+## Current Story Coverage
+
+The framework includes 19 interactive stories:
+
+### Line Chart (5 stories)
+- Default configuration
+- Multiple series comparison
+- Area chart with stacking
+- Stepped line visualization
+- Time series with date formatting
+
+### Bar Chart (6 stories)
+- Vertical columns
+- Horizontal bars
+- Stacked bars
+- Percentage stacked
+- Grouped comparison
+- With data labels
+
+### Pie Chart (8 stories)
+- Standard pie chart
+- Donut chart
+- Semi-circle chart
+- Custom colors
+- Legend only display
+- Percentage labels
+- Multiple data series
+- Custom inner size
+
+## Related Resources
+
+- [Storybook Documentation](https://storybook.js.org/docs/react/get-started/introduction)
+- [Component Examples](/examples) - Live examples on the docs site
+- [Developer Tools](/guides/developer-tools) - IDE setup and productivity tools
+- [Architecture Examples](/guides/architecture-examples) - Framework architecture patterns
