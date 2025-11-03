@@ -42,3 +42,6 @@ pnpm-debug.log*
 .tmp/
 # Local Netlify folder
 .netlify
+
+*storybook.log
+storybook-static

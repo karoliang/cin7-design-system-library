@@ -3,5 +3,7 @@ packages:
   - 'packages/*'
   # Example applications
   - 'apps/*'
+  # Storybook documentation
+  - 'storybook'
   # Exclude the Polaris submodule
   - '!polaris/**'

@@ -1,0 +1,40 @@
+{
+  "name": "@cin7/storybook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive component documentation for Cin7 Design System Library",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o storybook-static",
+    "preview": "npx http-server storybook-static",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@cin7/highcharts-adapter": "workspace:*",
+    "@cin7/design-tokens": "workspace:*",
+    "@cin7/core": "workspace:*",
+    "@shopify/polaris": "^13.0.0",
+    "@shopify/polaris-icons": "^9.0.0",
+    "@shopify/polaris-tokens": "^9.0.0",
+    "highcharts": "^11.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-links": "^8.6.14",
+    "@storybook/addon-onboarding": "^8.6.14",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test": "^8.6.14",
+    "storybook": "^8.6.14",
+    "eslint-plugin-storybook": "^0.10.1",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0"
+  }
+}

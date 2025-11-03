@@ -6,6 +6,12 @@ const nextConfig = {
   // See: https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files
   output: 'standalone',
   reactStrictMode: false,
+  // Transpile workspace packages for proper TypeScript resolution
+  transpilePackages: [
+    '@cin7/highcharts-adapter',
+    '@cin7/design-tokens',
+    '@cin7/core',
+  ],
   eslint: {
     ignoreDuringBuilds: true,
   },
