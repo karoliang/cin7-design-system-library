@@ -516,7 +516,7 @@ export const FormActions: Story = {
         <div style={{ margin: '16px 0' }}>
           <BlockStack gap="300">
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
                 Form Field
               </label>
               <input
@@ -528,7 +528,7 @@ export const FormActions: Story = {
                   padding: '8px 12px',
                   border: '1px solid var(--p-color-border)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
             </div>

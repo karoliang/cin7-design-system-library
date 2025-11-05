@@ -363,7 +363,7 @@ const TypeSafeTextField: React.FC<TypeSafeTextFieldProps> = ({
           display: 'block',
           marginBottom: '4px',
           fontWeight: '600',
-          fontSize: '14px',
+          fontSize: "var(--font-size-sm)",
           color: error ? '#dc2626' : '#202223'
         }}
       >
@@ -384,7 +384,7 @@ const TypeSafeTextField: React.FC<TypeSafeTextFieldProps> = ({
           padding: '8px 12px',
           border: `2px solid ${error ? '#dc2626' : isValid ? '#059669' : '#d1d5db'}`,
           borderRadius: '6px',
-          fontSize: '14px',
+          fontSize: "var(--font-size-sm)",
           fontFamily: 'system-ui, -apple-system, sans-serif',
           backgroundColor: disabled ? '#f9fafb' : 'white',
           outline: 'none',
@@ -395,7 +395,7 @@ const TypeSafeTextField: React.FC<TypeSafeTextFieldProps> = ({
       {error && (
         <div style={{
           color: '#dc2626',
-          fontSize: '12px',
+          fontSize: "var(--font-size-xs)",
           marginTop: '4px',
           display: 'flex',
           alignItems: 'center',
@@ -407,7 +407,7 @@ const TypeSafeTextField: React.FC<TypeSafeTextFieldProps> = ({
       {isValid && (
         <div style={{
           color: '#059669',
-          fontSize: '12px',
+          fontSize: "var(--font-size-xs)",
           marginTop: '4px'
         }}>
           ✓ Valid {label.toLowerCase()}
@@ -520,7 +520,7 @@ export const ReactImplementation: Story = {
 
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
           <Text variant="bodySm" as="h4">Form Data:</Text>
-          <pre style={{ fontSize: '12px', margin: '8px 0 0 0', whiteSpace: 'pre-wrap' }}>
+          <pre style={{ fontSize: "var(--font-size-xs)", margin: '8px 0 0 0', whiteSpace: 'pre-wrap' }}>
             {JSON.stringify(formData, null, 2)}
           </pre>
         </div>
@@ -603,7 +603,7 @@ export const VanillaJSImplementation: Story = {
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontSize: '14px'
+              fontSize: "var(--font-size-sm)"
             }}
           >
             Validate Vanilla JS Form
@@ -612,7 +612,7 @@ export const VanillaJSImplementation: Story = {
 
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#ecfdf5', borderRadius: '6px' }}>
           <Text variant="bodySm" as="h4">Vanilla JS State:</Text>
-          <pre style={{ fontSize: '12px', margin: '8px 0 0 0', whiteSpace: 'pre-wrap' }}>
+          <pre style={{ fontSize: "var(--font-size-xs)", margin: '8px 0 0 0', whiteSpace: 'pre-wrap' }}>
             {JSON.stringify(formData, null, 2)}
           </pre>
         </div>
@@ -684,7 +684,7 @@ export const ExtJSImplementation: Story = {
 
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
           <Text variant="bodySm" as="h4">ExtJS Form State:</Text>
-          <pre style={{ fontSize: '12px', margin: '8px 0 0 0', whiteSpace: 'pre-wrap', fontFamily: 'Arial, sans-serif' }}>
+          <pre style={{ fontSize: "var(--font-size-xs)", margin: '8px 0 0 0', whiteSpace: 'pre-wrap', fontFamily: 'Arial, sans-serif' }}>
             {JSON.stringify(formData, null, 2)}
           </pre>
         </div>
@@ -798,7 +798,7 @@ export const TypeScriptImplementation: Story = {
             borderRadius: '6px'
           }}>
             <Text variant="bodySm" as="h4">TypeScript Validation Status:</Text>
-            <ul style={{ margin: '8px 0 0 0', paddingLeft: '16px', fontSize: '12px' }}>
+            <ul style={{ margin: '8px 0 0 0', paddingLeft: '16px', fontSize: "var(--font-size-xs)" }}>
               <li style={{ color: validateFullName(formData.fullName) ? '#dc2626' : '#059669' }}>
                 Full Name: {validateFullName(formData.fullName) || '✓ Valid'}
               </li>
@@ -873,7 +873,7 @@ export const BusinessScenarioCustomerForm: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #0ea5e9',
             borderRadius: '6px',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             <strong>Active Layer: </strong>
             <Badge status={activeLayer === 'react' ? 'success' : 'info'}>
@@ -899,25 +899,25 @@ export const BusinessScenarioCustomerForm: Story = {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
             <div style={{ padding: '12px', backgroundColor: '#eff6ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#1d4ed8' }}>React</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 Best for modern SPAs, component libraries, and rapid development
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#f0fdf4', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#15803d' }}>Vanilla JS</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 Lightweight, no dependencies, ideal for simple forms and performance
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#faf5ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#7c3aed' }}>ExtJS</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 Enterprise applications, complex forms, data-rich interfaces
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#fef2f2', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#dc2626' }}>TypeScript</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 Type safety, business logic, validation, maintainable codebases
               </p>
             </div>

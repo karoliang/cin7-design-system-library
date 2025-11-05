@@ -438,7 +438,7 @@ export const InteractiveTable: Story = {
               padding: '8px 12px',
               border: '1px solid #d2d2d2',
               borderRadius: '4px',
-              fontSize: '14px',
+              fontSize: "var(--font-size-sm)",
             }}
           />
         </div>

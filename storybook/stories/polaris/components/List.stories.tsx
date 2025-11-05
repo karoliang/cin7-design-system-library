@@ -185,7 +185,7 @@ export const TaskList: Story = {
                   }}
                 >
                   {completedTasks.has(index) && (
-                    <span style={{ color: 'white', fontSize: '12px', lineHeight: 1 }}>✓</span>
+                    <span style={{ color: 'white', fontSize: "var(--font-size-xs)", lineHeight: 1 }}>✓</span>
                   )}
                 </button>
                 <span style={{
@@ -198,7 +198,7 @@ export const TaskList: Story = {
             </List.Item>
           ))}
         </List>
-        <div style={{ marginTop: '16px', fontSize: '14px', color: '#666' }}>
+        <div style={{ marginTop: '16px', fontSize: "var(--font-size-sm)", color: '#666' }}>
           Progress: {completedTasks.size} of {tasks.length} completed
         </div>
       </div>
@@ -354,7 +354,7 @@ export const SpacingExamples: Story = {
     return (
       <div style={{ display: 'flex', gap: '32px', alignItems: 'flex-start' }}>
         <div>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Extra Tight</h4>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Extra Tight</h4>
           <List gap="extraTight">
             {items.map((item, i) => (
               <List.Item key={i}>{item}</List.Item>
@@ -363,7 +363,7 @@ export const SpacingExamples: Story = {
         </div>
 
         <div>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Base</h4>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Base</h4>
           <List gap="base">
             {items.map((item, i) => (
               <List.Item key={i}>{item}</List.Item>
@@ -372,7 +372,7 @@ export const SpacingExamples: Story = {
         </div>
 
         <div>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Loose</h4>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Loose</h4>
           <List gap="loose">
             {items.map((item, i) => (
               <List.Item key={i}>{item}</List.Item>
@@ -491,7 +491,7 @@ export const ComparisonList: Story = {
         <List.Item>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Products</span>
-            <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+            <div style={{ display: 'flex', gap: '24px', fontSize: "var(--font-size-sm)" }}>
               <span>25</span>
               <span>Unlimited</span>
             </div>
@@ -500,7 +500,7 @@ export const ComparisonList: Story = {
         <List.Item>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Storage</span>
-            <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+            <div style={{ display: 'flex', gap: '24px', fontSize: "var(--font-size-sm)" }}>
               <span>1 GB</span>
               <span>Unlimited</span>
             </div>
@@ -509,7 +509,7 @@ export const ComparisonList: Story = {
         <List.Item>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Monthly bandwidth</span>
-            <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+            <div style={{ display: 'flex', gap: '24px', fontSize: "var(--font-size-sm)" }}>
               <span>100 GB</span>
               <span>Unlimited</span>
             </div>
@@ -518,7 +518,7 @@ export const ComparisonList: Story = {
         <List.Item>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Support</span>
-            <div style={{ display: 'flex', gap: '24px', fontSize: '14px' }}>
+            <div style={{ display: 'flex', gap: '24px', fontSize: "var(--font-size-sm)" }}>
               <span>Email</span>
               <span>Priority</span>
             </div>

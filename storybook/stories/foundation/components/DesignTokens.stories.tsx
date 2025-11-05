@@ -33,7 +33,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px'
+            fontSize: "var(--font-size-xs)"
           }}>
             Primary 500
           </div>
@@ -45,7 +45,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Primary 600
@@ -58,7 +58,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Primary 700
@@ -77,7 +77,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px'
+            fontSize: "var(--font-size-xs)"
           }}>
             Gray 50
           </div>
@@ -89,7 +89,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px'
+            fontSize: "var(--font-size-xs)"
           }}>
             Gray 100
           </div>
@@ -101,7 +101,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Gray 500
@@ -114,7 +114,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Gray 900
@@ -133,7 +133,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Success
@@ -146,7 +146,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Warning
@@ -159,7 +159,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             color: 'white'
           }}>
             Critical

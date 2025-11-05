@@ -630,7 +630,7 @@ export const CustomStyling: Story = {
                       backgroundColor: colorData?.color,
                       color: 'white',
                       borderRadius: '4px',
-                      fontSize: '12px',
+                      fontSize: "var(--font-size-xs)",
                     }}
                   >
                     {colorData?.label}

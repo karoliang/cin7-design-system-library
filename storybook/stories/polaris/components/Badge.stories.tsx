@@ -445,13 +445,13 @@ export const LoyaltyBadges: Story = {
                   justifyContent: 'center',
                   color: '#fff',
                   fontWeight: 'bold',
-                  fontSize: '18px'
+                  fontSize: "var(--font-size-lg)"
                 }}>
                   {tier.charAt(0)}
                 </div>
                 <div>
                   <h4 style={{ margin: '0 0 4px 0' }}>{tier} Tier</h4>
-                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
+                  <p style={{ margin: 0, color: '#666', fontSize: "var(--font-size-sm)" }}>
                     {tier.badges.length} benefits unlocked
                   </p>
                 </div>

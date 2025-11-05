@@ -206,7 +206,7 @@ export const SequentialToasts: Story = {
             <Button onClick={() => addToast('Customer notified')}>Notify Customer</Button>
           </div>
 
-          <div style={{ marginTop: '16px', fontSize: '14px', color: '#637381' }}>
+          <div style={{ marginTop: '16px', fontSize: "var(--font-size-sm)", color: '#637381' }}>
             Active messages: {messages.length}
           </div>
 

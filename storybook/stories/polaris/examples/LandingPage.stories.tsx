@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import {
   Text,
+  Heading,
   Badge,
   Button,
   ButtonGroup,
@@ -80,7 +81,7 @@ export const ProductLaunch: Story = {
             <Grid columns={{ xs: 1, sm: 2, lg: 3 }} gap="500">
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>🚀</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>🚀</div>
                   <Heading as="h3" variant="headingLg">
                     Fast Performance
                   </Heading>
@@ -93,7 +94,7 @@ export const ProductLaunch: Story = {
 
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>🔒</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>🔒</div>
                   <Heading as="h3" variant="headingLg">
                     Enterprise Security
                   </Heading>
@@ -106,7 +107,7 @@ export const ProductLaunch: Story = {
 
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>📊</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>📊</div>
                   <Heading as="h3" variant="headingLg">
                     Advanced Analytics
                   </Heading>
@@ -119,7 +120,7 @@ export const ProductLaunch: Story = {
 
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>🌍</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>🌍</div>
                   <Heading as="h3" variant="headingLg">
                     Global Reach
                   </Heading>
@@ -132,7 +133,7 @@ export const ProductLaunch: Story = {
 
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>🎯</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>🎯</div>
                   <Heading as="h3" variant="headingLg">
                     Smart Marketing
                   </Heading>
@@ -145,7 +146,7 @@ export const ProductLaunch: Story = {
 
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                  <div style={{ fontSize: '48px', marginBottom: '12px' }}>💬</div>
+                  <div className="icon-3xl" style={{ marginBottom: '12px' }}>💬</div>
                   <Heading as="h3" variant="headingLg">
                     24/7 Support
                   </Heading>
@@ -413,7 +414,7 @@ export const MarketingCampaign: Story = {
                   <Card key={index} padding="500">
                     <div style={{ marginBottom: '16px' }}>
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <span key={i} style={{ color: '#fbbf24', fontSize: '16px' }}>★</span>
+                        <span key={i} style={{ color: '#fbbf24', fontSize: "var(--font-size-base)" }}>★</span>
                       ))}
                     </div>
 
@@ -558,7 +559,7 @@ export const BusinessWebsite: Story = {
                 {services.map((service, index) => (
                   <Card key={index} sectioned>
                     <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                      <div style={{ fontSize: '56px', marginBottom: '16px' }}>
+                      <div style={{ className="icon-3xl", marginBottom: '16px' }}>
                         {service.icon}
                       </div>
                       <Heading as="h3" variant="headingLg">

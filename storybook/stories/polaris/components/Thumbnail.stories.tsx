@@ -349,7 +349,7 @@ export const UserGeneratedContent: Story = {
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: 'white',
-                        fontSize: '12px',
+                        fontSize: "var(--font-size-xs)",
                       }}
                     >
                       ▶
@@ -424,7 +424,7 @@ export const LoadingAndError: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#dc2626',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
             }}
           >
             ⚠
@@ -444,7 +444,7 @@ export const LoadingAndError: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#9ca3af',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
             }}
           >
             +
@@ -525,7 +525,7 @@ export const Selection: Story = {
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    fontSize: '12px',
+                    fontSize: "var(--font-size-xs)",
                     fontWeight: 'bold',
                   }}
                 >

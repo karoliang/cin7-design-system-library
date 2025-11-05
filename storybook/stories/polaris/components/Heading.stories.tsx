@@ -94,10 +94,10 @@ export const CardHeadings: Story = {
         backgroundColor: '#ffffff'
       }}>
         <Heading element="h3">Sales Overview</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Track your sales performance and revenue trends
         </p>
-        <div style={{ marginTop: '16px', fontSize: '24px', fontWeight: '600' }}>
+        <div style={{ marginTop: '16px', fontSize: "var(--font-size-2xl)", fontWeight: '600' }}>
           $45,231
         </div>
       </div>
@@ -109,10 +109,10 @@ export const CardHeadings: Story = {
         backgroundColor: '#ffffff'
       }}>
         <Heading element="h3">Customer Orders</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Monitor order status and fulfillment
         </p>
-        <div style={{ marginTop: '16px', fontSize: '24px', fontWeight: '600' }}>
+        <div style={{ marginTop: '16px', fontSize: "var(--font-size-2xl)", fontWeight: '600' }}>
           1,234
         </div>
       </div>
@@ -124,10 +124,10 @@ export const CardHeadings: Story = {
         backgroundColor: '#ffffff'
       }}>
         <Heading element="h3">Inventory Status</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Current stock levels and alerts
         </p>
-        <div style={{ marginTop: '16px', fontSize: '24px', fontWeight: '600' }}>
+        <div style={{ marginTop: '16px', fontSize: "var(--font-size-2xl)", fontWeight: '600' }}>
           892
         </div>
       </div>
@@ -140,12 +140,12 @@ export const FormSections: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
       <div>
         <Heading element="h2">Account Information</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Update your personal details and contact information
         </p>
         <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div>
-            <label style={{ display: 'block', marginBottom: '4px', fontSize: '14px', fontWeight: '500' }}>
+            <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
               Full Name
             </label>
             <input
@@ -155,7 +155,7 @@ export const FormSections: Story = {
                 padding: '8px 12px',
                 border: '1px solid #d2d2d2',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
                 width: '100%',
                 boxSizing: 'border-box',
               }}
@@ -166,13 +166,13 @@ export const FormSections: Story = {
 
       <div>
         <Heading element="h2">Notification Preferences</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Choose how you want to receive updates
         </p>
         <div style={{ marginTop: '16px' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <input type="checkbox" />
-            <span style={{ fontSize: '14px' }}>Email notifications</span>
+            <span style={{ fontSize: "var(--font-size-sm)" }}>Email notifications</span>
           </label>
         </div>
       </div>
@@ -190,7 +190,7 @@ export const ModalHeadings: Story = {
       backgroundColor: '#ffffff'
     }}>
       <Heading element="h2">Confirm Deletion</Heading>
-      <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+      <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
         Are you sure you want to delete this item? This action cannot be undone.
       </p>
       <div style={{ marginTop: '20px', display: 'flex', gap: '8px' }}>
@@ -224,7 +224,7 @@ export const DashboardHeadings: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '900px' }}>
       <div style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: '16px' }}>
         <Heading element="h1">Analytics Dashboard</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Comprehensive overview of your business performance
         </p>
       </div>
@@ -235,7 +235,7 @@ export const DashboardHeadings: Story = {
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#059669' }}>
             $124,563
           </div>
-          <div style={{ fontSize: '12px', color: '#637381', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#637381', marginTop: '4px' }}>
             +12.5% from last month
           </div>
         </div>
@@ -245,7 +245,7 @@ export const DashboardHeadings: Story = {
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#3b82f6' }}>
             8,432
           </div>
-          <div style={{ fontSize: '12px', color: '#637381', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#637381', marginTop: '4px' }}>
             +3.2% from last month
           </div>
         </div>
@@ -255,7 +255,7 @@ export const DashboardHeadings: Story = {
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#8b5cf6' }}>
             2,156
           </div>
-          <div style={{ fontSize: '12px', color: '#637381', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#637381', marginTop: '4px' }}>
             +8.7% from last month
           </div>
         </div>
@@ -263,7 +263,7 @@ export const DashboardHeadings: Story = {
 
       <div>
         <Heading element="h2">Recent Activity</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Latest transactions and customer interactions
         </p>
       </div>
@@ -276,11 +276,11 @@ export const WithAccessibility: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
       <div>
         <Heading id="billing-section" element="h2">Billing Information</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Manage your billing details and payment methods
         </p>
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#fef3c7', borderRadius: '4px' }}>
-          <span style={{ fontSize: '12px', color: '#92400e' }}>
+          <span style={{ fontSize: "var(--font-size-xs)", color: '#92400e' }}>
             ♿ This heading is properly identified for screen readers
           </span>
         </div>
@@ -288,11 +288,11 @@ export const WithAccessibility: Story = {
 
       <div>
         <Heading id="shipping-section" element="h2">Shipping Address</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Where should we send your orders?
         </p>
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#dbeafe', borderRadius: '4px' }}>
-          <span style={{ fontSize: '12px', color: '#1e40af' }}>
+          <span style={{ fontSize: "var(--font-size-xs)", color: '#1e40af' }}>
             ♿ Screen reader users can navigate to this section
           </span>
         </div>
@@ -300,7 +300,7 @@ export const WithAccessibility: Story = {
 
       <div>
         <Heading element="h3">Additional Notes</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Using proper heading levels creates a logical document structure that helps all users navigate content efficiently.
         </p>
       </div>
@@ -312,26 +312,26 @@ export const CustomElements: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
       <div>
-        <Heading element="p" style={{ fontSize: '18px', fontWeight: '600', margin: 0 }}>
+        <Heading element="p" style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', margin: 0 }}>
           Styled as a paragraph but with heading appearance
         </Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Sometimes you need heading styling without semantic heading meaning
         </p>
       </div>
 
       <div>
-        <Heading element="div" style={{ fontSize: '20px', fontWeight: '500', margin: 0 }}>
+        <Heading element="div" style={{ fontSize: "var(--font-size-xl)", fontWeight: '500', margin: 0 }}>
           Div element with heading styles
         </Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Useful for custom components that need heading appearance
         </p>
       </div>
 
       <div>
         <Heading element="h2">Semantic H2 with default styles</Heading>
-        <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+        <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
           Standard semantic heading with Polaris styling
         </p>
       </div>

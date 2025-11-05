@@ -298,7 +298,7 @@ export const SupportCenter: Story = {
               </div>
 
               <div style={{ marginBottom: '24px' }}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px' }}>Choose support channel:</h4>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)" }}>Choose support channel:</h4>
                 <InlineStack gap="200" wrap>
                   {Object.keys(supportChannels).map((channel) => (
                     <Button
@@ -458,7 +458,7 @@ export const ContextualHelp: Story = {
               </div>
 
               <div style={{ marginBottom: '24px' }}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px' }}>Configuration area:</h4>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)" }}>Configuration area:</h4>
                 <InlineStack gap="200" wrap>
                   {Object.keys(contextualHelp).map((section) => (
                     <Button
@@ -518,7 +518,7 @@ export const MobileOptimized: Story = {
           <div style={{ padding: '16px' }}>
             <BlockStack gap="300">
               <div>
-                <h3 style={{ margin: '0 0 12px 0', fontSize: '18px' }}>Quick Setup</h3>
+                <h3 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-lg)" }}>Quick Setup</h3>
                 <Text as="p" variant="bodySm">Complete your store setup in minutes.</Text>
               </div>
 

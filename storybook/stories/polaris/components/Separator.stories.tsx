@@ -444,7 +444,7 @@ export const CommentThread: Story = {
                 <React.Fragment key={index}>
                   <BlockStack gap="200">
                     <InlineStack gap="200" align="start">
-                      <div style={{ fontSize: '24px' }}>
+                      <div style={{ fontSize: "var(--font-size-2xl)" }}>
                         {comment.avatar}
                       </div>
                       <div style={{ flex: 1 }}>

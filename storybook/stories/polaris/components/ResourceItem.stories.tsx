@@ -96,11 +96,11 @@ export const Default: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>SKU: {item.sku}</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>SKU: {item.sku}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontWeight: '500' }}>{item.price}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>{item.stock} in stock</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{item.stock} in stock</div>
                   </div>
                 </div>
               </ResourceItem>
@@ -145,7 +145,7 @@ export const WithMedia: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>{item.category}</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{item.category}</div>
                   </div>
                   <div style={{ fontWeight: '500' }}>{item.price}</div>
                 </div>
@@ -202,7 +202,7 @@ export const WithActions: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
                       Status: <Badge status="success">{item.status}</Badge>
                     </div>
                   </div>
@@ -269,12 +269,12 @@ export const CustomerResource: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{customer.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px', marginBottom: '4px' }}>{customer.email}</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)", marginBottom: '4px' }}>{customer.email}</div>
                     <InlineStack gap="200">
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         {customer.orders} orders
                       </span>
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         • {customer.totalSpent} spent
                       </span>
                     </InlineStack>
@@ -359,10 +359,10 @@ export const OrderResource: Story = {
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>
                       Order #{order.id}
                     </div>
-                    <div style={{ color: '#6b7280', fontSize: '14px', marginBottom: '4px' }}>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)", marginBottom: '4px' }}>
                       {order.customerName} • {order.date}
                     </div>
-                    <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                    <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                       {order.items} item{order.items !== 1 ? 's' : ''}
                     </div>
                   </div>
@@ -411,7 +411,7 @@ export const SelectableItems: Story = {
           <div style={{ padding: '16px 20px', borderBottom: '1px solid #e1e3e5' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '600' }}>Products</h3>
-              <span style={{ fontSize: '14px', color: '#6b7280' }}>
+              <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                 {selectedItems.length} selected
               </span>
             </div>
@@ -432,7 +432,7 @@ export const SelectableItems: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{product.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>{product.category}</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{product.category}</div>
                   </div>
                   <div style={{ fontWeight: '500' }}>{product.price}</div>
                 </div>
@@ -499,7 +499,7 @@ export const FileResource: Story = {
                     justifyContent: 'center',
                     backgroundColor: '#f8f9fa',
                     borderRadius: '6px',
-                    fontSize: '20px'
+                    fontSize: "var(--font-size-xl)"
                   }}>
                     {getFileIcon(file.type)}
                   </div>
@@ -517,10 +517,10 @@ export const FileResource: Story = {
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{file.name}</div>
                     <InlineStack gap="200">
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         {file.type} • {file.size}
                       </span>
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         Modified {file.modified}
                       </span>
                     </InlineStack>
@@ -553,7 +553,7 @@ export const LoadingState: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px' }}>Loading details...</div>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>Loading details...</div>
                   </div>
                 </div>
               </ResourceItem>
@@ -621,7 +621,7 @@ export const ProductGridExample: Story = {
       <div style={{ width: '700px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: '18px' }}>Product Inventory</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>Product Inventory</h3>
 
             <ResourceList
               resourceName={{ singular: 'product', plural: 'products' }}
@@ -644,12 +644,12 @@ export const ProductGridExample: Story = {
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: '500', marginBottom: '4px' }}>{product.name}</div>
                       <InlineStack gap="200">
-                        <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                        <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                           {product.inventory} in stock
                         </span>
                         {product.compareAtPrice && (
                           <span style={{
-                            fontSize: '14px',
+                            fontSize: "var(--font-size-sm)",
                             color: '#dc2626',
                             textDecoration: 'line-through'
                           }}>
@@ -737,14 +737,14 @@ export const TaskResource: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: '500', marginBottom: '4px' }}>{task.title}</div>
-                    <div style={{ color: '#6b7280', fontSize: '14px', marginBottom: '8px' }}>
+                    <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)", marginBottom: '8px' }}>
                       {task.description}
                     </div>
                     <InlineStack gap="300">
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         Due: {task.dueDate}
                       </span>
-                      <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                         Assignee: {task.assignee}
                       </span>
                     </InlineStack>
@@ -808,9 +808,9 @@ export const InteractiveResourceList: Story = {
         <Card>
           <div style={{ padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ margin: 0, fontSize: '18px' }}>Product Catalog</h3>
+              <h3 style={{ margin: 0, fontSize: "var(--font-size-lg)" }}>Product Catalog</h3>
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                   {selectedItems.length} selected
                 </span>
                 {selectedItems.length > 0 && (
@@ -870,10 +870,10 @@ export const InteractiveResourceList: Story = {
                         )}
                       </div>
                       <InlineStack gap="300">
-                        <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                        <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                           {product.category}
                         </span>
-                        <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                        <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                           {renderStars(product.rating)} ({product.reviews})
                         </span>
                       </InlineStack>
@@ -894,7 +894,7 @@ export const InteractiveResourceList: Story = {
                 borderRadius: '6px',
                 border: '1px solid #bfdbfe'
               }}>
-                <p style={{ margin: 0, fontSize: '14px', color: '#1e40af' }}>
+                <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
                   You've viewed {viewedItems.length} product{viewedItems.length !== 1 ? 's' : ''}
                 </p>
               </div>
@@ -935,7 +935,7 @@ export const VerticalAlignment: Story = {
             </h3>
 
             <div style={{ marginBottom: '24px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
                 Center alignment (default)
               </h4>
               <ResourceList
@@ -950,7 +950,7 @@ export const VerticalAlignment: Story = {
                   >
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.title}</div>
-                      <div style={{ color: '#6b7280', fontSize: '14px' }}>{item.description}</div>
+                      <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{item.description}</div>
                     </div>
                     <Button size="slim">Action</Button>
                   </ResourceItem>
@@ -959,7 +959,7 @@ export const VerticalAlignment: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
                 Top alignment
               </h4>
               <ResourceList
@@ -974,7 +974,7 @@ export const VerticalAlignment: Story = {
                   >
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.title}</div>
-                      <div style={{ color: '#6b7280', fontSize: '14px' }}>{item.description}</div>
+                      <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{item.description}</div>
                     </div>
                     <Button size="slim">Action</Button>
                   </ResourceItem>

@@ -494,7 +494,7 @@ export default ExampleComponent;`;
             color: '#d4d4d4',
             padding: '20px',
             fontFamily: 'Monaco, Consolas, "Courier New", monospace',
-            fontSize: '14px',
+            fontSize: "var(--font-size-sm)",
             lineHeight: '1.5',
             borderRadius: '8px',
             overflow: 'auto'

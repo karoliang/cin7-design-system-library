@@ -414,7 +414,7 @@ const CheckoutFlow = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '14px',
+                    fontSize: "var(--font-size-sm)",
                     fontWeight: '500'
                   }}
                 >

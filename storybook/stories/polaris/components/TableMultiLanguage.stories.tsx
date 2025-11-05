@@ -286,7 +286,7 @@ const ExtJSGrid: React.FC<{
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
           {plugins.includes('selection') && (
-            <span style={{ fontSize: '12px', color: '#6c757d' }}>
+            <span style={{ fontSize: "var(--font-size-xs)", color: '#6c757d' }}>
               {selectedRows.length} selected
             </span>
           )}
@@ -323,7 +323,7 @@ const ExtJSGrid: React.FC<{
                     padding: '8px 12px',
                     textAlign: 'left',
                     fontWeight: 'bold',
-                    fontSize: '12px',
+                    fontSize: "var(--font-size-xs)",
                     color: '#495057',
                     borderRight: '1px solid #d1d5db',
                     cursor: 'pointer',
@@ -367,7 +367,7 @@ const ExtJSGrid: React.FC<{
                     key={colIndex}
                     style={{
                       padding: '8px 12px',
-                      fontSize: '12px',
+                      fontSize: "var(--font-size-xs)",
                       color: '#495057',
                       borderRight: '1px solid #f1f3f4'
                     }}
@@ -390,7 +390,7 @@ const ExtJSGrid: React.FC<{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: '12px'
+          fontSize: "var(--font-size-xs)"
         }}>
           <span>Showing 1-{store.length} of {store.length}</span>
           <div style={{ display: 'flex', gap: '4px' }}>
@@ -418,7 +418,7 @@ const ExtJSGrid: React.FC<{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '12px',
+          fontSize: "var(--font-size-xs)",
           color: '#6c757d'
         }}>
           Loading...
@@ -615,7 +615,7 @@ const TypeSafeTable: React.FC<{
                   padding: '6px 8px',
                   border: '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   minWidth: '150px'
                 }}
               />
@@ -639,7 +639,7 @@ const TypeSafeTable: React.FC<{
                   padding: '12px',
                   width: '40px',
                   fontWeight: '600',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   color: '#374151',
                   borderRight: '1px solid #e2e8f0'
                 }}>
@@ -666,7 +666,7 @@ const TypeSafeTable: React.FC<{
                     padding: '12px 16px',
                     textAlign: 'left',
                     fontWeight: '600',
-                    fontSize: '14px',
+                    fontSize: "var(--font-size-sm)",
                     color: '#374151',
                     borderRight: index < internalConfig.columns.length - 1 ? '1px solid #e2e8f0' : 'none',
                     cursor: column.sortable ? 'pointer' : 'default',
@@ -675,7 +675,7 @@ const TypeSafeTable: React.FC<{
                   }}
                 >
                   {column.title}
-                  <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                  <span style={{ color: '#6b7280', fontSize: "var(--font-size-xs)" }}>
                     {getSortIndicator(column.key)}
                   </span>
                 </th>
@@ -721,7 +721,7 @@ const TypeSafeTable: React.FC<{
                     key={column.key}
                     style={{
                       padding: '12px 16px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       color: '#374151',
                       borderRight: colIndex < internalConfig.columns.length - 1 ? '1px solid #f3f4f6' : 'none'
                     }}
@@ -739,7 +739,7 @@ const TypeSafeTable: React.FC<{
             padding: '40px',
             textAlign: 'center',
             color: '#6b7280',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             No data available
           </div>
@@ -754,7 +754,7 @@ const TypeSafeTable: React.FC<{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             <span>
               Showing {processedData.length} of {internalConfig.data.length} records
@@ -926,7 +926,7 @@ export const VanillaJSImplementation: Story = {
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               cursor: 'pointer'
             }}
           >
@@ -940,7 +940,7 @@ export const VanillaJSImplementation: Story = {
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               cursor: 'pointer'
             }}
           >
@@ -963,7 +963,7 @@ export const VanillaJSImplementation: Story = {
             border: '1px solid #10b981',
             borderRadius: '6px'
           }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '12px' }}>Vanilla JS Logs:</h4>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-xs)" }}>Vanilla JS Logs:</h4>
             {logs.map((log, index) => (
               <div key={index} style={{ fontSize: '11px', color: '#047857', fontFamily: 'monospace' }}>
                 {log}
@@ -1014,7 +1014,7 @@ export const ExtJSImplementation: Story = {
           backgroundColor: '#f3f4f6',
           border: '1px solid #d1d5db',
           borderRadius: '4px',
-          fontSize: '12px',
+          fontSize: "var(--font-size-xs)",
           fontFamily: 'Arial, sans-serif'
         }}>
           <strong>ExtJS Features:</strong> Selection models, data stores, column renderers,
@@ -1128,19 +1128,19 @@ export const TypeScriptImplementation: Story = {
           <h4>Table State:</h4>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
             <div style={{ padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-              <h5 style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#374151' }}>Selection</h5>
+              <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-xs)", color: '#374151' }}>Selection</h5>
               <p style={{ margin: 0, fontSize: '11px', color: '#6b7280' }}>
                 {selectedIds.length > 0 ? `${selectedIds.length} items selected` : 'No selection'}
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-              <h5 style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#374151' }}>Sorting</h5>
+              <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-xs)", color: '#374151' }}>Sorting</h5>
               <p style={{ margin: 0, fontSize: '11px', color: '#6b7280' }}>
                 {sortConfig ? `${sortConfig.column} (${sortConfig.direction})` : 'No sorting applied'}
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-              <h5 style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#374151' }}>Filters</h5>
+              <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-xs)", color: '#374151' }}>Filters</h5>
               <p style={{ margin: 0, fontSize: '11px', color: '#6b7280' }}>
                 {Object.keys(filters).filter(key => filters[key]).length > 0
                   ? `${Object.keys(filters).filter(key => filters[key]).length} active`
@@ -1342,7 +1342,7 @@ export const ComprehensiveDataManagement: Story = {
           backgroundColor: '#f0f9ff',
           border: '1px solid #0ea5e9',
           borderRadius: '6px',
-          fontSize: '14px',
+          fontSize: "var(--font-size-sm)",
           marginBottom: '16px'
         }}>
           <strong>Current View: </strong>
@@ -1401,7 +1401,7 @@ export const ComprehensiveDataManagement: Story = {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px' }}>
             <div style={{ padding: '12px', backgroundColor: '#eff6ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#1d4ed8' }}>React + Polaris</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 <strong>Best for:</strong> Modern SPAs, rapid development<br/>
                 <strong>Features:</strong> Virtual DOM, component ecosystem<br/>
                 <strong>Performance:</strong> Good for medium datasets
@@ -1409,7 +1409,7 @@ export const ComprehensiveDataManagement: Story = {
             </div>
             <div style={{ padding: '12px', backgroundColor: '#f0fdf4', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#15803d' }}>Vanilla JS</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 <strong>Best for:</strong> Lightweight apps, performance<br/>
                 <strong>Features:</strong> Direct DOM, minimal overhead<br/>
                 <strong>Performance:</strong> Excellent for all sizes
@@ -1417,7 +1417,7 @@ export const ComprehensiveDataManagement: Story = {
             </div>
             <div style={{ padding: '12px', backgroundColor: '#faf5ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#7c3aed' }}>ExtJS Grid</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 <strong>Best for:</strong> Enterprise applications<br/>
                 <strong>Features:</strong> Rich UI, data stores, plugins<br/>
                 <strong>Performance:</strong> Optimized for large datasets
@@ -1425,7 +1425,7 @@ export const ComprehensiveDataManagement: Story = {
             </div>
             <div style={{ padding: '12px', backgroundColor: '#fef2f2', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#dc2626' }}>TypeScript</h5>
-              <p style={{ margin: 0, fontSize: '12px' }}>
+              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
                 <strong>Best for:</strong> Complex business logic<br/>
                 <strong>Features:</strong> Type safety, validation, IDE support<br/>
                 <strong>Performance:</strong> Excellent with proper optimization

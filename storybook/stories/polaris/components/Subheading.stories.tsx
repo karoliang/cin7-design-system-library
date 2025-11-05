@@ -39,13 +39,13 @@ export const ContentOrganization: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '700px' }}>
       <div>
-        <h2 style={{ fontSize: '20px', fontWeight: '600', margin: '0 0 16px 0' }}>
+        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', margin: '0 0 16px 0' }}>
           Order Management
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <Subheading>Processing Orders</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Manage orders that are currently being processed. Update tracking information,
               modify shipping details, and handle customer requests.
             </p>
@@ -53,7 +53,7 @@ export const ContentOrganization: Story = {
 
           <div>
             <Subheading>Shipping & Fulfillment</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Coordinate shipping logistics, track deliveries, and manage fulfillment partners.
               Set up shipping rules and automate fulfillment processes.
             </p>
@@ -61,7 +61,7 @@ export const ContentOrganization: Story = {
 
           <div>
             <Subheading>Returns & Exchanges</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Handle customer returns, process refunds, and manage exchange requests.
               Monitor return rates and analyze reasons for returns.
             </p>
@@ -76,7 +76,7 @@ export const ProductCategories: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '800px' }}>
       <div>
-        <h2 style={{ fontSize: '24px', fontWeight: '600', margin: '0 0 20px 0' }}>
+        <h2 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', margin: '0 0 20px 0' }}>
           Electronics Collection
         </h2>
         <div style={{
@@ -86,30 +86,30 @@ export const ProductCategories: Story = {
         }}>
           <div>
             <Subheading>Audio Equipment</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Headphones, speakers, microphones, and professional audio gear from leading brands.
             </p>
-            <div style={{ marginTop: '12px', fontSize: '12px', color: '#059669', fontWeight: '500' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-xs)", color: '#059669', fontWeight: '500' }}>
               245 products
             </div>
           </div>
 
           <div>
             <Subheading>Computers & Accessories</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Laptops, desktops, keyboards, mice, and computer peripherals for work and gaming.
             </p>
-            <div style={{ marginTop: '12px', fontSize: '12px', color: '#059669', fontWeight: '500' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-xs)", color: '#059669', fontWeight: '500' }}>
               189 products
             </div>
           </div>
 
           <div>
             <Subheading>Mobile Devices</Subheading>
-            <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+            <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
               Smartphones, tablets, wearables, and mobile accessories from top manufacturers.
             </p>
-            <div style={{ marginTop: '12px', fontSize: '12px', color: '#059669', fontWeight: '500' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-xs)", color: '#059669', fontWeight: '500' }}>
               156 products
             </div>
           </div>
@@ -123,14 +123,14 @@ export const SettingsSections: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
       <div>
-        <h2 style={{ fontSize: '20px', fontWeight: '600', margin: '0 0 16px 0' }}>
+        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', margin: '0 0 16px 0' }}>
           Store Settings
         </h2>
         <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px', backgroundColor: '#ffffff' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
               <Subheading>General Information</Subheading>
-              <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+              <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
                 Store name, address, contact information, and business details.
               </p>
             </div>
@@ -139,7 +139,7 @@ export const SettingsSections: Story = {
 
             <div>
               <Subheading>Payment Methods</Subheading>
-              <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+              <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
                 Configure payment gateways, currency settings, and checkout options.
               </p>
             </div>
@@ -148,7 +148,7 @@ export const SettingsSections: Story = {
 
             <div>
               <Subheading>Shipping Configuration</Subheading>
-              <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+              <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
                 Set up shipping zones, rates, and delivery methods for your store.
               </p>
             </div>
@@ -157,7 +157,7 @@ export const SettingsSections: Story = {
 
             <div>
               <Subheading>Tax Settings</Subheading>
-              <p style={{ marginTop: '8px', color: '#637381', fontSize: '14px' }}>
+              <p style={{ marginTop: '8px', color: '#637381', fontSize: "var(--font-size-sm)" }}>
                 Configure tax rates, nexus settings, and tax calculation rules.
               </p>
             </div>
@@ -182,7 +182,7 @@ export const HelpDocumentation: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
           <div>
             <Subheading>1. Account Setup</Subheading>
-            <p style={{ marginTop: '12px', color: '#637381', fontSize: '14px', lineHeight: '1.6' }}>
+            <p style={{ marginTop: '12px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.6' }}>
               Create your account, verify your email, and complete your business profile.
               This includes adding your business information, tax details, and configuring your account preferences.
             </p>
@@ -193,7 +193,7 @@ export const HelpDocumentation: Story = {
 
           <div>
             <Subheading>2. Store Configuration</Subheading>
-            <p style={{ marginTop: '12px', color: '#637381', fontSize: '14px', lineHeight: '1.6' }}>
+            <p style={{ marginTop: '12px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.6' }}>
               Customize your store appearance, set up your domain, configure payment methods,
               and establish shipping zones. Personalize the look and feel to match your brand.
             </p>
@@ -204,7 +204,7 @@ export const HelpDocumentation: Story = {
 
           <div>
             <Subheading>3. Product Management</Subheading>
-            <p style={{ marginTop: '12px', color: '#637381', fontSize: '14px', lineHeight: '1.6' }}>
+            <p style={{ marginTop: '12px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.6' }}>
               Add your first products, organize them into categories, set pricing,
               manage inventory levels, and create compelling product descriptions with high-quality images.
             </p>
@@ -215,7 +215,7 @@ export const HelpDocumentation: Story = {
 
           <div>
             <Subheading>4. Launch Your Store</Subheading>
-            <p style={{ marginTop: '12px', color: '#637381', fontSize: '14px', lineHeight: '1.6' }}>
+            <p style={{ marginTop: '12px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.6' }}>
               Review your store setup, test the checkout process, and go live.
               Learn about marketing tools and analytics to grow your business.
             </p>
@@ -233,7 +233,7 @@ export const DashboardMetrics: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '900px' }}>
       <div>
-        <h2 style={{ fontSize: '20px', fontWeight: '600', margin: '0 0 16px 0' }}>
+        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', margin: '0 0 16px 0' }}>
           Performance Metrics
         </h2>
         <div style={{
@@ -248,13 +248,13 @@ export const DashboardMetrics: Story = {
             backgroundColor: '#ffffff'
           }}>
             <Subheading>Sales Performance</Subheading>
-            <div style={{ marginTop: '12px', fontSize: '32px', fontWeight: '700', color: '#059669' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-3xl)", fontWeight: '700', color: '#059669' }}>
               $89,432
             </div>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: '13px' }}>
               Total revenue this month
             </p>
-            <div style={{ marginTop: '8px', fontSize: '12px', color: '#059669' }}>
+            <div style={{ marginTop: '8px', fontSize: "var(--font-size-xs)", color: '#059669' }}>
               ↑ 12.5% from last month
             </div>
           </div>
@@ -266,13 +266,13 @@ export const DashboardMetrics: Story = {
             backgroundColor: '#ffffff'
           }}>
             <Subheading>Customer Acquisition</Subheading>
-            <div style={{ marginTop: '12px', fontSize: '32px', fontWeight: '700', color: '#3b82f6' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-3xl)", fontWeight: '700', color: '#3b82f6' }}>
               1,247
             </div>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: '13px' }}>
               New customers this month
             </p>
-            <div style={{ marginTop: '8px', fontSize: '12px', color: '#3b82f6' }}>
+            <div style={{ marginTop: '8px', fontSize: "var(--font-size-xs)", color: '#3b82f6' }}>
               ↑ 8.3% from last month
             </div>
           </div>
@@ -284,13 +284,13 @@ export const DashboardMetrics: Story = {
             backgroundColor: '#ffffff'
           }}>
             <Subheading>Order Volume</Subheading>
-            <div style={{ marginTop: '12px', fontSize: '32px', fontWeight: '700', color: '#8b5cf6' }}>
+            <div style={{ marginTop: '12px', fontSize: "var(--font-size-3xl)", fontWeight: '700', color: '#8b5cf6' }}>
               3,892
             </div>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: '13px' }}>
               Total orders processed
             </p>
-            <div style={{ marginTop: '8px', fontSize: '12px', color: '#8b5cf6' }}>
+            <div style={{ marginTop: '8px', fontSize: "var(--font-size-xs)", color: '#8b5cf6' }}>
               ↑ 15.7% from last month
             </div>
           </div>
@@ -304,7 +304,7 @@ export const FeatureList: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '650px' }}>
       <div>
-        <h2 style={{ fontSize: '20px', fontWeight: '600', margin: '0 0 16px 0' }}>
+        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', margin: '0 0 16px 0' }}>
           Platform Features
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -318,7 +318,7 @@ export const FeatureList: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               fontWeight: 'bold',
               flexShrink: 0
             }}>
@@ -326,7 +326,7 @@ export const FeatureList: Story = {
             </div>
             <div style={{ flex: 1 }}>
               <Subheading>Inventory Management</Subheading>
-              <p style={{ marginTop: '6px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+              <p style={{ marginTop: '6px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
                 Real-time inventory tracking, low stock alerts, and automated reorder points.
               </p>
             </div>
@@ -342,7 +342,7 @@ export const FeatureList: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               fontWeight: 'bold',
               flexShrink: 0
             }}>
@@ -350,7 +350,7 @@ export const FeatureList: Story = {
             </div>
             <div style={{ flex: 1 }}>
               <Subheading>Multi-channel Selling</Subheading>
-              <p style={{ marginTop: '6px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+              <p style={{ marginTop: '6px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
                 Sell across multiple platforms with centralized inventory and order management.
               </p>
             </div>
@@ -366,7 +366,7 @@ export const FeatureList: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               fontWeight: 'bold',
               flexShrink: 0
             }}>
@@ -374,7 +374,7 @@ export const FeatureList: Story = {
             </div>
             <div style={{ flex: 1 }}>
               <Subheading>Advanced Analytics</Subheading>
-              <p style={{ marginTop: '6px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+              <p style={{ marginTop: '6px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
                 Comprehensive reporting, customer insights, and predictive analytics.
               </p>
             </div>
@@ -390,7 +390,7 @@ export const FeatureList: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: '12px',
+              fontSize: "var(--font-size-xs)",
               fontWeight: 'bold',
               flexShrink: 0
             }}>
@@ -398,7 +398,7 @@ export const FeatureList: Story = {
             </div>
             <div style={{ flex: 1 }}>
               <Subheading>Customer Support Tools</Subheading>
-              <p style={{ marginTop: '6px', color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+              <p style={{ marginTop: '6px', color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
                 Integrated helpdesk, live chat, and ticket management system.
               </p>
             </div>
@@ -424,14 +424,14 @@ export const StatusSections: Story = {
             padding: '4px 8px',
             backgroundColor: '#10b981',
             color: 'white',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             borderRadius: '4px',
             fontWeight: '500'
           }}>
             Operational
           </span>
         </div>
-        <p style={{ color: '#637381', fontSize: '14px', lineHeight: '1.5' }}>
+        <p style={{ color: '#637381', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
           All systems are functioning normally. Last updated 2 minutes ago.
         </p>
       </div>
@@ -448,14 +448,14 @@ export const StatusSections: Story = {
             padding: '4px 8px',
             backgroundColor: '#f59e0b',
             color: 'white',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             borderRadius: '4px',
             fontWeight: '500'
           }}>
             Degraded
           </span>
         </div>
-        <p style={{ color: '#92400e', fontSize: '14px', lineHeight: '1.5' }}>
+        <p style={{ color: '#92400e', fontSize: "var(--font-size-sm)", lineHeight: '1.5' }}>
           Experiencing minor delays in payment processing. Our team is investigating.
         </p>
       </div>

@@ -219,7 +219,7 @@ export const EventUtilities: Story = {
             backgroundColor: 'var(--color-gray-900)',
             color: 'var(--color-green-400)',
             fontFamily: 'monospace',
-            fontSize: '12px',
+            fontSize: "var(--font-size-xs)",
             borderRadius: '4px',
             minHeight: '120px',
             maxHeight: '120px',
@@ -310,11 +310,11 @@ export const ValidationUtilities: Story = {
                   padding: '8px 12px',
                   border: errors.email ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
               {errors.email && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: '12px', marginTop: '4px' }}>
+                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
                   {errors.email}
                 </div>
               )}
@@ -334,11 +334,11 @@ export const ValidationUtilities: Story = {
                   padding: '8px 12px',
                   border: errors.required ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
               {errors.required && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: '12px', marginTop: '4px' }}>
+                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
                   {errors.required}
                 </div>
               )}
@@ -358,11 +358,11 @@ export const ValidationUtilities: Story = {
                   padding: '8px 12px',
                   border: errors.minLength ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
               {errors.minLength && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: '12px', marginTop: '4px' }}>
+                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
                   {errors.minLength}
                 </div>
               )}
@@ -382,11 +382,11 @@ export const ValidationUtilities: Story = {
                   padding: '8px 12px',
                   border: errors.pattern ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
               {errors.pattern && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: '12px', marginTop: '4px' }}>
+                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
                   {errors.pattern}
                 </div>
               )}
@@ -406,11 +406,11 @@ export const ValidationUtilities: Story = {
                   padding: '8px 12px',
                   border: errors.number ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
                   borderRadius: '4px',
-                  fontSize: '14px'
+                  fontSize: "var(--font-size-sm)"
                 }}
               />
               {errors.number && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: '12px', marginTop: '4px' }}>
+                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
                   {errors.number}
                 </div>
               )}
@@ -523,7 +523,7 @@ function ClassManagementDemo() {
         <div>
           <div>Current classes: <code>{classes.join(' ')}</code></div>
           {highlightClass && (
-            <div style={{ fontSize: '12px', color: 'var(--color-gray-600)', marginTop: '5px' }}>
+            <div style={{ fontSize: "var(--font-size-xs)", color: 'var(--color-gray-600)', marginTop: '5px' }}>
               Hovering over: <code>{highlightClass}</code>
             </div>
           )}
@@ -610,7 +610,7 @@ function AttributeDemo() {
         <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>
           Interactive Element
         </div>
-        <div style={{ fontSize: '12px', fontFamily: 'monospace', textAlign: 'left' }}>
+        <div style={{ fontSize: "var(--font-size-xs)", fontFamily: 'monospace', textAlign: 'left' }}>
           {Object.entries(attributes).map(([key, value]) => (
             <div key={key}>
               {key}: {typeof value === 'boolean' ? value.toString() : `"${value}"`}

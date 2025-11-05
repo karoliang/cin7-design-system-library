@@ -353,7 +353,7 @@ export const AvatarImages: Story = {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
-                  fontSize: '24px',
+                  fontSize: "var(--font-size-2xl)",
                   fontWeight: 'bold',
                   margin: '0 auto 8px'
                 }}

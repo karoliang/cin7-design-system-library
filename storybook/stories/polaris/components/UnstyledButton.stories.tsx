@@ -69,7 +69,7 @@ export const WithCustomStyling: Story = {
                   color: '#fff',
                   borderRadius: '8px',
                   border: 'none',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: '500',
                   cursor: 'pointer',
                 }}
@@ -90,7 +90,7 @@ export const WithCustomStyling: Story = {
                   color: '#007ace',
                   borderRadius: '8px',
                   border: '2px solid #007ace',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: '500',
                   cursor: 'pointer',
                 }}
@@ -111,7 +111,7 @@ export const WithCustomStyling: Story = {
                   color: '#d82c0d',
                   borderRadius: '8px',
                   border: '1px solid #d82c0d',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: '500',
                   cursor: 'pointer',
                 }}
@@ -252,7 +252,7 @@ export const TextLinkButtons: Story = {
                   border: 'none',
                   color: '#007ace',
                   textDecoration: 'underline',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   cursor: 'pointer',
                   textAlign: 'left',
                 }}
@@ -273,7 +273,7 @@ export const TextLinkButtons: Story = {
                   border: 'none',
                   color: '#637381',
                   textDecoration: 'none',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   cursor: 'pointer',
                   textAlign: 'left',
                 }}
@@ -296,7 +296,7 @@ export const TextLinkButtons: Story = {
                   border: 'none',
                   color: '#d82c0d',
                   textDecoration: 'none',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   cursor: 'pointer',
                   textAlign: 'left',
                 }}
@@ -375,7 +375,7 @@ export const CardActions: Story = {
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '6px',
-                          fontSize: '14px',
+                          fontSize: "var(--font-size-sm)",
                           color: likedItems.includes(product.id) ? '#d82c0d' : '#637381',
                         }}
                         onClick={() => handleLike(product.id)}
@@ -396,7 +396,7 @@ export const CardActions: Story = {
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '6px',
-                          fontSize: '14px',
+                          fontSize: "var(--font-size-sm)",
                           color: savedItems.includes(product.id) ? '#007ace' : '#637381',
                         }}
                         onClick={() => handleSave(product.id)}
@@ -460,7 +460,7 @@ export const TagButtons: Story = {
                   backgroundColor: selectedTags.includes(tag) ? '#007ace' : '#f8f9fa',
                   border: selectedTags.includes(tag) ? '1px solid #007ace' : '1px solid #e1e3e5',
                   color: selectedTags.includes(tag) ? '#fff' : '#637381',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                 }}
@@ -542,7 +542,7 @@ export const ColorSwatches: Story = {
                 onClick={() => setSelectedColor(color)}
               >
                 {selectedColor === color && (
-                  <span style={{ color: '#fff', fontSize: '20px' }}>✓</span>
+                  <span style={{ color: '#fff', fontSize: "var(--font-size-xl)" }}>✓</span>
                 )}
               </UnstyledButton>
             ))}
@@ -581,7 +581,7 @@ export const RatingButtons: Story = {
                 key={star}
                 accessibilityLabel={`Rate ${star} stars`}
                 style={{
-                  fontSize: '32px',
+                  fontSize: "var(--font-size-3xl)",
                   cursor: 'pointer',
                   backgroundColor: 'transparent',
                   border: 'none',
@@ -802,7 +802,7 @@ export const ResponsiveActions: Story = {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '20px',
+                        fontSize: "var(--font-size-xl)",
                       }}>
                         📊
                       </div>
@@ -843,7 +843,7 @@ export const ResponsiveActions: Story = {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '20px',
+                        fontSize: "var(--font-size-xl)",
                       }}>
                         ⚙️
                       </div>

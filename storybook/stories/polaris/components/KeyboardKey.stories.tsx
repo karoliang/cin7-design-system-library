@@ -374,7 +374,7 @@ export const InteractiveKeyboard: Story = {
 
               {keyHistory.length > 0 && (
                 <div>
-                  <h4 style={{ margin: '0 0 12px 0', fontSize: '14px' }}>Recent Combinations:</h4>
+                  <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)" }}>Recent Combinations:</h4>
                   <BlockStack gap="200">
                     {keyHistory.map((combo, index) => (
                       <div key={index} style={{
@@ -537,7 +537,7 @@ export const AccessibilityInfo: Story = {
 
               {accessibilityShortcuts.map((platform) => (
                 <div key={platform.platform}>
-                  <h4 style={{ margin: '0 0 16px 0', fontSize: '18px' }}>
+                  <h4 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>
                     <Badge tone="info">{platform.platform}</Badge>
                   </h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '12px' }}>
@@ -619,7 +619,7 @@ export const CustomStyling: Story = {
                       backgroundColor: item === '+' ? 'transparent' : '#f1f3f4',
                       border: item === '+' ? 'none' : '1px solid #dadce0',
                       borderRadius: item === '+' ? '0' : '4px',
-                      fontSize: '12px',
+                      fontSize: "var(--font-size-xs)",
                       fontFamily: 'monospace'
                     }}>
                       {item}

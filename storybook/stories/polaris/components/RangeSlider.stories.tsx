@@ -259,7 +259,7 @@ export const DateRangePicker: Story = {
               />
 
               <div>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px' }}>Quick presets:</h4>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)" }}>Quick presets:</h4>
                 <InlineStack gap="200" wrap>
                   {presets.map((preset) => (
                     <Button

@@ -38,7 +38,7 @@ export const Default: Story = {
 export const FormFieldCaption: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '300px' }}>
-      <label htmlFor="email" style={{ fontWeight: '600', fontSize: '14px' }}>
+      <label htmlFor="email" style={{ fontWeight: '600', fontSize: "var(--font-size-sm)" }}>
         Email address
       </label>
       <input
@@ -49,7 +49,7 @@ export const FormFieldCaption: Story = {
           padding: '8px 12px',
           border: '1px solid #d2d2d2',
           borderRadius: '4px',
-          fontSize: '14px',
+          fontSize: "var(--font-size-sm)",
         }}
       />
       <Caption>We'll never share your email with anyone else.</Caption>
@@ -113,22 +113,22 @@ export const PricingCaption: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
       <div>
-        <div style={{ fontSize: '24px', fontWeight: '600', marginBottom: '4px' }}>
+        <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '4px' }}>
           $29.99
         </div>
         <Caption>per month, billed annually</Caption>
       </div>
 
       <div>
-        <div style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
+        <div style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', marginBottom: '4px' }}>
           $199.99
         </div>
         <Caption>one-time purchase, lifetime access</Caption>
       </div>
 
       <div>
-        <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px', color: '#52c41a' }}>
-          $49.99 <span style={{ textDecoration: 'line-through', color: '#999', fontSize: '14px' }}>$79.99</span>
+        <div style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '4px', color: '#52c41a' }}>
+          $49.99 <span style={{ textDecoration: 'line-through', color: '#999', fontSize: "var(--font-size-sm)" }}>$79.99</span>
         </div>
         <Caption>Limited time offer - Save 37%</Caption>
       </div>
@@ -161,7 +161,7 @@ export const MultiLineCaption: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px' }}>
       <div>
-        <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600' }}>Account Requirements</h4>
+        <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Account Requirements</h4>
         <Caption>
           To create an account, you'll need a valid email address and a password that's at least 8 characters long.
           You'll also need to agree to our terms of service and privacy policy.
@@ -169,7 +169,7 @@ export const MultiLineCaption: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600' }}>System Requirements</h4>
+        <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>System Requirements</h4>
         <Caption>
           Compatible with Windows 10 or later, macOS 10.14 or later, and most modern web browsers.
           Mobile app available for iOS 12+ and Android 8+.
@@ -183,7 +183,7 @@ export const WithAccessibility: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '500px' }}>
       <div>
-        <label htmlFor="password" style={{ fontWeight: '600', fontSize: '14px', display: 'block', marginBottom: '8px' }}>
+        <label htmlFor="password" style={{ fontWeight: '600', fontSize: "var(--font-size-sm)", display: 'block', marginBottom: '8px' }}>
           Password
         </label>
         <input
@@ -195,7 +195,7 @@ export const WithAccessibility: Story = {
             padding: '8px 12px',
             border: '1px solid #d2d2d2',
             borderRadius: '4px',
-            fontSize: '14px',
+            fontSize: "var(--font-size-sm)",
             width: '100%',
             boxSizing: 'border-box',
           }}
@@ -206,7 +206,7 @@ export const WithAccessibility: Story = {
       </div>
 
       <div>
-        <label htmlFor="discount-code" style={{ fontWeight: '600', fontSize: '14px', display: 'block', marginBottom: '8px' }}>
+        <label htmlFor="discount-code" style={{ fontWeight: '600', fontSize: "var(--font-size-sm)", display: 'block', marginBottom: '8px' }}>
           Discount Code
         </label>
         <input
@@ -218,7 +218,7 @@ export const WithAccessibility: Story = {
             padding: '8px 12px',
             border: '1px solid #d2d2d2',
             borderRadius: '4px',
-            fontSize: '14px',
+            fontSize: "var(--font-size-sm)",
             width: '100%',
             boxSizing: 'border-box',
           }}

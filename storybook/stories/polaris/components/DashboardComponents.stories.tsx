@@ -299,7 +299,7 @@ const SalesChart = ({ data }: { data: typeof salesData }) => {
                     color: 'white',
                     padding: '4px 8px',
                     borderRadius: '4px',
-                    fontSize: '12px',
+                    fontSize: "var(--font-size-xs)",
                     whiteSpace: 'nowrap',
                     opacity: 0,
                     transition: 'opacity 0.2s',

@@ -195,7 +195,7 @@ const MultiStepForm = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '14px',
+                    fontSize: "var(--font-size-sm)",
                     fontWeight: '500'
                   }}
                 >
@@ -740,7 +740,7 @@ const FileUploadForm = () => {
                   borderRadius: '8px',
                   marginBottom: '8px'
                 }}>
-                  <div style={{ fontSize: '24px' }}>{getFileIcon(file.type)}</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)" }}>{getFileIcon(file.type)}</div>
                   <div style={{ flex: 1 }}>
                     <Text variant="bodySm" fontWeight="semibold">{file.name}</Text>
                     <Text variant="bodySm" tone="subdued">{formatFileSize(file.size)}</Text>

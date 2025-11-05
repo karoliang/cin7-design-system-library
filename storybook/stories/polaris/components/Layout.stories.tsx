@@ -482,7 +482,7 @@ export const CustomerProfile: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '32px'
+              fontSize: "var(--font-size-3xl)"
             }}>👤</div>
             <div>
               <Text as="h2" variant="headingLg">John Doe</Text>

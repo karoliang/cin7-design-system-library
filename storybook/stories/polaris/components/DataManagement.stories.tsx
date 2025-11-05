@@ -284,7 +284,7 @@ const AdvancedDataTable = ({ data, showBulkActions = true, enableAdvancedFilters
                       cursor: 'pointer',
                       fontWeight: '600',
                       color: '#6d7175',
-                      fontSize: '12px',
+                      fontSize: "var(--font-size-xs)",
                       textTransform: 'uppercase',
                       letterSpacing: '0.5px'
                     }}
@@ -471,19 +471,19 @@ const DataImportExport = () => {
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
                       <tr style={{ backgroundColor: '#f8f8f8' }}>
-                        <th style={{ padding: '8px', textAlign: 'left', fontSize: '12px' }}>ID</th>
-                        <th style={{ padding: '8px', textAlign: 'left', fontSize: '12px' }}>Name</th>
-                        <th style={{ padding: '8px', textAlign: 'left', fontSize: '12px' }}>Email</th>
-                        <th style={{ padding: '8px', textAlign: 'left', fontSize: '12px' }}>Status</th>
+                        <th style={{ padding: '8px', textAlign: 'left', fontSize: "var(--font-size-xs)" }}>ID</th>
+                        <th style={{ padding: '8px', textAlign: 'left', fontSize: "var(--font-size-xs)" }}>Name</th>
+                        <th style={{ padding: '8px', textAlign: 'left', fontSize: "var(--font-size-xs)" }}>Email</th>
+                        <th style={{ padding: '8px', textAlign: 'left', fontSize: "var(--font-size-xs)" }}>Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {sampleCustomers.slice(0, 5).map((customer) => (
                         <tr key={customer.id} style={{ borderTop: '1px solid #e1e1e1' }}>
-                          <td style={{ padding: '8px', fontSize: '12px' }}>{customer.id}</td>
-                          <td style={{ padding: '8px', fontSize: '12px' }}>{customer.name}</td>
-                          <td style={{ padding: '8px', fontSize: '12px' }}>{customer.email}</td>
-                          <td style={{ padding: '8px', fontSize: '12px' }}>
+                          <td style={{ padding: '8px', fontSize: "var(--font-size-xs)" }}>{customer.id}</td>
+                          <td style={{ padding: '8px', fontSize: "var(--font-size-xs)" }}>{customer.name}</td>
+                          <td style={{ padding: '8px', fontSize: "var(--font-size-xs)" }}>{customer.email}</td>
+                          <td style={{ padding: '8px', fontSize: "var(--font-size-xs)" }}>
                             <Badge status="success">{customer.status}</Badge>
                           </td>
                         </tr>

@@ -285,7 +285,7 @@ export const TagInputSystem: Story = {
                   padding: '4px 8px',
                   border: '1px solid var(--p-color-border)',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   minWidth: '100px'
                 }}
               />

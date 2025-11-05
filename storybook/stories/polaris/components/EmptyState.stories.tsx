@@ -234,7 +234,7 @@ export const OnboardingWelcome: Story = {
                 <p style={{ margin: 0 }}>{currentStepData.description}</p>
                 {completedSteps.length > 0 && (
                   <div>
-                    <p style={{ margin: '8px 0', fontSize: '14px', color: '#666' }}>
+                    <p style={{ margin: '8px 0', fontSize: "var(--font-size-sm)", color: '#666' }}>
                       Completed: {completedSteps.join(', ')}
                     </p>
                   </div>
@@ -398,7 +398,7 @@ export const DataImportFlow: Story = {
                 borderRadius: '6px',
                 border: '1px solid #fecaca'
               }}>
-                <p style={{ margin: 0, color: '#991b1b', fontSize: '14px' }}>
+                <p style={{ margin: 0, color: '#991b1b', fontSize: "var(--font-size-sm)" }}>
                   <strong>Common issues:</strong><br/>
                   • Invalid file format<br/>
                   • Missing required columns<br/>
@@ -460,7 +460,7 @@ export const CollectionStates: Story = {
                   onAction: () => console.log(`${state.action} clicked for ${state.useCase}`),
                 }}
               >
-                <p style={{ margin: 0, fontSize: '14px' }}>{state.description}</p>
+                <p style={{ margin: 0, fontSize: "var(--font-size-sm)" }}>{state.description}</p>
               </EmptyState>
             </div>
           </Card>
@@ -508,7 +508,7 @@ export const MobileEmptyStates: Story = {
                   }}
                   fullWidth
                 >
-                  <p style={{ margin: 0, fontSize: '14px', textAlign: 'center' }}>
+                  <p style={{ margin: 0, fontSize: "var(--font-size-sm)", textAlign: 'center' }}>
                     {scenario.description}
                   </p>
                 </EmptyState>

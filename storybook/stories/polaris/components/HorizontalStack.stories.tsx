@@ -60,7 +60,7 @@ export const SpacingVariations: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '800px' }}>
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>None</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>None</h4>
         <HorizontalStack gap="none">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -69,7 +69,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Extra Tight</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Extra Tight</h4>
         <HorizontalStack gap="extraTight">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -78,7 +78,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Tight</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Tight</h4>
         <HorizontalStack gap="tight">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -87,7 +87,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Base</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Base</h4>
         <HorizontalStack gap="base">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -96,7 +96,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Loose</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Loose</h4>
         <HorizontalStack gap="loose">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -105,7 +105,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Extra Loose</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Extra Loose</h4>
         <HorizontalStack gap="extraLoose">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -120,7 +120,7 @@ export const AlignmentOptions: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '800px' }}>
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Start</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Start</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px', height: '80px' }}>
           <HorizontalStack gap="400" align="start">
             <div style={{ padding: '8px 16px', backgroundColor: '#dbeafe', borderRadius: '4px' }}>Short</div>
@@ -131,7 +131,7 @@ export const AlignmentOptions: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>Center</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Center</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px', height: '80px' }}>
           <HorizontalStack gap="400" align="center">
             <div style={{ padding: '8px 16px', backgroundColor: '#dcfce7', borderRadius: '4px' }}>Short</div>
@@ -142,7 +142,7 @@ export const AlignmentOptions: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '600' }}>End</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>End</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px', height: '80px' }}>
           <HorizontalStack gap="400" align="end">
             <div style={{ padding: '8px 16px', backgroundColor: '#fef3c7', borderRadius: '4px' }}>Short</div>
@@ -300,7 +300,7 @@ export const StatusIndicators: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #bfdbfe',
             borderRadius: '6px',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             💳 Credit Card
           </div>
@@ -309,7 +309,7 @@ export const StatusIndicators: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #bfdbfe',
             borderRadius: '6px',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             📱 PayPal
           </div>
@@ -318,7 +318,7 @@ export const StatusIndicators: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #bfdbfe',
             borderRadius: '6px',
-            fontSize: '14px'
+            fontSize: "var(--font-size-sm)"
           }}>
             🏦 Bank Transfer
           </div>
@@ -331,7 +331,7 @@ export const StatusIndicators: Story = {
 export const MetricCards: Story = {
   render: () => (
     <div style={{ maxWidth: '900px' }}>
-      <h4 style={{ margin: '0 0 20px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h4 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         Performance Metrics
       </h4>
       <HorizontalStack gap="400" wrap>
@@ -343,11 +343,11 @@ export const MetricCards: Story = {
           minWidth: '200px',
           flex: '1'
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>Revenue</div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#059669' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280', marginBottom: '8px' }}>Revenue</div>
+          <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: '700', color: '#059669' }}>
             $45,231
           </div>
-          <div style={{ fontSize: '12px', color: '#059669', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#059669', marginTop: '4px' }}>
             ↑ 12.5% from last month
           </div>
         </div>
@@ -360,11 +360,11 @@ export const MetricCards: Story = {
           minWidth: '200px',
           flex: '1'
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>Orders</div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#3b82f6' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280', marginBottom: '8px' }}>Orders</div>
+          <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: '700', color: '#3b82f6' }}>
             1,234
           </div>
-          <div style={{ fontSize: '12px', color: '#3b82f6', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#3b82f6', marginTop: '4px' }}>
             ↑ 8.7% from last month
           </div>
         </div>
@@ -377,11 +377,11 @@ export const MetricCards: Story = {
           minWidth: '200px',
           flex: '1'
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>Customers</div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#8b5cf6' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280', marginBottom: '8px' }}>Customers</div>
+          <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: '700', color: '#8b5cf6' }}>
             892
           </div>
-          <div style={{ fontSize: '12px', color: '#8b5cf6', marginTop: '4px' }}>
+          <div style={{ fontSize: "var(--font-size-xs)", color: '#8b5cf6', marginTop: '4px' }}>
             ↑ 15.2% from last month
           </div>
         </div>
@@ -432,7 +432,7 @@ export const NavigationTabs: Story = {
           borderRadius: '8px',
           border: '1px solid #e5e7eb'
         }}>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '600' }}>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
             {tabs.find(t => t.id === activeTab)?.label}
           </h4>
           <p style={{ margin: 0, color: '#6b7280', lineHeight: '1.6' }}>
@@ -504,19 +504,19 @@ export const BreadcrumbNavigation: Story = {
         Breadcrumb Example
       </h4>
       <HorizontalStack gap="200" align="center">
-        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px' }}>
+        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: "var(--font-size-sm)" }}>
           Home
         </a>
-        <span style={{ color: '#9ca3af', fontSize: '14px' }}>›</span>
-        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px' }}>
+        <span style={{ color: '#9ca3af', fontSize: "var(--font-size-sm)" }}>›</span>
+        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: "var(--font-size-sm)" }}>
           Products
         </a>
-        <span style={{ color: '#9ca3af', fontSize: '14px' }}>›</span>
-        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '14px' }}>
+        <span style={{ color: '#9ca3af', fontSize: "var(--font-size-sm)" }}>›</span>
+        <a href="#" style={{ color: '#3b82f6', textDecoration: 'none', fontSize: "var(--font-size-sm)" }}>
           Electronics
         </a>
-        <span style={{ color: '#9ca3af', fontSize: '14px' }}>›</span>
-        <span style={{ color: '#6b7280', fontSize: '14px', fontWeight: '500' }}>
+        <span style={{ color: '#9ca3af', fontSize: "var(--font-size-sm)" }}>›</span>
+        <span style={{ color: '#6b7280', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
           Wireless Headphones
         </span>
       </HorizontalStack>
@@ -528,7 +528,7 @@ export const BreadcrumbNavigation: Story = {
         borderRadius: '8px',
         border: '1px solid #e5e7eb'
       }}>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '600' }}>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
           Product Details
         </h4>
         <p style={{ margin: 0, color: '#6b7280', lineHeight: '1.6' }}>
@@ -558,7 +558,7 @@ export const WrappedLayout: Story = {
               backgroundColor: '#f0f9ff',
               border: '1px solid #bfdbfe',
               borderRadius: '6px',
-              fontSize: '14px',
+              fontSize: "var(--font-size-sm)",
               color: '#1e40af',
               cursor: 'pointer',
               transition: 'all 0.2s ease',

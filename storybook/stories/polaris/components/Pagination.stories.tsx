@@ -108,7 +108,7 @@ export const ProductCatalog: Story = {
       <div style={{ width: '800px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
         <div style={{ marginBottom: '20px' }}>
           <h2 style={{ margin: '0 0 8px 0' }}>Product Catalog</h2>
-          <p style={{ margin: 0, color: '#6b7280', fontSize: '14px' }}>
+          <p style={{ margin: 0, color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
             Showing {startIndex}-{endIndex} of {totalProducts} products
           </p>
         </div>
@@ -140,14 +140,14 @@ export const ProductCatalog: Story = {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '24px',
+                fontSize: "var(--font-size-2xl)",
               }}>
                 📦
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>
+              <div style={{ fontSize: "var(--font-size-sm)", fontWeight: '600', marginBottom: '4px' }}>
                 {product.name}
               </div>
-              <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px' }}>
+              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '8px' }}>
                 {product.category}
               </div>
               <div style={{ fontSize: '16px', fontWeight: '700', color: '#059669' }}>
@@ -166,7 +166,7 @@ export const ProductCatalog: Story = {
           borderRadius: '6px',
           border: '1px solid #e5e7eb',
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
             Page {currentPage} of {totalPages}
           </div>
 
@@ -181,7 +181,7 @@ export const ProductCatalog: Story = {
           />
 
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <span style={{ fontSize: '14px', color: '#6b7280' }}>Go to page:</span>
+            <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>Go to page:</span>
             <input
               type="number"
               min="1"
@@ -198,7 +198,7 @@ export const ProductCatalog: Story = {
                 padding: '4px 8px',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
                 textAlign: 'center',
               }}
             />
@@ -289,7 +289,7 @@ export const DataTable: Story = {
       <div style={{ width: '900px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
         <div style={{ marginBottom: '20px' }}>
           <h2 style={{ margin: '0 0 8px 0' }}>Order Management</h2>
-          <p style={{ margin: 0, color: '#6b7280', fontSize: '14px' }}>
+          <p style={{ margin: 0, color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
             Total {totalOrders} orders • Page {currentPage} of {totalPages}
           </p>
         </div>
@@ -311,7 +311,7 @@ export const DataTable: Story = {
                     style={{
                       padding: '12px 16px',
                       textAlign: 'left',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       fontWeight: '600',
                       color: '#374151',
                       cursor: 'pointer',
@@ -321,7 +321,7 @@ export const DataTable: Story = {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       {column}
                       {sortColumn === column.toLowerCase() && (
-                        <span style={{ fontSize: '12px', color: '#3b82f6' }}>
+                        <span style={{ fontSize: "var(--font-size-xs)", color: '#3b82f6' }}>
                           {sortDirection === 'asc' ? '↑' : '↓'}
                         </span>
                       )}
@@ -333,9 +333,9 @@ export const DataTable: Story = {
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
-                  <td style={{ padding: '12px 16px', fontSize: '14px' }}>#{order.id}</td>
-                  <td style={{ padding: '12px 16px', fontSize: '14px' }}>{order.customer}</td>
-                  <td style={{ padding: '12px 16px', fontSize: '14px', fontWeight: '600' }}>
+                  <td style={{ padding: '12px 16px', fontSize: "var(--font-size-sm)" }}>#{order.id}</td>
+                  <td style={{ padding: '12px 16px', fontSize: "var(--font-size-sm)" }}>{order.customer}</td>
+                  <td style={{ padding: '12px 16px', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
                     {order.amount}
                   </td>
                   <td style={{ padding: '12px 16px' }}>
@@ -343,7 +343,7 @@ export const DataTable: Story = {
                       style={{
                         padding: '2px 8px',
                         borderRadius: '12px',
-                        fontSize: '12px',
+                        fontSize: "var(--font-size-xs)",
                         fontWeight: '600',
                         backgroundColor: getStatusColor(order.status),
                         color: 'white',
@@ -352,7 +352,7 @@ export const DataTable: Story = {
                       {order.status}
                     </span>
                   </td>
-                  <td style={{ padding: '12px 16px', fontSize: '14px', color: '#6b7280' }}>
+                  <td style={{ padding: '12px 16px', fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
                     {order.date}
                   </td>
                 </tr>
@@ -370,7 +370,7 @@ export const DataTable: Story = {
           borderRadius: '6px',
           border: '1px solid #e5e7eb',
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
             Showing {((currentPage - 1) * rowsPerPage) + 1}-{Math.min(currentPage * rowsPerPage, totalOrders)} of {totalOrders} orders
           </div>
 
@@ -395,7 +395,7 @@ export const DataTable: Story = {
                 padding: '4px 8px',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
               }}
             >
               <option value={10}>10 rows</option>
@@ -472,7 +472,7 @@ export const SearchResults: Story = {
       <div style={{ width: '900px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
         <div style={{ marginBottom: '20px' }}>
           <h2 style={{ margin: '0 0 8px 0' }}>Search Results</h2>
-          <p style={{ margin: '0 0 12px 0', color: '#6b7280', fontSize: '14px' }}>
+          <p style={{ margin: '0 0 12px 0', color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
             Showing {startResult}-{endResult} of {totalResults} results for "{searchQuery}"
           </p>
 
@@ -487,7 +487,7 @@ export const SearchResults: Story = {
                   border: selectedFilters.includes(filter) ? '1px solid #3b82f6' : '1px solid #d1d5db',
                   backgroundColor: selectedFilters.includes(filter) ? '#3b82f6' : 'white',
                   color: selectedFilters.includes(filter) ? 'white' : '#374151',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                 }}
@@ -524,14 +524,14 @@ export const SearchResults: Story = {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '32px',
+                fontSize: "var(--font-size-3xl)",
                 flexShrink: 0,
               }}>
                 🎧
               </div>
 
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '4px' }}>
+                <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280', marginBottom: '4px' }}>
                   {result.brand}
                 </div>
                 <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '600' }}>
@@ -539,15 +539,15 @@ export const SearchResults: Story = {
                 </h3>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <span style={{ color: '#f59e0b', fontSize: '14px' }}>⭐</span>
-                  <span style={{ fontSize: '14px', fontWeight: '600' }}>{result.rating}</span>
-                  <span style={{ fontSize: '12px', color: '#6b7280' }}>
+                  <span style={{ color: '#f59e0b', fontSize: "var(--font-size-sm)" }}>⭐</span>
+                  <span style={{ fontSize: "var(--font-size-sm)", fontWeight: '600' }}>{result.rating}</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
                     ({reviews.toLocaleString()} reviews)
                   </span>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '18px', fontWeight: '700', color: '#059669' }}>
+                  <span style={{ fontSize: "var(--font-size-lg)", fontWeight: '700', color: '#059669' }}>
                     {result.price}
                   </span>
                   <span
@@ -577,7 +577,7 @@ export const SearchResults: Story = {
           borderRadius: '6px',
           border: '1px solid #e5e7eb',
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
             {startResult}-{endResult} of {totalResults} results
           </div>
 
@@ -592,7 +592,7 @@ export const SearchResults: Story = {
           />
 
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <span style={{ fontSize: '14px', color: '#6b7280' }}>Page:</span>
+            <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>Page:</span>
             <div style={{ display: 'flex', gap: '4px' }}>
               {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                 let pageNum;
@@ -616,7 +616,7 @@ export const SearchResults: Story = {
                       borderRadius: '4px',
                       backgroundColor: pageNum === currentPage ? '#3b82f6' : 'white',
                       color: pageNum === currentPage ? 'white' : '#374151',
-                      fontSize: '12px',
+                      fontSize: "var(--font-size-xs)",
                       cursor: 'pointer',
                     }}
                   >
@@ -688,7 +688,7 @@ export const PhotoGallery: Story = {
                   border: selectedView === 'grid' ? '1px solid #3b82f6' : '1px solid #d1d5db',
                   backgroundColor: selectedView === 'grid' ? '#3b82f6' : 'white',
                   color: selectedView === 'grid' ? 'white' : '#374151',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer',
                 }}
               >
@@ -702,7 +702,7 @@ export const PhotoGallery: Story = {
                   border: selectedView === 'list' ? '1px solid #3b82f6' : '1px solid #d1d5db',
                   backgroundColor: selectedView === 'list' ? '#3b82f6' : 'white',
                   color: selectedView === 'list' ? 'white' : '#374151',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer',
                 }}
               >
@@ -710,7 +710,7 @@ export const PhotoGallery: Story = {
               </button>
             </div>
           </div>
-          <p style={{ margin: 0, color: '#6b7280', fontSize: '14px' }}>
+          <p style={{ margin: 0, color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
             {startPhoto}-{endPhoto} of {totalPhotos} photos
           </p>
         </div>
@@ -744,13 +744,13 @@ export const PhotoGallery: Story = {
                   📷
                 </div>
                 <div style={{ padding: '12px' }}>
-                  <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>
+                  <div style={{ fontSize: "var(--font-size-sm)", fontWeight: '600', marginBottom: '4px' }}>
                     {photo.title}
                   </div>
-                  <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px' }}>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '8px' }}>
                     {photo.category}
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: "var(--font-size-xs)" }}>
                     <span>❤️ {photo.likes}</span>
                     <span>{photo.date}</span>
                   </div>
@@ -781,7 +781,7 @@ export const PhotoGallery: Story = {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '32px',
+                  fontSize: "var(--font-size-3xl)",
                   flexShrink: 0,
                 }}>
                   📷
@@ -790,10 +790,10 @@ export const PhotoGallery: Story = {
                   <div style={{ fontSize: '16px', fontWeight: '600', marginBottom: '4px' }}>
                     {photo.title}
                   </div>
-                  <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>
+                  <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280', marginBottom: '8px' }}>
                     {photo.category} • {photo.date}
                   </div>
-                  <div style={{ fontSize: '14px' }}>
+                  <div style={{ fontSize: "var(--font-size-sm)" }}>
                     ❤️ {photo.likes} likes
                   </div>
                 </div>
@@ -811,7 +811,7 @@ export const PhotoGallery: Story = {
           borderRadius: '6px',
           border: '1px solid #e5e7eb',
         }}>
-          <div style={{ fontSize: '14px', color: '#6b7280' }}>
+          <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
             {startPhoto}-{endPhoto} of {totalPhotos} photos
           </div>
 
@@ -826,7 +826,7 @@ export const PhotoGallery: Story = {
           />
 
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <span style={{ fontSize: '14px', color: '#6b7280' }}>Items per page:</span>
+            <span style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>Items per page:</span>
             <select
               value={photosPerPage}
               onChange={(e) => {
@@ -837,7 +837,7 @@ export const PhotoGallery: Story = {
                 padding: '4px 8px',
                 border: '1px solid #d1d5db',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
               }}
             >
               <option value={8}>8</option>

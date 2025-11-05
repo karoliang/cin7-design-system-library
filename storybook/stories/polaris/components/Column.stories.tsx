@@ -138,7 +138,7 @@ export const ThreeColumnLayout: Story = {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px'
+                  fontSize: "var(--font-size-xs)"
                 }}>👤</div>
                 <div style={{ flex: 1 }}>
                   <Text as="p" variant="bodySm">{customer}</Text>
@@ -459,7 +459,7 @@ export const TeamColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '32px'
+              fontSize: "var(--font-size-3xl)"
             }}>👨‍💼</div>
 
             <Text as="h3" variant="headingMd">John Smith</Text>
@@ -491,7 +491,7 @@ export const TeamColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '32px'
+              fontSize: "var(--font-size-3xl)"
             }}>👩‍💻</div>
 
             <Text as="h3" variant="headingMd">Sarah Johnson</Text>
@@ -523,7 +523,7 @@ export const TeamColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '32px'
+              fontSize: "var(--font-size-3xl)"
             }}>👨‍🎨</div>
 
             <Text as="h3" variant="headingMd">Mike Chen</Text>
@@ -561,7 +561,7 @@ export const ProcessColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
               fontWeight: 'bold',
               color: '#4caf50'
             }}>1</div>
@@ -586,7 +586,7 @@ export const ProcessColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
               fontWeight: 'bold',
               color: '#ff9800'
             }}>2</div>
@@ -611,7 +611,7 @@ export const ProcessColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
               fontWeight: 'bold',
               color: '#2196f3'
             }}>3</div>
@@ -636,7 +636,7 @@ export const ProcessColumns: Story = {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '24px',
+              fontSize: "var(--font-size-2xl)",
               fontWeight: 'bold',
               color: '#9c27b0'
             }}>4</div>

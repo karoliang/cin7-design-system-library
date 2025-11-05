@@ -375,7 +375,7 @@ export const ReactLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -424,7 +424,7 @@ export const ReactLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -477,7 +477,7 @@ export const ReactLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto'
                     }}>
 {`import { EventBus } from '@cin7/core';
@@ -609,7 +609,7 @@ export const VanillaJSLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -658,7 +658,7 @@ class ProductCard {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -723,7 +723,7 @@ class ProductList {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto'
                     }}>
 {`// Performance-optimized utilities
@@ -864,7 +864,7 @@ export const ExtJSLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -924,7 +924,7 @@ const ProductGrid = Ext.create('Ext.grid.Panel', {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -1000,7 +1000,7 @@ const ProductForm = Ext.create('Ext.form.Panel', {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto'
                     }}>
 {`// ExtJS Store with event integration
@@ -1148,7 +1148,7 @@ export const TypeScriptLayer: Story = {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -1207,7 +1207,7 @@ export class ProductRepository {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto',
                       marginTop: '12px'
                     }}>
@@ -1292,7 +1292,7 @@ export class ProductService {
                       background: '#f8f9fa',
                       padding: '12px',
                       borderRadius: '4px',
-                      fontSize: '14px',
+                      fontSize: "var(--font-size-sm)",
                       overflow: 'auto'
                     }}>
 {`// Type-safe event definitions

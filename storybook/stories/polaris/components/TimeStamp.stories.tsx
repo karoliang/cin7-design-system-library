@@ -302,7 +302,7 @@ export const OrderTimeline: Story = {
                   <div key={index}>
                     <BlockStack gap="200">
                       <InlineStack gap="300" align="start">
-                        <div style={{ fontSize: '20px' }}>
+                        <div style={{ fontSize: "var(--font-size-xl)" }}>
                           {getStatusIcon(event.status)}
                         </div>
                         <div style={{ flex: 1 }}>

@@ -251,7 +251,7 @@ export const ButtonSelection: Story = {
                 background: '#f8f9fa',
                 padding: '12px',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
                 overflow: 'auto'
               }}>
 {`const actions = [

@@ -55,7 +55,7 @@ export const Default: Story = {
 export const DataTable: Story = {
   render: () => (
     <div style={{ maxWidth: '800px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         Product Inventory
       </h3>
       <table style={{
@@ -89,7 +89,7 @@ export const DataTable: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div>
                 <div style={{ fontWeight: '500' }}>Wireless Headphones</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Premium audio quality</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>Premium audio quality</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
@@ -107,7 +107,7 @@ export const DataTable: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 In Stock
@@ -118,7 +118,7 @@ export const DataTable: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div>
                 <div style={{ fontWeight: '500' }}>USB-C Hub</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>7-in-1 connectivity</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>7-in-1 connectivity</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
@@ -136,7 +136,7 @@ export const DataTable: Story = {
                 backgroundColor: '#fef3c7',
                 color: '#92400e',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Low Stock
@@ -147,7 +147,7 @@ export const DataTable: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div>
                 <div style={{ fontWeight: '500' }}>Laptop Stand</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Adjustable aluminum</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>Adjustable aluminum</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
@@ -165,7 +165,7 @@ export const DataTable: Story = {
                 backgroundColor: '#fecaca',
                 color: '#991b1b',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Out of Stock
@@ -181,7 +181,7 @@ export const DataTable: Story = {
 export const ComplexContent: Story = {
   render: () => (
     <div style={{ maxWidth: '700px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         Order Details
       </h3>
       <table style={{
@@ -212,13 +212,13 @@ export const ComplexContent: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <div style={{ fontWeight: '600' }}>#ORD-2024-001</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Nov 15, 2024 2:34 PM</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>Nov 15, 2024 2:34 PM</div>
                 <div style={{
                   padding: '4px 8px',
                   backgroundColor: '#dbeafe',
                   color: '#1e40af',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   fontWeight: '500',
                   display: 'inline-block',
                   marginTop: '4px'
@@ -230,17 +230,17 @@ export const ComplexContent: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <div style={{ fontWeight: '500' }}>John Doe</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>john.doe@email.com</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>+1 (555) 123-4567</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>john.doe@email.com</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>+1 (555) 123-4567</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ fontSize: '14px' }}>
+                <div style={{ fontSize: "var(--font-size-sm)" }}>
                   <span style={{ fontWeight: '500' }}>3 items</span>
                   <span style={{ color: '#6b7280', marginLeft: '8px' }}>2 products</span>
                 </div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
                   • Wireless Headphones × 1<br />
                   • USB-C Hub × 2
                 </div>
@@ -248,10 +248,10 @@ export const ComplexContent: Story = {
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <div style={{ fontSize: '18px', fontWeight: '700', color: '#059669' }}>
+                <div style={{ fontSize: "var(--font-size-lg)", fontWeight: '700', color: '#059669' }}>
                   $399.97
                 </div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
                   Subtotal: $399.97<br />
                   Shipping: $0.00<br />
                   Tax: $0.00
@@ -268,7 +268,7 @@ export const ComplexContent: Story = {
 export const ActionCells: Story = {
   render: () => (
     <div style={{ maxWidth: '700px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         User Management
       </h3>
       <table style={{
@@ -306,7 +306,7 @@ export const ActionCells: Story = {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: '600',
                   color: '#1e40af'
                 }}>
@@ -314,7 +314,7 @@ export const ActionCells: Story = {
                 </div>
                 <div>
                   <div style={{ fontWeight: '500' }}>John Doe</div>
-                  <div style={{ fontSize: '12px', color: '#6b7280' }}>john.doe@example.com</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>john.doe@example.com</div>
                 </div>
               </div>
             </Cell>
@@ -324,7 +324,7 @@ export const ActionCells: Story = {
                 backgroundColor: '#f3f4f6',
                 color: '#374151',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Administrator
@@ -336,7 +336,7 @@ export const ActionCells: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Active
@@ -350,7 +350,7 @@ export const ActionCells: Story = {
                   color: '#374151',
                   border: '1px solid #d2d2d2',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer'
                 }}>
                   Edit
@@ -361,7 +361,7 @@ export const ActionCells: Story = {
                   color: '#991b1b',
                   border: '1px solid #fecaca',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer'
                 }}>
                   Remove
@@ -380,7 +380,7 @@ export const ActionCells: Story = {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   fontWeight: '600',
                   color: '#9f1239'
                 }}>
@@ -388,7 +388,7 @@ export const ActionCells: Story = {
                 </div>
                 <div>
                   <div style={{ fontWeight: '500' }}>Sarah Miller</div>
-                  <div style={{ fontSize: '12px', color: '#6b7280' }}>sarah.m@example.com</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>sarah.m@example.com</div>
                 </div>
               </div>
             </Cell>
@@ -398,7 +398,7 @@ export const ActionCells: Story = {
                 backgroundColor: '#f3f4f6',
                 color: '#374151',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Editor
@@ -410,7 +410,7 @@ export const ActionCells: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 Active
@@ -424,7 +424,7 @@ export const ActionCells: Story = {
                   color: '#374151',
                   border: '1px solid #d2d2d2',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer'
                 }}>
                   Edit
@@ -435,7 +435,7 @@ export const ActionCells: Story = {
                   color: '#991b1b',
                   border: '1px solid #fecaca',
                   borderRadius: '4px',
-                  fontSize: '12px',
+                  fontSize: "var(--font-size-xs)",
                   cursor: 'pointer'
                 }}>
                   Remove
@@ -452,7 +452,7 @@ export const ActionCells: Story = {
 export const NumericData: Story = {
   render: () => (
     <div style={{ maxWidth: '600px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         Sales Report
       </h3>
       <table style={{
@@ -486,13 +486,13 @@ export const NumericData: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
               <div>
                 <div style={{ fontWeight: '600', fontSize: '16px' }}>$45,231</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>USD</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>USD</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
               <div>
                 <div style={{ fontWeight: '600', fontSize: '16px' }}>1,234</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>orders</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>orders</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
@@ -501,7 +501,7 @@ export const NumericData: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 +12.5%
@@ -515,13 +515,13 @@ export const NumericData: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
               <div>
                 <div style={{ fontWeight: '600', fontSize: '16px' }}>$38,456</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>USD</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>USD</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
               <div>
                 <div style={{ fontWeight: '600', fontSize: '16px' }}>987</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>orders</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>orders</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right' }}>
@@ -530,7 +530,7 @@ export const NumericData: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 fontWeight: '500'
               }}>
                 +8.3%
@@ -563,7 +563,7 @@ export const InteractiveCells: Story = {
 
     return (
       <div style={{ maxWidth: '800px' }}>
-        <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+        <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
           Task Management
         </h3>
         <table style={{
@@ -625,7 +625,7 @@ export const InteractiveCells: Story = {
                     backgroundColor: task.priority === 'High' ? '#fef2f2' : '#fef3c7',
                     color: task.priority === 'High' ? '#991b1b' : '#92400e',
                     borderRadius: '4px',
-                    fontSize: '12px',
+                    fontSize: "var(--font-size-xs)",
                     fontWeight: '500'
                   }}>
                     {task.priority}
@@ -640,7 +640,7 @@ export const InteractiveCells: Story = {
                       padding: '4px 8px',
                       border: '1px solid #d2d2d2',
                       borderRadius: '4px',
-                      fontSize: '12px'
+                      fontSize: "var(--font-size-xs)"
                     }}
                     defaultValue={task.status}
                   >
@@ -662,7 +662,7 @@ export const InteractiveCells: Story = {
             border: '1px solid #bfdbfe',
             borderRadius: '6px'
           }}>
-            <span style={{ fontSize: '14px', color: '#1e40af' }}>
+            <span style={{ fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
               {selectedRows.length} task{selectedRows.length > 1 ? 's' : ''} selected
             </span>
             <button
@@ -673,7 +673,7 @@ export const InteractiveCells: Story = {
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
-                fontSize: '12px',
+                fontSize: "var(--font-size-xs)",
                 cursor: 'pointer'
               }}
             >
@@ -689,7 +689,7 @@ export const InteractiveCells: Story = {
 export const MediaCells: Story = {
   render: () => (
     <div style={{ maxWidth: '800px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
         Media Gallery
       </h3>
       <table style={{
@@ -727,7 +727,7 @@ export const MediaCells: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div>
                 <div style={{ fontWeight: '500' }}>product-hero.jpg</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>JPEG Image</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>JPEG Image</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
@@ -748,7 +748,7 @@ export const MediaCells: Story = {
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
               <div>
                 <div style={{ fontWeight: '500' }}>thumbnail.png</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>PNG Image</div>
+                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>PNG Image</div>
               </div>
             </Cell>
             <Cell style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>

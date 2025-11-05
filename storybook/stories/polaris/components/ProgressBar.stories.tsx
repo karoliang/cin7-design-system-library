@@ -300,7 +300,7 @@ export const MultiStepProcess: Story = {
                 }}
               >
                 <div style={{
-                  fontSize: '24px',
+                  fontSize: "var(--font-size-2xl)",
                 }}>
                   {step.icon}
                 </div>

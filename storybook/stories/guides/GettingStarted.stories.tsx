@@ -166,7 +166,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`import { Button, Card, Text } from '@shopify/polaris';`}
@@ -181,7 +181,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`import {
@@ -211,7 +211,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`<Button>Click me</Button>`}
@@ -227,7 +227,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`<Button variant="primary">Save</Button>
@@ -258,7 +258,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`<TextField
@@ -282,7 +282,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`<Select
@@ -322,7 +322,7 @@ export const BasicComponentUsage: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`<Card>
@@ -374,7 +374,7 @@ export const ComponentComposition: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto',
                   marginTop: '12px'
                 }}>
@@ -435,7 +435,7 @@ export const ComponentComposition: Story = {
               background: '#f8f9fa',
               padding: '12px',
               borderRadius: '4px',
-              fontSize: '14px',
+              fontSize: "var(--font-size-sm)",
               overflow: 'auto',
               maxHeight: '300px'
             }}>
@@ -687,7 +687,7 @@ export const AccessibilityGuidelines: Story = {
                   background: '#f0fdf4',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto',
                   border: '1px solid #86efac',
                   marginTop: '8px'
@@ -712,7 +712,7 @@ export const AccessibilityGuidelines: Story = {
                   background: '#fef2f2',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto',
                   border: '1px solid #fca5a5',
                   marginTop: '8px'
@@ -880,7 +880,7 @@ export const PerformanceTips: Story = {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`// Instead of importing normally
@@ -937,7 +937,7 @@ const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
                 background: '#f8f9fa',
                 padding: '12px',
                 borderRadius: '4px',
-                fontSize: '14px',
+                fontSize: "var(--font-size-sm)",
                 overflow: 'auto'
               }}>
 {`// Use React.memo for expensive components
@@ -977,7 +977,7 @@ const handleClick = useCallback(() => {
                   background: '#f8f9fa',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto'
                 }}>
 {`// ✅ Good: Import specific components
@@ -1140,7 +1140,7 @@ export const CommonMistakes: Story = {
                   background: '#fef2f2',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto',
                   border: '1px solid #fca5a5'
                 }}>
@@ -1159,7 +1159,7 @@ export const CommonMistakes: Story = {
                   background: '#f0fdf4',
                   padding: '12px',
                   borderRadius: '4px',
-                  fontSize: '14px',
+                  fontSize: "var(--font-size-sm)",
                   overflow: 'auto',
                   border: '1px solid #86efac'
                 }}>
