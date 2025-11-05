@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Heading, Badge, Button, DataTable } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, DataTable } from '@shopify/polaris';
 import React from 'react';
 
 // Mock ExtJS Form Panel implementation
@@ -135,7 +135,7 @@ export const FormPanelWithDataGrid: Story = {
 
             <Card>
               <BlockStack gap="400">
-                <Heading>Products Data Grid</Heading>
+                <Text variant="headingLg" as="h2">Products Data Grid</Text>
                 <Text as="p">
                   ExtJS Grid component for displaying and managing large datasets.
                 </Text>
@@ -187,7 +187,7 @@ export const ComplexFormPanel: Story = {
     return (
       <Card sectioned>
         <BlockStack gap="400">
-          <Heading>Project Management Form</Heading>
+          <Text variant="headingLg" as="h2">Project Management Form</Text>
 
           <Text as="p">
             Complex form demonstrating ExtJS adapter capabilities for enterprise applications.

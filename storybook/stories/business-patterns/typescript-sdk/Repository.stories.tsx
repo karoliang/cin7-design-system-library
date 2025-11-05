@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Heading, Badge, Button, DataTable } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, DataTable } from '@shopify/polaris';
 import React from 'react';
 
 // Mock implementation for demonstration
@@ -52,7 +52,7 @@ export const RepositoryWithUseCase: Story = {
         <Layout.Section>
           <Card>
             <BlockStack gap="400">
-              <Heading>Product Repository</Heading>
+              <Text variant="headingLg" as="h3">Product Repository</Text>
               <Text as="p">
                 Demonstrates the Repository pattern with TypeScript SDK.
                 The repository provides a clean interface for data access operations.
@@ -113,7 +113,7 @@ export const AsyncRepository: Story = {
           <Layout.Section>
             <Card>
               <BlockStack gap="400">
-                <Heading>Async Product Repository</Heading>
+                <Text variant="headingLg" as="h3">Async Product Repository</Text>
                 <Text as="p">
                   Demonstrates async data loading with Repository pattern.
                 </Text>

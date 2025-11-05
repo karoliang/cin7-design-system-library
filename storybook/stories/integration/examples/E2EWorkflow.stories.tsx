@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Heading, Badge, Button, FormLayout, TextField, Select, DataTable, Progress } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, FormLayout, TextField, Select, DataTable, Progress } from '@shopify/polaris';
 import React from 'react';
 
 // Mock E2E workflow implementation
@@ -33,7 +33,7 @@ const E2EWorkflow = () => {
   return (
     <Card sectioned>
       <BlockStack gap="400">
-        <Heading>End-to-End Business Workflow</Heading>
+        <Text variant="headingXl" as="h1">End-to-End Business Workflow</Text>
         <Text as="p">
           Demonstrates complete business process flow across multiple system components.
         </Text>
@@ -48,7 +48,7 @@ const E2EWorkflow = () => {
 
         {/* Current step component */}
         <Card sectioned>
-          <Heading element="h2">{currentStepData?.name}</Heading>
+          <Text variant="heading2xl" as="h2">{currentStepData?.name}</Text>
           {step === 1 && (
             <FormLayout>
               <TextField label="Company Name" placeholder="Enter company name" />
@@ -167,7 +167,7 @@ export const WithRealTimeUpdates: Story = {
         <Layout.Section>
           <Card>
             <BlockStack gap="400">
-              <Heading>Live Workflow Monitoring</Heading>
+              <Text variant="headingLg" as="h3">Live Workflow Monitoring</Text>
               <Text as="p">
                 Demonstrates real-time updates and event-driven communication across all components.
               </Text>

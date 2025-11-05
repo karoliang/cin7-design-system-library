@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Heading, Badge, Button, DataTable, Icon } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, DataTable, Icon } from '@shopify/polaris';
 import React from 'react';
 
 // Mock system integration components
@@ -8,7 +8,7 @@ const SystemConnector = ({ system, status, onConnect }) => {
     <Card sectioned>
       <Grid columns={{ xs: 1, md: 2 }}>
         <BlockStack gap="200">
-          <Heading>{system.name}</Heading>
+          <Text variant="headingMd" as="h3">{system.name}</Text>
           <Text variant="bodySm">{system.description}</Text>
           <Badge tone={status === 'connected' ? 'success' : 'warning'}>
             {status === 'connected' ? 'Connected' : 'Disconnected'}
@@ -42,7 +42,7 @@ const SystemHealth = ({ systems }) => {
   return (
     <Card sectioned>
       <BlockStack gap="400">
-        <Heading>System Health Dashboard</Heading>
+        <Text variant="headingXl" as="h1">System Health Dashboard</Text>
 
         <Grid columns={{ xs: 1, md: 3 }}>
           <Card>
@@ -175,7 +175,7 @@ const SystemIntegration = () => {
         <Layout.Section>
           <Card>
             <BlockStack gap="400">
-              <Heading>Multi-System Integration Platform</Heading>
+              <Text variant="heading2xl" as="h2">Multi-System Integration Platform</Text>
               <Text as="p">
                 Comprehensive integration management across enterprise systems with real-time monitoring and control.
               </Text>
@@ -221,7 +221,7 @@ const SystemIntegration = () => {
               {activeTab === 'integrations' && (
                 <Card sectioned>
                   <BlockStack gap="400">
-                    <Heading>Data Integration Flows</Heading>
+                    <Text variant="headingLg" as="h3">Data Integration Flows</Text>
                     <DataTable
                       columnContentTypes={['text', 'text', 'text', 'text', 'text']}
                       headings={[
@@ -259,7 +259,7 @@ const SystemIntegration = () => {
               {activeTab === 'monitoring' && (
                 <Card sectioned>
                   <BlockStack gap="400">
-                    <Heading>System Monitoring</Heading>
+                    <Text variant="headingLg" as="h3">System Monitoring</Text>
                     <Text as="p">
                       Real-time monitoring of all integrated systems with comprehensive metrics and alerts.
                     </Text>
@@ -267,28 +267,28 @@ const SystemIntegration = () => {
                     <Grid columns={{ xs: 1, md: 2 }}>
                       <Card>
                         <BlockStack gap="200">
-                          <Heading element="h3">API Calls Today</Heading>
+                          <Text variant="headingMd" as="h3">API Calls Today</Text>
                           <Text variant="headingLg">12,847</Text>
                           <Badge tone="success">+15% from yesterday</Badge>
                         </BlockStack>
                       </Card>
                       <Card>
                         <BlockStack gap="200">
-                          <Heading element="h3">Data Transferred</Heading>
+                          <Text variant="headingMd" as="h3">Data Transferred</Text>
                           <Text variant="headingLg">2.4 GB</Text>
                           <Badge tone="success">Within limits</Badge>
                         </BlockStack>
                       </Card>
                       <Card>
                         <BlockStack gap="200">
-                          <Heading element="h3">Error Rate</Heading>
+                          <Text variant="headingMd" as="h3">Error Rate</Text>
                           <Text variant="headingLg" tone="warning">0.3%</Text>
                           <Badge tone="warning">Above target</Badge>
                         </BlockStack>
                       </Card>
                       <Card>
                         <BlockStack gap="200">
-                          <Heading element="h3">Uptime</Heading>
+                          <Text variant="headingMd" as="h3">Uptime</Text>
                           <Text variant="headingLg" tone="success">99.9%</Text>
                           <Badge tone="success">Excellent</Badge>
                         </BlockStack>
@@ -347,7 +347,7 @@ export const MinimalSystemView: Story = {
     return (
       <Card sectioned>
         <BlockStack gap="400">
-          <Heading>Connected Systems</Heading>
+          <Text variant="headingLg" as="h3">Connected Systems</Text>
           <DataTable
             columnContentTypes={['text', 'text', 'text']}
             headings={[

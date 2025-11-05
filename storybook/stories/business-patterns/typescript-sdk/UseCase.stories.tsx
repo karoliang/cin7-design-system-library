@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Heading, Badge, Button, FormLayout, TextField, Select } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, FormLayout, TextField, Select } from '@shopify/polaris';
 import React from 'react';
 
 // Mock implementation for demonstration
@@ -54,7 +54,7 @@ export const BasicUseCase: Story = {
     return (
       <Card sectioned>
         <BlockStack gap="400">
-          <Heading>Create User Use Case</Heading>
+          <Text variant="headingLg" as="h3">Create User Use Case</Text>
           <Text as="p">
             Demonstrates the Use Case pattern for business logic encapsulation.
           </Text>
@@ -85,7 +85,7 @@ export const BasicUseCase: Story = {
           {result && (
             <Card sectioned>
               <BlockStack gap="200">
-                <Heading>Result</Heading>
+                <Text variant="headingMd" as="h4">Result</Text>
                 <Badge tone={result.success ? 'success' : 'critical'}>
                   {result.success ? 'Success' : 'Error'}
                 </Badge>
@@ -106,7 +106,7 @@ export const ComplexUseCase: Story = {
         <Layout.Section>
           <Card>
             <BlockStack gap="400">
-              <Heading>Order Processing Use Case</Heading>
+              <Text variant="headingLg" as="h3">Order Processing Use Case</Text>
               <Text as="p">
                 Demonstrates complex business logic with the Use Case pattern.
               </Text>
@@ -176,7 +176,7 @@ export const UseCaseWithEventBus: Story = {
     return (
       <Card sectioned>
         <BlockStack gap="400">
-          <Heading>Event-Driven Use Case</Heading>
+          <Text variant="headingLg" as="h3">Event-Driven Use Case</Text>
           <Text as="p">
             Demonstrates Use Case with EventBus integration for cross-layer communication.
           </Text>
@@ -187,7 +187,7 @@ export const UseCaseWithEventBus: Story = {
 
           {events.length > 0 && (
             <Card sectioned>
-              <Heading>Event Log</Heading>
+              <Text variant="headingMd" as="h4">Event Log</Text>
               {events.map((event, index) => (
                 <div key={index} style={{
                   padding: '8px',

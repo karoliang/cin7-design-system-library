@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Heading } from '@shopify/polaris';
+import { Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
   title: 'Polaris/Structure/Heading',
-  component: Heading,
+  component: Text,
   parameters: {
     layout: 'centered',
     docs: {
@@ -23,13 +23,18 @@ const meta = {
       control: 'text',
       description: 'Element ID for accessibility and navigation',
     },
-    element: {
+    variant: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div'],
+      options: ['headingXs', 'headingSm', 'headingMd', 'headingLg', 'headingXl', 'heading2xl', 'heading3xl'],
+      description: 'Text variant for styling',
+    },
+    as: {
+      control: 'select',
+      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'],
       description: 'HTML element to render',
     },
   },
-} satisfies Meta<typeof Heading>;
+} satisfies Meta<typeof Text>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -43,12 +48,12 @@ export const Default: Story = {
 export const HeadingLevels: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
-      <Heading element="h1">Level 1 Heading - Main Page Title</Heading>
-      <Heading element="h2">Level 2 Heading - Major Section</Heading>
-      <Heading element="h3">Level 3 Heading - Subsection</Heading>
-      <Heading element="h4">Level 4 Heading - Minor Section</Heading>
-      <Heading element="h5">Level 5 Heading - Detailed Topic</Heading>
-      <Heading element="h6">Level 6 Heading - Sub-topic</Heading>
+      <Text variant="heading3xl" as="h1">Level 1 Heading - Main Page Title</Text>
+      <Text variant="heading2xl" as="h2">Level 2 Heading - Major Section</Text>
+      <Text variant="headingXl" as="h3">Level 3 Heading - Subsection</Text>
+      <Text variant="headingLg" as="h4">Level 4 Heading - Minor Section</Text>
+      <Text variant="headingMd" as="h5">Level 5 Heading - Detailed Topic</Text>
+      <Text variant="headingSm" as="h6">Level 6 Heading - Sub-topic</Text>
     </div>
   ),
 };
@@ -57,22 +62,22 @@ export const PageHeadings: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '800px' }}>
       <div>
-        <Heading element="h1">Product Catalog</Heading>
+        <Text variant="heading3xl" as="h1">Product Catalog</Text>
         <p style={{ marginTop: '8px', color: '#637381' }}>Browse our complete collection of products</p>
       </div>
 
       <div>
-        <Heading element="h2">Featured Products</Heading>
+        <Text variant="heading2xl" as="h2">Featured Products</Text>
         <p style={{ marginTop: '8px', color: '#637381' }}>Hand-picked items for this month</p>
       </div>
 
       <div>
-        <Heading element="h3">Electronics</Heading>
+        <Text variant="headingXl" as="h3">Electronics</Text>
         <p style={{ marginTop: '8px', color: '#637381' }}>Latest gadgets and accessories</p>
       </div>
 
       <div>
-        <Heading element="h4">Smartphones</Heading>
+        <Text variant="headingLg" as="h4">Smartphones</Text>
         <p style={{ marginTop: '8px', color: '#637381' }}>Premium mobile devices</p>
       </div>
     </div>
@@ -93,7 +98,7 @@ export const CardHeadings: Story = {
         borderRadius: '8px',
         backgroundColor: '#ffffff'
       }}>
-        <Heading element="h3">Sales Overview</Heading>
+        <Text variant="headingXl" as="h3">Sales Overview</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Track your sales performance and revenue trends
         </p>
@@ -108,7 +113,7 @@ export const CardHeadings: Story = {
         borderRadius: '8px',
         backgroundColor: '#ffffff'
       }}>
-        <Heading element="h3">Customer Orders</Heading>
+        <Text variant="headingXl" as="h3">Customer Orders</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Monitor order status and fulfillment
         </p>
@@ -123,7 +128,7 @@ export const CardHeadings: Story = {
         borderRadius: '8px',
         backgroundColor: '#ffffff'
       }}>
-        <Heading element="h3">Inventory Status</Heading>
+        <Text variant="headingXl" as="h3">Inventory Status</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Current stock levels and alerts
         </p>
@@ -139,7 +144,7 @@ export const FormSections: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
       <div>
-        <Heading element="h2">Account Information</Heading>
+        <Text variant="heading2xl" as="h2">Account Information</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Update your personal details and contact information
         </p>
@@ -165,7 +170,7 @@ export const FormSections: Story = {
       </div>
 
       <div>
-        <Heading element="h2">Notification Preferences</Heading>
+        <Text variant="heading2xl" as="h2">Notification Preferences</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Choose how you want to receive updates
         </p>
@@ -189,7 +194,7 @@ export const ModalHeadings: Story = {
       maxWidth: '500px',
       backgroundColor: '#ffffff'
     }}>
-      <Heading element="h2">Confirm Deletion</Heading>
+      <Text variant="heading2xl" as="h2">Confirm Deletion</Text>
       <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
         Are you sure you want to delete this item? This action cannot be undone.
       </p>
@@ -223,7 +228,7 @@ export const DashboardHeadings: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '900px' }}>
       <div style={{ borderBottom: '1px solid #e5e7eb', paddingBottom: '16px' }}>
-        <Heading element="h1">Analytics Dashboard</Heading>
+        <Text variant="heading3xl" as="h1">Analytics Dashboard</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Comprehensive overview of your business performance
         </p>
@@ -231,7 +236,7 @@ export const DashboardHeadings: Story = {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
         <div style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-          <Heading element="h3">Revenue</Heading>
+          <Text variant="headingXl" as="h3">Revenue</Text>
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#059669' }}>
             $124,563
           </div>
@@ -241,7 +246,7 @@ export const DashboardHeadings: Story = {
         </div>
 
         <div style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-          <Heading element="h3">Customers</Heading>
+          <Text variant="headingXl" as="h3">Customers</Text>
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#3b82f6' }}>
             8,432
           </div>
@@ -251,7 +256,7 @@ export const DashboardHeadings: Story = {
         </div>
 
         <div style={{ padding: '16px', backgroundColor: '#f8fafc', borderRadius: '6px' }}>
-          <Heading element="h3">Orders</Heading>
+          <Text variant="headingXl" as="h3">Orders</Text>
           <div style={{ marginTop: '8px', fontSize: '28px', fontWeight: '700', color: '#8b5cf6' }}>
             2,156
           </div>
@@ -262,7 +267,7 @@ export const DashboardHeadings: Story = {
       </div>
 
       <div>
-        <Heading element="h2">Recent Activity</Heading>
+        <Text variant="heading2xl" as="h2">Recent Activity</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Latest transactions and customer interactions
         </p>
@@ -275,7 +280,7 @@ export const WithAccessibility: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
       <div>
-        <Heading id="billing-section" element="h2">Billing Information</Heading>
+        <Text id="billing-section" variant="heading2xl" as="h2">Billing Information</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Manage your billing details and payment methods
         </p>
@@ -287,7 +292,7 @@ export const WithAccessibility: Story = {
       </div>
 
       <div>
-        <Heading id="shipping-section" element="h2">Shipping Address</Heading>
+        <Text id="shipping-section" variant="heading2xl" as="h2">Shipping Address</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Where should we send your orders?
         </p>
@@ -299,7 +304,7 @@ export const WithAccessibility: Story = {
       </div>
 
       <div>
-        <Heading element="h3">Additional Notes</Heading>
+        <Text variant="headingXl" as="h3">Additional Notes</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Using proper heading levels creates a logical document structure that helps all users navigate content efficiently.
         </p>
@@ -312,25 +317,25 @@ export const CustomElements: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
       <div>
-        <Heading element="p" style={{ fontSize: "18px", fontWeight: '600', margin: 0 }}>
+        <Text variant="headingMd" as="p" style={{ fontSize: "18px", fontWeight: '600', margin: 0 }}>
           Styled as a paragraph but with heading appearance
-        </Heading>
+        </Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Sometimes you need heading styling without semantic heading meaning
         </p>
       </div>
 
       <div>
-        <Heading element="div" style={{ fontSize: "20px", fontWeight: '500', margin: 0 }}>
+        <Text variant="headingMd" as="div" style={{ fontSize: "20px", fontWeight: '500', margin: 0 }}>
           Div element with heading styles
-        </Heading>
+        </Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Useful for custom components that need heading appearance
         </p>
       </div>
 
       <div>
-        <Heading element="h2">Semantic H2 with default styles</Heading>
+        <Text variant="heading2xl" as="h2">Semantic H2 with default styles</Text>
         <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
           Standard semantic heading with Polaris styling
         </p>
