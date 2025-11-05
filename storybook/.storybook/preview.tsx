@@ -65,13 +65,7 @@ if (typeof document !== 'undefined') {
 }
 
 const preview: Preview = {
-  decorators: [
-    (Story) => (
-      <AppProvider i18n={{}}>
-        <Story />
-      </AppProvider>
-    ),
-  ],
+  decorators: [],
   parameters: {
     controls: {
       matchers: {
