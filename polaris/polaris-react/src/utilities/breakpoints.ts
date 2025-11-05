@@ -10,10 +10,8 @@ import {isServer} from './target';
 import {useIsomorphicLayoutEffect} from './use-isomorphic-layout-effect';
 
 const Breakpoints = {
-  // TODO: Update to smDown
-  navigationBarCollapsed: '767.95px',
-  // TODO: Update to lgDown
-  stackedContent: '1039.95px',
+  navigationBarCollapsed: '489.96px',
+  stackedContent: '1039.96px',
 };
 
 const noWindowMatches: MediaQueryList = {
