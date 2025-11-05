@@ -1,5 +1,5 @@
 import React from 'react';
-import {themeNameDefault, createThemeClassName} from '@shopify/polaris-tokens';
+import {themeNameDefault, createThemeClassName, type ThemeName} from '@shopify/polaris-tokens';
 
 import {
   ThemeContext,
@@ -12,9 +12,8 @@ import styles from './ThemeProvider.module.css';
 
 /**
  * Allowlist of local themes
- * TODO: Replace `as const` with `satisfies ThemeName[]`
  */
-export const themeNamesLocal = ['light', 'dark-experimental'] as const;
+export const themeNamesLocal = ['light', 'dark-experimental'] satisfies ThemeName[];
 
 type ThemeNameLocal = (typeof themeNamesLocal)[number];
 
