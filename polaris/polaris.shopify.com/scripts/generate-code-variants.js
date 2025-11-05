@@ -14,12 +14,84 @@ function generateTemplate(componentName, exampleName) {
 export const ${camelCase(componentName)}Examples = {
   '${exampleName}': {
     react: \`import {/* components */} from '@shopify/polaris';
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 function ${pascalCase(componentName)}${pascalCase(exampleName)}Example() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleRetry = useCallback(() => {
+    setError(null);
+    setLoading(true);
+    // TODO: Implement retry logic
+    setTimeout(() => setLoading(false), 1000);
+  }, []);
+
+  // TODO: Add component-specific logic and event handlers
   return (
-    // TODO: Add React implementation
-    <div>Implement ${componentName} ${exampleName}</div>
+    <div className="${camelCase(componentName)} ${camelCase(componentName)}--${exampleName}">
+      <div className="${camelCase(componentName)}__container">
+        <header className="${camelCase(componentName)}__header">
+          <h2 className="${camelCase(componentName)}__title" id="${camelCase(componentName)}-${exampleName}-title">
+            ${pascalCase(exampleName)} ${pascalCase(componentName)}
+          </h2>
+          <div className="${camelCase(componentName)}__actions" role="toolbar" aria-label="${componentName} actions">
+            {/* TODO: Add action buttons/controls */}
+          </div>
+        </header>
+
+        <div className="${camelCase(componentName)}__content">
+          <div className="${camelCase(componentName)}__body">
+            <p className="${camelCase(componentName)}__description">
+              This is the ${exampleName} variant of the ${componentName} component.
+            </p>
+
+            <div className="${camelCase(componentName)}__main" role="main">
+              {/* TODO: Add ${componentName} ${exampleName} specific implementation */}
+              <div className="${camelCase(componentName)}__placeholder">
+                <p>React implementation for ${pascalCase(componentName)} ${pascalCase(exampleName)} goes here</p>
+                <p>Use Polaris components from @shopify/polaris to build the UI</p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="${camelCase(componentName)}__sidebar" role="complementary">
+            {/* TODO: Add secondary content/side panel */}
+          </aside>
+        </div>
+
+        <footer className="${camelCase(componentName)}__footer">
+          <div className="${camelCase(componentName)}__status" role="status" aria-live="polite">
+            {/* Status messages go here */}
+          </div>
+          <div className="${camelCase(componentName)}__meta">
+            {/* Metadata or additional information */}
+          </div>
+        </footer>
+      </div>
+
+      {/* Loading state */}
+      {loading && (
+        <div className="${camelCase(componentName)}__loading" aria-live="polite">
+          <div className="${camelCase(componentName)}__spinner" aria-hidden="true" />
+          <span className="${camelCase(componentName)}__loading-text">Loading...</span>
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div className="${camelCase(componentName)}__error" role="alert">
+          <p className="${camelCase(componentName)}__error-message">{error}</p>
+          <button
+            className="${camelCase(componentName)}__retry-btn"
+            onClick={handleRetry}
+            type="button"
+          >
+            Retry
+          </button>
+        </div>
+      )}
+    </div>
   );
 }\`,
     extjs: \`// ExtJS implementation for ${componentName} - ${exampleName}
@@ -363,21 +435,237 @@ if (document.readyState === 'loading') {
 } else {
   init${pascalCase(componentName)}();
 }\`,
-    typescript: \`import {/* components */} from '@shopify/polaris';
-import React from 'react';
+    typescript: \`// TypeScript implementation for ${componentName} - ${exampleName}
+import { UseCase, Repository, EventBus } from '@cin7/typescript-sdk';
+import { EventBus as CoreEventBus } from '@cin7/core';
+import type { ${pascalCase(componentName)}${pascalCase(exampleName)}Data } from '../types/${camelCase(componentName)}';
 
 interface ${pascalCase(componentName)}${pascalCase(exampleName)}Props {
-  // TODO: Add props interface
+  data?: ${pascalCase(componentName)}${pascalCase(exampleName)}Data;
+  onAction?: (action: string, payload?: any) => void;
+  className?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  error?: string | null;
 }
 
-function ${pascalCase(componentName)}${pascalCase(exampleName)}Example(
+interface ${pascalCase(componentName)}${pascalCase(exampleName)}State {
+  isLoading: boolean;
+  error: string | null;
+  data: ${pascalCase(componentName)}${pascalCase(exampleName)}Data | null;
+}
+
+/**
+ * ${pascalCase(componentName)} ${exampleName} - TypeScript business logic implementation
+ *
+ * This component demonstrates the Cin7 DSL TypeScript layer for business logic,
+ * with proper separation of concerns and type safety.
+ */
+export class ${pascalCase(componentName)}${pascalCase(exampleName)}UseCase extends UseCase<${pascalCase(componentName)}${pascalCase(exampleName)}Data> {
+  constructor(
+    private repository: Repository<${pascalCase(componentName)}${pascalCase(exampleName)}Data>
+  ) {
+    super();
+  }
+
+  async execute(params?: Record<string, any>): Promise<${pascalCase(componentName)}${pascalCase(exampleName)}Data> {
+    try {
+      this.setLoading(true);
+
+      // Execute business logic here
+      const result = await this.repository.findById(params?.id);
+
+      // Emit event for UI layers
+      CoreEventBus.emit('${camelCase(componentName)}:${exampleName}:loaded', result);
+
+      this.setLoading(false);
+      return result;
+    } catch (error) {
+      this.setError(error.message);
+      CoreEventBus.emit('${camelCase(componentName)}:${exampleName}:error', error);
+      throw error;
+    }
+  }
+
+  async save(data: ${pascalCase(componentName)}${pascalCase(exampleName)}Data): Promise<${pascalCase(componentName)}${pascalCase(exampleName)}Data> {
+    try {
+      this.setLoading(true);
+
+      const result = await this.repository.save(data);
+
+      CoreEventBus.emit('${camelCase(componentName)}:${exampleName}:saved', result);
+
+      this.setLoading(false);
+      return result;
+    } catch (error) {
+      this.setError(error.message);
+      CoreEventBus.emit('${camelCase(componentName)}:${exampleName}:error', error);
+      throw error;
+    }
+  }
+}
+
+/**
+ * React component wrapper that integrates with TypeScript business logic
+ */
+export function ${pascalCase(componentName)}${pascalCase(exampleName)}Example(
   props: ${pascalCase(componentName)}${pascalCase(exampleName)}Props
 ): JSX.Element {
+  const [state, setState] = useState<${pascalCase(componentName)}${pascalCase(exampleName)}State>({
+    isLoading: props.loading || false,
+    error: props.error || null,
+    data: props.data || null
+  });
+
+  useEffect(() => {
+    // Listen for business layer events
+    const handleLoaded = (data: ${pascalCase(componentName)}${pascalCase(exampleName)}Data) => {
+      setState(prev => ({ ...prev, data, isLoading: false, error: null }));
+    };
+
+    const handleSaved = (data: ${pascalCase(componentName)}${pascalCase(exampleName)}Data) => {
+      setState(prev => ({ ...prev, data, isLoading: false, error: null }));
+    };
+
+    const handleError = (error: Error) => {
+      setState(prev => ({ ...prev, error: error.message, isLoading: false }));
+    };
+
+    CoreEventBus.on('${camelCase(componentName)}:${exampleName}:loaded', handleLoaded);
+    CoreEventBus.on('${camelCase(componentName)}:${exampleName}:saved', handleSaved);
+    CoreEventBus.on('${camelCase(componentName)}:${exampleName}:error', handleError);
+
+    return () => {
+      CoreEventBus.off('${camelCase(componentName)}:${exampleName}:loaded', handleLoaded);
+      CoreEventBus.off('${camelCase(componentName)}:${exampleName}:saved', handleSaved);
+      CoreEventBus.off('${camelCase(componentName)}:${exampleName}:error', handleError);
+    };
+  }, []);
+
+  const handleAction = useCallback((action: string, payload?: any) => {
+    if (props.disabled) return;
+
+    // Emit action event for business logic layer
+    CoreEventBus.emit('${camelCase(componentName)}:${exampleName}:action', { action, payload });
+
+    // Call parent handler if provided
+    props.onAction?.(action, payload);
+  }, [props.onAction, props.disabled]);
+
+  const containerClasses = [
+    '${camelCase(componentName)}',
+    '${camelCase(componentName)}--${exampleName}',
+    props.className || '',
+    props.disabled ? '${camelCase(componentName)}--disabled' : '',
+    state.isLoading ? '${camelCase(componentName)}--loading' : '',
+    state.error ? '${camelCase(componentName)}--error' : ''
+  ].filter(Boolean).join(' ');
+
+  if (state.isLoading) {
+    return (
+      <div className={containerClasses} data-testid="${camelCase(componentName)}-${exampleName}">
+        <div className="${camelCase(componentName)}__loading" aria-live="polite">
+          <div className="${camelCase(componentName)}__spinner" aria-hidden="true" />
+          <span className="${camelCase(componentName)}__loading-text">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (state.error) {
+    return (
+      <div className={containerClasses} data-testid="${camelCase(componentName)}-${exampleName}">
+        <div className="${camelCase(componentName)}__error" role="alert">
+          <p className="${camelCase(componentName)}__error-message">{state.error}</p>
+          <button
+            className="${camelCase(componentName)}__retry-btn"
+            onClick={() => handleAction('retry')}
+            type="button"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    // TODO: Add TypeScript implementation
-    <div>Implement ${componentName} ${exampleName}</div>
+    <div
+      className={containerClasses}
+      data-testid="${camelCase(componentName)}-${exampleName}"
+      role="region"
+      aria-labelledby="${camelCase(componentName)}-${exampleName}-title"
+    >
+      <header className="${camelCase(componentName)}__header">
+        <h2
+          className="${camelCase(componentName)}__title"
+          id="${camelCase(componentName)}-${exampleName}-title"
+        >
+          ${pascalCase(exampleName)} ${pascalCase(componentName)}
+        </h2>
+        <div className="${camelCase(componentName)}__actions" role="toolbar" aria-label="${componentName} actions">
+          {/* TODO: Add action buttons/controls */}
+        </div>
+      </header>
+
+      <div className="${camelCase(componentName)}__content">
+        <div className="${camelCase(componentName)}__body">
+          <p className="${camelCase(componentName)}__description">
+            This is the ${exampleName} variant of the ${componentName} component.
+          </p>
+
+          <div className="${camelCase(componentName)}__main" role="main">
+            {/* TODO: Add ${componentName} ${exampleName} specific implementation */}
+            {state.data && (
+              <div className="${camelCase(componentName)}__data">
+                {/* Render data from business logic layer */}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <aside className="${camelCase(componentName)}__sidebar" role="complementary">
+          {/* TODO: Add secondary content/side panel */}
+        </aside>
+      </div>
+
+      <footer className="${camelCase(componentName)}__footer">
+        <div className="${camelCase(componentName)}__status" role="status" aria-live="polite">
+          {/* Status messages go here */}
+        </div>
+        <div className="${camelCase(componentName)}__meta">
+          {/* Metadata or additional information */}
+        </div>
+      </footer>
+    </div>
   );
-}\`
+}
+
+// Type definitions for external usage
+export type {
+  ${pascalCase(componentName)}${pascalCase(exampleName)}Props,
+  ${pascalCase(componentName)}${pascalCase(exampleName)}State,
+  ${pascalCase(componentName)}${pascalCase(exampleName)}Data
+};
+
+export { ${pascalCase(componentName)}${pascalCase(exampleName)}UseCase as default };
+
+/**
+ * Usage example:
+ *
+ * import { ${pascalCase(componentName)}${pascalCase(exampleName)}Example, ${pascalCase(componentName)}${pascalCase(exampleName)}UseCase } from './${camelCase(componentName)}-${exampleName}';
+ *
+ * // Business logic usage:
+ * const useCase = new ${pascalCase(componentName)}${pascalCase(exampleName)}UseCase(repository);
+ * const data = await useCase.execute({ id: '123' });
+ *
+ * // In React component:
+ * <${pascalCase(componentName)}${pascalCase(exampleName)}Example
+ *   data={data}
+ *   onAction={(action, payload) => console.log('Action:', action, payload)}
+ *   disabled={false}
+ * />
+ */\`
   }
 };
 `;
