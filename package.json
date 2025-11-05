@@ -12,8 +12,10 @@
     "test": "pnpm --filter \"@cin7/*\" test",
     "lint": "pnpm --filter \"@cin7/*\" lint",
     "typecheck": "pnpm --filter \"@cin7/*\" typecheck",
-    "collect:variations": "node scripts/collect-component-variations.js",
-    "check:variations": "node scripts/collect-component-variations.js --check"
+    "collect:variations": "npx tsc scripts/collect-component-variations.ts --outDir temp && node temp/collect-component-variations.js && rm -rf temp",
+    "collect:variations:js": "node scripts/collect-component-variations.js",
+    "check:variations": "npx tsc scripts/collect-component-variations.ts --outDir temp && node temp/collect-component-variations.js --check && rm -rf temp",
+    "check:variations:js": "node scripts/collect-component-variations.js --check"
   },
   "engines": {
     "node": ">=20.10.0",
@@ -22,8 +24,10 @@
   "packageManager": "pnpm@8.15.1",
   "devDependencies": {
     "@types/node": "^20.10.0",
+    "@types/js-yaml": "^4.0.5",
     "js-yaml": "^4.1.0",
     "ts-jest": "^29.4.4",
+    "ts-node": "^10.9.1",
     "typescript": "^5.3.3"
   }
 }
