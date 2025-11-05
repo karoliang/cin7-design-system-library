@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
+import { AppProvider } from '@shopify/polaris';
 
 // Inline design token styles for now
 const designTokenStyles = `
@@ -64,6 +65,13 @@ if (typeof document !== 'undefined') {
 }
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <AppProvider i18n={{}}>
+        <Story />
+      </AppProvider>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {

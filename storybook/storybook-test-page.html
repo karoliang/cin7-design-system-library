@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Storybook UI Test</title>
+    <script>
+        let consoleLogs = [];
+        const originalConsole = {
+            log: console.log,
+            error: console.error,
+            warn: console.warn,
+            info: console.info
+        };
+
+        function captureLog(type, ...args) {
+            const message = args.map(arg =>
+                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+            ).join(' ');
+            consoleLogs.push({
+                type: type,
+                message: message,
+                timestamp: new Date().toISOString()
+            });
+            originalConsole[type](...args);
+        }
+
+        console.log = (...args) => captureLog('log', ...args);
+        console.error = (...args) => captureLog('error', ...args);
+        console.warn = (...args) => captureLog('warn', ...args);
+        console.info = (...args) => captureLog('info', ...args);
+
+        window.addEventListener('load', function() {
+            console.log('PAGE_LOADED');
+
+            // Wait for React to mount
+            setTimeout(() => {
+                console.log('CHECKING_REACT_MOUNTED');
+                const storybookRoot = document.querySelector('#root');
+                if (storybookRoot) {
+                    console.log('STORYBOOK_ROOT_FOUND', {
+                        hasChildren: storybookRoot.children.length > 0,
+                        innerHTML: storybookRoot.innerHTML.substring(0, 500)
+                    });
+
+                    // Check for specific Storybook elements
+                    const sidebar = document.querySelector('[data-testid="sidebar"]');
+                    const canvas = document.querySelector('[data-testid="canvas"]');
+                    const preview = document.querySelector('#storybook-preview-iframe');
+
+                    console.log('STORYBOOK_ELEMENTS', {
+                        sidebar: !!sidebar,
+                        canvas: !!canvas,
+                        preview: !!preview
+                    });
+                } else {
+                    console.log('NO_STORYBOOK_ROOT_FOUND');
+                }
+
+                // Send logs to parent window
+                window.opener.postMessage({
+                    type: 'console-logs',
+                    logs: consoleLogs
+                }, '*');
+            }, 5000);
+        });
+
+        // Navigate to Storybook after a short delay
+        setTimeout(() => {
+            window.location.href = 'http://localhost:6006';
+        }, 1000);
+    </script>
+</head>
+<body>
+    <h1>Loading Storybook Test...</h1>
+    <p>This page will automatically navigate to Storybook and capture console logs.</p>
+</body>
+</html>

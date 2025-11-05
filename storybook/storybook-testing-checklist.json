@@ -1,0 +1,2194 @@
+{
+  "timestamp": "2025-11-05T16:28:40.106Z",
+  "totalStories": 119,
+  "categories": {
+    "foundation": [
+      "stories/foundation/components/CoreUtilities.stories.tsx",
+      "stories/foundation/components/DesignTokens.stories.tsx"
+    ],
+    "guides": [
+      "stories/guides/ComponentCategories.stories.tsx",
+      "stories/guides/ComponentSelection.stories.tsx",
+      "stories/guides/DSLAitecture.stories.tsx",
+      "stories/guides/GettingStarted.stories.tsx",
+      "stories/guides/RealWorldExamples.stories.tsx",
+      "stories/guides/UsagePatterns.stories.tsx"
+    ],
+    "polaris": [
+      "stories/polaris/components/ActionList.stories.tsx",
+      "stories/polaris/components/ActionMenu.stories.tsx",
+      "stories/polaris/components/AdminComponents.stories.tsx",
+      "stories/polaris/components/AfterInitialMount.stories.tsx",
+      "stories/polaris/components/AlphaStack.stories.tsx",
+      "stories/polaris/components/AppProvider.stories.tsx",
+      "stories/polaris/components/Autocomplete.stories.tsx",
+      "stories/polaris/components/Avatar.stories.tsx",
+      "stories/polaris/components/Backdrop.stories.tsx",
+      "stories/polaris/components/Badge.stories.tsx",
+      "stories/polaris/components/Banner.stories.tsx",
+      "stories/polaris/components/Bleed.stories.tsx",
+      "stories/polaris/components/BlockStack.stories.tsx",
+      "stories/polaris/components/Box.stories.tsx",
+      "stories/polaris/components/Breadcrumbs.stories.tsx",
+      "stories/polaris/components/BulkActions.stories.tsx",
+      "stories/polaris/components/Button.stories.tsx",
+      "stories/polaris/components/ButtonFrom.stories.tsx",
+      "stories/polaris/components/ButtonGroup.stories.tsx",
+      "stories/polaris/components/ButtonMultiLanguage.stories.tsx",
+      "stories/polaris/components/CalloutCard.stories.tsx",
+      "stories/polaris/components/Caption.stories.tsx",
+      "stories/polaris/components/Card.stories.tsx",
+      "stories/polaris/components/CardMultiLanguage.stories.tsx",
+      "stories/polaris/components/Cell.stories.tsx",
+      "stories/polaris/components/Checkbox.stories.tsx",
+      "stories/polaris/components/CheckboxGroup.stories.tsx",
+      "stories/polaris/components/ChoiceList.stories.tsx",
+      "stories/polaris/components/Collapsible.stories.tsx",
+      "stories/polaris/components/ColorPicker.stories.tsx",
+      "stories/polaris/components/Column.stories.tsx",
+      "stories/polaris/components/Combobox.stories.tsx",
+      "stories/polaris/components/ContextualSaveBar.stories.tsx",
+      "stories/polaris/components/DashboardComponents.stories.tsx",
+      "stories/polaris/components/DataManagement.stories.tsx",
+      "stories/polaris/components/DataTable.stories.tsx",
+      "stories/polaris/components/DatePicker.stories.tsx",
+      "stories/polaris/components/DescriptionList.stories.tsx",
+      "stories/polaris/components/DisplayText.stories.tsx",
+      "stories/polaris/components/Divider.stories.tsx",
+      "stories/polaris/components/DropZone.stories.tsx",
+      "stories/polaris/components/EcommerceComponents.stories.tsx",
+      "stories/polaris/components/EmptyState.stories.tsx",
+      "stories/polaris/components/ErrorPage.stories.tsx",
+      "stories/polaris/components/ExceptionList.stories.tsx",
+      "stories/polaris/components/Filters.stories.tsx",
+      "stories/polaris/components/FooterHelp.stories.tsx",
+      "stories/polaris/components/FormComponents.stories.tsx",
+      "stories/polaris/components/FormLayout.stories.tsx",
+      "stories/polaris/components/Frame.stories.tsx",
+      "stories/polaris/components/FullscreenBar.stories.tsx",
+      "stories/polaris/components/Grid.stories.tsx",
+      "stories/polaris/components/Heading.stories.tsx",
+      "stories/polaris/components/HorizontalAlignment.stories.tsx",
+      "stories/polaris/components/HorizontalStack.stories.tsx",
+      "stories/polaris/components/Icon.stories.tsx",
+      "stories/polaris/components/Image.stories.tsx",
+      "stories/polaris/components/IndexFilters.stories.tsx",
+      "stories/polaris/components/IndexTable.stories.tsx",
+      "stories/polaris/components/InlineStack.stories.tsx",
+      "stories/polaris/components/KeyboardKey.stories.tsx",
+      "stories/polaris/components/KeypressListener.stories.tsx",
+      "stories/polaris/components/Label.stories.tsx",
+      "stories/polaris/components/Layer.stories.tsx",
+      "stories/polaris/components/Layout.stories.tsx",
+      "stories/polaris/components/Link.stories.tsx",
+      "stories/polaris/components/List.stories.tsx",
+      "stories/polaris/components/Loading.stories.tsx",
+      "stories/polaris/components/MediaCard.stories.tsx",
+      "stories/polaris/components/Modal.stories.tsx",
+      "stories/polaris/components/Navigation.stories.tsx",
+      "stories/polaris/components/OptionList.stories.tsx",
+      "stories/polaris/components/Page.stories.tsx",
+      "stories/polaris/components/PageActions.stories.tsx",
+      "stories/polaris/components/Pagination.stories.tsx",
+      "stories/polaris/components/Popover.stories.tsx",
+      "stories/polaris/components/ProgressBar.stories.tsx",
+      "stories/polaris/components/RadioButton.stories.tsx",
+      "stories/polaris/components/RangeSlider.stories.tsx",
+      "stories/polaris/components/ResourceItem.stories.tsx",
+      "stories/polaris/components/ResourceList.stories.tsx",
+      "stories/polaris/components/Row.stories.tsx",
+      "stories/polaris/components/ScrollLock.stories.tsx",
+      "stories/polaris/components/Scrollable.stories.tsx",
+      "stories/polaris/components/Select.stories.tsx",
+      "stories/polaris/components/Separator.stories.tsx",
+      "stories/polaris/components/Sheet.stories.tsx",
+      "stories/polaris/components/SkeletonBodyText.stories.tsx",
+      "stories/polaris/components/SkeletonPage.stories.tsx",
+      "stories/polaris/components/Spinner.stories.tsx",
+      "stories/polaris/components/Subheading.stories.tsx",
+      "stories/polaris/components/TableMultiLanguage.stories.tsx",
+      "stories/polaris/components/Tabs.stories.tsx",
+      "stories/polaris/components/Tag.stories.tsx",
+      "stories/polaris/components/Text.stories.tsx",
+      "stories/polaris/components/TextContainer.stories.tsx",
+      "stories/polaris/components/TextField.stories.tsx",
+      "stories/polaris/components/TextFieldMultiLanguage.stories.tsx",
+      "stories/polaris/components/TextLayout.stories.tsx",
+      "stories/polaris/components/Thumbnail.stories.tsx",
+      "stories/polaris/components/TimeStamp.stories.tsx",
+      "stories/polaris/components/Toast.stories.tsx",
+      "stories/polaris/components/Tooltip.stories.tsx",
+      "stories/polaris/components/TopBar.stories.tsx",
+      "stories/polaris/components/UnstyledButton.stories.tsx",
+      "stories/polaris/components/VerticalAlignment.stories.tsx",
+      "stories/polaris/components/VerticalStack.stories.tsx",
+      "stories/polaris/components/VideoThumbnail.stories.tsx",
+      "stories/polaris/components/VisuallyHidden.stories.tsx",
+      "stories/polaris/examples/LandingPage.stories.tsx"
+    ],
+    "vanilla-js.backup": [
+      "stories/vanilla-js.backup/components/VanillaButton.stories.tsx"
+    ]
+  },
+  "testingInstructions": [
+    "1. Open http://localhost:6006 in Chrome with DevTools open",
+    "2. Navigate to each story category systematically",
+    "3. For each story:",
+    "   - Check Console tab for errors/warnings",
+    "   - Test all interactive elements (buttons, forms, dropdowns)",
+    "   - Verify story renders without crashes",
+    "   - Check Network tab for failed requests",
+    "   - Note any performance issues or slow loading",
+    "4. Take screenshots of any issues found",
+    "5. Document all findings in the report below"
+  ],
+  "testResults": {
+    "foundation": {
+      "stories": {
+        "CoreUtilities": {
+          "file": "stories/foundation/components/CoreUtilities.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DesignTokens": {
+          "file": "stories/foundation/components/DesignTokens.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        }
+      },
+      "status": "pending",
+      "issues": []
+    },
+    "guides": {
+      "stories": {
+        "ComponentCategories": {
+          "file": "stories/guides/ComponentCategories.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ComponentSelection": {
+          "file": "stories/guides/ComponentSelection.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DSLAitecture": {
+          "file": "stories/guides/DSLAitecture.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "GettingStarted": {
+          "file": "stories/guides/GettingStarted.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "RealWorldExamples": {
+          "file": "stories/guides/RealWorldExamples.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "UsagePatterns": {
+          "file": "stories/guides/UsagePatterns.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        }
+      },
+      "status": "pending",
+      "issues": []
+    },
+    "polaris": {
+      "stories": {
+        "ActionList": {
+          "file": "stories/polaris/components/ActionList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ActionMenu": {
+          "file": "stories/polaris/components/ActionMenu.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "AdminComponents": {
+          "file": "stories/polaris/components/AdminComponents.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "AfterInitialMount": {
+          "file": "stories/polaris/components/AfterInitialMount.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "AlphaStack": {
+          "file": "stories/polaris/components/AlphaStack.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "AppProvider": {
+          "file": "stories/polaris/components/AppProvider.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Autocomplete": {
+          "file": "stories/polaris/components/Autocomplete.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Avatar": {
+          "file": "stories/polaris/components/Avatar.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Backdrop": {
+          "file": "stories/polaris/components/Backdrop.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Badge": {
+          "file": "stories/polaris/components/Badge.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Banner": {
+          "file": "stories/polaris/components/Banner.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Bleed": {
+          "file": "stories/polaris/components/Bleed.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "BlockStack": {
+          "file": "stories/polaris/components/BlockStack.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Box": {
+          "file": "stories/polaris/components/Box.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Breadcrumbs": {
+          "file": "stories/polaris/components/Breadcrumbs.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "BulkActions": {
+          "file": "stories/polaris/components/BulkActions.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Button": {
+          "file": "stories/polaris/components/Button.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ButtonFrom": {
+          "file": "stories/polaris/components/ButtonFrom.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ButtonGroup": {
+          "file": "stories/polaris/components/ButtonGroup.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ButtonMultiLanguage": {
+          "file": "stories/polaris/components/ButtonMultiLanguage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "CalloutCard": {
+          "file": "stories/polaris/components/CalloutCard.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Caption": {
+          "file": "stories/polaris/components/Caption.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Card": {
+          "file": "stories/polaris/components/Card.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "CardMultiLanguage": {
+          "file": "stories/polaris/components/CardMultiLanguage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Cell": {
+          "file": "stories/polaris/components/Cell.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Checkbox": {
+          "file": "stories/polaris/components/Checkbox.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "CheckboxGroup": {
+          "file": "stories/polaris/components/CheckboxGroup.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ChoiceList": {
+          "file": "stories/polaris/components/ChoiceList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Collapsible": {
+          "file": "stories/polaris/components/Collapsible.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ColorPicker": {
+          "file": "stories/polaris/components/ColorPicker.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Column": {
+          "file": "stories/polaris/components/Column.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Combobox": {
+          "file": "stories/polaris/components/Combobox.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ContextualSaveBar": {
+          "file": "stories/polaris/components/ContextualSaveBar.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DashboardComponents": {
+          "file": "stories/polaris/components/DashboardComponents.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DataManagement": {
+          "file": "stories/polaris/components/DataManagement.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DataTable": {
+          "file": "stories/polaris/components/DataTable.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DatePicker": {
+          "file": "stories/polaris/components/DatePicker.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DescriptionList": {
+          "file": "stories/polaris/components/DescriptionList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DisplayText": {
+          "file": "stories/polaris/components/DisplayText.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Divider": {
+          "file": "stories/polaris/components/Divider.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "DropZone": {
+          "file": "stories/polaris/components/DropZone.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "EcommerceComponents": {
+          "file": "stories/polaris/components/EcommerceComponents.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "EmptyState": {
+          "file": "stories/polaris/components/EmptyState.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ErrorPage": {
+          "file": "stories/polaris/components/ErrorPage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ExceptionList": {
+          "file": "stories/polaris/components/ExceptionList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Filters": {
+          "file": "stories/polaris/components/Filters.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "FooterHelp": {
+          "file": "stories/polaris/components/FooterHelp.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "FormComponents": {
+          "file": "stories/polaris/components/FormComponents.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "FormLayout": {
+          "file": "stories/polaris/components/FormLayout.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Frame": {
+          "file": "stories/polaris/components/Frame.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "FullscreenBar": {
+          "file": "stories/polaris/components/FullscreenBar.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Grid": {
+          "file": "stories/polaris/components/Grid.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Heading": {
+          "file": "stories/polaris/components/Heading.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "HorizontalAlignment": {
+          "file": "stories/polaris/components/HorizontalAlignment.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "HorizontalStack": {
+          "file": "stories/polaris/components/HorizontalStack.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Icon": {
+          "file": "stories/polaris/components/Icon.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Image": {
+          "file": "stories/polaris/components/Image.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "IndexFilters": {
+          "file": "stories/polaris/components/IndexFilters.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "IndexTable": {
+          "file": "stories/polaris/components/IndexTable.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "InlineStack": {
+          "file": "stories/polaris/components/InlineStack.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "KeyboardKey": {
+          "file": "stories/polaris/components/KeyboardKey.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "KeypressListener": {
+          "file": "stories/polaris/components/KeypressListener.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Label": {
+          "file": "stories/polaris/components/Label.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Layer": {
+          "file": "stories/polaris/components/Layer.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Layout": {
+          "file": "stories/polaris/components/Layout.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Link": {
+          "file": "stories/polaris/components/Link.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "List": {
+          "file": "stories/polaris/components/List.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Loading": {
+          "file": "stories/polaris/components/Loading.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "MediaCard": {
+          "file": "stories/polaris/components/MediaCard.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Modal": {
+          "file": "stories/polaris/components/Modal.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Navigation": {
+          "file": "stories/polaris/components/Navigation.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "OptionList": {
+          "file": "stories/polaris/components/OptionList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Page": {
+          "file": "stories/polaris/components/Page.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "PageActions": {
+          "file": "stories/polaris/components/PageActions.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Pagination": {
+          "file": "stories/polaris/components/Pagination.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Popover": {
+          "file": "stories/polaris/components/Popover.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ProgressBar": {
+          "file": "stories/polaris/components/ProgressBar.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "RadioButton": {
+          "file": "stories/polaris/components/RadioButton.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "RangeSlider": {
+          "file": "stories/polaris/components/RangeSlider.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ResourceItem": {
+          "file": "stories/polaris/components/ResourceItem.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ResourceList": {
+          "file": "stories/polaris/components/ResourceList.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Row": {
+          "file": "stories/polaris/components/Row.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "ScrollLock": {
+          "file": "stories/polaris/components/ScrollLock.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Scrollable": {
+          "file": "stories/polaris/components/Scrollable.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Select": {
+          "file": "stories/polaris/components/Select.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Separator": {
+          "file": "stories/polaris/components/Separator.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Sheet": {
+          "file": "stories/polaris/components/Sheet.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "SkeletonBodyText": {
+          "file": "stories/polaris/components/SkeletonBodyText.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "SkeletonPage": {
+          "file": "stories/polaris/components/SkeletonPage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Spinner": {
+          "file": "stories/polaris/components/Spinner.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Subheading": {
+          "file": "stories/polaris/components/Subheading.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TableMultiLanguage": {
+          "file": "stories/polaris/components/TableMultiLanguage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Tabs": {
+          "file": "stories/polaris/components/Tabs.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Tag": {
+          "file": "stories/polaris/components/Tag.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Text": {
+          "file": "stories/polaris/components/Text.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TextContainer": {
+          "file": "stories/polaris/components/TextContainer.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TextField": {
+          "file": "stories/polaris/components/TextField.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TextFieldMultiLanguage": {
+          "file": "stories/polaris/components/TextFieldMultiLanguage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TextLayout": {
+          "file": "stories/polaris/components/TextLayout.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Thumbnail": {
+          "file": "stories/polaris/components/Thumbnail.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TimeStamp": {
+          "file": "stories/polaris/components/TimeStamp.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Toast": {
+          "file": "stories/polaris/components/Toast.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "Tooltip": {
+          "file": "stories/polaris/components/Tooltip.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "TopBar": {
+          "file": "stories/polaris/components/TopBar.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "UnstyledButton": {
+          "file": "stories/polaris/components/UnstyledButton.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "VerticalAlignment": {
+          "file": "stories/polaris/components/VerticalAlignment.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "VerticalStack": {
+          "file": "stories/polaris/components/VerticalStack.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "VideoThumbnail": {
+          "file": "stories/polaris/components/VideoThumbnail.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "VisuallyHidden": {
+          "file": "stories/polaris/components/VisuallyHidden.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        },
+        "LandingPage": {
+          "file": "stories/polaris/examples/LandingPage.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        }
+      },
+      "status": "pending",
+      "issues": []
+    },
+    "vanilla-js.backup": {
+      "stories": {
+        "VanillaButton": {
+          "file": "stories/vanilla-js.backup/components/VanillaButton.stories.tsx",
+          "loaded": false,
+          "consoleErrors": [],
+          "consoleWarnings": [],
+          "interactiveElements": {
+            "buttons": 0,
+            "forms": 0,
+            "links": 0
+          },
+          "performance": {
+            "loadTime": 0,
+            "issues": []
+          },
+          "visualIssues": [],
+          "notes": ""
+        }
+      },
+      "status": "pending",
+      "issues": []
+    }
+  }
+}

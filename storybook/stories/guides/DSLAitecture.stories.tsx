@@ -293,7 +293,7 @@ export const Overview: Story = {
                   <List.Item>Flexible technology choices</List.Item>
                   <List.Item>Improved maintainability</List.Item>
                   <List.Item>Better team collaboration</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
 
@@ -306,7 +306,7 @@ export const Overview: Story = {
                   <List.Item>Type safety throughout</List.Item>
                   <List.Item>Performance optimization</List.Item>
                   <List.Item>Framework agnostic</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -528,7 +528,7 @@ const ProductCard = ({ product }) => {
                   <List.Item>Rich ecosystem</List.Item>
                   <List.Item>Developer tools</List.Item>
                   <List.Item>Community support</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
 
@@ -540,7 +540,7 @@ const ProductCard = ({ product }) => {
                   <List.Item>Implement virtual scrolling for large lists</List.Item>
                   <List.Item>Lazy load components when possible</List.Item>
                   <List.Item>Optimize re-renders with useMemo/useCallback</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -624,14 +624,13 @@ class ProductCard {
   }
 
   render() {
-    this.element.innerHTML = \`
-      <div class="product-card">
-        <h3>\${this.product.name}</h3>
-        <p>\${this.product.price}</p>
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-      </div>
-    \`;
+    this.element.innerHTML =
+      '<div class="product-card">' +
+        '<h3>' + this.product.name + '</h3>' +
+        '<p>' + this.product.price + '</p>' +
+        '<button class="edit-btn">Edit</button>' +
+        '<button class="delete-btn">Delete</button>' +
+      '</div>';
   }
 
   bindEvents() {
@@ -783,7 +782,7 @@ class PerformanceUtils {
                   <List.Item>Universal browser support</List.Item>
                   <List.Item>Smaller bundle sizes</List.Item>
                   <List.Item>Faster load times</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
 
@@ -796,7 +795,7 @@ class PerformanceUtils {
                   <List.Item>Implement debouncing/throttling</List.Item>
                   <List.Item>Minimize DOM manipulations</List.Item>
                   <List.Item>Use document fragments</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -850,7 +849,7 @@ export const ExtJSLayer: Story = {
                         <List.Item>Mobile-first applications</List.Item>
                         <List.Item>Modern UI requirements</List.Item>
                         <List.Item>Lightweight applications</List.Item>
-                        <List.Item>Small datasets (<100 items)</List.Item>
+                        <List.Item>Small datasets (&lt;100 items)</List.Item>
                       </List>
                     </BlockStack>
                   </Card>
@@ -887,8 +886,8 @@ const ProductGrid = Ext.create('Ext.grid.Panel', {
     { text: 'Stock', dataIndex: 'quantity',
       renderer: (value) => {
         return value > 0 ?
-          \`<span class="stock-available">\${value}</span>\` :
-          \`<span class="stock-out">Out of Stock</span>\`;
+          '<span class="stock-available">' + value + '</span>' :
+          '<span class="stock-out">Out of Stock</span>';
       }
     }
   ],
@@ -1068,7 +1067,7 @@ EventBus.on('product:filter', function(filterData) {
                   <List.Item>Enterprise-grade forms</List.Item>
                   <List.Item>Built-in data validation</List.Item>
                   <List.Item>Theme system</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
 
@@ -1080,7 +1079,7 @@ EventBus.on('product:filter', function(filterData) {
                   <List.Item>Implement virtual scrolling</List.Item>
                   <List.Item>Cache store data appropriately</List.Item>
                   <List.Item>Use web workers for data processing</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -1347,7 +1346,7 @@ const eventBus = new TypedEventBus();
 
 // Type-safe event subscription
 eventBus.on('product:created', (data) => {
-  console.log(\`Product created: \${data.product.name}\`);
+  console.log('Product created: ' + data.product.name);
   // data.product is fully typed
 });
 
@@ -1382,7 +1381,7 @@ eventBus.emit('product:created', {
                   <List.Item>Self-documenting code</List.Item>
                   <List.Item>Easier refactoring</List.Item>
                   <List.Item>Domain modeling tools</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
 
@@ -1395,7 +1394,7 @@ eventBus.emit('product:created', {
                   <List.Item>Leverage generics for reusable components</List.Item>
                   <List.Item>Use union types for enums</List.Item>
                   <List.Item>Implement proper error handling types</List.Item>
-                </ListStack>
+                </List>
               </BlockStack>
             </Card>
           </Layout.Section>
@@ -1530,7 +1529,7 @@ export const LayerDecisionGuide: Story = {
                   <Card sectioned>
                     <Text fontWeight="semibold">🏢 Enterprise Legacy System</Text>
                     <Text as="p" tone="subdued">Large-scale enterprise application with existing ExtJS infrastructure.</Text>
-                    <BlockStack gap="200}>
+                    <BlockStack gap="200">
                       <Text><strong>Recommended Stack:</strong></Text>
                       <List>
                         <List.Item>ExtJS for existing data components</List.Item>
@@ -1541,7 +1540,7 @@ export const LayerDecisionGuide: Story = {
                   </Card>
                 </Grid>
 
-                <Card sectioned tone="info">
+                <Card sectioned>
                   <BlockStack gap="300">
                     <Heading element="h3">🎯 General Guidelines</Heading>
                     <List type="number">

@@ -1,0 +1,141 @@
+{
+  "timestamp": "2025-11-05T19:04:28.117Z",
+  "tests": {
+    "httpConnectivity": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "connection": "keep-alive",
+        "content-encoding": "gzip",
+        "content-type": "text/html",
+        "date": "Wed, 05 Nov 2025 19:04:28 GMT",
+        "keep-alive": "timeout=5",
+        "transfer-encoding": "chunked"
+      },
+      "success": true
+    },
+    "jsFiles": {
+      "/sb-manager/runtime.js": {
+        "status": 200,
+        "success": true,
+        "contentLength": null
+      },
+      "/sb-manager/globals-runtime.js": {
+        "status": 200,
+        "success": true,
+        "contentLength": null
+      },
+      "/sb-addons/storybook-core-core-server-presets-0/common-manager-bundle.js": {
+        "status": 200,
+        "success": true,
+        "contentLength": null
+      }
+    },
+    "htmlContent": {
+      "length": 4851,
+      "hasRoot": true,
+      "hasStorybookConfig": true,
+      "hasStorybookScripts": true,
+      "hasReactRenderer": true,
+      "bodyClasses": "",
+      "scripts": 2
+    },
+    "iframeEndpoint": {
+      "status": 200,
+      "success": true,
+      "contentLength": null
+    },
+    "storyEndpoints": {
+      "http://localhost:6006/?path=/story/polaris-components-button--primary": {
+        "status": 200,
+        "success": true,
+        "hasRoot": true,
+        "hasStorybookConfig": true,
+        "length": 4851
+      },
+      "http://localhost:6006/?path=/story/foundation-components-design-tokens--color-palette": {
+        "status": 200,
+        "success": true,
+        "hasRoot": true,
+        "hasStorybookConfig": true,
+        "length": 4851
+      }
+    },
+    "processAnalysis": {
+      "running": false,
+      "error": "Cannot read properties of undefined (reading 'trim')"
+    },
+    "debugLogs": {
+      "exists": true,
+      "recentLines": [
+        "",
+        "> @cin7/storybook@0.1.0 dev /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook",
+        "> storybook dev -p 6006",
+        "",
+        "@storybook/core v8.6.14",
+        "",
+        "(node:72178) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.",
+        "(Use `node --trace-deprecation ...` to show where the warning was created)",
+        "info Found existing addon \"@storybook/addon-docs\", skipping.",
+        "info Found existing addon \"@storybook/addon-docs\", skipping.",
+        "info => Starting manager..",
+        "info => Starting preview..",
+        "╭─────────────────────────────────────────────────────────────────────╮",
+        "│                                                                     │",
+        "│   \u001b[38;2;162;224;94mStorybook 8.6.14 for react-vite started\u001b[39m                           │",
+        "│   2.22 s for manager and 234 ms for preview                         │",
+        "│                                                                     │",
+        "│   Local:            http://localhost:6006/                          │",
+        "│   On your network:  http://192.168.1.52:6006/                       │",
+        "│                                                                     │",
+        "│   \u001b[38;2;243;173;56mA new version (10.0.4) is available!\u001b[39m                              │",
+        "│                                                                     │",
+        "│   Upgrade now: \u001b[38;2;162;224;94mnpx storybook@latest upgrade\u001b[39m                         │",
+        "│                                                                     │",
+        "│   Read full changelog:                                              │",
+        "│   https://github.com/storybookjs/storybook/blob/main/CHANGELOG.md   │",
+        "│                                                                     │",
+        "╰─────────────────────────────────────────────────────────────────────╯",
+        ""
+      ],
+      "hasErrors": false,
+      "hasWarnings": true,
+      "hasSuccess": true
+    },
+    "networkAnalysis": {
+      "port6006Listening": false,
+      "error": "Cannot read properties of undefined (reading 'includes')"
+    },
+    "configFiles": {
+      ".storybook/main.ts": {
+        "exists": true,
+        "size": 2376,
+        "hasReact": true,
+        "hasVite": true,
+        "hasStories": true
+      },
+      ".storybook/preview.ts": {
+        "exists": false
+      },
+      "package.json": {
+        "exists": true,
+        "size": 1403,
+        "hasReact": true,
+        "hasVite": true,
+        "hasStories": false
+      }
+    }
+  },
+  "diagnosis": {
+    "issues": [
+      "Port 6006 is not listening"
+    ],
+    "suggestions": [
+      "Restart Storybook server or check for port conflicts"
+    ],
+    "summary": "Server-side issues detected"
+  }
+}

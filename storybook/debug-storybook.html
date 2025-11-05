@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Storybook Debug Console</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .error { color: red; }
+        .warning { color: orange; }
+        .info { color: blue; }
+        .log { color: black; }
+        #console-output { white-space: pre-wrap; background: #f5f5f5; padding: 10px; margin: 10px 0; }
+        #iframe-container { width: 100%; height: 600px; border: 2px solid #ccc; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+    <h1>Storybook Debug Console</h1>
+
+    <div>
+        <button onclick="clearConsole()">Clear Console</button>
+        <button onclick="reloadStorybook()">Reload Storybook</button>
+        <button onclick="checkElements()">Check Elements</button>
+    </div>
+
+    <h3>Console Output:</h3>
+    <div id="console-output">Loading...</div>
+
+    <h3>Storybook Iframe:</h3>
+    <div id="iframe-container">
+        <iframe id="storybook-frame" src="http://localhost:6006"></iframe>
+    </div>
+
+    <script>
+        let originalConsole = {
+            log: console.log,
+            error: console.error,
+            warn: console.warn,
+            info: console.info
+        };
+
+        let logOutput = '';
+        let logCount = 0;
+
+        function formatLog(type, ...args) {
+            const timestamp = new Date().toISOString();
+            const message = args.map(arg => {
+                if (typeof arg === 'object') {
+                    try {
+                        return JSON.stringify(arg, null, 2);
+                    } catch {
+                        return String(arg);
+                    }
+                }
+                return String(arg);
+            }).join(' ');
+
+            return `[${timestamp}] ${type.toUpperCase()}: ${message}\n`;
+        }
+
+        function captureLog(type, ...args) {
+            const formattedLog = formatLog(type, ...args);
+            logOutput += formattedLog;
+            logCount++;
+
+            // Update display
+            const outputDiv = document.getElementById('console-output');
+            outputDiv.textContent = logOutput;
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+
+            // Also log to original console
+            originalConsole[type](...args);
+        }
+
+        // Override console methods
+        console.log = (...args) => captureLog('log', ...args);
+        console.error = (...args) => captureLog('error', ...args);
+        console.warn = (...args) => captureLog('warn', ...args);
+        console.info = (...args) => captureLog('info', ...args);
+
+        // Capture unhandled errors
+        window.addEventListener('error', (event) => {
+            captureLog('error', 'Unhandled Error:', event.error || event.message);
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            captureLog('error', 'Unhandled Promise Rejection:', event.reason);
+        });
+
+        // Monitor iframe loading
+        const iframe = document.getElementById('storybook-frame');
+
+        iframe.onload = () => {
+            captureLog('info', 'Iframe loaded successfully');
+
+            // Try to access iframe console (may be blocked by CORS)
+            try {
+                const iframeWindow = iframe.contentWindow;
+                if (iframeWindow) {
+                    captureLog('info', 'Iframe window accessible');
+
+                    // Monitor iframe DOM
+                    setTimeout(() => {
+                        try {
+                            const doc = iframe.contentDocument;
+                            const root = doc.getElementById('root');
+                            if (root) {
+                                captureLog('info', 'Storybook root element found:', {
+                                    hasChildren: root.children.length > 0,
+                                    innerHTML: root.innerHTML.substring(0, 200) + '...'
+                                });
+                            } else {
+                                captureLog('error', 'Storybook root element NOT found');
+                            }
+
+                            // Check for loading indicators
+                            const loadingElements = doc.querySelectorAll('[class*="loading"], [class*="spinner"]');
+                            captureLog('info', `Found ${loadingElements.length} loading elements`);
+
+                            // Check for error elements
+                            const errorElements = doc.querySelectorAll('[class*="error"], [class*="Error"]');
+                            if (errorElements.length > 0) {
+                                captureLog('error', `Found ${errorElements.length} error elements`);
+                                errorElements.forEach((el, i) => {
+                                    captureLog('error', `Error element ${i}:`, el.textContent.substring(0, 100));
+                                });
+                            }
+
+                        } catch (e) {
+                            captureLog('error', 'Could not access iframe DOM:', e.message);
+                        }
+                    }, 3000);
+                }
+            } catch (e) {
+                captureLog('error', 'Could not access iframe window:', e.message);
+            }
+        };
+
+        iframe.onerror = () => {
+            captureLog('error', 'Iframe failed to load');
+        };
+
+        // Helper functions
+        function clearConsole() {
+            logOutput = '';
+            logCount = 0;
+            document.getElementById('console-output').textContent = 'Console cleared.';
+        }
+
+        function reloadStorybook() {
+            captureLog('info', 'Reloading Storybook...');
+            iframe.src = iframe.src; // Force reload
+        }
+
+        function checkElements() {
+            try {
+                const doc = iframe.contentDocument;
+                const root = doc.getElementById('root');
+
+                if (root) {
+                    captureLog('info', '=== DOM Analysis ===');
+                    captureLog('info', 'Root element:', root.tagName, 'Class:', root.className);
+                    captureLog('info', 'Children count:', root.children.length);
+
+                    for (let i = 0; i < Math.min(root.children.length, 5); i++) {
+                        const child = root.children[i];
+                        captureLog('info', `Child ${i}:`, child.tagName, 'Class:', child.className);
+                    }
+
+                    // Check for React devtools
+                    const reactRoot = doc.querySelector('[data-reactroot]');
+                    captureLog('info', 'React root found:', !!reactRoot);
+
+                    // Check for Storybook elements
+                    const storybookElements = doc.querySelectorAll('[data-testid*="storybook"], [id*="storybook"]');
+                    captureLog('info', `Found ${storybookElements.length} Storybook elements`);
+                } else {
+                    captureLog('error', 'Root element not found in iframe');
+                }
+            } catch (e) {
+                captureLog('error', 'Could not analyze iframe DOM:', e.message);
+            }
+        }
+
+        // Start logging
+        captureLog('info', 'Debug console initialized');
+        captureLog('info', 'Loading Storybook iframe...');
+    </script>
+</body>
+</html>

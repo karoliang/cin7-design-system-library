@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storybook Manual Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .status.warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .iframe-container {
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Storybook Manual Testing Interface</h1>
+        <p>This page provides manual testing capabilities for the Storybook instance running on localhost:6006</p>
+
+        <!-- Server Connectivity Test -->
+        <div class="test-section">
+            <h2>📡 Server Connectivity Test</h2>
+            <button onclick="testServerConnectivity()">Test Server Connection</button>
+            <div id="server-status" class="status hidden"></div>
+            <div id="server-log" class="log hidden"></div>
+        </div>
+
+        <!-- Iframe Test -->
+        <div class="test-section">
+            <h2>🖼️ Storybook Iframe Test</h2>
+            <p>Loads the main Storybook interface in an iframe:</p>
+            <div class="iframe-container">
+                <iframe id="storybook-iframe" src="http://localhost:6006/" title="Storybook Interface"></iframe>
+            </div>
+        </div>
+
+        <!-- Specific Story Tests -->
+        <div class="test-section">
+            <h2>📖 Individual Story Tests</h2>
+            <p>Test specific stories directly:</p>
+
+            <button onclick="testStory('test-simple-button--primary')">Simple Button Test</button>
+            <button onclick="testStory('polaris-forms-button--primary')">Polaris Button Test</button>
+            <button onclick="testStory('foundation-design-tokens--color-palette')">Design Tokens Test</button>
+
+            <div id="story-status" class="status hidden"></div>
+            <div id="story-iframe-container" class="iframe-container hidden">
+                <iframe id="story-iframe" src="" title="Story Preview"></iframe>
+            </div>
+        </div>
+
+        <!-- Console Error Detection -->
+        <div class="test-section">
+            <h2>🐛 Console Error Detection</h2>
+            <p>Monitors console errors from the Storybook iframe:</p>
+            <button onclick="startErrorMonitoring()">Start Error Monitoring</button>
+            <button onclick="clearErrors()">Clear Errors</button>
+            <div id="error-log" class="log hidden">No errors detected yet...</div>
+        </div>
+
+        <!-- Manual Instructions -->
+        <div class="test-section">
+            <h2>📋 Manual Testing Instructions</h2>
+            <ol>
+                <li><strong>Basic Loading:</strong> The main iframe above should show the Storybook interface</li>
+                <li><strong>Loading Time:</strong> Note how long the loading spinner appears</li>
+                <li><strong>Interface Elements:</strong> Check for sidebar, story list, and preview panel</li>
+                <li><strong>Console Errors:</strong> Use browser Developer Tools (F12) to check for JavaScript errors</li>
+                <li><strong>Network Issues:</strong> Check Network tab for failed requests</li>
+                <li><strong>Specific Stories:</strong> Test individual stories using the buttons above</li>
+            </ol>
+
+            <h3>🔍 What to Look For:</h3>
+            <ul>
+                <li>❌ Red error messages in the iframe</li>
+                <li>⚠️ Yellow warnings in Developer Console</li>
+                <li>🔄 Infinite loading spinner</li>
+                <li>📱 Broken or missing UI elements</li>
+                <li>🚫 Failed network requests (check Network tab)</li>
+            </ul>
+        </div>
+
+        <!-- Quick Diagnosis -->
+        <div class="test-section">
+            <h2>🎯 Quick Diagnosis</h2>
+            <button onclick="runDiagnosis()">Run Automatic Diagnosis</button>
+            <div id="diagnosis-results" class="status hidden"></div>
+            <div id="diagnosis-log" class="log hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        let errorLog = [];
+        let monitoringInterval = null;
+
+        // Server connectivity test
+        async function testServerConnectivity() {
+            const statusEl = document.getElementById('server-status');
+            const logEl = document.getElementById('server-log');
+
+            statusEl.className = 'status';
+            statusEl.textContent = 'Testing connection...';
+            logEl.className = 'log';
+
+            try {
+                const startTime = Date.now();
+                const response = await fetch('http://localhost:6006/');
+                const endTime = Date.now();
+
+                if (response.ok) {
+                    statusEl.className = 'status success';
+                    statusEl.textContent = `✅ Server connected successfully (${response.status}) in ${endTime - startTime}ms`;
+
+                    const html = await response.text();
+                    logEl.textContent = `Response length: ${html.length} characters\n`;
+                    logEl.textContent += `Has root div: ${html.includes('<div id="root">')}\n`;
+                    logEl.textContent += `Has Storybook config: ${html.includes('window[\'FEATURES\']')}\n`;
+                    logEl.textContent += `Has React renderer: ${html.includes('STORYBOOK_RENDERER')}\n`;
+                } else {
+                    statusEl.className = 'status error';
+                    statusEl.textContent = `❌ Server responded with ${response.status}`;
+                }
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.textContent = `❌ Connection failed: ${error.message}`;
+                logEl.textContent = error.stack;
+            }
+
+            statusEl.classList.remove('hidden');
+            logEl.classList.remove('hidden');
+        }
+
+        // Test specific story
+        function testStory(storyId) {
+            const statusEl = document.getElementById('story-status');
+            const containerEl = document.getElementById('story-iframe-container');
+            const iframeEl = document.getElementById('story-iframe');
+
+            const storyUrl = `http://localhost:6006/?path=/story/${storyId}`;
+
+            statusEl.className = 'status';
+            statusEl.textContent = `Loading story: ${storyId}...`;
+
+            iframeEl.src = storyUrl;
+            containerEl.classList.remove('hidden');
+            statusEl.classList.remove('hidden');
+
+            iframeEl.onload = function() {
+                statusEl.className = 'status success';
+                statusEl.textContent = `✅ Story loaded: ${storyId}`;
+            };
+
+            iframeEl.onerror = function() {
+                statusEl.className = 'status error';
+                statusEl.textContent = `❌ Failed to load story: ${storyId}`;
+            };
+        }
+
+        // Error monitoring
+        function startErrorMonitoring() {
+            const iframe = document.getElementById('storybook-iframe');
+            const errorLogEl = document.getElementById('error-log');
+
+            errorLog = [];
+            errorLogEl.className = 'log';
+            errorLogEl.textContent = 'Monitoring for errors...';
+            errorLogEl.classList.remove('hidden');
+
+            // Listen for errors from the iframe
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'console-error') {
+                    errorLog.push(`[${new Date().toLocaleTimeString()}] ${event.data.message}`);
+                    updateErrorLog();
+                }
+            });
+
+            // Inject error monitoring script into iframe
+            iframe.onload = function() {
+                try {
+                    iframe.contentWindow.postMessage({
+                        type: 'inject-monitor'
+                    }, '*');
+                } catch (e) {
+                    errorLog.push(`[${new Date().toLocaleTimeString()}] Cannot monitor iframe: ${e.message}`);
+                    updateErrorLog();
+                }
+            };
+        }
+
+        function updateErrorLog() {
+            const errorLogEl = document.getElementById('error-log');
+            if (errorLog.length > 0) {
+                errorLogEl.textContent = errorLog.join('\n');
+            } else {
+                errorLogEl.textContent = 'No errors detected...';
+            }
+        }
+
+        function clearErrors() {
+            errorLog = [];
+            updateErrorLog();
+        }
+
+        // Automatic diagnosis
+        async function runDiagnosis() {
+            const statusEl = document.getElementById('diagnosis-results');
+            const logEl = document.getElementById('diagnosis-log');
+
+            statusEl.className = 'status';
+            statusEl.textContent = 'Running diagnosis...';
+            logEl.className = 'log';
+            logEl.textContent = '';
+
+            const results = [];
+
+            // Test 1: Server connectivity
+            try {
+                const response = await fetch('http://localhost:6006/');
+                results.push(`✅ Server connectivity: ${response.status}`);
+                logEl.textContent += `Server responded with ${response.status}\n`;
+            } catch (e) {
+                results.push(`❌ Server connectivity: Failed`);
+                logEl.textContent += `Server connection failed: ${e.message}\n`;
+            }
+
+            // Test 2: JavaScript file accessibility
+            try {
+                const jsResponse = await fetch('http://localhost:6006/sb-manager/runtime.js');
+                results.push(`✅ JavaScript files: Accessible`);
+                logEl.textContent += `JavaScript files accessible: ${jsResponse.status}\n`;
+            } catch (e) {
+                results.push(`❌ JavaScript files: Failed`);
+                logEl.textContent += `JavaScript files failed: ${e.message}\n`;
+            }
+
+            // Test 3: iframe loading
+            const iframe = document.getElementById('storybook-iframe');
+            if (iframe.contentDocument && iframe.contentDocument.body) {
+                const hasContent = iframe.contentDocument.body.children.length > 1;
+                results.push(hasContent ? '✅ Iframe content: Loaded' : '⚠️ Iframe content: Minimal');
+                logEl.textContent += `Iframe body children: ${iframe.contentDocument.body.children.length}\n`;
+            } else {
+                results.push('❌ Iframe content: Cannot access');
+                logEl.textContent += 'Cannot access iframe content (likely cross-origin)\n';
+            }
+
+            // Display results
+            statusEl.className = 'status success';
+            statusEl.innerHTML = results.join('<br>');
+            statusEl.classList.remove('hidden');
+            logEl.classList.remove('hidden');
+        }
+
+        // Auto-run server connectivity test on page load
+        window.addEventListener('load', function() {
+            setTimeout(testServerConnectivity, 1000);
+        });
+    </script>
+</body>
+</html>

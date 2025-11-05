@@ -3,8 +3,8 @@ import type { Preview } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: [
-    // Core story structure - only Polaris stories for now
-    "../stories/polaris/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    // Core story structure
+    "./stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-links",
@@ -42,18 +42,39 @@ const config: StorybookConfig = {
   }),
   // Vite configuration for handling complex workspace dependencies
   viteFinal: async (config) => {
-    // Add support for workspace packages (commented out for now)
-    // config.resolve = config.resolve || {};
-    // config.resolve.alias = {
-    //   ...config.resolve.alias,
-    //   '@cin7/core': new URL('../../packages/core/src', import.meta.url).pathname,
-    //   '@cin7/design-tokens': new URL('../../packages/design-tokens/src', import.meta.url).pathname,
-    //   '@cin7/vanilla-js': new URL('../../packages/vanilla-js/src', import.meta.url).pathname,
-    //   '@cin7/typescript-sdk': new URL('../../packages/typescript-sdk/src', import.meta.url).pathname,
-    //   '@cin7/extjs-adapters': new URL('../../packages/extjs-adapters/src', import.meta.url).pathname,
-    //   '@cin7/polaris-adapter': new URL('../../packages/polaris-adapter/src', import.meta.url).pathname,
-    //   '@cin7/highcharts-adapter': new URL('../../packages/highcharts-adapter/src', import.meta.url).pathname,
-    // };
+    // Fix hostname detection issues for Storybook
+    config.server = {
+      ...config.server,
+      host: 'localhost',
+      allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0']
+    };
+
+    // Configure Vite optimizeDeps to handle workspace packages
+    config.optimizeDeps = {
+      ...config.optimizeDeps,
+      exclude: [
+        '@cin7/core',
+        '@cin7/design-tokens',
+        '@cin7/vanilla-js',
+        '@cin7/typescript-sdk',
+        '@cin7/extjs-adapters',
+        '@cin7/polaris-adapter',
+        '@cin7/highcharts-adapter'
+      ]
+    };
+
+    // Add support for workspace packages with proper aliases
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@cin7/core': new URL('../../packages/core/src', import.meta.url).pathname,
+      '@cin7/design-tokens': new URL('../../packages/design-tokens/src', import.meta.url).pathname,
+      '@cin7/vanilla-js': new URL('../../packages/vanilla-js/src', import.meta.url).pathname,
+      '@cin7/typescript-sdk': new URL('../../packages/typescript-sdk/src', import.meta.url).pathname,
+      '@cin7/extjs-adapters': new URL('../../packages/extjs-adapters/src', import.meta.url).pathname,
+      '@cin7/polaris-adapter': new URL('../../packages/polaris-adapter/src', import.meta.url).pathname,
+      '@cin7/highcharts-adapter': new URL('../../packages/highcharts-adapter/src', import.meta.url).pathname,
+    };
     return config;
   },
 };
