@@ -38,7 +38,7 @@ export const DOMUtilities: Story = {
               onClick={() => demonstrateQuery('.demo-button')}
               style={{
                 padding: '8px 16px',
-                backgroundColor: 'var(--color-primary-500)',
+                backgroundColor: '#007ace',
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
@@ -51,7 +51,7 @@ export const DOMUtilities: Story = {
               onClick={() => demonstrateQuery('#demo-text')}
               style={{
                 padding: '8px 16px',
-                backgroundColor: 'var(--color-primary-500)',
+                backgroundColor: '#007ace',
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
@@ -64,7 +64,7 @@ export const DOMUtilities: Story = {
               onClick={() => demonstrateQuery('[data-demo]')}
               style={{
                 padding: '8px 16px',
-                backgroundColor: 'var(--color-primary-500)',
+                backgroundColor: '#007ace',
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
@@ -75,14 +75,14 @@ export const DOMUtilities: Story = {
             </button>
           </div>
 
-          <div ref={containerRef} style={{ padding: '20px', border: '1px solid var(--color-gray-300)', borderRadius: '8px' }}>
+          <div ref={containerRef} style={{ padding: '20px', border: '1px solid #d1d5db', borderRadius: '8px' }}>
             <button
               className={`demo-button ${highlightedElement === '.demo-button' ? 'highlighted' : ''}`}
               data-demo="true"
               style={{
                 padding: '10px 20px',
-                backgroundColor: highlightedElement === '.demo-button' ? 'var(--color-success-500)' : 'var(--color-gray-100)',
-                border: '1px solid var(--color-gray-300)',
+                backgroundColor: highlightedElement === '.demo-button' ? 'var(--color-success-500)' : '#f3f4f6',
+                border: '1px solid #d1d5db',
                 borderRadius: '4px',
                 marginRight: '10px',
                 transition: 'all 0.3s ease'
@@ -96,8 +96,8 @@ export const DOMUtilities: Story = {
               className={highlightedElement === '#demo-text' ? 'highlighted' : ''}
               style={{
                 padding: '10px',
-                backgroundColor: highlightedElement === '#demo-text' ? 'var(--color-warning-500)' : 'var(--color-gray-50)',
-                border: '1px solid var(--color-gray-200)',
+                backgroundColor: highlightedElement === '#demo-text' ? '#f59e0b' : '#f9fafb',
+                border: '1px solid #e5e7eb',
                 borderRadius: '4px',
                 transition: 'all 0.3s ease'
               }}
@@ -111,9 +111,9 @@ export const DOMUtilities: Story = {
               style={{
                 marginTop: '10px',
                 padding: '10px',
-                backgroundColor: highlightedElement === '[data-demo]' ? 'var(--color-critical-500)' : 'var(--color-gray-50)',
+                backgroundColor: highlightedElement === '[data-demo]' ? '#dc2626' : '#f9fafb',
                 color: highlightedElement === '[data-demo]' ? 'white' : 'inherit',
-                border: '1px solid var(--color-gray-200)',
+                border: '1px solid #e5e7eb',
                 borderRadius: '4px',
                 transition: 'all 0.3s ease'
               }}
@@ -171,7 +171,7 @@ export const EventUtilities: Story = {
             onClick={handleClick}
             style={{
               padding: '12px 24px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               color: 'white',
               border: 'none',
               borderRadius: '6px',
@@ -187,8 +187,8 @@ export const EventUtilities: Story = {
           <h3>Mouse Events</h3>
           <div style={{
             padding: '20px',
-            backgroundColor: 'var(--color-gray-50)',
-            border: '1px solid var(--color-gray-300)',
+            backgroundColor: '#f9fafb',
+            border: '1px solid #d1d5db',
             borderRadius: '8px'
           }}>
             <p>Mouse Position: ({mousePosition.x}, {mousePosition.y})</p>
@@ -200,13 +200,13 @@ export const EventUtilities: Story = {
           <h3>Keyboard Events</h3>
           <div style={{
             padding: '20px',
-            backgroundColor: 'var(--color-gray-50)',
-            border: '1px solid var(--color-gray-300)',
+            backgroundColor: '#f9fafb',
+            border: '1px solid #d1d5db',
             borderRadius: '8px',
             outline: 'none'
           }}>
             <p>Type any key to see keyboard event handling:</p>
-            <p style={{ fontStyle: 'italic', color: 'var(--color-gray-600)' }}>
+            <p style={{ fontStyle: 'italic', color: '#6b7280' }}>
               This div is focusable - click here and start typing
             </p>
           </div>
@@ -216,10 +216,10 @@ export const EventUtilities: Story = {
           <h3>Event Log</h3>
           <div style={{
             padding: '15px',
-            backgroundColor: 'var(--color-gray-900)',
+            backgroundColor: '#111827',
             color: 'var(--color-green-400)',
             fontFamily: 'monospace',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             borderRadius: '4px',
             minHeight: '120px',
             maxHeight: '120px',
@@ -230,7 +230,7 @@ export const EventUtilities: Story = {
                 <div key={index}>{log}</div>
               ))
             ) : (
-              <div style={{ color: 'var(--color-gray-500)' }}>Events will appear here...</div>
+              <div style={{ color: '#9ca3af' }}>Events will appear here...</div>
             )}
           </div>
         </div>
@@ -308,13 +308,13 @@ export const ValidationUtilities: Story = {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: errors.email ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
+                  border: errors.email ? '1px solid #dc2626' : '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
               {errors.email && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
+                <div style={{ color: '#dc2626', fontSize: "12px", marginTop: '4px' }}>
                   {errors.email}
                 </div>
               )}
@@ -332,13 +332,13 @@ export const ValidationUtilities: Story = {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: errors.required ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
+                  border: errors.required ? '1px solid #dc2626' : '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
               {errors.required && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
+                <div style={{ color: '#dc2626', fontSize: "12px", marginTop: '4px' }}>
                   {errors.required}
                 </div>
               )}
@@ -356,13 +356,13 @@ export const ValidationUtilities: Story = {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: errors.minLength ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
+                  border: errors.minLength ? '1px solid #dc2626' : '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
               {errors.minLength && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
+                <div style={{ color: '#dc2626', fontSize: "12px", marginTop: '4px' }}>
                   {errors.minLength}
                 </div>
               )}
@@ -380,13 +380,13 @@ export const ValidationUtilities: Story = {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: errors.pattern ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
+                  border: errors.pattern ? '1px solid #dc2626' : '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
               {errors.pattern && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
+                <div style={{ color: '#dc2626', fontSize: "12px", marginTop: '4px' }}>
                   {errors.pattern}
                 </div>
               )}
@@ -404,25 +404,25 @@ export const ValidationUtilities: Story = {
                 style={{
                   width: '100%',
                   padding: '8px 12px',
-                  border: errors.number ? '1px solid var(--color-critical-500)' : '1px solid var(--color-gray-300)',
+                  border: errors.number ? '1px solid #dc2626' : '1px solid #d1d5db',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
               {errors.number && (
-                <div style={{ color: 'var(--color-critical-500)', fontSize: "var(--font-size-xs)", marginTop: '4px' }}>
+                <div style={{ color: '#dc2626', fontSize: "12px", marginTop: '4px' }}>
                   {errors.number}
                 </div>
               )}
             </div>
           </div>
 
-          <div style={{ marginTop: '20px', padding: '15px', backgroundColor: 'var(--color-gray-50)', borderRadius: '6px' }}>
+          <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
             <h4>Validation Status:</h4>
             <div style={{
               padding: '10px',
               backgroundColor: isValid ? 'var(--color-success-100)' : 'var(--color-warning-100)',
-              border: `1px solid ${isValid ? 'var(--color-success-500)' : 'var(--color-warning-500)'}`,
+              border: `1px solid ${isValid ? 'var(--color-success-500)' : '#f59e0b'}`,
               borderRadius: '4px',
               color: isValid ? 'var(--color-success-700)' : 'var(--color-warning-700)'
             }}>
@@ -467,7 +467,7 @@ function ClassManagementDemo() {
           onMouseLeave={() => setHighlightClass(null)}
           style={{
             padding: '6px 12px',
-            backgroundColor: classes.includes('highlight') ? 'var(--color-success-500)' : 'var(--color-gray-200)',
+            backgroundColor: classes.includes('highlight') ? 'var(--color-success-500)' : '#e5e7eb',
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer'
@@ -481,7 +481,7 @@ function ClassManagementDemo() {
           onMouseLeave={() => setHighlightClass(null)}
           style={{
             padding: '6px 12px',
-            backgroundColor: classes.includes('large') ? 'var(--color-success-500)' : 'var(--color-gray-200)',
+            backgroundColor: classes.includes('large') ? 'var(--color-success-500)' : '#e5e7eb',
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer'
@@ -495,7 +495,7 @@ function ClassManagementDemo() {
           onMouseLeave={() => setHighlightClass(null)}
           style={{
             padding: '6px 12px',
-            backgroundColor: classes.includes('bordered') ? 'var(--color-success-500)' : 'var(--color-gray-200)',
+            backgroundColor: classes.includes('bordered') ? 'var(--color-success-500)' : '#e5e7eb',
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer'
@@ -509,8 +509,8 @@ function ClassManagementDemo() {
         className={classes.join(' ')}
         style={{
           padding: '20px',
-          backgroundColor: classes.includes('highlight') ? 'var(--color-warning-100)' : 'var(--color-gray-50)',
-          border: classes.includes('bordered') ? '2px solid var(--color-primary-500)' : '1px solid var(--color-gray-300)',
+          backgroundColor: classes.includes('highlight') ? 'var(--color-warning-100)' : '#f9fafb',
+          border: classes.includes('bordered') ? '2px solid #007ace' : '1px solid #d1d5db',
           borderRadius: '4px',
           fontSize: classes.includes('large') ? '18px' : '14px',
           transition: 'all 0.3s ease',
@@ -523,7 +523,7 @@ function ClassManagementDemo() {
         <div>
           <div>Current classes: <code>{classes.join(' ')}</code></div>
           {highlightClass && (
-            <div style={{ fontSize: "var(--font-size-xs)", color: 'var(--color-gray-600)', marginTop: '5px' }}>
+            <div style={{ fontSize: "12px", color: '#6b7280', marginTop: '5px' }}>
               Hovering over: <code>{highlightClass}</code>
             </div>
           )}
@@ -598,7 +598,7 @@ function AttributeDemo() {
         title={attributes.title}
         style={{
           padding: '20px',
-          backgroundColor: attributes.disabled ? 'var(--color-gray-100)' : 'var(--color-primary-50)',
+          backgroundColor: attributes.disabled ? '#f3f4f6' : 'var(--color-primary-50)',
           border: '2px solid var(--color-primary-300)',
           borderRadius: '8px',
           opacity: attributes.disabled ? 0.6 : 1,
@@ -610,7 +610,7 @@ function AttributeDemo() {
         <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>
           Interactive Element
         </div>
-        <div style={{ fontSize: "var(--font-size-xs)", fontFamily: 'monospace', textAlign: 'left' }}>
+        <div style={{ fontSize: "12px", fontFamily: 'monospace', textAlign: 'left' }}>
           {Object.entries(attributes).map(([key, value]) => (
             <div key={key}>
               {key}: {typeof value === 'boolean' ? value.toString() : `"${value}"`}

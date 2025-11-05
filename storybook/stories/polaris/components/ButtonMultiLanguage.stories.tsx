@@ -328,8 +328,8 @@ const TypeSafeButton: React.FC<TypeSafeButtonProps> = ({
 
   const getSizeStyles = () => {
     const sizes = {
-      small: { padding: '6px 12px', fontSize: "var(--font-size-xs)" },
-      medium: { padding: '10px 20px', fontSize: "var(--font-size-sm)" },
+      small: { padding: '6px 12px', fontSize: "12px" },
+      medium: { padding: '10px 20px', fontSize: "14px" },
       large: { padding: '14px 28px', fontSize: '16px' }
     };
 
@@ -554,7 +554,7 @@ export const VanillaJSImplementation: Story = {
 
         <div style={{ marginBottom: '16px' }}>
           <Text as="p">Click counts by variant:</Text>
-          <pre style={{ fontSize: "var(--font-size-xs)", margin: '8px 0', whiteSpace: 'pre-wrap' }}>
+          <pre style={{ fontSize: "12px", margin: '8px 0', whiteSpace: 'pre-wrap' }}>
             {JSON.stringify(clickCounts, null, 2)}
           </pre>
         </div>
@@ -620,7 +620,7 @@ export const ExtJSImplementation: Story = {
 
         <div style={{ marginBottom: '16px' }}>
           <Text as="p">Action counters:</Text>
-          <pre style={{ fontSize: "var(--font-size-xs)", margin: '8px 0', whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
+          <pre style={{ fontSize: "12px", margin: '8px 0', whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
             {JSON.stringify(actionCounts, null, 2)}
           </pre>
         </div>
@@ -652,7 +652,7 @@ export const ExtJSImplementation: Story = {
             border: '1px solid #1976d2',
             borderRadius: '4px',
             fontFamily: 'Arial, sans-serif',
-            fontSize: "var(--font-size-xs)"
+            fontSize: "12px"
           }}>
             <strong>ExtJS Action Log:</strong>
             {messages.map((message, index) => (
@@ -763,7 +763,7 @@ export const TypeScriptImplementation: Story = {
             borderRadius: '8px',
             fontFamily: 'monospace'
           }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", color: '#374151' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", color: '#374151' }}>
               TypeScript Event Log (Type-Safe):
             </h4>
             {events.map((event, index) => (
@@ -948,10 +948,10 @@ export const SideBySideComparison: Story = {
                   <div style={{ fontWeight: '600', textTransform: 'capitalize' }}>
                     {framework}
                   </div>
-                  <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'bold', color: '#1d4ed8' }}>
+                  <div style={{ fontSize: "20px", fontWeight: 'bold', color: '#1d4ed8' }}>
                     {count}
                   </div>
-                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
+                  <div style={{ fontSize: "12px", color: '#6b7280' }}>
                     {percentage}%
                   </div>
                 </div>
@@ -1027,7 +1027,7 @@ export const BusinessScenarioActionPanel: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #0ea5e9',
             borderRadius: '6px',
-            fontSize: "var(--font-size-sm)"
+            fontSize: "14px"
           }}>
             <strong>Active Framework: </strong>
             <Badge status="info">{activeLayer.toUpperCase()}</Badge>
@@ -1176,7 +1176,7 @@ export const BusinessScenarioActionPanel: Story = {
                 borderRadius: '6px',
                 textAlign: 'center'
               }}>
-                <div style={{ fontSize: "var(--font-size-xs)", textTransform: 'capitalize', marginBottom: '4px' }}>
+                <div style={{ fontSize: "12px", textTransform: 'capitalize', marginBottom: '4px' }}>
                   {task}
                 </div>
                 <Badge status={completed ? 'success' : 'info'}>

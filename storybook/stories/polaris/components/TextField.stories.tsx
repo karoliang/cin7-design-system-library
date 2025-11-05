@@ -240,7 +240,7 @@ export const PasswordField: Story = {
           required
         />
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: "var(--font-size-sm)" }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: "14px" }}>
           <input
             type="checkbox"
             checked={showPassword}
@@ -297,7 +297,7 @@ export const SearchField: Story = {
 
         {recentSearches.length > 0 && (
           <div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Recent Searches:</h4>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>Recent Searches:</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               {recentSearches.map((search, index) => (
                 <button
@@ -310,7 +310,7 @@ export const SearchField: Story = {
                     backgroundColor: 'white',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontSize: "var(--font-size-sm)",
+                    fontSize: "14px",
                   }}
                 >
                   {search}
@@ -588,8 +588,8 @@ export const FormExample: Story = {
         />
 
         <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Form Data:</h4>
-          <pre style={{ fontSize: "var(--font-size-xs)", margin: 0, whiteSpace: 'pre-wrap' }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>Form Data:</h4>
+          <pre style={{ fontSize: "12px", margin: 0, whiteSpace: 'pre-wrap' }}>
             {JSON.stringify(formData, null, 2)}
           </pre>
         </div>

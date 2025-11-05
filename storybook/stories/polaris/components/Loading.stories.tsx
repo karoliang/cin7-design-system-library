@@ -439,9 +439,9 @@ export const LoadingSteps: Story = {
                       marginRight: '12px'
                     }}>
                       {index < currentStep ? (
-                        <span style={{ color: 'white', fontSize: "var(--font-size-xs)" }}>✓</span>
+                        <span style={{ color: 'white', fontSize: "12px" }}>✓</span>
                       ) : (
-                        <span style={{ color: '#6b7280', fontSize: "var(--font-size-xs)" }}>
+                        <span style={{ color: '#6b7280', fontSize: "12px" }}>
                           {index + 1}
                         </span>
                       )}

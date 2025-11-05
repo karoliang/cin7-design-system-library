@@ -28,12 +28,12 @@ export const ColorTokens: Story = {
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-primary-500)',
+            backgroundColor: '#007ace',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)"
+            fontSize: "12px"
           }}>
             Primary 500
           </div>
@@ -45,7 +45,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Primary 600
@@ -58,7 +58,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Primary 700
@@ -72,36 +72,36 @@ export const ColorTokens: Story = {
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-gray-50)',
+            backgroundColor: '#f9fafb',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)"
+            fontSize: "12px"
           }}>
             Gray 50
           </div>
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-gray-100)',
+            backgroundColor: '#f3f4f6',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)"
+            fontSize: "12px"
           }}>
             Gray 100
           </div>
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-gray-500)',
+            backgroundColor: '#9ca3af',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Gray 500
@@ -109,12 +109,12 @@ export const ColorTokens: Story = {
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-gray-900)',
+            backgroundColor: '#111827',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Gray 900
@@ -133,7 +133,7 @@ export const ColorTokens: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Success
@@ -141,12 +141,12 @@ export const ColorTokens: Story = {
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-warning-500)',
+            backgroundColor: '#f59e0b',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Warning
@@ -154,12 +154,12 @@ export const ColorTokens: Story = {
           <div style={{
             width: '100px',
             height: '100px',
-            backgroundColor: 'var(--color-critical-500)',
+            backgroundColor: '#dc2626',
             border: '1px solid #ccc',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             color: 'white'
           }}>
             Critical
@@ -182,7 +182,7 @@ export const SpacingTokens: Story = {
             <div style={{
               width: 'var(--spacing-1)',
               height: '40px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -198,7 +198,7 @@ export const SpacingTokens: Story = {
             <div style={{
               width: 'var(--spacing-2)',
               height: '40px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -214,7 +214,7 @@ export const SpacingTokens: Story = {
             <div style={{
               width: 'var(--spacing-4)',
               height: '40px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -230,7 +230,7 @@ export const SpacingTokens: Story = {
             <div style={{
               width: 'var(--spacing-6)',
               height: '40px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -246,7 +246,7 @@ export const SpacingTokens: Story = {
             <div style={{
               width: 'var(--spacing-8)',
               height: '40px',
-              backgroundColor: 'var(--color-primary-500)',
+              backgroundColor: '#007ace',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -267,19 +267,19 @@ export const SpacingTokens: Story = {
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: 'var(--spacing-6)',
           padding: 'var(--spacing-4)',
-          border: '1px solid var(--color-gray-200)',
+          border: '1px solid #e5e7eb',
           borderRadius: 'var(--border-radius-4)'
         }}>
           <div style={{
             padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-gray-50)',
+            backgroundColor: '#f9fafb',
             borderRadius: 'var(--border-radius-2)'
           }}>
             Card with consistent spacing
           </div>
           <div style={{
             padding: 'var(--spacing-4)',
-            backgroundColor: 'var(--color-gray-50)',
+            backgroundColor: '#f9fafb',
             borderRadius: 'var(--border-radius-2)'
           }}>
             Another card with same spacing
@@ -298,28 +298,28 @@ export const TypographyTokens: Story = {
       <div style={{ marginBottom: '30px' }}>
         <h3>Font Sizes</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <div style={{ fontSize: 'var(--font-size-1)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-1) - 12px: Small text
           </div>
-          <div style={{ fontSize: 'var(--font-size-2)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-2) - 14px: Body text
           </div>
-          <div style={{ fontSize: 'var(--font-size-3)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-3) - 16px: Default text
           </div>
-          <div style={{ fontSize: 'var(--font-size-4)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-4) - 18px: Large body
           </div>
-          <div style={{ fontSize: 'var(--font-size-5)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-5) - 20px: Subheading
           </div>
-          <div style={{ fontSize: 'var(--font-size-6)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-6) - 24px: Heading 3
           </div>
-          <div style={{ fontSize: 'var(--font-size-7)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-7) - 32px: Heading 2
           </div>
-          <div style={{ fontSize: 'var(--font-size-8)', fontFamily: 'var(--font-family-sans)' }}>
+          <div style={{ fontSize: '16px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             var(--font-size-8) - 40px: Heading 1
           </div>
         </div>
@@ -328,16 +328,16 @@ export const TypographyTokens: Story = {
       <div style={{ marginBottom: '30px' }}>
         <h3>Font Weights</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ fontWeight: 'var(--font-weight-regular)' }}>
+          <div style={{ fontWeight: '400' }}>
             var(--font-weight-regular) - 400: Regular weight
           </div>
-          <div style={{ fontWeight: 'var(--font-weight-medium)' }}>
+          <div style={{ fontWeight: '400' }}>
             var(--font-weight-medium) - 500: Medium weight
           </div>
-          <div style={{ fontWeight: 'var(--font-weight-semibold)' }}>
+          <div style={{ fontWeight: '400' }}>
             var(--font-weight-semibold) - 600: Semibold weight
           </div>
-          <div style={{ fontWeight: 'var(--font-weight-bold)' }}>
+          <div style={{ fontWeight: '400' }}>
             var(--font-weight-bold) - 700: Bold weight
           </div>
         </div>
@@ -346,16 +346,16 @@ export const TypographyTokens: Story = {
       <div style={{ marginBottom: '30px' }}>
         <h3>Line Heights</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <div style={{ lineHeight: 'var(--line-height-1)', fontSize: 'var(--font-size-2)' }}>
+          <div style={{ lineHeight: '1.25', fontSize: '16px' }}>
             var(--line-height-1) - Tight line height for compact layouts
           </div>
-          <div style={{ lineHeight: 'var(--line-height-2)', fontSize: 'var(--font-size-2)' }}>
+          <div style={{ lineHeight: '1.5', fontSize: '16px' }}>
             var(--line-height-2) - Normal line height for body text
           </div>
-          <div style={{ lineHeight: 'var(--line-height-3)', fontSize: 'var(--font-size-2)' }}>
+          <div style={{ lineHeight: '1.75', fontSize: '16px' }}>
             var(--line-height-3) - Relaxed line height for readability
           </div>
-          <div style={{ lineHeight: 'var(--line-height-4)', fontSize: 'var(--font-size-2)' }}>
+          <div style={{ lineHeight: '2', fontSize: '16px' }}>
             var(--line-height-4) - Loose line height for spacious layouts
           </div>
         </div>

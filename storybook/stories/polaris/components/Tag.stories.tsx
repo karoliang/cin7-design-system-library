@@ -285,7 +285,7 @@ export const TagInputSystem: Story = {
                   padding: '4px 8px',
                   border: '1px solid var(--p-color-border)',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)",
+                  fontSize: "14px",
                   minWidth: '100px'
                 }}
               />
@@ -373,7 +373,7 @@ export const FilterTags: Story = {
           <div style={{
             margin: '16px 0',
             padding: '12px',
-            backgroundColor: 'var(--p-color-bg-surface-subdued)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '4px'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
@@ -476,7 +476,7 @@ export const InteractiveTagCloud: Story = {
             gap: '12px',
             justifyContent: 'center',
             padding: '20px',
-            backgroundColor: 'var(--p-color-bg-surface-subdued)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '8px'
           }}>
             {tagCloud.map(({ tag, count, tone }) => (

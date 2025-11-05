@@ -179,7 +179,7 @@ export const IconSizes: Story = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {sizes.map(({ name, scale }) => (
           <div key={name} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ width: '120px', fontSize: "var(--font-size-sm)" }}>{name}</div>
+            <div style={{ width: '120px', fontSize: "14px" }}>{name}</div>
             <InlineStack gap="200">
               <Icon source={HomeMajor} style={{ transform: `scale(${scale})` }} />
               <Icon source={SettingsMajor} style={{ transform: `scale(${scale})` }} />
@@ -406,7 +406,7 @@ export const InteractiveIcons: Story = {
           {isExpanded && (
             <div style={{
               padding: '16px',
-              backgroundColor: 'var(--p-color-bg-surface-subdued)',
+              backgroundColor: '#f3f4f6',
               borderRadius: '4px',
               marginTop: '8px'
             }}>

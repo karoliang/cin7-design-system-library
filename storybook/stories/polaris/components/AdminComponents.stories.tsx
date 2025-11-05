@@ -414,15 +414,15 @@ const UserManagement = ({ showPermissions = false, showBulkOperations = false }:
                     />
                   </th>
                 )}
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>USER</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>ROLE</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>STATUS</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>DEPARTMENT</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>LAST ACTIVE</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>USER</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>ROLE</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>STATUS</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>DEPARTMENT</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>LAST ACTIVE</th>
                 {showPermissions && (
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>PERMISSIONS</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>PERMISSIONS</th>
                 )}
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>ACTIONS</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -754,13 +754,13 @@ const AuditLog = () => {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #e1e1e1' }}>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>TIMESTAMP</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>USER</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>ACTION</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>TARGET</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>IP ADDRESS</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>STATUS</th>
-                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "var(--font-size-xs)" }}>DETAILS</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>TIMESTAMP</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>USER</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>ACTION</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>TARGET</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>IP ADDRESS</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>STATUS</th>
+                <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6d7175', fontSize: "12px" }}>DETAILS</th>
               </tr>
             </thead>
             <tbody>

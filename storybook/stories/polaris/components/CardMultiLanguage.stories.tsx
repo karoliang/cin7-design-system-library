@@ -235,7 +235,7 @@ const ExtJSCard: React.FC<{
         alignItems: 'center'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {iconCls && <span style={{ fontSize: "var(--font-size-sm)" }}>{iconCls}</span>}
+          {iconCls && <span style={{ fontSize: "14px" }}>{iconCls}</span>}
           <strong style={{ fontSize: '13px', color: '#495057' }}>{title}</strong>
         </div>
         <div style={{ display: 'flex', gap: '4px' }}>
@@ -249,7 +249,7 @@ const ExtJSCard: React.FC<{
                 border: 'none',
                 background: 'none',
                 cursor: 'pointer',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 color: '#6c757d',
                 display: 'flex',
                 alignItems: 'center',
@@ -269,7 +269,7 @@ const ExtJSCard: React.FC<{
       {!collapsed && (
         <div style={{
           padding: '12px',
-          fontSize: "var(--font-size-xs)",
+          fontSize: "12px",
           color: '#495057',
           minHeight: '60px'
         }}>
@@ -382,7 +382,7 @@ const TypeSafeCard: React.FC<{
     }}>
       <div style={{ flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-          <strong style={{ fontSize: "var(--font-size-sm)", color: '#202223' }}>{data.title}</strong>
+          <strong style={{ fontSize: "14px", color: '#202223' }}>{data.title}</strong>
           <div style={{
             width: '8px',
             height: '8px',
@@ -428,7 +428,7 @@ const TypeSafeCard: React.FC<{
       }}>
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-            <h3 style={{ margin: 0, fontSize: "var(--font-size-lg)", color: '#202223' }}>{data.title}</h3>
+            <h3 style={{ margin: 0, fontSize: "18px", color: '#202223' }}>{data.title}</h3>
             <div style={{
               width: '10px',
               height: '10px',
@@ -442,7 +442,7 @@ const TypeSafeCard: React.FC<{
               backgroundColor: statusColor.bg,
               color: statusColor.text,
               borderRadius: '16px',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
               fontWeight: '500'
             }}>
               {data.status}
@@ -475,7 +475,7 @@ const TypeSafeCard: React.FC<{
         padding: '12px',
         backgroundColor: '#f8fafc',
         borderRadius: '6px',
-        fontSize: "var(--font-size-xs)",
+        fontSize: "12px",
         marginBottom: '16px'
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}>
@@ -711,7 +711,7 @@ export const VanillaJSImplementation: Story = {
             backgroundColor: '#ecfdf5',
             border: '1px solid #10b981',
             borderRadius: '6px',
-            fontSize: "var(--font-size-sm)"
+            fontSize: "14px"
           }}>
             {message}
           </div>
@@ -769,7 +769,7 @@ export const ExtJSImplementation: Story = {
             backgroundColor: '#e7f3ff',
             border: '1px solid #0066cc',
             borderRadius: '3px',
-            fontSize: "var(--font-size-xs)",
+            fontSize: "12px",
             fontFamily: 'Arial, sans-serif'
           }}>
             {message}
@@ -882,9 +882,9 @@ export const TypeScriptImplementation: Story = {
             border: '1px solid #e2e8f0',
             borderRadius: '6px'
           }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)" }}>Activity Log</h4>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px" }}>Activity Log</h4>
             {logs.map((log, index) => (
-              <div key={index} style={{ fontSize: "var(--font-size-xs)", color: '#64748b', fontFamily: 'monospace' }}>
+              <div key={index} style={{ fontSize: "12px", color: '#64748b', fontFamily: 'monospace' }}>
                 {log}
               </div>
             ))}
@@ -972,7 +972,7 @@ export const DashboardLayout: Story = {
             backgroundColor: '#f0f9ff',
             border: '1px solid #0ea5e9',
             borderRadius: '6px',
-            fontSize: "var(--font-size-sm)"
+            fontSize: "14px"
           }}>
             <strong>Dashboard Implementation: </strong>
             <Badge status="info">{activeLayer.toUpperCase()}</Badge>
@@ -1058,25 +1058,25 @@ export const DashboardLayout: Story = {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
             <div style={{ padding: '12px', backgroundColor: '#eff6ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#1d4ed8' }}>React</h5>
-              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
+              <p style={{ margin: 0, fontSize: "12px" }}>
                 Component-based, virtual DOM, optimal for dynamic content
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#f0fdf4', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#15803d' }}>Vanilla JS</h5>
-              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
+              <p style={{ margin: 0, fontSize: "12px" }}>
                 Fast, lightweight, direct DOM manipulation
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#faf5ff', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#7c3aed' }}>ExtJS</h5>
-              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
+              <p style={{ margin: 0, fontSize: "12px" }}>
                 Feature-rich, enterprise-ready, built-in data handling
               </p>
             </div>
             <div style={{ padding: '12px', backgroundColor: '#fef2f2', borderRadius: '6px' }}>
               <h5 style={{ margin: '0 0 8px 0', color: '#dc2626' }}>TypeScript</h5>
-              <p style={{ margin: 0, fontSize: "var(--font-size-xs)" }}>
+              <p style={{ margin: 0, fontSize: "12px" }}>
                 Type-safe, maintainable, IDE-friendly development
               </p>
             </div>

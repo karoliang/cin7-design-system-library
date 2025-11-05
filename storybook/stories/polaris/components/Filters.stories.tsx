@@ -658,7 +658,7 @@ export const AdvancedProductFilters: Story = {
               </div>
 
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '500' }}>
                   Price range
                 </label>
                 <InlineStack gap="200">
@@ -761,7 +761,7 @@ export const TagBasedFilters: Story = {
         label: 'Tags',
         filter: (
           <div style={{ minWidth: '250px', padding: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
               Select tags
             </h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -774,7 +774,7 @@ export const TagBasedFilters: Story = {
                     borderRadius: '16px',
                     backgroundColor: 'white',
                     cursor: 'pointer',
-                    fontSize: "var(--font-size-sm)",
+                    fontSize: "14px",
                     transition: 'all 0.2s'
                   }}
                   onClick={() => {
@@ -863,7 +863,7 @@ export const DateRangeFilters: Story = {
               </div>
 
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '500' }}>
                   Custom range
                 </label>
                 <BlockStack gap="200">
@@ -1119,7 +1119,7 @@ export const InteractiveExample: Story = {
                     >
                       <div>
                         <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
-                        <div style={{ color: '#6b7280', fontSize: "var(--font-size-sm)" }}>{item.category}</div>
+                        <div style={{ color: '#6b7280', fontSize: "14px" }}>{item.category}</div>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <Badge status={item.status === 'Active' ? 'success' : 'info'}>

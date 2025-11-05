@@ -479,7 +479,7 @@ export const AdvancedFiltering: Story = {
                 border: '1px solid #007ace',
                 borderRadius: '4px',
                 cursor: 'pointer',
-                fontSize: "var(--font-size-sm)",
+                fontSize: "14px",
               }}
             >
               Clear All

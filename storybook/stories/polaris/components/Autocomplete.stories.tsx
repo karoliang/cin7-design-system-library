@@ -297,7 +297,7 @@ export const WithAsyncSearch: Story = {
 
         {searchHistory.length > 0 && (
           <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
               Recent Searches:
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -312,7 +312,7 @@ export const WithAsyncSearch: Story = {
                     backgroundColor: 'white',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontSize: "var(--font-size-sm)",
+                    fontSize: "14px",
                     color: '#374151'
                   }}
                 >
@@ -395,7 +395,7 @@ export const WithCategories: Story = {
         />
 
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
             Available Categories:
           </h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -406,7 +406,7 @@ export const WithCategories: Story = {
                   padding: '4px 8px',
                   backgroundColor: '#e1e3e5',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-xs)",
+                  fontSize: "12px",
                   color: '#374151'
                 }}
               >
@@ -479,7 +479,7 @@ export const CustomerLookup: Story = {
 
         {customers.length > 0 && (
           <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
               Customer Results:
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -498,13 +498,13 @@ export const CustomerLookup: Story = {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <div style={{ fontWeight: '500' }}>{customer.name}</div>
-                      <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>{customer.email}</div>
+                      <div style={{ fontSize: "14px", color: '#6b7280' }}>{customer.email}</div>
                     </div>
                     <div style={{
                       padding: '4px 8px',
                       backgroundColor: '#f0f9ff',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-xs)",
+                      fontSize: "12px",
                       color: '#1e40af'
                     }}>
                       {customer.orders} orders
@@ -524,7 +524,7 @@ export const CustomerLookup: Story = {
             borderRadius: '6px',
             border: '1px solid #bfdbfe'
           }}>
-            <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+            <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
               Selected customer: <strong>{selectedCustomer}</strong>
             </p>
           </div>
@@ -613,7 +613,7 @@ export const OrderLookup: Story = {
 
         {orders.length > 0 && (
           <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
               Order Results:
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -632,7 +632,7 @@ export const OrderLookup: Story = {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <div style={{ fontWeight: '500' }}>{order.id}</div>
-                      <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>{order.customer}</div>
+                      <div style={{ fontSize: "14px", color: '#6b7280' }}>{order.customer}</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ fontWeight: '500' }}>{order.total}</span>
@@ -640,7 +640,7 @@ export const OrderLookup: Story = {
                         padding: '4px 8px',
                         backgroundColor: getStatusColor(order.status),
                         borderRadius: '4px',
-                        fontSize: "var(--font-size-xs)",
+                        fontSize: "12px",
                         color: getStatusTextColor(order.status),
                         textTransform: 'capitalize'
                       }}>
@@ -662,7 +662,7 @@ export const OrderLookup: Story = {
             borderRadius: '6px',
             border: '1px solid #bfdbfe'
           }}>
-            <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+            <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
               Selected order: <strong>{selectedOrder}</strong>
             </p>
           </div>
@@ -761,7 +761,7 @@ export const WithLoadMore: Story = {
         />
 
         <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-          <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#374151' }}>
+          <p style={{ margin: 0, fontSize: "14px", color: '#374151' }}>
             Showing {options.length} results
             {hasMore && ' (scroll to load more)'}
           </p>
@@ -953,7 +953,7 @@ export const FormIntegration: Story = {
       <div style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>Product Form</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Product Form</h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
@@ -1016,7 +1016,7 @@ export const FormIntegration: Story = {
                           padding: '4px 8px',
                           backgroundColor: '#e1e3e5',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-xs)",
+                          fontSize: "12px",
                           color: '#374151',
                           cursor: 'pointer'
                         }}
@@ -1056,10 +1056,10 @@ export const FormIntegration: Story = {
 
         <Card>
           <div style={{ padding: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
               Form Data:
             </h4>
-            <pre style={{ fontSize: "var(--font-size-xs)", margin: 0, whiteSpace: 'pre-wrap' }}>
+            <pre style={{ fontSize: "12px", margin: 0, whiteSpace: 'pre-wrap' }}>
               {JSON.stringify(formData, null, 2)}
             </pre>
           </div>

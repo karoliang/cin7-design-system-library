@@ -297,7 +297,7 @@ export const ProgressIndicators: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
               fontWeight: 'bold'
             }}>✓</div>
             <Text as="p" variant="bodySm">Placed</Text>
@@ -320,7 +320,7 @@ export const ProgressIndicators: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
               fontWeight: 'bold'
             }}>✓</div>
             <Text as="p" variant="bodySm">Processed</Text>
@@ -343,7 +343,7 @@ export const ProgressIndicators: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
               fontWeight: 'bold'
             }}>3</div>
             <Text as="p" variant="bodySm">Shipped</Text>
@@ -367,7 +367,7 @@ export const ProgressIndicators: Story = {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#6c7278',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
               fontWeight: 'bold'
             }}>4</div>
             <Text as="p" variant="bodySm" tone="subdued">Delivered</Text>
@@ -391,7 +391,7 @@ export const StatusRow: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xl)"
+            fontSize: "20px"
           }}>✓</div>
           <div style={{ flex: 1 }}>
             <Text as="h3" variant="headingSm">Payment Successful</Text>
@@ -411,7 +411,7 @@ export const StatusRow: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xl)"
+            fontSize: "20px"
           }}>⏳</div>
           <div style={{ flex: 1 }}>
             <Text as="h3" variant="headingSm">Processing Order</Text>
@@ -431,7 +431,7 @@ export const StatusRow: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xl)"
+            fontSize: "20px"
           }}>⚠</div>
           <div style={{ flex: 1 }}>
             <Text as="h3" variant="headingSm">Payment Required</Text>

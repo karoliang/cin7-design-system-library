@@ -73,7 +73,7 @@ export const BasicAlignment: Story = {
                 position: 'absolute',
                 top: '8px',
                 left: '8px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 color: '#666',
                 fontWeight: 'bold'
               }}>
@@ -192,7 +192,7 @@ export const AlignmentVariants: Story = {
                       padding: '8px 12px',
                       backgroundColor: '#dbeafe',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-sm)"
+                      fontSize: "14px"
                     }}>
                       Content
                     </div>
@@ -200,7 +200,7 @@ export const AlignmentVariants: Story = {
                       padding: '16px 20px',
                       backgroundColor: '#fce7f3',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-lg)"
+                      fontSize: "18px"
                     }}>
                       Larger
                     </div>
@@ -208,7 +208,7 @@ export const AlignmentVariants: Story = {
                       padding: '4px 8px',
                       backgroundColor: '#f3e8ff',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-xs)"
+                      fontSize: "12px"
                     }}>
                       Small
                     </div>
@@ -352,7 +352,7 @@ export const FormElements: Story = {
               }}>
                 <VerticalAlignment align="start">
                   <div>
-                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Label</label>
+                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Label</label>
                     <input
                       type="text"
                       placeholder="Single line input"
@@ -360,13 +360,13 @@ export const FormElements: Story = {
                         padding: '8px 12px',
                         border: '1px solid #e1e3e5',
                         borderRadius: '4px',
-                        fontSize: "var(--font-size-sm)",
+                        fontSize: "14px",
                         width: '200px'
                       }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Message</label>
+                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Message</label>
                     <textarea
                       placeholder="Multi-line text area"
                       rows={3}
@@ -374,7 +374,7 @@ export const FormElements: Story = {
                         padding: '8px 12px',
                         border: '1px solid #e1e3e5',
                         borderRadius: '4px',
-                        fontSize: "var(--font-size-sm)",
+                        fontSize: "14px",
                         width: '200px',
                         resize: 'vertical'
                       }}
@@ -408,7 +408,7 @@ export const FormElements: Story = {
                         padding: '8px 12px',
                         border: '1px solid #0ea5e9',
                         borderRadius: '4px',
-                        fontSize: "var(--font-size-sm)",
+                        fontSize: "14px",
                         width: '200px'
                       }}
                     />
@@ -421,7 +421,7 @@ export const FormElements: Story = {
                         padding: '8px 12px',
                         border: '1px solid #0ea5e9',
                         borderRadius: '4px',
-                        fontSize: "var(--font-size-sm)",
+                        fontSize: "14px",
                         width: '200px',
                         resize: 'vertical'
                       }}
@@ -442,19 +442,19 @@ export const IconAndTextAlignment: Story = {
   render: () => {
     const iconTextCombinations = [
       {
-        icon: <div style={{ fontSize: "var(--font-size-2xl)" }}>📊</div>,
+        icon: <div style={{ fontSize: "24px" }}>📊</div>,
         text: 'Analytics Dashboard',
         description: 'View detailed metrics',
         color: '#dbeafe'
       },
       {
-        icon: <div style={{ fontSize: "var(--font-size-3xl)" }}>🎯</div>,
+        icon: <div style={{ fontSize: "30px" }}>🎯</div>,
         text: 'Goal Tracking',
         description: 'Monitor objectives and key results',
         color: '#dcfce7'
       },
       {
-        icon: <div style={{ fontSize: "var(--font-size-xl)" }}>📧</div>,
+        icon: <div style={{ fontSize: "20px" }}>📧</div>,
         text: 'Email',
         description: 'Send notifications',
         color: '#fce7f3'

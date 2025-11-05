@@ -39,7 +39,7 @@ export const BasicUsage: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer>
-        <h2 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           Introduction to Our Platform
         </h2>
         <p style={{ lineHeight: '1.6', color: '#374151' }}>
@@ -76,7 +76,7 @@ export const LongFormContent: Story = {
           can create seamless, engaging experiences that keep customers coming back.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', marginBottom: '12px', marginTop: '24px' }}>
+        <h3 style={{ fontSize: "20px", fontWeight: '600', marginBottom: '12px', marginTop: '24px' }}>
           Key Trends Shaping the Industry
         </h3>
 
@@ -102,7 +102,7 @@ export const ProductDescription: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer>
-        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: "20px", fontWeight: '600', marginBottom: '12px' }}>
           Premium Wireless Headphones
         </h2>
 
@@ -139,7 +139,7 @@ export const HelpArticle: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer spacing>
-        <h2 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           How to Set Up Your First Product
         </h2>
 
@@ -149,7 +149,7 @@ export const HelpArticle: Story = {
           information needed to create compelling product listings that attract customers.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '12px' }}>
           Step 1: Basic Product Information
         </h3>
 
@@ -159,7 +159,7 @@ export const HelpArticle: Story = {
           descriptive yet concise, helping customers quickly understand what you're offering.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '12px' }}>
           Step 2: Product Images
         </h3>
 
@@ -170,7 +170,7 @@ export const HelpArticle: Story = {
           and features.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '12px' }}>
           Step 3: Pricing and Inventory
         </h3>
 
@@ -191,7 +191,7 @@ export const HelpArticle: Story = {
           <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px', color: '#1e40af' }}>
             💡 Pro Tip
           </h4>
-          <p style={{ lineHeight: '1.6', color: '#1e40af', fontSize: "var(--font-size-sm)" }}>
+          <p style={{ lineHeight: '1.6', color: '#1e40af', fontSize: "14px" }}>
             Use the "Preview" feature to see how your product listing will appear to customers
             before publishing. This helps you catch any issues and ensure your presentation is perfect.
           </p>
@@ -205,7 +205,7 @@ export const BlogPost: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer spacing>
-        <h2 style={{ fontSize: "var(--font-size-3xl)", fontWeight: '700', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: "30px", fontWeight: '700', marginBottom: '16px' }}>
           5 Strategies to Boost Your E-Commerce Sales This Holiday Season
         </h2>
 
@@ -220,7 +220,7 @@ export const BlogPost: Story = {
           record-breaking one. Here are five proven approaches to maximize your holiday sales.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           1. Optimize Your Mobile Experience
         </h3>
 
@@ -231,7 +231,7 @@ export const BlogPost: Story = {
           purchasing and mobile wallet integration.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           2. Create Holiday-Specific Promotions
         </h3>
 
@@ -242,7 +242,7 @@ export const BlogPost: Story = {
           holiday shopping atmosphere.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           3. Implement Email Marketing Campaigns
         </h3>
 
@@ -260,7 +260,7 @@ export const BlogPost: Story = {
           borderLeft: '4px solid #3b82f6',
           fontStyle: 'italic'
         }}>
-          <p style={{ lineHeight: '1.6', color: '#4b5563', fontSize: "var(--font-size-lg)" }}>
+          <p style={{ lineHeight: '1.6', color: '#4b5563', fontSize: "18px" }}>
             "Businesses that start their holiday marketing campaigns by early November see
             30% higher conversion rates compared to those who wait until Black Friday."
           </p>
@@ -287,14 +287,14 @@ export const ComparisonLayout: Story = {
       gap: '40px'
     }}>
       <div>
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '16px', textAlign: 'center' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '16px', textAlign: 'center' }}>
           Without TextContainer
         </h3>
         <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
           <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>
             Standard Layout
           </h4>
-          <p style={{ lineHeight: '1.6', color: '#374151', fontSize: "var(--font-size-sm)" }}>
+          <p style={{ lineHeight: '1.6', color: '#374151', fontSize: "14px" }}>
             This text spans the full width of the container without any line length restrictions.
             On wider screens, this can create very long lines of text that become difficult to read,
             causing eye strain and reducing comprehension. Readers may lose their place when moving
@@ -304,7 +304,7 @@ export const ComparisonLayout: Story = {
       </div>
 
       <div>
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '16px', textAlign: 'center' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '16px', textAlign: 'center' }}>
           With TextContainer
         </h3>
         <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
@@ -312,7 +312,7 @@ export const ComparisonLayout: Story = {
             <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>
               Optimized Layout
             </h4>
-            <p style={{ lineHeight: '1.6', color: '#374151', fontSize: "var(--font-size-sm)" }}>
+            <p style={{ lineHeight: '1.6', color: '#374151', fontSize: "14px" }}>
               This text is wrapped in a TextContainer, which automatically limits the line length
               to optimal reading dimensions. The controlled line width makes content easier to read
               and digest, reducing eye strain and improving comprehension. Readers can maintain their
@@ -329,7 +329,7 @@ export const NarrowContent: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer>
-        <h2 style={{ fontSize: "var(--font-size-xl)", fontWeight: '600', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: "20px", fontWeight: '600', marginBottom: '12px' }}>
           Privacy Policy Summary
         </h2>
 
@@ -365,7 +365,7 @@ export const TechnicalDocumentation: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <TextContainer spacing>
-        <h2 style={{ fontSize: "var(--font-size-2xl)", fontWeight: '600', marginBottom: '16px' }}>
+        <h2 style={{ fontSize: "24px", fontWeight: '600', marginBottom: '16px' }}>
           API Integration Guide
         </h2>
 
@@ -374,7 +374,7 @@ export const TechnicalDocumentation: Story = {
           Follow these steps to connect your applications and access our platform's powerful features.
         </p>
 
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '12px' }}>
           Authentication
         </h3>
 
@@ -389,13 +389,13 @@ export const TechnicalDocumentation: Story = {
           padding: '16px',
           borderRadius: '6px',
           fontFamily: 'monospace',
-          fontSize: "var(--font-size-sm)",
+          fontSize: "14px",
           marginBottom: '16px'
         }}>
           Authorization: Bearer your-api-key-here
         </div>
 
-        <h3 style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: "18px", fontWeight: '600', marginBottom: '12px' }}>
           Rate Limiting
         </h3>
 
@@ -417,10 +417,10 @@ export const TechnicalDocumentation: Story = {
           border: '1px solid #fbbf24',
           borderRadius: '6px'
         }}>
-          <h4 style={{ fontSize: "var(--font-size-sm)", fontWeight: '600', marginBottom: '8px', color: '#92400e' }}>
+          <h4 style={{ fontSize: "14px", fontWeight: '600', marginBottom: '8px', color: '#92400e' }}>
             ⚠️ Important Note
           </h4>
-          <p style={{ lineHeight: '1.6', color: '#92400e', fontSize: "var(--font-size-sm)" }}>
+          <p style={{ lineHeight: '1.6', color: '#92400e', fontSize: "14px" }}>
             Always handle rate limit responses gracefully and implement exponential backoff
             for retry logic to ensure reliable integration.
           </p>

@@ -90,7 +90,7 @@ export const BasicUsage: Story = {
           <div style={{
             padding: '16px',
             marginTop: '12px',
-            backgroundColor: 'var(--p-color-bg-surface-subdued)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '4px'
           }}>
             <BlockStack gap="200">
@@ -163,7 +163,7 @@ export const AccordionStyle: Story = {
               >
                 <div style={{
                   padding: '16px',
-                  backgroundColor: 'var(--p-color-bg-surface-subdued)',
+                  backgroundColor: '#f3f4f6',
                   borderLeft: '3px solid var(--p-color-interactive)',
                   marginLeft: '16px'
                 }}>
@@ -200,7 +200,7 @@ export const NestedCollapsibles: Story = {
           id="main-collapsible"
           transition
         >
-          <div style={{ padding: '16px', marginTop: '12px', backgroundColor: 'var(--p-color-bg-surface-subdued)', borderRadius: '4px' }}>
+          <div style={{ padding: '16px', marginTop: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>
             <BlockStack gap="300">
               <Text as="h4" variant="headingSm">Configuration Options</Text>
 
@@ -294,7 +294,7 @@ export const MultipleCollapsibles: Story = {
                   <div style={{
                     padding: '12px',
                     marginTop: '8px',
-                    backgroundColor: 'var(--p-color-bg-surface-subdued)',
+                    backgroundColor: '#f3f4f6',
                     borderRadius: '4px'
                   }}>
                     <Text as="p" variant="bodySm" whiteSpace="pre-line">
@@ -326,7 +326,7 @@ export const CollapsibleForms: Story = {
               <Text as="h4" variant="headingSm">Basic Information</Text>
               <div style={{ marginTop: '12px' }}>
                 <div style={{ marginBottom: '12px' }}>
-                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Email</label>
+                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Email</label>
                   <input
                     type="email"
                     placeholder="customer@example.com"
@@ -335,12 +335,12 @@ export const CollapsibleForms: Story = {
                       padding: '8px 12px',
                       border: '1px solid var(--p-color-border)',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-sm)"
+                      fontSize: "14px"
                     }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Phone</label>
+                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Phone</label>
                   <input
                     type="tel"
                     placeholder="+1 (555) 123-4567"
@@ -349,7 +349,7 @@ export const CollapsibleForms: Story = {
                       padding: '8px 12px',
                       border: '1px solid var(--p-color-border)',
                       borderRadius: '4px',
-                      fontSize: "var(--font-size-sm)"
+                      fontSize: "14px"
                     }}
                   />
                 </div>
@@ -373,12 +373,12 @@ export const CollapsibleForms: Story = {
                 <div style={{
                   padding: '16px',
                   marginTop: '12px',
-                  backgroundColor: 'var(--p-color-bg-surface-subdued)',
+                  backgroundColor: '#f3f4f6',
                   borderRadius: '4px'
                 }}>
                   <BlockStack gap="200">
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                         Company Name
                       </label>
                       <input
@@ -389,12 +389,12 @@ export const CollapsibleForms: Story = {
                           padding: '8px 12px',
                           border: '1px solid var(--p-color-border)',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-sm)"
+                          fontSize: "14px"
                         }}
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                         Tax ID
                       </label>
                       <input
@@ -405,7 +405,7 @@ export const CollapsibleForms: Story = {
                           padding: '8px 12px',
                           border: '1px solid var(--p-color-border)',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-sm)"
+                          fontSize: "14px"
                         }}
                       />
                     </div>
@@ -431,12 +431,12 @@ export const CollapsibleForms: Story = {
                 <div style={{
                   padding: '16px',
                   marginTop: '12px',
-                  backgroundColor: 'var(--p-color-bg-surface-subdued)',
+                  backgroundColor: '#f3f4f6',
                   borderRadius: '4px'
                 }}>
                   <BlockStack gap="200">
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                         Street Address
                       </label>
                       <input
@@ -447,13 +447,13 @@ export const CollapsibleForms: Story = {
                           padding: '8px 12px',
                           border: '1px solid var(--p-color-border)',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-sm)"
+                          fontSize: "14px"
                         }}
                       />
                     </div>
                     <InlineStack gap="200">
                       <div style={{ flex: 1 }}>
-                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                           City
                         </label>
                         <input
@@ -464,12 +464,12 @@ export const CollapsibleForms: Story = {
                             padding: '8px 12px',
                             border: '1px solid var(--p-color-border)',
                             borderRadius: '4px',
-                            fontSize: "var(--font-size-sm)"
+                            fontSize: "14px"
                           }}
                         />
                       </div>
                       <div style={{ flex: 1 }}>
-                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                           State
                         </label>
                         <input
@@ -480,7 +480,7 @@ export const CollapsibleForms: Story = {
                             padding: '8px 12px',
                             border: '1px solid var(--p-color-border)',
                             borderRadius: '4px',
-                            fontSize: "var(--font-size-sm)"
+                            fontSize: "14px"
                           }}
                         />
                       </div>
@@ -659,7 +659,7 @@ export const CollapsibleWithAnimation: Story = {
           <div style={{
             padding: '16px',
             marginTop: '12px',
-            backgroundColor: 'var(--p-color-bg-surface-subdued)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '4px'
           }}>
             <BlockStack gap="200">

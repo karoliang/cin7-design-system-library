@@ -402,7 +402,7 @@ export const WithTooltips: Story = {
                             backgroundColor: '#333',
                             color: '#fff',
                             borderRadius: '4px',
-                            fontSize: "var(--font-size-xs)",
+                            fontSize: "12px",
                             whiteSpace: 'normal',
                             zIndex: 1000,
                             maxWidth: '200px'
@@ -652,7 +652,7 @@ export const MultiStepForm: Story = {
                         top: '-24px',
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        fontSize: "var(--font-size-xs)",
+                        fontSize: "12px",
                         color: step.id <= currentStep ? '#007ace' : '#666'
                       }}>
                         Step {step.id}

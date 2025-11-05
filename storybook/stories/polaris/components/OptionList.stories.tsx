@@ -280,11 +280,11 @@ export const UserRoleSelection: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>User Role Management</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>User Role Management</h3>
 
           <BlockStack gap="400">
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
                 Select user role:
               </h4>
               <OptionList
@@ -322,7 +322,7 @@ export const UserRoleSelection: Story = {
                 borderRadius: '6px',
                 border: '1px solid #bfdbfe'
               }}>
-                <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+                <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
                   Selected role: <strong>{selected[0]}</strong>
                 </p>
               </div>
@@ -394,12 +394,12 @@ export const ProductCategories: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Product Categories</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Product Categories</h3>
 
           <BlockStack gap="600">
             {categories.map((section, index) => (
               <div key={index}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
                   {section.title}
                 </h4>
                 <OptionList
@@ -416,7 +416,7 @@ export const ProductCategories: Story = {
               backgroundColor: '#f8f9fa',
               borderRadius: '6px'
             }}>
-              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#374151' }}>
+              <p style={{ margin: 0, fontSize: "14px", color: '#374151' }}>
                 {selected.length} categorie{selected.length !== 1 ? 's' : ''} selected
               </p>
             </div>
@@ -438,9 +438,9 @@ export const NotificationSettings: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Email Notifications</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Email Notifications</h3>
 
-          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
+          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "14px" }}>
             Select the events you want to be notified about via email.
           </p>
 
@@ -564,7 +564,7 @@ export const ThemeSelection: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Appearance Settings</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Appearance Settings</h3>
 
           <OptionList
             title="Choose your theme"
@@ -599,26 +599,26 @@ export const ShippingOptions: Story = {
         value: 'standard',
         label: 'Standard Shipping',
         description: '3-5 business days',
-        media: <span style={{ fontSize: "var(--font-size-sm)", fontWeight: '500' }}>$9.99</span>,
+        media: <span style={{ fontSize: "14px", fontWeight: '500' }}>$9.99</span>,
       },
       {
         value: 'express',
         label: 'Express Shipping',
         description: '2-3 business days',
-        media: <span style={{ fontSize: "var(--font-size-sm)", fontWeight: '500' }}>$19.99</span>,
+        media: <span style={{ fontSize: "14px", fontWeight: '500' }}>$19.99</span>,
       },
       {
         value: 'overnight',
         label: 'Overnight Shipping',
         description: 'Next business day',
-        media: <span style={{ fontSize: "var(--font-size-sm)", fontWeight: '500' }}>$39.99</span>,
+        media: <span style={{ fontSize: "14px", fontWeight: '500' }}>$39.99</span>,
       },
     ];
 
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Select Shipping Method</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Select Shipping Method</h3>
 
           <OptionList
             options={shippingOptions}
@@ -628,7 +628,7 @@ export const ShippingOptions: Story = {
 
           {selected.length > 0 && (
             <div style={{ marginTop: '20px', padding: '16px', backgroundColor: '#f0f9ff', borderRadius: '6px' }}>
-              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+              <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
                 <strong>Shipping selected:</strong> Your order will be delivered according to the selected method.
               </p>
             </div>
@@ -709,16 +709,16 @@ export const PermissionSettings: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Role Permissions</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Role Permissions</h3>
 
-          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
+          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "14px" }}>
             Configure what this role can access and modify in your store.
           </p>
 
           <BlockStack gap="600">
             {permissions.map((section, index) => (
               <div key={index}>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
                   {section.title}
                 </h4>
                 <OptionList
@@ -738,7 +738,7 @@ export const PermissionSettings: Story = {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <span style={{ fontSize: "var(--font-size-sm)", color: '#374151' }}>
+              <span style={{ fontSize: "14px", color: '#374151' }}>
                 {selected.length} permission{selected.length !== 1 ? 's' : ''} granted
               </span>
               <Button size="slim">Save Changes</Button>
@@ -796,7 +796,7 @@ export const LanguageSelection: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)" }}>Language Preferences</h3>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "18px" }}>Language Preferences</h3>
 
           <OptionList
             title="Select your preferred language"
@@ -858,8 +858,8 @@ export const InteractiveExample: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-lg)" }}>Communication Preferences</h3>
-          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "var(--font-size-sm)" }}>
+          <h3 style={{ margin: '0 0 8px 0', fontSize: "18px" }}>Communication Preferences</h3>
+          <p style={{ margin: '0 0 20px 0', color: '#6b7280', fontSize: "14px" }}>
             Choose what types of emails you'd like to receive from us.
           </p>
 
@@ -890,14 +890,14 @@ export const InteractiveExample: Story = {
               borderRadius: '6px',
               border: '1px solid #bfdbfe'
             }}>
-              <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+              <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
                 ✓ Preferences saved! You're now subscribed to {selected.length} communication type{selected.length !== 1 ? 's' : ''}.
               </p>
             </div>
           )}
 
           <div style={{ marginTop: '20px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-            <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#374151' }}>
+            <p style={{ margin: 0, fontSize: "14px", color: '#374151' }}>
               <strong>Current selections:</strong> {selected.length > 0 ? selected.join(', ') : 'None selected'}
             </p>
           </div>

@@ -264,7 +264,7 @@ export const CustomerPage: Story = {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: "var(--font-size-3xl)"
+                fontSize: "30px"
               }}>👤</div>
               <div>
                 <Text as="h3" variant="headingLg">Customer Overview</Text>

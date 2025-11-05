@@ -236,7 +236,7 @@ export const EcommerceHeader: Story = {
         zIndex: 1000,
       }}>
         <div style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
-          <p style={{ margin: 0, fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
+          <p style={{ margin: 0, fontSize: "12px", color: '#6b7280' }}>
             Search results for "{searchValue}"
           </p>
         </div>
@@ -255,8 +255,8 @@ export const EcommerceHeader: Story = {
               }}
               onClick={handleSearchResultsDismiss}
             >
-              <div style={{ fontSize: "var(--font-size-sm)", fontWeight: '500' }}>{result.title}</div>
-              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginTop: '2px' }}>Product</div>
+              <div style={{ fontSize: "14px", fontWeight: '500' }}>{result.title}</div>
+              <div style={{ fontSize: "12px", color: '#6b7280', marginTop: '2px' }}>Product</div>
             </a>
           ))}
         </div>
@@ -468,10 +468,10 @@ export const ProjectManagement: Story = {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
-                  <div style={{ fontSize: "var(--font-size-sm)", fontWeight: '600', marginBottom: '4px' }}>
+                  <div style={{ fontSize: "14px", fontWeight: '600', marginBottom: '4px' }}>
                     {result.title}
                   </div>
-                  <div style={{ display: 'flex', gap: '8px', fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
+                  <div style={{ display: 'flex', gap: '8px', fontSize: "12px", color: '#6b7280' }}>
                     <span style={{
                       padding: '2px 6px',
                       backgroundColor: '#f3f4f6',
@@ -497,7 +497,7 @@ export const ProjectManagement: Story = {
           backgroundColor: '#f8fafc',
           borderBottom: '1px solid #e5e7eb'
         }}>
-          <span style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
+          <span style={{ fontSize: "12px", color: '#6b7280' }}>
             Current Project: <strong style={{ color: '#1f2937' }}>{currentProject}</strong>
           </span>
         </div>
@@ -674,12 +674,12 @@ export const EducationalPlatform: Story = {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: "var(--font-size-sm)", opacity: 0.9 }}>Currently Learning</div>
+              <div style={{ fontSize: "14px", opacity: 0.9 }}>Currently Learning</div>
               <div style={{ fontSize: '16px', fontWeight: '600' }}>{currentCourse}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: "var(--font-size-xl)", fontWeight: '700' }}>{learningProgress}%</div>
-              <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.9 }}>Complete</div>
+              <div style={{ fontSize: "20px", fontWeight: '700' }}>{learningProgress}%</div>
+              <div style={{ fontSize: "12px", opacity: 0.9 }}>Complete</div>
             </div>
           </div>
         </div>

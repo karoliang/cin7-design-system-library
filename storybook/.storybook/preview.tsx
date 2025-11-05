@@ -163,7 +163,7 @@ if (typeof document !== 'undefined') {
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div className="story-wrapper" style={{ fontFamily: "var(--font-family-sans)", fontSize: "var(--font-size-base)", lineHeight: "var(--line-height-normal)" }}>
+      <div className="story-wrapper" style={{ fontFamily: "var(--font-family-sans)", fontSize: "16px", lineHeight: "1.5" }}>
         <Story />
       </div>
     ),

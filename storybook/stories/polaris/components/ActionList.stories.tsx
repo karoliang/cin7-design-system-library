@@ -216,7 +216,7 @@ export const NestedMenuExample: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
         <div>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Navigation Menu</h4>
+          <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Navigation Menu</h4>
           <ActionList
             items={[
               {
@@ -245,7 +245,7 @@ export const NestedMenuExample: Story = {
             borderRadius: '8px',
             border: '1px solid #e1e3e5'
           }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600', textTransform: 'capitalize' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', textTransform: 'capitalize' }}>
               {activeMenu}
             </h4>
             <ActionList items={menuItems[activeMenu as keyof typeof menuItems]} />
@@ -259,7 +259,7 @@ export const NestedMenuExample: Story = {
             borderRadius: '6px',
             border: '1px solid #bfdbfe'
           }}>
-            <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af' }}>
+            <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
               Selected action: <strong>{selectedAction}</strong>
             </p>
           </div>
@@ -350,7 +350,7 @@ export const BulkActionsExample: Story = {
                 backgroundColor: item.status === 'Active' ? '#dcfce7' : '#f3f4f6',
                 color: item.status === 'Active' ? '#166534' : '#374151',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)"
+                fontSize: "12px"
               }}>
                 {item.status}
               </span>
@@ -364,7 +364,7 @@ export const BulkActionsExample: Story = {
             backgroundColor: '#f0f9ff',
             borderRadius: '6px',
             border: '1px solid #bfdbfe',
-            fontSize: "var(--font-size-sm)"
+            fontSize: "14px"
           }}>
             {selectedItems.length} items selected for bulk actions
           </div>
@@ -458,7 +458,7 @@ export const ContextMenuExample: Story = {
 
         {actionHistory.length > 0 && (
           <div style={{ marginTop: '20px' }}>
-            <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h5 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
               Recent Actions:
             </h5>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -467,7 +467,7 @@ export const ContextMenuExample: Story = {
                   padding: '6px 8px',
                   backgroundColor: '#f8f9fa',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-xs)",
+                  fontSize: "12px",
                   color: '#374151'
                 }}>
                   {action}

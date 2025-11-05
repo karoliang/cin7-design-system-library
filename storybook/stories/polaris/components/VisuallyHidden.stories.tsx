@@ -40,7 +40,7 @@ export const Default: Story = {
         <VisuallyHidden>Open navigation menu</VisuallyHidden>
         <span aria-hidden="true">☰</span>
       </button>
-      <p style={{ marginTop: '12px', fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+      <p style={{ marginTop: '12px', fontSize: "14px", color: '#6b7280' }}>
         The text "Open navigation menu" is hidden visually but accessible to screen readers.
       </p>
     </div>
@@ -112,7 +112,7 @@ export const IconButtons: Story = {
         </button>
       </div>
 
-      <p style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+      <p style={{ fontSize: "14px", color: '#6b7280' }}>
         Icon buttons with descriptive text hidden visually but available to screen readers.
       </p>
     </div>
@@ -123,7 +123,7 @@ export const FormLabels: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '500px' }}>
       <div>
-        <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+        <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '600' }}>
           Search Products
         </label>
         <div style={{ position: 'relative' }}>
@@ -135,7 +135,7 @@ export const FormLabels: Story = {
               padding: '10px 12px 10px 40px',
               border: '1px solid #d2d2d2',
               borderRadius: '6px',
-              fontSize: "var(--font-size-sm)",
+              fontSize: "14px",
               width: '100%',
               boxSizing: 'border-box'
             }}
@@ -154,7 +154,7 @@ export const FormLabels: Story = {
       </div>
 
       <div>
-        <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+        <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '600' }}>
           Password
         </label>
         <div style={{ position: 'relative' }}>
@@ -166,7 +166,7 @@ export const FormLabels: Story = {
               padding: '10px 50px 10px 12px',
               border: '1px solid #d2d2d2',
               borderRadius: '6px',
-              fontSize: "var(--font-size-sm)",
+              fontSize: "14px",
               width: '100%',
               boxSizing: 'border-box'
             }}
@@ -190,7 +190,7 @@ export const FormLabels: Story = {
         </div>
       </div>
 
-      <p style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+      <p style={{ fontSize: "14px", color: '#6b7280' }}>
         Form inputs with icons and helper text that are accessible to screen readers.
       </p>
     </div>
@@ -221,7 +221,7 @@ export const SkipLinks: Story = {
         >
           Skip to main content
         </a>
-        <p style={{ margin: '8px 0 0 0', fontSize: "var(--font-size-xs)", color: '#1e40af' }}>
+        <p style={{ margin: '8px 0 0 0', fontSize: "12px", color: '#1e40af' }}>
           This link is normally hidden and only visible when focused by keyboard users.
         </p>
       </div>
@@ -233,7 +233,7 @@ export const SkipLinks: Story = {
         borderRadius: '6px',
         marginBottom: '20px'
       }}>
-        <h2 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
+        <h2 style={{ margin: '0 0 8px 0', fontSize: "18px", fontWeight: '600' }}>
           Website Header
         </h2>
         <nav>
@@ -257,7 +257,7 @@ export const SkipLinks: Story = {
         border: '1px solid #e5e7eb',
         borderRadius: '6px'
       }}>
-        <h2 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-xl)", fontWeight: '600' }}>
+        <h2 style={{ margin: '0 0 12px 0', fontSize: "20px", fontWeight: '600' }}>
           Main Content
         </h2>
         <p style={{ margin: 0, lineHeight: '1.6', color: '#374151' }}>
@@ -288,14 +288,14 @@ export const StatusIndicators: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
-            fontSize: "var(--font-size-sm)",
+            fontSize: "14px",
             fontWeight: 'bold'
           }}>
             ✓
           </div>
           <div>
             <div style={{ fontWeight: '600', fontSize: '16px' }}>Order Confirmed</div>
-            <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>Your order #12345 has been confirmed</div>
+            <div style={{ fontSize: "14px", color: '#6b7280' }}>Your order #12345 has been confirmed</div>
           </div>
           <VisuallyHidden>
             Status: Success. Your order has been successfully processed and confirmed.
@@ -319,14 +319,14 @@ export const StatusIndicators: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
-            fontSize: "var(--font-size-sm)",
+            fontSize: "14px",
             fontWeight: 'bold'
           }}>
             !
           </div>
           <div>
             <div style={{ fontWeight: '600', fontSize: '16px' }}>Payment Pending</div>
-            <div style={{ fontSize: "var(--font-size-sm)", color: '#92400e' }}>Waiting for payment confirmation</div>
+            <div style={{ fontSize: "14px", color: '#92400e' }}>Waiting for payment confirmation</div>
           </div>
           <VisuallyHidden>
             Status: Warning. Payment is currently pending confirmation. Your order will be processed once payment is verified.
@@ -334,7 +334,7 @@ export const StatusIndicators: Story = {
         </div>
       </div>
 
-      <p style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+      <p style={{ fontSize: "14px", color: '#6b7280' }}>
         Status indicators provide visual context while screen readers get detailed information about the status.
       </p>
     </div>
@@ -344,7 +344,7 @@ export const StatusIndicators: Story = {
 export const TableAccessibility: Story = {
   render: () => (
     <div style={{ maxWidth: '700px' }}>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: "18px", fontWeight: '600' }}>
         Accessible Data Table
       </h3>
       <table style={{
@@ -388,7 +388,7 @@ export const TableAccessibility: Story = {
                 backgroundColor: '#dcfce7',
                 color: '#166534',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 fontWeight: '500'
               }}>
                 In Stock
@@ -402,7 +402,7 @@ export const TableAccessibility: Story = {
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 cursor: 'pointer'
               }}>
                 <VisuallyHidden>Edit product: Wireless Headphones</VisuallyHidden>
@@ -423,7 +423,7 @@ export const TableAccessibility: Story = {
                 backgroundColor: '#fef3c7',
                 color: '#92400e',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 fontWeight: '500'
               }}>
                 Low Stock
@@ -437,7 +437,7 @@ export const TableAccessibility: Story = {
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 cursor: 'pointer'
               }}>
                 <VisuallyHidden>Edit product: USB-C Hub</VisuallyHidden>
@@ -448,7 +448,7 @@ export const TableAccessibility: Story = {
         </tbody>
       </table>
 
-      <p style={{ marginTop: '16px', fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+      <p style={{ marginTop: '16px', fontSize: "14px", color: '#6b7280' }}>
         Table with proper accessibility descriptions for screen reader users.
       </p>
     </div>
@@ -465,7 +465,7 @@ export const ErrorValidation: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '500px' }}>
         <div>
-          <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '600' }}>
             Email Address
           </label>
           <input
@@ -477,13 +477,13 @@ export const ErrorValidation: Story = {
               padding: '10px 12px',
               border: errors.email ? '2px solid #ef4444' : '1px solid #d2d2d2',
               borderRadius: '6px',
-              fontSize: "var(--font-size-sm)",
+              fontSize: "14px",
               width: '100%',
               boxSizing: 'border-box'
             }}
           />
           {errors.email && (
-            <div id="email-error" style={{ marginTop: '4px', color: '#ef4444', fontSize: "var(--font-size-xs)" }}>
+            <div id="email-error" style={{ marginTop: '4px', color: '#ef4444', fontSize: "12px" }}>
               <VisuallyHidden>Error: </VisuallyHidden>
               Please enter a valid email address
             </div>
@@ -491,7 +491,7 @@ export const ErrorValidation: Story = {
         </div>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '600' }}>
             Password
           </label>
           <input
@@ -503,13 +503,13 @@ export const ErrorValidation: Story = {
               padding: '10px 12px',
               border: errors.password ? '2px solid #ef4444' : '1px solid #d2d2d2',
               borderRadius: '6px',
-              fontSize: "var(--font-size-sm)",
+              fontSize: "14px",
               width: '100%',
               boxSizing: 'border-box'
             }}
           />
           {errors.password && (
-            <div id="password-error" style={{ marginTop: '4px', color: '#ef4444', fontSize: "var(--font-size-xs)" }}>
+            <div id="password-error" style={{ marginTop: '4px', color: '#ef4444', fontSize: "12px" }}>
               <VisuallyHidden>Error: </VisuallyHidden>
               Password must be at least 8 characters long
             </div>
@@ -525,14 +525,14 @@ export const ErrorValidation: Story = {
             border: 'none',
             borderRadius: '6px',
             cursor: 'pointer',
-            fontSize: "var(--font-size-sm)",
+            fontSize: "14px",
             fontWeight: '500'
           }}
         >
           Validate Form
         </button>
 
-        <p style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>
+        <p style={{ fontSize: "14px", color: '#6b7280' }}>
           Form validation with proper error announcements for screen readers.
         </p>
       </div>
@@ -560,7 +560,7 @@ export const LoadingStates: Story = {
           }} />
           <div>
             <div style={{ fontWeight: '500' }}>Processing...</div>
-            <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>Please wait while we process your request</div>
+            <div style={{ fontSize: "14px", color: '#6b7280' }}>Please wait while we process your request</div>
           </div>
           <VisuallyHidden>
             Loading: Your request is currently being processed. This may take a few moments.
@@ -585,7 +585,7 @@ export const LoadingStates: Story = {
           }} />
           <div>
             <div style={{ fontWeight: '500' }}>Uploading file...</div>
-            <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>document.pdf (2.3 MB)</div>
+            <div style={{ fontSize: "14px", color: '#6b7280' }}>document.pdf (2.3 MB)</div>
           </div>
           <VisuallyHidden>
             Upload in progress: Currently uploading document.pdf with a file size of 2.3 megabytes.

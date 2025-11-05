@@ -250,7 +250,7 @@ export const CourseContent: Story = {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: "var(--font-size-xs)",
+                      fontSize: "12px",
                       fontWeight: 'bold',
                     }}
                   >
@@ -585,7 +585,7 @@ export const LoadingState: Story = {
               color: 'white',
               padding: '2px 6px',
               borderRadius: '4px',
-              fontSize: "var(--font-size-xs)",
+              fontSize: "12px",
             }}
           >
             --:--
@@ -756,7 +756,7 @@ export const CustomStyling: Story = {
                 color: 'white',
                 padding: '4px 8px',
                 borderRadius: '4px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 fontWeight: '600',
                 display: 'flex',
                 alignItems: 'center',

@@ -549,7 +549,7 @@ export const HighlightedContent: Story = {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: "var(--font-size-xl)"
+            fontSize: "20px"
           }}>✓</div>
           <div>
             <Text as="h3" variant="headingSm">Money-back Guarantee</Text>

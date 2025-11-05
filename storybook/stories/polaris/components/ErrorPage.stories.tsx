@@ -363,7 +363,7 @@ export const ErrorBoundaryExample: Story = {
                     backgroundColor: '#f1f3f4',
                     padding: '8px',
                     borderRadius: '4px',
-                    fontSize: "var(--font-size-xs)",
+                    fontSize: "12px",
                     display: 'block',
                     overflow: 'auto',
                     maxWidth: '100%'
@@ -372,7 +372,7 @@ export const ErrorBoundaryExample: Story = {
                   </code>
                   {errorInfo.stack && (
                     <details style={{ marginTop: '8px' }}>
-                      <summary style={{ cursor: 'pointer', fontSize: "var(--font-size-xs)" }}>
+                      <summary style={{ cursor: 'pointer', fontSize: "12px" }}>
                         View technical details
                       </summary>
                       <pre style={{
@@ -415,7 +415,7 @@ export const ErrorBoundaryExample: Story = {
               </div>
 
               <div>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)" }}>Simulate Error:</h4>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: "14px" }}>Simulate Error:</h4>
                 <InlineStack gap="200" wrap>
                   <Button size="small" onClick={() => simulateError('network')}>
                     Network Error

@@ -73,7 +73,7 @@ export const BasicAlignment: Story = {
                 position: 'absolute',
                 top: '8px',
                 left: '8px',
-                fontSize: "var(--font-size-xs)",
+                fontSize: "12px",
                 color: '#666',
                 fontWeight: 'bold'
               }}>
@@ -254,7 +254,7 @@ export const FormLayouts: Story = {
               }}>
                 <BlockStack gap="300">
                   <div>
-                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Name</label>
+                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Name</label>
                     <HorizontalAlignment align="start">
                       <input
                         type="text"
@@ -263,14 +263,14 @@ export const FormLayouts: Story = {
                           padding: '8px 12px',
                           border: '1px solid #e1e3e5',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-sm)",
+                          fontSize: "14px",
                           width: '100%'
                         }}
                       />
                     </HorizontalAlignment>
                   </div>
                   <div>
-                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>Email</label>
+                    <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Email</label>
                     <HorizontalAlignment align="start">
                       <input
                         type="email"
@@ -279,7 +279,7 @@ export const FormLayouts: Story = {
                           padding: '8px 12px',
                           border: '1px solid #e1e3e5',
                           borderRadius: '4px',
-                          fontSize: "var(--font-size-sm)",
+                          fontSize: "14px",
                           width: '100%'
                         }}
                       />

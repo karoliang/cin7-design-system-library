@@ -456,7 +456,7 @@ export const ProgressSteps: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
-            fontSize: "var(--font-size-lg)",
+            fontSize: "18px",
             fontWeight: 'bold',
             margin: '0 auto 8px'
           }}>✓</div>
@@ -474,7 +474,7 @@ export const ProgressSteps: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
-            fontSize: "var(--font-size-lg)",
+            fontSize: "18px",
             fontWeight: 'bold',
             margin: '0 auto 8px'
           }}>✓</div>
@@ -492,7 +492,7 @@ export const ProgressSteps: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: 'white',
-            fontSize: "var(--font-size-lg)",
+            fontSize: "18px",
             fontWeight: 'bold',
             margin: '0 auto 8px'
           }}>3</div>
@@ -511,7 +511,7 @@ export const ProgressSteps: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: '#6c7278',
-            fontSize: "var(--font-size-lg)",
+            fontSize: "18px",
             fontWeight: 'bold',
             margin: '0 auto 8px'
           }}>4</div>

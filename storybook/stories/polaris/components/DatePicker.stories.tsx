@@ -389,7 +389,7 @@ export const EventScheduling: Story = {
         <Text as="h3" variant="headingMd">Schedule Event</Text>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '500' }}>
             Event Type:
           </label>
           <select

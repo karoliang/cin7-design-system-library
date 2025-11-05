@@ -414,7 +414,7 @@ export const MarketingCampaign: Story = {
                   <Card key={index} padding="500">
                     <div style={{ marginBottom: '16px' }}>
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <span key={i} style={{ color: '#fbbf24', fontSize: "var(--font-size-base)" }}>★</span>
+                        <span key={i} style={{ color: '#fbbf24', fontSize: "16px" }}>★</span>
                       ))}
                     </div>
 
@@ -559,7 +559,7 @@ export const BusinessWebsite: Story = {
                 {services.map((service, index) => (
                   <Card key={index} sectioned>
                     <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                      <div style={{ className="icon-3xl", marginBottom: '16px' }}>
+                      <div className="icon-3xl" style={{ marginBottom: '16px' }}>
                         {service.icon}
                       </div>
                       <Heading as="h3" variant="headingLg">

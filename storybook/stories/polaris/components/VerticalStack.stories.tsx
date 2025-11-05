@@ -56,7 +56,7 @@ export const SpacingVariations: Story = {
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>None</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>None</h4>
         <VerticalStack gap="none">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -65,7 +65,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Extra Tight</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Extra Tight</h4>
         <VerticalStack gap="extraTight">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -74,7 +74,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Tight</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Tight</h4>
         <VerticalStack gap="tight">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -83,7 +83,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Base</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Base</h4>
         <VerticalStack gap="base">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -92,7 +92,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Loose</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Loose</h4>
         <VerticalStack gap="loose">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -101,7 +101,7 @@ export const SpacingVariations: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Extra Loose</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Extra Loose</h4>
         <VerticalStack gap="extraLoose">
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 1</div>
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>Item 2</div>
@@ -116,7 +116,7 @@ export const AlignmentOptions: Story = {
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Start</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Start</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px' }}>
           <VerticalStack gap="400" align="start">
             <div style={{ padding: '8px 16px', backgroundColor: '#dbeafe', borderRadius: '4px' }}>Left aligned</div>
@@ -126,7 +126,7 @@ export const AlignmentOptions: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>Center</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Center</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px' }}>
           <VerticalStack gap="400" align="center">
             <div style={{ padding: '8px 16px', backgroundColor: '#dcfce7', borderRadius: '4px' }}>Center aligned</div>
@@ -136,7 +136,7 @@ export const AlignmentOptions: Story = {
       </div>
 
       <div>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>End</h4>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>End</h4>
         <div style={{ border: '1px dashed #d1d5db', padding: '12px', borderRadius: '4px' }}>
           <VerticalStack gap="400" align="end">
             <div style={{ padding: '8px 16px', backgroundColor: '#fef3c7', borderRadius: '4px' }}>Right aligned</div>
@@ -156,7 +156,7 @@ export const FormLayout: Story = {
           <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '600' }}>Contact Information</h3>
           <VerticalStack gap="300">
             <div>
-              <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+              <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                 First Name
               </label>
               <input
@@ -166,14 +166,14 @@ export const FormLayout: Story = {
                   padding: '8px 12px',
                   border: '1px solid #d2d2d2',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)",
+                  fontSize: "14px",
                   width: '100%',
                   boxSizing: 'border-box',
                 }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+              <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                 Last Name
               </label>
               <input
@@ -183,14 +183,14 @@ export const FormLayout: Story = {
                   padding: '8px 12px',
                   border: '1px solid #d2d2d2',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)",
+                  fontSize: "14px",
                   width: '100%',
                   boxSizing: 'border-box',
                 }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '4px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+              <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
                 Email
               </label>
               <input
@@ -200,7 +200,7 @@ export const FormLayout: Story = {
                   padding: '8px 12px',
                   border: '1px solid #d2d2d2',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)",
+                  fontSize: "14px",
                   width: '100%',
                   boxSizing: 'border-box',
                 }}
@@ -300,16 +300,16 @@ export const MixedContent: Story = {
         border: '1px solid #bfdbfe',
         borderRadius: '8px'
       }}>
-        <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600', color: '#1e40af' }}>
+        <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600', color: '#1e40af' }}>
           📢 Important Update
         </h4>
-        <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#1e40af', lineHeight: '1.5' }}>
+        <p style={{ margin: 0, fontSize: "14px", color: '#1e40af', lineHeight: '1.5' }}>
           System maintenance scheduled for tonight at 11:00 PM EST. Services may be temporarily unavailable.
         </p>
       </div>
 
       <div>
-        <h3 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-lg)", fontWeight: '600' }}>
+        <h3 style={{ margin: '0 0 12px 0', fontSize: "18px", fontWeight: '600' }}>
           Recent Activity
         </h3>
         <VerticalStack gap="300">
@@ -322,7 +322,7 @@ export const MixedContent: Story = {
             }} />
             <div>
               <div style={{ fontWeight: '500' }}>New order received</div>
-              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>2 minutes ago</div>
+              <div style={{ fontSize: "12px", color: '#6b7280' }}>2 minutes ago</div>
             </div>
           </div>
 
@@ -335,7 +335,7 @@ export const MixedContent: Story = {
             }} />
             <div>
               <div style={{ fontWeight: '500' }}>Payment processed</div>
-              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>15 minutes ago</div>
+              <div style={{ fontSize: "12px", color: '#6b7280' }}>15 minutes ago</div>
             </div>
           </div>
 
@@ -348,7 +348,7 @@ export const MixedContent: Story = {
             }} />
             <div>
               <div style={{ fontWeight: '500' }}>Low stock alert</div>
-              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>1 hour ago</div>
+              <div style={{ fontSize: "12px", color: '#6b7280' }}>1 hour ago</div>
             </div>
           </div>
         </VerticalStack>
@@ -360,10 +360,10 @@ export const MixedContent: Story = {
         border: '1px solid #fecaca',
         borderRadius: '8px'
       }}>
-        <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600', color: '#991b1b' }}>
+        <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600', color: '#991b1b' }}>
           ⚠️ Action Required
         </h4>
-        <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: '#991b1b', lineHeight: '1.5' }}>
+        <p style={{ margin: 0, fontSize: "14px", color: '#991b1b', lineHeight: '1.5' }}>
           3 orders require manual review due to unusual payment patterns.
         </p>
       </div>
@@ -385,7 +385,7 @@ export const NestedStacks: Story = {
         </h4>
         <VerticalStack gap="300">
           <div>
-            <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h5 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
               Quick Stats
             </h5>
             <VerticalStack gap="200">
@@ -407,17 +407,17 @@ export const NestedStacks: Story = {
           <div style={{ height: '1px', backgroundColor: '#e5e7eb' }} />
 
           <div>
-            <h5 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)", fontWeight: '600' }}>
+            <h5 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
               Recent Orders
             </h5>
             <VerticalStack gap="200">
               <div style={{ padding: '8px', backgroundColor: 'white', borderRadius: '4px' }}>
                 <div style={{ fontWeight: '500' }}>Order #1001</div>
-                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>2 items • $89.99</div>
+                <div style={{ fontSize: "12px", color: '#6b7280' }}>2 items • $89.99</div>
               </div>
               <div style={{ padding: '8px', backgroundColor: 'white', borderRadius: '4px' }}>
                 <div style={{ fontWeight: '500' }}>Order #1002</div>
-                <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>5 items • $234.50</div>
+                <div style={{ fontSize: "12px", color: '#6b7280' }}>5 items • $234.50</div>
               </div>
             </VerticalStack>
           </div>
@@ -432,7 +432,7 @@ export const ResponsiveLayout: Story = {
     <div style={{ maxWidth: '800px' }}>
       <VerticalStack gap="400">
         <div>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: "var(--font-size-xl)", fontWeight: '600' }}>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: "20px", fontWeight: '600' }}>
             Responsive Product Grid
           </h3>
           <VerticalStack gap="300">
@@ -451,9 +451,9 @@ export const ResponsiveLayout: Story = {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: '600', marginBottom: '4px' }}>{product.name}</div>
-                    <div style={{ fontSize: "var(--font-size-sm)", color: '#6b7280' }}>{product.status}</div>
+                    <div style={{ fontSize: "14px", color: '#6b7280' }}>{product.status}</div>
                   </div>
-                  <div style={{ fontSize: "var(--font-size-lg)", fontWeight: '600', color: '#059669' }}>
+                  <div style={{ fontSize: "18px", fontWeight: '600', color: '#059669' }}>
                     {product.price}
                   </div>
                 </div>

@@ -338,7 +338,7 @@ export const DynamicButtonGeneration: Story = {
 
         <div style={{
           padding: '16px',
-          backgroundColor: 'var(--p-color-bg-surface-subdued)',
+          backgroundColor: '#f3f4f6',
           borderRadius: '4px'
         }}>
           <Text as="h4" variant="headingSm">Available Actions:</Text>
@@ -431,7 +431,7 @@ export const ConditionalButtons: Story = {
 
         <div style={{
           padding: '16px',
-          backgroundColor: 'var(--p-color-bg-surface-subdued)',
+          backgroundColor: '#f3f4f6',
           borderRadius: '4px'
         }}>
           <Text as="h4" variant="headingSm">Available Actions:</Text>
@@ -516,7 +516,7 @@ export const FormActions: Story = {
         <div style={{ margin: '16px 0' }}>
           <BlockStack gap="300">
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontSize: "var(--font-size-sm)", fontWeight: '500' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '500' }}>
                 Form Field
               </label>
               <input
@@ -528,14 +528,14 @@ export const FormActions: Story = {
                   padding: '8px 12px',
                   border: '1px solid var(--p-color-border)',
                   borderRadius: '4px',
-                  fontSize: "var(--font-size-sm)"
+                  fontSize: "14px"
                 }}
               />
             </div>
 
             <div style={{
               padding: '16px',
-              backgroundColor: 'var(--p-color-bg-surface-subdued)',
+              backgroundColor: '#f3f4f6',
               borderRadius: '4px'
             }}>
               <Text as="h4" variant="headingSm">Form Status:</Text>
@@ -651,7 +651,7 @@ export const BulkActions: Story = {
         {selectedItems.length > 0 && (
           <div style={{
             padding: '16px',
-            backgroundColor: 'var(--p-color-bg-surface-subdued)',
+            backgroundColor: '#f3f4f6',
             borderRadius: '4px'
           }}>
             <Text as="h4" variant="headingSm">

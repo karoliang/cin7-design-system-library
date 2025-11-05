@@ -322,7 +322,7 @@ export const PricingTable: Story = {
                   color: 'white',
                   padding: '4px 16px',
                   borderRadius: '12px',
-                  fontSize: "var(--font-size-xs)",
+                  fontSize: "12px",
                   fontWeight: 'bold'
                 }}>
                   MOST POPULAR
