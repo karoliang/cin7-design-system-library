@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@cin7/core": ["../packages/core/src"],
+      "@cin7/design-tokens": ["../packages/design-tokens/src"],
+      "@cin7/vanilla-js": ["../packages/vanilla-js/src"],
+      "@cin7/typescript-sdk": ["../packages/typescript-sdk/src"],
+      "@cin7/polaris-adapter": ["../packages/polaris-adapter/src"],
+      "@cin7/extjs-adapters": ["../packages/extjs-adapters/src"],
+      "@cin7/highcharts-adapter": ["../packages/highcharts-adapter/src"],
+      "@cin7/cli": ["../packages/cli/src"]
+    }
+  },
+  "include": [
+    "stories/**/*",
+    ".storybook/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "storybook-static"
+  ]
+}

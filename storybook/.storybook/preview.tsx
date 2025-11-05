@@ -139,8 +139,9 @@ body {
   font-family: var(--font-family-sans) !important;
 }
 
+/* Allow stories to set their own font sizes - removed aggressive override */
 .story-wrapper [style*="font-size"] {
-  font-size: inherit !important;
+  /* Removed font-size: inherit !important; to allow story-specific sizing */
 }
 
 /* Icon size utilities */
@@ -163,9 +164,11 @@ if (typeof document !== 'undefined') {
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <div className="story-wrapper" style={{ fontFamily: "var(--font-family-sans)", fontSize: "16px", lineHeight: "1.5" }}>
-        <Story />
-      </div>
+      <AppProvider i18n={{}}>
+        <div className="story-wrapper" style={{ fontFamily: "var(--font-family-sans)", fontSize: "16px", lineHeight: "1.5" }}>
+          <Story />
+        </div>
+      </AppProvider>
     ),
   ],
   parameters: {

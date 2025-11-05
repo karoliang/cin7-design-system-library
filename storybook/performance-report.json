@@ -1,0 +1,330 @@
+{
+  "timestamp": "2025-11-05T20:39:58.368Z",
+  "totalStories": 121,
+  "largeFiles": [
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/RealWorldExamples.stories.tsx",
+      "size": 57678,
+      "imports": 1,
+      "components": 98
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/DSLAitecture.stories.tsx",
+      "size": 55180,
+      "imports": 1,
+      "components": 71
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TableMultiLanguage.stories.tsx",
+      "size": 48983,
+      "imports": 1,
+      "components": 48
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/AdminComponents.stories.tsx",
+      "size": 46747,
+      "imports": 1,
+      "components": 114
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/ComponentSelection.stories.tsx",
+      "size": 42538,
+      "imports": 1,
+      "components": 62
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/FormComponents.stories.tsx",
+      "size": 42041,
+      "imports": 1,
+      "components": 74
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/GettingStarted.stories.tsx",
+      "size": 40565,
+      "imports": 5,
+      "components": 64
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ButtonMultiLanguage.stories.tsx",
+      "size": 40104,
+      "imports": 1,
+      "components": 36
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/DataManagement.stories.tsx",
+      "size": 38358,
+      "imports": 1,
+      "components": 76
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Row.stories.tsx",
+      "size": 35457,
+      "imports": 1,
+      "components": 4
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/CardMultiLanguage.stories.tsx",
+      "size": 34851,
+      "imports": 1,
+      "components": 25
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Filters.stories.tsx",
+      "size": 33877,
+      "imports": 1,
+      "components": 42
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Autocomplete.stories.tsx",
+      "size": 33119,
+      "imports": 1,
+      "components": 39
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Navigation.stories.tsx",
+      "size": 32864,
+      "imports": 1,
+      "components": 4
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/ComponentCategories.stories.tsx",
+      "size": 32734,
+      "imports": 1,
+      "components": 42
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ResourceItem.stories.tsx",
+      "size": 32659,
+      "imports": 1,
+      "components": 31
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ColorPicker.stories.tsx",
+      "size": 32592,
+      "imports": 1,
+      "components": 25
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/DashboardComponents.stories.tsx",
+      "size": 31777,
+      "imports": 1,
+      "components": 78
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/UnstyledButton.stories.tsx",
+      "size": 30481,
+      "imports": 1,
+      "components": 16
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/EcommerceComponents.stories.tsx",
+      "size": 28357,
+      "imports": 1,
+      "components": 44
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Label.stories.tsx",
+      "size": 28129,
+      "imports": 1,
+      "components": 21
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TextFieldMultiLanguage.stories.tsx",
+      "size": 28105,
+      "imports": 1,
+      "components": 37
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/IndexFilters.stories.tsx",
+      "size": 27647,
+      "imports": 1,
+      "components": 32
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/VideoThumbnail.stories.tsx",
+      "size": 27643,
+      "imports": 1,
+      "components": 24
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/DescriptionList.stories.tsx",
+      "size": 26847,
+      "imports": 1,
+      "components": 28
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ResourceList.stories.tsx",
+      "size": 26804,
+      "imports": 1,
+      "components": 45
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/OptionList.stories.tsx",
+      "size": 26093,
+      "imports": 1,
+      "components": 26
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/IndexTable.stories.tsx",
+      "size": 25483,
+      "imports": 1,
+      "components": 41
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/BulkActions.stories.tsx",
+      "size": 25463,
+      "imports": 1,
+      "components": 58
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/PageActions.stories.tsx",
+      "size": 23886,
+      "imports": 1,
+      "components": 45
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TextLayout.stories.tsx",
+      "size": 23854,
+      "imports": 1,
+      "components": 25
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Scrollable.stories.tsx",
+      "size": 23143,
+      "imports": 2,
+      "components": 15
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TopBar.stories.tsx",
+      "size": 22521,
+      "imports": 1,
+      "components": 28
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ButtonFrom.stories.tsx",
+      "size": 22404,
+      "imports": 1,
+      "components": 35
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/MediaCard.stories.tsx",
+      "size": 21484,
+      "imports": 1,
+      "components": 26
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ContextualSaveBar.stories.tsx",
+      "size": 20942,
+      "imports": 1,
+      "components": 58
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Combobox.stories.tsx",
+      "size": 20828,
+      "imports": 1,
+      "components": 32
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Frame.stories.tsx",
+      "size": 19662,
+      "imports": 1,
+      "components": 75
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/List.stories.tsx",
+      "size": 19474,
+      "imports": 1,
+      "components": 25
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/FullscreenBar.stories.tsx",
+      "size": 18837,
+      "imports": 1,
+      "components": 64
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/AppProvider.stories.tsx",
+      "size": 18712,
+      "imports": 1,
+      "components": 40
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Backdrop.stories.tsx",
+      "size": 18055,
+      "imports": 1,
+      "components": 25
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Icon.stories.tsx",
+      "size": 18026,
+      "imports": 1,
+      "components": 167
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/UsagePatterns.stories.tsx",
+      "size": 16915,
+      "imports": 1,
+      "components": 44
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ActionList.stories.tsx",
+      "size": 15983,
+      "imports": 1,
+      "components": 45
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ActionMenu.stories.tsx",
+      "size": 15631,
+      "imports": 1,
+      "components": 52
+    },
+    {
+      "path": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Modal.stories.tsx",
+      "size": 14541,
+      "imports": 1,
+      "components": 25
+    }
+  ],
+  "issues": {
+    "infiniteReloadRisk": true,
+    "memoryRisk": true,
+    "buildRisk": true
+  },
+  "recommendations": [
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/RealWorldExamples.stories.tsx into smaller files (98 components)",
+    "Optimize /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/RealWorldExamples.stories.tsx (56KB)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/DSLAitecture.stories.tsx into smaller files (71 components)",
+    "Optimize /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/DSLAitecture.stories.tsx (54KB)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TableMultiLanguage.stories.tsx into smaller files (48 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/AdminComponents.stories.tsx into smaller files (114 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/ComponentSelection.stories.tsx into smaller files (62 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/FormComponents.stories.tsx into smaller files (74 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/GettingStarted.stories.tsx into smaller files (64 components)",
+    "Consolidate imports in /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/GettingStarted.stories.tsx",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ButtonMultiLanguage.stories.tsx into smaller files (36 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/DataManagement.stories.tsx into smaller files (76 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Filters.stories.tsx into smaller files (42 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Autocomplete.stories.tsx into smaller files (39 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/ComponentCategories.stories.tsx into smaller files (42 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ResourceItem.stories.tsx into smaller files (31 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/DashboardComponents.stories.tsx into smaller files (78 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/EcommerceComponents.stories.tsx into smaller files (44 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/TextFieldMultiLanguage.stories.tsx into smaller files (37 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/IndexFilters.stories.tsx into smaller files (32 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ResourceList.stories.tsx into smaller files (45 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/IndexTable.stories.tsx into smaller files (41 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/BulkActions.stories.tsx into smaller files (58 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/PageActions.stories.tsx into smaller files (45 components)",
+    "Consolidate imports in /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Scrollable.stories.tsx",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ButtonFrom.stories.tsx into smaller files (35 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ContextualSaveBar.stories.tsx into smaller files (58 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Combobox.stories.tsx into smaller files (32 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Frame.stories.tsx into smaller files (75 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/FullscreenBar.stories.tsx into smaller files (64 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/AppProvider.stories.tsx into smaller files (40 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/Icon.stories.tsx into smaller files (167 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/guides/UsagePatterns.stories.tsx into smaller files (44 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ActionList.stories.tsx into smaller files (45 components)",
+    "Split /Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/stories/polaris/components/ActionMenu.stories.tsx into smaller files (52 components)"
+  ]
+}

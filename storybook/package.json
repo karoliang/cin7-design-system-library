@@ -8,7 +8,12 @@
     "build": "storybook build -o storybook-static",
     "preview": "npx http-server storybook-static",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "perf:check": "node scripts/performance-manager.js",
+    "perf:emergency-fix": "node scripts/emergency-fix.js",
+    "perf:restore": "node scripts/emergency-fix.js restore",
+    "dev:minimal": "STORYBOOK_CONFIG_PATH=main.minimal.ts storybook dev -p 6008",
+    "build:minimal": "STORYBOOK_CONFIG_PATH=main.minimal.ts storybook build -o storybook-static-minimal"
   },
   "dependencies": {
     "@cin7/core": "workspace:*",
@@ -36,6 +41,7 @@
     "@storybook/test": "^8.6.14",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
     "eslint-plugin-storybook": "^0.10.1",
     "storybook": "^8.6.14",
     "typescript": "^5.3.3",

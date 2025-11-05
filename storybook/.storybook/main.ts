@@ -3,7 +3,7 @@ import type { Preview } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: [
-    // Core story structure
+    // Core story structure - use absolute path for reliable discovery
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
@@ -48,6 +48,22 @@ const config: StorybookConfig = {
       host: 'localhost',
       allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0']
     };
+
+    // Fix module resolution issues - remove problematic aliases for now
+    // config.resolve = {
+    //   ...config.resolve,
+    //   alias: {
+    //     ...config.resolve?.alias,
+    //     '@cin7/core': require.resolve('@cin7/core'),
+    //     '@cin7/design-tokens': require.resolve('@cin7/design-tokens'),
+    //     '@cin7/vanilla-js': require.resolve('@cin7/vanilla-js'),
+    //     '@cin7/typescript-sdk': require.resolve('@cin7/typescript-sdk'),
+    //     '@cin7/polaris-adapter': require.resolve('@cin7/polaris-adapter'),
+    //     '@cin7/extjs-adapters': require.resolve('@cin7/extjs-adapters'),
+    //     '@cin7/highcharts-adapter': require.resolve('@cin7/highcharts-adapter'),
+    //   },
+    // };
+
     return config;
   },
 };
