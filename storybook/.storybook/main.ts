@@ -3,14 +3,8 @@ import type { Preview } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: [
-    // Core story structure
-    "../stories/**/*.mdx",
-    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    // Include stories from all packages
-    "../../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    // Foundation patterns
-    "../../packages/core/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../packages/design-tokens/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    // Core story structure - only Polaris stories for now
+    "../stories/polaris/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-links",
@@ -48,18 +42,18 @@ const config: StorybookConfig = {
   }),
   // Vite configuration for handling complex workspace dependencies
   viteFinal: async (config) => {
-    // Add support for workspace packages
-    config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@cin7/core': '/../../packages/core/src',
-      '@cin7/design-tokens': '/../../packages/design-tokens/src',
-      '@cin7/vanilla-js': '/../../packages/vanilla-js/src',
-      '@cin7/typescript-sdk': '/../../packages/typescript-sdk/src',
-      '@cin7/extjs-adapters': '/../../packages/extjs-adapters/src',
-      '@cin7/polaris-adapter': '/../../packages/polaris-adapter/src',
-      '@cin7/highcharts-adapter': '/../../packages/highcharts-adapter/src',
-    };
+    // Add support for workspace packages (commented out for now)
+    // config.resolve = config.resolve || {};
+    // config.resolve.alias = {
+    //   ...config.resolve.alias,
+    //   '@cin7/core': new URL('../../packages/core/src', import.meta.url).pathname,
+    //   '@cin7/design-tokens': new URL('../../packages/design-tokens/src', import.meta.url).pathname,
+    //   '@cin7/vanilla-js': new URL('../../packages/vanilla-js/src', import.meta.url).pathname,
+    //   '@cin7/typescript-sdk': new URL('../../packages/typescript-sdk/src', import.meta.url).pathname,
+    //   '@cin7/extjs-adapters': new URL('../../packages/extjs-adapters/src', import.meta.url).pathname,
+    //   '@cin7/polaris-adapter': new URL('../../packages/polaris-adapter/src', import.meta.url).pathname,
+    //   '@cin7/highcharts-adapter': new URL('../../packages/highcharts-adapter/src', import.meta.url).pathname,
+    // };
     return config;
   },
 };
