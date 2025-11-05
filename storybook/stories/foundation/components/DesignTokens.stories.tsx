@@ -1,8 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
+// Design tokens showcase component
+const DesignTokensShowcase = () => (
+  <div style={{ padding: '20px' }}>
+    <h2>Design Tokens Showcase</h2>
+    <p>Use the stories below to explore the different token categories.</p>
+  </div>
+);
+
 const meta = {
   title: 'Foundation/Design Tokens',
+  component: DesignTokensShowcase,
   parameters: {
     layout: 'padded',
     docs: {
@@ -12,7 +21,7 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-} satisfies Meta;
+} satisfies Meta<typeof DesignTokensShowcase>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

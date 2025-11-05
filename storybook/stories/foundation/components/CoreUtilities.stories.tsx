@@ -1,8 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useEffect, useRef, useState } from 'react';
 
+// Core utilities showcase component
+const CoreUtilitiesShowcase = () => (
+  <div style={{ padding: '20px' }}>
+    <h2>Core Utilities Showcase</h2>
+    <p>Explore the different utility categories using the stories below.</p>
+  </div>
+);
+
 const meta = {
   title: 'Foundation/Core Utilities',
+  component: CoreUtilitiesShowcase,
   parameters: {
     layout: 'padded',
     docs: {
@@ -12,7 +21,7 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-} satisfies Meta;
+} satisfies Meta<typeof CoreUtilitiesShowcase>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
