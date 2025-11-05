@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ActionList, Button, Popover, Icon } from '@shopify/polaris';
-import { SearchMinor, SettingsMinor, ExportMinor, DuplicateMinor, DeleteMinor, EditMinor, ViewMajor, CircleTickMinor, CircleDisabledMinor } from '@shopify/polaris-icons';
+import { SearchMinor, SettingsMinor, ExportMinor, DuplicateMinor, DeleteMinor, EditMinor, ViewIcon, CircleTickMinor, CircleDisabledMinor } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
 const meta = {
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     items: [
-      { content: 'View product', icon: ViewMajor },
+      { content: 'View product', icon: ViewIcon },
       { content: 'Edit product', icon: EditMinor },
       { content: 'Duplicate product', icon: DuplicateMinor },
       { content: 'Delete product', icon: DeleteMinor, destructive: true },
@@ -77,7 +77,7 @@ export const WithActions: Story = {
         >
           <ActionList
             items={[
-              { content: 'View details', icon: ViewMajor, onAction: () => console.log('View clicked') },
+              { content: 'View details', icon: ViewIcon, onAction: () => console.log('View clicked') },
               { content: 'Edit', icon: EditMinor, onAction: () => console.log('Edit clicked') },
               { content: 'Duplicate', icon: DuplicateMinor, onAction: () => console.log('Duplicate clicked') },
               { content: 'Delete', icon: DeleteMinor, destructive: true, onAction: () => console.log('Delete clicked') },
@@ -95,7 +95,7 @@ export const WithSections: Story = {
       {
         title: 'Product actions',
         items: [
-          { content: 'View product', icon: ViewMajor },
+          { content: 'View product', icon: ViewIcon },
           { content: 'Edit product', icon: EditMinor },
           { content: 'Duplicate product', icon: DuplicateMinor },
         ],
@@ -121,7 +121,7 @@ export const WithSections: Story = {
 export const WithDisabledItems: Story = {
   args: {
     items: [
-      { content: 'Available action', icon: ViewMajor },
+      { content: 'Available action', icon: ViewIcon },
       { content: 'Disabled action', icon: EditMinor, disabled: true },
       { content: 'Another action', icon: DuplicateMinor },
       { content: 'Also disabled', icon: SettingsMinor, disabled: true },
@@ -400,7 +400,7 @@ export const ContextMenuExample: Story = {
     ];
 
     const contextActions = [
-      { content: 'View details', icon: ViewMajor, onAction: () => handleAction('View details') },
+      { content: 'View details', icon: ViewIcon, onAction: () => handleAction('View details') },
       { content: 'Edit', icon: EditMinor, onAction: () => handleAction('Edit') },
       { content: 'Duplicate', icon: DuplicateMinor, onAction: () => handleAction('Duplicate') },
       { content: 'Delete', icon: DeleteMinor, destructive: true, onAction: () => handleAction('Delete') },
