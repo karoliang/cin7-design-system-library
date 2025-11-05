@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Page, Layout, Card, Button, Text, Badge, DisplayText } from '@shopify/polaris';
+import { Page, Layout, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {

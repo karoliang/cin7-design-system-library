@@ -10,7 +10,6 @@ import {
   Layout,
   Page,
   Text,
-  DisplayText,
   Heading,
   TextField,
   Select,
@@ -84,9 +83,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <DisplayText size="large" element="h1">
+      <Heading as="h1" variant="heading3xl">
         Component Selection Guide
-      </DisplayText>
+      </Heading>
       <Text as="p" tone="subdued">
         Learn when to use different components and make informed design decisions.
       </Text>
@@ -530,9 +529,9 @@ export const TextComponentSelection: Story = {
             <BlockStack gap="200">
               <Text fontWeight="semibold">Sizes Available:</Text>
               <BlockStack gap="100">
-                <DisplayText size="small">Small Display Text</DisplayText>
-                <DisplayText size="medium">Medium Display Text</DisplayText>
-                <DisplayText size="large">Large Display Text</DisplayText>
+                <Heading as="h3" variant="headingXl">Small Display Text</Heading>
+                <Heading as="h2" variant="heading2xl">Medium Display Text</Heading>
+                <Heading as="h1" variant="heading3xl">Large Display Text</Heading>
               </BlockStack>
             </BlockStack>
 

@@ -25,7 +25,6 @@ import {
   ProgressBar,
   Text,
   Heading,
-  DisplayText,
   Icon,
   Collapsible,
   Scrollable,
@@ -73,9 +72,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <DisplayText size="large" element="h1">
+      <Heading as="h1" variant="displayMd">
         Cin7 DSL Component Categories
-      </DisplayText>
+      </Heading>
       <Text as="p" tone="subdued">
         Learn how to effectively use components organized by their purpose and use cases.
       </Text>
@@ -741,9 +740,9 @@ export const TypographyAndContent: Story = {
           <Heading element="h3">Typography Hierarchy</Heading>
 
           <BlockStack gap="200">
-            <DisplayText size="small">Display Text - Small</DisplayText>
-            <DisplayText size="medium">Display Text - Medium</DisplayText>
-            <DisplayText size="large">Display Text - Large</DisplayText>
+            <Heading as="h3" variant="headingXl">Display Text - Small</Heading>
+            <Heading as="h2" variant="heading2xl">Display Text - Medium</Heading>
+            <Heading as="h1" variant="heading3xl">Display Text - Large</Heading>
             <Heading level="1">Heading Level 1</Heading>
             <Heading level="2">Heading Level 2</Heading>
             <Heading level="3">Heading Level 3</Heading>
@@ -762,7 +761,7 @@ export const TypographyAndContent: Story = {
           <Heading element="h3">📝 Typography Guidelines</Heading>
           <Grid columns={{ sm: 1, md: 2 }} gap="400">
             <div>
-              <Text fontWeight="semibold">Use DisplayText for:</Text>
+              <Text fontWeight="semibold">Use large Heading variants for:</Text>
               <List>
                 <List.Item>Page titles</List.Item>
                 <List.Item>Major section headers</List.Item>

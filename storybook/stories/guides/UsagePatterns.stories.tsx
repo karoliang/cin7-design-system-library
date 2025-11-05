@@ -22,7 +22,6 @@ import {
   FormLayout,
   Text,
   Heading,
-  DisplayText,
   Icon,
   Form,
 } from '@shopify/polaris';
@@ -58,9 +57,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <DisplayText size="large" element="h1">
+      <Heading as="h1" variant="heading3xl">
         Common Usage Patterns
-      </DisplayText>
+      </Heading>
       <Text as="p" tone="subdued">
         Learn how to combine Cin7 DSL components to build effective user interfaces.
       </Text>
@@ -247,7 +246,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Revenue</Text>
-                  <DisplayText size="medium">$45,231</DisplayText>
+                  <Heading as="h2" variant="heading2xl">$45,231</Heading>
                   <Text tone="success">↑ 12% from last month</Text>
                 </BlockStack>
               </Card>
@@ -255,7 +254,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Orders</Text>
-                  <DisplayText size="medium">1,248</DisplayText>
+                  <Heading as="h2" variant="heading2xl">1,248</Heading>
                   <Text tone="success">↑ 8% from last month</Text>
                 </BlockStack>
               </Card>
@@ -263,7 +262,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Active Products</Text>
-                  <DisplayText size="medium">523</DisplayText>
+                  <Heading as="h2" variant="heading2xl">523</Heading>
                   <Text tone="subdued">→ No change</Text>
                 </BlockStack>
               </Card>
@@ -271,7 +270,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Conversion Rate</Text>
-                  <DisplayText size="medium">3.2%</DisplayText>
+                  <Heading as="h2" variant="heading2xl">3.2%</Heading>
                   <Text tone="critical">↓ 2% from last month</Text>
                 </BlockStack>
               </Card>

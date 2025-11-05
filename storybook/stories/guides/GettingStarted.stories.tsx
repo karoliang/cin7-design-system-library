@@ -16,7 +16,6 @@ import {
   Banner,
   Text,
   Heading,
-  DisplayText,
   Icon,
   FormLayout,
   Grid,
@@ -76,9 +75,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <DisplayText size="large" element="h1">
+      <Heading as="h1" variant="heading3xl">
         Getting Started with Cin7 DSL
-      </DisplayText>
+      </Heading>
       <Text as="p" tone="subdued">
         Learn how to build beautiful, accessible, and performant user interfaces with the Cin7 Design System Library.
       </Text>
@@ -695,7 +694,7 @@ export const AccessibilityGuidelines: Story = {
                 }}>
 {`<DisplayText element="h1">
   Page Title
-</DisplayText>
+</Heading>
 
 <Heading element="h2">
   Section Title

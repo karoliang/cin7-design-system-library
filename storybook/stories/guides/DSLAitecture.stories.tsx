@@ -9,7 +9,6 @@ import {
   InlineStack,
   Text,
   Heading,
-  DisplayText,
   Icon,
   Badge,
   Divider,
@@ -95,7 +94,7 @@ export const Overview: Story = {
           <Layout.Section>
             <Card>
               <BlockStack gap="400">
-                <DisplayText size="medium">Multi-Layer Architecture Overview</DisplayText>
+                <Heading as="h2" variant="heading2xl">Multi-Layer Architecture Overview</Heading>
                 <Text as="p">
                   Cin7 DSL is a production-ready, multi-layered enterprise framework that combines
                   Shopify Polaris, ExtJS, Vanilla JavaScript, and TypeScript to create scalable

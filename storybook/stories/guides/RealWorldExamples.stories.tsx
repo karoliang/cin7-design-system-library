@@ -22,7 +22,6 @@ import {
   FormLayout,
   Text,
   Heading,
-  DisplayText,
   Icon,
   Avatar,
   ProgressBar,
@@ -110,9 +109,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <DisplayText size="large" element="h1">
+      <Heading as="h1" variant="heading3xl">
         Real-World Application Examples
-      </DisplayText>
+      </Heading>
       <Text as="p" tone="subdued">
         Complete, production-ready examples showing how Cin7 DSL components work together in real applications.
       </Text>
@@ -266,7 +265,7 @@ export const EcommerceProductPage: Story = {
                         <Badge tone="success">In Stock</Badge>
                       </InlineStack>
                       <InlineStack gap="200" align="center">
-                        <DisplayText size="large">{product.price}</DisplayText>
+                        <Heading as="h1" variant="heading3xl">{product.price}</Heading>
                         <Text tone="subdued" textDecoration="line-through">{product.originalPrice}</Text>
                         <Badge tone="attention">30% OFF</Badge>
                       </InlineStack>
@@ -590,7 +589,7 @@ export const AdminDashboard: Story = {
                   <Card>
                     <BlockStack gap="200">
                       <Text as="p" tone="subdued">Total Revenue</Text>
-                      <DisplayText size="medium">{metrics.revenue.value}</DisplayText>
+                      <Heading as="h2" variant="heading2xl">{metrics.revenue.value}</Heading>
                       <InlineStack gap="200">
                         <Icon source={ChevronRightIcon} tone={metrics.revenue.trend === 'up' ? 'success' : 'critical'} />
                         <Text tone={metrics.revenue.trend === 'up' ? 'success' : 'critical'}>
@@ -603,7 +602,7 @@ export const AdminDashboard: Story = {
                   <Card>
                     <BlockStack gap="200">
                       <Text as="p" tone="subdued">Total Orders</Text>
-                      <DisplayText size="medium">{metrics.orders.value}</DisplayText>
+                      <Heading as="h2" variant="heading2xl">{metrics.orders.value}</Heading>
                       <InlineStack gap="200">
                         <Icon source={ChevronRightIcon} tone={metrics.orders.trend === 'up' ? 'success' : 'critical'} />
                         <Text tone={metrics.orders.trend === 'up' ? 'success' : 'critical'}>
@@ -616,7 +615,7 @@ export const AdminDashboard: Story = {
                   <Card>
                     <BlockStack gap="200">
                       <Text as="p" tone="subdued">Active Customers</Text>
-                      <DisplayText size="medium">{metrics.customers.value}</DisplayText>
+                      <Heading as="h2" variant="heading2xl">{metrics.customers.value}</Heading>
                       <InlineStack gap="200">
                         <Icon source={ChevronRightIcon} tone={metrics.customers.trend === 'up' ? 'success' : 'critical'} />
                         <Text tone={metrics.customers.trend === 'up' ? 'success' : 'critical'}>
@@ -629,7 +628,7 @@ export const AdminDashboard: Story = {
                   <Card>
                     <BlockStack gap="200">
                       <Text as="p" tone="subdued">Conversion Rate</Text>
-                      <DisplayText size="medium">{metrics.conversion.value}</DisplayText>
+                      <Heading as="h2" variant="heading2xl">{metrics.conversion.value}</Heading>
                       <InlineStack gap="200">
                         <Icon source={ChevronRightIcon} tone={metrics.conversion.trend === 'up' ? 'success' : 'critical'} />
                         <Text tone={metrics.conversion.trend === 'up' ? 'success' : 'critical'}>

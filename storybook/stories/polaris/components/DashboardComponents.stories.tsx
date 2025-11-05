@@ -21,7 +21,6 @@ import {
   Avatar,
   DataTable,
   Pagination,
-  SkeletonDisplayText,
   SkeletonBodyText,
   Tooltip,
   useIndexResourceState,

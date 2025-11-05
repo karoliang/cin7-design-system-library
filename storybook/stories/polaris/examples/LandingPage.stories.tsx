@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import {
-  DisplayText,
   Text,
   Badge,
   Button,
@@ -42,9 +41,9 @@ export const ProductLaunch: Story = {
         textAlign: 'center',
         borderRadius: '0 0 40px 40px'
       }}>
-        <DisplayText variant="heading4xl" element="h1">
+        <Heading as="h1" variant="heading4xl">
           Introducing Premium Pro
-        </DisplayText>
+        </Heading>
         <Text variant="bodyLg" as="p" style={{ marginTop: '16px', opacity: 0.9, maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
           The most powerful and intuitive platform for growing your business.
           Launch today and transform the way you work.
@@ -70,9 +69,9 @@ export const ProductLaunch: Story = {
         <Layout.Section>
           <div style={{ padding: '60px 0' }}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <DisplayText variant="heading2xl" element="h2">
+              <Heading as="h2" variant="heading2xl">
                 Everything You Need to Succeed
-              </DisplayText>
+              </Heading>
               <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                 Powerful features designed to help you grow faster
               </Text>
@@ -82,9 +81,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>🚀</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     Fast Performance
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Lightning-fast loading times and smooth user experience
@@ -95,9 +94,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>🔒</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     Enterprise Security
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Bank-level security with advanced encryption and
@@ -108,9 +107,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>📊</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     Advanced Analytics
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Real-time insights and detailed reports to help you
@@ -121,9 +120,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>🌍</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     Global Reach
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Multi-language support and localized features to
@@ -134,9 +133,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>🎯</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     Smart Marketing
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Built-in marketing tools to attract, engage, and
@@ -147,9 +146,9 @@ export const ProductLaunch: Story = {
               <Card sectioned>
                 <div style={{ textAlign: 'center', marginBottom: '16px' }}>
                   <div style={{ fontSize: '48px', marginBottom: '12px' }}>💬</div>
-                  <DisplayText variant="headingLg" element="h3">
+                  <Heading as="h3" variant="headingLg">
                     24/7 Support
-                  </DisplayText>
+                  </Heading>
                 </div>
                 <Text variant="bodyMd" alignment="center">
                   Expert support team available around the clock to
@@ -161,9 +160,9 @@ export const ProductLaunch: Story = {
 
           <div style={{ backgroundColor: '#f8f9fa', padding: '60px 0', margin: '0 -40px' }}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <DisplayText variant="heading2xl" element="h2">
+              <Heading as="h2" variant="heading2xl">
                 Trusted by Industry Leaders
-              </DisplayText>
+              </Heading>
               <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                 Join thousands of successful companies using our platform
               </Text>
@@ -193,9 +192,9 @@ export const ProductLaunch: Story = {
           </div>
 
           <div style={{ padding: '60px 0', textAlign: 'center' }}>
-            <DisplayText variant="heading2xl" element="h2">
+            <Heading as="h2" variant="heading2xl">
               Ready to Get Started?
-            </DisplayText>
+            </Heading>
             <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
               Join thousands of businesses already using our platform
             </Text>
@@ -304,9 +303,9 @@ export const MarketingCampaign: Story = {
           <div style={{ marginBottom: '16px' }}>
             <Badge tone="attention">Limited Time Offer</Badge>
           </div>
-          <DisplayText variant="heading4xl" element="h1">
+          <Heading as="h1" variant="heading4xl">
             Black Friday Special
-          </DisplayText>
+          </Heading>
           <Text variant="bodyLg" as="p" style={{ marginTop: '16px', opacity: 0.9, maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
             Get 50% off your first 3 months. This is our biggest sale of the year -
             don't miss out on this opportunity to transform your business.
@@ -327,9 +326,9 @@ export const MarketingCampaign: Story = {
           <Layout.Section>
             <div style={{ padding: '60px 0' }}>
               <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-                <DisplayText variant="heading2xl" element="h2">
+                <Heading as="h2" variant="heading2xl">
                   Choose Your Plan
-                </DisplayText>
+                </Heading>
                 <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                   Simple, transparent pricing with no hidden fees
                 </Text>
@@ -355,18 +354,18 @@ export const MarketingCampaign: Story = {
                       borderBottom: '1px solid #e1e3e5'
                     }}>
                       <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                        <DisplayText variant="headingLg" element="h3">
+                        <Heading as="h3" variant="headingLg">
                           {plan.name}
-                        </DisplayText>
+                        </Heading>
                         <Badge tone={plan.badgeTone as any} style={{ marginTop: '8px' }}>
                           {plan.badge}
                         </Badge>
                       </div>
 
                       <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                        <DisplayText variant="heading3xl" element="div">
+                        <Heading as="div" variant="heading3xl">
                           {plan.price}
-                        </DisplayText>
+                        </Heading>
                         <Text variant="bodySm" tone="subdued">
                           {plan.period}
                         </Text>
@@ -401,9 +400,9 @@ export const MarketingCampaign: Story = {
 
             <div style={{ backgroundColor: '#f8f9fa', padding: '60px 0', margin: '0 -40px' }}>
               <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-                <DisplayText variant="heading2xl" element="h2">
+                <Heading as="h2" variant="heading2xl">
                   Customer Success Stories
-                </DisplayText>
+                </Heading>
                 <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                   See how businesses like yours are achieving remarkable results
                 </Text>
@@ -446,9 +445,9 @@ export const MarketingCampaign: Story = {
               <div style={{ marginBottom: '16px' }}>
                 <Badge tone="critical">Limited Time</Badge>
               </div>
-              <DisplayText variant="heading2xl" element="h2">
+              <Heading as="h2" variant="heading2xl">
                 Don't Miss Out!
-              </DisplayText>
+              </Heading>
               <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                 This Black Friday offer ends in 48 hours
               </Text>
@@ -518,9 +517,9 @@ export const BusinessWebsite: Story = {
           textAlign: 'center',
           borderRadius: '0 0 60px 60px'
         }}>
-          <DisplayText variant="heading4xl" element="h1">
+          <Heading as="h1" variant="heading4xl">
             Innovate. Transform. Succeed.
-          </DisplayText>
+          </Heading>
           <Text variant="bodyLg" as="p" style={{
             marginTop: '24px',
             opacity: 0.9,
@@ -547,9 +546,9 @@ export const BusinessWebsite: Story = {
           <Layout.Section>
             <div style={{ padding: '80px 0' }}>
               <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-                <DisplayText variant="heading2xl" element="h2">
+                <Heading as="h2" variant="heading2xl">
                   Our Services
-                </DisplayText>
+                </Heading>
                 <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                   Comprehensive solutions tailored to your business needs
                 </Text>
@@ -562,9 +561,9 @@ export const BusinessWebsite: Story = {
                       <div style={{ fontSize: '56px', marginBottom: '16px' }}>
                         {service.icon}
                       </div>
-                      <DisplayText variant="headingLg" element="h3">
+                      <Heading as="h3" variant="headingLg">
                         {service.title}
-                      </DisplayText>
+                      </Heading>
                     </div>
 
                     <Text variant="bodyMd" alignment="center" style={{ marginBottom: '24px' }}>
@@ -588,9 +587,9 @@ export const BusinessWebsite: Story = {
 
             <div style={{ backgroundColor: '#f8f9fa', padding: '80px 0', margin: '0 -40px' }}>
               <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-                <DisplayText variant="heading2xl" element="h2">
+                <Heading as="h2" variant="heading2xl">
                   Why Choose Us
-                </DisplayText>
+                </Heading>
                 <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                   The numbers speak for themselves
                 </Text>
@@ -600,9 +599,9 @@ export const BusinessWebsite: Story = {
                 {stats.map((stat, index) => (
                   <Card key={index} padding="500">
                     <div style={{ textAlign: 'center' }}>
-                      <DisplayText variant="heading3xl" element="div">
+                      <Heading as="div" variant="heading3xl">
                         {stat.number}
-                      </DisplayText>
+                      </Heading>
                       <Text variant="bodySm" tone="subdued">
                         {stat.label}
                       </Text>
@@ -614,9 +613,9 @@ export const BusinessWebsite: Story = {
 
             <div style={{ padding: '80px 0' }}>
               <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-                <DisplayText variant="heading2xl" element="h2">
+                <Heading as="h2" variant="heading2xl">
                   Meet Our Team
-                </DisplayText>
+                </Heading>
                 <Text variant="bodyLg" as="p" style={{ marginTop: '16px' }}>
                   The experts behind your success
                 </Text>
@@ -627,9 +626,9 @@ export const BusinessWebsite: Story = {
                   <Card key={index} padding="400">
                     <div style={{ textAlign: 'center' }}>
                       <Avatar size="large" initials={member.initials} style={{ marginBottom: '16px' }} />
-                      <DisplayText variant="headingMd" element="h3">
+                      <Heading as="h3" variant="headingMd">
                         {member.name}
-                      </DisplayText>
+                      </Heading>
                       <Text variant="bodySm" tone="subdued">
                         {member.role}
                       </Text>
@@ -647,9 +646,9 @@ export const BusinessWebsite: Story = {
               borderRadius: '60px 60px 0 0',
               margin: '0 -40px'
             }}>
-              <DisplayText variant="heading2xl" element="h2">
+              <Heading as="h2" variant="heading2xl">
                 Ready to Transform Your Business?
-              </DisplayText>
+              </Heading>
               <Text variant="bodyLg" as="p" style={{ marginTop: '16px', opacity: 0.9 }}>
                 Let's discuss how we can help you achieve your goals
               </Text>
