@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ActionList, Button, Popover, Icon } from '@shopify/polaris';
-import { SearchMinor, SettingsMinor, ExportMinor, DuplicateMinor, DeleteMinor, EditMinor, ViewIcon, CircleTickMinor, CircleDisabledMinor } from '@shopify/polaris-icons';
+import { SearchIcon, SettingsIcon, ExportIcon, DuplicateIcon, DeleteIcon, EditIcon, ViewIcon, CheckCircleIcon, DisabledIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
 const meta = {
@@ -47,9 +47,9 @@ export const Default: Story = {
   args: {
     items: [
       { content: 'View product', icon: ViewIcon },
-      { content: 'Edit product', icon: EditMinor },
-      { content: 'Duplicate product', icon: DuplicateMinor },
-      { content: 'Delete product', icon: DeleteMinor, destructive: true },
+      { content: 'Edit product', icon: EditIcon },
+      { content: 'Duplicate product', icon: DuplicateIcon },
+      { content: 'Delete product', icon: DeleteIcon, destructive: true },
     ],
   },
 };
@@ -78,9 +78,9 @@ export const WithActions: Story = {
           <ActionList
             items={[
               { content: 'View details', icon: ViewIcon, onAction: () => console.log('View clicked') },
-              { content: 'Edit', icon: EditMinor, onAction: () => console.log('Edit clicked') },
-              { content: 'Duplicate', icon: DuplicateMinor, onAction: () => console.log('Duplicate clicked') },
-              { content: 'Delete', icon: DeleteMinor, destructive: true, onAction: () => console.log('Delete clicked') },
+              { content: 'Edit', icon: EditIcon, onAction: () => console.log('Edit clicked') },
+              { content: 'Duplicate', icon: DuplicateIcon, onAction: () => console.log('Duplicate clicked') },
+              { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => console.log('Delete clicked') },
             ]}
           />
         </Popover>
@@ -96,22 +96,22 @@ export const WithSections: Story = {
         title: 'Product actions',
         items: [
           { content: 'View product', icon: ViewIcon },
-          { content: 'Edit product', icon: EditMinor },
-          { content: 'Duplicate product', icon: DuplicateMinor },
+          { content: 'Edit product', icon: EditIcon },
+          { content: 'Duplicate product', icon: DuplicateIcon },
         ],
       },
       {
         title: 'Inventory',
         items: [
-          { content: 'Adjust inventory', icon: SettingsMinor },
-          { content: 'View history', icon: SearchMinor },
+          { content: 'Adjust inventory', icon: SettingsIcon },
+          { content: 'View history', icon: SearchIcon },
         ],
       },
       {
         title: 'Danger zone',
         items: [
-          { content: 'Delete product', icon: DeleteMinor, destructive: true },
-          { content: 'Archive product', icon: CircleDisabledMinor, destructive: true },
+          { content: 'Delete product', icon: DeleteIcon, destructive: true },
+          { content: 'Archive product', icon: DisabledIcon, destructive: true },
         ],
       },
     ],
@@ -122,9 +122,9 @@ export const WithDisabledItems: Story = {
   args: {
     items: [
       { content: 'Available action', icon: ViewIcon },
-      { content: 'Disabled action', icon: EditMinor, disabled: true },
-      { content: 'Another action', icon: DuplicateMinor },
-      { content: 'Also disabled', icon: SettingsMinor, disabled: true },
+      { content: 'Disabled action', icon: EditIcon, disabled: true },
+      { content: 'Another action', icon: DuplicateIcon },
+      { content: 'Also disabled', icon: SettingsIcon, disabled: true },
     ],
   },
 };
@@ -146,12 +146,12 @@ export const WithPrefixAndSuffix: Story = {
     items: [
       {
         content: 'Active status',
-        prefix: <Icon source={CircleTickMinor} color="success" />,
+        prefix: <Icon source={CheckCircleIcon} color="success" />,
         suffix: 'Enabled'
       },
       {
         content: 'Inactive status',
-        prefix: <Icon source={CircleDisabledMinor} color="subdued" />,
+        prefix: <Icon source={DisabledIcon} color="subdued" />,
         suffix: 'Disabled'
       },
       {
@@ -166,9 +166,9 @@ export const WithPrefixAndSuffix: Story = {
 export const WithDestructiveActions: Story = {
   args: {
     items: [
-      { content: 'Safe action', icon: EditMinor },
-      { content: 'Warning action', icon: SettingsMinor, destructive: true },
-      { content: 'Delete permanently', icon: DeleteMinor, destructive: true },
+      { content: 'Safe action', icon: EditIcon },
+      { content: 'Warning action', icon: SettingsIcon, destructive: true },
+      { content: 'Delete permanently', icon: DeleteIcon, destructive: true },
       { content: 'Remove access', destructive: true },
     ],
   },
@@ -221,17 +221,17 @@ export const NestedMenuExample: Story = {
             items={[
               {
                 content: 'Products',
-                icon: SearchMinor,
+                icon: SearchIcon,
                 onAction: () => setActiveMenu(activeMenu === 'products' ? null : 'products'),
               },
               {
                 content: 'Orders',
-                icon: ExportMinor,
+                icon: ExportIcon,
                 onAction: () => setActiveMenu(activeMenu === 'orders' ? null : 'orders'),
               },
               {
                 content: 'Customers',
-                icon: SettingsMinor,
+                icon: SettingsIcon,
                 onAction: () => setActiveMenu(activeMenu === 'customers' ? null : 'customers'),
               },
             ]}
@@ -295,10 +295,10 @@ export const BulkActionsExample: Story = {
     };
 
     const bulkActions = [
-      { content: 'Edit selected', icon: EditMinor, onAction: () => handleBulkAction('edit') },
-      { content: 'Duplicate selected', icon: DuplicateMinor, onAction: () => handleBulkAction('duplicate') },
+      { content: 'Edit selected', icon: EditIcon, onAction: () => handleBulkAction('edit') },
+      { content: 'Duplicate selected', icon: DuplicateIcon, onAction: () => handleBulkAction('duplicate') },
       { content: 'Archive selected', onAction: () => handleBulkAction('archive') },
-      { content: 'Delete selected', icon: DeleteMinor, destructive: true, onAction: () => handleBulkAction('delete') },
+      { content: 'Delete selected', icon: DeleteIcon, destructive: true, onAction: () => handleBulkAction('delete') },
     ];
 
     return (
@@ -401,9 +401,9 @@ export const ContextMenuExample: Story = {
 
     const contextActions = [
       { content: 'View details', icon: ViewIcon, onAction: () => handleAction('View details') },
-      { content: 'Edit', icon: EditMinor, onAction: () => handleAction('Edit') },
-      { content: 'Duplicate', icon: DuplicateMinor, onAction: () => handleAction('Duplicate') },
-      { content: 'Delete', icon: DeleteMinor, destructive: true, onAction: () => handleAction('Delete') },
+      { content: 'Edit', icon: EditIcon, onAction: () => handleAction('Edit') },
+      { content: 'Duplicate', icon: DuplicateIcon, onAction: () => handleAction('Duplicate') },
+      { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => handleAction('Delete') },
     ];
 
     return (
