@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useEffect, useRef } from 'react';
-import { ButtonComponent } from '@cin7/vanilla-js';
+import { ButtonComponent } from '../../../../packages/vanilla-js/src';
 
 // React wrapper for vanilla JS Button component
 const VanillaButtonWrapper: React.FC<{

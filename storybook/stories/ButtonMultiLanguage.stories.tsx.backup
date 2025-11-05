@@ -1,0 +1,306 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button } from '@shopify/polaris';
+import { ButtonComponent } from '../../../../packages/vanilla-js/src';
+
+// Vanilla JS React Wrapper
+const VanillaButtonWrapper: React.FC<{
+  label: string;
+  variant?: 'primary' | 'secondary' | 'plain' | 'critical';
+  onClick?: () => void;
+}> = ({ label, variant = 'primary', onClick }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<ButtonComponent | null>(null);
+
+  useEffect(() => {
+    if (containerRef.current && !buttonRef.current) {
+      buttonRef.current = new ButtonComponent({
+        label,
+        variant,
+        onClick,
+      });
+      buttonRef.current.mount(containerRef.current);
+    }
+
+    return () => {
+      if (buttonRef.current) {
+        buttonRef.current.destroy();
+        buttonRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.setLabel(label);
+    }
+  }, [label]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.setVariant(variant);
+    }
+  }, [variant]);
+
+  return <div ref={containerRef} style={{ display: 'inline-block' }} />;
+};
+
+// ExtJS Mock (for demonstration)
+const ExtJSButtonWrapper: React.FC<{
+  text: string;
+  handler?: () => void;
+}> = ({ text, handler }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Simulate ExtJS component mounting
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  return (
+    <button
+      style={{
+        padding: '8px 16px',
+        backgroundColor: '#006fbb',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontFamily: 'Arial, sans-serif',
+        opacity: mounted ? 1 : 0.7,
+      }}
+      onClick={handler}
+      disabled={!mounted}
+    >
+      {mounted ? `ExtJS: ${text}` : 'Loading ExtJS...'}
+    </button>
+  );
+};
+
+// TypeScript Pattern Component
+const TypeSafeButton: React.FC<{
+  label: string;
+  variant: 'primary' | 'secondary' | 'critical';
+  onClick: (event: React.MouseEvent) => void;
+  disabled?: boolean;
+  loading?: boolean;
+}> = ({ label, variant, onClick, disabled = false, loading = false }) => {
+  const getVariantStyles = (variant: string) => {
+    switch (variant) {
+      case 'primary':
+        return { backgroundColor: '#006fbb', color: 'white' };
+      case 'secondary':
+        return { backgroundColor: '#f3f4f6', color: '#202223', border: '1px solid #d1d5db' };
+      case 'critical':
+        return { backgroundColor: '#ef4444', color: 'white' };
+      default:
+        return { backgroundColor: '#6b7280', color: 'white' };
+    }
+  };
+
+  return (
+    <button
+      style={{
+        padding: '8px 16px',
+        borderRadius: '4px',
+        border: 'none',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled || loading ? 0.6 : 1,
+        fontSize: '14px',
+        fontFamily: 'system-ui, sans-serif',
+        ...getVariantStyles(variant),
+      }}
+      onClick={onClick}
+      disabled={disabled || loading}
+    >
+      {loading ? 'Loading...' : `TS: ${label}`}
+    </button>
+  );
+};
+
+const meta = {
+  title: 'Polaris/Multi-Language/Button',
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component: 'Comprehensive multi-language implementation of the Button component showing React, Vanilla JS, ExtJS, and TypeScript patterns. This demonstrates how the same UI component can be implemented across different layers of the Cin7 DSL framework.',
+      },
+    },
+  },
+  tags: ['autodocs'],
+} satisfies Meta;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const ReactImplementation: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <h3>React (Polaris) Implementation</h3>
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <Button>Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="critical">Critical</Button>
+        <Button disabled>Disabled</Button>
+      </div>
+    </div>
+  ),
+};
+
+export const VanillaJSImplementation: Story = {
+  render: () => {
+    const [clickCount, setClickCount] = useState(0);
+
+    const handleVanillaClick = () => {
+      setClickCount(prev => prev + 1);
+    };
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h3>Vanilla JS Implementation</h3>
+        <p>Click count: {clickCount}</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <VanillaButtonWrapper
+            label="Primary"
+            variant="primary"
+            onClick={handleVanillaClick}
+          />
+          <VanillaButtonWrapper
+            label="Secondary"
+            variant="secondary"
+            onClick={handleVanillaClick}
+          />
+          <VanillaButtonWrapper
+            label="Critical"
+            variant="critical"
+            onClick={handleVanillaClick}
+          />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const ExtJSImplementation: Story = {
+  render: () => {
+    const [message, setMessage] = useState('');
+
+    const handleExtJSClick = (action: string) => {
+      setMessage(`ExtJS button clicked: ${action}`);
+    };
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h3>ExtJS Implementation</h3>
+        {message && <p style={{ color: '#006fbb' }}>{message}</p>}
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <ExtJSButtonWrapper text="Save" handler={() => handleExtJSClick('Save')} />
+          <ExtJSButtonWrapper text="Cancel" handler={() => handleExtJSClick('Cancel')} />
+          <ExtJSButtonWrapper text="Delete" handler={() => handleExtJSClick('Delete')} />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const TypeScriptImplementation: Story = {
+  render: () => {
+    const [loading, setLoading] = useState(false);
+
+    const handleTypeSafeClick = async (event: React.MouseEvent) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      setLoading(true);
+
+      // Simulate async operation with type safety
+      await new Promise<void>(resolve => {
+        setTimeout(() => {
+          console.log(`Type-safe click on: ${button.textContent}`);
+          resolve();
+        }, 1000);
+      });
+
+      setLoading(false);
+    };
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h3>TypeScript Implementation</h3>
+        <p>Type-safe implementation with proper event handling</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <TypeSafeButton
+            label="Submit"
+            variant="primary"
+            onClick={handleTypeSafeClick}
+            loading={loading}
+          />
+          <TypeSafeButton
+            label="Reset"
+            variant="secondary"
+            onClick={() => console.log('Reset clicked')}
+          />
+          <TypeSafeButton
+            label="Remove"
+            variant="critical"
+            onClick={() => console.log('Remove clicked')}
+          />
+        </div>
+      </div>
+    );
+  },
+};
+
+export const SideBySideComparison: Story = {
+  render: () => {
+    const [reactClicks, setReactClicks] = useState(0);
+    const [vanillaClicks, setVanillaClicks] = useState(0);
+    const [extJSClicks, setExtJSClicks] = useState(0);
+    const [tsClicks, setTsClicks] = useState(0);
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <h3>Side-by-Side Comparison</h3>
+        <p>Click any button to see implementation-specific behavior</p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+          <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
+            <h4 style={{ margin: '0 0 12px 0', color: '#006fbb' }}>React</h4>
+            <p>Clicks: {reactClicks}</p>
+            <Button onClick={() => setReactClicks(prev => prev + 1)}>
+              React Button
+            </Button>
+          </div>
+
+          <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
+            <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>Vanilla JS</h4>
+            <p>Clicks: {vanillaClicks}</p>
+            <VanillaButtonWrapper
+              label="Vanilla Button"
+              onClick={() => setVanillaClicks(prev => prev + 1)}
+            />
+          </div>
+
+          <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
+            <h4 style={{ margin: '0 0 12px 0', color: '#7c3aed' }}>ExtJS</h4>
+            <p>Clicks: {extJSClicks}</p>
+            <ExtJSButtonWrapper
+              text="ExtJS Button"
+              handler={() => setExtJSClicks(prev => prev + 1)}
+            />
+          </div>
+
+          <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
+            <h4 style={{ margin: '0 0 12px 0', color: '#dc2626' }}>TypeScript</h4>
+            <p>Clicks: {tsClicks}</p>
+            <TypeSafeButton
+              label="TypeScript Button"
+              variant="primary"
+              onClick={() => setTsClicks(prev => prev + 1)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  },
+};
