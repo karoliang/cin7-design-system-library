@@ -10,7 +10,6 @@ import {
   Layout,
   Page,
   Text,
-  Heading,
   TextField,
   Select,
   DataTable,
@@ -40,19 +39,19 @@ import {
   SettingsIcon,
   ChevronRightIcon,
   InfoIcon,
-  HelpIcon,
-  ShoppingCartIcon,
+  QuestionCircleIcon,
+  CartIcon,
   PackageIcon,
-  CustomersIcon,
-  AnalyticsIcon,
+  PersonIcon,
+  ChartBarIcon,
   MobileIcon,
   DesktopIcon,
   CreditCardIcon,
   ExportIcon,
   ImportIcon,
   RefreshIcon,
-  TickIcon,
-  AlertIcon,
+  CheckIcon,
+  AlertMajorIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -83,9 +82,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <Heading as="h1" variant="heading3xl">
+      <Text variant="heading3xl" as="h1">
         Component Selection Guide
-      </Heading>
+      </Text>
       <Text as="p" tone="subdued">
         Learn when to use different components and make informed design decisions.
       </Text>
@@ -94,7 +93,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={EditIcon} size="large" />
-            <Heading>Button Choices</Heading>
+            <Text variant="headingMd" as="h3">Button Choices</Text>
             <Text>Button vs ButtonGroup vs ButtonFrom</Text>
             <Badge tone="info">3 Variants</Badge>
           </BlockStack>
@@ -103,7 +102,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={Grid} size="large" />
-            <Heading>Layout Options</Heading>
+            <Text variant="headingMd" as="h3">Layout Options</Text>
             <Text>Stack vs Grid vs Layout</Text>
             <Badge tone="info">3 Options</Badge>
           </BlockStack>
@@ -112,7 +111,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={Text} size="large" />
-            <Heading>Text Components</Heading>
+            <Text variant="headingMd" as="h3">Text Components</Text>
             <Text>Text vs DisplayText vs Heading</Text>
             <Badge tone="info">3 Types</Badge>
           </BlockStack>
@@ -121,7 +120,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={List} size="large" />
-            <Heading>Data Display</Heading>
+            <Text variant="headingMd" as="h3">Data Display</Text>
             <Text>Table vs List vs ResourceList</Text>
             <Badge tone="info">3 Components</Badge>
           </BlockStack>
@@ -129,8 +128,8 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={AlertIcon} size="large" />
-            <Heading>User Feedback</Heading>
+            <Icon source={AlertMajorIcon} size="large" />
+            <Text variant="headingMd" as="h3">User Feedback</Text>
             <Text>Banner vs Toast vs CalloutCard</Text>
             <Badge tone="info">3 Methods</Badge>
           </BlockStack>
@@ -139,7 +138,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={Navigation} size="large" />
-            <Heading>Navigation</Heading>
+            <Text variant="headingMd" as="h3">Navigation</Text>
             <Text>Tabs vs Navigation vs Breadcrumbs</Text>
             <Badge tone="info">3 Types</Badge>
           </BlockStack>
@@ -152,7 +151,7 @@ export const Overview: Story = {
 export const ButtonSelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Button Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">Button Component Selection</Text>
       <Text as="p">
         Choose the right button component for your specific use case.
       </Text>
@@ -162,7 +161,7 @@ export const ButtonSelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Button</Heading>
+            <Text variant="headingXl" as="h3">Button</Text>
             <Text as="p" tone="subdued">
               The standard button component for most use cases.
             </Text>
@@ -196,7 +195,7 @@ export const ButtonSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">ButtonGroup</Heading>
+            <Text variant="headingXl" as="h3">ButtonGroup</Text>
             <Text as="p" tone="subdued">
               Groups related buttons together with proper spacing.
             </Text>
@@ -230,7 +229,7 @@ export const ButtonSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">ButtonFrom</Heading>
+            <Text variant="headingXl" as="h3">ButtonFrom</Text>
             <Text as="p" tone="subdued">
               Creates buttons from action objects, useful for dynamic interfaces.
             </Text>
@@ -273,7 +272,7 @@ export const ButtonSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Decision Guide</Heading>
+            <Text variant="headingXl" as="h3">Decision Guide</Text>
             <Text as="p" tone="subdued">
               Quick reference for choosing the right button component.
             </Text>
@@ -316,7 +315,7 @@ export const ButtonSelection: Story = {
 export const LayoutSelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Layout Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">Layout Component Selection</Text>
       <Text as="p">
         Choose the right layout component to structure your content effectively.
       </Text>
@@ -326,7 +325,7 @@ export const LayoutSelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">BlockStack & InlineStack</Heading>
+            <Text variant="headingXl" as="h3">BlockStack & InlineStack</Text>
             <Text as="p" tone="subdued">
               1D layout components for arranging items in a single direction.
             </Text>
@@ -372,7 +371,7 @@ export const LayoutSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Grid</Heading>
+            <Text variant="headingXl" as="h3">Grid</Text>
             <Text as="p" tone="subdued">
               2D layout component for complex arrangements with rows and columns.
             </Text>
@@ -409,7 +408,7 @@ export const LayoutSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Layout</Heading>
+            <Text variant="headingXl" as="h3">Layout</Text>
             <Text as="p" tone="subdued">
               Fixed-width layout system for admin interfaces with sidebars.
             </Text>
@@ -445,7 +444,7 @@ export const LayoutSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Layout Decision Matrix</Heading>
+            <Text variant="headingXl" as="h3">Layout Decision Matrix</Text>
             <Text as="p" tone="subdued">
               Choose the right layout based on your requirements.
             </Text>
@@ -501,7 +500,7 @@ export const LayoutSelection: Story = {
 export const TextComponentSelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Text Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">Text Component Selection</Text>
       <Text as="p">
         Choose the right text component for proper hierarchy and readability.
       </Text>
@@ -511,7 +510,7 @@ export const TextComponentSelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">DisplayText</Heading>
+            <Text variant="headingXl" as="h3">DisplayText</Text>
             <Text as="p" tone="subdued">
               Large, prominent text for page titles and hero content.
             </Text>
@@ -529,9 +528,9 @@ export const TextComponentSelection: Story = {
             <BlockStack gap="200">
               <Text fontWeight="semibold">Sizes Available:</Text>
               <BlockStack gap="100">
-                <Heading as="h3" variant="headingXl">Small Display Text</Heading>
-                <Heading as="h2" variant="heading2xl">Medium Display Text</Heading>
-                <Heading as="h1" variant="heading3xl">Large Display Text</Heading>
+                <Text variant="headingXl" as="h3">Small Display Text</Text>
+                <Text variant="heading2xl" as="h2">Medium Display Text</Text>
+                <Text variant="heading3xl" as="h1">Large Display Text</Text>
               </BlockStack>
             </BlockStack>
 
@@ -545,7 +544,7 @@ export const TextComponentSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Heading</Heading>
+            <Text variant="headingXl" as="h3">Heading</Text>
             <Text as="p" tone="subdued">
               Semantic heading components for content structure.
             </Text>
@@ -563,10 +562,10 @@ export const TextComponentSelection: Story = {
             <BlockStack gap="200">
               <Text fontWeight="semibold">Heading Levels:</Text>
               <BlockStack gap="100">
-                <Heading level="1">Heading Level 1</Heading>
-                <Heading level="2">Heading Level 2</Heading>
-                <Heading level="3">Heading Level 3</Heading>
-                <Heading level="4">Heading Level 4</Heading>
+                <Text variant="heading3xl" as="h1">Heading Level 1</Text>
+                <Text variant="heading2xl" as="h2">Heading Level 2</Text>
+                <Text variant="headingXl" as="h3">Heading Level 3</Text>
+                <Text variant="headingLg" as="h4">Heading Level 4</Text>
               </BlockStack>
             </BlockStack>
 
@@ -580,7 +579,7 @@ export const TextComponentSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Text</Heading>
+            <Text variant="headingXl" as="h3">Text</Text>
             <Text as="p" tone="subdued">
               General-purpose text component for body content and labels.
             </Text>
@@ -615,7 +614,7 @@ export const TextComponentSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Typography Hierarchy Guide</Heading>
+            <Text variant="headingXl" as="h3">Typography Hierarchy Guide</Text>
             <Text as="p" tone="subdued">
               Follow this hierarchy for consistent text styling.
             </Text>
@@ -655,7 +654,7 @@ export const TextComponentSelection: Story = {
 export const DataDisplaySelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Data Display Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">Data Display Component Selection</Text>
       <Text as="p">
         Choose the right component for presenting your data effectively.
       </Text>
@@ -665,7 +664,7 @@ export const DataDisplaySelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">DataTable</Heading>
+            <Text variant="headingXl" as="h3">DataTable</Text>
             <Text as="p" tone="subdued">
               Structured tabular data with sorting and filtering capabilities.
             </Text>
@@ -703,7 +702,7 @@ export const DataDisplaySelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">List</Heading>
+            <Text variant="headingXl" as="h3">List</Text>
             <Text as="p" tone="subdued">
               Simple ordered or unordered collections of items.
             </Text>
@@ -737,7 +736,7 @@ export const DataDisplaySelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">ResourceList</Heading>
+            <Text variant="headingXl" as="h3">ResourceList</Text>
             <Text as="p" tone="subdued">
               Rich list items with media, actions, and complex layouts.
             </Text>
@@ -777,7 +776,7 @@ export const DataDisplaySelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Data Display Decision Guide</Heading>
+            <Text variant="headingXl" as="h3">Data Display Decision Guide</Text>
             <Text as="p" tone="subdued">
               Choose based on data complexity and user needs.
             </Text>
@@ -833,7 +832,7 @@ export const DataDisplaySelection: Story = {
 export const FeedbackSelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">User Feedback Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">User Feedback Component Selection</Text>
       <Text as="p">
         Choose the right feedback component for your message and context.
       </Text>
@@ -843,7 +842,7 @@ export const FeedbackSelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Banner</Heading>
+            <Text variant="headingXl" as="h3">Banner</Text>
             <Text as="p" tone="subdued">
               Prominent messages that require user attention.
             </Text>
@@ -875,7 +874,7 @@ export const FeedbackSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Toast</Heading>
+            <Text variant="headingXl" as="h3">Toast</Text>
             <Text as="p" tone="subdued">
               Temporary notifications that appear briefly and auto-dismiss.
             </Text>
@@ -910,7 +909,7 @@ export const FeedbackSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">CalloutCard</Heading>
+            <Text variant="headingXl" as="h3">CalloutCard</Text>
             <Text as="p" tone="subdued">
               Promotional or informational cards with visual appeal.
             </Text>
@@ -949,7 +948,7 @@ export const FeedbackSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Feedback Decision Guide</Heading>
+            <Text variant="headingXl" as="h3">Feedback Decision Guide</Text>
             <Text as="p" tone="subdued">
               Choose based on urgency, importance, and user action requirements.
             </Text>
@@ -1005,7 +1004,7 @@ export const FeedbackSelection: Story = {
 export const NavigationSelection: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Navigation Component Selection</Heading>
+      <Text variant="heading3xl" as="h1">Navigation Component Selection</Text>
       <Text as="p">
         Choose the right navigation component for your application structure.
       </Text>
@@ -1015,7 +1014,7 @@ export const NavigationSelection: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Tabs</Heading>
+            <Text variant="headingXl" as="h3">Tabs</Text>
             <Text as="p" tone="subdued">
               Switch between related views within the same context.
             </Text>
@@ -1053,7 +1052,7 @@ export const NavigationSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Navigation</Heading>
+            <Text variant="headingXl" as="h3">Navigation</Text>
             <Text as="p" tone="subdued">
               Main navigation component for application-wide menus.
             </Text>
@@ -1088,7 +1087,7 @@ export const NavigationSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Breadcrumbs</Heading>
+            <Text variant="headingXl" as="h3">Breadcrumbs</Text>
             <Text as="p" tone="subdued">
               Show user's location and provide easy navigation back.
             </Text>
@@ -1125,7 +1124,7 @@ export const NavigationSelection: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Navigation Decision Guide</Heading>
+            <Text variant="headingXl" as="h3">Navigation Decision Guide</Text>
             <Text as="p" tone="subdued">
               Choose based on navigation scope and user context.
             </Text>

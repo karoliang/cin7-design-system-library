@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Collapsible, Button, Card, Text, InlineStack, BlockStack } from '@shopify/polaris';
-import { ChevronDownMinor, ChevronUpMinor } from '@shopify/polaris-icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {

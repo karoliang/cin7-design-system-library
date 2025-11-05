@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ActionMenu, Button, Popover, Text } from '@shopify/polaris';
-import { MoreHorizontalIcon, EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon, ViewIcon } from '@shopify/polaris-icons';
+import { MenuHorizontalIcon, EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon, ViewIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
@@ -97,7 +97,7 @@ export const WithIconButtonActivator: Story = {
       },
     ],
     activator: (
-      <Button size="slim" icon={MoreHorizontalIcon} />
+      <Button size="slim" icon={MenuHorizontalIcon} />
     ),
   },
 };
@@ -415,7 +415,7 @@ export const ContextualUsage: Story = {
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <Text color="subdued">{item.status}</Text>
                 <ActionMenu
-                  activator={<Button size="slim" icon={MoreHorizontalIcon} />}
+                  activator={<Button size="slim" icon={MenuHorizontalIcon} />}
                   actions={[
                     {
                       content: 'Edit',

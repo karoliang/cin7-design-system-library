@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FooterHelp, Button, Card, InlineStack, BlockStack, Text, Icon } from '@shopify/polaris';
-import { QuestionMarkMajor, InfoMajor, ExternalMinor } from '@shopify/polaris-icons';
+import { QuestionCircleIcon, InfoIcon, ExternalIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
@@ -70,7 +70,7 @@ export const WithIcon: Story = {
         </div>
         <FooterHelp>
           <InlineStack gap="200" align="center">
-            <Icon source={QuestionMarkMajor} tone="base" />
+            <Icon source={QuestionCircleIcon} tone="base" />
             <Text as="span">Need help configuring your store? Check our setup guide for step-by-step instructions.</Text>
           </InlineStack>
         </FooterHelp>
@@ -146,12 +146,12 @@ export const InteractiveHelp: Story = {
       billing: {
         text: 'Questions about your subscription, invoices, or payment methods?',
         link: 'Billing documentation',
-        icon: InfoMajor
+        icon: InfoIcon
       },
       technical: {
         text: 'Need technical assistance with API integrations or custom code?',
         link: 'Developer resources',
-        icon: ExternalMinor
+        icon: ExternalIcon
       }
     };
 

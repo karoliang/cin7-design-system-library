@@ -21,7 +21,6 @@ import {
   SkeletonBodyText,
   FormLayout,
   Text,
-  Heading,
   Icon,
   Form,
 } from '@shopify/polaris';
@@ -31,7 +30,7 @@ import {
   DeleteIcon,
   ViewIcon,
   AlertIcon,
-  TickIcon,
+  CheckIcon,
   SearchIcon,
   FilterIcon,
 } from '@shopify/polaris-icons';
@@ -57,9 +56,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <Heading as="h1" variant="heading3xl">
+      <Text variant="heading3xl" as="h1">
         Common Usage Patterns
-      </Heading>
+      </Text>
       <Text as="p" tone="subdued">
         Learn how to combine Cin7 DSL components to build effective user interfaces.
       </Text>
@@ -68,7 +67,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={EditIcon} size="large" />
-            <Heading>Form Patterns</Heading>
+            <Text variant="headingMd" as="h3">Form Patterns</Text>
             <Text>Complete form layouts with validation</Text>
             <Badge tone="info">6 Patterns</Badge>
           </BlockStack>
@@ -77,7 +76,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={ViewIcon} size="large" />
-            <Heading>Dashboard Patterns</Heading>
+            <Text variant="headingMd" as="h3">Dashboard Patterns</Text>
             <Text>Data visualization and metrics</Text>
             <Badge tone="info">4 Patterns</Badge>
           </BlockStack>
@@ -86,7 +85,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={FilterIcon} size="large" />
-            <Heading>Table Patterns</Heading>
+            <Text variant="headingMd" as="h3">Table Patterns</Text>
             <Text>Data tables with sorting, filtering</Text>
             <Badge tone="info">5 Patterns</Badge>
           </BlockStack>
@@ -95,7 +94,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={AlertIcon} size="large" />
-            <Heading>Modal Patterns</Heading>
+            <Text variant="headingMd" as="h3">Modal Patterns</Text>
             <Text>Dialogs, confirmations, wizards</Text>
             <Badge tone="info">4 Patterns</Badge>
           </BlockStack>
@@ -104,7 +103,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={SearchIcon} size="large" />
-            <Heading>Navigation Patterns</Heading>
+            <Text variant="headingMd" as="h3">Navigation Patterns</Text>
             <Text>Tabs, breadcrumbs, menus</Text>
             <Badge tone="info">3 Patterns</Badge>
           </BlockStack>
@@ -113,7 +112,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={Spinner} size="large" />
-            <Heading>Loading Patterns</Heading>
+            <Text variant="headingMd" as="h3">Loading Patterns</Text>
             <Text>Skeleton states and progress</Text>
             <Badge tone="info">3 Patterns</Badge>
           </BlockStack>
@@ -157,7 +156,7 @@ export const FormPatterns: Story = {
             <Layout.Section>
               <Card>
                 <BlockStack gap="400">
-                  <Heading element="h2">Product Information</Heading>
+                  <Text variant="heading2xl" as="h2">Product Information</Text>
 
                   <FormLayout>
                     <TextField
@@ -212,7 +211,7 @@ export const FormPatterns: Story = {
             <Layout.Section variant="oneThird">
               <Card sectioned>
                 <BlockStack gap="400">
-                  <Heading element="h3">Form Guidelines</Heading>
+                  <Text variant="headingXl" as="h3">Form Guidelines</Text>
                   <Text as="p">
                     Complete all required fields marked with an asterisk (*).
                   </Text>
@@ -246,7 +245,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Revenue</Text>
-                  <Heading as="h2" variant="heading2xl">$45,231</Heading>
+                  <Text variant="heading2xl" as="h2">$45,231</Text>
                   <Text tone="success">↑ 12% from last month</Text>
                 </BlockStack>
               </Card>
@@ -254,7 +253,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Orders</Text>
-                  <Heading as="h2" variant="heading2xl">1,248</Heading>
+                  <Text variant="heading2xl" as="h2">1,248</Text>
                   <Text tone="success">↑ 8% from last month</Text>
                 </BlockStack>
               </Card>
@@ -262,7 +261,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Active Products</Text>
-                  <Heading as="h2" variant="heading2xl">523</Heading>
+                  <Text variant="heading2xl" as="h2">523</Text>
                   <Text tone="subdued">→ No change</Text>
                 </BlockStack>
               </Card>
@@ -270,7 +269,7 @@ export const DashboardPatterns: Story = {
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Conversion Rate</Text>
-                  <Heading as="h2" variant="heading2xl">3.2%</Heading>
+                  <Text variant="heading2xl" as="h2">3.2%</Text>
                   <Text tone="critical">↓ 2% from last month</Text>
                 </BlockStack>
               </Card>
@@ -281,7 +280,7 @@ export const DashboardPatterns: Story = {
             <Card>
               <BlockStack gap="400">
                 <InlineStack align="space-between">
-                  <Heading element="h2">Recent Orders</Heading>
+                  <Text variant="heading2xl" as="h2">Recent Orders</Text>
                   <Button variant="plain">View all</Button>
                 </InlineStack>
 
@@ -414,7 +413,7 @@ export const ModalPatterns: Story = {
           <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap="400">
             <Card sectioned>
               <BlockStack gap="400">
-                <Heading element="h3">Confirmation Modal</Heading>
+                <Text variant="headingXl" as="h3">Confirmation Modal</Text>
                 <Text as="p">
                   For critical actions that require user confirmation.
                 </Text>
@@ -429,7 +428,7 @@ export const ModalPatterns: Story = {
 
             <Card sectioned>
               <BlockStack gap="400">
-                <Heading element="h3">Form Modal</Heading>
+                <Text variant="headingXl" as="h3">Form Modal</Text>
                 <Text as="p">
                   For quick data entry without navigation.
                 </Text>
@@ -441,7 +440,7 @@ export const ModalPatterns: Story = {
 
             <Card sectioned>
               <BlockStack gap="400">
-                <Heading element="h3">Wizard Modal</Heading>
+                <Text variant="headingXl" as="h3">Wizard Modal</Text>
                 <Text as="p">
                   For multi-step processes.
                 </Text>
@@ -486,7 +485,7 @@ export const LoadingPatterns: Story = {
         <Grid columns={{ sm: 1, md: 2 }} gap="400">
           <Card sectioned>
             <BlockStack gap="400">
-              <Heading element="h3">Page Loading</Heading>
+              <Text variant="headingXl" as="h3">Page Loading</Text>
               <Text as="p">
                 Skeleton pages provide structure while data loads.
               </Text>
@@ -496,7 +495,7 @@ export const LoadingPatterns: Story = {
 
           <Card sectioned>
             <BlockStack gap="400">
-              <Heading element="h3">Progress Loading</Heading>
+              <Text variant="headingXl" as="h3">Progress Loading</Text>
               <Text as="p">
                 Progress bars for operations with known duration.
               </Text>
@@ -506,7 +505,7 @@ export const LoadingPatterns: Story = {
 
           <Card sectioned>
             <BlockStack gap="400">
-              <Heading element="h3">Inline Loading</Heading>
+              <Text variant="headingXl" as="h3">Inline Loading</Text>
               <Text as="p">
                 Spinners for quick operations.
               </Text>
@@ -519,7 +518,7 @@ export const LoadingPatterns: Story = {
 
           <Card sectioned>
             <BlockStack gap="400">
-              <Heading element="h3">Button Loading</Heading>
+              <Text variant="headingXl" as="h3">Button Loading</Text>
               <Text as="p">
                 Loading states on buttons prevent duplicate actions.
               </Text>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DescriptionList, Card, BlockStack, InlineStack, Badge, Button, Icon, Avatar, Text } from '@shopify/polaris';
-import { CustomerMajor, PackageMajor, CurrencyDollarMajor, ClockMajor, LocationMinor, EmailMinor, PhoneMinor } from '@shopify/polaris-icons';
+import { PersonIcon, PackageIcon, CashDollarIcon, ClockIcon, LocationIcon, EmailIcon, PhoneIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
@@ -153,7 +153,7 @@ export const WithIcons: Story = {
       {
         term: (
           <InlineStack gap="200">
-            <Icon source={EmailMinor} />
+            <Icon source={EmailIcon} />
             Email
           </InlineStack>
         ),
@@ -162,7 +162,7 @@ export const WithIcons: Story = {
       {
         term: (
           <InlineStack gap="200">
-            <Icon source={PhoneMinor} />
+            <Icon source={PhoneIcon} />
             Phone
           </InlineStack>
         ),
@@ -171,7 +171,7 @@ export const WithIcons: Story = {
       {
         term: (
           <InlineStack gap="200">
-            <Icon source={LocationMinor} />
+            <Icon source={LocationIcon} />
             Address
           </InlineStack>
         ),
@@ -180,7 +180,7 @@ export const WithIcons: Story = {
       {
         term: (
           <InlineStack gap="200">
-            <Icon source={ClockMinor} />
+            <Icon source={ClockIcon} />
             Business Hours
           </InlineStack>
         ),

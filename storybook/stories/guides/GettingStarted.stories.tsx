@@ -15,7 +15,6 @@ import {
   Badge,
   Banner,
   Text,
-  Heading,
   Icon,
   FormLayout,
   Grid,
@@ -36,7 +35,7 @@ import {
   SearchIcon,
   FilterIcon,
   AlertIcon,
-  TickIcon,
+  CheckIcon,
   InfoIcon,
   ExternalIcon,
   CodeIcon,
@@ -44,7 +43,7 @@ import {
   MobileIcon,
   DesktopIcon,
   AccessibilityIcon,
-  LightningBoltIcon,
+  FlashIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -75,9 +74,9 @@ type Story = StoryObj<typeof meta>;
 export const Overview: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
-      <Heading as="h1" variant="heading3xl">
+      <Text variant="heading3xl" as="h1">
         Getting Started with Cin7 DSL
-      </Heading>
+      </Text>
       <Text as="p" tone="subdued">
         Learn how to build beautiful, accessible, and performant user interfaces with the Cin7 Design System Library.
       </Text>
@@ -86,7 +85,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={CodeIcon} size="large" />
-            <Heading>Basic Component Usage</Heading>
+            <Text variant="headingMd" as="h3">Basic Component Usage</Text>
             <Text>Learn the fundamentals of using Cin7 DSL components</Text>
             <Badge tone="info">Essential</Badge>
           </BlockStack>
@@ -95,7 +94,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={PlusIcon} size="large" />
-            <Heading>Component Composition</Heading>
+            <Text variant="headingMd" as="h3">Component Composition</Text>
             <Text>Combine components to build complex interfaces</Text>
             <Badge tone="info">Important</Badge>
           </BlockStack>
@@ -104,7 +103,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={EditIcon} size="large" />
-            <Heading>Styling and Theming</Heading>
+            <Text variant="headingMd" as="h3">Styling and Theming</Text>
             <Text>Customize components to match your brand</Text>
             <Badge tone="info">Advanced</Badge>
           </BlockStack>
@@ -113,7 +112,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={AccessibilityIcon} size="large" />
-            <Heading>Accessibility Guidelines</Heading>
+            <Text variant="headingMd" as="h3">Accessibility Guidelines</Text>
             <Text>Build inclusive interfaces for all users</Text>
             <Badge tone="success">Critical</Badge>
           </BlockStack>
@@ -121,8 +120,8 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={LightningBoltIcon} size="large" />
-            <Heading>Performance Tips</Heading>
+            <Icon source={FlashIcon} size="large" />
+            <Text variant="headingMd" as="h3">Performance Tips</Text>
             <Text>Optimize your applications for speed</Text>
             <Badge tone="attention">Recommended</Badge>
           </BlockStack>
@@ -131,7 +130,7 @@ export const Overview: Story = {
         <Card>
           <BlockStack gap="200">
             <Icon source={AlertIcon} size="large" />
-            <Heading>Common Mistakes</Heading>
+            <Text variant="headingMd" as="h3">Common Mistakes</Text>
             <Text>What to avoid when using the DSL</Text>
             <Badge tone="warning">Helpful</Badge>
           </BlockStack>
@@ -144,7 +143,7 @@ export const Overview: Story = {
 export const BasicComponentUsage: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Basic Component Usage</Heading>
+      <Text variant="heading3xl" as="h1">Basic Component Usage</Text>
       <Text as="p">
         Learn the fundamentals of using Cin7 DSL components with simple, practical examples.
       </Text>
@@ -154,7 +153,7 @@ export const BasicComponentUsage: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">1. Importing Components</Heading>
+            <Text variant="headingXl" as="h3">1. Importing Components</Text>
             <Text as="p" tone="subdued">
               Start by importing the components you need from the Polaris package.
             </Text>
@@ -199,7 +198,7 @@ export const BasicComponentUsage: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">2. Basic Button Usage</Heading>
+            <Text variant="headingXl" as="h3">2. Basic Button Usage</Text>
             <Text as="p" tone="subdued">
               Buttons are the most common interactive element.
             </Text>
@@ -246,7 +245,7 @@ export const BasicComponentUsage: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">3. Text Input Components</Heading>
+            <Text variant="headingXl" as="h3">3. Text Input Components</Text>
             <Text as="p" tone="subdued">
               Collect user input with text fields and select components.
             </Text>
@@ -310,7 +309,7 @@ export const BasicComponentUsage: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">4. Layout Components</Heading>
+            <Text variant="headingXl" as="h3">4. Layout Components</Text>
             <Text as="p" tone="subdued">
               Structure your content with layout components.
             </Text>
@@ -327,7 +326,7 @@ export const BasicComponentUsage: Story = {
                 }}>
 {`<Card>
   <BlockStack gap="200">
-    <Heading>Card Title</Heading>
+    <Text variant="headingMd" as="h3">Card Title</Text>
     <Text>Card content goes here</Text>
     <Button>Action</Button>
   </BlockStack>
@@ -335,7 +334,7 @@ export const BasicComponentUsage: Story = {
                 </pre>
                 <Card>
                   <BlockStack gap="200">
-                    <Heading element="h4">Card Title</Heading>
+                    <Text variant="headingLg" as="h4">Card Title</Text>
                     <Text>Card content goes here</Text>
                     <Button>Action</Button>
                   </BlockStack>
@@ -352,7 +351,7 @@ export const BasicComponentUsage: Story = {
 export const ComponentComposition: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Component Composition</Heading>
+      <Text variant="heading3xl" as="h1">Component Composition</Text>
       <Text as="p">
         Learn how to combine components to build complex, reusable interfaces.
       </Text>
@@ -362,7 +361,7 @@ export const ComponentComposition: Story = {
       <BlockStack gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Building a Product Card</Heading>
+            <Text variant="headingXl" as="h3">Building a Product Card</Text>
             <Text as="p" tone="subdued">
               Combine multiple components to create a reusable product card.
             </Text>
@@ -382,7 +381,7 @@ export const ComponentComposition: Story = {
   <Card>
     <BlockStack gap="300">
       <InlineStack align="space-between">
-        <Heading>{product.name}</Heading>
+        <Text variant="headingMd" as="h3">{product.name}</Text>
         <Badge tone="success">In Stock</Badge>
       </InlineStack>
 
@@ -405,7 +404,7 @@ export const ComponentComposition: Story = {
                   <Card>
                     <BlockStack gap="300">
                       <InlineStack align="space-between">
-                        <Heading element="h4">Wireless Headphones</Heading>
+                        <Text variant="headingLg" as="h4">Wireless Headphones</Text>
                         <Badge tone="success">In Stock</Badge>
                       </InlineStack>
 
@@ -426,7 +425,7 @@ export const ComponentComposition: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Building a Form Section</Heading>
+            <Text variant="headingXl" as="h3">Building a Form Section</Text>
             <Text as="p" tone="subdued">
               Combine form components with proper layout structure.
             </Text>
@@ -450,7 +449,7 @@ export const ComponentComposition: Story = {
   return (
     <Card>
       <BlockStack gap="400">
-        <Heading>Product Information</Heading>
+        <Text variant="headingMd" as="h3">Product Information</Text>
 
         <FormLayout>
           <TextField
@@ -495,7 +494,7 @@ export const ComponentComposition: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Building a Data Table</Heading>
+            <Text variant="headingXl" as="h3">Building a Data Table</Text>
             <Text as="p" tone="subdued">
               Combine DataTable with pagination and actions.
             </Text>
@@ -521,7 +520,7 @@ export const ComponentComposition: Story = {
 export const StylingAndTheming: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Styling and Theming</Heading>
+      <Text variant="heading3xl" as="h1">Styling and Theming</Text>
       <Text as="p">
         Learn how to customize components and apply consistent styling across your application.
       </Text>
@@ -531,7 +530,7 @@ export const StylingAndTheming: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Component Sizing</Heading>
+            <Text variant="headingXl" as="h3">Component Sizing</Text>
             <Text as="p" tone="subdued">
               Control component sizes using built-in props.
             </Text>
@@ -559,7 +558,7 @@ export const StylingAndTheming: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Color and Tone</Heading>
+            <Text variant="headingXl" as="h3">Color and Tone</Text>
             <Text as="p" tone="subdued">
               Use tone variations for semantic meaning.
             </Text>
@@ -591,7 +590,7 @@ export const StylingAndTheming: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Layout Spacing</Heading>
+            <Text variant="headingXl" as="h3">Layout Spacing</Text>
             <Text as="p" tone="subdued">
               Use consistent spacing with Stack components.
             </Text>
@@ -616,7 +615,7 @@ export const StylingAndTheming: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Custom Styling</Heading>
+            <Text variant="headingXl" as="h3">Custom Styling</Text>
             <Text as="p" tone="subdued">
               Apply custom styles using the style prop.
             </Text>
@@ -648,7 +647,7 @@ export const StylingAndTheming: Story = {
 
       <Card>
         <BlockStack gap="400">
-          <Heading element="h3">🎨 Best Practices</Heading>
+          <Text variant="headingXl" as="h3">🎨 Best Practices</Text>
           <List type="number">
             <List.Item>Use built-in spacing tokens instead of arbitrary values</List.Item>
             <List.Item>Leverage tone variations for semantic meaning</List.Item>
@@ -665,7 +664,7 @@ export const StylingAndTheming: Story = {
 export const AccessibilityGuidelines: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Accessibility Guidelines</Heading>
+      <Text variant="heading3xl" as="h1">Accessibility Guidelines</Text>
       <Text as="p">
         Build inclusive interfaces that work for all users, including those with disabilities.
       </Text>
@@ -675,7 +674,7 @@ export const AccessibilityGuidelines: Story = {
       <BlockStack gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Semantic HTML</Heading>
+            <Text variant="headingXl" as="h3">Semantic HTML</Text>
             <Text as="p" tone="subdued">
               Use proper HTML elements and headings for screen readers.
             </Text>
@@ -692,13 +691,13 @@ export const AccessibilityGuidelines: Story = {
                   border: '1px solid #86efac',
                   marginTop: '8px'
                 }}>
-{`<DisplayText element="h1">
+{`<Text variant="heading3xl" as="h1">
   Page Title
-</Heading>
+</Text>
 
-<Heading element="h2">
+<Text variant="heading2xl" as="h2">
   Section Title
-</Heading>
+</Text>
 
 <Text>
   Regular paragraph content
@@ -732,7 +731,7 @@ export const AccessibilityGuidelines: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Form Accessibility</Heading>
+            <Text variant="headingXl" as="h3">Form Accessibility</Text>
             <Text as="p" tone="subdued">
               Ensure forms are accessible with proper labels and descriptions.
             </Text>
@@ -767,7 +766,7 @@ export const AccessibilityGuidelines: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Button Accessibility</Heading>
+            <Text variant="headingXl" as="h3">Button Accessibility</Text>
             <Text as="p" tone="subdued">
               Provide clear button labels and sufficient click targets.
             </Text>
@@ -806,7 +805,7 @@ export const AccessibilityGuidelines: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">🎯 Key Accessibility Requirements</Heading>
+            <Text variant="headingXl" as="h3">🎯 Key Accessibility Requirements</Text>
             <Grid columns={{ sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Keyboard Navigation</Text>
@@ -854,7 +853,7 @@ export const AccessibilityGuidelines: Story = {
 export const PerformanceTips: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Performance Tips</Heading>
+      <Text variant="heading3xl" as="h1">Performance Tips</Text>
       <Text as="p">
         Optimize your Cin7 DSL applications for better performance and user experience.
       </Text>
@@ -864,7 +863,7 @@ export const PerformanceTips: Story = {
       <Grid columns={{ sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Efficient Rendering</Heading>
+            <Text variant="headingXl" as="h3">Efficient Rendering</Text>
             <Text as="p" tone="subdued">
               Minimize unnecessary re-renders and optimize component updates.
             </Text>
@@ -901,7 +900,7 @@ const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Data Management</Heading>
+            <Text variant="headingXl" as="h3">Data Management</Text>
             <Text as="p" tone="subdued">
               Optimize data fetching and state management patterns.
             </Text>
@@ -926,7 +925,7 @@ const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Component Optimization</Heading>
+            <Text variant="headingXl" as="h3">Component Optimization</Text>
             <Text as="p" tone="subdued">
               Write efficient components that minimize render cycles.
             </Text>
@@ -961,7 +960,7 @@ const handleClick = useCallback(() => {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Bundle Size Optimization</Heading>
+            <Text variant="headingXl" as="h3">Bundle Size Optimization</Text>
             <Text as="p" tone="subdued">
               Reduce bundle size for faster load times.
             </Text>
@@ -994,7 +993,7 @@ import * as Polaris from '@shopify/polaris';`}
 
       <Card>
         <BlockStack gap="400">
-          <Heading element="h3">⚡ Performance Checklist</Heading>
+          <Text variant="headingXl" as="h3">⚡ Performance Checklist</Text>
           <Grid columns={{ sm: 1, md: 2 }} gap="400">
             <div>
               <Text fontWeight="semibold">Loading Performance</Text>
@@ -1042,7 +1041,7 @@ import * as Polaris from '@shopify/polaris';`}
 export const CommonMistakes: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
-      <Heading element="h1">Common Mistakes to Avoid</Heading>
+      <Text variant="heading3xl" as="h1">Common Mistakes to Avoid</Text>
       <Text as="p">
         Learn from common pitfalls and avoid these mistakes when using Cin7 DSL.
       </Text>
@@ -1052,7 +1051,7 @@ export const CommonMistakes: Story = {
       <BlockStack gap="400">
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Layout Mistakes</Heading>
+            <Text variant="headingXl" as="h3">Layout Mistakes</Text>
             <Text as="p" tone="subdued">
               Avoid these common layout and spacing errors.
             </Text>
@@ -1105,7 +1104,7 @@ export const CommonMistakes: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Component Usage Mistakes</Heading>
+            <Text variant="headingXl" as="h3">Component Usage Mistakes</Text>
             <Text as="p" tone="subdued">
               Avoid improper component usage and anti-patterns.
             </Text>
@@ -1128,7 +1127,7 @@ export const CommonMistakes: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Performance Mistakes</Heading>
+            <Text variant="headingXl" as="h3">Performance Mistakes</Text>
             <Text as="p" tone="subdued">
               Avoid these performance anti-patterns.
             </Text>
@@ -1181,7 +1180,7 @@ export const CommonMistakes: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">Accessibility Mistakes</Heading>
+            <Text variant="headingXl" as="h3">Accessibility Mistakes</Text>
             <Text as="p" tone="subdued">
               Common accessibility issues to avoid.
             </Text>
@@ -1204,7 +1203,7 @@ export const CommonMistakes: Story = {
 
         <Card>
           <BlockStack gap="400">
-            <Heading element="h3">🚫 What to Avoid Summary</Heading>
+            <Text variant="headingXl" as="h3">🚫 What to Avoid Summary</Text>
             <List type="number">
               <List.Item><strong>Don't</strong> use arbitrary spacing values - use Stack components</List.Item>
               <List.Item><strong>Don't</strong> overuse Cards - they should group related content</List.Item>

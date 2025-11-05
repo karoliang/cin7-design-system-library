@@ -621,7 +621,7 @@ export const DisabledTags: Story = {
             </div>
 
             <div>
-              <Text as="h4" variant="HeadingSm">Disabled Interactive Tags</Text>
+              <Text as="h4" variant="headingSm">Disabled Interactive Tags</Text>
               <div style={{ marginTop: '8px' }}>
                 <InlineStack gap="300">
                   <Tag disabled clickable onClick={() => console.log('This wont fire')}>

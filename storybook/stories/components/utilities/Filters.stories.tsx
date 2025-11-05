@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Filters, Card, Button, Badge, InlineStack, BlockStack, TextField, Select, Checkbox, DatePicker, Popover, Icon } from '@shopify/polaris';
-import { SearchMinor, CalendarMinor, FilterMinor, XSmallMinor } from '@shopify/polaris-icons';
+import { SearchIcon, CalendarIcon, FilterIcon, XSmallIcon } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
 const meta = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptionList, Card, BlockStack, InlineStack, Button, Badge, Icon, Checkbox, RadioButton } from '@shopify/polaris';
-import { CustomerMajor, ProductMajor, OrderMajor, SettingsMajor, DiscountMajor, ShippingMajor } from '@shopify/polaris-icons';
+import { PersonIcon, ProductIcon, OrderIcon, SettingsIcon, DiscountIcon, ShippingLabelIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
 const meta = {
@@ -106,32 +106,32 @@ export const WithIcons: Story = {
             {
               value: 'customers',
               label: 'Customers',
-              media: <Icon source={CustomerMajor} />,
+              media: <Icon source={PersonIcon} />,
             },
             {
               value: 'products',
               label: 'Products',
-              media: <Icon source={ProductMajor} />,
+              media: <Icon source={ProductIcon} />,
             },
             {
               value: 'orders',
               label: 'Orders',
-              media: <Icon source={OrderMajor} />,
+              media: <Icon source={OrderIcon} />,
             },
             {
               value: 'discounts',
               label: 'Discounts',
-              media: <Icon source={DiscountMajor} />,
+              media: <Icon source={DiscountIcon} />,
             },
             {
               value: 'shipping',
               label: 'Shipping',
-              media: <Icon source={ShippingMajor} />,
+              media: <Icon source={ShippingLabelIcon} />,
             },
             {
               value: 'settings',
               label: 'Settings',
-              media: <Icon source={SettingsMajor} />,
+              media: <Icon source={SettingsIcon} />,
             },
           ]}
           selected={selected}

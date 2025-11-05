@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Autocomplete, TextField, Label, Icon, Popover, Card, InlineStack, BlockStack } from '@shopify/polaris';
-import { SearchMinor, CalendarMinor, CustomerMajor, ProductMajor, OrderMajor } from '@shopify/polaris-icons';
+import { SearchIcon, CalendarIcon, PersonIcon, ProductIcon, OrderIcon } from '@shopify/polaris-icons';
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 
 const meta = {
@@ -191,7 +191,7 @@ export const SingleSelection: Story = {
         value={inputValue}
         placeholder="Type to search..."
         autoComplete="off"
-        prefix={<Icon source={SearchMinor} />}
+        prefix={<Icon source={SearchIcon} />}
       />
     );
 
@@ -464,7 +464,7 @@ export const CustomerLookup: Story = {
         value={inputValue}
         placeholder="Search by name or email..."
         autoComplete="off"
-        prefix={<Icon source={CustomerMajor} />}
+        prefix={<Icon source={PersonIcon} />}
       />
     );
 
@@ -598,7 +598,7 @@ export const OrderLookup: Story = {
         value={inputValue}
         placeholder="Search by order number or customer..."
         autoComplete="off"
-        prefix={<Icon source={OrderMajor} />}
+        prefix={<Icon source={OrderIcon} />}
       />
     );
 

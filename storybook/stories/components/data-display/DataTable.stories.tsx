@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DataTable, Button, Badge, Icon } from '@shopify/polaris';
-import { ChevronDownMinor, ChevronUpMinor, ViewMinor, EditMinor, DeleteMinor } from '@shopify/polaris-icons';
+import { ChevronDownIcon, ChevronUpIcon, ViewIcon, EditIcon, DeleteIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
 const meta = {
@@ -115,20 +115,20 @@ export const WithCustomContent: Story = {
         rows={[
           ['#1020', 'John Doe', '$42.00', 'Fulfilled', (
             <div style={{ display: 'flex', gap: '8px' }}>
-              <Button size="small" variant="plain" icon={ViewMinor}>View</Button>
-              <Button size="small" variant="plain" icon={EditMinor}>Edit</Button>
+              <Button size="small" variant="plain" icon={ViewIcon}>View</Button>
+              <Button size="small" variant="plain" icon={EditIcon}>Edit</Button>
             </div>
           )],
           ['#1019', 'Jane Smith', '$125.00', 'Unfulfilled', (
             <div style={{ display: 'flex', gap: '8px' }}>
-              <Button size="small" variant="plain" icon={ViewMinor}>View</Button>
-              <Button size="small" variant="plain" icon={EditMinor}>Edit</Button>
+              <Button size="small" variant="plain" icon={ViewIcon}>View</Button>
+              <Button size="small" variant="plain" icon={EditIcon}>Edit</Button>
             </div>
           )],
           ['#1018', 'Bob Johnson', '$89.00', 'Fulfilled', (
             <div style={{ display: 'flex', gap: '8px' }}>
-              <Button size="small" variant="plain" icon={ViewMinor}>View</Button>
-              <Button size="small" variant="plain" icon={EditMinor}>Edit</Button>
+              <Button size="small" variant="plain" icon={ViewIcon}>View</Button>
+              <Button size="small" variant="plain" icon={EditIcon}>Edit</Button>
             </div>
           )],
         ]}
@@ -166,9 +166,9 @@ export const Sortable: Story = {
 
     const getSortIcon = (columnIndex: number) => {
       if (sortedColumnIndex !== columnIndex) {
-        return <Icon source={ChevronDownMinor} color="subdued" />;
+        return <Icon source={ChevronDownIcon} color="subdued" />;
       }
-      return <Icon source={sortDirection === 'ascending' ? ChevronUpMinor : ChevronDownMinor} />;
+      return <Icon source={sortDirection === 'ascending' ? ChevronUpIcon : ChevronDownMinor} />;
     };
 
     const sortableHeadings = [

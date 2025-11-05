@@ -489,7 +489,7 @@ export const PermissionSettings: Story = {
           />
 
           <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
-            <Text as="h4" variant="HeadingSm">Permission Summary:</Text>
+            <Text as="h4" variant="headingSm">Permission Summary:</Text>
             <Text as="p">Admin: {adminPermissions.length} permissions</Text>
             <Text as="p">User: {userPermissions.length} permissions</Text>
             <Text as="p">Guest: {guestPermissions.length} permissions</Text>

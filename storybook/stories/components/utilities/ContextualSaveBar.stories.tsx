@@ -10,7 +10,7 @@ import {
   InlineStack,
   Badge,
 } from '@shopify/polaris';
-import { SaveIcon, CancelSmallIcon } from '@shopify/polaris-icons';
+import { SaveIcon, XSmallIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {

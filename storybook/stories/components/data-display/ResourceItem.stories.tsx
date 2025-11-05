@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ResourceItem, ResourceList, Card, BlockStack, InlineStack, Badge, Button, Icon, Avatar, Thumbnail, Text } from '@shopify/polaris';
-import { CustomerMajor, ProductMajor, OrderMajor, NoteMinor, ViewMinor, EditMinor, DeleteMinor } from '@shopify/polaris-icons';
+import { PersonIcon, ProductIcon, OrderIcon, NoteIcon, ViewIcon, EditIcon, DeleteIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
 const meta = {
@@ -180,19 +180,19 @@ export const WithActions: Story = {
                 shortcutActions={[
                   {
                     content: 'View',
-                    icon: ViewMinor,
+                    icon: ViewIcon,
                     onAction: () => console.log('View clicked'),
                   },
                 ]}
                 actions={[
                   {
                     content: 'Edit',
-                    icon: EditMinor,
+                    icon: EditIcon,
                     onAction: () => console.log('Edit clicked'),
                   },
                   {
                     content: 'Delete',
-                    icon: DeleteMinor,
+                    icon: DeleteIcon,
                     destructive: true,
                     onAction: () => console.log('Delete clicked'),
                   },
@@ -260,7 +260,7 @@ export const CustomerResource: Story = {
                 shortcutActions={[
                   {
                     content: 'View orders',
-                    icon: OrderMajor,
+                    icon: OrderIcon,
                     onAction: () => console.log(`View orders for ${customer.name}`),
                   },
                 ]}
@@ -344,11 +344,11 @@ export const OrderResource: Story = {
               <ResourceItem
                 id={order.id}
                 name={`Order ${order.id}`}
-                media={<Icon source={OrderMajor} />}
+                media={<Icon source={OrderIcon} />}
                 shortcutActions={[
                   {
                     content: 'View details',
-                    icon: ViewMinor,
+                    icon: ViewIcon,
                     onAction: () => console.log(`View details for order ${order.id}`),
                   },
                 ]}
@@ -507,7 +507,7 @@ export const FileResource: Story = {
                 shortcutActions={[
                   {
                     content: 'Download',
-                    icon: ViewMinor,
+                    icon: ViewIcon,
                     onAction: () => console.log(`Download ${file.name}`),
                   },
                 ]}
@@ -634,7 +634,7 @@ export const ProductGridExample: Story = {
                   shortcutActions={[
                     {
                       content: 'Edit',
-                      icon: EditMinor,
+                      icon: EditIcon,
                       onAction: () => console.log(`Edit ${product.name}`),
                     },
                   ]}
@@ -725,7 +725,7 @@ export const TaskResource: Story = {
               <ResourceItem
                 id={task.id}
                 name={task.title}
-                media={<Icon source={NoteMinor} />}
+                media={<Icon source={NoteIcon} />}
                 shortcutActions={[
                   {
                     content: 'Complete',
@@ -833,14 +833,14 @@ export const InteractiveResourceList: Story = {
                   shortcutActions={[
                     {
                       content: 'Quick view',
-                      icon: ViewMinor,
+                      icon: ViewIcon,
                       onAction: () => handleViewItem(product.id),
                     },
                   ]}
                   actions={[
                     {
                       content: 'Edit',
-                      icon: EditMinor,
+                      icon: EditIcon,
                       onAction: () => console.log(`Edit ${product.name}`),
                     },
                   ]}
