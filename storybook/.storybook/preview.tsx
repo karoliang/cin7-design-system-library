@@ -15,17 +15,36 @@ const designTokenStyles = `
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
   --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
   --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
   /* Semantic Colors */
+  --color-success-50: #f0fdf4;
+  --color-success-400: #34d399;
   --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-warning-50: #fff3e0;
+  --color-warning-400: #fbbf24;
   --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-critical-50: #fef2f2;
+  --color-critical-400: #f87171;
   --color-critical-500: #ef4444;
+  --color-critical-600: #dc2626;
+  --color-critical-700: #b91c1c;
 
   /* Spacing */
+  --spacing-half: 2px;
   --spacing-1: 4px;
+  --spacing-1-5: 6px;
   --spacing-2: 8px;
+  --spacing-2-5: 10px;
   --spacing-3: 12px;
   --spacing-4: 16px;
   --spacing-5: 20px;
@@ -34,6 +53,8 @@ const designTokenStyles = `
   --spacing-10: 40px;
   --spacing-12: 48px;
   --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-25: 100px;
 
   /* Typography System - Storybook Global */
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -67,12 +88,54 @@ const designTokenStyles = `
 
   /* Border Radius */
   --border-radius-sm: 2px;
+  --border-radius-xs: 3px;
   --border-radius-base: 4px;
   --border-radius-md: 6px;
   --border-radius-lg: 8px;
+  --border-radius-3xl: 10px;
   --border-radius-xl: 12px;
   --border-radius-2xl: 16px;
   --border-radius-full: 9999px;
+
+  /* Brand Colors */
+  --color-brand-primary: #007ace;
+  --color-brand-secondary: #5c6ac4;
+  --color-brand-tertiary: #47c1bf;
+  --color-brand-accent: #955ba5;
+
+  /* Info Colors */
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-500: #3b82f6;
+
+  /* Social Media Colors */
+  --color-social-facebook: #1877f2;
+  --color-social-twitter: #1da1f2;
+  --color-social-linkedin: #0077b5;
+
+  /* File Type Colors */
+  --color-file-pdf: #d72c0d;
+  --color-file-excel: #2a6f3a;
+  --color-file-powerpoint: #e4930d;
+  --color-file-image: #6f42c1;
+
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Opacity Tokens */
+  --opacity-full: 1;
+  --opacity-high: 0.9;
+  --opacity-medium: 0.8;
+  --opacity-low: 0.6;
+  --opacity-very-low: 0.3;
+  --opacity-disabled: 0.5;
+
+  /* Box Shadow Tokens */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-base: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* Global typography base styles */
