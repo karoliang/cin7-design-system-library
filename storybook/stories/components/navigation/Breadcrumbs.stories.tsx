@@ -98,12 +98,12 @@ export const ProductNavigation: Story = {
 
         <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
           <h3 style={{ margin: '0 0 12px 0' }}>Current Path</h3>
-          <code style={{ display: 'block', padding: '8px', backgroundColor: '#e5e7eb', borderRadius: '4px', fontSize: "12px" }}>
+          <code style={{ display: 'block', padding: '8px', backgroundColor: '#e5e7eb', borderRadius: '4px', fontSize: 'var(--font-size-xs)' }}>
             {currentPath}
           </code>
 
           <div style={{ marginTop: '16px' }}>
-            <p style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>Quick Navigation:</p>
+            <p style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>Quick Navigation:</p>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {[
                 '/shop',
@@ -118,7 +118,7 @@ export const ProductNavigation: Story = {
                   onClick={() => handleNavigation(path)}
                   style={{
                     padding: '4px 8px',
-                    fontSize: "12px",
+                    fontSize: 'var(--font-size-xs)',
                     border: '1px solid #d1d5db',
                     borderRadius: '4px',
                     backgroundColor: currentPath === path ? '#3b82f6' : 'white',
@@ -199,7 +199,7 @@ export const EcommerceNavigation: Story = {
           <h3 style={{ margin: '0 0 16px 0' }}>🛍️ Product Navigation</h3>
 
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '600' }}>
+            <label style={{ display: 'block', marginBottom: '4px', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
               Category:
             </label>
             <select
@@ -220,7 +220,7 @@ export const EcommerceNavigation: Story = {
 
           {category && (
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '600' }}>
+              <label style={{ display: 'block', marginBottom: '4px', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Subcategory:
               </label>
               <select
@@ -241,7 +241,7 @@ export const EcommerceNavigation: Story = {
 
           {category && subcategory && (
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '600' }}>
+              <label style={{ display: 'block', marginBottom: '4px', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Product:
               </label>
               <select
@@ -258,7 +258,7 @@ export const EcommerceNavigation: Story = {
           )}
 
           <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
-            <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '8px' }}>Navigation Path:</div>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '8px' }}>Navigation Path:</div>
             <code style={{ fontSize: '11px', color: '#374151' }}>
               /{category ? category : ''}{subcategory ? '/' + subcategory : ''}{product ? '/' + product.toLowerCase().replace(/\s+/g, '-') : ''}
             </code>
@@ -367,17 +367,17 @@ export const AdminPanel: Story = {
                   textAlign: 'center',
                 }}
               >
-                <div style={{ fontSize: '16px', marginBottom: '4px' }}>
+                <div style={{ fontSize: 'var(--font-size-base)', marginBottom: '4px' }}>
                   {key === 'dashboard' ? '📊' : key === 'products' ? '📦' : key === 'orders' ? '🛒' : key === 'customers' ? '👥' : '⚙️'}
                 </div>
-                <div style={{ fontSize: "12px" }}>{value.name}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)' }}>{value.name}</div>
               </button>
             ))}
           </div>
 
           {section && adminStructure[section as keyof typeof adminStructure].subsections && (
             <div style={{ marginBottom: '16px' }}>
-              <div style={{ fontSize: "12px", color: '#9ca3af', marginBottom: '8px' }}>Subsections:</div>
+              <div style={{ fontSize: 'var(--font-size-xs)', color: '#9ca3af', marginBottom: '8px' }}>Subsections:</div>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {Object.entries(adminStructure[section as keyof typeof adminStructure].subsections).map(([key, value]) => (
                   <button
@@ -393,7 +393,7 @@ export const AdminPanel: Story = {
                       backgroundColor: subsection === key ? '#3b82f6' : '#374151',
                       color: 'white',
                       cursor: 'pointer',
-                      fontSize: "12px",
+                      fontSize: 'var(--font-size-xs)',
                     }}
                   >
                     {value.name}
@@ -405,7 +405,7 @@ export const AdminPanel: Story = {
 
           {section && subsection && adminStructure[section as keyof typeof adminStructure].subsections[subsection as keyof typeof adminStructure[typeof section]['subsections']].details && (
             <div>
-              <div style={{ fontSize: "12px", color: '#9ca3af', marginBottom: '8px' }}>Actions:</div>
+              <div style={{ fontSize: 'var(--font-size-xs)', color: '#9ca3af', marginBottom: '8px' }}>Actions:</div>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                 {adminStructure[section as keyof typeof adminStructure].subsections[subsection as keyof typeof adminStructure[typeof section]['subsections']].details.map((detailName) => (
                   <button
@@ -436,7 +436,7 @@ export const AdminPanel: Story = {
               borderRadius: '4px',
               border: '1px solid #10b981'
             }}>
-              <div style={{ fontSize: "12px", fontWeight: '600' }}>✅ Ready to execute: {detail.replace(/-/g, ' ').toUpperCase()}</div>
+              <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 'var(--font-weight-semibold)' }}>✅ Ready to execute: {detail.replace(/-/g, ' ').toUpperCase()}</div>
             </div>
           )}
         </div>
@@ -555,7 +555,7 @@ export const DocumentationSite: Story = {
 
           <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '20px' }}>
             <div style={{ backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e2e8f0', padding: '12px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Navigation Tree</h4>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>Navigation Tree</h4>
 
               {Object.entries(docsStructure).map(([key, section]) => (
                 <div key={key} style={{ marginBottom: '8px' }}>
@@ -570,8 +570,8 @@ export const DocumentationSite: Story = {
                       color: path[0] === key ? 'white' : '#374151',
                       borderRadius: '4px',
                       cursor: 'pointer',
-                      fontSize: "12px",
-                      fontWeight: '600',
+                      fontSize: 'var(--font-size-xs)',
+                      fontWeight: 'var(--font-weight-semibold)',
                     }}
                   >
                     {section.name}
@@ -630,11 +630,11 @@ export const DocumentationSite: Story = {
             </div>
 
             <div style={{ backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e2e8f0', padding: '16px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 {buildBreadcrumbs()[buildBreadcrumbs().length - 1]?.content || 'Documentation'}
               </h4>
 
-              <div style={{ fontSize: "14px", lineHeight: '1.5', color: '#6b7280' }}>
+              <div style={{ fontSize: 'var(--font-size-sm)', lineHeight: '1.5', color: '#6b7280' }}>
                 {path.length === 3 && (
                   <p>
                     This page contains detailed documentation about <strong>{buildBreadcrumbs()[buildBreadcrumbs().length - 1]?.content}</strong>.
@@ -658,7 +658,7 @@ export const DocumentationSite: Story = {
               </div>
 
               <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f1f5f9', borderRadius: '4px' }}>
-                <div style={{ fontSize: "12px", color: '#64748b', marginBottom: '4px' }}>Current path:</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', color: '#64748b', marginBottom: '4px' }}>Current path:</div>
                 <code style={{ fontSize: '11px', color: '#334155' }}>
                   /{path.join('/')}
                 </code>

@@ -148,11 +148,11 @@ export const Interactive: Story = {
           </p>
 
           <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px" }}>Tab Interaction Stats:</h4>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)" }}>Tab Interaction Stats:</h4>
             {tabs.map((tab, index) => (
               <div key={tab.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}>
-                <span style={{ fontSize: '13px' }}>{tab.content}:</span>
-                <span style={{ fontSize: '13px', fontWeight: '600' }}>
+                <span style={{ fontSize: 'var(--font-size-xs)' }}>{tab.content}:</span>
+                <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 'var(--font-weight-semibold)' }}>
                   {viewCounts[tab.id]} view{viewCounts[tab.id] !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -296,8 +296,8 @@ export const OrderStatus: Story = {
                 backgroundColor: getStatusColor(tabs[selected].id),
                 color: 'white',
                 borderRadius: '12px',
-                fontSize: "14px",
-                fontWeight: '600'
+                fontSize: "var(--font-size-sm)",
+                fontWeight: 'var(--font-weight-semibold)'
               }}
             >
               {statusCounts[tabs[selected].id as keyof typeof statusCounts]} orders
@@ -310,16 +310,16 @@ export const OrderStatus: Story = {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
             <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
-              <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Total Value</div>
-              <div style={{ fontSize: "18px", fontWeight: '600' }}>$12,456</div>
+              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Total Value</div>
+              <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>$12,456</div>
             </div>
             <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
-              <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Average Order</div>
-              <div style={{ fontSize: "18px", fontWeight: '600' }}>$89.95</div>
+              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Average Order</div>
+              <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>$89.95</div>
             </div>
             <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
-              <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Processing Time</div>
-              <div style={{ fontSize: "18px", fontWeight: '600' }}>2.3 days</div>
+              <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Processing Time</div>
+              <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>2.3 days</div>
             </div>
           </div>
         </div>
@@ -362,7 +362,7 @@ export const CampaignTabs: Story = {
           borderRadius: '8px',
           color: 'white'
         }}>
-          <h3 style={{ margin: '0 0 20px 0', fontSize: "20px" }}>📊 {tabs[selected].content}</h3>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-xl)" }}>📊 {tabs[selected].content}</h3>
 
           <div style={{
             backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -373,26 +373,26 @@ export const CampaignTabs: Story = {
             {tabs[selected].id === 'overview' && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
                 <div>
-                  <div style={{ fontSize: "12px", opacity: 0.8, marginBottom: '4px' }}>Total Budget</div>
-                  <div style={{ fontSize: "24px", fontWeight: '700' }}>{campaignData.overview.budget}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8, marginBottom: '4px' }}>Total Budget</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.budget}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: "12px", opacity: 0.8, marginBottom: '4px' }}>Spent</div>
-                  <div style={{ fontSize: "24px", fontWeight: '700' }}>{campaignData.overview.spent}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8, marginBottom: '4px' }}>Spent</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.spent}</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: "12px", opacity: 0.8, marginBottom: '4px' }}>ROI</div>
-                  <div style={{ fontSize: "24px", fontWeight: '700' }}>{campaignData.overview.roi}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8, marginBottom: '4px' }}>ROI</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.roi}</div>
                 </div>
               </div>
             )}
 
             {tabs[selected].id === 'ads' && (
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '48px', fontWeight: '700', marginBottom: '8px' }}>
+                <div style={{ fontSize: 'var(--font-size-5xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: '8px' }}>
                   {campaignData.ads.active} / {campaignData.ads.total}
                 </div>
-                <div style={{ fontSize: "14px", opacity: 0.8 }}>
+                <div style={{ fontSize: "var(--font-size-sm)", opacity: 0.8 }}>
                   Active ads with {campaignData.ads.ctr} click-through rate
                 </div>
               </div>
@@ -401,16 +401,16 @@ export const CampaignTabs: Story = {
             {tabs[selected].id === 'audience' && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.audience.reached.toLocaleString()}</div>
-                  <div style={{ fontSize: "12px", opacity: 0.8 }}>People Reached</div>
+                  <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.reached.toLocaleString()}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>People Reached</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.audience.engaged.toLocaleString()}</div>
-                  <div style={{ fontSize: "12px", opacity: 0.8 }}>Engaged</div>
+                  <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.engaged.toLocaleString()}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Engaged</div>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.audience.new.toLocaleString()}</div>
-                  <div style={{ fontSize: "12px", opacity: 0.8 }}>New Customers</div>
+                  <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.new.toLocaleString()}</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>New Customers</div>
                 </div>
               </div>
             )}
@@ -420,18 +420,18 @@ export const CampaignTabs: Story = {
                 <h4 style={{ margin: '0 0 12px 0' }}>Performance Metrics</h4>
                 <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.analytics.impressions}</div>
-                    <div style={{ fontSize: "12px", opacity: 0.8 }}>Impressions</div>
+                    <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.impressions}</div>
+                    <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Impressions</div>
                   </div>
-                  <div style={{ fontSize: "24px", opacity: 0.6 }}>→</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)", opacity: 0.6 }}>→</div>
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.analytics.clicks}</div>
-                    <div style={{ fontSize: "12px", opacity: 0.8 }}>Clicks</div>
+                    <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.clicks}</div>
+                    <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Clicks</div>
                   </div>
-                  <div style={{ fontSize: "24px", opacity: 0.6 }}>→</div>
+                  <div style={{ fontSize: "var(--font-size-2xl)", opacity: 0.6 }}>→</div>
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: "20px", fontWeight: '700' }}>{campaignData.analytics.conversions}</div>
-                    <div style={{ fontSize: "12px", opacity: 0.8 }}>Conversions</div>
+                    <div style={{ fontSize: "var(--font-size-xl)", fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.conversions}</div>
+                    <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Conversions</div>
                   </div>
                 </div>
               </div>
@@ -439,7 +439,7 @@ export const CampaignTabs: Story = {
 
             {tabs[selected].id === 'settings' && (
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: "18px", marginBottom: '12px' }}>⚙️ Campaign Configuration</div>
+                <div style={{ fontSize: "var(--font-size-lg)", marginBottom: '12px' }}>⚙️ Campaign Configuration</div>
                 <p style={{ margin: 0, opacity: 0.8 }}>
                   Manage campaign settings, targeting, budget allocation, and scheduling options.
                 </p>

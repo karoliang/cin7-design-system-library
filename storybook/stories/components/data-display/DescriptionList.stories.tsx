@@ -267,11 +267,11 @@ export const ComplexProductSpecs: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Product Specifications</h3>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>Product Specifications</h3>
 
           <BlockStack gap="800">
             <div>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Basic Information
               </h4>
               <DescriptionList
@@ -298,7 +298,7 @@ export const ComplexProductSpecs: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Physical Characteristics
               </h4>
               <DescriptionList
@@ -325,7 +325,7 @@ export const ComplexProductSpecs: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Technical Specifications
               </h4>
               <DescriptionList
@@ -368,7 +368,7 @@ export const ComplexProductSpecs: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Warranty & Support
               </h4>
               <DescriptionList
@@ -400,11 +400,11 @@ export const OrderDetails: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Order Details</h3>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>Order Details</h3>
 
           <BlockStack gap="600">
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 ORDER INFORMATION
               </h4>
               <DescriptionList
@@ -431,7 +431,7 @@ export const OrderDetails: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 CUSTOMER INFORMATION
               </h4>
               <DescriptionList
@@ -463,7 +463,7 @@ export const OrderDetails: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 SHIPPING INFORMATION
               </h4>
               <DescriptionList
@@ -489,7 +489,7 @@ export const OrderDetails: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 PAYMENT INFORMATION
               </h4>
               <DescriptionList
@@ -532,14 +532,14 @@ export const UserProfile: Story = {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
             <Avatar size="large" name="Sarah Johnson" />
             <div>
-              <h3 style={{ margin: '0 0 4px 0', fontSize: "18px" }}>Sarah Johnson</h3>
+              <h3 style={{ margin: '0 0 4px 0', fontSize: "var(--font-size-lg)" }}>Sarah Johnson</h3>
               <p style={{ margin: 0, color: '#6b7280' }}>Premium Customer</p>
             </div>
           </div>
 
           <BlockStack gap="600">
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 CONTACT INFORMATION
               </h4>
               <DescriptionList
@@ -566,7 +566,7 @@ export const UserProfile: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 ACCOUNT DETAILS
               </h4>
               <DescriptionList
@@ -593,7 +593,7 @@ export const UserProfile: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 SHOPPING ACTIVITY
               </h4>
               <DescriptionList
@@ -628,7 +628,7 @@ export const UserProfile: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 PREFERENCES
               </h4>
               <DescriptionList
@@ -665,11 +665,11 @@ export const SystemMetrics: Story = {
     return (
       <Card>
         <div style={{ padding: '20px' }}>
-          <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>System Performance Metrics</h3>
+          <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>System Performance Metrics</h3>
 
           <BlockStack gap="600">
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 SERVER STATUS
               </h4>
               <DescriptionList
@@ -696,7 +696,7 @@ export const SystemMetrics: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 DATABASE PERFORMANCE
               </h4>
               <DescriptionList
@@ -723,7 +723,7 @@ export const SystemMetrics: Story = {
             </div>
 
             <div>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600', color: '#6b7280' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)', color: '#6b7280' }}>
                 APPLICATION METRICS
               </h4>
               <DescriptionList
@@ -759,16 +759,16 @@ export const ProductComparison: Story = {
   render: () => {
     return (
       <div style={{ maxWidth: '800px' }}>
-        <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Product Comparison</h3>
+        <h3 style={{ margin: '0 0 20px 0', fontSize: "var(--font-size-lg)" }}>Product Comparison</h3>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
           <Card>
             <div style={{ padding: '20px' }}>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Basic Plan
               </h4>
-              <div style={{ fontSize: "24px", fontWeight: 'bold', marginBottom: '16px' }}>
-                $9.99<span style={{ fontSize: "14px", fontWeight: 'normal' }}>/month</span>
+              <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)', marginBottom: '16px' }}>
+                $9.99<span style={{ fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-normal)' }}>/month</span>
               </div>
               <DescriptionList
                 spacing="tight"
@@ -805,18 +805,18 @@ export const ProductComparison: Story = {
                 padding: '4px 8px',
                 backgroundColor: '#007ace',
                 color: 'white',
-                fontSize: "12px",
-                fontWeight: '600',
+                fontSize: "var(--font-size-xs)",
+                fontWeight: 'var(--font-weight-semibold)',
                 borderRadius: '4px',
                 marginBottom: '12px'
               }}>
                 POPULAR
               </div>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Professional Plan
               </h4>
-              <div style={{ fontSize: "24px", fontWeight: 'bold', marginBottom: '16px' }}>
-                $29.99<span style={{ fontSize: "14px", fontWeight: 'normal' }}>/month</span>
+              <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)', marginBottom: '16px' }}>
+                $29.99<span style={{ fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-normal)' }}>/month</span>
               </div>
               <DescriptionList
                 spacing="tight"
@@ -848,11 +848,11 @@ export const ProductComparison: Story = {
 
           <Card>
             <div style={{ padding: '20px' }}>
-              <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Enterprise Plan
               </h4>
-              <div style={{ fontSize: "24px", fontWeight: 'bold', marginBottom: '16px' }}>
-                $99.99<span style={{ fontSize: "14px", fontWeight: 'normal' }}>/month</span>
+              <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)', marginBottom: '16px' }}>
+                $99.99<span style={{ fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-normal)' }}>/month</span>
               </div>
               <DescriptionList
                 spacing="tight"
@@ -893,7 +893,7 @@ export const WithActions: Story = {
       <Card>
         <div style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ margin: 0, fontSize: "18px" }}>Store Settings</h3>
+            <h3 style={{ margin: 0, fontSize: "var(--font-size-lg)" }}>Store Settings</h3>
             <Button size="slim">Edit</Button>
           </div>
 

@@ -422,18 +422,18 @@ export const ProjectManagement: Story = {
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
                 <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>
-                  <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Total Tasks</div>
-                  <div style={{ fontSize: "18px", fontWeight: '600' }}>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Total Tasks</div>
+                  <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>
                     {projects.find(p => p.id === activeProject)?.tasks}
                   </div>
                 </div>
                 <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>
-                  <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Progress</div>
-                  <div style={{ fontSize: "18px", fontWeight: '600' }}>67%</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Progress</div>
+                  <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>67%</div>
                 </div>
                 <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>
-                  <div style={{ fontSize: "12px", color: '#6b7280', marginBottom: '4px' }}>Due Date</div>
-                  <div style={{ fontSize: "18px", fontWeight: '600' }}>Dec 15</div>
+                  <div style={{ fontSize: "var(--font-size-xs)", color: '#6b7280', marginBottom: '4px' }}>Due Date</div>
+                  <div style={{ fontSize: "var(--font-size-lg)", fontWeight: 'var(--font-weight-semibold)' }}>Dec 15</div>
                 </div>
               </div>
             </div>
@@ -627,37 +627,37 @@ export const AdminPanel: Story = {
 
           <div style={{ marginTop: '20px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
             <div style={{ padding: '16px', backgroundColor: 'white', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>System Status</h4>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)' }}>System Status</h4>
               <div style={{ display: 'grid', gap: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Server Status</span>
-                  <span style={{ fontSize: "12px", color: '#10b981', fontWeight: '600' }}>Online</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Server Status</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", color: '#10b981', fontWeight: 'var(--font-weight-semibold)' }}>Online</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Database</span>
-                  <span style={{ fontSize: "12px", color: '#10b981', fontWeight: '600' }}>Healthy</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Database</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", color: '#10b981', fontWeight: 'var(--font-weight-semibold)' }}>Healthy</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Cache</span>
-                  <span style={{ fontSize: "12px", color: '#10b981', fontWeight: '600' }}>Active</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Cache</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", color: '#10b981', fontWeight: 'var(--font-weight-semibold)' }}>Active</span>
                 </div>
               </div>
             </div>
 
             <div style={{ padding: '16px', backgroundColor: 'white', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>Notifications</h4>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)' }}>Notifications</h4>
               <div style={{ display: 'grid', gap: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Orders</span>
-                  <span style={{ fontSize: "12px", fontWeight: '600' }}>{notifications.orders}</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Orders</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", fontWeight: 'var(--font-weight-semibold)' }}>{notifications.orders}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Customers</span>
-                  <span style={{ fontSize: "12px", fontWeight: '600' }}>{notifications.customers}</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Customers</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", fontWeight: 'var(--font-weight-semibold)' }}>{notifications.customers}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: "12px" }}>Support</span>
-                  <span style={{ fontSize: "12px", fontWeight: '600' }}>{notifications.support}</span>
+                  <span style={{ fontSize: "var(--font-size-xs)" }}>Support</span>
+                  <span style={{ fontSize: "var(--font-size-xs)", fontWeight: 'var(--font-weight-semibold)' }}>{notifications.support}</span>
                 </div>
               </div>
             </div>
@@ -809,20 +809,20 @@ export const LearningPlatform: Story = {
             <h3 style={{ margin: '0 0 16px 0' }}>Your Learning Progress</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: "24px", fontWeight: '700' }}>{userProgress.courses}</div>
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>Courses Enrolled</div>
+                <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{userProgress.courses}</div>
+                <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Courses Enrolled</div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: "24px", fontWeight: '700' }}>{userProgress.completed}</div>
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>Completed</div>
+                <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{userProgress.completed}</div>
+                <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Completed</div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: "24px", fontWeight: '700' }}>{userProgress.certificates}</div>
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>Certificates</div>
+                <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{userProgress.certificates}</div>
+                <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Certificates</div>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: "24px", fontWeight: '700' }}>{userProgress.hours}h</div>
-                <div style={{ fontSize: "12px", opacity: 0.8 }}>Learning Time</div>
+                <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: 'var(--font-weight-bold)' }}>{userProgress.hours}h</div>
+                <div style={{ fontSize: "var(--font-size-xs)", opacity: 0.8 }}>Learning Time</div>
               </div>
             </div>
           </div>
@@ -832,7 +832,7 @@ export const LearningPlatform: Story = {
               <h4 style={{ margin: '0 0 12px 0' }}>🎯 Course Details</h4>
               {courses.filter(c => location.includes(c.id)).map(course => (
                 <div key={course.id}>
-                  <p style={{ margin: '0 0 8px 0', fontSize: "14px" }}>
+                  <p style={{ margin: '0 0 8px 0', fontSize: "var(--font-size-sm)" }}>
                     <strong>{course.name}</strong> - {course.duration} duration
                   </p>
                   <div style={{
@@ -851,7 +851,7 @@ export const LearningPlatform: Story = {
                       }}
                     />
                   </div>
-                  <p style={{ margin: '8px 0 0 0', fontSize: "12px", color: '#6b7280' }}>
+                  <p style={{ margin: '8px 0 0 0', fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
                     Progress: {course.progress}%
                   </p>
                 </div>

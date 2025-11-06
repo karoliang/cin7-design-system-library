@@ -78,7 +78,7 @@ export const NoUnderline: Story = {
 
 export const InlineText: Story = {
   render: () => (
-    <div style={{ maxWidth: '400px', lineHeight: '1.6' }}>
+    <div style={{ maxWidth: '400px', lineHeight: 'var(--line-height-normal)' }}>
       <p>
         Our product catalog includes a wide range of electronics. You can{' '}
         <Link url="#browse">browse our collection</Link> to find the perfect items
@@ -118,7 +118,7 @@ export const FooterLinks: Story = {
     }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
         <div>
-          <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>Product</h4>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>Product</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <Link url="#features" monochrome>Features</Link>
             <Link url="#pricing" monochrome>Pricing</Link>
@@ -127,7 +127,7 @@ export const FooterLinks: Story = {
           </div>
         </div>
         <div>
-          <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>Company</h4>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>Company</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <Link url="#about" monochrome>About Us</Link>
             <Link url="#careers" monochrome>Careers</Link>
@@ -136,7 +136,7 @@ export const FooterLinks: Story = {
           </div>
         </div>
         <div>
-          <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>Support</h4>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>Support</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <Link url="#help" monochrome>Help Center</Link>
             <Link url="#docs" monochrome>Documentation</Link>
@@ -145,7 +145,7 @@ export const FooterLinks: Story = {
           </div>
         </div>
         <div>
-          <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600' }}>Legal</h4>
+          <h4 style={{ margin: '0 0 16px 0', fontSize: 'var(--font-size-base)', fontWeight: 'var(--font-weight-semibold)' }}>Legal</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <Link url="#privacy" monochrome>Privacy Policy</Link>
             <Link url="#terms" monochrome>Terms of Service</Link>
@@ -168,8 +168,8 @@ export const CardActions: Story = {
         border: '1px solid #e5e7eb',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
       }}>
-        <h3 style={{ margin: '0 0 8px 0', fontSize: "18px" }}>Product Catalog</h3>
-        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: "14px" }}>
+        <h3 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-lg)' }}>Product Catalog</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: 'var(--font-size-sm)' }}>
           Manage your products, inventory, and categories all in one place.
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -185,8 +185,8 @@ export const CardActions: Story = {
         border: '1px solid #e5e7eb',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
       }}>
-        <h3 style={{ margin: '0 0 8px 0', fontSize: "18px" }}>Order Management</h3>
-        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: "14px" }}>
+        <h3 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-lg)' }}>Order Management</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: 'var(--font-size-sm)' }}>
           Track orders, manage fulfillment, and handle customer service.
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -202,8 +202,8 @@ export const CardActions: Story = {
         border: '1px solid #e5e7eb',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
       }}>
-        <h3 style={{ margin: '0 0 8px 0', fontSize: "18px" }}>Customer Hub</h3>
-        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: "14px" }}>
+        <h3 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-lg)' }}>Customer Hub</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: 'var(--font-size-sm)' }}>
           Build relationships with customers and manage their data.
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -219,8 +219,8 @@ export const CardActions: Story = {
         border: '1px solid #e5e7eb',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
       }}>
-        <h3 style={{ margin: '0 0 8px 0', fontSize: "18px" }}>Analytics Dashboard</h3>
-        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: "14px" }}>
+        <h3 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-lg)' }}>Analytics Dashboard</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280', fontSize: 'var(--font-size-sm)' }}>
           Get insights into your business performance and trends.
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -276,24 +276,24 @@ export const HelpDocumentation: Story = {
         <h3 style={{ margin: '0 0 12px 0' }}>External Resources</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-            <div style={{ fontWeight: '600', marginBottom: '4px' }}>📚 API Documentation</div>
-            <p style={{ margin: '0 0 8px 0', fontSize: "14px", color: '#6b7280' }}>
+            <div style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: '4px' }}>📚 API Documentation</div>
+            <p style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)', color: '#6b7280' }}>
               Complete reference for our REST API and webhooks.
             </p>
             <Link url="https://api.docs.example.com" external>View API Docs →</Link>
           </div>
 
           <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-            <div style={{ fontWeight: '600', marginBottom: '4px' }}>💬 Community Forum</div>
-            <p style={{ margin: '0 0 8px 0', fontSize: "14px", color: '#6b7280' }}>
+            <div style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: '4px' }}>💬 Community Forum</div>
+            <p style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)', color: '#6b7280' }}>
               Connect with other merchants and get help from our community.
             </p>
             <Link url="https://community.example.com" external>Join Community →</Link>
           </div>
 
           <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '6px', border: '1px solid #e5e7eb' }}>
-            <div style={{ fontWeight: '600', marginBottom: '4px' }}>🎓 Video Tutorials</div>
-            <p style={{ margin: '0 0 8px 0', fontSize: "14px", color: '#6b7280' }}>
+            <div style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: '4px' }}>🎓 Video Tutorials</div>
+            <p style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)', color: '#6b7280' }}>
               Step-by-step video guides for common tasks and features.
             </p>
             <Link url="https://videos.example.com" external>Watch Tutorials →</Link>
@@ -308,26 +308,26 @@ export const BreadcrumbStyle: Story = {
   render: () => (
     <div style={{ maxWidth: '600px' }}>
       <h3 style={{ margin: '0 0 16px 0' }}>You are here:</h3>
-      <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: "14px" }}>
+      <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'var(--font-size-sm)' }}>
         <Link url="#home" monochrome>Home</Link>
         <span style={{ color: '#9ca3af' }}>›</span>
         <Link url="#products" monochrome>Products</Link>
         <span style={{ color: '#9ca3af' }}>›</span>
         <Link url="#electronics" monochrome>Electronics</Link>
         <span style={{ color: '#9ca3af' }}>›</span>
-        <span style={{ color: '#6b7280', fontWeight: '600' }}>Audio Equipment</span>
+        <span style={{ color: '#6b7280', fontWeight: 'var(--font-weight-semibold)' }}>Audio Equipment</span>
       </nav>
 
       <div style={{ marginTop: '24px' }}>
         <h3 style={{ margin: '0 0 16px 0' }}>Alternative breadcrumb style:</h3>
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: "14px" }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--font-size-sm)' }}>
           <Link url="#home" removeUnderline>Home</Link>
           <span style={{ color: '#9ca3af' }}>/</span>
           <Link url="#products" removeUnderline>Products</Link>
           <span style={{ color: '#9ca3af' }}>/</span>
           <Link url="#electronics" removeUnderline>Electronics</Link>
           <span style={{ color: '#9ca3af' }}>/</span>
-          <span style={{ color: '#6b7280', fontWeight: '600' }}>Audio Equipment</span>
+          <span style={{ color: '#6b7280', fontWeight: 'var(--font-weight-semibold)' }}>Audio Equipment</span>
         </nav>
       </div>
     </div>
@@ -378,7 +378,7 @@ export const TagCloud: Story = {
               style={{
                 fontSize: `${getFontSize(tag.count)}px`,
                 color: tag.count > 30 ? '#1e40af' : tag.count > 15 ? '#3b82f6' : '#6b7280',
-                fontWeight: tag.count > 30 ? '600' : '400',
+                fontWeight: tag.count > 30 ? 'var(--font-weight-semibold)' : 'var(--font-weight-normal)',
               }}
             >
               {tag.name} ({tag.count})
@@ -401,7 +401,7 @@ export const TableOfContents: Story = {
         border: '1px solid #e5e7eb'
       }}>
         <div style={{ marginBottom: '16px' }}>
-          <Link url="#introduction" style={{ fontWeight: '600', fontSize: '16px' }}>
+          <Link url="#introduction" style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-base)' }}>
             1. Introduction
           </Link>
           <div style={{ marginLeft: '20px', marginTop: '8px' }}>
@@ -418,7 +418,7 @@ export const TableOfContents: Story = {
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <Link url="#installation" style={{ fontWeight: '600', fontSize: '16px' }}>
+          <Link url="#installation" style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-base)' }}>
             2. Installation
           </Link>
           <div style={{ marginLeft: '20px', marginTop: '8px' }}>
@@ -435,7 +435,7 @@ export const TableOfContents: Story = {
         </div>
 
         <div style={{ marginBottom: '16px' }}>
-          <Link url="#configuration" style={{ fontWeight: '600', fontSize: '16px' }}>
+          <Link url="#configuration" style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-base)' }}>
             3. Configuration
           </Link>
           <div style={{ marginLeft: '20px', marginTop: '8px' }}>
@@ -452,7 +452,7 @@ export const TableOfContents: Story = {
         </div>
 
         <div>
-          <Link url="#next-steps" style={{ fontWeight: '600', fontSize: '16px' }}>
+          <Link url="#next-steps" style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-base)' }}>
             4. Next Steps
           </Link>
         </div>
@@ -479,7 +479,7 @@ export const SocialLinks: Story = {
             backgroundColor: '#1da1f2',
             color: 'white',
             textDecoration: 'none',
-            fontSize: "20px",
+            fontSize: 'var(--font-size-xl)',
           }}
         >
           𝕏
@@ -497,7 +497,7 @@ export const SocialLinks: Story = {
             backgroundColor: '#1877f2',
             color: 'white',
             textDecoration: 'none',
-            fontSize: "20px",
+            fontSize: 'var(--font-size-xl)',
           }}
         >
           f
@@ -515,7 +515,7 @@ export const SocialLinks: Story = {
             backgroundColor: '#0077b5',
             color: 'white',
             textDecoration: 'none',
-            fontSize: "20px",
+            fontSize: 'var(--font-size-xl)',
           }}
         >
           in
@@ -533,7 +533,7 @@ export const SocialLinks: Story = {
             backgroundColor: '#333',
             color: 'white',
             textDecoration: 'none',
-            fontSize: "20px",
+            fontSize: 'var(--font-size-xl)',
           }}
         >
           ⚡
@@ -551,7 +551,7 @@ export const SocialLinks: Story = {
             backgroundColor: '#ff0000',
             color: 'white',
             textDecoration: 'none',
-            fontSize: "20px",
+            fontSize: 'var(--font-size-xl)',
           }}
         >
           ▶
@@ -559,11 +559,11 @@ export const SocialLinks: Story = {
       </div>
 
       <div style={{ marginTop: '20px' }}>
-        <h4 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>Follow our blog</h4>
-        <p style={{ margin: '0 0 12px 0', fontSize: "14px", color: '#6b7280' }}>
+        <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-base)' }}>Follow our blog</h4>
+        <p style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', color: '#6b7280' }}>
           Stay updated with the latest news and tutorials.
         </p>
-        <Link url="#blog-subscription" removeUnderline style={{ fontWeight: '600' }}>
+        <Link url="#blog-subscription" removeUnderline style={{ fontWeight: 'var(--font-weight-semibold)' }}>
           Subscribe to Newsletter →
         </Link>
       </div>

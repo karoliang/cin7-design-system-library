@@ -151,7 +151,7 @@ export const WithAlpha: Story = {
             alignItems: 'center',
             justifyContent: 'center',
             color: color.brightness > 0.5 ? '#000' : '#fff',
-            fontSize: "14px"
+            fontSize: 'var(--font-size-sm)'
           }}>
             Alpha: {Math.round(color.alpha * 100)}%
           </div>
@@ -221,10 +221,10 @@ export const ProductColorCustomizer: Story = {
       <div style={{ maxWidth: '500px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Product Color Scheme</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-lg)' }}>Product Color Scheme</h3>
 
             <div style={{ marginBottom: '20px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Presets:
               </h4>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -267,7 +267,7 @@ export const ProductColorCustomizer: Story = {
             </BlockStack>
 
             <div style={{ marginTop: '24px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Preview:
               </h4>
               <div style={{
@@ -285,7 +285,7 @@ export const ProductColorCustomizer: Story = {
                   borderRadius: '4px',
                   marginBottom: '12px',
                   textAlign: 'center',
-                  fontWeight: '600'
+                  fontWeight: 'var(--font-weight-semibold)'
                 }}>
                   Product Title
                 </div>
@@ -295,7 +295,7 @@ export const ProductColorCustomizer: Story = {
                   padding: '8px 12px',
                   borderRadius: '4px',
                   display: 'inline-block',
-                  fontSize: "14px"
+                  fontSize: 'var(--font-size-sm)'
                 }}>
                   $29.99
                 </div>
@@ -379,10 +379,10 @@ export const ThemeCustomizer: Story = {
       <div style={{ maxWidth: '600px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Theme Customizer</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-lg)' }}>Theme Customizer</h3>
 
             <div style={{ marginBottom: '20px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Predefined Themes:
               </h4>
               <InlineStack gap="200">
@@ -456,7 +456,7 @@ export const ThemeCustomizer: Story = {
             </div>
 
             <div style={{ marginTop: '24px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Theme Preview:
               </h4>
               <div style={{
@@ -479,7 +479,7 @@ export const ThemeCustomizer: Story = {
                     color: `hsla(${theme.primary.hue}, ${theme.primary.saturation * 100}%, ${theme.primary.brightness * 100}%, 1)`,
                     borderRadius: '4px',
                     border: `1px solid hsla(${theme.primary.hue}, ${theme.primary.saturation * 100}%, ${theme.primary.brightness * 100}%, 0.3)`,
-                    fontSize: "14px"
+                    fontSize: 'var(--font-size-sm)'
                   }}>
                     Primary Action
                   </div>
@@ -490,7 +490,7 @@ export const ThemeCustomizer: Story = {
                       backgroundColor: `hsla(${theme.success.hue}, ${theme.success.saturation * 100}%, ${theme.success.brightness * 100}%, 0.2)`,
                       color: `hsla(${theme.success.hue}, ${theme.success.saturation * 100}%, ${theme.success.brightness * 100}%, 1)`,
                       borderRadius: '4px',
-                      fontSize: "12px"
+                      fontSize: 'var(--font-size-xs)'
                     }}>
                       ✓ Success
                     </div>
@@ -499,7 +499,7 @@ export const ThemeCustomizer: Story = {
                       backgroundColor: `hsla(${theme.warning.hue}, ${theme.warning.saturation * 100}%, ${theme.warning.brightness * 100}%, 0.2)`,
                       color: `hsla(${theme.warning.hue}, ${theme.warning.saturation * 100}%, ${theme.warning.brightness * 100}%, 1)`,
                       borderRadius: '4px',
-                      fontSize: "12px"
+                      fontSize: 'var(--font-size-xs)'
                     }}>
                       ⚠ Warning
                     </div>
@@ -508,7 +508,7 @@ export const ThemeCustomizer: Story = {
                       backgroundColor: `hsla(${theme.error.hue}, ${theme.error.saturation * 100}%, ${theme.error.brightness * 100}%, 0.2)`,
                       color: `hsla(${theme.error.hue}, ${theme.error.saturation * 100}%, ${theme.error.brightness * 100}%, 1)`,
                       borderRadius: '4px',
-                      fontSize: "12px"
+                      fontSize: 'var(--font-size-xs)'
                     }}>
                       ✕ Error
                     </div>
@@ -518,7 +518,7 @@ export const ThemeCustomizer: Story = {
                     padding: '12px',
                     backgroundColor: `hsla(${theme.secondary.hue}, ${theme.secondary.saturation * 100}%, ${theme.secondary.brightness * 100}%, 0.3)`,
                     borderRadius: '4px',
-                    fontSize: "14px",
+                    fontSize: 'var(--font-size-sm)',
                     color: `hsla(${theme.text.hue}, ${theme.text.saturation * 100}%, ${theme.text.brightness * 100}%, ${theme.text.alpha})`
                   }}>
                     Secondary content area with some text that demonstrates the theme colors.
@@ -569,10 +569,10 @@ export const BrandColorSelector: Story = {
       <div style={{ maxWidth: '500px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Brand Color Selector</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-lg)' }}>Brand Color Selector</h3>
 
             <div style={{ marginBottom: '20px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Brand Colors:
               </h4>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '8px' }}>
@@ -596,7 +596,7 @@ export const BrandColorSelector: Story = {
                       backgroundColor: `hsla(${brandColor.color.hue}, ${brandColor.color.saturation * 100}%, ${brandColor.color.brightness * 100}%, ${brandColor.color.alpha})`,
                       margin: '0 auto 8px'
                     }} />
-                    <div style={{ fontSize: "12px", color: '#374151' }}>{brandColor.name}</div>
+                    <div style={{ fontSize: 'var(--font-size-xs)', color: '#374151' }}>{brandColor.name}</div>
                   </button>
                 ))}
               </div>
@@ -611,7 +611,7 @@ export const BrandColorSelector: Story = {
 
             <div style={{ marginBottom: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <h4 style={{ margin: 0, fontSize: "14px", fontWeight: '600' }}>
+                <h4 style={{ margin: 0, fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                   Current Selection:
                 </h4>
                 <Button size="slim" onClick={saveColor}>
@@ -637,10 +637,10 @@ export const BrandColorSelector: Story = {
                     border: '1px solid #e1e3e5'
                   }} />
                   <div>
-                    <div style={{ fontSize: "14px", fontWeight: '500', marginBottom: '4px' }}>
+                    <div style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', marginBottom: '4px' }}>
                       HSL({Math.round(selectedColor.hue)}, {Math.round(selectedColor.saturation * 100)}%, {Math.round(selectedColor.brightness * 100)}%)
                     </div>
-                    <div style={{ fontSize: "12px", color: '#6b7280' }}>
+                    <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280' }}>
                       Alpha: {Math.round(selectedColor.alpha * 100)}%
                     </div>
                   </div>
@@ -650,7 +650,7 @@ export const BrandColorSelector: Story = {
 
             {savedColors.length > 0 && (
               <div>
-                <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                   Saved Colors:
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
@@ -674,7 +674,7 @@ export const BrandColorSelector: Story = {
                         marginBottom: '8px'
                       }} />
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: "12px", color: '#374151' }}>{savedColor.name}</span>
+                        <span style={{ fontSize: 'var(--font-size-xs)', color: '#374151' }}>{savedColor.name}</span>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -685,7 +685,7 @@ export const BrandColorSelector: Story = {
                             border: 'none',
                             color: '#991b1b',
                             cursor: 'pointer',
-                            fontSize: '16px',
+                            fontSize: 'var(--font-size-base)',
                             padding: '0',
                             lineHeight: '1'
                           }}
@@ -745,10 +745,10 @@ export const GradientCreator: Story = {
       <div style={{ maxWidth: '500px' }}>
         <Card>
           <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Gradient Creator</h3>
+            <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-lg)' }}>Gradient Creator</h3>
 
             <div style={{ marginBottom: '20px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Presets:
               </h4>
               <InlineStack gap="200">
@@ -796,7 +796,7 @@ export const GradientCreator: Story = {
             </BlockStack>
 
             <div style={{ marginTop: '24px' }}>
-              <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+              <h4 style={{ margin: '0 0 12px 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
                 Preview:
               </h4>
               <div style={{
@@ -807,7 +807,7 @@ export const GradientCreator: Story = {
               }} />
 
               <div style={{ marginTop: '12px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-                <code style={{ fontSize: "12px", wordBreak: 'break-all' }}>
+                <code style={{ fontSize: 'var(--font-size-xs)', wordBreak: 'break-all' }}>
                   background: linear-gradient({angle}deg,
                   hsl({Math.round(startColor.hue)}, {Math.round(startColor.saturation * 100)}%, {Math.round(startColor.brightness * 100)}%) 0%,
                   hsl({Math.round(endColor.hue)}, {Math.round(endColor.saturation * 100)}%, {Math.round(endColor.brightness * 100)}%) 100%);
@@ -874,10 +874,10 @@ export const ColorPickerInPopover: Story = {
               border: '1px solid #e1e3e5'
             }} />
             <div>
-              <div style={{ fontSize: "14px", fontWeight: '500' }}>
+              <div style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)' }}>
                 Selected Color
               </div>
-              <div style={{ fontSize: "12px", color: '#6b7280' }}>
+              <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280' }}>
                 HSL({Math.round(selectedColor.hue)}, {Math.round(selectedColor.saturation * 100)}%, {Math.round(selectedColor.brightness * 100)}%)
               </div>
             </div>

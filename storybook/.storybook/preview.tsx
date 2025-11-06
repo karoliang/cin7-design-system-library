@@ -101,6 +101,8 @@ body {
   line-height: var(--line-height-tight);
   color: var(--color-gray-900);
   margin: 0;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .sbdocs h1 { font-size: var(--font-size-4xl); }
@@ -109,6 +111,18 @@ body {
 .sbdocs h4 { font-size: var(--font-size-xl); }
 .sbdocs h5 { font-size: var(--font-size-lg); }
 .sbdocs h6 { font-size: var(--font-size-base); }
+
+/* Override Storybook's default uppercase section labels and anchors */
+.sb-anchor,
+.sbdocs .sb-anchor,
+.docs-story h2,
+h2[class*="sb-"],
+.sbdocs-h2,
+.sbdocs *[class*="heading"],
+.sbdocs *[class*="title"] {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
 
 /* Story content area typography */
 .sbdocs-content {
