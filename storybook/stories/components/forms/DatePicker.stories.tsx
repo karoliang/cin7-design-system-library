@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Forms/DatePicker',
   component: DatePicker,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Date picker components allow users to select dates from a calendar interface. They support single date selection, date ranges, month/year selection, and can be configured with disabled dates, minimum/maximum dates, and localization.',

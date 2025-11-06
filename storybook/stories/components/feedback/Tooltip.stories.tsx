@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Overlays/Tooltip',
   component: Tooltip,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Tooltips provide contextual information when users hover over or focus on an element. They\'re perfect for explaining icons, providing additional context, or showing brief help text.',

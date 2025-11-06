@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Overlays/Popover',
   component: Popover,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Popovers are small overlays that open when users interact with an element. They\'re used to display additional content or actions in context without leaving the current page.',
@@ -84,7 +84,7 @@ export const Default: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -115,7 +115,7 @@ export const ButtonActivator: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -144,7 +144,7 @@ export const TextLinkActivator: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -261,7 +261,7 @@ export const WithActionList: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -311,7 +311,7 @@ export const WithSections: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -365,7 +365,7 @@ export const WithForm: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -408,7 +408,7 @@ export const Dismissible: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -447,7 +447,7 @@ export const CustomWidth: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}
@@ -586,7 +586,7 @@ export const AccessibilityDemo: Story = {
     );
 
     return (
-      <div style={{ height: '200px' }}>
+      <div style={{ minHeight: '500px' }}>
         <Popover
           active={active}
           activator={activator}

@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Forms/ColorPicker',
   component: ColorPicker,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'ColorPicker allows users to select colors from a predefined palette or enter custom hex values. It\'s commonly used for theme customization, brand color selection, product color options, and any scenario where color selection is needed.',

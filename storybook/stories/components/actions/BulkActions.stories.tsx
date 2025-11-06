@@ -95,7 +95,7 @@ const meta = {
   title: 'Components/Actions/BulkActions',
   component: CustomBulkActions,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'BulkActions provides a set of actions that can be performed on multiple selected items. It\'s commonly used in tables and lists to allow users to perform actions on multiple items at once.',

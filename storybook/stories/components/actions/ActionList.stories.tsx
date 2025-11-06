@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Navigation/ActionList',
   component: ActionList,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Action lists are used to present a list of actions or commands that can be performed. They\'re commonly used in dropdown menus, context menus, and as action panels.',

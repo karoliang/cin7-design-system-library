@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Actions/ActionMenu',
   component: ActionMenu,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'ActionMenu displays a dropdown menu of actions that can be performed on an item. It\'s commonly used in tables, cards, and lists to provide contextual actions without cluttering the interface.',

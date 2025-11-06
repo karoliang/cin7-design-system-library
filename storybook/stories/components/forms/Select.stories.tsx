@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Forms/Select',
   component: Select,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Select components allow users to choose one option from a dropdown list. They are useful when you have many options to choose from or when screen space is limited. Select components can include groups, disabled options, and placeholder text.',

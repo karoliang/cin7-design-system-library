@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Forms/Autocomplete',
   component: Autocomplete,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Autocomplete provides users with a list of suggestions as they type. It\'s commonly used for search bars, product selection, customer lookup, and any scenario where users need to select from a large dataset.',

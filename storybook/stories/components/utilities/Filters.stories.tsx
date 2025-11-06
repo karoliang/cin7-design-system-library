@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Navigation/Filters',
   component: Filters,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Filters allow users to refine and narrow down data sets by applying various criteria. They\'re essential for data tables, product listings, order management, and any scenario where users need to find specific items within large datasets.',

@@ -17,7 +17,7 @@ const meta = {
   title: 'Components/Forms/ContextualSaveBar',
   component: ContextualSaveBar,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'ContextualSaveBar provides a fixed save bar that appears when users make changes to a form. It displays save/discard actions and provides visual feedback for unsaved changes.',

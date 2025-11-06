@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Selection/OptionList',
   component: OptionList,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'OptionList displays a list of selectable options. It\'s commonly used for settings panels, configuration choices, category selection, and any scenario where users need to choose from a list of options.',

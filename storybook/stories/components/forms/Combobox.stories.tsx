@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Forms/Combobox',
   component: Combobox,
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
     docs: {
       description: {
         component: 'Combobox combines a text input with a dropdown list of options, providing autocomplete functionality. It allows users to either type their own input or select from predefined options.',

@@ -12,7 +12,7 @@ const BasicComponentsShowcase = () => (
 );
 
 const meta = {
-  title: 'Components/Basic Components',
+  title: 'Components/Basic Components/Overview',
   component: BasicComponentsShowcase,
   parameters: {
     layout: 'centered',
