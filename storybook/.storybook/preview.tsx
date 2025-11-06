@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react';
 import React from 'react';
 import { AppProvider } from '@shopify/polaris';
+import '@shopify/polaris/build/esm/styles.css';
 
 // Enhanced design token styles with consistent typography
 const designTokenStyles = `
@@ -138,12 +139,13 @@ const designTokenStyles = `
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Global typography base styles */
-* {
+/* Global typography base styles - scoped to avoid Polaris conflicts */
+.story-wrapper,
+.story-wrapper > :not([class*="Polaris"]) {
   box-sizing: border-box;
 }
 
-body {
+.story-wrapper {
   font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
@@ -152,20 +154,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Consistent heading styles */
-.sbdocs h1,
-.sbdocs h2,
-.sbdocs h3,
-.sbdocs h4,
-.sbdocs h5,
-.sbdocs h6 {
+/* Consistent heading styles - exclude Polaris components */
+.sbdocs > h1:not([class*="Polaris"]),
+.sbdocs > h2:not([class*="Polaris"]),
+.sbdocs > h3:not([class*="Polaris"]),
+.sbdocs > h4:not([class*="Polaris"]),
+.sbdocs > h5:not([class*="Polaris"]),
+.sbdocs > h6:not([class*="Polaris"]) {
   font-family: var(--font-family-sans);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   color: var(--color-gray-900);
   margin: 0;
-  text-transform: none !important;
-  letter-spacing: normal !important;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .sbdocs h1 { font-size: var(--font-size-4xl); }
@@ -175,16 +177,12 @@ body {
 .sbdocs h5 { font-size: var(--font-size-lg); }
 .sbdocs h6 { font-size: var(--font-size-base); }
 
-/* Override Storybook's default uppercase section labels and anchors */
+/* Override Storybook's default uppercase section labels - scoped to avoid Polaris */
 .sb-anchor,
 .sbdocs .sb-anchor,
-.docs-story h2,
-h2[class*="sb-"],
-.sbdocs-h2,
-.sbdocs *[class*="heading"],
-.sbdocs *[class*="title"] {
-  text-transform: none !important;
-  letter-spacing: normal !important;
+.docs-story > h2:not([class*="Polaris"]) {
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 /* Story content area typography */
@@ -211,24 +209,21 @@ h2[class*="sb-"],
   font-size: 0.875em;
 }
 
-/* Fix hardcoded font sizes in stories */
-.story-wrapper {
-  font-family: var(--font-family-sans) !important;
-}
+/* Story wrapper inherits typography - no !important needed */
 
 /* Allow stories to set their own font sizes - removed aggressive override */
 .story-wrapper [style*="font-size"] {
   /* Removed font-size: inherit !important; to allow story-specific sizing */
 }
 
-/* Icon size utilities */
-.icon-xs { font-size: var(--font-size-sm) !important; }
-.icon-sm { font-size: var(--font-size-base) !important; }
-.icon-md { font-size: var(--font-size-lg) !important; }
-.icon-lg { font-size: var(--font-size-2xl) !important; }
-.icon-xl { font-size: var(--font-size-3xl) !important; }
-.icon-2xl { font-size: var(--font-size-4xl) !important; }
-.icon-3xl { font-size: var(--font-size-5xl) !important; }
+/* Icon size utilities - scoped to story wrapper */
+.story-wrapper .icon-xs { font-size: var(--font-size-sm); }
+.story-wrapper .icon-sm { font-size: var(--font-size-base); }
+.story-wrapper .icon-md { font-size: var(--font-size-lg); }
+.story-wrapper .icon-lg { font-size: var(--font-size-2xl); }
+.story-wrapper .icon-xl { font-size: var(--font-size-3xl); }
+.story-wrapper .icon-2xl { font-size: var(--font-size-4xl); }
+.story-wrapper .icon-3xl { font-size: var(--font-size-5xl); }
 `;
 
 // Inject design token styles
@@ -242,7 +237,7 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <AppProvider i18n={{}}>
-        <div className="story-wrapper" style={{ fontFamily: "var(--font-family-sans)", fontSize: "16px", lineHeight: "1.5" }}>
+        <div className="story-wrapper">
           <Story />
         </div>
       </AppProvider>
