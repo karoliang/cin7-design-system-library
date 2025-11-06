@@ -3,8 +3,8 @@
   base = "polaris/polaris.shopify.com"
   publish = ".next"
   command = "bash ../../scripts/netlify-build.sh"
-  # Include storybook changes in build detection
-  ignore = "exit 0"  # Always build (disable smart build detection)
+  # Always build (disable smart build detection to include storybook changes)
+  ignore = "exit 1"  # Return non-zero to never skip builds
 
 [build.environment]
   NODE_VERSION = "20.10.0"
