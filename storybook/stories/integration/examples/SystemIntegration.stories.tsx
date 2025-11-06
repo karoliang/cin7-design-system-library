@@ -67,12 +67,7 @@ const SystemHealth = ({ systems }) => {
 
         <DataTable
           columnContentTypes={['text', 'text', 'text', 'text']}
-          headings={[
-            { title: 'System' },
-            { title: 'Type' },
-            { title: 'Status' },
-            { title: 'Last Sync' },
-          ]}
+          headings={['System', 'Type', 'Status', 'Last Sync']}
           rows={systems.map(system => [
             system.name,
             system.type,
@@ -224,13 +219,7 @@ const SystemIntegration = () => {
                     <Text variant="headingLg" as="h3">Data Integration Flows</Text>
                     <DataTable
                       columnContentTypes={['text', 'text', 'text', 'text', 'text']}
-                      headings={[
-                        { title: 'Source' },
-                        { title: 'Target' },
-                        { title: 'Data Type' },
-                        { title: 'Frequency' },
-                        { title: 'Status' },
-                      ]}
+                      headings={['Source', 'Target', 'Data Type', 'Frequency', 'Status']}
                       rows={integrations.map((integration, index) => [
                         integration.source,
                         integration.target,
@@ -350,15 +339,11 @@ export const MinimalSystemView: Story = {
           <Text variant="headingLg" as="h3">Connected Systems</Text>
           <DataTable
             columnContentTypes={['text', 'text', 'text']}
-            headings={[
-              { title: 'System' },
-              { title: 'Type' },
-              { title: 'Status' },
-            ]}
+            headings={['System', 'Type', 'Status']}
             rows={systems.map(system => [
               system.name,
               system.type,
-              <Badge tone="success">Connected</Badge>,
+              <Badge key={system.name} tone="success">Connected</Badge>,
             ])}
           />
         </BlockStack>

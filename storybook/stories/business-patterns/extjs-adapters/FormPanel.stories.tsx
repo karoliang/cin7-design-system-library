@@ -141,17 +141,12 @@ export const FormPanelWithDataGrid: Story = {
                 </Text>
 
                 <DataTable
-                  columnContentTypes={['text', 'numeric', 'text', 'text']}
-                  headings={[
-                    { title: 'ID' },
-                    { title: 'Name' },
-                    { title: 'Price' },
-                    { title: 'Actions' },
-                  ]}
+                  columnContentTypes={['text', 'text', 'numeric', 'text']}
+                  headings={['ID', 'Name', 'Price', 'Actions']}
                   rows={[
-                    [1, 'Product 1', 99.99, 'Edit'],
-                    [2, 'Product 2', 149.99, 'Edit'],
-                    [3, 'Product 3', 199.99, 'Edit'],
+                    ['1', 'Product 1', '$99.99', 'Edit'],
+                    ['2', 'Product 2', '$149.99', 'Edit'],
+                    ['3', 'Product 3', '$199.99', 'Edit'],
                   ]}
                 />
 

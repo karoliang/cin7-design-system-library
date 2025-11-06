@@ -67,16 +67,11 @@ const E2EWorkflow = () => {
           {step === 2 && (
             <DataTable
               columnContentTypes={['text', 'numeric', 'text', 'text']}
-              headings={[
-                { title: 'Product' },
-                { title: 'Price' },
-                { title: 'Stock' },
-                { title: 'Action' },
-              ]}
+              headings={['Product', 'Price', 'Stock', 'Action']}
               rows={[
-                ['Product A', 99.99, '50 units', <Button size="small">Add</Button>],
-                ['Product B', 149.99, '25 units', <Button size="small">Add</Button>],
-                ['Product C', 199.99, '10 units', <Button size="small">Add</Button>],
+                ['Product A', '$99.99', '50 units', <Button size="small" key="product-a">Add</Button>],
+                ['Product B', '$149.99', '25 units', <Button size="small" key="product-b">Add</Button>],
+                ['Product C', '$199.99', '10 units', <Button size="small" key="product-c">Add</Button>],
               ]}
             />
           )}

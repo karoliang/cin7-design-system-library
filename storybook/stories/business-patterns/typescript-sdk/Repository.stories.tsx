@@ -30,17 +30,13 @@ type Story = StoryObj<typeof meta>;
 
 export const BasicRepository: Story = {
   args: {
-    headings: [
-      { title: 'ID' },
-      { title: 'Name' },
-      { title: 'Price' },
-      { title: 'Actions' },
-    ],
+    columnContentTypes: ['text', 'text', 'numeric', 'text'],
+    headings: ['ID', 'Name', 'Price', 'Actions'],
     rows: MockRepository.findAll().map(product => [
       product.id,
       product.name,
       `$${product.price}`,
-      <Button size="small">View</Button>,
+      <Button size="small" key={product.id}>View</Button>,
     ]),
   },
 };
@@ -60,17 +56,12 @@ export const RepositoryWithUseCase: Story = {
 
               <DataTable
                 columnContentTypes={['text', 'text', 'numeric', 'text']}
-                headings={[
-                  { title: 'ID' },
-                  { title: 'Name' },
-                  { title: 'Price' },
-                  { title: 'Actions' },
-                ]}
+                headings={['ID', 'Name', 'Price', 'Actions']}
                 rows={MockRepository.findAll().map(product => [
                   product.id,
                   product.name,
-                  product.price,
-                  <Button size="small">Edit</Button>,
+                  `$${product.price}`,
+                  <Button size="small" key={product.id}>Edit</Button>,
                 ])}
               />
 
@@ -120,17 +111,12 @@ export const AsyncRepository: Story = {
 
                 <DataTable
                   columnContentTypes={['text', 'text', 'numeric', 'text']}
-                  headings={[
-                    { title: 'ID' },
-                    { title: 'Name' },
-                    { title: 'Price' },
-                    { title: 'Actions' },
-                  ]}
+                  headings={['ID', 'Name', 'Price', 'Actions']}
                   rows={products.map(product => [
                     product.id,
                     product.name,
-                    product.price,
-                    <Button size="small">View</Button>,
+                    `$${product.price}`,
+                    <Button size="small" key={product.id}>View</Button>,
                   ])}
                 />
               </BlockStack>
