@@ -29,7 +29,7 @@ import {
   EditIcon,
   DeleteIcon,
   ViewIcon,
-  AlertIcon,
+  AlertCircleIcon,
   CheckIcon,
   SearchIcon,
   FilterIcon,
@@ -93,7 +93,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={AlertIcon} size="large" />
+            <Icon source={AlertCircleIcon} size="large" />
             <Text variant="headingMd" as="h3">Modal Patterns</Text>
             <Text>Dialogs, confirmations, wizards</Text>
             <Badge tone="info">4 Patterns</Badge>

@@ -4,7 +4,7 @@ import {
   XSmallIcon,
   InfoCircleIcon,
   CheckmarkIcon,
-  AlertIcon
+  AlertCircleIcon
 } from '@shopify/polaris-icons';
 import React from 'react';
 

@@ -36,7 +36,7 @@ import {
   ReturnIcon,
   SecurityIcon,
   ClockIcon,
-  AlertIcon,
+  AlertCircleIcon,
   InfoIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';

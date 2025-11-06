@@ -34,7 +34,7 @@ import {
   ViewIcon,
   SearchIcon,
   FilterIcon,
-  AlertIcon,
+  AlertCircleIcon,
   CheckIcon,
   InfoIcon,
   ExternalIcon,
@@ -129,7 +129,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={AlertIcon} size="large" />
+            <Icon source={AlertCircleIcon} size="large" />
             <Text variant="headingMd" as="h3">Common Mistakes</Text>
             <Text>What to avoid when using the DSL</Text>
             <Badge tone="warning">Helpful</Badge>

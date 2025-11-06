@@ -17,7 +17,7 @@ import {
   CustomersIcon,
   OrdersIcon,
   CheckCircleIcon,
-  AlertIcon,
+  AlertCircleIcon,
   ViewIcon,
   EditIcon,
   DeleteIcon,

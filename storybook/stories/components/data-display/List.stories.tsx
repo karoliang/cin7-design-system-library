@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { List, Button, Badge, Icon, InlineStack, Text } from '@shopify/polaris';
 import {
   CheckCircleIcon,
-  AlertIcon,
+  AlertCircleIcon,
   InfoIcon,
   ExternalIcon,
   MobileIcon,
@@ -85,7 +85,7 @@ export const WithIcons: Story = {
     <div style={{ width: '400px' }}>
       <List>
         <List.Item icon={CheckCircleIcon}>Task completed successfully</List.Item>
-        <List.Item icon={AlertIcon}>Warning: Review this item</List.Item>
+        <List.Item icon={AlertCircleIcon}>Warning: Review this item</List.Item>
         <List.Item icon={InfoIcon}>Additional information available</List.Item>
         <List.Item icon={ExternalIcon}>External link to resource</List.Item>
       </List>

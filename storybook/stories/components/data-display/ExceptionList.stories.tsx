@@ -30,13 +30,13 @@ export const Default: Story = {
     items: [
       {
         status: 'critical',
-        icon: 'AlertIcon',
+        icon: 'AlertCircleIcon',
         title: 'Payment method declined',
         description: 'Your credit card ending in 4242 has expired. Please update your payment information.',
       },
       {
         status: 'warning',
-        icon: 'AlertIcon',
+        icon: 'AlertCircleIcon',
         title: 'Inventory running low',
         description: 'You have 5 items that are running low on stock. Consider restocking soon.',
       },
@@ -57,19 +57,19 @@ export const ErrorList: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Invalid shipping address',
             description: 'The address provided is incomplete. Please add apartment/suite number.',
           },
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Payment method required',
             description: 'Please add a valid payment method to complete this order.',
           },
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Item out of stock',
             description: 'Premium Widget is currently out of stock and has been removed from your cart.',
           },
@@ -92,19 +92,19 @@ export const WarningList: Story = {
         items={[
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Missing product descriptions',
             description: '12 products are missing descriptions. Add them to improve SEO.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Low product images quality',
             description: '8 products have low-quality images that may affect customer trust.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Slow page load times',
             description: 'Your homepage loads in 4.2 seconds. Optimize images and apps to improve speed.',
           },
@@ -127,13 +127,13 @@ export const MixedStatuses: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Duplicate SKUs found',
             description: '3 products have duplicate SKUs. These were not imported.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Missing required fields',
             description: '5 products were missing prices and were set to $0.00 by default.',
           },
@@ -145,7 +145,7 @@ export const MixedStatuses: Story = {
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Image processing errors',
             description: '7 product images failed to process and were skipped.',
           },
@@ -168,31 +168,31 @@ export const ValidationErrors: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Title is required',
             description: 'Every product must have a title before it can be published.',
           },
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Price must be greater than 0',
             description: 'Product price cannot be negative or zero.',
           },
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'At least one image required',
             description: 'Add at least one product image to help customers visualize your product.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'No product description',
             description: 'Adding a description can help with SEO and customer understanding.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'No product tags',
             description: 'Tags help customers find your products through search and filtering.',
           },
@@ -215,19 +215,19 @@ export const ShippingIssues: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'No shipping zones configured',
             description: 'You must set up at least one shipping zone to sell products.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'High shipping rates',
             description: 'Your shipping rates may be too high for some regions. Consider free shipping thresholds.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'No express shipping available',
             description: 'Customers may prefer faster shipping options for urgent orders.',
           },
@@ -246,21 +246,21 @@ export const InteractiveExceptionList: Story = {
       {
         id: 1,
         status: 'critical' as const,
-        icon: 'AlertIcon',
+        icon: 'AlertCircleIcon',
         title: 'Payment method expired',
         description: 'Your payment method expires next week. Update your billing information.',
       },
       {
         id: 2,
         status: 'warning' as const,
-        icon: 'AlertIcon',
+        icon: 'AlertCircleIcon',
         title: 'Storage almost full',
         description: 'You\'re using 85% of your storage capacity.',
       },
       {
         id: 3,
         status: 'warning' as const,
-        icon: 'AlertIcon',
+        icon: 'AlertCircleIcon',
         title: 'App updates available',
         description: '3 installed apps have updates available.',
       },
@@ -332,25 +332,25 @@ export const SystemAlerts: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Database connection failed',
             description: 'Unable to connect to the database. Please check your connection settings.',
           },
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'SSL certificate expires in 7 days',
             description: 'Your SSL certificate will expire soon. Renew it to maintain secure connections.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'High memory usage',
             description: 'Memory usage is at 78%. Consider optimizing your applications.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Backup failed',
             description: 'Last backup failed 2 hours ago. Check your backup configuration.',
           },
@@ -373,19 +373,19 @@ export const CustomerFeedback: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Delivery delay reported',
             description: 'Customer #12345 reports order #1001 is 3 days late. Check tracking information.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Wrong item received',
             description: 'Customer #67890 received wrong product. Arrange exchange or refund.',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Product damaged in transit',
             description: 'Customer #54321 reports damaged packaging. File insurance claim.',
           },
@@ -408,12 +408,12 @@ export const MinimalList: Story = {
         items={[
           {
             status: 'critical',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Action required',
           },
           {
             status: 'warning',
-            icon: 'AlertIcon',
+            icon: 'AlertCircleIcon',
             title: 'Review recommended',
           },
         ]}
