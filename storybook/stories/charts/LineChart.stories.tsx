@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { LineChart } from '@cin7/highcharts-adapter/react';
 
 const meta = {
-  title: 'Charts/LineChart',
+  title: 'Components/Charts/LineChart',
   component: LineChart,
   parameters: {
     layout: 'padded',

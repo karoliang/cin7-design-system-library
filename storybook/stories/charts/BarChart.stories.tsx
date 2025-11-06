@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { BarChart } from '@cin7/highcharts-adapter/react';
 
 const meta = {
-  title: 'Charts/BarChart',
+  title: 'Components/Charts/BarChart',
   component: BarChart,
   parameters: {
     layout: 'padded',

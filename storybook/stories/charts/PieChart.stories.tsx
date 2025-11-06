@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { PieChart } from '@cin7/highcharts-adapter/react';
 
 const meta = {
-  title: 'Charts/PieChart',
+  title: 'Components/Charts/PieChart',
   component: PieChart,
   parameters: {
     layout: 'padded',
