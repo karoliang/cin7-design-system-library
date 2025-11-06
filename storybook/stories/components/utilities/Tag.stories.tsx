@@ -7,6 +7,7 @@ import {
   AlertCircleIcon
 } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Utilities/Tag',
@@ -64,6 +65,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'Sample Tag',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
   },
 };
 

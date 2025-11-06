@@ -24134,6 +24134,909 @@ function MediaCard({
 
 // Map of all component examples
 // Action List Examples
+// Link Component Examples
+export const linkExamples = {
+  default: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function LinkExample() {
+  return <Link url="#products">View all products</Link>;
+}`,
+    vanilla: `<!-- HTML Structure -->
+<a href="#products" class="polaris-link">View all products</a>
+
+<script>
+// JavaScript behavior
+const link = document.querySelector('.polaris-link');
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log('Navigate to:', e.target.href);
+});
+</script>`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<a href="#products" class="polaris-link">View all products</a>',
+  listeners: {
+    afterrender: function(cmp) {
+      cmp.getEl().on('click', function(e, target) {
+        e.preventDefault();
+        console.log('Navigate to:', target.href);
+      }, null, { delegate: 'a' });
+    }
+  }
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface LinkExampleProps {
+  url: string;
+  children: React.ReactNode;
+}
+
+function LinkExample({ url, children }: LinkExampleProps): JSX.Element {
+  return <Link url={url}>{children}</Link>;
+}`
+  },
+  externalLink: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function ExternalLinkExample() {
+  return (
+    <Link url="https://polaris.shopify.com" external>
+      Visit Shopify documentation
+    </Link>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<a href="https://polaris.shopify.com" class="polaris-link" target="_blank" rel="noopener noreferrer">
+  Visit Shopify documentation
+</a>
+
+<script>
+// JavaScript behavior
+const link = document.querySelector('.polaris-link');
+link.addEventListener('click', () => {
+  console.log('Opening external link');
+});
+</script>`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<a href="https://polaris.shopify.com" target="_blank" rel="noopener noreferrer" class="polaris-link">Visit Shopify documentation</a>',
+  listeners: {
+    afterrender: function(cmp) {
+      cmp.getEl().on('click', function() {
+        console.log('Opening external link');
+      }, null, { delegate: 'a' });
+    }
+  }
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface ExternalLinkExampleProps {
+  url: string;
+  children: React.ReactNode;
+}
+
+function ExternalLinkExample({ url, children }: ExternalLinkExampleProps): JSX.Element {
+  return <Link url={url} external>{children}</Link>;
+}`
+  },
+  monochrome: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function MonochromeLinkExample() {
+  return (
+    <Link url="#features" monochrome>
+      Learn more about our features
+    </Link>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<a href="#features" class="polaris-link polaris-link--monochrome">
+  Learn more about our features
+</a>
+
+<style>
+.polaris-link--monochrome {
+  color: inherit;
+}
+.polaris-link--monochrome:hover {
+  text-decoration: underline;
+}
+</style>`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<a href="#features" class="polaris-link polaris-link--monochrome">Learn more about our features</a>',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface MonochromeLinkExampleProps {
+  url: string;
+  children: React.ReactNode;
+}
+
+function MonochromeLinkExample({ url, children }: MonochromeLinkExampleProps): JSX.Element {
+  return <Link url={url} monochrome>{children}</Link>;
+}`
+  },
+  noUnderline: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function NoUnderlineLinkExample() {
+  return (
+    <Link url="#shop" removeUnderline>
+      Shop now
+    </Link>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<a href="#shop" class="polaris-link polaris-link--no-underline">
+  Shop now
+</a>
+
+<style>
+.polaris-link--no-underline {
+  text-decoration: none;
+}
+</style>`,
+    extjs: `Ext.create('Ext.Component', {
+  html: '<a href="#shop" class="polaris-link polaris-link--no-underline">Shop now</a>',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface NoUnderlineLinkExampleProps {
+  url: string;
+  children: React.ReactNode;
+}
+
+function NoUnderlineLinkExample({ url, children }: NoUnderlineLinkExampleProps): JSX.Element {
+  return <Link url={url} removeUnderline>{children}</Link>;
+}`
+  },
+  inlineText: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function InlineTextExample() {
+  return (
+    <div style={{ maxWidth: '400px' }}>
+      <p>
+        Our product catalog includes a wide range of electronics. You can{' '}
+        <Link url="#browse">browse our collection</Link> to find the perfect items
+        for your needs. For more information, please{' '}
+        <Link url="#contact">contact our support team</Link>.
+      </p>
+    </div>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<div class="content" style="max-width: 400px">
+  <p>
+    Our product catalog includes a wide range of electronics. You can
+    <a href="#browse" class="polaris-link">browse our collection</a> to find the perfect items
+    for your needs. For more information, please
+    <a href="#contact" class="polaris-link">contact our support team</a>.
+  </p>
+</div>`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  html: \`
+    <div style="max-width: 400px">
+      <p>
+        Our product catalog includes a wide range of electronics. You can
+        <a href="#browse" class="polaris-link">browse our collection</a> to find the perfect items
+        for your needs. For more information, please
+        <a href="#contact" class="polaris-link">contact our support team</a>.
+      </p>
+    </div>
+  \`,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function InlineTextExample(): JSX.Element {
+  return (
+    <div style={{ maxWidth: '400px' }}>
+      <p>
+        Our product catalog includes a wide range of electronics. You can{' '}
+        <Link url="#browse">browse our collection</Link> to find the perfect items
+        for your needs. For more information, please{' '}
+        <Link url="#contact">contact our support team</Link>.
+      </p>
+    </div>
+  );
+}`
+  },
+  navigationLinks: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function NavigationLinksExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <h3>Quick Navigation</h3>
+      <Link url="#dashboard">📊 Dashboard</Link>
+      <Link url="#products">📦 Products</Link>
+      <Link url="#orders">🛒 Orders</Link>
+      <Link url="#customers">👥 Customers</Link>
+      <Link url="#analytics">📈 Analytics</Link>
+      <Link url="#settings">⚙️ Settings</Link>
+    </div>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<div class="navigation-links">
+  <h3>Quick Navigation</h3>
+  <a href="#dashboard" class="polaris-link">📊 Dashboard</a>
+  <a href="#products" class="polaris-link">📦 Products</a>
+  <a href="#orders" class="polaris-link">🛒 Orders</a>
+  <a href="#customers" class="polaris-link">👥 Customers</a>
+  <a href="#analytics" class="polaris-link">📈 Analytics</a>
+  <a href="#settings" class="polaris-link">⚙️ Settings</a>
+</div>
+
+<style>
+.navigation-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+</style>`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Quick Navigation',
+  bodyPadding: 10,
+  items: [
+    { xtype: 'component', html: '<a href="#dashboard" class="polaris-link">📊 Dashboard</a>' },
+    { xtype: 'component', html: '<a href="#products" class="polaris-link">📦 Products</a>' },
+    { xtype: 'component', html: '<a href="#orders" class="polaris-link">🛒 Orders</a>' },
+    { xtype: 'component', html: '<a href="#customers" class="polaris-link">👥 Customers</a>' },
+    { xtype: 'component', html: '<a href="#analytics" class="polaris-link">📈 Analytics</a>' },
+    { xtype: 'component', html: '<a href="#settings" class="polaris-link">⚙️ Settings</a>' }
+  ]
+});`,
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface NavItem {
+  url: string;
+  label: string;
+  icon: string;
+}
+
+function NavigationLinksExample(): JSX.Element {
+  const navItems: NavItem[] = [
+    { url: '#dashboard', label: 'Dashboard', icon: '📊' },
+    { url: '#products', label: 'Products', icon: '📦' },
+    { url: '#orders', label: 'Orders', icon: '🛒' },
+    { url: '#customers', label: 'Customers', icon: '👥' },
+    { url: '#analytics', label: 'Analytics', icon: '📈' },
+    { url: '#settings', label: 'Settings', icon: '⚙️' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <h3>Quick Navigation</h3>
+      {navItems.map((item) => (
+        <Link key={item.url} url={item.url}>
+          {item.icon} {item.label}
+        </Link>
+      ))}
+    </div>
+  );
+}`
+  }
+};
+
+// Navigation Component Examples
+export const navigationExamples = {
+  default: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function NavigationExample() {
+  const [location, setLocation] = useState('/home');
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        items={[
+          {
+            url: '/home',
+            label: 'Home',
+            icon: 'home',
+          },
+          {
+            url: '/orders',
+            label: 'Orders',
+            icon: 'orders',
+            badge: '12',
+          },
+          {
+            url: '/products',
+            label: 'Products',
+            icon: 'products',
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation">
+  <div class="polaris-navigation__section">
+    <ul class="polaris-navigation__items">
+      <li class="polaris-navigation__item">
+        <a href="/home" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Home</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/orders" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📦</span>
+          <span class="polaris-navigation__text">Orders</span>
+          <span class="polaris-navigation__badge">12</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/products" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🛍️</span>
+          <span class="polaris-navigation__text">Products</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-navigation__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Remove active class from all links
+    document.querySelectorAll('.polaris-navigation__link').forEach(l => {
+      l.classList.remove('polaris-navigation__link--active');
+    });
+    // Add active class to clicked link
+    link.classList.add('polaris-navigation__link--active');
+    console.log('Navigate to:', link.href);
+  });
+});
+</script>`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Navigation',
+  width: 250,
+  layout: 'fit',
+  items: [{
+    xtype: 'treepanel',
+    rootVisible: false,
+    store: Ext.create('Ext.data.TreeStore', {
+      root: {
+        expanded: true,
+        children: [
+          {
+            text: 'Home',
+            iconCls: 'x-fa fa-home',
+            leaf: true,
+            url: '/home'
+          },
+          {
+            text: 'Orders',
+            iconCls: 'x-fa fa-shopping-cart',
+            leaf: true,
+            url: '/orders',
+            badge: '12'
+          },
+          {
+            text: 'Products',
+            iconCls: 'x-fa fa-box',
+            leaf: true,
+            url: '/products'
+          }
+        ]
+      }
+    }),
+    listeners: {
+      itemclick: function(view, record) {
+        console.log('Navigate to:', record.get('url'));
+      }
+    }
+  }]
+});`,
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+}
+
+function NavigationExample(): JSX.Element {
+  const [location, setLocation] = useState<string>('/home');
+
+  const items: NavigationItem[] = [
+    {
+      url: '/home',
+      label: 'Home',
+      icon: 'home',
+    },
+    {
+      url: '/orders',
+      label: 'Orders',
+      icon: 'orders',
+      badge: '12',
+    },
+    {
+      url: '/products',
+      label: 'Products',
+      icon: 'products',
+    },
+  ];
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section items={items} />
+    </Navigation>
+  );
+}`
+  },
+  nestedNavigation: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function NestedNavigationExample() {
+  const [location, setLocation] = useState('/dashboard');
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        title="Sales"
+        items={[
+          {
+            url: '/dashboard',
+            label: 'Dashboard',
+            icon: 'home',
+            selected: location.startsWith('/dashboard'),
+          },
+          {
+            url: '/orders',
+            label: 'Orders',
+            icon: 'orders',
+            badge: '24',
+            selected: location.startsWith('/orders'),
+            subNavigationItems: [
+              {
+                url: '/orders/all',
+                label: 'All Orders',
+                selected: location === '/orders/all',
+              },
+              {
+                url: '/orders/fulfillments',
+                label: 'Fulfillments',
+                selected: location === '/orders/fulfillments',
+              },
+              {
+                url: '/orders/returns',
+                label: 'Returns',
+                selected: location === '/orders/returns',
+                badge: '3',
+              },
+            ],
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation">
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-title">Sales</h3>
+    <ul class="polaris-navigation__items">
+      <li class="polaris-navigation__item">
+        <a href="/dashboard" class="polaris-navigation__link polaris-navigation__link--active">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Dashboard</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/orders" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📦</span>
+          <span class="polaris-navigation__text">Orders</span>
+          <span class="polaris-navigation__badge">24</span>
+        </a>
+        <ul class="polaris-navigation__subitems">
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/all" class="polaris-navigation__link">All Orders</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/fulfillments" class="polaris-navigation__link">Fulfillments</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/returns" class="polaris-navigation__link">
+              Returns
+              <span class="polaris-navigation__badge">3</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// Toggle expandable navigation items
+document.querySelectorAll('.polaris-navigation__item--expandable > .polaris-navigation__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const parent = link.parentElement;
+    parent.classList.toggle('polaris-navigation__item--expanded');
+  });
+});
+</script>`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Sales',
+  width: 250,
+  layout: 'fit',
+  items: [{
+    xtype: 'treepanel',
+    rootVisible: false,
+    store: Ext.create('Ext.data.TreeStore', {
+      root: {
+        expanded: true,
+        children: [
+          {
+            text: 'Dashboard',
+            iconCls: 'x-fa fa-home',
+            leaf: true,
+            url: '/dashboard'
+          },
+          {
+            text: 'Orders',
+            iconCls: 'x-fa fa-shopping-cart',
+            badge: '24',
+            expanded: true,
+            children: [
+              { text: 'All Orders', leaf: true, url: '/orders/all' },
+              { text: 'Fulfillments', leaf: true, url: '/orders/fulfillments' },
+              { text: 'Returns', leaf: true, url: '/orders/returns', badge: '3' }
+            ]
+          }
+        ]
+      }
+    }),
+    listeners: {
+      itemclick: function(view, record) {
+        if (record.get('leaf')) {
+          console.log('Navigate to:', record.get('url'));
+        }
+      }
+    }
+  }]
+});`,
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface SubNavigationItem {
+  url: string;
+  label: string;
+  badge?: string;
+  selected?: boolean;
+}
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+  selected?: boolean;
+  subNavigationItems?: SubNavigationItem[];
+}
+
+function NestedNavigationExample(): JSX.Element {
+  const [location, setLocation] = useState<string>('/dashboard');
+
+  const items: NavigationItem[] = [
+    {
+      url: '/dashboard',
+      label: 'Dashboard',
+      icon: 'home',
+      selected: location.startsWith('/dashboard'),
+    },
+    {
+      url: '/orders',
+      label: 'Orders',
+      icon: 'orders',
+      badge: '24',
+      selected: location.startsWith('/orders'),
+      subNavigationItems: [
+        {
+          url: '/orders/all',
+          label: 'All Orders',
+          selected: location === '/orders/all',
+        },
+        {
+          url: '/orders/fulfillments',
+          label: 'Fulfillments',
+          selected: location === '/orders/fulfillments',
+        },
+        {
+          url: '/orders/returns',
+          label: 'Returns',
+          selected: location === '/orders/returns',
+          badge: '3',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section title="Sales" items={items} />
+    </Navigation>
+  );
+}`
+  },
+  ecommerceNavigation: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function EcommerceNavigationExample() {
+  const [location, setLocation] = useState('/dashboard');
+
+  const handleNavigation = (url: string) => {
+    setLocation(url);
+  };
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        title="Online Store"
+        items={[
+          {
+            url: '/dashboard',
+            label: 'Dashboard',
+            icon: 'home',
+            onClick: () => handleNavigation('/dashboard'),
+          },
+          {
+            url: '/products',
+            label: 'Products',
+            icon: 'products',
+            badge: '156',
+            onClick: () => handleNavigation('/products'),
+            subNavigationItems: [
+              {
+                url: '/products/all',
+                label: 'All products',
+                onClick: () => handleNavigation('/products/all'),
+              },
+              {
+                url: '/products/collections',
+                label: 'Collections',
+                onClick: () => handleNavigation('/products/collections'),
+              },
+            ],
+          },
+        ]}
+      />
+      <Navigation.Section
+        title="Settings"
+        items={[
+          {
+            url: '/settings/general',
+            label: 'General',
+            icon: 'settings',
+            onClick: () => handleNavigation('/settings/general'),
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}`,
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation">
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-title">Online Store</h3>
+    <ul class="polaris-navigation__items">
+      <li class="polaris-navigation__item">
+        <a href="/dashboard" class="polaris-navigation__link" data-url="/dashboard">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Dashboard</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/products" class="polaris-navigation__link" data-url="/products">
+          <span class="polaris-navigation__icon">🛍️</span>
+          <span class="polaris-navigation__text">Products</span>
+          <span class="polaris-navigation__badge">156</span>
+        </a>
+        <ul class="polaris-navigation__subitems">
+          <li class="polaris-navigation__subitem">
+            <a href="/products/all" class="polaris-navigation__link" data-url="/products/all">All products</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/products/collections" class="polaris-navigation__link" data-url="/products/collections">Collections</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-title">Settings</h3>
+    <ul class="polaris-navigation__items">
+      <li class="polaris-navigation__item">
+        <a href="/settings/general" class="polaris-navigation__link" data-url="/settings/general">
+          <span class="polaris-navigation__icon">⚙️</span>
+          <span class="polaris-navigation__text">General</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+let currentLocation = '/dashboard';
+
+function handleNavigation(url) {
+  currentLocation = url;
+  console.log('Current location:', currentLocation);
+
+  // Update active state
+  document.querySelectorAll('.polaris-navigation__link').forEach(link => {
+    link.classList.remove('polaris-navigation__link--active');
+    if (link.dataset.url === url) {
+      link.classList.add('polaris-navigation__link--active');
+    }
+  });
+}
+
+document.querySelectorAll('.polaris-navigation__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    handleNavigation(link.dataset.url);
+  });
+});
+</script>`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  width: 250,
+  layout: 'accordion',
+  items: [
+    {
+      title: 'Online Store',
+      xtype: 'treepanel',
+      rootVisible: false,
+      store: Ext.create('Ext.data.TreeStore', {
+        root: {
+          expanded: true,
+          children: [
+            {
+              text: 'Dashboard',
+              iconCls: 'x-fa fa-home',
+              leaf: true,
+              url: '/dashboard'
+            },
+            {
+              text: 'Products',
+              iconCls: 'x-fa fa-box',
+              badge: '156',
+              expanded: true,
+              children: [
+                { text: 'All products', leaf: true, url: '/products/all' },
+                { text: 'Collections', leaf: true, url: '/products/collections' }
+              ]
+            }
+          ]
+        }
+      }),
+      listeners: {
+        itemclick: function(view, record) {
+          if (record.get('leaf')) {
+            console.log('Navigate to:', record.get('url'));
+          }
+        }
+      }
+    },
+    {
+      title: 'Settings',
+      xtype: 'treepanel',
+      rootVisible: false,
+      store: Ext.create('Ext.data.TreeStore', {
+        root: {
+          expanded: true,
+          children: [
+            {
+              text: 'General',
+              iconCls: 'x-fa fa-cog',
+              leaf: true,
+              url: '/settings/general'
+            }
+          ]
+        }
+      })
+    }
+  ]
+});`,
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+  onClick?: () => void;
+  subNavigationItems?: SubNavigationItem[];
+}
+
+interface SubNavigationItem {
+  url: string;
+  label: string;
+  onClick?: () => void;
+}
+
+function EcommerceNavigationExample(): JSX.Element {
+  const [location, setLocation] = useState<string>('/dashboard');
+
+  const handleNavigation = (url: string): void => {
+    setLocation(url);
+  };
+
+  const onlineStoreItems: NavigationItem[] = [
+    {
+      url: '/dashboard',
+      label: 'Dashboard',
+      icon: 'home',
+      onClick: () => handleNavigation('/dashboard'),
+    },
+    {
+      url: '/products',
+      label: 'Products',
+      icon: 'products',
+      badge: '156',
+      onClick: () => handleNavigation('/products'),
+      subNavigationItems: [
+        {
+          url: '/products/all',
+          label: 'All products',
+          onClick: () => handleNavigation('/products/all'),
+        },
+        {
+          url: '/products/collections',
+          label: 'Collections',
+          onClick: () => handleNavigation('/products/collections'),
+        },
+      ],
+    },
+  ];
+
+  const settingsItems: NavigationItem[] = [
+    {
+      url: '/settings/general',
+      label: 'General',
+      icon: 'settings',
+      onClick: () => handleNavigation('/settings/general'),
+    },
+  ];
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section title="Online Store" items={onlineStoreItems} />
+      <Navigation.Section title="Settings" items={settingsItems} />
+    </Navigation>
+  );
+}`
+  }
+};
+
 export const actionListExamples = {
   'with-destructive-item': {
     react: `import {Button, Popover, ActionList} from '@shopify/polaris';

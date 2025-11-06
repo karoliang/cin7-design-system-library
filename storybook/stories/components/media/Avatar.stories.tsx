@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Avatar, Text, InlineStack, Card, Badge } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/Avatar',
@@ -50,6 +51,9 @@ export const Default: Story = {
   args: {
     name: 'John Doe',
     size: 'medium',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
   },
 };
 

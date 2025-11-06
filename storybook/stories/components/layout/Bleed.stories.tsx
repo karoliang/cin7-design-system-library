@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Bleed, Card, Button, Text, Badge } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 const meta = {
@@ -46,6 +48,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Card with Bleed</Text>

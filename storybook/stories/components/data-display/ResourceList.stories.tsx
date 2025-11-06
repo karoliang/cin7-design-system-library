@@ -23,6 +23,7 @@ import {
   DeleteIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/ResourceList',
@@ -256,6 +257,9 @@ export const Default: Story = {
         />
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
   },
 };
 

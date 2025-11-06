@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CalloutCard, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/CalloutCard',
@@ -53,6 +54,9 @@ export const Default: Story = {
       content: 'Learn more',
       url: '#',
     },
+  },
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'layout'),
   },
 };
 

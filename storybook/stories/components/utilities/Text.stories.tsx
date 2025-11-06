@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Text, Card, Badge, Button } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Typography/Text',
@@ -71,6 +72,9 @@ export const Default: Story = {
     variant: 'bodyMd',
     as: 'p',
     children: 'This is default body text using the Text component.',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('text', 'body'),
   },
 };
 

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Grid, Card, Button, Text, Badge } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 const meta = {
@@ -35,6 +37,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} gap="400">
       <Card sectioned>

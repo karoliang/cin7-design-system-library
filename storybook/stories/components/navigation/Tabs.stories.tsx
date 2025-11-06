@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Tabs } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Tabs',
@@ -46,6 +47,9 @@ export const Default: Story = {
       { id: 'archived', content: 'Archived' },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'default'),
+  },
 };
 
 export const WithBadges: Story = {
@@ -57,6 +61,9 @@ export const WithBadges: Story = {
       { id: 'flagged', content: 'Flagged', badge: '12' },
       { id: 'drafts', content: 'Drafts' },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'withBadges'),
   },
 };
 
@@ -70,6 +77,9 @@ export const Fitted: Story = {
       { id: 'customers', content: 'Customers' },
       { id: 'analytics', content: 'Analytics' },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'fitted'),
   },
 };
 
@@ -103,6 +113,9 @@ export const ManyTabs: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'manyTabs'),
   },
 };
 
@@ -161,6 +174,9 @@ export const Interactive: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'interactive'),
   },
 };
 
@@ -244,6 +260,9 @@ export const ProductManagement: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'productManagement'),
+  },
 };
 
 export const OrderStatus: Story = {
@@ -325,6 +344,9 @@ export const OrderStatus: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'orderStatus'),
   },
 };
 
@@ -449,5 +471,8 @@ export const CampaignTabs: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('tabs', 'campaignTabs'),
   },
 };

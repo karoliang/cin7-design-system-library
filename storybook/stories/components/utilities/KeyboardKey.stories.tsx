@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { KeyboardKey, Card, BlockStack, InlineStack, Text, Button, Badge } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Typography/KeyboardKey',
@@ -28,6 +29,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'Enter',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
 };
 

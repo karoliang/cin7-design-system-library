@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DataTable, Button, Badge, Icon } from '@shopify/polaris';
 import { ChevronDownIcon, ChevronUpIcon, ViewIcon, EditIcon, DeleteIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/DataTable',
@@ -95,6 +96,9 @@ export const Default: Story = {
     columnContentTypes: ['text', 'text', 'numeric', 'text', 'text'],
     headings: ['Order', 'Date', 'Total', 'Items', 'Status'],
     rows: sampleOrders,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
   },
 };
 

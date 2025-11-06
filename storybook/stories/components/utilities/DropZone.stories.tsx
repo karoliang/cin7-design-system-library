@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DropZone, BlockStack, InlineStack, Text, Card, Thumbnail, Button } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/DropZone',

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DescriptionList, Card, BlockStack, InlineStack, Badge, Button, Icon, Avatar, Text } from '@shopify/polaris';
 import { PersonIcon, PackageIcon, CashDollarIcon, ClockIcon, LocationIcon, EmailIcon, PhoneIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/DescriptionList',
@@ -55,6 +56,9 @@ export const Default: Story = {
         description: 'Paid',
       },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
   },
 };
 

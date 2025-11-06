@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge, Button, InlineStack } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/Badge',
@@ -43,6 +44,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'New',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
   },
 };
 

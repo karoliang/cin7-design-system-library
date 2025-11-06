@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Navigation } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Navigation',
@@ -66,6 +67,9 @@ export const Default: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('navigation', 'default'),
   },
 };
 
@@ -142,6 +146,9 @@ export const NestedNavigation: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('navigation', 'nestedNavigation'),
   },
 };
 
@@ -298,6 +305,9 @@ export const EcommerceNavigation: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('navigation', 'ecommerceNavigation'),
   },
 };
 

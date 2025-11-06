@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Loading, Button, Card, Text, BlockStack, InlineStack, Badge } from '@shopify/polaris';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/Loading',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Loading displays a spinning indicator to show that content is being loaded or processed. It provides visual feedback during async operations.',
       },
     },
+    codeVariants: getCodeVariants('loading', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

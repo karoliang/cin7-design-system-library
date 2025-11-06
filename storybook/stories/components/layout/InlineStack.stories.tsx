@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { InlineStack, Card, Button, Badge, Text } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 const meta = {
@@ -45,6 +47,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
   render: () => (
     <InlineStack gap="400">
       <Button>Save</Button>

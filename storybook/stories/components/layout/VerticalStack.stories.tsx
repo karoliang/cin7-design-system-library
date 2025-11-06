@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BlockStack } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 // Custom VerticalStack component for Polaris v13.9.5 compatibility
@@ -79,6 +81,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('blockstack', 'default'),
+  },
   render: () => (
     <CustomVerticalStack gap="400">
       <div style={{ padding: '12px', backgroundColor: '#e3f2fd', borderRadius: '4px' }}>

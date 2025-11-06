@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ProgressBar, Card, Button, Text } from '@shopify/polaris';
 import React, { useState, useEffect } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/ProgressBar',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Progress bars show the completion status of a task or process. They provide visual feedback for operations that take time to complete.',
       },
     },
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

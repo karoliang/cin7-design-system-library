@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TopBar } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/TopBar',
@@ -12,6 +13,7 @@ const meta = {
         component: 'TopBar provides a consistent header for applications with search functionality, user menu, and navigation controls. It\'s typically used at the top of the page to provide global actions and user account management.',
       },
     },
+    codeVariants: getCodeVariants('topbar', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

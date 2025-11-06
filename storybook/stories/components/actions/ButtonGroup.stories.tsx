@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonGroup, Button, BlockStack, InlineStack, Text, Card } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 import React from 'react';
 
 const meta = {
@@ -11,6 +12,10 @@ const meta = {
       description: {
         component: 'ButtonGroup is used to group related buttons together. It provides visual cohesion and proper spacing for button actions that are closely related in functionality, such as primary/secondary actions or toggle groups.',
       },
+    },
+    codeVariants: {
+      component: 'buttonGroup',
+      variations: ['default', 'with-segmented-buttons', 'pressed-with-segmented-buttons']
     },
   },
   tags: ['autodocs'],

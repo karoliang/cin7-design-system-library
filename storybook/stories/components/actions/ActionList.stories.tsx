@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ActionList, Button, Popover, Icon } from '@shopify/polaris';
 import { SearchIcon, SettingsIcon, ExportIcon, DuplicateIcon, DeleteIcon, EditIcon, ViewIcon, CheckCircleIcon, DisabledIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/ActionList',
@@ -52,6 +53,9 @@ export const Default: Story = {
       { content: 'Delete product', icon: DeleteIcon, destructive: true },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'default'),
+  },
 };
 
 export const WithActions: Story = {
@@ -87,6 +91,9 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-actions'),
+  },
 };
 
 export const WithSections: Story = {
@@ -116,6 +123,9 @@ export const WithSections: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-sections'),
+  },
 };
 
 export const WithDisabledItems: Story = {
@@ -126,6 +136,9 @@ export const WithDisabledItems: Story = {
       { content: 'Another action', icon: DuplicateIcon },
       { content: 'Also disabled', icon: SettingsIcon, disabled: true },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-disabled-items'),
   },
 };
 
@@ -138,6 +151,9 @@ export const WithBadges: Story = {
       { content: 'Failed', badge: { status: 'critical', content: 'Error' } },
       { content: 'Custom badge', badge: { tone: 'magic', content: 'Special' } },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-badges'),
   },
 };
 
@@ -161,6 +177,9 @@ export const WithPrefixAndSuffix: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-prefix-and-suffix'),
+  },
 };
 
 export const WithDestructiveActions: Story = {
@@ -172,6 +191,9 @@ export const WithDestructiveActions: Story = {
       { content: 'Remove access', destructive: true },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-destructive-actions'),
+  },
 };
 
 export const WithExternalLinks: Story = {
@@ -181,6 +203,9 @@ export const WithExternalLinks: Story = {
       { content: 'Open support', url: 'https://support.shopify.com', external: true },
       { content: 'View API docs', url: '#', external: true },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'with-external-links'),
   },
 };
 
@@ -266,6 +291,9 @@ export const NestedMenuExample: Story = {
         )}
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'nested-menu-example'),
   },
 };
 
@@ -371,6 +399,9 @@ export const BulkActionsExample: Story = {
         )}
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'bulk-actions-example'),
   },
 };
 
@@ -478,5 +509,8 @@ export const ContextMenuExample: Story = {
         )}
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('actionlist', 'context-menu-example'),
   },
 };

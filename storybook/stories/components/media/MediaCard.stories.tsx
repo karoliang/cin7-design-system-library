@@ -11,6 +11,7 @@ import {
   ArrowDownIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/MediaCard',
@@ -65,6 +66,9 @@ export const Default: Story = {
       content: 'View details',
       onAction: () => console.log('View details clicked'),
     },
+  },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
   },
 };
 

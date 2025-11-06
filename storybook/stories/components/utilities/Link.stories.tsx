@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Link } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Link',
@@ -50,6 +51,9 @@ export const Default: Story = {
     children: 'View all products',
     url: '#products',
   },
+  parameters: {
+    codeVariants: getCodeVariants('link', 'default'),
+  },
 };
 
 export const ExternalLink: Story = {
@@ -57,6 +61,9 @@ export const ExternalLink: Story = {
     children: 'Visit Shopify documentation',
     url: 'https://polaris.shopify.com',
     external: true,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('link', 'externalLink'),
   },
 };
 
@@ -66,6 +73,9 @@ export const Monochrome: Story = {
     url: '#features',
     monochrome: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('link', 'monochrome'),
+  },
 };
 
 export const NoUnderline: Story = {
@@ -73,6 +83,9 @@ export const NoUnderline: Story = {
     children: 'Shop now',
     url: '#shop',
     removeUnderline: true,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('link', 'noUnderline'),
   },
 };
 
@@ -92,6 +105,9 @@ export const InlineText: Story = {
       </p>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('link', 'inlineText'),
+  },
 };
 
 export const NavigationLinks: Story = {
@@ -106,6 +122,9 @@ export const NavigationLinks: Story = {
       <Link url="#settings">⚙️ Settings</Link>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('link', 'navigationLinks'),
+  },
 };
 
 export const FooterLinks: Story = {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Pagination } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Pagination',
@@ -47,6 +48,9 @@ export const Default: Story = {
     hasPrevious: false,
     label: 'Pagination',
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'default'),
+  },
 };
 
 export const MiddlePage: Story = {
@@ -55,6 +59,9 @@ export const MiddlePage: Story = {
     hasPrevious: true,
     label: 'Pagination',
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'middlePage'),
+  },
 };
 
 export const LastPage: Story = {
@@ -62,6 +69,9 @@ export const LastPage: Story = {
     hasNext: false,
     hasPrevious: true,
     label: 'Pagination',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'lastPage'),
   },
 };
 
@@ -72,6 +82,9 @@ export const CustomTooltips: Story = {
     label: 'Customer list pagination',
     nextTooltip: 'Next page of customers',
     previousTooltip: 'Previous page of customers',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'customTooltips'),
   },
 };
 

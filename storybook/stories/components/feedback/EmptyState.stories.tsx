@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { EmptyState, Button, Card, InlineStack, BlockStack, Image } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/EmptyState',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Empty states are placeholder screens that appear when there\'s no data to display. They provide context and guide users toward next actions.',
       },
     },
+    codeVariants: getCodeVariants('emptystate', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Spinner, Card, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/Spinner',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Spinners are loading indicators that show that content is being processed or loaded. They provide visual feedback during asynchronous operations.',
       },
     },
+    codeVariants: getCodeVariants('spinner', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

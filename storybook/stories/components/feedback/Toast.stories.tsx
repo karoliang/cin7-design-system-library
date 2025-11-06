@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Toast, Button, Frame } from '@shopify/polaris';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/Toast',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Toasts are brief notifications that appear at the bottom of the screen to provide feedback on an action. They automatically dismiss after a short time or can be manually dismissed.',
       },
     },
+    codeVariants: getCodeVariants('toast', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

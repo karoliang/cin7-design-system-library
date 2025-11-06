@@ -10420,6 +10420,3564 @@ export default LoadingExample;`
   }
 };
 
+// FullscreenBar Component Examples
+export const fullscreenbarExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { FullscreenBar } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function FullscreenBarExample() {
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleNavigationDismiss = useCallback(() => {
+    console.log('Navigation dismissed');
+  }, []);
+
+  return (
+    <FullscreenBar
+      logo={{
+        width: 124,
+        contextualSaveBarSource: 'https://cdn.shopify.com/logo.svg',
+        url: '#',
+      }}
+      searchField={{
+        placeholder: 'Search',
+        onChange: setSearchValue,
+        value: searchValue,
+      }}
+      onNavigationDismiss={handleNavigationDismiss}
+    />
+  );
+}
+
+export default FullscreenBarExample;`,
+
+    vanilla: `<!-- FullscreenBar Structure -->
+<div class="polaris-fullscreen-bar">
+  <div class="polaris-fullscreen-bar__logo">
+    <a href="#">
+      <img src="https://cdn.shopify.com/logo.svg" width="124" alt="Logo" />
+    </a>
+  </div>
+  <div class="polaris-fullscreen-bar__search">
+    <input
+      type="search"
+      class="polaris-text-field__input"
+      placeholder="Search"
+      id="fullscreen-search"
+    />
+  </div>
+</div>
+
+<script>
+import { createSearchField, EventBus } from '@cin7/vanilla-js';
+
+const searchField = document.getElementById('fullscreen-search');
+searchField.addEventListener('input', (e) => {
+  EventBus.emit('search:changed', { value: e.target.value });
+});
+
+// Handle navigation dismiss
+document.querySelector('.polaris-fullscreen-bar__back')?.addEventListener('click', () => {
+  console.log('Navigation dismissed');
+});
+</script>`,
+
+    extjs: `// ExtJS FullscreenBar using @cin7/extjs-adapters
+Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'top',
+  height: 60,
+  cls: 'polaris-fullscreen-bar',
+  items: [
+    {
+      xtype: 'component',
+      html: '<a href="#"><img src="https://cdn.shopify.com/logo.svg" width="124" alt="Logo" /></a>',
+      width: 150
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: '',
+      emptyText: 'Search',
+      flex: 1,
+      margin: '0 16',
+      listeners: {
+        change: function(field, newValue) {
+          Ext.GlobalEvents.fireEvent('search:changed', { value: newValue });
+        }
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Menu',
+      menu: [
+        { text: 'Profile settings' },
+        { text: 'Logout' }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { FullscreenBar } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface FullscreenBarExampleProps {
+  logoUrl?: string;
+  logoWidth?: number;
+  onSearchChange?: (value: string) => void;
+}
+
+function FullscreenBarExample({
+  logoUrl = 'https://cdn.shopify.com/logo.svg',
+  logoWidth = 124,
+  onSearchChange
+}: FullscreenBarExampleProps): JSX.Element {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleSearchChange = useCallback((value: string): void => {
+    setSearchValue(value);
+    onSearchChange?.(value);
+  }, [onSearchChange]);
+
+  const handleNavigationDismiss = useCallback((): void => {
+    console.log('Navigation dismissed');
+  }, []);
+
+  return (
+    <FullscreenBar
+      logo={{
+        width: logoWidth,
+        contextualSaveBarSource: logoUrl,
+        url: '#',
+      }}
+      searchField={{
+        placeholder: 'Search',
+        onChange: handleSearchChange,
+        value: searchValue,
+      }}
+      onNavigationDismiss={handleNavigationDismiss}
+    />
+  );
+}
+
+export default FullscreenBarExample;`
+  }
+};
+
+// ContextualSaveBar Component Examples
+export const contextualsavebarExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ContextualSaveBar } from '@shopify/polaris';
+import { useState } from 'react';
+
+function ContextualSaveBarExample() {
+  const [isDirty, setIsDirty] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsSaving(false);
+    setIsDirty(false);
+  };
+
+  const handleDiscard = () => {
+    setIsDirty(false);
+  };
+
+  return (
+    <>
+      {isDirty && (
+        <ContextualSaveBar
+          message="Unsaved changes"
+          saveAction={{
+            content: isSaving ? 'Saving...' : 'Save',
+            onAction: handleSave,
+            loading: isSaving,
+          }}
+          discardAction={{
+            content: 'Discard',
+            onAction: handleDiscard,
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+export default ContextualSaveBarExample;`,
+
+    vanilla: `<!-- ContextualSaveBar Structure -->
+<div class="polaris-contextual-save-bar" id="save-bar" style="display: none;">
+  <div class="polaris-contextual-save-bar__content">
+    <span class="polaris-contextual-save-bar__message">Unsaved changes</span>
+    <div class="polaris-contextual-save-bar__actions">
+      <button class="polaris-button" id="discard-btn">Discard</button>
+      <button class="polaris-button polaris-button--primary" id="save-btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+import { EventBus } from '@cin7/vanilla-js';
+
+let isDirty = false;
+const saveBar = document.getElementById('save-bar');
+const saveBtn = document.getElementById('save-btn');
+const discardBtn = document.getElementById('discard-btn');
+
+// Show/hide save bar based on dirty state
+EventBus.on('form:changed', () => {
+  isDirty = true;
+  saveBar.style.display = 'flex';
+});
+
+saveBtn.addEventListener('click', async () => {
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving...';
+
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  isDirty = false;
+  saveBar.style.display = 'none';
+  saveBtn.disabled = false;
+  saveBtn.textContent = 'Save';
+
+  EventBus.emit('form:saved');
+});
+
+discardBtn.addEventListener('click', () => {
+  isDirty = false;
+  saveBar.style.display = 'none';
+  EventBus.emit('form:discarded');
+});
+</script>`,
+
+    extjs: `// ExtJS ContextualSaveBar using @cin7/extjs-adapters
+Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  cls: 'polaris-contextual-save-bar',
+  hidden: true,
+  id: 'contextual-save-bar',
+  items: [
+    {
+      xtype: 'component',
+      html: '<span class="polaris-contextual-save-bar__message">Unsaved changes</span>',
+      flex: 1
+    },
+    {
+      xtype: 'button',
+      text: 'Discard',
+      handler: function() {
+        const saveBar = Ext.getCmp('contextual-save-bar');
+        saveBar.hide();
+        Ext.GlobalEvents.fireEvent('form:discarded');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Save',
+      cls: 'polaris-button--primary',
+      handler: async function(btn) {
+        btn.setText('Saving...');
+        btn.setDisabled(true);
+
+        // Simulate async save
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        const saveBar = Ext.getCmp('contextual-save-bar');
+        saveBar.hide();
+        btn.setText('Save');
+        btn.setDisabled(false);
+
+        Ext.GlobalEvents.fireEvent('form:saved');
+      }
+    }
+  ]
+});
+
+// Show save bar when form is dirty
+Ext.GlobalEvents.on('form:changed', function() {
+  const saveBar = Ext.getCmp('contextual-save-bar');
+  saveBar.show();
+});`,
+
+    typescript: `import { ContextualSaveBar } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface ContextualSaveBarExampleProps {
+  message?: string;
+  onSave?: () => Promise<void>;
+  onDiscard?: () => void;
+}
+
+function ContextualSaveBarExample({
+  message = 'Unsaved changes',
+  onSave,
+  onDiscard
+}: ContextualSaveBarExampleProps): JSX.Element {
+  const [isDirty, setIsDirty] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  const handleSave = useCallback(async (): Promise<void> => {
+    setIsSaving(true);
+
+    try {
+      await onSave?.();
+      setIsDirty(false);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [onSave]);
+
+  const handleDiscard = useCallback((): void => {
+    onDiscard?.();
+    setIsDirty(false);
+  }, [onDiscard]);
+
+  if (!isDirty) return null;
+
+  return (
+    <ContextualSaveBar
+      message={message}
+      saveAction={{
+        content: isSaving ? 'Saving...' : 'Save',
+        onAction: handleSave,
+        loading: isSaving,
+        disabled: isSaving,
+      }}
+      discardAction={{
+        content: 'Discard',
+        onAction: handleDiscard,
+        disabled: isSaving,
+      }}
+    />
+  );
+}
+
+export default ContextualSaveBarExample;`
+  }
+};
+
+// Divider Component Examples
+export const dividerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Divider, Card, Text } from '@shopify/polaris';
+
+function DividerExample() {
+  return (
+    <Card>
+      <Text as="h3" variant="headingMd">Section One</Text>
+      <Text as="p">This is the first section.</Text>
+
+      <Divider />
+
+      <Text as="h3" variant="headingMd">Section Two</Text>
+      <Text as="p">This is the second section.</Text>
+    </Card>
+  );
+}
+
+export default DividerExample;`,
+
+    vanilla: `<!-- Divider Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <h3 class="polaris-heading-md">Section One</h3>
+    <p>This is the first section.</p>
+  </div>
+
+  <hr class="polaris-divider" />
+
+  <div class="polaris-card__section">
+    <h3 class="polaris-heading-md">Section Two</h3>
+    <p>This is the second section.</p>
+  </div>
+</div>
+
+<style>
+.polaris-divider {
+  border: none;
+  border-top: 1px solid var(--p-color-border);
+  margin: 0;
+}
+</style>`,
+
+    extjs: `// ExtJS Divider using standard components
+Ext.create('Ext.panel.Panel', {
+  title: 'Content Sections',
+  bodyPadding: 16,
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3>Section One</h3><p>This is the first section.</p>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<hr class="polaris-divider" />',
+      cls: 'polaris-divider-wrapper'
+    },
+    {
+      xtype: 'component',
+      html: '<h3>Section Two</h3><p>This is the second section.</p>',
+      margin: '16 0 0 0'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Divider, Card, Text } from '@shopify/polaris';
+
+interface DividerExampleProps {
+  borderColor?: 'border' | 'border-inverse' | 'border-critical' | 'border-warning' | 'border-highlight' | 'border-success';
+  borderWidth?: 'none' | 'base' | 'thick';
+}
+
+function DividerExample({
+  borderColor = 'border',
+  borderWidth = 'base'
+}: DividerExampleProps): JSX.Element {
+  return (
+    <Card>
+      <Text as="h3" variant="headingMd">Section One</Text>
+      <Text as="p">This is the first section.</Text>
+
+      <Divider borderColor={borderColor} borderWidth={borderWidth} />
+
+      <Text as="h3" variant="headingMd">Section Two</Text>
+      <Text as="p">This is the second section.</Text>
+    </Card>
+  );
+}
+
+export default DividerExample;`
+  }
+};
+
+// DropZone Component Examples
+export const dropzoneExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { DropZone, Text } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function DropZoneExample() {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleDrop = useCallback((acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+  }, []);
+
+  const fileUpload = !files.length && (
+    <DropZone.FileUpload />
+  );
+
+  const uploadedFiles = files.length > 0 && (
+    <div style={{ padding: '20px' }}>
+      {files.map((file, index) => (
+        <Text key={index} variant="bodySm" as="p">
+          {file.name} ({file.size} bytes)
+        </Text>
+      ))}
+    </div>
+  );
+
+  return (
+    <DropZone onDrop={handleDrop}>
+      {uploadedFiles}
+      {fileUpload}
+    </DropZone>
+  );
+}
+
+export default DropZoneExample;`,
+
+    vanilla: `<!-- DropZone Structure -->
+<div class="polaris-drop-zone" id="drop-zone">
+  <input type="file" id="file-input" style="display: none;" multiple />
+  <div class="polaris-drop-zone__content">
+    <div class="polaris-drop-zone__placeholder" id="placeholder">
+      <span>Drop files here or click to upload</span>
+    </div>
+    <div class="polaris-drop-zone__files" id="file-list"></div>
+  </div>
+</div>
+
+<script>
+import { EventBus } from '@cin7/vanilla-js';
+
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const fileList = document.getElementById('file-list');
+const placeholder = document.getElementById('placeholder');
+
+// Handle click to browse
+dropZone.addEventListener('click', () => {
+  fileInput.click();
+});
+
+// Handle drag and drop
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('polaris-drop-zone--dragging');
+});
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('polaris-drop-zone--dragging');
+});
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('polaris-drop-zone--dragging');
+
+  const files = Array.from(e.dataTransfer.files);
+  displayFiles(files);
+  EventBus.emit('files:uploaded', { files });
+});
+
+// Handle file input change
+fileInput.addEventListener('change', (e) => {
+  const files = Array.from(e.target.files);
+  displayFiles(files);
+  EventBus.emit('files:uploaded', { files });
+});
+
+function displayFiles(files) {
+  if (files.length > 0) {
+    placeholder.style.display = 'none';
+    fileList.innerHTML = files.map(file =>
+      \`<p>\${file.name} (\${file.size} bytes)</p>\`
+    ).join('');
+  }
+}
+</script>`,
+
+    extjs: `// ExtJS DropZone using filefield
+Ext.create('Ext.form.Panel', {
+  title: 'File Upload',
+  bodyPadding: 16,
+  items: [
+    {
+      xtype: 'filefield',
+      name: 'files',
+      fieldLabel: 'Files',
+      labelWidth: 50,
+      msgTarget: 'side',
+      allowBlank: false,
+      buttonText: 'Browse Files...',
+      listeners: {
+        change: function(field, value) {
+          const files = field.fileInputEl.dom.files;
+          console.log('Files selected:', files);
+
+          Ext.GlobalEvents.fireEvent('files:uploaded', {
+            files: Array.from(files),
+            count: files.length
+          });
+        }
+      }
+    },
+    {
+      xtype: 'component',
+      id: 'file-preview',
+      html: '<div class="file-preview">No files selected</div>',
+      margin: '8 0 0 0'
+    }
+  ],
+  buttons: [
+    {
+      text: 'Upload',
+      handler: function() {
+        const form = this.up('form').getForm();
+        if (form.isValid()) {
+          // Handle file upload
+          console.log('Uploading files...');
+        }
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { DropZone, Text } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface DropZoneExampleProps {
+  accept?: string;
+  allowMultiple?: boolean;
+  onDrop?: (files: File[]) => void;
+}
+
+function DropZoneExample({
+  accept,
+  allowMultiple = true,
+  onDrop
+}: DropZoneExampleProps): JSX.Element {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleDrop = useCallback((acceptedFiles: File[]): void => {
+    setFiles(acceptedFiles);
+    onDrop?.(acceptedFiles);
+  }, [onDrop]);
+
+  const fileUpload = !files.length && (
+    <DropZone.FileUpload />
+  );
+
+  const uploadedFiles = files.length > 0 && (
+    <div style={{ padding: '20px' }}>
+      {files.map((file, index) => (
+        <Text key={index} variant="bodySm" as="p">
+          {file.name} ({file.size} bytes)
+        </Text>
+      ))}
+    </div>
+  );
+
+  return (
+    <DropZone
+      onDrop={handleDrop}
+      accept={accept}
+      allowMultiple={allowMultiple}
+    >
+      {uploadedFiles}
+      {fileUpload}
+    </DropZone>
+  );
+}
+
+export default DropZoneExample;`
+  }
+};
+
+// KeyboardKey Component Examples
+export const keyboardkeyExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { KeyboardKey } from '@shopify/polaris';
+
+function KeyboardKeyExample() {
+  return <KeyboardKey>Enter</KeyboardKey>;
+}
+
+export default KeyboardKeyExample;`,
+
+    vanilla: `<!-- KeyboardKey Structure -->
+<kbd class="polaris-keyboard-key">Enter</kbd>
+
+<style>
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 2px 6px;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS KeyboardKey representation
+Ext.create('Ext.Component', {
+  html: '<kbd class="polaris-keyboard-key">Enter</kbd>',
+  cls: 'keyboard-key-wrapper',
+  renderTo: Ext.getBody()
+});
+
+// For keyboard shortcuts display
+Ext.create('Ext.panel.Panel', {
+  title: 'Keyboard Shortcuts',
+  bodyPadding: 16,
+  items: [
+    {
+      xtype: 'component',
+      html: \`
+        <div class="shortcut-row">
+          <span>Save</span>
+          <span>
+            <kbd class="polaris-keyboard-key">Ctrl</kbd> +
+            <kbd class="polaris-keyboard-key">S</kbd>
+          </span>
+        </div>
+      \`
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, Text } from '@shopify/polaris';
+
+interface KeyboardKeyExampleProps {
+  keys: string[];
+  description?: string;
+}
+
+function KeyboardKeyExample({
+  keys = ['Enter'],
+  description
+}: KeyboardKeyExampleProps): JSX.Element {
+  return (
+    <InlineStack gap="100" blockAlign="center">
+      {description && <Text variant="bodySm">{description}:</Text>}
+      {keys.map((key, index) => (
+        <span key={index}>
+          {index > 0 && <Text>+</Text>}
+          <KeyboardKey>{key}</KeyboardKey>
+        </span>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default KeyboardKeyExample;`
+  }
+};
+
+// Text Component Examples
+export const textExamples: Record<string, CodeVariant> = {
+  body: {
+    react: `import { Text } from '@shopify/polaris';
+
+function TextExample() {
+  return (
+    <Text variant="bodyMd" as="p">
+      This is default body text using the Text component.
+    </Text>
+  );
+}
+
+export default TextExample;`,
+
+    vanilla: `<!-- Text Structure -->
+<p class="polaris-text polaris-text--body-md">
+  This is default body text using the Text component.
+</p>
+
+<style>
+.polaris-text--body-md {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.polaris-text--heading-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+</style>`,
+
+    extjs: `// ExtJS Text representation
+Ext.create('Ext.Component', {
+  html: '<p class="polaris-text polaris-text--body-md">This is default body text using the Text component.</p>',
+  renderTo: Ext.getBody()
+});
+
+// For different text variants
+Ext.create('Ext.panel.Panel', {
+  title: 'Text Variants',
+  bodyPadding: 16,
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Heading Text</h3>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md">Body text with medium size.</p>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-sm polaris-text--subdued">Small subdued text for captions.</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+
+interface TextExampleProps {
+  variant?: 'bodySm' | 'bodyMd' | 'bodyLg' | 'headingSm' | 'headingMd' | 'headingLg' | 'headingXl';
+  as?: 'p' | 'span' | 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  tone?: 'base' | 'subdued' | 'critical' | 'success' | 'warning' | 'attention' | 'info';
+  children: React.ReactNode;
+}
+
+function TextExample({
+  variant = 'bodyMd',
+  as = 'p',
+  tone = 'base',
+  children
+}: TextExampleProps): JSX.Element {
+  return (
+    <Text variant={variant} as={as} tone={tone}>
+      {children}
+    </Text>
+  );
+}
+
+export default TextExample;`
+  }
+};
+
+// AlphaStack Component Examples
+export const alphastackExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { AlphaStack, Text, Button } from '@shopify/polaris';
+import React from 'react';
+
+function AlphaStackDefault() {
+  return (
+    <AlphaStack spacing="loose">
+      <Text as="h3" variant="headingMd">AlphaStack Example</Text>
+      <Text as="p" variant="bodyMd">This is the default vertical AlphaStack with loose spacing.</Text>
+      <Button variant="primary">Primary Action</Button>
+      <Button variant="secondary">Secondary Action</Button>
+    </AlphaStack>
+  );
+}
+
+export default AlphaStackDefault;`,
+
+    vanilla: `<!-- AlphaStack using @cin7/vanilla-js -->
+<div id="alphastack-container"></div>
+
+<script>
+import { createAlphaStack } from '@cin7/vanilla-js';
+
+const alphaStack = createAlphaStack({
+  spacing: 'loose',
+  direction: 'vertical',
+  items: [
+    { type: 'heading', text: 'AlphaStack Example', level: 3 },
+    { type: 'text', text: 'This is the default vertical AlphaStack with loose spacing.' },
+    { type: 'button', text: 'Primary Action', variant: 'primary' },
+    { type: 'button', text: 'Secondary Action', variant: 'secondary' }
+  ]
+});
+
+document.getElementById('alphastack-container').appendChild(alphaStack);
+</script>`,
+
+    extjs: `// ExtJS AlphaStack using @cin7/extjs-adapters
+import { PolarisAlphaStack } from '@cin7/extjs-adapters';
+
+Ext.create('PolarisAlphaStack', {
+  renderTo: Ext.getBody(),
+  spacing: 'loose',
+  direction: 'vertical',
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3>AlphaStack Example</h3>'
+    },
+    {
+      xtype: 'component',
+      html: '<p>This is the default vertical AlphaStack with loose spacing.</p>'
+    },
+    {
+      xtype: 'button',
+      text: 'Primary Action',
+      ui: 'primary',
+      handler: function() {
+        console.log('Primary action clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Secondary Action',
+      ui: 'secondary',
+      handler: function() {
+        console.log('Secondary action clicked');
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { AlphaStack, Text, Button, AlphaStackProps } from '@shopify/polaris';
+import React from 'react';
+
+interface AlphaStackDefaultProps {
+  spacing?: AlphaStackProps['spacing'];
+  direction?: AlphaStackProps['direction'];
+  onPrimaryAction?: () => void;
+  onSecondaryAction?: () => void;
+}
+
+function AlphaStackDefault({
+  spacing = 'loose',
+  direction = 'vertical',
+  onPrimaryAction,
+  onSecondaryAction
+}: AlphaStackDefaultProps): JSX.Element {
+  return (
+    <AlphaStack spacing={spacing} direction={direction}>
+      <Text as="h3" variant="headingMd">AlphaStack Example</Text>
+      <Text as="p" variant="bodyMd">
+        This is the default vertical AlphaStack with loose spacing.
+      </Text>
+      <Button
+        variant="primary"
+        onClick={onPrimaryAction || (() => console.log('Primary action'))}
+      >
+        Primary Action
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={onSecondaryAction || (() => console.log('Secondary action'))}
+      >
+        Secondary Action
+      </Button>
+    </AlphaStack>
+  );
+}
+
+export default AlphaStackDefault;`
+  }
+};
+
+// Bleed Component Examples
+export const bleedExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Bleed, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function BleedDefault() {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        Card with Bleed
+      </Text>
+      <Text as="p" variant="bodySm" style={{ marginBottom: '16px' }}>
+        Below is a div that bleeds to remove the card's padding on all sides:
+      </Text>
+      <Bleed margin="400">
+        <div style={{
+          backgroundColor: '#f4f6f8',
+          padding: '16px',
+          textAlign: 'center'
+        }}>
+          <Text as="p" variant="bodyMd">This content bleeds to the edges</Text>
+        </div>
+      </Bleed>
+    </Card>
+  );
+}
+
+export default BleedDefault;`,
+
+    vanilla: `<!-- Bleed using @cin7/vanilla-js -->
+<div id="bleed-container"></div>
+
+<script>
+import { createBleed } from '@cin7/vanilla-js';
+
+// Create card container
+const card = document.createElement('div');
+card.className = 'polaris-card';
+card.style.padding = '16px';
+
+// Add heading
+const heading = document.createElement('h3');
+heading.textContent = 'Card with Bleed';
+heading.style.marginBottom = '16px';
+card.appendChild(heading);
+
+// Add description
+const description = document.createElement('p');
+description.textContent = "Below is a div that bleeds to remove the card's padding on all sides:";
+description.style.marginBottom = '16px';
+card.appendChild(description);
+
+// Create bleed component
+const bleed = createBleed({
+  margin: '400',
+  content: {
+    backgroundColor: '#f4f6f8',
+    padding: '16px',
+    textAlign: 'center',
+    text: 'This content bleeds to the edges'
+  }
+});
+
+card.appendChild(bleed);
+document.getElementById('bleed-container').appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Bleed using @cin7/extjs-adapters
+import { PolarisBleed } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3>Card with Bleed</h3>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p>Below is a div that bleeds to remove the card\\'s padding on all sides:</p>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'PolarisBleed',
+      margin: '400',
+      items: [{
+        xtype: 'box',
+        style: {
+          backgroundColor: '#f4f6f8',
+          padding: '16px',
+          textAlign: 'center'
+        },
+        html: '<p>This content bleeds to the edges</p>'
+      }]
+    }
+  ]
+});`,
+
+    typescript: `import { Bleed, Card, Text, BleedProps } from '@shopify/polaris';
+import React from 'react';
+
+interface BleedDefaultProps {
+  margin?: BleedProps['margin'];
+  content?: string;
+}
+
+function BleedDefault({
+  margin = '400',
+  content = 'This content bleeds to the edges'
+}: BleedDefaultProps): JSX.Element {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        Card with Bleed
+      </Text>
+      <Text as="p" variant="bodySm" style={{ marginBottom: '16px' }}>
+        Below is a div that bleeds to remove the card's padding on all sides:
+      </Text>
+      <Bleed margin={margin}>
+        <div style={{
+          backgroundColor: '#f4f6f8',
+          padding: '16px',
+          textAlign: 'center'
+        }}>
+          <Text as="p" variant="bodyMd">{content}</Text>
+        </div>
+      </Bleed>
+    </Card>
+  );
+}
+
+export default BleedDefault;`
+  }
+};
+
+// Box Component Examples
+export const boxExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Box, Text } from '@shopify/polaris';
+import React from 'react';
+
+function BoxDefault() {
+  return (
+    <Box padding="400" background="surface" border="base" borderRadius="base">
+      <Text as="h3" variant="headingMd">Box Component</Text>
+      <Text as="p" variant="bodyMd">
+        This is a basic Box with padding, background, border, and border radius.
+      </Text>
+    </Box>
+  );
+}
+
+export default BoxDefault;`,
+
+    vanilla: `<!-- Box using @cin7/vanilla-js -->
+<div id="box-container"></div>
+
+<script>
+import { createBox } from '@cin7/vanilla-js';
+
+const box = createBox({
+  padding: '400',
+  background: 'surface',
+  border: 'base',
+  borderRadius: 'base',
+  content: [
+    {
+      type: 'heading',
+      text: 'Box Component',
+      level: 3
+    },
+    {
+      type: 'text',
+      text: 'This is a basic Box with padding, background, border, and border radius.'
+    }
+  ]
+});
+
+document.getElementById('box-container').appendChild(box);
+</script>`,
+
+    extjs: `// ExtJS Box using @cin7/extjs-adapters
+import { PolarisBox } from '@cin7/extjs-adapters';
+
+Ext.create('PolarisBox', {
+  renderTo: Ext.getBody(),
+  padding: '400',
+  background: 'surface',
+  border: 'base',
+  borderRadius: 'base',
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3>Box Component</h3>'
+    },
+    {
+      xtype: 'component',
+      html: '<p>This is a basic Box with padding, background, border, and border radius.</p>'
+    }
+  ]
+});`,
+
+    typescript: `import { Box, Text, BoxProps } from '@shopify/polaris';
+import React from 'react';
+
+interface BoxDefaultProps {
+  padding?: BoxProps['padding'];
+  background?: BoxProps['background'];
+  border?: BoxProps['border'];
+  borderRadius?: BoxProps['borderRadius'];
+  children?: React.ReactNode;
+}
+
+function BoxDefault({
+  padding = '400',
+  background = 'surface',
+  border = 'base',
+  borderRadius = 'base',
+  children
+}: BoxDefaultProps): JSX.Element {
+  return (
+    <Box
+      padding={padding}
+      background={background}
+      border={border}
+      borderRadius={borderRadius}
+    >
+      {children || (
+        <>
+          <Text as="h3" variant="headingMd">Box Component</Text>
+          <Text as="p" variant="bodyMd">
+            This is a basic Box with padding, background, border, and border radius.
+          </Text>
+        </>
+      )}
+    </Box>
+  );
+}
+
+export default BoxDefault;`
+  }
+};
+
+// Grid Component Examples
+export const gridExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Grid, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function GridDefault() {
+  return (
+    <Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} gap="400">
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Column 1</Text>
+        <Text as="p" variant="bodySm">First grid item</Text>
+      </Card>
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Column 2</Text>
+        <Text as="p" variant="bodySm">Second grid item</Text>
+      </Card>
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Column 3</Text>
+        <Text as="p" variant="bodySm">Third grid item</Text>
+      </Card>
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Column 4</Text>
+        <Text as="p" variant="bodySm">Fourth grid item</Text>
+      </Card>
+    </Grid>
+  );
+}
+
+export default GridDefault;`,
+
+    vanilla: `<!-- Grid using @cin7/vanilla-js -->
+<div id="grid-container"></div>
+
+<script>
+import { createGrid } from '@cin7/vanilla-js';
+
+const grid = createGrid({
+  columns: { xs: 1, sm: 2, md: 3, lg: 4 },
+  gap: '400',
+  items: [
+    {
+      type: 'card',
+      title: 'Column 1',
+      content: 'First grid item'
+    },
+    {
+      type: 'card',
+      title: 'Column 2',
+      content: 'Second grid item'
+    },
+    {
+      type: 'card',
+      title: 'Column 3',
+      content: 'Third grid item'
+    },
+    {
+      type: 'card',
+      title: 'Column 4',
+      content: 'Fourth grid item'
+    }
+  ]
+});
+
+document.getElementById('grid-container').appendChild(grid);
+</script>`,
+
+    extjs: `// ExtJS Grid using @cin7/extjs-adapters
+import { PolarisGrid } from '@cin7/extjs-adapters';
+
+Ext.create('PolarisGrid', {
+  renderTo: Ext.getBody(),
+  columns: { xs: 1, sm: 2, md: 3, lg: 4 },
+  gap: '400',
+  items: [
+    {
+      xtype: 'panel',
+      cls: 'polaris-card',
+      bodyPadding: 15,
+      html: '<h3>Column 1</h3><p>First grid item</p>'
+    },
+    {
+      xtype: 'panel',
+      cls: 'polaris-card',
+      bodyPadding: 15,
+      html: '<h3>Column 2</h3><p>Second grid item</p>'
+    },
+    {
+      xtype: 'panel',
+      cls: 'polaris-card',
+      bodyPadding: 15,
+      html: '<h3>Column 3</h3><p>Third grid item</p>'
+    },
+    {
+      xtype: 'panel',
+      cls: 'polaris-card',
+      bodyPadding: 15,
+      html: '<h3>Column 4</h3><p>Fourth grid item</p>'
+    }
+  ]
+});`,
+
+    typescript: `import { Grid, Card, Text, GridProps } from '@shopify/polaris';
+import React from 'react';
+
+interface GridItem {
+  title: string;
+  content: string;
+}
+
+interface GridDefaultProps {
+  columns?: GridProps['columns'];
+  gap?: GridProps['gap'];
+  items?: GridItem[];
+}
+
+function GridDefault({
+  columns = { xs: 1, sm: 2, md: 3, lg: 4 },
+  gap = '400',
+  items = [
+    { title: 'Column 1', content: 'First grid item' },
+    { title: 'Column 2', content: 'Second grid item' },
+    { title: 'Column 3', content: 'Third grid item' },
+    { title: 'Column 4', content: 'Fourth grid item' }
+  ]
+}: GridDefaultProps): JSX.Element {
+  return (
+    <Grid columns={columns} gap={gap}>
+      {items.map((item, index) => (
+        <Card key={index} sectioned>
+          <Text as="h3" variant="headingSm">{item.title}</Text>
+          <Text as="p" variant="bodySm">{item.content}</Text>
+        </Card>
+      ))}
+    </Grid>
+  );
+}
+
+export default GridDefault;`
+  }
+};
+
+// InlineStack Component Examples
+export const inlinestackExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { InlineStack, Button } from '@shopify/polaris';
+import React from 'react';
+
+function InlineStackDefault() {
+  return (
+    <InlineStack gap="400">
+      <Button>Save</Button>
+      <Button variant="secondary">Cancel</Button>
+      <Button variant="plain">Preview</Button>
+    </InlineStack>
+  );
+}
+
+export default InlineStackDefault;`,
+
+    vanilla: `<!-- InlineStack using @cin7/vanilla-js -->
+<div id="inlinestack-container"></div>
+
+<script>
+import { createInlineStack } from '@cin7/vanilla-js';
+
+const inlineStack = createInlineStack({
+  gap: '400',
+  items: [
+    { type: 'button', text: 'Save', variant: 'primary' },
+    { type: 'button', text: 'Cancel', variant: 'secondary' },
+    { type: 'button', text: 'Preview', variant: 'plain' }
+  ]
+});
+
+document.getElementById('inlinestack-container').appendChild(inlineStack);
+</script>`,
+
+    extjs: `// ExtJS InlineStack using @cin7/extjs-adapters
+import { PolarisInlineStack } from '@cin7/extjs-adapters';
+
+Ext.create('PolarisInlineStack', {
+  renderTo: Ext.getBody(),
+  gap: '400',
+  items: [
+    {
+      xtype: 'button',
+      text: 'Save',
+      ui: 'primary',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Cancel',
+      ui: 'secondary',
+      handler: function() {
+        console.log('Cancel clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Preview',
+      ui: 'plain',
+      handler: function() {
+        console.log('Preview clicked');
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { InlineStack, Button, InlineStackProps } from '@shopify/polaris';
+import React from 'react';
+
+interface InlineStackDefaultProps {
+  gap?: InlineStackProps['gap'];
+  align?: InlineStackProps['align'];
+  onSave?: () => void;
+  onCancel?: () => void;
+  onPreview?: () => void;
+}
+
+function InlineStackDefault({
+  gap = '400',
+  align = 'start',
+  onSave,
+  onCancel,
+  onPreview
+}: InlineStackDefaultProps): JSX.Element {
+  return (
+    <InlineStack gap={gap} align={align}>
+      <Button onClick={onSave || (() => console.log('Save'))}>
+        Save
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={onCancel || (() => console.log('Cancel'))}
+      >
+        Cancel
+      </Button>
+      <Button
+        variant="plain"
+        onClick={onPreview || (() => console.log('Preview'))}
+      >
+        Preview
+      </Button>
+    </InlineStack>
+  );
+}
+
+export default InlineStackDefault;`
+  }
+};
+
+// VerticalStack Component Examples (maps to BlockStack)
+export const verticalstackExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function VerticalStackDefault() {
+  return (
+    <BlockStack gap="400">
+      <div style={{ padding: '12px', backgroundColor: '#e3f2fd', borderRadius: '4px' }}>
+        First Item
+      </div>
+      <div style={{ padding: '12px', backgroundColor: '#e8f5e8', borderRadius: '4px' }}>
+        Second Item
+      </div>
+      <div style={{ padding: '12px', backgroundColor: '#fff3e0', borderRadius: '4px' }}>
+        Third Item
+      </div>
+    </BlockStack>
+  );
+}
+
+export default VerticalStackDefault;`,
+
+    vanilla: `<!-- VerticalStack using @cin7/vanilla-js -->
+<div id="verticalstack-container"></div>
+
+<script>
+import { createVerticalStack } from '@cin7/vanilla-js';
+
+const verticalStack = createVerticalStack({
+  gap: '400',
+  items: [
+    {
+      type: 'div',
+      style: { padding: '12px', backgroundColor: '#e3f2fd', borderRadius: '4px' },
+      content: 'First Item'
+    },
+    {
+      type: 'div',
+      style: { padding: '12px', backgroundColor: '#e8f5e8', borderRadius: '4px' },
+      content: 'Second Item'
+    },
+    {
+      type: 'div',
+      style: { padding: '12px', backgroundColor: '#fff3e0', borderRadius: '4px' },
+      content: 'Third Item'
+    }
+  ]
+});
+
+document.getElementById('verticalstack-container').appendChild(verticalStack);
+</script>`,
+
+    extjs: `// ExtJS VerticalStack using @cin7/extjs-adapters
+import { PolarisVerticalStack } from '@cin7/extjs-adapters';
+
+Ext.create('PolarisVerticalStack', {
+  renderTo: Ext.getBody(),
+  gap: '400',
+  items: [
+    {
+      xtype: 'box',
+      style: {
+        padding: '12px',
+        backgroundColor: '#e3f2fd',
+        borderRadius: '4px'
+      },
+      html: 'First Item'
+    },
+    {
+      xtype: 'box',
+      style: {
+        padding: '12px',
+        backgroundColor: '#e8f5e8',
+        borderRadius: '4px'
+      },
+      html: 'Second Item'
+    },
+    {
+      xtype: 'box',
+      style: {
+        padding: '12px',
+        backgroundColor: '#fff3e0',
+        borderRadius: '4px'
+      },
+      html: 'Third Item'
+    }
+  ]
+});`,
+
+    typescript: `import { BlockStack, BlockStackProps } from '@shopify/polaris';
+import React from 'react';
+
+interface VerticalStackItem {
+  content: string;
+  backgroundColor: string;
+}
+
+interface VerticalStackDefaultProps {
+  gap?: BlockStackProps['gap'];
+  items?: VerticalStackItem[];
+}
+
+function VerticalStackDefault({
+  gap = '400',
+  items = [
+    { content: 'First Item', backgroundColor: '#e3f2fd' },
+    { content: 'Second Item', backgroundColor: '#e8f5e8' },
+    { content: 'Third Item', backgroundColor: '#fff3e0' }
+  ]
+}: VerticalStackDefaultProps): JSX.Element {
+  return (
+    <BlockStack gap={gap}>
+      {items.map((item, index) => (
+        <div
+          key={index}
+          style={{
+            padding: '12px',
+            backgroundColor: item.backgroundColor,
+            borderRadius: '4px'
+          }}
+        >
+          {item.content}
+        </div>
+      ))}
+    </BlockStack>
+  );
+}
+
+export default VerticalStackDefault;`
+  }
+};
+
+// ActionList Component Examples
+export const actionList: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ActionList } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+
+function ActionListExample() {
+  return (
+    <ActionList
+      items={[
+        { content: 'View product', icon: ViewIcon },
+        { content: 'Edit product', icon: EditIcon },
+        { content: 'Duplicate product', icon: DuplicateIcon },
+        { content: 'Delete product', icon: DeleteIcon, destructive: true },
+      ]}
+    />
+  );
+}
+
+export default ActionListExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-action-list">
+  <ul class="polaris-action-list__list">
+    <li class="polaris-action-list__item">
+      <button class="polaris-action-list__button">
+        <span class="polaris-action-list__icon">👁️</span>
+        <span class="polaris-action-list__text">View product</span>
+      </button>
+    </li>
+    <li class="polaris-action-list__item">
+      <button class="polaris-action-list__button">
+        <span class="polaris-action-list__icon">✏️</span>
+        <span class="polaris-action-list__text">Edit product</span>
+      </button>
+    </li>
+    <li class="polaris-action-list__item">
+      <button class="polaris-action-list__button">
+        <span class="polaris-action-list__icon">📋</span>
+        <span class="polaris-action-list__text">Duplicate product</span>
+      </button>
+    </li>
+    <li class="polaris-action-list__item polaris-action-list__item--destructive">
+      <button class="polaris-action-list__button">
+        <span class="polaris-action-list__icon">🗑️</span>
+        <span class="polaris-action-list__text">Delete product</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createActionList } from '@cin7/vanilla-js';
+
+const actionList = createActionList({
+  items: [
+    { text: 'View product', icon: '👁️', onClick: () => console.log('View') },
+    { text: 'Edit product', icon: '✏️', onClick: () => console.log('Edit') },
+    { text: 'Duplicate product', icon: '📋', onClick: () => console.log('Duplicate') },
+    { text: 'Delete product', icon: '🗑️', onClick: () => console.log('Delete'), destructive: true }
+  ]
+});
+
+document.getElementById('app').appendChild(actionList);
+</script>`,
+
+    extjs: `// ExtJS Menu using @cin7/extjs-adapters
+Ext.create('Ext.menu.Menu', {
+  items: [
+    {
+      text: 'View product',
+      iconCls: 'icon-view',
+      handler: function() {
+        console.log('View product');
+      }
+    },
+    {
+      text: 'Edit product',
+      iconCls: 'icon-edit',
+      handler: function() {
+        console.log('Edit product');
+      }
+    },
+    {
+      text: 'Duplicate product',
+      iconCls: 'icon-duplicate',
+      handler: function() {
+        console.log('Duplicate product');
+      }
+    },
+    '-', // Separator
+    {
+      text: 'Delete product',
+      iconCls: 'icon-delete',
+      cls: 'destructive-action',
+      handler: function() {
+        Ext.Msg.confirm('Delete', 'Are you sure?', function(btn) {
+          if (btn === 'yes') {
+            console.log('Delete product');
+          }
+        });
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+
+interface ActionListExampleProps {
+  onAction?: (action: string) => void;
+}
+
+function ActionListExample({ onAction }: ActionListExampleProps): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    {
+      content: 'View product',
+      icon: ViewIcon,
+      onAction: () => onAction?.('view'),
+    },
+    {
+      content: 'Edit product',
+      icon: EditIcon,
+      onAction: () => onAction?.('edit'),
+    },
+    {
+      content: 'Duplicate product',
+      icon: DuplicateIcon,
+      onAction: () => onAction?.('duplicate'),
+    },
+    {
+      content: 'Delete product',
+      icon: DeleteIcon,
+      destructive: true,
+      onAction: () => onAction?.('delete'),
+    },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListExample;`
+  },
+
+  'with-actions': {
+    react: `import { ActionList, Button, Popover } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState } from 'react';
+
+function ActionListWithPopover() {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = () => {
+    setPopoverActive(!popoverActive);
+  };
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure="down">
+      Actions
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={popoverActive}
+      activator={activator}
+      onClose={togglePopoverActive}
+    >
+      <ActionList
+        items={[
+          { content: 'View details', icon: ViewIcon, onAction: () => console.log('View clicked') },
+          { content: 'Edit', icon: EditIcon, onAction: () => console.log('Edit clicked') },
+          { content: 'Duplicate', icon: DuplicateIcon, onAction: () => console.log('Duplicate clicked') },
+          { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => console.log('Delete clicked') },
+        ]}
+      />
+    </Popover>
+  );
+}
+
+export default ActionListWithPopover;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-popover-wrapper">
+  <button id="actions-button" class="polaris-button">
+    Actions
+    <span class="polaris-button__icon">▼</span>
+  </button>
+  <div id="actions-popover" class="polaris-popover" style="display: none;">
+    <div class="polaris-action-list">
+      <ul class="polaris-action-list__list">
+        <li class="polaris-action-list__item">
+          <button class="polaris-action-list__button" data-action="view">
+            <span class="polaris-action-list__icon">👁️</span>
+            <span class="polaris-action-list__text">View details</span>
+          </button>
+        </li>
+        <li class="polaris-action-list__item">
+          <button class="polaris-action-list__button" data-action="edit">
+            <span class="polaris-action-list__icon">✏️</span>
+            <span class="polaris-action-list__text">Edit</span>
+          </button>
+        </li>
+        <li class="polaris-action-list__item">
+          <button class="polaris-action-list__button" data-action="duplicate">
+            <span class="polaris-action-list__icon">📋</span>
+            <span class="polaris-action-list__text">Duplicate</span>
+          </button>
+        </li>
+        <li class="polaris-action-list__item polaris-action-list__item--destructive">
+          <button class="polaris-action-list__button" data-action="delete">
+            <span class="polaris-action-list__icon">🗑️</span>
+            <span class="polaris-action-list__text">Delete</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createPopover, createActionList } from '@cin7/vanilla-js';
+
+const button = document.getElementById('actions-button');
+const popover = document.getElementById('actions-popover');
+
+button.addEventListener('click', () => {
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.querySelectorAll('[data-action]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const action = e.currentTarget.getAttribute('data-action');
+    console.log(\`\${action} clicked\`);
+    popover.style.display = 'none';
+  });
+});
+
+// Close on outside click
+document.addEventListener('click', (e) => {
+  if (!button.contains(e.target) && !popover.contains(e.target)) {
+    popover.style.display = 'none';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Button with Menu
+Ext.create('Ext.button.Button', {
+  text: 'Actions',
+  menu: Ext.create('Ext.menu.Menu', {
+    items: [
+      {
+        text: 'View details',
+        iconCls: 'icon-view',
+        handler: function() {
+          console.log('View clicked');
+        }
+      },
+      {
+        text: 'Edit',
+        iconCls: 'icon-edit',
+        handler: function() {
+          console.log('Edit clicked');
+        }
+      },
+      {
+        text: 'Duplicate',
+        iconCls: 'icon-duplicate',
+        handler: function() {
+          console.log('Duplicate clicked');
+        }
+      },
+      '-',
+      {
+        text: 'Delete',
+        iconCls: 'icon-delete',
+        cls: 'destructive-action',
+        handler: function() {
+          console.log('Delete clicked');
+        }
+      }
+    ]
+  }),
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, Button, Popover, ActionListItemDescriptor } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+type ActionType = 'view' | 'edit' | 'duplicate' | 'delete';
+
+interface ActionListWithPopoverProps {
+  onAction?: (action: ActionType) => void;
+}
+
+function ActionListWithPopover({ onAction }: ActionListWithPopoverProps): JSX.Element {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = useCallback(() => {
+    setPopoverActive((active) => !active);
+  }, []);
+
+  const handleAction = useCallback((action: ActionType) => {
+    console.log(\`\${action} clicked\`);
+    onAction?.(action);
+    setPopoverActive(false);
+  }, [onAction]);
+
+  const items: ActionListItemDescriptor[] = [
+    {
+      content: 'View details',
+      icon: ViewIcon,
+      onAction: () => handleAction('view'),
+    },
+    {
+      content: 'Edit',
+      icon: EditIcon,
+      onAction: () => handleAction('edit'),
+    },
+    {
+      content: 'Duplicate',
+      icon: DuplicateIcon,
+      onAction: () => handleAction('duplicate'),
+    },
+    {
+      content: 'Delete',
+      icon: DeleteIcon,
+      destructive: true,
+      onAction: () => handleAction('delete'),
+    },
+  ];
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure="down">
+      Actions
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={popoverActive}
+      activator={activator}
+      onClose={togglePopoverActive}
+    >
+      <ActionList items={items} />
+    </Popover>
+  );
+}
+
+export default ActionListWithPopover;`
+  },
+
+  'with-sections': {
+    react: `import { ActionList } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, SettingsIcon, SearchIcon, DeleteIcon, DisabledIcon } from '@shopify/polaris-icons';
+
+function ActionListWithSections() {
+  return (
+    <ActionList
+      sections={[
+        {
+          title: 'Product actions',
+          items: [
+            { content: 'View product', icon: ViewIcon },
+            { content: 'Edit product', icon: EditIcon },
+            { content: 'Duplicate product', icon: DuplicateIcon },
+          ],
+        },
+        {
+          title: 'Inventory',
+          items: [
+            { content: 'Adjust inventory', icon: SettingsIcon },
+            { content: 'View history', icon: SearchIcon },
+          ],
+        },
+        {
+          title: 'Danger zone',
+          items: [
+            { content: 'Delete product', icon: DeleteIcon, destructive: true },
+            { content: 'Archive product', icon: DisabledIcon, destructive: true },
+          ],
+        },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithSections;`,
+
+    vanilla: `<div class="polaris-action-list">
+  <div class="polaris-action-list__section">
+    <div class="polaris-action-list__section-title">Product actions</div>
+    <ul class="polaris-action-list__list">
+      <li><button>👁️ View product</button></li>
+      <li><button>✏️ Edit product</button></li>
+      <li><button>📋 Duplicate product</button></li>
+    </ul>
+  </div>
+  <div class="polaris-action-list__section">
+    <div class="polaris-action-list__section-title">Inventory</div>
+    <ul class="polaris-action-list__list">
+      <li><button>⚙️ Adjust inventory</button></li>
+      <li><button>🔍 View history</button></li>
+    </ul>
+  </div>
+  <div class="polaris-action-list__section">
+    <div class="polaris-action-list__section-title">Danger zone</div>
+    <ul class="polaris-action-list__list">
+      <li class="destructive"><button>🗑️ Delete product</button></li>
+      <li class="destructive"><button>🚫 Archive product</button></li>
+    </ul>
+  </div>
+</div>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    { text: 'Product actions', plain: true, canActivate: false },
+    { text: 'View product', iconCls: 'icon-view' },
+    { text: 'Edit product', iconCls: 'icon-edit' },
+    { text: 'Duplicate product', iconCls: 'icon-duplicate' },
+    '-',
+    { text: 'Inventory', plain: true, canActivate: false },
+    { text: 'Adjust inventory', iconCls: 'icon-settings' },
+    { text: 'View history', iconCls: 'icon-search' },
+    '-',
+    { text: 'Danger zone', plain: true, canActivate: false },
+    { text: 'Delete product', iconCls: 'icon-delete', cls: 'destructive' },
+    { text: 'Archive product', iconCls: 'icon-archive', cls: 'destructive' }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListSection } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, SettingsIcon, SearchIcon, DeleteIcon, DisabledIcon } from '@shopify/polaris-icons';
+
+interface ActionListWithSectionsProps {
+  onAction?: (section: string, action: string) => void;
+}
+
+function ActionListWithSections({ onAction }: ActionListWithSectionsProps): JSX.Element {
+  const sections: ActionListSection[] = [
+    {
+      title: 'Product actions',
+      items: [
+        { content: 'View product', icon: ViewIcon, onAction: () => onAction?.('product', 'view') },
+        { content: 'Edit product', icon: EditIcon, onAction: () => onAction?.('product', 'edit') },
+        { content: 'Duplicate product', icon: DuplicateIcon, onAction: () => onAction?.('product', 'duplicate') },
+      ],
+    },
+    {
+      title: 'Inventory',
+      items: [
+        { content: 'Adjust inventory', icon: SettingsIcon, onAction: () => onAction?.('inventory', 'adjust') },
+        { content: 'View history', icon: SearchIcon, onAction: () => onAction?.('inventory', 'history') },
+      ],
+    },
+    {
+      title: 'Danger zone',
+      items: [
+        { content: 'Delete product', icon: DeleteIcon, destructive: true, onAction: () => onAction?.('danger', 'delete') },
+        { content: 'Archive product', icon: DisabledIcon, destructive: true, onAction: () => onAction?.('danger', 'archive') },
+      ],
+    },
+  ];
+
+  return <ActionList sections={sections} />;
+}
+
+export default ActionListWithSections;`
+  },
+
+  'with-disabled-items': {
+    react: `import { ActionList } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, SettingsIcon } from '@shopify/polaris-icons';
+
+function ActionListWithDisabledItems() {
+  return (
+    <ActionList
+      items={[
+        { content: 'Available action', icon: ViewIcon },
+        { content: 'Disabled action', icon: EditIcon, disabled: true },
+        { content: 'Another action', icon: DuplicateIcon },
+        { content: 'Also disabled', icon: SettingsIcon, disabled: true },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithDisabledItems;`,
+
+    vanilla: `<ul class="polaris-action-list__list">
+  <li><button>👁️ Available action</button></li>
+  <li><button disabled>✏️ Disabled action</button></li>
+  <li><button>📋 Another action</button></li>
+  <li><button disabled>⚙️ Also disabled</button></li>
+</ul>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    { text: 'Available action', iconCls: 'icon-view' },
+    { text: 'Disabled action', iconCls: 'icon-edit', disabled: true },
+    { text: 'Another action', iconCls: 'icon-duplicate' },
+    { text: 'Also disabled', iconCls: 'icon-settings', disabled: true }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, SettingsIcon } from '@shopify/polaris-icons';
+
+function ActionListWithDisabledItems(): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    { content: 'Available action', icon: ViewIcon },
+    { content: 'Disabled action', icon: EditIcon, disabled: true },
+    { content: 'Another action', icon: DuplicateIcon },
+    { content: 'Also disabled', icon: SettingsIcon, disabled: true },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListWithDisabledItems;`
+  },
+
+  'with-badges': {
+    react: `import { ActionList } from '@shopify/polaris';
+
+function ActionListWithBadges() {
+  return (
+    <ActionList
+      items={[
+        { content: 'New order', badge: { status: 'new', content: 'New' } },
+        { content: 'Processing', badge: { status: 'info', content: 'In progress' } },
+        { content: 'Completed', badge: { status: 'success', content: 'Done' } },
+        { content: 'Failed', badge: { status: 'critical', content: 'Error' } },
+        { content: 'Custom badge', badge: { tone: 'magic', content: 'Special' } },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithBadges;`,
+
+    vanilla: `<ul class="polaris-action-list__list">
+  <li>
+    <button>
+      New order
+      <span class="badge badge-new">New</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      Processing
+      <span class="badge badge-info">In progress</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      Completed
+      <span class="badge badge-success">Done</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      Failed
+      <span class="badge badge-critical">Error</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      Custom badge
+      <span class="badge badge-magic">Special</span>
+    </button>
+  </li>
+</ul>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    { text: 'New order', badge: 'New', badgeCls: 'badge-new' },
+    { text: 'Processing', badge: 'In progress', badgeCls: 'badge-info' },
+    { text: 'Completed', badge: 'Done', badgeCls: 'badge-success' },
+    { text: 'Failed', badge: 'Error', badgeCls: 'badge-critical' },
+    { text: 'Custom badge', badge: 'Special', badgeCls: 'badge-magic' }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+
+function ActionListWithBadges(): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    { content: 'New order', badge: { status: 'new', content: 'New' } },
+    { content: 'Processing', badge: { status: 'info', content: 'In progress' } },
+    { content: 'Completed', badge: { status: 'success', content: 'Done' } },
+    { content: 'Failed', badge: { status: 'critical', content: 'Error' } },
+    { content: 'Custom badge', badge: { tone: 'magic', content: 'Special' } },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListWithBadges;`
+  },
+
+  'with-prefix-and-suffix': {
+    react: `import { ActionList, Icon } from '@shopify/polaris';
+import { CheckCircleIcon, DisabledIcon } from '@shopify/polaris-icons';
+
+function ActionListWithPrefixAndSuffix() {
+  return (
+    <ActionList
+      items={[
+        {
+          content: 'Active status',
+          prefix: <Icon source={CheckCircleIcon} tone="success" />,
+          suffix: 'Enabled'
+        },
+        {
+          content: 'Inactive status',
+          prefix: <Icon source={DisabledIcon} tone="subdued" />,
+          suffix: 'Disabled'
+        },
+        {
+          content: 'With help text',
+          suffix: 'Optional',
+          helpText: 'This action is reversible'
+        },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithPrefixAndSuffix;`,
+
+    vanilla: `<ul class="polaris-action-list__list">
+  <li>
+    <button>
+      <span class="prefix">✓</span>
+      Active status
+      <span class="suffix">Enabled</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      <span class="prefix">○</span>
+      Inactive status
+      <span class="suffix">Disabled</span>
+    </button>
+  </li>
+  <li>
+    <button>
+      With help text
+      <span class="suffix">Optional</span>
+      <div class="help-text">This action is reversible</div>
+    </button>
+  </li>
+</ul>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    {
+      text: 'Active status',
+      iconCls: 'icon-check-circle',
+      cls: 'success',
+      rightIcon: 'Enabled'
+    },
+    {
+      text: 'Inactive status',
+      iconCls: 'icon-disabled',
+      cls: 'subdued',
+      rightIcon: 'Disabled'
+    },
+    {
+      text: 'With help text',
+      rightIcon: 'Optional',
+      tooltip: 'This action is reversible'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, Icon, ActionListItemDescriptor } from '@shopify/polaris';
+import { CheckCircleIcon, DisabledIcon } from '@shopify/polaris-icons';
+
+function ActionListWithPrefixAndSuffix(): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    {
+      content: 'Active status',
+      prefix: <Icon source={CheckCircleIcon} tone="success" />,
+      suffix: 'Enabled'
+    },
+    {
+      content: 'Inactive status',
+      prefix: <Icon source={DisabledIcon} tone="subdued" />,
+      suffix: 'Disabled'
+    },
+    {
+      content: 'With help text',
+      suffix: 'Optional',
+      helpText: 'This action is reversible'
+    },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListWithPrefixAndSuffix;`
+  },
+
+  'with-destructive-actions': {
+    react: `import { ActionList } from '@shopify/polaris';
+import { EditIcon, SettingsIcon, DeleteIcon } from '@shopify/polaris-icons';
+
+function ActionListWithDestructiveActions() {
+  return (
+    <ActionList
+      items={[
+        { content: 'Safe action', icon: EditIcon },
+        { content: 'Warning action', icon: SettingsIcon, destructive: true },
+        { content: 'Delete permanently', icon: DeleteIcon, destructive: true },
+        { content: 'Remove access', destructive: true },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithDestructiveActions;`,
+
+    vanilla: `<ul class="polaris-action-list__list">
+  <li><button>✏️ Safe action</button></li>
+  <li class="destructive"><button>⚙️ Warning action</button></li>
+  <li class="destructive"><button>🗑️ Delete permanently</button></li>
+  <li class="destructive"><button>Remove access</button></li>
+</ul>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    { text: 'Safe action', iconCls: 'icon-edit' },
+    { text: 'Warning action', iconCls: 'icon-settings', cls: 'destructive' },
+    { text: 'Delete permanently', iconCls: 'icon-delete', cls: 'destructive' },
+    { text: 'Remove access', cls: 'destructive' }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import { EditIcon, SettingsIcon, DeleteIcon } from '@shopify/polaris-icons';
+
+function ActionListWithDestructiveActions(): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    { content: 'Safe action', icon: EditIcon },
+    { content: 'Warning action', icon: SettingsIcon, destructive: true },
+    { content: 'Delete permanently', icon: DeleteIcon, destructive: true },
+    { content: 'Remove access', destructive: true },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListWithDestructiveActions;`
+  },
+
+  'with-external-links': {
+    react: `import { ActionList } from '@shopify/polaris';
+
+function ActionListWithExternalLinks() {
+  return (
+    <ActionList
+      items={[
+        { content: 'Visit documentation', url: 'https://polaris.shopify.com', external: true },
+        { content: 'Open support', url: 'https://support.shopify.com', external: true },
+        { content: 'View API docs', url: '#', external: true },
+      ]}
+    />
+  );
+}
+
+export default ActionListWithExternalLinks;`,
+
+    vanilla: `<ul class="polaris-action-list__list">
+  <li>
+    <a href="https://polaris.shopify.com" target="_blank" rel="noopener">
+      Visit documentation 🔗
+    </a>
+  </li>
+  <li>
+    <a href="https://support.shopify.com" target="_blank" rel="noopener">
+      Open support 🔗
+    </a>
+  </li>
+  <li>
+    <a href="#" target="_blank" rel="noopener">
+      View API docs 🔗
+    </a>
+  </li>
+</ul>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    {
+      text: 'Visit documentation',
+      iconCls: 'icon-external-link',
+      handler: function() {
+        window.open('https://polaris.shopify.com', '_blank');
+      }
+    },
+    {
+      text: 'Open support',
+      iconCls: 'icon-external-link',
+      handler: function() {
+        window.open('https://support.shopify.com', '_blank');
+      }
+    },
+    {
+      text: 'View API docs',
+      iconCls: 'icon-external-link',
+      handler: function() {
+        window.open('#', '_blank');
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+
+function ActionListWithExternalLinks(): JSX.Element {
+  const items: ActionListItemDescriptor[] = [
+    { content: 'Visit documentation', url: 'https://polaris.shopify.com', external: true },
+    { content: 'Open support', url: 'https://support.shopify.com', external: true },
+    { content: 'View API docs', url: '#', external: true },
+  ];
+
+  return <ActionList items={items} />;
+}
+
+export default ActionListWithExternalLinks;`
+  },
+
+  'nested-menu-example': {
+    react: `import { ActionList } from '@shopify/polaris';
+import { SearchIcon, ExportIcon, SettingsIcon } from '@shopify/polaris-icons';
+import { useState } from 'react';
+
+function NestedMenuExample() {
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [selectedAction, setSelectedAction] = useState<string>('');
+
+  const handleActionClick = (action: string) => {
+    setSelectedAction(action);
+    setActiveMenu(null);
+  };
+
+  const menuItems = {
+    products: [
+      { content: 'All products', onAction: () => handleActionClick('All products') },
+      { content: 'Add product', onAction: () => handleActionClick('Add product') },
+      { content: 'Import products', onAction: () => handleActionClick('Import products') },
+      { content: 'Export products', onAction: () => handleActionClick('Export products') },
+    ],
+    orders: [
+      { content: 'All orders', onAction: () => handleActionClick('All orders') },
+      { content: 'Draft orders', onAction: () => handleActionClick('Draft orders') },
+      { content: 'Abandoned checkouts', onAction: () => handleActionClick('Abandoned checkouts') },
+    ],
+    customers: [
+      { content: 'All customers', onAction: () => handleActionClick('All customers') },
+      { content: 'Customer groups', onAction: () => handleActionClick('Customer groups') },
+      { content: 'Import customers', onAction: () => handleActionClick('Import customers') },
+    ],
+  };
+
+  return (
+    <div>
+      <ActionList
+        items={[
+          { content: 'Products', icon: SearchIcon, onAction: () => setActiveMenu('products') },
+          { content: 'Orders', icon: ExportIcon, onAction: () => setActiveMenu('orders') },
+          { content: 'Customers', icon: SettingsIcon, onAction: () => setActiveMenu('customers') },
+        ]}
+      />
+      {activeMenu && menuItems[activeMenu as keyof typeof menuItems] && (
+        <ActionList items={menuItems[activeMenu as keyof typeof menuItems]} />
+      )}
+      {selectedAction && <p>Selected: {selectedAction}</p>}
+    </div>
+  );
+}
+
+export default NestedMenuExample;`,
+
+    vanilla: `<div class="nested-menu">
+  <ul class="main-menu">
+    <li><button data-menu="products">🔍 Products</button></li>
+    <li><button data-menu="orders">📤 Orders</button></li>
+    <li><button data-menu="customers">⚙️ Customers</button></li>
+  </ul>
+  <div id="submenu" style="display: none;"></div>
+</div>
+
+<script>
+const submenus = {
+  products: ['All products', 'Add product', 'Import products', 'Export products'],
+  orders: ['All orders', 'Draft orders', 'Abandoned checkouts'],
+  customers: ['All customers', 'Customer groups', 'Import customers']
+};
+
+document.querySelectorAll('[data-menu]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const menu = e.target.dataset.menu;
+    const submenu = document.getElementById('submenu');
+    submenu.innerHTML = submenus[menu].map(item =>
+      \`<button>\${item}</button>\`
+    ).join('');
+    submenu.style.display = 'block';
+  });
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.menu.Menu', {
+  items: [
+    {
+      text: 'Products',
+      iconCls: 'icon-search',
+      menu: {
+        items: [
+          { text: 'All products' },
+          { text: 'Add product' },
+          { text: 'Import products' },
+          { text: 'Export products' }
+        ]
+      }
+    },
+    {
+      text: 'Orders',
+      iconCls: 'icon-export',
+      menu: {
+        items: [
+          { text: 'All orders' },
+          { text: 'Draft orders' },
+          { text: 'Abandoned checkouts' }
+        ]
+      }
+    },
+    {
+      text: 'Customers',
+      iconCls: 'icon-settings',
+      menu: {
+        items: [
+          { text: 'All customers' },
+          { text: 'Customer groups' },
+          { text: 'Import customers' }
+        ]
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import { SearchIcon, ExportIcon, SettingsIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+type MenuKey = 'products' | 'orders' | 'customers';
+
+interface NestedMenuExampleProps {
+  onSelect?: (action: string) => void;
+}
+
+function NestedMenuExample({ onSelect }: NestedMenuExampleProps): JSX.Element {
+  const [activeMenu, setActiveMenu] = useState<MenuKey | null>(null);
+  const [selectedAction, setSelectedAction] = useState<string>('');
+
+  const handleActionClick = useCallback((action: string) => {
+    setSelectedAction(action);
+    setActiveMenu(null);
+    onSelect?.(action);
+  }, [onSelect]);
+
+  const menuItems: Record<MenuKey, ActionListItemDescriptor[]> = {
+    products: [
+      { content: 'All products', onAction: () => handleActionClick('All products') },
+      { content: 'Add product', onAction: () => handleActionClick('Add product') },
+      { content: 'Import products', onAction: () => handleActionClick('Import products') },
+      { content: 'Export products', onAction: () => handleActionClick('Export products') },
+    ],
+    orders: [
+      { content: 'All orders', onAction: () => handleActionClick('All orders') },
+      { content: 'Draft orders', onAction: () => handleActionClick('Draft orders') },
+      { content: 'Abandoned checkouts', onAction: () => handleActionClick('Abandoned checkouts') },
+    ],
+    customers: [
+      { content: 'All customers', onAction: () => handleActionClick('All customers') },
+      { content: 'Customer groups', onAction: () => handleActionClick('Customer groups') },
+      { content: 'Import customers', onAction: () => handleActionClick('Import customers') },
+    ],
+  };
+
+  return (
+    <div>
+      <ActionList
+        items={[
+          { content: 'Products', icon: SearchIcon, onAction: () => setActiveMenu('products') },
+          { content: 'Orders', icon: ExportIcon, onAction: () => setActiveMenu('orders') },
+          { content: 'Customers', icon: SettingsIcon, onAction: () => setActiveMenu('customers') },
+        ]}
+      />
+      {activeMenu && menuItems[activeMenu] && (
+        <ActionList items={menuItems[activeMenu]} />
+      )}
+      {selectedAction && <p>Selected: {selectedAction}</p>}
+    </div>
+  );
+}
+
+export default NestedMenuExample;`
+  },
+
+  'bulk-actions-example': {
+    react: `import { ActionList, Button, Popover } from '@shopify/polaris';
+import { EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState } from 'react';
+
+function BulkActionsExample() {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const items = [
+    { id: '1', name: 'Product A', status: 'Active' },
+    { id: '2', name: 'Product B', status: 'Draft' },
+    { id: '3', name: 'Product C', status: 'Active' },
+    { id: '4', name: 'Product D', status: 'Archived' },
+  ];
+
+  const handleSelectItem = (itemId: string) => {
+    setSelectedItems(prev =>
+      prev.includes(itemId) ? prev.filter(id => id !== itemId) : [...prev, itemId]
+    );
+  };
+
+  const handleBulkAction = (action: string) => {
+    console.log(\`Bulk action: \${action} on items:\`, selectedItems);
+    setIsMenuOpen(false);
+  };
+
+  const bulkActions = [
+    { content: 'Edit selected', icon: EditIcon, onAction: () => handleBulkAction('edit') },
+    { content: 'Duplicate selected', icon: DuplicateIcon, onAction: () => handleBulkAction('duplicate') },
+    { content: 'Archive selected', onAction: () => handleBulkAction('archive') },
+    { content: 'Delete selected', icon: DeleteIcon, destructive: true, onAction: () => handleBulkAction('delete') },
+  ];
+
+  return (
+    <div>
+      <div>
+        <h4>Products ({selectedItems.length} selected)</h4>
+        {selectedItems.length > 0 && (
+          <Popover
+            active={isMenuOpen}
+            activator={<Button onClick={() => setIsMenuOpen(!isMenuOpen)}>Bulk actions</Button>}
+            onClose={() => setIsMenuOpen(false)}
+          >
+            <ActionList items={bulkActions} />
+          </Popover>
+        )}
+      </div>
+      {items.map(item => (
+        <div key={item.id} onClick={() => handleSelectItem(item.id)}>
+          <input type="checkbox" checked={selectedItems.includes(item.id)} />
+          <span>{item.name}</span>
+          <span>{item.status}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default BulkActionsExample;`,
+
+    vanilla: `<div class="bulk-actions">
+  <div class="header">
+    <h4>Products (<span id="selected-count">0</span> selected)</h4>
+    <button id="bulk-menu" style="display: none;">Bulk actions</button>
+  </div>
+  <div class="items">
+    <div data-id="1"><input type="checkbox"> Product A</div>
+    <div data-id="2"><input type="checkbox"> Product B</div>
+    <div data-id="3"><input type="checkbox"> Product C</div>
+    <div data-id="4"><input type="checkbox"> Product D</div>
+  </div>
+</div>
+
+<script>
+let selected = [];
+document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+  cb.addEventListener('change', (e) => {
+    const id = e.target.parentElement.dataset.id;
+    selected = e.target.checked
+      ? [...selected, id]
+      : selected.filter(i => i !== id);
+    document.getElementById('selected-count').textContent = selected.length;
+    document.getElementById('bulk-menu').style.display =
+      selected.length > 0 ? 'block' : 'none';
+  });
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.grid.Panel', {
+  selModel: {
+    mode: 'MULTI'
+  },
+  store: {
+    fields: ['id', 'name', 'status'],
+    data: [
+      { id: 1, name: 'Product A', status: 'Active' },
+      { id: 2, name: 'Product B', status: 'Draft' },
+      { id: 3, name: 'Product C', status: 'Active' },
+      { id: 4, name: 'Product D', status: 'Archived' }
+    ]
+  },
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Status', dataIndex: 'status', width: 100 }
+  ],
+  dockedItems: [{
+    xtype: 'toolbar',
+    items: [{
+      text: 'Bulk actions',
+      menu: {
+        items: [
+          { text: 'Edit selected', iconCls: 'icon-edit' },
+          { text: 'Duplicate selected', iconCls: 'icon-duplicate' },
+          { text: 'Archive selected' },
+          { text: 'Delete selected', iconCls: 'icon-delete', cls: 'destructive' }
+        ]
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, Button, Popover, ActionListItemDescriptor } from '@shopify/polaris';
+import { EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+interface Item {
+  id: string;
+  name: string;
+  status: string;
+}
+
+interface BulkActionsExampleProps {
+  onBulkAction?: (action: string, items: string[]) => void;
+}
+
+function BulkActionsExample({ onBulkAction }: BulkActionsExampleProps): JSX.Element {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const items: Item[] = [
+    { id: '1', name: 'Product A', status: 'Active' },
+    { id: '2', name: 'Product B', status: 'Draft' },
+    { id: '3', name: 'Product C', status: 'Active' },
+    { id: '4', name: 'Product D', status: 'Archived' },
+  ];
+
+  const handleSelectItem = useCallback((itemId: string) => {
+    setSelectedItems(prev =>
+      prev.includes(itemId) ? prev.filter(id => id !== itemId) : [...prev, itemId]
+    );
+  }, []);
+
+  const handleBulkAction = useCallback((action: string) => {
+    console.log(\`Bulk action: \${action} on items:\`, selectedItems);
+    onBulkAction?.(action, selectedItems);
+    setIsMenuOpen(false);
+  }, [selectedItems, onBulkAction]);
+
+  const bulkActions: ActionListItemDescriptor[] = [
+    { content: 'Edit selected', icon: EditIcon, onAction: () => handleBulkAction('edit') },
+    { content: 'Duplicate selected', icon: DuplicateIcon, onAction: () => handleBulkAction('duplicate') },
+    { content: 'Archive selected', onAction: () => handleBulkAction('archive') },
+    { content: 'Delete selected', icon: DeleteIcon, destructive: true, onAction: () => handleBulkAction('delete') },
+  ];
+
+  return (
+    <div>
+      <div>
+        <h4>Products ({selectedItems.length} selected)</h4>
+        {selectedItems.length > 0 && (
+          <Popover
+            active={isMenuOpen}
+            activator={<Button onClick={() => setIsMenuOpen(!isMenuOpen)}>Bulk actions</Button>}
+            onClose={() => setIsMenuOpen(false)}
+          >
+            <ActionList items={bulkActions} />
+          </Popover>
+        )}
+      </div>
+      {items.map(item => (
+        <div key={item.id} onClick={() => handleSelectItem(item.id)}>
+          <input type="checkbox" checked={selectedItems.includes(item.id)} readOnly />
+          <span>{item.name}</span>
+          <span>{item.status}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default BulkActionsExample;`
+  },
+
+  'context-menu-example': {
+    react: `import { ActionList } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState } from 'react';
+
+function ContextMenuExample() {
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; item: string } | null>(null);
+  const [actionHistory, setActionHistory] = useState<string[]>([]);
+
+  const handleContextMenu = (e: React.MouseEvent, item: string) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY, item });
+  };
+
+  const handleAction = (action: string) => {
+    if (contextMenu) {
+      const message = \`\${action} - \${contextMenu.item}\`;
+      setActionHistory(prev => [message, ...prev.slice(0, 4)]);
+      setContextMenu(null);
+    }
+  };
+
+  const items = ['Product A - T-Shirt', 'Product B - Jeans', 'Product C - Shoes', 'Product D - Hat'];
+
+  const contextActions = [
+    { content: 'View details', icon: ViewIcon, onAction: () => handleAction('View details') },
+    { content: 'Edit', icon: EditIcon, onAction: () => handleAction('Edit') },
+    { content: 'Duplicate', icon: DuplicateIcon, onAction: () => handleAction('Duplicate') },
+    { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => handleAction('Delete') },
+  ];
+
+  return (
+    <div>
+      <h4>Right-click items for context menu</h4>
+      {items.map((item, index) => (
+        <div key={index} onContextMenu={(e) => handleContextMenu(e, item)}>
+          {item}
+        </div>
+      ))}
+      {contextMenu && (
+        <div style={{ position: 'fixed', left: contextMenu.x, top: contextMenu.y }}>
+          <ActionList items={contextActions} />
+        </div>
+      )}
+      {actionHistory.length > 0 && (
+        <div>
+          <h5>Recent Actions:</h5>
+          {actionHistory.map((action, index) => <div key={index}>{action}</div>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default ContextMenuExample;`,
+
+    vanilla: `<div id="items-container">
+  <div class="item" data-name="Product A">Product A - T-Shirt</div>
+  <div class="item" data-name="Product B">Product B - Jeans</div>
+  <div class="item" data-name="Product C">Product C - Shoes</div>
+  <div class="item" data-name="Product D">Product D - Hat</div>
+</div>
+<div id="context-menu" style="display: none; position: fixed;">
+  <button data-action="view">👁️ View details</button>
+  <button data-action="edit">✏️ Edit</button>
+  <button data-action="duplicate">📋 Duplicate</button>
+  <button data-action="delete">🗑️ Delete</button>
+</div>
+
+<script>
+let currentItem = null;
+
+document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    currentItem = e.target.dataset.name;
+    const menu = document.getElementById('context-menu');
+    menu.style.left = e.clientX + 'px';
+    menu.style.top = e.clientY + 'px';
+    menu.style.display = 'block';
+  });
+});
+
+document.querySelectorAll('[data-action]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const action = e.target.dataset.action;
+    console.log(\`\${action} - \${currentItem}\`);
+    document.getElementById('context-menu').style.display = 'none';
+  });
+});
+
+document.addEventListener('click', () => {
+  document.getElementById('context-menu').style.display = 'none';
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.view.View', {
+  store: {
+    fields: ['name'],
+    data: [
+      { name: 'Product A - T-Shirt' },
+      { name: 'Product B - Jeans' },
+      { name: 'Product C - Shoes' },
+      { name: 'Product D - Hat' }
+    ]
+  },
+  tpl: '<div class="item">{name}</div>',
+  itemSelector: 'div.item',
+  listeners: {
+    itemcontextmenu: function(view, record, item, index, e) {
+      e.stopEvent();
+      const menu = Ext.create('Ext.menu.Menu', {
+        items: [
+          {
+            text: 'View details',
+            iconCls: 'icon-view',
+            handler: function() {
+              console.log('View - ' + record.get('name'));
+            }
+          },
+          {
+            text: 'Edit',
+            iconCls: 'icon-edit',
+            handler: function() {
+              console.log('Edit - ' + record.get('name'));
+            }
+          },
+          {
+            text: 'Duplicate',
+            iconCls: 'icon-duplicate',
+            handler: function() {
+              console.log('Duplicate - ' + record.get('name'));
+            }
+          },
+          '-',
+          {
+            text: 'Delete',
+            iconCls: 'icon-delete',
+            cls: 'destructive',
+            handler: function() {
+              console.log('Delete - ' + record.get('name'));
+            }
+          }
+        ]
+      });
+      menu.showAt(e.getXY());
+    }
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import { ViewIcon, EditIcon, DuplicateIcon, DeleteIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+interface ContextMenuState {
+  x: number;
+  y: number;
+  item: string;
+}
+
+interface ContextMenuExampleProps {
+  onAction?: (action: string, item: string) => void;
+}
+
+function ContextMenuExample({ onAction }: ContextMenuExampleProps): JSX.Element {
+  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
+  const [actionHistory, setActionHistory] = useState<string[]>([]);
+
+  const handleContextMenu = useCallback((e: React.MouseEvent, item: string) => {
+    e.preventDefault();
+    setContextMenu({ x: e.clientX, y: e.clientY, item });
+  }, []);
+
+  const handleAction = useCallback((action: string) => {
+    if (contextMenu) {
+      const message = \`\${action} - \${contextMenu.item}\`;
+      setActionHistory(prev => [message, ...prev.slice(0, 4)]);
+      onAction?.(action, contextMenu.item);
+      setContextMenu(null);
+    }
+  }, [contextMenu, onAction]);
+
+  const items: string[] = ['Product A - T-Shirt', 'Product B - Jeans', 'Product C - Shoes', 'Product D - Hat'];
+
+  const contextActions: ActionListItemDescriptor[] = [
+    { content: 'View details', icon: ViewIcon, onAction: () => handleAction('View details') },
+    { content: 'Edit', icon: EditIcon, onAction: () => handleAction('Edit') },
+    { content: 'Duplicate', icon: DuplicateIcon, onAction: () => handleAction('Duplicate') },
+    { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => handleAction('Delete') },
+  ];
+
+  return (
+    <div>
+      <h4>Right-click items for context menu</h4>
+      {items.map((item, index) => (
+        <div key={index} onContextMenu={(e) => handleContextMenu(e, item)}>
+          {item}
+        </div>
+      ))}
+      {contextMenu && (
+        <div style={{ position: 'fixed', left: contextMenu.x, top: contextMenu.y, zIndex: 1000 }}>
+          <ActionList items={contextActions} />
+        </div>
+      )}
+      {actionHistory.length > 0 && (
+        <div>
+          <h5>Recent Actions:</h5>
+          {actionHistory.map((action, index) => <div key={index}>{action}</div>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default ContextMenuExample;`
+  }
+};
+
+// Autocomplete Component Examples - Forms
+export const autocompleteExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Autocomplete } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function AutocompleteExample() {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState<string[]>(['Red T-shirt', 'Blue Jeans', 'Green Sweater']);
+
+  const updateText = useCallback((value: string) => {
+    setInputValue(value);
+    if (!value) {
+      setOptions(['Red T-shirt', 'Blue Jeans', 'Green Sweater']);
+      return;
+    }
+    const filterRegex = new RegExp(value, 'i');
+    setOptions(['Red T-shirt', 'Blue Jeans', 'Green Sweater'].filter((option) => option.match(filterRegex)));
+  }, []);
+
+  return (
+    <Autocomplete
+      options={options}
+      selected={selectedOptions}
+      onSelect={setSelectedOptions}
+      multiple
+      textField={
+        <Autocomplete.TextField
+          onChange={updateText}
+          label="Search products"
+          value={inputValue}
+          placeholder="Search products..."
+          autoComplete="off"
+        />
+      }
+    />
+  );
+}
+
+export default AutocompleteExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const input = $('#autocomplete-input');
+const allOptions = ['Red T-shirt', 'Blue Jeans', 'Green Sweater'];
+let selectedOptions = [];
+
+on(input, 'input', (e) => {
+  const value = e.target.value;
+  const filterRegex = new RegExp(value, 'i');
+  const filtered = allOptions.filter(option => option.match(filterRegex));
+  EventBus.emit('autocomplete:filtered', { results: filtered });
+});`,
+    extjs: `Ext.create('Ext.form.field.Tag', {
+  fieldLabel: 'Search products',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value'],
+    data: [{value: 'Red T-shirt'}, {value: 'Blue Jeans'}, {value: 'Green Sweater'}]
+  }),
+  displayField: 'value',
+  valueField: 'value',
+  queryMode: 'local',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { Autocomplete } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface AutocompleteExampleProps {
+  onSelectionChange?: (selected: string[]) => void;
+}
+
+function AutocompleteExample({ onSelectionChange }: AutocompleteExampleProps): JSX.Element {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [options, setOptions] = useState<string[]>(['Red T-shirt', 'Blue Jeans', 'Green Sweater']);
+
+  const updateText = useCallback((value: string): void => {
+    setInputValue(value);
+    const filterRegex = new RegExp(value, 'i');
+    setOptions(['Red T-shirt', 'Blue Jeans', 'Green Sweater'].filter((option) => option.match(filterRegex)));
+  }, []);
+
+  return (
+    <Autocomplete
+      options={options}
+      selected={selectedOptions}
+      onSelect={(selected) => {
+        setSelectedOptions(selected);
+        onSelectionChange?.(selected);
+      }}
+      multiple
+      textField={
+        <Autocomplete.TextField
+          onChange={updateText}
+          label="Search products"
+          value={inputValue}
+          autoComplete="off"
+        />
+      }
+    />
+  );
+}
+
+export default AutocompleteExample;`
+  }
+};
+
+// ChoiceList Component Examples - Forms
+export const choiceListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ChoiceList } from '@shopify/polaris';
+import { useState } from 'react';
+
+function ChoiceListExample() {
+  const [selected, setSelected] = useState<string[]>(['basic']);
+
+  return (
+    <ChoiceList
+      title="Select your plan"
+      choices={[
+        {label: 'Basic plan - $5/month', value: 'basic'},
+        {label: 'Professional plan - $15/month', value: 'professional'},
+        {label: 'Enterprise plan', value: 'enterprise'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}
+
+export default ChoiceListExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const choices = document.querySelectorAll('input[name="plan"]');
+choices.forEach(choice => {
+  on(choice, 'change', (e) => {
+    EventBus.emit('plan:changed', { plan: e.target.value });
+  });
+});`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Select your plan',
+  vertical: true,
+  items: [
+    {boxLabel: 'Basic plan - $5/month', name: 'plan', inputValue: 'basic', checked: true},
+    {boxLabel: 'Professional plan - $15/month', name: 'plan', inputValue: 'professional'},
+    {boxLabel: 'Enterprise plan', name: 'plan', inputValue: 'enterprise'}
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { ChoiceList } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface ChoiceListExampleProps {
+  onPlanChange?: (selected: string[]) => void;
+}
+
+function ChoiceListExample({ onPlanChange }: ChoiceListExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(['basic']);
+
+  return (
+    <ChoiceList
+      title="Select your plan"
+      choices={[
+        {label: 'Basic plan - $5/month', value: 'basic'},
+        {label: 'Professional plan - $15/month', value: 'professional'},
+        {label: 'Enterprise plan', value: 'enterprise'},
+      ]}
+      selected={selected}
+      onChange={(newSelected) => {
+        setSelected(newSelected);
+        onPlanChange?.(newSelected);
+      }}
+    />
+  );
+}
+
+export default ChoiceListExample;`
+  }
+};
+
+// ColorPicker Component Examples - Forms
+export const colorPickerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ColorPicker } from '@shopify/polaris';
+import { useState } from 'react';
+
+function ColorPickerExample() {
+  const [color, setColor] = useState({
+    hue: 300,
+    saturation: 1,
+    brightness: 1,
+    alpha: 1,
+  });
+
+  return <ColorPicker onChange={setColor} color={color} />;
+}
+
+export default ColorPickerExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const colorInput = $('#color-input');
+on(colorInput, 'input', (e) => {
+  EventBus.emit('color:changed', { hex: e.target.value });
+});`,
+    extjs: `Ext.create('Ext.picker.Color', {
+  value: 'FF00FF',
+  renderTo: Ext.getBody(),
+  listeners: {
+    select: function(picker, color) {
+      EventBus.emit('color:selected', { hex: '#' + color });
+    }
+  }
+});`,
+    typescript: `import { ColorPicker } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface ColorPickerExampleProps {
+  onColorChange?: (color: {hue: number; saturation: number; brightness: number; alpha: number}) => void;
+}
+
+function ColorPickerExample({ onColorChange }: ColorPickerExampleProps): JSX.Element {
+  const [color, setColor] = useState({
+    hue: 300,
+    saturation: 1,
+    brightness: 1,
+    alpha: 1,
+  });
+
+  return (
+    <ColorPicker
+      onChange={(newColor) => {
+        setColor(newColor);
+        onColorChange?.(newColor);
+      }}
+      color={color}
+    />
+  );
+}
+
+export default ColorPickerExample;`
+  }
+};
+
+// Combobox Component Examples - Forms
+export const comboboxExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Combobox, Listbox, Icon } from '@shopify/polaris';
+import { SearchIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+function ComboboxExample() {
+  const [selectedOption, setSelectedOption] = useState<string>();
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState(['Red', 'Orange', 'Yellow', 'Green', 'Blue']);
+
+  const updateText = useCallback((value: string) => {
+    setInputValue(value);
+    if (value === '') {
+      setOptions(['Red', 'Orange', 'Yellow', 'Green', 'Blue']);
+      return;
+    }
+    const filterRegex = new RegExp(value, 'i');
+    setOptions(['Red', 'Orange', 'Yellow', 'Green', 'Blue'].filter((option) => option.match(filterRegex)));
+  }, []);
+
+  return (
+    <Combobox
+      activator={
+        <Combobox.TextField
+          onChange={updateText}
+          label="Search colors"
+          value={inputValue}
+          prefix={<Icon source={SearchIcon} />}
+        />
+      }
+    >
+      <Listbox onSelect={setSelectedOption}>
+        {options.map((option) => (
+          <Listbox.Option key={option} value={option}>
+            {option}
+          </Listbox.Option>
+        ))}
+      </Listbox>
+    </Combobox>
+  );
+}
+
+export default ComboboxExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const input = $('#combobox-input');
+const listbox = $('#combobox-listbox');
+const options = ['Red', 'Orange', 'Yellow', 'Green', 'Blue'];
+
+on(input, 'input', (e) => {
+  const value = e.target.value;
+  const filterRegex = new RegExp(value, 'i');
+  const filtered = options.filter(opt => opt.match(filterRegex));
+  EventBus.emit('combobox:filtered', { results: filtered });
+});`,
+    extjs: `Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Search colors',
+  store: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+  queryMode: 'local',
+  typeAhead: true,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import { Combobox, Listbox, Icon } from '@shopify/polaris';
+import { SearchIcon } from '@shopify/polaris-icons';
+import { useState, useCallback } from 'react';
+
+interface ComboboxExampleProps {
+  onSelect?: (value: string) => void;
+}
+
+function ComboboxExample({ onSelect }: ComboboxExampleProps): JSX.Element {
+  const [selectedOption, setSelectedOption] = useState<string>();
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState(['Red', 'Orange', 'Yellow', 'Green', 'Blue']);
+
+  const updateText = useCallback((value: string): void => {
+    setInputValue(value);
+    const filterRegex = new RegExp(value, 'i');
+    setOptions(['Red', 'Orange', 'Yellow', 'Green', 'Blue'].filter((option) => option.match(filterRegex)));
+  }, []);
+
+  return (
+    <Combobox
+      activator={
+        <Combobox.TextField
+          onChange={updateText}
+          label="Search colors"
+          value={inputValue}
+          prefix={<Icon source={SearchIcon} />}
+        />
+      }
+    >
+      <Listbox onSelect={(value) => {
+        setSelectedOption(value);
+        onSelect?.(value);
+      }}>
+        {options.map((option) => (
+          <Listbox.Option key={option} value={option}>
+            {option}
+          </Listbox.Option>
+        ))}
+      </Listbox>
+    </Combobox>
+  );
+}
+
+export default ComboboxExample;`
+  }
+};
+
+// DatePicker Component Examples - Forms
+export const datePickerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { DatePicker } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function DatePickerExample() {
+  const [selected, setSelected] = useState(new Date());
+  const [month, setMonth] = useState(selected.getMonth());
+  const [year, setYear] = useState(selected.getFullYear());
+
+  return (
+    <DatePicker
+      month={month}
+      year={year}
+      onChange={setSelected}
+      onMonthChange={(month, year) => {
+        setMonth(month);
+        setYear(year);
+      }}
+      selected={selected}
+    />
+  );
+}
+
+export default DatePickerExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const datePicker = $('#date-picker');
+on(datePicker, 'change', (e) => {
+  EventBus.emit('date:selected', { date: e.target.value });
+});`,
+    extjs: `Ext.create('Ext.form.field.Date', {
+  fieldLabel: 'Select date',
+  value: new Date(),
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(field, newValue) {
+      EventBus.emit('date:selected', { date: newValue });
+    }
+  }
+});`,
+    typescript: `import { DatePicker } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface DatePickerExampleProps {
+  onDateChange?: (date: Date) => void;
+}
+
+function DatePickerExample({ onDateChange }: DatePickerExampleProps): JSX.Element {
+  const [selected, setSelected] = useState(new Date());
+  const [month, setMonth] = useState(selected.getMonth());
+  const [year, setYear] = useState(selected.getFullYear());
+
+  return (
+    <DatePicker
+      month={month}
+      year={year}
+      onChange={(newDate) => {
+        setSelected(newDate);
+        onDateChange?.(newDate);
+      }}
+      onMonthChange={(month, year) => {
+        setMonth(month);
+        setYear(year);
+      }}
+      selected={selected}
+    />
+  );
+}
+
+export default DatePickerExample;`
+  }
+};
+
+// FormLayout Component Examples - Forms
+export const formLayoutExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { FormLayout, TextField } from '@shopify/polaris';
+
+function FormLayoutExample() {
+  return (
+    <FormLayout>
+      <TextField label="Full name" placeholder="Enter your full name" />
+      <TextField label="Email" type="email" placeholder="email@example.com" />
+      <TextField label="Message" multiline={3} />
+    </FormLayout>
+  );
+}
+
+export default FormLayoutExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const form = $('#form-layout');
+const inputs = form.querySelectorAll('input, textarea');
+
+inputs.forEach(input => {
+  on(input, 'change', (e) => {
+    EventBus.emit('form:changed', { field: e.target.name, value: e.target.value });
+  });
+});`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  renderTo: Ext.getBody(),
+  width: 400,
+  bodyPadding: 10,
+  items: [
+    {xtype: 'textfield', fieldLabel: 'Full name'},
+    {xtype: 'textfield', fieldLabel: 'Email', vtype: 'email'},
+    {xtype: 'textareafield', fieldLabel: 'Message', height: 80}
+  ]
+});`,
+    typescript: `import { FormLayout, TextField } from '@shopify/polaris';
+
+interface FormLayoutExampleProps {
+  onFormChange?: (field: string, value: string) => void;
+}
+
+function FormLayoutExample({ onFormChange }: FormLayoutExampleProps): JSX.Element {
+  return (
+    <FormLayout>
+      <TextField
+        label="Full name"
+        onChange={(value) => onFormChange?.('name', value)}
+      />
+      <TextField
+        label="Email"
+        type="email"
+        onChange={(value) => onFormChange?.('email', value)}
+      />
+      <TextField
+        label="Message"
+        multiline={3}
+        onChange={(value) => onFormChange?.('message', value)}
+      />
+    </FormLayout>
+  );
+}
+
+export default FormLayoutExample;`
+  }
+};
+
+// RangeSlider Component Examples - Forms
+export const rangeSliderExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { RangeSlider } from '@shopify/polaris';
+import { useState } from 'react';
+
+function RangeSliderExample() {
+  const [value, setValue] = useState([20, 80]);
+
+  return (
+    <RangeSlider
+      label="Price range"
+      value={value}
+      onChange={setValue}
+      min={0}
+      max={100}
+      output
+      prefix="$"
+    />
+  );
+}
+
+export default RangeSliderExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const rangeSlider = $('#range-slider');
+on(rangeSlider, 'input', (e) => {
+  EventBus.emit('range:changed', { value: e.target.value });
+});`,
+    extjs: `Ext.create('Ext.slider.Multi', {
+  fieldLabel: 'Price range',
+  values: [20, 80],
+  minValue: 0,
+  maxValue: 100,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(slider, newValue) {
+      EventBus.emit('range:changed', { values: newValue });
+    }
+  }
+});`,
+    typescript: `import { RangeSlider } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface RangeSliderExampleProps {
+  onRangeChange?: (range: [number, number]) => void;
+}
+
+function RangeSliderExample({ onRangeChange }: RangeSliderExampleProps): JSX.Element {
+  const [value, setValue] = useState<[number, number]>([20, 80]);
+
+  return (
+    <RangeSlider
+      label="Price range"
+      value={value}
+      onChange={(newValue) => {
+        setValue(newValue as [number, number]);
+        onRangeChange?.(newValue as [number, number]);
+      }}
+      min={0}
+      max={100}
+      output
+      prefix="$"
+    />
+  );
+}
+
+export default RangeSliderExample;`
+  }
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -10448,6 +14006,13 @@ export function getCodeVariants(
     select: selectExamples,
     checkbox: checkboxExamples,
     radiobutton: radioButtonExamples,
+    autocomplete: autocompleteExamples,
+    choicelist: choiceListExamples,
+    colorpicker: colorPickerExamples,
+    combobox: comboboxExamples,
+    datepicker: datePickerExamples,
+    formlayout: formLayoutExamples,
+    rangeslider: rangeSliderExamples,
     avatar: avatarExamples,
     mediacard: mediacardExamples,
     thumbnail: thumbnailExamples,
@@ -10462,6 +14027,18 @@ export function getCodeVariants(
     list: listExamples,
     resourceitem: resourceItemExamples,
     resourcelist: resourceListExamples,
+    alphastack: alphastackExamples,
+    bleed: bleedExamples,
+    box: boxExamples,
+    grid: gridExamples,
+    inlinestack: inlinestackExamples,
+    verticalstack: verticalstackExamples,
+    fullscreenbar: fullscreenbarExamples,
+    contextualsavebar: contextualsavebarExamples,
+    divider: dividerExamples,
+    dropzone: dropzoneExamples,
+    keyboardkey: keyboardkeyExamples,
+    text: textExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

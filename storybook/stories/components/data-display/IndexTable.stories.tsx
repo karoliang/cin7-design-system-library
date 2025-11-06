@@ -21,6 +21,7 @@ import {
   CheckCircleIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/IndexTable',
@@ -147,6 +148,9 @@ export const Default: Story = {
       </LegacyCard>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
 };
 
 export const Selectable: Story = {

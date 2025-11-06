@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BlockStack, InlineStack, Card, Button, Text, Badge } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 // Custom AlphaStack component for Polaris v13.9.5 compatibility
@@ -114,6 +116,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('blockstack', 'default'),
+  },
   render: () => (
     <CustomAlphaStack spacing="loose">
       <Text as="h3" variant="headingMd">AlphaStack Example</Text>

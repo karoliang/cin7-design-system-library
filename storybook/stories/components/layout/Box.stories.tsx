@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box, Card, Button, Text, Badge } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 const meta = {
@@ -105,6 +107,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
   render: () => (
     <Box padding="400" background="surface" border="base" borderRadius="base">
       <Text as="h3" variant="headingMd">Box Component</Text>

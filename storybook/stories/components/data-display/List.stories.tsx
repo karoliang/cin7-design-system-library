@@ -12,6 +12,7 @@ import {
   ChartHistogramFullIcon
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/List',
@@ -52,6 +53,9 @@ export const Default: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const BulletedList: Story = {

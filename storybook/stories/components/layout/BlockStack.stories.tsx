@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BlockStack, Card, Button, Text, Badge } from '@shopify/polaris';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+
 import React from 'react';
 
 const meta = {
@@ -41,6 +43,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('blockstack', 'default'),
+  },
   render: () => (
     <BlockStack gap="400">
       <Text as="h2" variant="headingMd">Order Information</Text>

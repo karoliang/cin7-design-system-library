@@ -22,6 +22,7 @@ import {
   ExitIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/FullscreenBar',
@@ -33,6 +34,7 @@ const meta = {
         component: 'FullscreenBar provides a top navigation bar that spans the full width of the viewport. It\'s commonly used in immersive interfaces like previews, editors, or full-screen applications.',
       },
     },
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

@@ -12,6 +12,7 @@ import {
   HeartIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/VideoThumbnail',
@@ -61,6 +62,9 @@ export const Default: Story = {
     thumbnailUrl: 'https://picsum.photos/seed/video1/640/360.jpg',
     videoLength: 120,
     thumbnailAlt: 'Video thumbnail preview',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
   },
 };
 

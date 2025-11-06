@@ -12,6 +12,7 @@ import {
 } from '@shopify/polaris';
 import { SaveIcon, XSmallIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/ContextualSaveBar',
@@ -23,6 +24,7 @@ const meta = {
         component: 'ContextualSaveBar provides a fixed save bar that appears when users make changes to a form. It displays save/discard actions and provides visual feedback for unsaved changes.',
       },
     },
+    codeVariants: getCodeVariants('contextualsavebar', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

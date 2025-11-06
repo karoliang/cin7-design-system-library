@@ -8,6 +8,7 @@ import {
   CheckCircleIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Data Display/Thumbnail',
@@ -50,6 +51,9 @@ export const Default: Story = {
     size: 'medium',
     source: 'https://picsum.photos/seed/product1/200/200.jpg',
     alt: 'Product image',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
   },
 };
 

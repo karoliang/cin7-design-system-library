@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ResourceItem, ResourceList, Card, BlockStack, InlineStack, Badge, Button, Icon, Avatar, Thumbnail, Text } from '@shopify/polaris';
 import { PersonIcon, ProductIcon, OrderIcon, NoteIcon, ViewIcon, EditIcon, DeleteIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Helper function to create inline SVG placeholder images
 const createPlaceholder = (text: string, bgColor: string, textColor: string) => {
@@ -118,6 +119,9 @@ export const Default: Story = {
         </Card>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
   },
 };
 

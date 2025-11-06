@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ExceptionList, Card, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/ExceptionList',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Exception lists display errors, warnings, or other important messages in a structured format. They help users identify and resolve issues with their data or actions.',
       },
     },
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {
