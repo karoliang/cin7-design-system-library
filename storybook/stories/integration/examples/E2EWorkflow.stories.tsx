@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, FormLayout, TextField, Select, DataTable, Progress } from '@shopify/polaris';
+import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, FormLayout, TextField, Select, DataTable, ProgressBar } from '@shopify/polaris';
 import React from 'react';
 
 // Mock E2E workflow implementation
@@ -40,7 +40,7 @@ const E2EWorkflow = () => {
 
         {/* Progress indicator */}
         <Card sectioned>
-          <Progress progress={(step / steps.length) * 100} size="small" />
+          <ProgressBar progress={(step / steps.length) * 100} size="small" />
           <Text as="p" variant="bodySm" alignment="center">
             Step {step} of {steps.length}: {currentStepData?.name}
           </Text>
