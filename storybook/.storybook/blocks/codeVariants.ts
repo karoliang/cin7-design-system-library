@@ -422,6 +422,60 @@ function LargeButton({
 }`
   },
 
+  small: {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function SmallButton() {
+  return <Button size="slim">Small button</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Small button',
+  scale: 'small',
+  height: 28,
+  padding: '4 12',
+  handler: function() {
+    console.log('Small button clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--slim">Small button</button>
+
+<script>
+const smallButton = document.querySelector('.polaris-button--slim');
+
+smallButton.addEventListener('click', () => {
+  console.log('Small button clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface SmallButtonProps {
+  label?: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+}
+
+function SmallButton({
+  label = 'Small button',
+  onClick,
+  variant,
+  disabled = false
+}: SmallButtonProps): JSX.Element {
+  return (
+    <Button
+      size="slim"
+      variant={variant}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
+}`
+  },
+
   loading: {
     react: `import {Button} from '@shopify/polaris';
 import React from 'react';
@@ -711,6 +765,66 @@ function DisclosureButton({
       onClick={handleToggle}
     >
       {expanded ? expandedText : collapsedText}
+    </Button>
+  );
+}`
+  },
+
+  critical: {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function CriticalButton() {
+  return <Button tone="critical">Delete</Button>;
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Delete',
+  ui: 'danger',
+  style: {
+    backgroundColor: '#d72c0d',
+    borderColor: '#d72c0d',
+    color: 'white'
+  },
+  handler: function() {
+    console.log('Delete clicked');
+  }
+});`,
+    vanilla: `<button class="polaris-button polaris-button--critical">Delete</button>
+
+<script>
+const criticalButton = document.querySelector('.polaris-button--critical');
+
+criticalButton.addEventListener('click', () => {
+  console.log('Delete clicked');
+});
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+interface CriticalButtonProps {
+  label?: string;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'plain';
+  disabled?: boolean;
+  loading?: boolean;
+}
+
+function CriticalButton({
+  label = 'Delete',
+  onClick,
+  variant,
+  disabled = false,
+  loading = false
+}: CriticalButtonProps): JSX.Element {
+  return (
+    <Button
+      tone="critical"
+      variant={variant}
+      disabled={disabled}
+      loading={loading}
+      onClick={onClick}
+    >
+      {label}
     </Button>
   );
 }`
@@ -7691,6 +7805,196 @@ function SelectWithErrorExample(): JSX.Element {
 }
 
 export default SelectWithErrorExample;`
+  },
+
+  groups: {
+    react: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+function SelectWithGroupsExample() {
+  const [selected, setSelected] = useState('');
+
+  const groupedOptions = [
+    {label: 'Select a product category', value: ''},
+    {label: 'Electronics', options: [
+      {label: 'Smartphones', value: 'smartphones'},
+      {label: 'Laptops', value: 'laptops'},
+      {label: 'Tablets', value: 'tablets'},
+    ]},
+    {label: 'Clothing', options: [
+      {label: "Men's Clothing", value: 'mens'},
+      {label: "Women's Clothing", value: 'womens'},
+      {label: "Children's Clothing", value: 'children'},
+    ]},
+    {label: 'Home & Garden', options: [
+      {label: 'Furniture', value: 'furniture'},
+      {label: 'Decor', value: 'decor'},
+      {label: 'Garden Supplies', value: 'garden'},
+    ]},
+  ];
+
+  return (
+    <Select
+      label="Product category"
+      options={groupedOptions}
+      value={selected}
+      onChange={setSelected}
+      placeholder="Select a category"
+    />
+  );
+}
+
+export default SelectWithGroupsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-wrapper">
+  <label class="polaris-label">Product category</label>
+  <select class="polaris-select" id="category-select">
+    <option value="">Select a product category</option>
+    <optgroup label="Electronics">
+      <option value="smartphones">Smartphones</option>
+      <option value="laptops">Laptops</option>
+      <option value="tablets">Tablets</option>
+    </optgroup>
+    <optgroup label="Clothing">
+      <option value="mens">Men's Clothing</option>
+      <option value="womens">Women's Clothing</option>
+      <option value="children">Children's Clothing</option>
+    </optgroup>
+    <optgroup label="Home & Garden">
+      <option value="furniture">Furniture</option>
+      <option value="decor">Decor</option>
+      <option value="garden">Garden Supplies</option>
+    </optgroup>
+  </select>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const selectEl = $('#category-select');
+
+on(selectEl, 'change', (e) => {
+  const selectedValue = e.target.value;
+  const selectedText = e.target.options[e.target.selectedIndex].text;
+  const groupLabel = e.target.options[e.target.selectedIndex].parentElement.label;
+
+  console.log('Selected:', selectedValue, 'in group:', groupLabel);
+  EventBus.emit('category:changed', {
+    value: selectedValue,
+    text: selectedText,
+    group: groupLabel
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS ComboBox with grouped options
+Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Product category',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label', 'group'],
+    data: [
+      {value: '', label: 'Select a product category', group: ''},
+      // Electronics
+      {value: 'smartphones', label: 'Smartphones', group: 'Electronics'},
+      {value: 'laptops', label: 'Laptops', group: 'Electronics'},
+      {value: 'tablets', label: 'Tablets', group: 'Electronics'},
+      // Clothing
+      {value: 'mens', label: "Men's Clothing", group: 'Clothing'},
+      {value: 'womens', label: "Women's Clothing", group: 'Clothing'},
+      {value: 'children', label: "Children's Clothing", group: 'Clothing'},
+      // Home & Garden
+      {value: 'furniture', label: 'Furniture', group: 'Home & Garden'},
+      {value: 'decor', label: 'Decor', group: 'Home & Garden'},
+      {value: 'garden', label: 'Garden Supplies', group: 'Home & Garden'}
+    ],
+    groupField: 'group'
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  editable: false,
+  emptyText: 'Select a category',
+  renderTo: Ext.getBody(),
+  listConfig: {
+    features: [{
+      ftype: 'grouping',
+      groupHeaderTpl: '{name}'
+    }]
+  },
+  listeners: {
+    change: function(combo, newValue) {
+      const record = combo.findRecordByValue(newValue);
+      if (record) {
+        console.log('Selected:', newValue, 'in group:', record.get('group'));
+        EventBus.emit('category:changed', {
+          value: newValue,
+          text: record.get('label'),
+          group: record.get('group')
+        });
+      }
+    }
+  }
+});`,
+
+    typescript: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface OptionGroup {
+  label: string;
+  value?: string;
+  options?: Array<{label: string; value: string}>;
+}
+
+interface SelectWithGroupsProps {
+  label?: string;
+  placeholder?: string;
+  onChange?: (value: string) => void;
+}
+
+function SelectWithGroupsExample({
+  label = 'Product category',
+  placeholder = 'Select a category',
+  onChange
+}: SelectWithGroupsProps): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+
+  const groupedOptions: OptionGroup[] = [
+    {label: 'Select a product category', value: ''},
+    {label: 'Electronics', options: [
+      {label: 'Smartphones', value: 'smartphones'},
+      {label: 'Laptops', value: 'laptops'},
+      {label: 'Tablets', value: 'tablets'},
+    ]},
+    {label: 'Clothing', options: [
+      {label: "Men's Clothing", value: 'mens'},
+      {label: "Women's Clothing", value: 'womens'},
+      {label: "Children's Clothing", value: 'children'},
+    ]},
+    {label: 'Home & Garden', options: [
+      {label: 'Furniture', value: 'furniture'},
+      {label: 'Decor', value: 'decor'},
+      {label: 'Garden Supplies', value: 'garden'},
+    ]},
+  ];
+
+  const handleChange = (value: string): void => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <Select
+      label={label}
+      options={groupedOptions}
+      value={selected}
+      onChange={handleChange}
+      placeholder={placeholder}
+    />
+  );
+}
+
+export default SelectWithGroupsExample;`
   }
 };
 
@@ -8033,6 +8337,103 @@ function CheckboxWithHelpTextExample({
 }
 
 export default CheckboxWithHelpTextExample;`
+  },
+
+  error: {
+    react: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckboxWithErrorExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Checkbox
+      label="Age verification"
+      checked={checked}
+      onChange={setChecked}
+      error="You must be 18 or older to continue"
+    />
+  );
+}
+
+export default CheckboxWithErrorExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-wrapper">
+  <label class="polaris-checkbox-label">
+    <input type="checkbox" class="polaris-checkbox polaris-checkbox--error" id="age-checkbox" />
+    <span class="polaris-checkbox-label-text">Age verification</span>
+  </label>
+  <div class="polaris-error" id="age-error">You must be 18 or older to continue</div>
+</div>
+
+<script>
+import { $, on, removeClass } from '@cin7/vanilla-js';
+
+const checkbox = $('#age-checkbox');
+const errorEl = $('#age-error');
+
+on(checkbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  if (isChecked) {
+    removeClass(checkbox, 'polaris-checkbox--error');
+    errorEl.style.display = 'none';
+  } else {
+    errorEl.style.display = 'block';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Checkbox with error state
+Ext.create('Ext.form.field.Checkbox', {
+  boxLabel: 'Age verification',
+  checked: false,
+  msgTarget: 'under',
+  activeError: 'You must be 18 or older to continue',
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(checkbox, newValue) {
+      if (newValue) {
+        checkbox.clearInvalid();
+      } else {
+        checkbox.markInvalid('You must be 18 or older to continue');
+      }
+    }
+  }
+});`,
+
+    typescript: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface CheckboxWithErrorProps {
+  label?: string;
+  error?: string;
+  onChange?: (checked: boolean) => void;
+}
+
+function CheckboxWithErrorExample({
+  label = 'Age verification',
+  error = 'You must be 18 or older to continue',
+  onChange
+}: CheckboxWithErrorProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(false);
+
+  const handleChange = (newChecked: boolean): void => {
+    setChecked(newChecked);
+    onChange?.(newChecked);
+  };
+
+  return (
+    <Checkbox
+      label={label}
+      checked={checked}
+      onChange={handleChange}
+      error={error}
+    />
+  );
+}
+
+export default CheckboxWithErrorExample;`
   }
 };
 
@@ -8458,6 +8859,114 @@ function RadioButtonWithHelpTextExample({
 }
 
 export default RadioButtonWithHelpTextExample;`
+  },
+
+  error: {
+    react: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+function RadioButtonWithErrorExample() {
+  const [selected, setSelected] = useState('');
+
+  return (
+    <RadioButton
+      label="Invalid option"
+      name="option"
+      value="invalid"
+      checked={selected === 'invalid'}
+      onChange={() => setSelected('invalid')}
+      error="This option is not available in your region"
+    />
+  );
+}
+
+export default RadioButtonWithErrorExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-radio-wrapper">
+  <label class="polaris-radio-label">
+    <input
+      type="radio"
+      class="polaris-radio polaris-radio--error"
+      name="option"
+      value="invalid"
+      id="invalid-radio"
+    />
+    <span class="polaris-radio-label-text">Invalid option</span>
+  </label>
+  <div class="polaris-error" id="option-error">This option is not available in your region</div>
+</div>
+
+<script>
+import { $, on, removeClass } from '@cin7/vanilla-js';
+
+const radio = $('#invalid-radio');
+const errorEl = $('#option-error');
+
+on(radio, 'change', (e) => {
+  if (e.target.checked) {
+    console.log('Invalid option selected');
+    // Show error message to user
+    errorEl.style.display = 'block';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Radio Button with error state
+Ext.create('Ext.form.field.Radio', {
+  boxLabel: 'Invalid option',
+  name: 'option',
+  inputValue: 'invalid',
+  msgTarget: 'under',
+  activeError: 'This option is not available in your region',
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(radio, newValue) {
+      if (newValue) {
+        radio.markInvalid('This option is not available in your region');
+      }
+    }
+  }
+});`,
+
+    typescript: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface RadioButtonWithErrorProps {
+  label?: string;
+  name?: string;
+  value?: string;
+  error?: string;
+  onChange?: (value: string) => void;
+}
+
+function RadioButtonWithErrorExample({
+  label = 'Invalid option',
+  name = 'option',
+  value = 'invalid',
+  error = 'This option is not available in your region',
+  onChange
+}: RadioButtonWithErrorProps): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+
+  const handleChange = (): void => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <RadioButton
+      label={label}
+      name={name}
+      value={value}
+      checked={selected === value}
+      onChange={handleChange}
+      error={error}
+    />
+  );
+}
+
+export default RadioButtonWithErrorExample;`
   }
 };
 
@@ -13975,6 +14484,387 @@ function RangeSliderExample({ onRangeChange }: RangeSliderExampleProps): JSX.Ele
 }
 
 export default RangeSliderExample;`
+  }
+};
+
+// Pagination Component Examples
+export const paginationExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Pagination } from '@shopify/polaris';
+
+function PaginationExample() {
+  return (
+    <Pagination
+      hasNext={true}
+      hasPrevious={false}
+      label="Pagination"
+    />
+  );
+}
+
+export default PaginationExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-pagination">
+  <button class="polaris-pagination__button" disabled>Previous</button>
+  <button class="polaris-pagination__button">Next</button>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const nextButton = $('.polaris-pagination__button:last-child');
+on(nextButton, 'click', () => {
+  console.log('Next page');
+});
+</script>`,
+
+    extjs: `// ExtJS Paging Toolbar for first page
+Ext.create('Ext.toolbar.Paging', {
+  displayInfo: true,
+  displayMsg: 'Displaying items {0} - {1} of {2}',
+  emptyMsg: 'No items to display',
+  store: myStore,
+  renderTo: Ext.getBody(),
+  listeners: {
+    beforechange: function(toolbar, page) {
+      console.log('Navigating to page:', page);
+    }
+  }
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+
+interface PaginationExampleProps {
+  onNext?: () => void;
+  onPrevious?: () => void;
+}
+
+function PaginationExample({
+  onNext,
+  onPrevious
+}: PaginationExampleProps): JSX.Element {
+  return (
+    <Pagination
+      hasNext={true}
+      hasPrevious={false}
+      label="Pagination"
+      onNext={onNext}
+      onPrevious={onPrevious}
+    />
+  );
+}
+
+export default PaginationExample;`
+  },
+
+  middlePage: {
+    react: `import { Pagination } from '@shopify/polaris';
+
+function MiddlePageExample() {
+  return (
+    <Pagination
+      hasNext={true}
+      hasPrevious={true}
+      label="Pagination"
+    />
+  );
+}
+
+export default MiddlePageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-pagination">
+  <button class="polaris-pagination__button">Previous</button>
+  <button class="polaris-pagination__button">Next</button>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const prevButton = $('.polaris-pagination__button:first-child');
+const nextButton = $('.polaris-pagination__button:last-child');
+
+on(prevButton, 'click', () => {
+  console.log('Previous page');
+});
+
+on(nextButton, 'click', () => {
+  console.log('Next page');
+});
+</script>`,
+
+    extjs: `// ExtJS Paging Toolbar for middle page
+const store = Ext.create('Ext.data.Store', {
+  pageSize: 25,
+  currentPage: 5
+});
+
+Ext.create('Ext.toolbar.Paging', {
+  store: store,
+  displayInfo: true,
+  renderTo: Ext.getBody(),
+  items: [
+    '-',
+    {
+      text: 'Custom Action',
+      handler: function() {
+        console.log('Current page:', store.currentPage);
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface MiddlePageExampleProps {
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
+}
+
+function MiddlePageExample({
+  currentPage = 5,
+  onPageChange
+}: MiddlePageExampleProps): JSX.Element {
+  const [page, setPage] = useState(currentPage);
+
+  const handleNext = () => {
+    const newPage = page + 1;
+    setPage(newPage);
+    onPageChange?.(newPage);
+  };
+
+  const handlePrevious = () => {
+    const newPage = page - 1;
+    setPage(newPage);
+    onPageChange?.(newPage);
+  };
+
+  return (
+    <Pagination
+      hasNext={true}
+      hasPrevious={true}
+      label="Pagination"
+      onNext={handleNext}
+      onPrevious={handlePrevious}
+    />
+  );
+}
+
+export default MiddlePageExample;`
+  },
+
+  lastPage: {
+    react: `import { Pagination } from '@shopify/polaris';
+
+function LastPageExample() {
+  return (
+    <Pagination
+      hasNext={false}
+      hasPrevious={true}
+      label="Pagination"
+    />
+  );
+}
+
+export default LastPageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-pagination">
+  <button class="polaris-pagination__button">Previous</button>
+  <button class="polaris-pagination__button" disabled>Next</button>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const prevButton = $('.polaris-pagination__button:first-child');
+on(prevButton, 'click', () => {
+  console.log('Previous page');
+});
+</script>`,
+
+    extjs: `// ExtJS Paging Toolbar for last page
+const store = Ext.create('Ext.data.Store', {
+  pageSize: 25,
+  totalCount: 250,
+  currentPage: 10 // Last page (250 / 25 = 10 pages)
+});
+
+Ext.create('Ext.toolbar.Paging', {
+  store: store,
+  displayInfo: true,
+  displayMsg: 'Displaying items {0} - {1} of {2}',
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(toolbar, pageData) {
+      if (pageData.currentPage === pageData.pageCount) {
+        console.log('On last page');
+      }
+    }
+  }
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+
+interface LastPageExampleProps {
+  onPrevious?: () => void;
+  totalPages?: number;
+}
+
+function LastPageExample({
+  onPrevious,
+  totalPages = 10
+}: LastPageExampleProps): JSX.Element {
+  return (
+    <Pagination
+      hasNext={false}
+      hasPrevious={true}
+      label="Pagination"
+      onPrevious={onPrevious}
+    />
+  );
+}
+
+export default LastPageExample;`
+  },
+
+  customTooltips: {
+    react: `import { Pagination } from '@shopify/polaris';
+
+function CustomTooltipsExample() {
+  return (
+    <Pagination
+      hasNext={true}
+      hasPrevious={true}
+      label="Customer list pagination"
+      nextTooltip="Next page of customers"
+      previousTooltip="Previous page of customers"
+    />
+  );
+}
+
+export default CustomTooltipsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-pagination">
+  <button
+    class="polaris-pagination__button"
+    title="Previous page of customers"
+    aria-label="Previous page of customers"
+  >
+    Previous
+  </button>
+  <button
+    class="polaris-pagination__button"
+    title="Next page of customers"
+    aria-label="Next page of customers"
+  >
+    Next
+  </button>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const prevButton = $('.polaris-pagination__button:first-child');
+const nextButton = $('.polaris-pagination__button:last-child');
+
+on(prevButton, 'click', () => {
+  console.log('Previous page of customers');
+});
+
+on(nextButton, 'click', () => {
+  console.log('Next page of customers');
+});
+</script>`,
+
+    extjs: `// ExtJS Paging Toolbar with custom tooltips
+Ext.create('Ext.toolbar.Paging', {
+  store: customerStore,
+  displayInfo: true,
+  displayMsg: 'Displaying customers {0} - {1} of {2}',
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      itemId: 'first',
+      tooltip: 'First page of customers',
+      overflowText: 'First'
+    },
+    {
+      itemId: 'prev',
+      tooltip: 'Previous page of customers',
+      overflowText: 'Previous'
+    },
+    '-',
+    {
+      itemId: 'next',
+      tooltip: 'Next page of customers',
+      overflowText: 'Next'
+    },
+    {
+      itemId: 'last',
+      tooltip: 'Last page of customers',
+      overflowText: 'Last'
+    }
+  ],
+  listeners: {
+    beforechange: function(toolbar, page) {
+      console.log('Navigating to page', page, 'of customer list');
+    }
+  }
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface CustomTooltipsExampleProps {
+  customers?: Customer[];
+  customersPerPage?: number;
+  onPageChange?: (page: number) => void;
+}
+
+function CustomTooltipsExample({
+  customers = [],
+  customersPerPage = 25,
+  onPageChange
+}: CustomTooltipsExampleProps): JSX.Element {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(customers.length / customersPerPage);
+
+  const handleNext = () => {
+    const newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    onPageChange?.(newPage);
+  };
+
+  const handlePrevious = () => {
+    const newPage = currentPage - 1;
+    setCurrentPage(newPage);
+    onPageChange?.(newPage);
+  };
+
+  return (
+    <Pagination
+      hasNext={currentPage < totalPages}
+      hasPrevious={currentPage > 1}
+      label={\`Customer list pagination, page \${currentPage} of \${totalPages}\`}
+      nextTooltip="Next page of customers"
+      previousTooltip="Previous page of customers"
+      onNext={handleNext}
+      onPrevious={handlePrevious}
+    />
+  );
+}
+
+export default CustomTooltipsExample;`
   }
 };
 
