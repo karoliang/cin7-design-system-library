@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { VideoThumbnail, Badge, Button, Text, InlineStack, Icon, Card } from '@shopify/polaris';
 import {
   PlayIcon,
-  PauseIcon,
-  VolumeUpIcon,
-  VolumeUpFilledIcon,
-  DownloadIcon,
+  PauseCircleIcon,
+  SoundIcon,
+  SoundIcon as VolumeIcon,
+  ArrowDownIcon,
   ShareIcon,
   ClockIcon,
   ViewIcon,
@@ -377,7 +377,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={isPlaying ? PauseIcon : PlayIcon} />
+                <Icon source={isPlaying ? PauseCircleIcon : PlayIcon} />
                 <Text variant="bodyMd">{isPlaying ? 'Pause' : 'Play'}</Text>
               </button>
 
@@ -394,7 +394,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={volume > 0 ? VolumeUpFilledIcon : VolumeUpIcon} color={volume > 0 ? undefined : 'subdued'} />
+                <Icon source={volume > 0 ? VolumeIcon : SoundIcon} color={volume > 0 ? undefined : 'subdued'} />
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -454,7 +454,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={DownloadIcon} color="subdued" />
+                <Icon source={ArrowDownIcon} color="subdued" />
                 <Text variant="bodySm">Download</Text>
               </button>
             </InlineStack>

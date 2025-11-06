@@ -42,8 +42,8 @@ import {
   PlayIcon,
   MobileIcon,
   DesktopIcon,
-  AccessibilityIcon,
-  FlashIcon,
+  EyeglassesIcon,
+  MagicIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -111,7 +111,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={AccessibilityIcon} size="large" />
+            <Icon source={EyeglassesIcon} size="large" />
             <Text variant="headingMd" as="h3">Accessibility Guidelines</Text>
             <Text>Build inclusive interfaces for all users</Text>
             <Badge tone="success">Critical</Badge>
@@ -120,7 +120,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={FlashIcon} size="large" />
+            <Icon source={MagicIcon} size="large" />
             <Text variant="headingMd" as="h3">Performance Tips</Text>
             <Text>Optimize your applications for speed</Text>
             <Badge tone="attention">Recommended</Badge>

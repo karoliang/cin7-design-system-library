@@ -24,17 +24,17 @@ import {
 import {
   HeartIcon,
   StarFilledIcon,
-  StarOutlineIcon,
+  StarIcon,
   CartIcon,
   PackageIcon,
-  CheckmarkIcon,
-  XMarkIcon,
+  CheckIcon,
+  XIcon,
   PlusIcon,
   MinusIcon,
   CreditCardIcon,
-  TruckIcon,
+  DeliveryIcon,
   ReturnIcon,
-  SecurityIcon,
+  LockIcon,
   ClockIcon,
   AlertCircleIcon,
   InfoIcon,
@@ -148,7 +148,7 @@ const StarRating = ({ rating, size = 'small' }: { rating: number; size?: 'small'
     return (
       <Icon
         key={i}
-        source={filled ? StarFilledIcon : StarOutlineIcon}
+        source={filled ? StarFilledIcon : StarIcon}
         tone={filled ? 'text' : 'subdued'}
       />
     );
@@ -340,7 +340,7 @@ const ShoppingCart = () => {
                 />
                 <Button
                   size="small"
-                  icon={XMarkIcon}
+                  icon={XIcon}
                   onClick={() => updateQuantity(item.id, 0)}
                   tone="critical"
                 />
@@ -466,7 +466,7 @@ const CheckoutFlow = () => {
                 </div>
                 <TextField label="Name on Card" />
 
-                <Banner status="info" icon={SecurityIcon}>
+                <Banner status="info" icon={LockIcon}>
                   <Text variant="bodySm">Your payment information is secure and encrypted</Text>
                 </Banner>
 
@@ -496,7 +496,7 @@ const CheckoutFlow = () => {
 
               <div style={{ marginTop: '16px' }}>
                 <Text variant="bodySm" tone="subdued">
-                  <Icon source={TruckIcon} /> Free shipping on orders over $50
+                  <Icon source={DeliveryIcon} /> Free shipping on orders over $50
                 </Text>
                 <Text variant="bodySm" tone="subdued">
                   <Icon source={ReturnIcon} /> 30-day return policy

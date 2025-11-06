@@ -4,11 +4,11 @@ import {
   PlayIcon,
   ExternalIcon,
   HeartIcon,
-  BookmarkIcon,
+  PinFilledIcon,
   ShareIcon,
   ClockIcon,
   ViewIcon,
-  DownloadIcon,
+  ArrowDownIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -123,7 +123,7 @@ export const ArticleCard: Story = {
           secondaryAction={{
             content: isBookmarked ? 'Bookmarked' : 'Bookmark',
             onAction: () => setIsBookmarked(!isBookmarked),
-            icon: BookmarkIcon,
+            icon: PinFilledIcon,
             tone: isBookmarked ? 'success' : undefined,
           }}
         />
@@ -224,7 +224,7 @@ export const LandscapeMode: Story = {
           secondaryAction={{
             content: 'Download',
             onAction: () => console.log('Download'),
-            icon: DownloadIcon,
+            icon: ArrowDownIcon,
           }}
         />
 
@@ -407,7 +407,7 @@ export const InteractiveCard: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={BookmarkIcon} color="subdued" />
+                <Icon source={PinFilledIcon} color="subdued" />
                 <Text variant="bodySm">Save</Text>
               </button>
             </InlineStack>

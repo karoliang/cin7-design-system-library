@@ -3,7 +3,7 @@ import { Thumbnail, Badge, Button, Text, Card, InlineStack, Icon } from '@shopif
 import {
   ViewIcon,
   EditIcon,
-  DownloadIcon,
+  ArrowDownIcon,
   DeleteIcon,
   CheckCircleIcon,
 } from '@shopify/polaris-icons';
@@ -282,7 +282,7 @@ export const WithActions: Story = {
                 >
                   <Button size="small" variant="plain" icon={ViewIcon} />
                   <Button size="small" variant="plain" icon={EditIcon} />
-                  <Button size="small" variant="plain" icon={DownloadIcon} />
+                  <Button size="small" variant="plain" icon={ArrowDownIcon} />
                   <Button size="small" variant="plain" icon={DeleteIcon} tone="critical" />
                 </div>
               )}

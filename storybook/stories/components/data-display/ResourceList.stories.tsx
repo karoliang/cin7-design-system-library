@@ -15,7 +15,7 @@ import {
   NoteIcon,
   ProductIcon,
   PersonIcon,
-  OrdersIcon,
+  OrderIcon,
   CheckCircleIcon,
   AlertCircleIcon,
   ViewIcon,

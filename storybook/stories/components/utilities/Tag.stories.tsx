@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Tag, Card, Text, InlineStack, BlockStack, Button } from '@shopify/polaris';
 import {
   XSmallIcon,
-  InfoCircleIcon,
-  CheckmarkIcon,
+  InfoIcon,
+  CheckIcon,
   AlertCircleIcon
 } from '@shopify/polaris-icons';
 import React from 'react';

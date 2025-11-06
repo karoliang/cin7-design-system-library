@@ -16,13 +16,13 @@ import {
 } from '@shopify/polaris';
 import {
   HomeIcon,
-  OrdersIcon,
+  OrderIcon,
   ProductIcon,
   PersonIcon,
   ChartHistogramFullIcon,
   SettingsIcon,
-  LogOutIcon,
-  QuestionMarkIcon,
+  ExitIcon,
+  QuestionCircleIcon,
   NotificationIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
@@ -79,7 +79,7 @@ const navigationItems = [
   },
   {
     label: 'Orders',
-    icon: OrdersIcon,
+    icon: OrderIcon,
     url: '#',
     subNavigationItems: [
       {
@@ -137,8 +137,8 @@ const userMenu = [
   {
     items: [
       { content: 'Account settings', icon: SettingsIcon },
-      { content: 'Support', icon: QuestionMarkIcon },
-      { content: 'Logout', icon: LogOutIcon },
+      { content: 'Support', icon: QuestionCircleIcon },
+      { content: 'Logout', icon: ExitIcon },
     ],
   },
 ];
@@ -261,7 +261,7 @@ export const WithLogo: Story = {
           title="Back End"
           items={[
             { label: 'Dashboard', icon: HomeIcon, url: '#' },
-            { label: 'Orders', icon: OrdersIcon, url: '#' },
+            { label: 'Orders', icon: OrderIcon, url: '#' },
             { label: 'Products', icon: ProductIcon, url: '#' },
           ]}
         />
@@ -270,7 +270,7 @@ export const WithLogo: Story = {
           items={[
             { label: 'Online Store', icon: HomeIcon, url: '#' },
             { label: 'Point of Sale', icon: ProductIcon, url: '#' },
-            { label: 'Buy Button', icon: OrdersIcon, url: '#' },
+            { label: 'Buy Button', icon: OrderIcon, url: '#' },
           ]}
         />
       </Navigation>
@@ -345,7 +345,7 @@ export const WithNotifications: Story = {
         },
       },
       {
-        icon: QuestionMarkIcon,
+        icon: QuestionCircleIcon,
         onClick: () => console.log('Help clicked'),
       },
     ];
@@ -421,7 +421,7 @@ export const EcommerceLayout: Story = {
       },
       {
         label: 'Orders',
-        icon: OrdersIcon,
+        icon: OrderIcon,
         url: '#',
         badge: { status: 'attention', content: '8' },
         subNavigationItems: [

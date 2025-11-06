@@ -43,7 +43,7 @@ import {
   CartIcon,
   PackageIcon,
   PersonIcon,
-  ChartBarIcon,
+  ChartVerticalIcon,
   MobileIcon,
   DesktopIcon,
   CreditCardIcon,

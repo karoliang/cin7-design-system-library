@@ -18,7 +18,7 @@ import {
   ArchiveIcon,
   DuplicateIcon,
   PlusIcon,
-  MoreHorizontalIcon,
+  MenuHorizontalIcon,
 } from '@shopify/polaris-icons';
 import React from 'react';
 
