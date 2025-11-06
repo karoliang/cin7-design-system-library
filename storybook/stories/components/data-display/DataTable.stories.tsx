@@ -168,7 +168,7 @@ export const Sortable: Story = {
       if (sortedColumnIndex !== columnIndex) {
         return <Icon source={ChevronDownIcon} color="subdued" />;
       }
-      return <Icon source={sortDirection === 'ascending' ? ChevronUpIcon : ChevronDownMinor} />;
+      return <Icon source={sortDirection === 'ascending' ? ChevronUpIcon : ChevronDownIcon} />;
     };
 
     const sortableHeadings = [

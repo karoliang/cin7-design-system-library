@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Thumbnail, Badge, Button, Text, Card, InlineStack, Icon } from '@shopify/polaris';
 import {
-  ViewMinor,
-  EditMinor,
-  DownloadMinor,
-  DeleteMinor,
-  CircleTickMinor,
+  ViewIcon,
+  EditIcon,
+  DownloadIcon,
+  DeleteIcon,
+  CheckCircleIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -280,10 +280,10 @@ export const WithActions: Story = {
                     gap: '8px',
                   }}
                 >
-                  <Button size="small" variant="plain" icon={ViewMinor} />
-                  <Button size="small" variant="plain" icon={EditMinor} />
-                  <Button size="small" variant="plain" icon={DownloadMinor} />
-                  <Button size="small" variant="plain" icon={DeleteMinor} tone="critical" />
+                  <Button size="small" variant="plain" icon={ViewIcon} />
+                  <Button size="small" variant="plain" icon={EditIcon} />
+                  <Button size="small" variant="plain" icon={DownloadIcon} />
+                  <Button size="small" variant="plain" icon={DeleteIcon} tone="critical" />
                 </div>
               )}
             </div>
@@ -363,7 +363,7 @@ export const UserGeneratedContent: Story = {
                         right: '4px',
                       }}
                     >
-                      <Icon source={CircleTickMinor} color="success" />
+                      <Icon source={CheckCircleIcon} color="success" />
                     </div>
                   )}
                 </div>

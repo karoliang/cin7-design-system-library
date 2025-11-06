@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonFrom, Card, Text, InlineStack, BlockStack } from '@shopify/polaris';
 import {
-  SearchMinor,
-  ExportMinor,
-  ImportMinor,
-  DeleteMinor,
-  EditMinor,
-  PlusMinor,
-  RefreshMinor
+  SearchIcon,
+  ExportIcon,
+  ImportIcon,
+  DeleteIcon,
+  EditIcon,
+  PlusIcon,
+  RefreshIcon
 } from '@shopify/polaris-icons';
 import React from 'react';
 
@@ -187,12 +187,12 @@ export const ButtonSizes: Story = {
 export const WithIcons: Story = {
   render: () => {
     const iconActions = [
-      { content: 'Search', icon: SearchMinor },
-      { content: 'Export', icon: ExportMinor },
-      { content: 'Import', icon: ImportMinor },
-      { content: 'Delete', icon: DeleteMinor, destructive: true },
-      { content: 'Edit', icon: EditMinor },
-      { content: 'Add', icon: PlusMinor, primary: true },
+      { content: 'Search', icon: SearchIcon },
+      { content: 'Export', icon: ExportIcon },
+      { content: 'Import', icon: ImportIcon },
+      { content: 'Delete', icon: DeleteIcon, destructive: true },
+      { content: 'Edit', icon: EditIcon },
+      { content: 'Add', icon: PlusIcon, primary: true },
     ];
 
     return (
@@ -304,7 +304,7 @@ export const DynamicButtonGeneration: Story = {
             <ButtonFrom
               action={{
                 content: 'Refresh',
-                icon: RefreshMinor,
+                icon: RefreshIcon,
                 loading,
                 onAction: handleRefresh,
               }}
@@ -378,26 +378,26 @@ export const ConditionalButtons: Story = {
     const allActions = [
       {
         content: 'Edit',
-        icon: EditMinor,
+        icon: EditIcon,
         onAction: () => console.log('Edit action'),
         condition: permissions.canEdit,
       },
       {
         content: 'Delete',
-        icon: DeleteMinor,
+        icon: DeleteIcon,
         destructive: true,
         onAction: () => console.log('Delete action'),
         condition: permissions.canDelete,
       },
       {
         content: 'Export',
-        icon: ExportMinor,
+        icon: ExportIcon,
         onAction: () => console.log('Export action'),
         condition: permissions.canExport,
       },
       {
         content: 'Import',
-        icon: ImportMinor,
+        icon: ImportIcon,
         onAction: () => console.log('Import action'),
         condition: permissions.canImport,
       },
@@ -585,7 +585,7 @@ export const BulkActions: Story = {
     const bulkActions = [
       {
         content: 'Export',
-        icon: ExportMinor,
+        icon: ExportIcon,
         onAction: async () => {
           setLoadingAction('export');
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -596,7 +596,7 @@ export const BulkActions: Story = {
       },
       {
         content: 'Delete',
-        icon: DeleteMinor,
+        icon: DeleteIcon,
         destructive: true,
         onAction: async () => {
           setLoadingAction('delete');
@@ -700,7 +700,7 @@ export const ButtonFromJSON: Story = {
         },
         {
           content: 'Download PDF',
-          icon: ExportMinor,
+          icon: ExportIcon,
           onAction: () => console.log('Download PDF clicked'),
         },
       ],

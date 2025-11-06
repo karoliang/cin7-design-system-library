@@ -12,15 +12,15 @@ import {
   Tooltip,
 } from '@shopify/polaris';
 import {
-  NoteMinor,
-  ProductsMajor,
-  CustomersMajor,
-  OrdersMajor,
-  CircleTickMinor,
-  AlertMinor,
-  ViewMinor,
-  EditMinor,
-  DeleteMinor,
+  NoteIcon,
+  ProductsIcon,
+  CustomersIcon,
+  OrdersIcon,
+  CheckCircleIcon,
+  AlertIcon,
+  ViewIcon,
+  EditIcon,
+  DeleteIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
@@ -180,12 +180,12 @@ const promotedBulkActions = [
   {
     content: 'Edit items',
     onAction: () => console.log('Edit selected'),
-    icon: EditMinor,
+    icon: EditIcon,
   },
   {
     content: 'Delete items',
     onAction: () => console.log('Delete selected'),
-    icon: DeleteMinor,
+    icon: DeleteIcon,
     destructive: true,
   },
 ];
@@ -480,12 +480,12 @@ export const WithActions: Story = {
             const shortcutActions = [
               {
                 content: 'View',
-                icon: ViewMinor,
+                icon: ViewIcon,
                 onAction: () => console.log(`View ${name}`),
               },
               {
                 content: 'Edit',
-                icon: EditMinor,
+                icon: EditIcon,
                 onAction: () => console.log(`Edit ${name}`),
               },
             ];
@@ -841,10 +841,10 @@ export const CustomizedItems: Story = {
                     <div>
                       <InlineStack gap="200">
                         <Tooltip content="View product">
-                          <Button size="small" variant="plain" icon={ViewMinor} />
+                          <Button size="small" variant="plain" icon={ViewIcon} />
                         </Tooltip>
                         <Tooltip content="Edit product">
-                          <Button size="small" variant="plain" icon={EditMinor} />
+                          <Button size="small" variant="plain" icon={EditIcon} />
                         </Tooltip>
                       </InlineStack>
                     </div>

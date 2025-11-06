@@ -11,14 +11,14 @@ import {
   LegacyCard
 } from '@shopify/polaris';
 import {
-  ViewMinor,
-  EditMinor,
-  DeleteMinor,
-  DuplicateMinor,
-  ArchiveMinor,
-  MobileMajor,
-  DesktopMajor,
-  CircleTickMinor,
+  ViewIcon,
+  EditIcon,
+  DeleteIcon,
+  DuplicateIcon,
+  ArchiveIcon,
+  MobileIcon,
+  DesktopIcon,
+  CheckCircleIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
@@ -85,12 +85,12 @@ const promotedBulkActions = [
   {
     content: 'Edit products',
     onAction: () => console.log('Edit selected'),
-    icon: EditMinor,
+    icon: EditIcon,
   },
   {
     content: 'Delete products',
     onAction: () => console.log('Delete selected'),
-    icon: DeleteMinor,
+    icon: DeleteIcon,
     destructive: true,
   },
 ];
@@ -99,12 +99,12 @@ const bulkActions = [
   {
     content: 'Duplicate products',
     onAction: () => console.log('Duplicate selected'),
-    icon: DuplicateMinor,
+    icon: DuplicateIcon,
   },
   {
     content: 'Archive products',
     onAction: () => console.log('Archive selected'),
-    icon: ArchiveMinor,
+    icon: ArchiveIcon,
   },
 ];
 
@@ -230,13 +230,13 @@ export const WithActions: Story = {
           <IndexTable.Cell>
             <InlineStack gap="200">
               <Tooltip content="View product">
-                <Button size="small" variant="plain" icon={ViewMinor} />
+                <Button size="small" variant="plain" icon={ViewIcon} />
               </Tooltip>
               <Tooltip content="Edit product">
-                <Button size="small" variant="plain" icon={EditMinor} />
+                <Button size="small" variant="plain" icon={EditIcon} />
               </Tooltip>
               <Tooltip content="Delete product">
-                <Button size="small" variant="plain" icon={DeleteMinor} tone="critical" />
+                <Button size="small" variant="plain" icon={DeleteIcon} tone="critical" />
               </Tooltip>
             </InlineStack>
           </IndexTable.Cell>
@@ -309,8 +309,8 @@ export const LargeDataset: Story = {
           </IndexTable.Cell>
           <IndexTable.Cell>
             <InlineStack gap="200">
-              <Button size="small" variant="plain" icon={ViewMinor} />
-              <Button size="small" variant="plain" icon={EditMinor} />
+              <Button size="small" variant="plain" icon={ViewIcon} />
+              <Button size="small" variant="plain" icon={EditIcon} />
             </InlineStack>
           </IndexTable.Cell>
         </IndexTable.Row>
@@ -598,17 +598,17 @@ export const WithCustomBulkActions: Story = {
       {
         content: 'Apply 10% discount',
         onAction: () => console.log('Apply discount to selected'),
-        icon: CircleTickMinor,
+        icon: CheckCircleIcon,
       },
       {
         content: 'Set as featured',
         onAction: () => console.log('Set selected as featured'),
-        icon: MobileMajor,
+        icon: MobileIcon,
       },
       {
         content: 'Add to collection',
         onAction: () => console.log('Add selected to collection'),
-        icon: DesktopMajor,
+        icon: DesktopIcon,
       },
     ];
 

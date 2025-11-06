@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { VideoThumbnail, Badge, Button, Text, InlineStack, Icon, Card } from '@shopify/polaris';
 import {
-  PlayMinor,
-  PauseMinor,
-  VolumeUpMinor,
-  VolumeUpFilledMajor,
-  DownloadMinor,
-  ShareMinor,
-  ClockMinor,
-  ViewMinor,
-  HeartMinor,
+  PlayIcon,
+  PauseIcon,
+  VolumeUpIcon,
+  VolumeUpFilledIcon,
+  DownloadIcon,
+  ShareIcon,
+  ClockIcon,
+  ViewIcon,
+  HeartIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -164,7 +164,7 @@ export const VideoGallery: Story = {
                 <Text variant="bodySm" fontWeight="medium">{video.title}</Text>
                 <InlineStack gap="200">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Icon source={ViewMinor} color="subdued" />
+                    <Icon source={ViewIcon} color="subdued" />
                     <Text variant="bodySm" color="subdued">{video.views.toLocaleString()}</Text>
                   </div>
                   <Text variant="bodySm" color="subdued">
@@ -377,7 +377,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={isPlaying ? PauseMinor : PlayMinor} />
+                <Icon source={isPlaying ? PauseIcon : PlayIcon} />
                 <Text variant="bodyMd">{isPlaying ? 'Pause' : 'Play'}</Text>
               </button>
 
@@ -394,11 +394,11 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={volume > 0 ? VolumeUpFilledMajor : VolumeUpMinor} color={volume > 0 ? undefined : 'subdued'} />
+                <Icon source={volume > 0 ? VolumeUpFilledIcon : VolumeUpIcon} color={volume > 0 ? undefined : 'subdued'} />
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Icon source={ClockMinor} color="subdued" />
+                <Icon source={ClockIcon} color="subdued" />
                 <Text variant="bodySm" color="subdued">
                   {Math.floor((progress * 120) / 100)}:{((progress * 120) % 60).toString().padStart(2, '0')} / 2:00
                 </Text>
@@ -420,7 +420,7 @@ export const InteractivePreview: Story = {
                   color: isLiked ? '#d72c0d' : '#637381',
                 }}
               >
-                <Icon source={HeartMinor} color={isLiked ? 'critical' : 'subdued'} />
+                <Icon source={HeartIcon} color={isLiked ? 'critical' : 'subdued'} />
                 <Text variant="bodySm">{isLiked ? 'Liked' : 'Like'}</Text>
               </button>
 
@@ -437,7 +437,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={ShareMinor} color="subdued" />
+                <Icon source={ShareIcon} color="subdued" />
                 <Text variant="bodySm">Share</Text>
               </button>
 
@@ -454,7 +454,7 @@ export const InteractivePreview: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={DownloadMinor} color="subdued" />
+                <Icon source={DownloadIcon} color="subdued" />
                 <Text variant="bodySm">Download</Text>
               </button>
             </InlineStack>
@@ -524,13 +524,13 @@ export const WithMetadata: Story = {
                     <InlineStack gap="400">
                       <Badge>{video.category}</Badge>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Icon source={ClockMinor} color="subdued" />
+                        <Icon source={ClockIcon} color="subdued" />
                         <Text variant="bodySm" color="subdued">
                           {formatTime(video.length)}
                         </Text>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Icon source={ViewMinor} color="subdued" />
+                        <Icon source={ViewIcon} color="subdued" />
                         <Text variant="bodySm" color="subdued">
                           {video.views.toLocaleString()} views
                         </Text>

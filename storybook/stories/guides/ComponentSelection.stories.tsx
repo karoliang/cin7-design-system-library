@@ -51,7 +51,7 @@ import {
   ImportIcon,
   RefreshIcon,
   CheckIcon,
-  AlertMajorIcon,
+  AlertIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -128,7 +128,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={AlertMajorIcon} size="large" />
+            <Icon source={AlertIcon} size="large" />
             <Text variant="headingMd" as="h3">User Feedback</Text>
             <Text>Banner vs Toast vs CalloutCard</Text>
             <Badge tone="info">3 Methods</Badge>

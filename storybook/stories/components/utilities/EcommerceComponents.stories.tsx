@@ -22,22 +22,22 @@ import {
   Scrollable,
 } from '@shopify/polaris';
 import {
-  HeartMinor,
-  StarFilledMinor,
-  StarOutlineMinor,
-  CartMajor,
-  PackageMajor,
-  CheckmarkMinor,
-  XMarkMinor,
-  PlusMinor,
-  MinusMinor,
-  CreditCardMajor,
-  TruckMinor,
-  ReturnMajor,
-  SecurityMajor,
-  ClockMajor,
-  AlertMinor,
-  InfoMinor,
+  HeartIcon,
+  StarFilledIcon,
+  StarOutlineIcon,
+  CartIcon,
+  PackageIcon,
+  CheckmarkIcon,
+  XMarkIcon,
+  PlusIcon,
+  MinusIcon,
+  CreditCardIcon,
+  TruckIcon,
+  ReturnIcon,
+  SecurityIcon,
+  ClockIcon,
+  AlertIcon,
+  InfoIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
@@ -148,7 +148,7 @@ const StarRating = ({ rating, size = 'small' }: { rating: number; size?: 'small'
     return (
       <Icon
         key={i}
-        source={filled ? StarFilledMinor : StarOutlineMinor}
+        source={filled ? StarFilledIcon : StarOutlineIcon}
         tone={filled ? 'text' : 'subdued'}
       />
     );
@@ -247,7 +247,7 @@ const ProductShowcase = ({ product, showQuickActions = true, showReviews = true 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
                   <Button
                     size="small"
-                    icon={MinusMinor}
+                    icon={MinusIcon}
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     disabled={quantity <= 1}
                   />
@@ -262,7 +262,7 @@ const ProductShowcase = ({ product, showQuickActions = true, showReviews = true 
                   />
                   <Button
                     size="small"
-                    icon={PlusMinor}
+                    icon={PlusIcon}
                     onClick={() => setQuantity(Math.min(product.inventory, quantity + 1))}
                     disabled={quantity >= product.inventory}
                   />
@@ -276,13 +276,13 @@ const ProductShowcase = ({ product, showQuickActions = true, showReviews = true 
               <Button
                 primary
                 size="large"
-                icon={CartMajor}
+                icon={CartIcon}
                 disabled={product.status === 'out-of-stock'}
                 fullWidth
               >
                 {product.status === 'out-of-stock' ? 'Out of Stock' : 'Add to Cart'}
               </Button>
-              <Button size="large" icon={HeartMinor} variant="plain" />
+              <Button size="large" icon={HeartIcon} variant="plain" />
             </div>
           )}
         </div>
@@ -329,18 +329,18 @@ const ShoppingCart = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Button
                   size="small"
-                  icon={MinusMinor}
+                  icon={MinusIcon}
                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
                 />
                 <Text variant="bodyMd">{item.quantity}</Text>
                 <Button
                   size="small"
-                  icon={PlusMinor}
+                  icon={PlusIcon}
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
                 />
                 <Button
                   size="small"
-                  icon={XMarkMinor}
+                  icon={XMarkIcon}
                   onClick={() => updateQuantity(item.id, 0)}
                   tone="critical"
                 />
@@ -459,14 +459,14 @@ const CheckoutFlow = () => {
             <div>
               <Text variant="headingMd" as="h2">Payment Information</Text>
               <BlockStack gap="400" style={{ marginTop: '16px' }}>
-                <TextField label="Card Number" prefix={<Icon source={CreditCardMajor} />} />
+                <TextField label="Card Number" prefix={<Icon source={CreditCardIcon} />} />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <TextField label="Expiry Date" placeholder="MM/YY" />
                   <TextField label="CVV" />
                 </div>
                 <TextField label="Name on Card" />
 
-                <Banner status="info" icon={SecurityMajor}>
+                <Banner status="info" icon={SecurityIcon}>
                   <Text variant="bodySm">Your payment information is secure and encrypted</Text>
                 </Banner>
 
@@ -496,10 +496,10 @@ const CheckoutFlow = () => {
 
               <div style={{ marginTop: '16px' }}>
                 <Text variant="bodySm" tone="subdued">
-                  <Icon source={TruckMinor} /> Free shipping on orders over $50
+                  <Icon source={TruckIcon} /> Free shipping on orders over $50
                 </Text>
                 <Text variant="bodySm" tone="subdued">
-                  <Icon source={ReturnMajor} /> 30-day return policy
+                  <Icon source={ReturnIcon} /> 30-day return policy
                 </Text>
               </div>
 

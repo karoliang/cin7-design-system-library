@@ -92,9 +92,9 @@ export const Default: Story = {
         >
           <ActionList
             items={[
-              { content: 'Import file', icon: 'ImportMajor' },
-              { content: 'Export file', icon: 'ExportMajor' },
-              { content: 'Download CSV', icon: 'DownloadMajor' },
+              { content: 'Import file', icon: 'ImportIcon' },
+              { content: 'Export file', icon: 'ExportIcon' },
+              { content: 'Download CSV', icon: 'DownloadIcon' },
             ]}
           />
         </Popover>
@@ -272,22 +272,22 @@ export const WithActionList: Story = {
             items={[
               {
                 content: 'View product details',
-                icon: 'ViewMinor',
+                icon: 'ViewIcon',
                 onAction: toggleActive,
               },
               {
                 content: 'Edit product',
-                icon: 'EditMinor',
+                icon: 'EditIcon',
                 onAction: toggleActive,
               },
               {
                 content: 'Duplicate product',
-                icon: 'DuplicateMinor',
+                icon: 'DuplicateIcon',
                 onAction: toggleActive,
               },
               {
                 content: 'Delete product',
-                icon: 'DeleteMinor',
+                icon: 'DeleteIcon',
                 destructive: true,
                 onAction: toggleActive,
               },
@@ -510,10 +510,10 @@ export const InteractiveExamples: Story = {
           >
             <ActionList
               items={[
-                { content: 'Copy link', icon: 'LinkMinor', onAction: () => handleAction('Copy link') },
-                { content: 'Email', icon: 'EmailMajor', onAction: () => handleAction('Email') },
-                { content: 'Facebook', icon: 'FacebookMajor', onAction: () => handleAction('Facebook') },
-                { content: 'Twitter', icon: 'TwitterMajor', onAction: () => handleAction('Twitter') },
+                { content: 'Copy link', icon: 'LinkIcon', onAction: () => handleAction('Copy link') },
+                { content: 'Email', icon: 'EmailIcon', onAction: () => handleAction('Email') },
+                { content: 'Facebook', icon: 'FacebookIcon', onAction: () => handleAction('Facebook') },
+                { content: 'Twitter', icon: 'TwitterIcon', onAction: () => handleAction('Twitter') },
               ]}
             />
           </Popover>
@@ -561,10 +561,10 @@ export const InteractiveExamples: Story = {
           >
             <ActionList
               items={[
-                { content: 'View details', icon: 'ViewMinor', onAction: () => handleAction('View details') },
-                { content: 'Edit', icon: 'EditMinor', onAction: () => handleAction('Edit') },
-                { content: 'Duplicate', icon: 'DuplicateMinor', onAction: () => handleAction('Duplicate') },
-                { content: 'Delete', icon: 'DeleteMinor', destructive: true, onAction: () => handleAction('Delete') },
+                { content: 'View details', icon: 'ViewIcon', onAction: () => handleAction('View details') },
+                { content: 'Edit', icon: 'EditIcon', onAction: () => handleAction('Edit') },
+                { content: 'Duplicate', icon: 'DuplicateIcon', onAction: () => handleAction('Duplicate') },
+                { content: 'Delete', icon: 'DeleteIcon', destructive: true, onAction: () => handleAction('Delete') },
               ]}
             />
           </Popover>

@@ -21,9 +21,9 @@ import {
   CustomersIcon,
   AnalyticsIcon,
   SettingsIcon,
-  LogOutMinor,
-  QuestionMarkMajor,
-  NotificationMajor,
+  LogOutIcon,
+  QuestionMarkIcon,
+  NotificationIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
@@ -137,8 +137,8 @@ const userMenu = [
   {
     items: [
       { content: 'Account settings', icon: SettingsIcon },
-      { content: 'Support', icon: QuestionMarkMajor },
-      { content: 'Logout', icon: LogOutMinor },
+      { content: 'Support', icon: QuestionMarkIcon },
+      { content: 'Logout', icon: LogOutIcon },
     ],
   },
 ];
@@ -337,7 +337,7 @@ export const WithNotifications: Story = {
 
     const globalActions = [
       {
-        icon: NotificationMajor,
+        icon: NotificationIcon,
         badge: { content: notificationCount, status: 'critical' },
         onClick: () => {
           setNotificationCount(0);
@@ -345,7 +345,7 @@ export const WithNotifications: Story = {
         },
       },
       {
-        icon: QuestionMarkMajor,
+        icon: QuestionMarkIcon,
         onClick: () => console.log('Help clicked'),
       },
     ];

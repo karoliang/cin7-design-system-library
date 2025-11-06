@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MediaCard, Badge, Button, Text, InlineStack, Icon, Avatar } from '@shopify/polaris';
 import {
-  PlayMinor,
-  ExternalSmallMinor,
-  HeartMinor,
-  BookmarkMinor,
-  ShareMinor,
-  ClockMinor,
-  ViewMinor,
-  DownloadMinor,
+  PlayIcon,
+  ExternalIcon,
+  HeartIcon,
+  BookmarkIcon,
+  ShareIcon,
+  ClockIcon,
+  ViewIcon,
+  DownloadIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -95,7 +95,7 @@ export const VideoCard: Story = {
         primaryAction={{
           content: 'Watch now',
           onAction: () => console.log('Watch video'),
-          icon: PlayMinor,
+          icon: PlayIcon,
         }}
         secondaryAction={{
           content: 'More videos',
@@ -118,12 +118,12 @@ export const ArticleCard: Story = {
           primaryAction={{
             content: 'Read article',
             onAction: () => console.log('Read article'),
-            icon: ExternalSmallMinor,
+            icon: ExternalIcon,
           }}
           secondaryAction={{
             content: isBookmarked ? 'Bookmarked' : 'Bookmark',
             onAction: () => setIsBookmarked(!isBookmarked),
-            icon: BookmarkMinor,
+            icon: BookmarkIcon,
             tone: isBookmarked ? 'success' : undefined,
           }}
         />
@@ -224,7 +224,7 @@ export const LandscapeMode: Story = {
           secondaryAction={{
             content: 'Download',
             onAction: () => console.log('Download'),
-            icon: DownloadMinor,
+            icon: DownloadIcon,
           }}
         />
 
@@ -238,7 +238,7 @@ export const LandscapeMode: Story = {
           secondaryAction={{
             content: 'Share',
             onAction: () => console.log('Share'),
-            icon: ShareMinor,
+            icon: ShareIcon,
           }}
         />
       </div>
@@ -265,11 +265,11 @@ export const WithMetadata: Story = {
           <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #e1e1e1' }}>
             <InlineStack gap="200" wrap={false}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Icon source={ClockMinor} color="subdued" />
+                <Icon source={ClockIcon} color="subdued" />
                 <Text variant="bodySm" color="subdued">5 min read</Text>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Icon source={ViewMinor} color="subdued" />
+                <Icon source={ViewIcon} color="subdued" />
                 <Text variant="bodySm" color="subdued">12.5k views</Text>
               </div>
               <Badge status="success">Updated</Badge>
@@ -375,7 +375,7 @@ export const InteractiveCard: Story = {
                   color: isLiked ? '#d72c0d' : '#637381',
                 }}
               >
-                <Icon source={HeartMinor} color={isLiked ? 'critical' : 'subdued'} />
+                <Icon source={HeartIcon} color={isLiked ? 'critical' : 'subdued'} />
                 <Text variant="bodySm">{likeCount}</Text>
               </button>
               <button
@@ -391,7 +391,7 @@ export const InteractiveCard: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={ShareMinor} color="subdued" />
+                <Icon source={ShareIcon} color="subdued" />
                 <Text variant="bodySm">Share</Text>
               </button>
               <button
@@ -407,7 +407,7 @@ export const InteractiveCard: Story = {
                   cursor: 'pointer',
                 }}
               >
-                <Icon source={BookmarkMinor} color="subdued" />
+                <Icon source={BookmarkIcon} color="subdued" />
                 <Text variant="bodySm">Save</Text>
               </button>
             </InlineStack>
@@ -467,7 +467,7 @@ export const EducationalContent: Story = {
               <div style={{ marginTop: '12px' }}>
                 <InlineStack gap="200">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Icon source={ClockMinor} color="subdued" />
+                    <Icon source={ClockIcon} color="subdued" />
                     <Text variant="bodySm" color="subdued">{course.duration}</Text>
                   </div>
                   <Badge tone="info">{course.level}</Badge>

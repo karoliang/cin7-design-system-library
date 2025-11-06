@@ -141,7 +141,7 @@ export const InteractiveHelp: Story = {
       general: {
         text: 'Get help with basic store setup and navigation.',
         link: 'Getting started guide',
-        icon: QuestionMarkMajor
+        icon: QuestionMarkIcon
       },
       billing: {
         text: 'Questions about your subscription, invoices, or payment methods?',

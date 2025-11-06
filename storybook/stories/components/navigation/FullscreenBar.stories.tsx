@@ -19,7 +19,7 @@ import {
   EditIcon,
   ShareIcon,
   PrintIcon,
-  LogOutMinor,
+  LogOutIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 
@@ -105,7 +105,7 @@ export const Default: Story = {
           { content: 'Profile settings', icon: EditIcon },
           { content: 'Share', icon: ShareIcon },
           { content: 'Print', icon: PrintIcon },
-          { content: 'Logout', icon: LogOutMinor },
+          { content: 'Logout', icon: LogOutIcon },
         ],
       },
     ];
@@ -518,7 +518,7 @@ export const MobileOptimized: Story = {
           { content: 'Orders', icon: ViewIcon },
           { content: 'Customers', icon: EditIcon },
           { content: 'Settings', icon: ViewIcon },
-          { content: 'Logout', icon: LogOutMinor },
+          { content: 'Logout', icon: LogOutIcon },
         ],
       },
     ];

@@ -833,7 +833,7 @@ export const DatePickerIntegration: Story = {
         value={inputValue}
         placeholder="Select a date..."
         autoComplete="off"
-        prefix={<Icon source={CalendarMajor} />}
+        prefix={<Icon source={CalendarIcon} />}
         onFocus={() => setPopoverActive(true)}
       />
     );

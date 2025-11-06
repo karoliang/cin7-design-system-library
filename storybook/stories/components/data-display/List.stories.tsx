@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { List, Button, Badge, Icon, InlineStack, Text } from '@shopify/polaris';
 import {
-  CircleTickMinor,
-  AlertMinor,
-  InfoMinor,
-  ExternalSmallMinor,
-  MobileMajor,
-  NoteMinor,
-  ProductsMajor,
-  CustomersMajor,
-  AnalyticsMajor
+  CheckCircleIcon,
+  AlertIcon,
+  InfoIcon,
+  ExternalIcon,
+  MobileIcon,
+  NoteIcon,
+  ProductsIcon,
+  CustomersIcon,
+  AnalyticsIcon
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -84,10 +84,10 @@ export const WithIcons: Story = {
   render: () => (
     <div style={{ width: '400px' }}>
       <List>
-        <List.Item icon={CircleTickMinor}>Task completed successfully</List.Item>
-        <List.Item icon={AlertMinor}>Warning: Review this item</List.Item>
-        <List.Item icon={InfoMinor}>Additional information available</List.Item>
-        <List.Item icon={ExternalSmallMinor}>External link to resource</List.Item>
+        <List.Item icon={CheckCircleIcon}>Task completed successfully</List.Item>
+        <List.Item icon={AlertIcon}>Warning: Review this item</List.Item>
+        <List.Item icon={InfoIcon}>Additional information available</List.Item>
+        <List.Item icon={ExternalIcon}>External link to resource</List.Item>
       </List>
     </div>
   ),
@@ -127,10 +127,10 @@ export const FeatureList: Story = {
         Premium Features
       </h3>
       <List gap="loose">
-        <List.Item icon={AnalyticsMajor}>Advanced analytics dashboard</List.Item>
-        <List.Item icon={ProductsMajor}>Unlimited product listings</List.Item>
-        <List.Item icon={CustomersMajor}>Customer segmentation tools</List.Item>
-        <List.Item icon={MobileMajor}>Mobile app integration</List.Item>
+        <List.Item icon={AnalyticsIcon}>Advanced analytics dashboard</List.Item>
+        <List.Item icon={ProductsIcon}>Unlimited product listings</List.Item>
+        <List.Item icon={CustomersIcon}>Customer segmentation tools</List.Item>
+        <List.Item icon={MobileIcon}>Mobile app integration</List.Item>
       </List>
     </div>
   ),
@@ -211,10 +211,10 @@ export const NavigationList: Story = {
     const [activeItem, setActiveItem] = useState('products');
 
     const navItems = [
-      { id: 'products', label: 'Products', icon: ProductsMajor, count: 42 },
-      { id: 'customers', label: 'Customers', icon: CustomersMajor, count: 128 },
-      { id: 'analytics', label: 'Analytics', icon: AnalyticsMajor, count: null },
-      { id: 'settings', label: 'Settings', icon: NoteMinor, count: null },
+      { id: 'products', label: 'Products', icon: ProductsIcon, count: 42 },
+      { id: 'customers', label: 'Customers', icon: CustomersIcon, count: 128 },
+      { id: 'analytics', label: 'Analytics', icon: AnalyticsIcon, count: null },
+      { id: 'settings', label: 'Settings', icon: NoteIcon, count: null },
     ];
 
     return (
@@ -331,7 +331,7 @@ export const ChecklistList: Story = {
         <div style={{ marginTop: '20px', padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
           {requiredComplete ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#2a6f3a' }}>
-              <Icon source={CircleTickMinor} color="success" />
+              <Icon source={CheckCircleIcon} color="success" />
               <span>All required setup complete!</span>
             </div>
           ) : (
