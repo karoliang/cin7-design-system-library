@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/Thumbnail',
+  title: 'Components/Data Display/Thumbnail',
   component: Thumbnail,
   parameters: {
     layout: 'centered',

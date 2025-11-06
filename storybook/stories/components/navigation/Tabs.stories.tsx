@@ -3,7 +3,7 @@ import { Tabs } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Tabs',
+  title: 'Components/Navigation/Tabs',
   component: Tabs,
   parameters: {
     layout: 'centered',

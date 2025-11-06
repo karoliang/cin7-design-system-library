@@ -3,7 +3,7 @@ import { EmptyState, Button, Card, InlineStack, BlockStack, Image } from '@shopi
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/EmptyState',
+  title: 'Components/Feedback/EmptyState',
   component: EmptyState,
   parameters: {
     layout: 'centered',

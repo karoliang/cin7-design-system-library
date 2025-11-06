@@ -3,7 +3,7 @@ import { InlineStack, Card, Button, Badge, Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/InlineStack',
+  title: 'Components/Layout/InlineStack',
   component: InlineStack,
   parameters: {
     layout: 'centered',

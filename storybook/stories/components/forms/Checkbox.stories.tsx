@@ -3,7 +3,7 @@ import { Checkbox, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/Checkbox',
+  title: 'Components/Forms/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'centered',

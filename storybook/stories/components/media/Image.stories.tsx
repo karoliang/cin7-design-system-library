@@ -3,7 +3,7 @@ import { Image, Card, Text, InlineStack, BlockStack, Button } from '@shopify/pol
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Utilities/Image',
+  title: 'Components/Utilities/Image',
   component: Image,
   parameters: {
     layout: 'centered',

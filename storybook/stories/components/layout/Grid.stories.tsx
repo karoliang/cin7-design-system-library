@@ -3,7 +3,7 @@ import { Grid, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Grid',
+  title: 'Components/Layout/Grid',
   component: Grid,
   parameters: {
     layout: 'centered',

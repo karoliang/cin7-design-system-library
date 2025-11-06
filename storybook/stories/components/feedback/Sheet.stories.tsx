@@ -3,7 +3,7 @@ import { Sheet, Button, Text, FormLayout, TextField, Card, Badge } from '@shopif
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/Sheet',
+  title: 'Components/Overlays/Sheet',
   component: Sheet,
   parameters: {
     layout: 'centered',

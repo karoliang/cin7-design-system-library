@@ -3,7 +3,7 @@ import { Page, Layout, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Page',
+  title: 'Components/Layout/Page',
   component: Page,
   parameters: {
     layout: 'fullscreen',

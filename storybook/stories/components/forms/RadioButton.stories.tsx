@@ -3,7 +3,7 @@ import { RadioButton, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/RadioButton',
+  title: 'Components/Forms/RadioButton',
   component: RadioButton,
   parameters: {
     layout: 'centered',

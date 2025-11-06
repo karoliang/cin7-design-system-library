@@ -3,7 +3,7 @@ import { Pagination } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Pagination',
+  title: 'Components/Navigation/Pagination',
   component: Pagination,
   parameters: {
     layout: 'centered',

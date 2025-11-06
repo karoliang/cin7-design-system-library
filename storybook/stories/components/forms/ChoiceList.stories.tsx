@@ -3,7 +3,7 @@ import { ChoiceList, BlockStack, InlineStack, Text, Card } from '@shopify/polari
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/ChoiceList',
+  title: 'Components/Forms/ChoiceList',
   component: ChoiceList,
   parameters: {
     layout: 'centered',

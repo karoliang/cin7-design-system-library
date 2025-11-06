@@ -3,7 +3,7 @@ import { BlockStack, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/BlockStack',
+  title: 'Components/Layout/BlockStack',
   component: BlockStack,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { Navigation } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Navigation',
+  title: 'Components/Navigation/Navigation',
   component: Navigation,
   parameters: {
     layout: 'fullscreen',

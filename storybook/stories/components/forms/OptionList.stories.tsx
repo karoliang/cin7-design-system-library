@@ -4,7 +4,7 @@ import { PersonIcon, ProductIcon, OrderIcon, SettingsIcon, DiscountIcon, Shippin
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Selection/OptionList',
+  title: 'Components/Selection/OptionList',
   component: OptionList,
   parameters: {
     layout: 'centered',

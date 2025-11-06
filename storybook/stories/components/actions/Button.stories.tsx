@@ -3,7 +3,7 @@ import { Button } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/Button',
+  title: 'Components/Forms/Button',
   component: Button,
   parameters: {
     layout: 'centered',

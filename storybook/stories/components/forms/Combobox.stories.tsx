@@ -4,7 +4,7 @@ import { SearchIcon, PlusIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/Combobox',
+  title: 'Components/Forms/Combobox',
   component: Combobox,
   parameters: {
     layout: 'centered',

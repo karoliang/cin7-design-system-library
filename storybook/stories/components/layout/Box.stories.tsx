@@ -3,7 +3,7 @@ import { Box, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Box',
+  title: 'Components/Layout/Box',
   component: Box,
   parameters: {
     layout: 'centered',

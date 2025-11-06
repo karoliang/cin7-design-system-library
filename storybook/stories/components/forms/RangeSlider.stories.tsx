@@ -3,7 +3,7 @@ import { RangeSlider, Card, BlockStack, InlineStack, Text, Badge, Button } from 
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/RangeSlider',
+  title: 'Components/Forms/RangeSlider',
   component: RangeSlider,
   parameters: {
     layout: 'centered',

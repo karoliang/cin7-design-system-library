@@ -17,7 +17,7 @@ import {
 import { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Providers/AppProvider',
+  title: 'Components/Providers/AppProvider',
   component: AppProvider,
   parameters: {
     layout: 'centered',

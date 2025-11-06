@@ -3,7 +3,7 @@ import { ButtonGroup, Button, BlockStack, InlineStack, Text, Card } from '@shopi
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/ButtonGroup',
+  title: 'Components/Forms/ButtonGroup',
   component: ButtonGroup,
   parameters: {
     layout: 'centered',

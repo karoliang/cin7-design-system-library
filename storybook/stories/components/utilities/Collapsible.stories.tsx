@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Utilities/Collapsible',
+  title: 'Components/Utilities/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',

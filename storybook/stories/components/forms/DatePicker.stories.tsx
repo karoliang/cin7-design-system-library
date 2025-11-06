@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import en from '@shopify/polaris/locales/en.json';
 
 const meta = {
-  title: 'Polaris/Forms/DatePicker',
+  title: 'Components/Forms/DatePicker',
   component: DatePicker,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { TextField } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/TextField',
+  title: 'Components/Forms/TextField',
   component: TextField,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { Breadcrumbs } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Breadcrumbs',
+  title: 'Components/Navigation/Breadcrumbs',
   component: Breadcrumbs,
   parameters: {
     layout: 'centered',

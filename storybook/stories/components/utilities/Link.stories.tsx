@@ -3,7 +3,7 @@ import { Link } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Link',
+  title: 'Components/Navigation/Link',
   component: Link,
   parameters: {
     layout: 'centered',

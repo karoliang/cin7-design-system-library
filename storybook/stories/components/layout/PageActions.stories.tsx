@@ -3,7 +3,7 @@ import { PageActions, Card, BlockStack, InlineStack, Text, Button, Badge } from 
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/PageActions',
+  title: 'Components/Layout/PageActions',
   component: PageActions,
   parameters: {
     layout: 'centered',

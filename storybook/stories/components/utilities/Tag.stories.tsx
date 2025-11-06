@@ -9,7 +9,7 @@ import {
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Utilities/Tag',
+  title: 'Components/Utilities/Tag',
   component: Tag,
   parameters: {
     layout: 'centered',

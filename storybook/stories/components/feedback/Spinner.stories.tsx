@@ -3,7 +3,7 @@ import { Spinner, Card, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/Spinner',
+  title: 'Components/Feedback/Spinner',
   component: Spinner,
   parameters: {
     layout: 'centered',

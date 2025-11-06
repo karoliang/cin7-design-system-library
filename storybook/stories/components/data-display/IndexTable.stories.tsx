@@ -23,7 +23,7 @@ import {
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/IndexTable',
+  title: 'Components/Data Display/IndexTable',
   component: IndexTable,
   parameters: {
     layout: 'centered',

@@ -4,7 +4,7 @@ import { PersonIcon, ProductIcon, OrderIcon, NoteIcon, ViewIcon, EditIcon, Delet
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data/ResourceItem',
+  title: 'Components/Data/ResourceItem',
   component: ResourceItem,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { ExceptionList, Card, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/ExceptionList',
+  title: 'Components/Feedback/ExceptionList',
   component: ExceptionList,
   parameters: {
     layout: 'centered',

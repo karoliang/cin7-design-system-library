@@ -3,7 +3,7 @@ import { DropZone, BlockStack, InlineStack, Text, Card, Thumbnail, Button } from
 import { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/DropZone',
+  title: 'Components/Forms/DropZone',
   component: DropZone,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { Loading, Button, Card, Text, BlockStack, InlineStack, Badge } from '@sh
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/Loading',
+  title: 'Components/Feedback/Loading',
   component: Loading,
   parameters: {
     layout: 'centered',

@@ -4,7 +4,7 @@ import { PersonIcon, PackageIcon, CashDollarIcon, ClockIcon, LocationIcon, Email
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/DescriptionList',
+  title: 'Components/Layout/DescriptionList',
   component: DescriptionList,
   parameters: {
     layout: 'centered',

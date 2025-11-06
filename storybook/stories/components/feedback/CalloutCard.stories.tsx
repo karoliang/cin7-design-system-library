@@ -3,7 +3,7 @@ import { CalloutCard, Button, Text } from '@shopify/polaris';
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/CalloutCard',
+  title: 'Components/Feedback/CalloutCard',
   component: CalloutCard,
   parameters: {
     layout: 'centered',

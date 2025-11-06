@@ -67,7 +67,7 @@ const CustomAlphaStack: React.FC<{
 };
 
 const meta = {
-  title: 'Polaris/Layout/AlphaStack',
+  title: 'Components/Layout/AlphaStack',
   component: CustomAlphaStack,
   parameters: {
     layout: 'centered',

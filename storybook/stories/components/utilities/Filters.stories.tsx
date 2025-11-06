@@ -4,7 +4,7 @@ import { SearchIcon, CalendarIcon, FilterIcon, XSmallIcon } from '@shopify/polar
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/Filters',
+  title: 'Components/Navigation/Filters',
   component: Filters,
   parameters: {
     layout: 'centered',

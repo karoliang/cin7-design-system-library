@@ -20,7 +20,7 @@ import { SearchIcon, FilterIcon, SortAscendingIcon } from '@shopify/polaris-icon
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Tables/IndexFilters',
+  title: 'Components/Tables/IndexFilters',
   component: IndexFilters,
   parameters: {
     layout: 'full',

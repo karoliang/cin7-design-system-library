@@ -3,7 +3,7 @@ import { Toast, Button, Frame } from '@shopify/polaris';
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/Toast',
+  title: 'Components/Feedback/Toast',
   component: Toast,
   parameters: {
     layout: 'centered',

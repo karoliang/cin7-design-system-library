@@ -3,7 +3,7 @@ import { Bleed, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Bleed',
+  title: 'Components/Layout/Bleed',
   component: Bleed,
   parameters: {
     layout: 'centered',

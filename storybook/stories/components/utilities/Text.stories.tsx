@@ -3,7 +3,7 @@ import { Text, Card, Badge, Button } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Typography/Text',
+  title: 'Components/Typography/Text',
   component: Text,
   parameters: {
     layout: 'centered',

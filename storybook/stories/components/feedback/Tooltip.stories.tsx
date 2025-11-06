@@ -3,7 +3,7 @@ import { Tooltip, Button, Text, Icon, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/Tooltip',
+  title: 'Components/Overlays/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

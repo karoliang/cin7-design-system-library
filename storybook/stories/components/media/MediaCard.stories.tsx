@@ -13,7 +13,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/MediaCard',
+  title: 'Components/Data Display/MediaCard',
   component: MediaCard,
   parameters: {
     layout: 'centered',

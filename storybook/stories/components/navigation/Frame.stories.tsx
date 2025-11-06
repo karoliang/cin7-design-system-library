@@ -28,7 +28,7 @@ import {
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Frame',
+  title: 'Components/Layout/Frame',
   component: Frame,
   parameters: {
     layout: 'fullscreen',

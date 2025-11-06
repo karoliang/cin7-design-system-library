@@ -92,7 +92,7 @@ const CustomBulkActions: React.FC<{
 };
 
 const meta = {
-  title: 'Polaris/Actions/BulkActions',
+  title: 'Components/Actions/BulkActions',
   component: CustomBulkActions,
   parameters: {
     layout: 'centered',

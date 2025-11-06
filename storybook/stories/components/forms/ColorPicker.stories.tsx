@@ -3,7 +3,7 @@ import { ColorPicker, Card, InlineStack, BlockStack, Button, TextField, Label, P
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/ColorPicker',
+  title: 'Components/Forms/ColorPicker',
   component: ColorPicker,
   parameters: {
     layout: 'centered',

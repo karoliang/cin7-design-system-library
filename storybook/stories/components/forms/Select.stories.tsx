@@ -3,7 +3,7 @@ import { Select, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/Select',
+  title: 'Components/Forms/Select',
   component: Select,
   parameters: {
     layout: 'centered',

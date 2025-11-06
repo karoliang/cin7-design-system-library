@@ -10,7 +10,7 @@ const CoreUtilitiesShowcase = () => (
 );
 
 const meta = {
-  title: 'Foundation/Core Utilities',
+  title: 'Cin7 DSL/Foundation/Core Utilities',
   component: CoreUtilitiesShowcase,
   parameters: {
     layout: 'padded',

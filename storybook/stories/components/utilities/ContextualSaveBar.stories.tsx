@@ -14,7 +14,7 @@ import { SaveIcon, XSmallIcon } from '@shopify/polaris-icons';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/ContextualSaveBar',
+  title: 'Components/Forms/ContextualSaveBar',
   component: ContextualSaveBar,
   parameters: {
     layout: 'centered',

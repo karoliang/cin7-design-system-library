@@ -4,7 +4,7 @@ import { ChevronDownIcon, ChevronUpIcon, ViewIcon, EditIcon, DeleteIcon } from '
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/DataTable',
+  title: 'Components/Data Display/DataTable',
   component: DataTable,
   parameters: {
     layout: 'centered',

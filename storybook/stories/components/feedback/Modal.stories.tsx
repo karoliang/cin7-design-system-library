@@ -3,7 +3,7 @@ import { Modal, Button, Text, TextField, FormLayout } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/Modal',
+  title: 'Components/Overlays/Modal',
   component: Modal,
   parameters: {
     layout: 'centered',

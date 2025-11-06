@@ -3,7 +3,7 @@ import { Divider, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/Divider',
+  title: 'Components/Layout/Divider',
   component: Divider,
   parameters: {
     layout: 'centered',

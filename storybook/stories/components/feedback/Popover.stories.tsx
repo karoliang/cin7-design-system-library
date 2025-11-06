@@ -3,7 +3,7 @@ import { Popover, Button, Text, ActionList, FormLayout, TextField } from '@shopi
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/Popover',
+  title: 'Components/Overlays/Popover',
   component: Popover,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { FormLayout, TextField, Select, Checkbox, Button, Card, BlockStack, Inli
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/FormLayout',
+  title: 'Components/Forms/FormLayout',
   component: FormLayout,
   parameters: {
     layout: 'centered',

@@ -4,7 +4,7 @@ import { MenuHorizontalIcon, EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon, V
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Actions/ActionMenu',
+  title: 'Components/Actions/ActionMenu',
   component: ActionMenu,
   parameters: {
     layout: 'centered',

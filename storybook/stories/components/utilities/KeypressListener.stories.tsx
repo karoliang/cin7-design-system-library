@@ -3,7 +3,7 @@ import { KeypressListener, Button, Text, Card, Badge, Toast } from '@shopify/pol
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/KeypressListener',
+  title: 'Components/Overlays/KeypressListener',
   component: KeypressListener,
   parameters: {
     layout: 'centered',

@@ -3,7 +3,7 @@ import { Banner, Button, Text } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/Banner',
+  title: 'Components/Feedback/Banner',
   component: Banner,
   parameters: {
     layout: 'centered',

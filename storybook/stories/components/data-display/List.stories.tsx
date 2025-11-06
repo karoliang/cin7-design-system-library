@@ -14,7 +14,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/List',
+  title: 'Components/Data Display/List',
   component: List,
   parameters: {
     layout: 'centered',

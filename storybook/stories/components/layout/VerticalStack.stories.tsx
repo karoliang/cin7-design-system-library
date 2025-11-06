@@ -45,7 +45,7 @@ const CustomVerticalStack: React.FC<{
 };
 
 const meta = {
-  title: 'Polaris/Structure/VerticalStack',
+  title: 'Components/Structure/VerticalStack',
   component: CustomVerticalStack,
   parameters: {
     layout: 'centered',

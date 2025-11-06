@@ -4,7 +4,7 @@ import { SearchIcon, SettingsIcon, ExportIcon, DuplicateIcon, DeleteIcon, EditIc
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/ActionList',
+  title: 'Components/Navigation/ActionList',
   component: ActionList,
   parameters: {
     layout: 'centered',

@@ -14,7 +14,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/VideoThumbnail',
+  title: 'Components/Data Display/VideoThumbnail',
   component: VideoThumbnail,
   parameters: {
     layout: 'centered',

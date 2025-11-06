@@ -3,7 +3,7 @@ import { TopBar } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Navigation/TopBar',
+  title: 'Components/Navigation/TopBar',
   component: TopBar,
   parameters: {
     layout: 'fullscreen',

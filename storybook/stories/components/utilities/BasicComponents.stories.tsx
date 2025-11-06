@@ -12,7 +12,7 @@ const BasicComponentsShowcase = () => (
 );
 
 const meta = {
-  title: 'Polaris/Basic Components',
+  title: 'Components/Basic Components',
   component: BasicComponentsShowcase,
   parameters: {
     layout: 'centered',

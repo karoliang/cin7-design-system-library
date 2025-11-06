@@ -3,7 +3,7 @@ import { KeyboardKey, Card, BlockStack, InlineStack, Text, Button, Badge } from 
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Typography/KeyboardKey',
+  title: 'Components/Typography/KeyboardKey',
   component: KeyboardKey,
   parameters: {
     layout: 'centered',

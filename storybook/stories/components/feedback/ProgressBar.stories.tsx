@@ -3,7 +3,7 @@ import { ProgressBar, Card, Button, Text } from '@shopify/polaris';
 import React, { useState, useEffect } from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/ProgressBar',
+  title: 'Components/Feedback/ProgressBar',
   component: ProgressBar,
   parameters: {
     layout: 'centered',

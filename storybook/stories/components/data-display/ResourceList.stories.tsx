@@ -25,7 +25,7 @@ import {
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/ResourceList',
+  title: 'Components/Data Display/ResourceList',
   component: ResourceList,
   parameters: {
     layout: 'centered',

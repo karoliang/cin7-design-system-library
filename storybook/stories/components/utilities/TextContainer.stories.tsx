@@ -3,7 +3,7 @@ import { TextContainer } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Structure/TextContainer',
+  title: 'Components/Structure/TextContainer',
   component: TextContainer,
   parameters: {
     layout: 'centered',

@@ -4,7 +4,7 @@ import { SearchIcon, CalendarIcon, PersonIcon, ProductIcon, OrderIcon } from '@s
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 
 const meta = {
-  title: 'Polaris/Forms/Autocomplete',
+  title: 'Components/Forms/Autocomplete',
   component: Autocomplete,
   parameters: {
     layout: 'centered',

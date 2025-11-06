@@ -3,7 +3,7 @@ import { Scrollable, Button, Text, Card, Badge, Avatar } from '@shopify/polaris'
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Overlays/Scrollable',
+  title: 'Components/Overlays/Scrollable',
   component: Scrollable,
   parameters: {
     layout: 'centered',

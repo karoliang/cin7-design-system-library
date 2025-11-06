@@ -4,7 +4,7 @@ import { QuestionCircleIcon, InfoIcon, ExternalIcon } from '@shopify/polaris-ico
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Layout/FooterHelp',
+  title: 'Components/Layout/FooterHelp',
   component: FooterHelp,
   parameters: {
     layout: 'centered',

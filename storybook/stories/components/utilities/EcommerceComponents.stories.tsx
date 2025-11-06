@@ -42,7 +42,7 @@ import {
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Business Components/E-commerce',
+  title: 'Components/E-commerce',
   component: Card,
   parameters: {
     layout: 'centered',

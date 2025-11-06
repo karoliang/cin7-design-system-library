@@ -3,7 +3,7 @@ import { Avatar, Text, InlineStack, Card, Badge } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Data Display/Avatar',
+  title: 'Components/Data Display/Avatar',
   component: Avatar,
   parameters: {
     layout: 'centered',

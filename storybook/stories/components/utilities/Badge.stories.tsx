@@ -3,7 +3,7 @@ import { Badge, Button, InlineStack } from '@shopify/polaris';
 import React from 'react';
 
 const meta = {
-  title: 'Polaris/Feedback/Badge',
+  title: 'Components/Feedback/Badge',
   component: Badge,
   parameters: {
     layout: 'centered',
