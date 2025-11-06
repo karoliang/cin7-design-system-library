@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@shopify/polaris';
 import React from 'react';
-import { MultiLanguageCode } from '../../.storybook/blocks';
+import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Demo/Multi-Language Code',
@@ -10,7 +10,7 @@ const meta = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'This demo showcases the new multi-language code documentation feature. It displays code examples in React, Vanilla JS, ExtJS, and TypeScript for each component variation.',
+        component: 'This demo showcases the new multi-language code documentation feature. Code examples appear as tabs in the addon panel below (alongside Controls and Actions).',
       },
     },
   },
@@ -27,16 +27,12 @@ export const DefaultButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A default button with multi-language implementation examples below.',
+        story: 'A default button with multi-language implementation examples in the addon panels below.',
       },
     },
+    codeVariants: getCodeVariants('button', 'default'),
   },
-  render: (args) => (
-    <div>
-      <Button {...args} />
-      <MultiLanguageCode componentName="button" exampleName="default" />
-    </div>
-  ),
+  render: (args) => <Button {...args} />,
 };
 
 export const PrimaryButton: Story = {
@@ -47,16 +43,12 @@ export const PrimaryButton: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'A primary button variant with implementation examples.',
+        story: 'A primary button variant with implementation examples in the addon panels below.',
       },
     },
+    codeVariants: getCodeVariants('button', 'primary'),
   },
-  render: (args) => (
-    <div>
-      <Button {...args} />
-      <MultiLanguageCode componentName="button" exampleName="primary" />
-    </div>
-  ),
+  render: (args) => <Button {...args} />,
 };
 
 export const MissingExample: Story = {
@@ -67,14 +59,10 @@ export const MissingExample: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'This story demonstrates what happens when code examples are not yet available.',
+        story: 'This story demonstrates what happens when code examples are not yet available. The panels will show an empty state message.',
       },
     },
+    codeVariants: getCodeVariants('button', 'disabled'), // Will return null - demonstrates empty state
   },
-  render: (args) => (
-    <div>
-      <Button {...args} />
-      <MultiLanguageCode componentName="button" exampleName="disabled" />
-    </div>
-  ),
+  render: (args) => <Button {...args} />,
 };

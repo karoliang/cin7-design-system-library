@@ -4,12 +4,14 @@ This directory contains the multi-language code documentation system for Storybo
 
 ## Overview
 
-The multi-language code system allows component stories to display implementation examples in multiple frameworks:
+The multi-language code system displays implementation examples in multiple frameworks as **addon panels** alongside Controls and Actions:
 
 - **React** - Using `@shopify/polaris`
 - **Vanilla JS** - Using `@cin7/vanilla-js`
 - **ExtJS** - Using `@cin7/extjs-adapters`
 - **TypeScript** - Type-safe implementations with full typing
+
+Code examples appear as tabs in the addon panel at the bottom of Storybook, integrated seamlessly with existing Controls and Actions tabs.
 
 ## Components
 
@@ -55,26 +57,22 @@ export const buttonExamples: Record<string, CodeVariant> = {
 3. Provide code for all 4 frameworks
 4. Update the `examples` object in `getCodeVariants()` to include your new component
 
-### 3. `MultiLanguageCode.tsx`
+### 3. Custom Addon Panels
 
-High-level wrapper component for easy use in stories.
+Located in `../.storybook/addons/code-panels/`:
 
-**Usage in Stories:**
-```tsx
-import { MultiLanguageCode } from '../../.storybook/blocks';
+- **`register.tsx`** - Registers 4 addon panels (React, Vanilla JS, ExtJS, TypeScript)
+- **`Panel.tsx`** - Panel component that displays code with syntax highlighting
 
-export const Default: Story = {
-  render: (args) => (
-    <div>
-      <Button {...args} />
-      <MultiLanguageCode
-        componentName="button"
-        exampleName="default"
-      />
-    </div>
-  ),
-};
-```
+**How it works:**
+- Panels are registered with Storybook's addon API
+- Stories pass code via `parameters.codeVariants`
+- Each language gets its own tab alongside Controls/Actions
+- Automatic empty state handling when code is unavailable
+
+### 4. `MultiLanguageCode.tsx` (Deprecated)
+
+**Note:** This component is deprecated in favor of the addon panel approach. It was used to render code in the canvas area but has been replaced by proper addon panels.
 
 ## Quick Start
 
@@ -102,26 +100,28 @@ const examples: Record<string, Record<string, CodeVariant>> = {
 ### Step 2: Use in Story
 
 ```tsx
-import { MultiLanguageCode } from '../../.storybook/blocks';
+import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 export const MyStory: Story = {
-  render: (args) => (
-    <div>
-      <MyComponent {...args} />
-      <MultiLanguageCode
-        componentName="mycomponent"
-        exampleName="default"
-      />
-    </div>
-  ),
+  args: {
+    // Your component args
+  },
+  parameters: {
+    codeVariants: getCodeVariants('mycomponent', 'default'),
+  },
+  render: (args) => <MyComponent {...args} />,
 };
 ```
+
+Code will automatically appear in React, Vanilla JS, ExtJS, and TypeScript tabs in the addon panel.
 
 ### Step 3: View in Storybook
 
 1. Open http://localhost:6006/
 2. Navigate to your story
-3. See tabbed code examples below the component
+3. Look at the addon panel at the bottom
+4. See React, Vanilla JS, ExtJS, and TypeScript tabs alongside Controls and Actions
+5. Click each tab to view framework-specific code
 
 ## Demo
 
