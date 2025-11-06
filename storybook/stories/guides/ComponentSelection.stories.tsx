@@ -27,6 +27,8 @@ import {
   Icon,
   Badge,
   Avatar,
+  Divider,
+  Frame,
 } from '@shopify/polaris';
 import {
   PlusIcon,
@@ -137,7 +139,7 @@ export const Overview: Story = {
 
         <Card>
           <BlockStack gap="200">
-            <Icon source={Navigation} size="large" />
+            <Icon source={HomeIcon} size="large" />
             <Text variant="headingMd" as="h3">Navigation</Text>
             <Text>Tabs vs Navigation vs Breadcrumbs</Text>
             <Badge tone="info">3 Types</Badge>
