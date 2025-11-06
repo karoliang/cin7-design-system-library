@@ -1,10 +1,74 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AlphaStack, Card, Button, Text, Badge } from '@shopify/polaris';
+import { BlockStack, InlineStack, Card, Button, Text, Badge } from '@shopify/polaris';
 import React from 'react';
+
+// Custom AlphaStack component for Polaris v13.9.5 compatibility
+const CustomAlphaStack: React.FC<{
+  children: React.ReactNode;
+  wrap?: boolean;
+  distribution?: 'leading' | 'trailing' | 'center' | 'fill' | 'fillEvenly' | 'equalSpacing';
+  spacing?: 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
+  alignment?: 'leading' | 'trailing' | 'center' | 'fill' | 'baseline';
+  direction?: 'vertical' | 'horizontal';
+  as?: string;
+}> = ({ children, wrap, distribution = 'leading', spacing = 'base', alignment = 'leading', direction = 'vertical', as }) => {
+  const spacingMap = {
+    extraTight: '100',
+    tight: '200',
+    base: '400',
+    loose: '500',
+    extraLoose: '600'
+  };
+
+  const alignMap = {
+    leading: direction === 'vertical' ? 'start' : 'start',
+    trailing: direction === 'vertical' ? 'end' : 'end',
+    center: 'center',
+    fill: 'stretch',
+    baseline: 'baseline'
+  };
+
+  const distributionMap = {
+    leading: 'start',
+    trailing: 'end',
+    center: 'center',
+    fill: 'fill',
+    fillEvenly: 'fill',
+    equalSpacing: 'spaceBetween'
+  };
+
+  const StackComponent = direction === 'vertical' ? BlockStack : InlineStack;
+
+  const props: any = {
+    gap: spacingMap[spacing],
+    as,
+  };
+
+  if (direction === 'vertical') {
+    props.align = alignMap[alignment];
+  } else {
+    props.align = alignMap[alignment];
+    props.blockAlign = alignment === 'fill' ? 'stretch' : 'center';
+
+    if (distribution === 'spaceBetween') {
+      props.distribute = 'spaceBetween';
+    } else if (distribution === 'center') {
+      props.distribute = 'center';
+    } else if (distribution === 'end') {
+      props.distribute = 'end';
+    }
+  }
+
+  if (wrap) {
+    props.wrap = wrap;
+  }
+
+  return <StackComponent {...props}>{children}</StackComponent>;
+};
 
 const meta = {
   title: 'Polaris/Layout/AlphaStack',
-  component: AlphaStack,
+  component: CustomAlphaStack,
   parameters: {
     layout: 'centered',
     docs: {
@@ -44,19 +108,19 @@ const meta = {
       description: 'HTML element to render as',
     },
   },
-} satisfies Meta<typeof AlphaStack>;
+} satisfies Meta<typeof CustomAlphaStack>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <AlphaStack spacing="loose">
+    <CustomAlphaStack spacing="loose">
       <Text as="h3" variant="headingMd">AlphaStack Example</Text>
       <Text as="p" variant="bodyMd">This is the default vertical AlphaStack with loose spacing.</Text>
       <Button variant="primary">Primary Action</Button>
       <Button variant="secondary">Secondary Action</Button>
-    </AlphaStack>
+    </CustomAlphaStack>
   ),
 };
 
@@ -65,7 +129,7 @@ export const VerticalStack: Story = {
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Vertical AlphaStack</Text>
 
-      <AlphaStack spacing="base" direction="vertical">
+      <CustomAlphaStack spacing="base" direction="vertical">
         <Text as="h4" variant="headingSm">Section 1</Text>
         <Text as="p" variant="bodySm">Content for the first section with base spacing.</Text>
 
@@ -74,7 +138,7 @@ export const VerticalStack: Story = {
 
         <Text as="h4" variant="headingSm">Section 3</Text>
         <Text as="p" variant="bodySm">Content for the third section maintaining consistent spacing.</Text>
-      </AlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };
@@ -84,12 +148,12 @@ export const HorizontalStack: Story = {
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Horizontal AlphaStack</Text>
 
-      <AlphaStack spacing="loose" direction="horizontal">
+      <CustomAlphaStack spacing="loose" direction="horizontal">
         <Button variant="primary">Save</Button>
         <Button variant="secondary">Save Draft</Button>
         <Button variant="plain">Preview</Button>
         <Button variant="plain">Cancel</Button>
-      </AlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };
@@ -99,47 +163,47 @@ export const SpacingVariations: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
       <Card sectioned>
         <Text as="h3" variant="headingSm">Extra Tight Spacing</Text>
-        <AlphaStack spacing="extraTight" direction="horizontal">
+        <CustomAlphaStack spacing="extraTight" direction="horizontal">
           <Badge status="success">Active</Badge>
           <Badge status="info">Pending</Badge>
           <Badge status="attention">Warning</Badge>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Tight Spacing</Text>
-        <AlphaStack spacing="tight" direction="horizontal">
+        <CustomAlphaStack spacing="tight" direction="horizontal">
           <Badge status="success">Active</Badge>
           <Badge status="info">Pending</Badge>
           <Badge status="attention">Warning</Badge>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Base Spacing</Text>
-        <AlphaStack spacing="base" direction="horizontal">
+        <CustomAlphaStack spacing="base" direction="horizontal">
           <Badge status="success">Active</Badge>
           <Badge status="info">Pending</Badge>
           <Badge status="attention">Warning</Badge>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Loose Spacing</Text>
-        <AlphaStack spacing="loose" direction="horizontal">
+        <CustomAlphaStack spacing="loose" direction="horizontal">
           <Badge status="success">Active</Badge>
           <Badge status="info">Pending</Badge>
           <Badge status="attention">Warning</Badge>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Extra Loose Spacing</Text>
-        <AlphaStack spacing="extraLoose" direction="horizontal">
+        <CustomAlphaStack spacing="extraLoose" direction="horizontal">
           <Badge status="success">Active</Badge>
           <Badge status="info">Pending</Badge>
           <Badge status="attention">Warning</Badge>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
     </div>
   ),
@@ -150,56 +214,56 @@ export const DistributionOptions: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
       <Card sectioned>
         <Text as="h3" variant="headingSm">Leading Distribution</Text>
-        <AlphaStack distribution="leading" direction="horizontal">
+        <CustomAlphaStack distribution="leading" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Trailing Distribution</Text>
-        <AlphaStack distribution="trailing" direction="horizontal">
+        <CustomAlphaStack distribution="trailing" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Center Distribution</Text>
-        <AlphaStack distribution="center" direction="horizontal">
+        <CustomAlphaStack distribution="center" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Fill Distribution</Text>
-        <AlphaStack distribution="fill" direction="horizontal">
+        <CustomAlphaStack distribution="fill" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Equal Spacing Distribution</Text>
-        <AlphaStack distribution="equalSpacing" direction="horizontal">
+        <CustomAlphaStack distribution="equalSpacing" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
 
       <Card sectioned>
         <Text as="h3" variant="headingSm">Fill Evenly Distribution</Text>
-        <AlphaStack distribution="fillEvenly" direction="horizontal">
+        <CustomAlphaStack distribution="fillEvenly" direction="horizontal">
           <Button size="small">Left</Button>
           <Button size="small">Center</Button>
           <Button size="small">Right</Button>
-        </AlphaStack>
+        </CustomAlphaStack>
       </Card>
     </div>
   ),
@@ -218,11 +282,11 @@ export const AlignmentOptions: Story = {
           display: 'flex',
           alignItems: 'flex-start'
         }}>
-          <AlphaStack alignment="leading" direction="horizontal">
+          <CustomAlphaStack alignment="leading" direction="horizontal">
             <Button size="small">Small</Button>
             <Button>Medium</Button>
             <Button size="large">Large</Button>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
       </Card>
 
@@ -236,11 +300,11 @@ export const AlignmentOptions: Story = {
           display: 'flex',
           alignItems: 'flex-end'
         }}>
-          <AlphaStack alignment="trailing" direction="horizontal">
+          <CustomAlphaStack alignment="trailing" direction="horizontal">
             <Button size="small">Small</Button>
             <Button>Medium</Button>
             <Button size="large">Large</Button>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
       </Card>
 
@@ -254,11 +318,11 @@ export const AlignmentOptions: Story = {
           display: 'flex',
           alignItems: 'center'
         }}>
-          <AlphaStack alignment="center" direction="horizontal">
+          <CustomAlphaStack alignment="center" direction="horizontal">
             <Button size="small">Small</Button>
             <Button>Medium</Button>
             <Button size="large">Large</Button>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
       </Card>
 
@@ -272,11 +336,11 @@ export const AlignmentOptions: Story = {
           display: 'flex',
           alignItems: 'stretch'
         }}>
-          <AlphaStack alignment="fill" direction="horizontal">
+          <CustomAlphaStack alignment="fill" direction="horizontal">
             <Button size="small" style={{ height: '100%' }}>Small</Button>
             <Button style={{ height: '100%' }}>Medium</Button>
             <Button size="large" style={{ height: '100%' }}>Large</Button>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
       </Card>
 
@@ -290,11 +354,11 @@ export const AlignmentOptions: Story = {
           display: 'flex',
           alignItems: 'baseline'
         }}>
-          <AlphaStack alignment="baseline" direction="horizontal">
+          <CustomAlphaStack alignment="baseline" direction="horizontal">
             <Button size="small">Small</Button>
             <Button>Medium</Button>
             <Button size="large">Large</Button>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
       </Card>
     </div>
@@ -309,7 +373,7 @@ export const WrappingStack: Story = {
         Items will wrap to the next line when there isn't enough horizontal space.
       </Text>
 
-      <AlphaStack spacing="loose" wrap direction="horizontal">
+      <CustomAlphaStack spacing="loose" wrap direction="horizontal">
         <Badge>Electronics</Badge>
         <Badge>Mobile</Badge>
         <Badge>Accessories</Badge>
@@ -322,7 +386,7 @@ export const WrappingStack: Story = {
         <Badge>Popular</Badge>
         <Badge>Trending</Badge>
         <Badge>Clearance</Badge>
-      </AlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };
@@ -332,10 +396,10 @@ export const FormLayout: Story = {
     <Card sectioned>
       <Text as="h3" variant="headingLg" style={{ marginBottom: '20px' }}>Customer Information</Text>
 
-      <AlphaStack spacing="loose" direction="vertical">
+      <CustomAlphaStack spacing="loose" direction="vertical">
         <div>
           <Text as="h4" variant="headingSm">Personal Details</Text>
-          <AlphaStack spacing="base" direction="vertical">
+          <CustomAlphaStack spacing="base" direction="vertical">
             <div style={{
               padding: '12px',
               border: '1px dashed #d2d2d7',
@@ -352,12 +416,12 @@ export const FormLayout: Story = {
             }}>
               <Text as="p" variant="bodySm">Last Name Input</Text>
             </div>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
 
         <div>
           <Text as="h4" variant="headingSm">Contact Information</Text>
-          <AlphaStack spacing="base" direction="vertical">
+          <CustomAlphaStack spacing="base" direction="vertical">
             <div style={{
               padding: '12px',
               border: '1px dashed #d2d2d7',
@@ -374,14 +438,14 @@ export const FormLayout: Story = {
             }}>
               <Text as="p" variant="bodySm">Phone Input</Text>
             </div>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
 
-        <AlphaStack distribution="trailing" direction="horizontal">
+        <CustomAlphaStack distribution="trailing" direction="horizontal">
           <Button variant="primary">Save Customer</Button>
           <Button variant="plain">Cancel</Button>
-        </AlphaStack>
-      </AlphaStack>
+        </CustomAlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };
@@ -391,7 +455,7 @@ export const CardGrid: Story = {
     <div style={{ maxWidth: '800px' }}>
       <Text as="h3" variant="headingLg" style={{ marginBottom: '20px' }}>Product Categories</Text>
 
-      <AlphaStack spacing="loose" wrap direction="horizontal">
+      <CustomAlphaStack spacing="loose" wrap direction="horizontal">
         <Card sectioned style={{ minWidth: '200px', flex: '1' }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{
@@ -435,7 +499,7 @@ export const CardGrid: Story = {
             <Text as="p" variant="bodySm" tone="subdued">67 items</Text>
           </div>
         </Card>
-      </AlphaStack>
+      </CustomAlphaStack>
     </div>
   ),
 };
@@ -445,7 +509,7 @@ export const ProgressSteps: Story = {
     <Card sectioned>
       <Text as="h3" variant="headingLg" style={{ marginBottom: '20px' }}>Order Progress</Text>
 
-      <AlphaStack spacing="extraLoose" distribution="equalSpacing" direction="horizontal">
+      <CustomAlphaStack spacing="extraLoose" distribution="equalSpacing" direction="horizontal">
         <div style={{ textAlign: 'center' }}>
           <div style={{
             width: '40px',
@@ -518,7 +582,7 @@ export const ProgressSteps: Story = {
           <Text as="p" variant="bodySm" tone="subdued">Delivered</Text>
           <Badge status="info">Pending</Badge>
         </div>
-      </AlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };
@@ -526,9 +590,9 @@ export const ProgressSteps: Story = {
 export const StatusCards: Story = {
   render: () => (
     <div style={{ maxWidth: '700px' }}>
-      <AlphaStack spacing="loose" direction="vertical">
+      <CustomAlphaStack spacing="loose" direction="vertical">
         <Card sectioned background="surface">
-          <AlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
+          <CustomAlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 width: '12px',
@@ -539,14 +603,14 @@ export const StatusCards: Story = {
               <Text as="h4" variant="headingSm">System Operational</Text>
             </div>
             <Badge status="success">All Systems Go</Badge>
-          </AlphaStack>
+          </CustomAlphaStack>
           <Text as="p" variant="bodySm" tone="subdued" style={{ marginTop: '8px' }}>
             All services are functioning normally with no reported issues.
           </Text>
         </Card>
 
         <Card sectioned background="surface subdued">
-          <AlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
+          <CustomAlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 width: '12px',
@@ -557,14 +621,14 @@ export const StatusCards: Story = {
               <Text as="h4" variant="headingSm">Maintenance Scheduled</Text>
             </div>
             <Badge status="attention">Tonight 11 PM</Badge>
-          </AlphaStack>
+          </CustomAlphaStack>
           <Text as="p" variant="bodySm" tone="subdued" style={{ marginTop: '8px' }}>
             Scheduled maintenance window for system updates and improvements.
           </Text>
         </Card>
 
         <Card sectioned>
-          <AlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
+          <CustomAlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{
                 width: '12px',
@@ -575,12 +639,12 @@ export const StatusCards: Story = {
               <Text as="h4" variant="headingSm">Payment Processing Delay</Text>
             </div>
             <Badge status="critical">Investigating</Badge>
-          </AlphaStack>
+          </CustomAlphaStack>
           <Text as="p" variant="bodySm" tone="subdued" style={{ marginTop: '8px' }}>
             Our team is investigating delays in payment processing. Estimated resolution: 2 hours.
           </Text>
         </Card>
-      </AlphaStack>
+      </CustomAlphaStack>
     </div>
   ),
 };
@@ -590,29 +654,29 @@ export const ComplexLayout: Story = {
     <Card sectioned>
       <Text as="h3" variant="headingLg" style={{ marginBottom: '20px' }}>Order Details</Text>
 
-      <AlphaStack spacing="loose" direction="vertical">
+      <CustomAlphaStack spacing="loose" direction="vertical">
         <div>
-          <AlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
+          <CustomAlphaStack distribution="equalSpacing" alignment="center" direction="horizontal">
             <div>
               <Text as="h4" variant="headingMd">Order #1001</Text>
               <Text as="p" variant="bodySm" tone="subdued">Placed on November 3, 2025</Text>
             </div>
             <Badge status="success">Fulfilled</Badge>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
 
         <div>
           <Text as="h4" variant="headingSm">Customer</Text>
-          <AlphaStack spacing="base" direction="vertical">
+          <CustomAlphaStack spacing="base" direction="vertical">
             <Text as="p" variant="bodyMd">John Doe</Text>
             <Text as="p" variant="bodySm" tone="subdued">john.doe@example.com</Text>
             <Text as="p" variant="bodySm" tone="subdued">(555) 123-4567</Text>
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
 
         <div>
           <Text as="h4" variant="headingSm">Items</Text>
-          <AlphaStack spacing="base" direction="vertical">
+          <CustomAlphaStack spacing="base" direction="vertical">
             {[
               { name: 'Classic T-Shirt', qty: 2, price: '$59.98' },
               { name: 'Denim Jeans', qty: 1, price: '$89.99' },
@@ -623,14 +687,14 @@ export const ComplexLayout: Story = {
                 backgroundColor: '#f4f6f8',
                 borderRadius: '4px'
               }}>
-                <AlphaStack distribution="equalSpacing" direction="horizontal">
+                <CustomAlphaStack distribution="equalSpacing" direction="horizontal">
                   <Text as="p" variant="bodySm">{item.name}</Text>
                   <Text as="p" variant="bodySm">Qty: {item.qty}</Text>
                   <Text as="p" variant="bodySm">{item.price}</Text>
-                </AlphaStack>
+                </CustomAlphaStack>
               </div>
             ))}
-          </AlphaStack>
+          </CustomAlphaStack>
         </div>
 
         <div style={{
@@ -645,12 +709,12 @@ export const ComplexLayout: Story = {
           </div>
         </div>
 
-        <AlphaStack distribution="trailing" direction="horizontal">
+        <CustomAlphaStack distribution="trailing" direction="horizontal">
           <Button variant="primary">Track Order</Button>
           <Button variant="secondary">Create Return</Button>
           <Button variant="plain">Print Receipt</Button>
-        </AlphaStack>
-      </AlphaStack>
+        </CustomAlphaStack>
+      </CustomAlphaStack>
     </Card>
   ),
 };

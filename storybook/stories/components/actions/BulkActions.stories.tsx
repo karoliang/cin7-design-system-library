@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import {
-  BulkActions,
   Button,
   Icon,
   Text,
@@ -11,6 +10,7 @@ import {
   Popover,
   ActionList,
   Badge,
+  ButtonGroup,
 } from '@shopify/polaris';
 import {
   EditIcon,
@@ -22,9 +22,78 @@ import {
 } from '@shopify/polaris-icons';
 import React from 'react';
 
+// Custom BulkActions component for Polaris v13.9.5 compatibility
+const CustomBulkActions: React.FC<{
+  promotedActions?: any[];
+  pageActions?: any[];
+  actionType?: string;
+  accessibilityLabel?: string;
+}> = ({ promotedActions = [], pageActions = [], actionType, accessibilityLabel }) => {
+  const [popoverActive, setPopoverActive] = React.useState(false);
+
+  const togglePopover = () => setPopoverActive(!popoverActive);
+
+  const promotedButtons = promotedActions.map((action, index) => (
+    <Button
+      key={index}
+      onClick={action.onAction}
+      icon={action.icon}
+      destructive={action.destructive}
+      loading={action.loading}
+      disabled={action.disabled}
+    >
+      {action.content}
+    </Button>
+  ));
+
+  const pageButtons = pageActions.map((action, index) => {
+    if (action.actions) {
+      return (
+        <Popover
+          key={index}
+          active={popoverActive}
+          activator={
+            <Button onClick={togglePopover} disclosure>
+              {action.content}
+            </Button>
+          }
+          onClose={togglePopover}
+        >
+          <ActionList
+            items={action.actions.map((item: any) => ({
+              content: item.content,
+              onAction: item.onAction,
+              icon: item.icon,
+              destructive: item.destructive,
+            }))}
+          />
+        </Popover>
+      );
+    }
+    return (
+      <Button
+        key={index}
+        onClick={action.onAction}
+        icon={action.icon}
+      >
+        {action.content}
+      </Button>
+    );
+  });
+
+  return (
+    <InlineStack gap="200">
+      {promotedButtons.length > 0 && (
+        <ButtonGroup>{promotedButtons}</ButtonGroup>
+      )}
+      {pageButtons}
+    </InlineStack>
+  );
+};
+
 const meta = {
   title: 'Polaris/Actions/BulkActions',
-  component: BulkActions,
+  component: CustomBulkActions,
   parameters: {
     layout: 'centered',
     docs: {
@@ -66,7 +135,7 @@ const meta = {
       description: 'Callback when an action is performed',
     },
   },
-} satisfies Meta<any>;
+} satisfies Meta<typeof CustomBulkActions>;
 
 export default meta;
 type Story = any;
@@ -164,7 +233,7 @@ export const Default: Story = {
               </InlineStack>
 
               {selectedItems.length > 0 && (
-                <BulkActions
+                <CustomBulkActions
                   promotedActions={promotedActions}
                   pageActions={[
                     {
@@ -251,7 +320,7 @@ export const WithPageActions: Story = {
           <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text variant="headingMd">Products</Text>
-              <BulkActions
+              <CustomBulkActions
                 pageActions={pageActions}
                 selectMode={selectedItems.length > 0}
               />
@@ -272,7 +341,7 @@ export const WithPageActions: Story = {
               <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px', marginBottom: '16px' }}>
                 <Text>{selectedItems.length} items selected</Text>
                 <div style={{ marginTop: '12px' }}>
-                  <BulkActions
+                  <CustomBulkActions
                     promotedActions={promotedActions}
                   />
                 </div>
@@ -376,7 +445,7 @@ export const MenuActionType: Story = {
                 <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
                   <Text>{selectedItems.length} items selected</Text>
                   <div style={{ marginTop: '12px' }}>
-                    <BulkActions
+                    <CustomBulkActions
                       actionType="menu"
                       promotedActions={promotedActions}
                       pageActions={[
@@ -446,7 +515,7 @@ export const WithLoadingStates: Story = {
               <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
                 <Text>{selectedItems.length} items selected</Text>
                 <div style={{ marginTop: '12px' }}>
-                  <BulkActions
+                  <CustomBulkActions
                     promotedActions={promotedActions}
                   />
                 </div>
@@ -546,7 +615,7 @@ export const WithConditionalActions: Story = {
 
           {selectedItems.length > 0 && (
             <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
-              <BulkActions
+              <CustomBulkActions
                 promotedActions={getPromotedActions()}
               />
             </div>
@@ -632,7 +701,7 @@ export const WithAccessibility: Story = {
                 <div style={{ padding: '16px', backgroundColor: 'white', border: '1px solid #e1e3e5', borderRadius: '4px' }}>
                   <Text>{selectedItems.length} items selected</Text>
                   <div style={{ marginTop: '12px' }}>
-                    <BulkActions
+                    <CustomBulkActions
                       promotedActions={promotedActions}
                       accessibilityLabel={`Actions for ${selectedItems.length} selected items`}
                     />
@@ -715,7 +784,7 @@ export const IntegrationExample: Story = {
           <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text variant="headingMd">Orders</Text>
-              <BulkActions
+              <CustomBulkActions
                 pageActions={pageActions}
                 selectMode={selectedItems.length > 0}
               />
@@ -728,7 +797,7 @@ export const IntegrationExample: Story = {
                 <Text>
                   {selectedItems.length} order{selectedItems.length !== 1 ? 's' : ''} selected
                 </Text>
-                <BulkActions
+                <CustomBulkActions
                   promotedActions={promotedActions}
                 />
               </div>

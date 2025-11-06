@@ -1,10 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Subheading } from '@shopify/polaris';
+import { Text } from '@shopify/polaris';
 import React from 'react';
+
+// Custom Subheading component for Polaris v13.9.5 compatibility
+const CustomSubheading: React.FC<{
+  children: React.ReactNode;
+  id?: string;
+}> = ({ children, id }) => (
+  <Text id={id} variant="headingMd" as="h3">
+    {children}
+  </Text>
+);
 
 const meta = {
   title: 'Polaris/Structure/Subheading',
-  component: Subheading,
+  component: CustomSubheading,
   parameters: {
     layout: 'centered',
     docs: {
@@ -24,7 +34,7 @@ const meta = {
       description: 'Element ID for accessibility',
     },
   },
-} satisfies Meta<typeof Subheading>;
+} satisfies Meta<typeof CustomSubheading>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -44,7 +54,7 @@ export const ContentOrganization: Story = {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <Subheading>Processing Orders</Subheading>
+            <CustomSubheading>Processing Orders</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Manage orders that are currently being processed. Update tracking information,
               modify shipping details, and handle customer requests.
@@ -52,7 +62,7 @@ export const ContentOrganization: Story = {
           </div>
 
           <div>
-            <Subheading>Shipping & Fulfillment</Subheading>
+            <CustomSubheading>Shipping & Fulfillment</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Coordinate shipping logistics, track deliveries, and manage fulfillment partners.
               Set up shipping rules and automate fulfillment processes.
@@ -60,7 +70,7 @@ export const ContentOrganization: Story = {
           </div>
 
           <div>
-            <Subheading>Returns & Exchanges</Subheading>
+            <CustomSubheading>Returns & Exchanges</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Handle customer returns, process refunds, and manage exchange requests.
               Monitor return rates and analyze reasons for returns.
@@ -85,7 +95,7 @@ export const ProductCategories: Story = {
           gap: '24px'
         }}>
           <div>
-            <Subheading>Audio Equipment</Subheading>
+            <CustomSubheading>Audio Equipment</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Headphones, speakers, microphones, and professional audio gear from leading brands.
             </p>
@@ -95,7 +105,7 @@ export const ProductCategories: Story = {
           </div>
 
           <div>
-            <Subheading>Computers & Accessories</Subheading>
+            <CustomSubheading>Computers & Accessories</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Laptops, desktops, keyboards, mice, and computer peripherals for work and gaming.
             </p>
@@ -105,7 +115,7 @@ export const ProductCategories: Story = {
           </div>
 
           <div>
-            <Subheading>Mobile Devices</Subheading>
+            <CustomSubheading>Mobile Devices</CustomSubheading>
             <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
               Smartphones, tablets, wearables, and mobile accessories from top manufacturers.
             </p>
@@ -129,7 +139,7 @@ export const SettingsSections: Story = {
         <div style={{ padding: '16px', border: '1px solid #e5e7eb', borderRadius: '8px', backgroundColor: '#ffffff' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <Subheading>General Information</Subheading>
+              <CustomSubheading>General Information</CustomSubheading>
               <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
                 Store name, address, contact information, and business details.
               </p>
@@ -138,7 +148,7 @@ export const SettingsSections: Story = {
             <div style={{ height: '1px', backgroundColor: '#e5e7eb' }} />
 
             <div>
-              <Subheading>Payment Methods</Subheading>
+              <CustomSubheading>Payment Methods</CustomSubheading>
               <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
                 Configure payment gateways, currency settings, and checkout options.
               </p>
@@ -147,7 +157,7 @@ export const SettingsSections: Story = {
             <div style={{ height: '1px', backgroundColor: '#e5e7eb' }} />
 
             <div>
-              <Subheading>Shipping Configuration</Subheading>
+              <CustomSubheading>Shipping Configuration</CustomSubheading>
               <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
                 Set up shipping zones, rates, and delivery methods for your store.
               </p>
@@ -156,7 +166,7 @@ export const SettingsSections: Story = {
             <div style={{ height: '1px', backgroundColor: '#e5e7eb' }} />
 
             <div>
-              <Subheading>Tax Settings</Subheading>
+              <CustomSubheading>Tax Settings</CustomSubheading>
               <p style={{ marginTop: '8px', color: '#637381', fontSize: "14px" }}>
                 Configure tax rates, nexus settings, and tax calculation rules.
               </p>
@@ -181,7 +191,7 @@ export const HelpDocumentation: Story = {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
           <div>
-            <Subheading>1. Account Setup</Subheading>
+            <CustomSubheading>1. Account Setup</CustomSubheading>
             <p style={{ marginTop: '12px', color: '#637381', fontSize: "14px", lineHeight: '1.6' }}>
               Create your account, verify your email, and complete your business profile.
               This includes adding your business information, tax details, and configuring your account preferences.
@@ -192,7 +202,7 @@ export const HelpDocumentation: Story = {
           </div>
 
           <div>
-            <Subheading>2. Store Configuration</Subheading>
+            <CustomSubheading>2. Store Configuration</CustomSubheading>
             <p style={{ marginTop: '12px', color: '#637381', fontSize: "14px", lineHeight: '1.6' }}>
               Customize your store appearance, set up your domain, configure payment methods,
               and establish shipping zones. Personalize the look and feel to match your brand.
@@ -203,7 +213,7 @@ export const HelpDocumentation: Story = {
           </div>
 
           <div>
-            <Subheading>3. Product Management</Subheading>
+            <CustomSubheading>3. Product Management</CustomSubheading>
             <p style={{ marginTop: '12px', color: '#637381', fontSize: "14px", lineHeight: '1.6' }}>
               Add your first products, organize them into categories, set pricing,
               manage inventory levels, and create compelling product descriptions with high-quality images.
@@ -214,7 +224,7 @@ export const HelpDocumentation: Story = {
           </div>
 
           <div>
-            <Subheading>4. Launch Your Store</Subheading>
+            <CustomSubheading>4. Launch Your Store</CustomSubheading>
             <p style={{ marginTop: '12px', color: '#637381', fontSize: "14px", lineHeight: '1.6' }}>
               Review your store setup, test the checkout process, and go live.
               Learn about marketing tools and analytics to grow your business.
@@ -247,7 +257,7 @@ export const DashboardMetrics: Story = {
             borderRadius: '8px',
             backgroundColor: '#ffffff'
           }}>
-            <Subheading>Sales Performance</Subheading>
+            <CustomSubheading>Sales Performance</CustomSubheading>
             <div style={{ marginTop: '12px', fontSize: "30px", fontWeight: '700', color: '#059669' }}>
               $89,432
             </div>
@@ -265,7 +275,7 @@ export const DashboardMetrics: Story = {
             borderRadius: '8px',
             backgroundColor: '#ffffff'
           }}>
-            <Subheading>Customer Acquisition</Subheading>
+            <CustomSubheading>Customer Acquisition</CustomSubheading>
             <div style={{ marginTop: '12px', fontSize: "30px", fontWeight: '700', color: '#3b82f6' }}>
               1,247
             </div>
@@ -283,7 +293,7 @@ export const DashboardMetrics: Story = {
             borderRadius: '8px',
             backgroundColor: '#ffffff'
           }}>
-            <Subheading>Order Volume</Subheading>
+            <CustomSubheading>Order Volume</CustomSubheading>
             <div style={{ marginTop: '12px', fontSize: "30px", fontWeight: '700', color: '#8b5cf6' }}>
               3,892
             </div>
@@ -325,7 +335,7 @@ export const FeatureList: Story = {
               ✓
             </div>
             <div style={{ flex: 1 }}>
-              <Subheading>Inventory Management</Subheading>
+              <CustomSubheading>Inventory Management</CustomSubheading>
               <p style={{ marginTop: '6px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
                 Real-time inventory tracking, low stock alerts, and automated reorder points.
               </p>
@@ -349,7 +359,7 @@ export const FeatureList: Story = {
               ✓
             </div>
             <div style={{ flex: 1 }}>
-              <Subheading>Multi-channel Selling</Subheading>
+              <CustomSubheading>Multi-channel Selling</CustomSubheading>
               <p style={{ marginTop: '6px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
                 Sell across multiple platforms with centralized inventory and order management.
               </p>
@@ -373,7 +383,7 @@ export const FeatureList: Story = {
               ✓
             </div>
             <div style={{ flex: 1 }}>
-              <Subheading>Advanced Analytics</Subheading>
+              <CustomSubheading>Advanced Analytics</CustomSubheading>
               <p style={{ marginTop: '6px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
                 Comprehensive reporting, customer insights, and predictive analytics.
               </p>
@@ -397,7 +407,7 @@ export const FeatureList: Story = {
               ✓
             </div>
             <div style={{ flex: 1 }}>
-              <Subheading>Customer Support Tools</Subheading>
+              <CustomSubheading>Customer Support Tools</CustomSubheading>
               <p style={{ marginTop: '6px', color: '#637381', fontSize: "14px", lineHeight: '1.5' }}>
                 Integrated helpdesk, live chat, and ticket management system.
               </p>
@@ -419,7 +429,7 @@ export const StatusSections: Story = {
         backgroundColor: '#ffffff'
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <Subheading>System Status</Subheading>
+          <CustomSubheading>System Status</CustomSubheading>
           <span style={{
             padding: '4px 8px',
             backgroundColor: '#10b981',
@@ -443,7 +453,7 @@ export const StatusSections: Story = {
         backgroundColor: '#fffbeb'
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <Subheading>Payment Processing</Subheading>
+          <CustomSubheading>Payment Processing</CustomSubheading>
           <span style={{
             padding: '4px 8px',
             backgroundColor: '#f59e0b',
