@@ -216,7 +216,7 @@ export const PasswordField: Story = {
     };
 
     return (
-      <div style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ maxWidth: 'var(--size-400)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
         <TextField
           label="Password"
           type={showPassword ? 'text' : 'password'}
@@ -240,7 +240,7 @@ export const PasswordField: Story = {
           required
         />
 
-        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: "14px" }}>
+        <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)', fontSize: 'var(--font-size-sm)' }}>
           <input
             type="checkbox"
             checked={showPassword}
@@ -290,27 +290,27 @@ export const SearchField: Story = {
         />
 
         {isSearching && (
-          <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px', textAlign: 'center' }}>
+          <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)', textAlign: 'center' }}>
             Searching...
           </div>
         )}
 
         {recentSearches.length > 0 && (
           <div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>Recent Searches:</h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h4 style={{ margin: '0 0 var(--spacing-2) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>Recent Searches:</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)' }}>
               {recentSearches.map((search, index) => (
                 <button
                   key={index}
                   onClick={() => setSearchQuery(search)}
                   style={{
-                    padding: '8px',
-                    border: '1px solid #e1e1e1',
-                    borderRadius: '4px',
-                    backgroundColor: 'white',
+                    padding: 'var(--spacing-2)',
+                    border: '1px solid var(--color-gray-200)',
+                    borderRadius: 'var(--border-radius-base)',
+                    backgroundColor: 'var(--color-white)',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontSize: "14px",
+                    fontSize: 'var(--font-size-sm)',
                   }}
                 >
                   {search}
@@ -359,7 +359,7 @@ export const TelephoneInput: Story = {
     };
 
     return (
-      <div style={{ maxWidth: '400px' }}>
+      <div style={{ maxWidth: 'var(--size-400)' }}>
         <TextField
           label="Phone Number"
           type="tel"
@@ -383,7 +383,7 @@ export const CharacterCount: Story = {
     const maxLengthDesc = 300;
 
     return (
-      <div style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ maxWidth: 'var(--size-500)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
         <TextField
           label="Title"
           value={title}
@@ -416,7 +416,7 @@ export const PrefixSuffix: Story = {
     const [discount, setDiscount] = React.useState('');
 
     return (
-      <div style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ maxWidth: 'var(--size-400)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
         <TextField
           label="Price"
           type="number"
@@ -463,7 +463,7 @@ export const AutoComplete: Story = {
     ]);
 
     return (
-      <div style={{ maxWidth: '400px' }}>
+      <div style={{ maxWidth: 'var(--size-400)' }}>
         <TextField
           label="Email address"
           type="email"
@@ -528,8 +528,8 @@ export const FormExample: Story = {
     };
 
     return (
-      <div style={{ maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+      <div style={{ maxWidth: 'var(--size-400)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-3)' }}>
           <TextField
             label="First name"
             value={formData.firstName}
@@ -587,9 +587,9 @@ export const FormExample: Story = {
           maxLength={500}
         />
 
-        <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>Form Data:</h4>
-          <pre style={{ fontSize: "12px", margin: 0, whiteSpace: 'pre-wrap' }}>
+        <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
+          <h4 style={{ margin: '0 0 var(--spacing-2) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>Form Data:</h4>
+          <pre style={{ fontSize: 'var(--font-size-xs)', margin: 0, whiteSpace: 'pre-wrap' }}>
             {JSON.stringify(formData, null, 2)}
           </pre>
         </div>

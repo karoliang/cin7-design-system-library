@@ -136,7 +136,7 @@ export const Default: Story = {
     );
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Autocomplete
           actionBefore={{
             content: 'View all products',
@@ -196,7 +196,7 @@ export const SingleSelection: Story = {
     );
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Autocomplete
           options={options}
           selected={selectedOption ? [selectedOption] : []}
@@ -205,7 +205,7 @@ export const SingleSelection: Story = {
         />
 
         {selectedOption && (
-          <div style={{ marginTop: '12px', padding: '8px', backgroundColor: '#f0f9ff', borderRadius: '4px' }}>
+          <div style={{ marginTop: 'var(--spacing-3)', padding: 'var(--spacing-2)', backgroundColor: 'var(--color-success-50)', borderRadius: 'var(--border-radius-base)' }}>
             Selected: <strong>{selectedOption}</strong>
           </div>
         )}
@@ -281,7 +281,7 @@ export const WithAsyncSearch: Story = {
     );
 
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: 'var(--size-400)' }}>
         <Autocomplete
           options={options}
           selected={selectedOptions}
@@ -296,24 +296,24 @@ export const WithAsyncSearch: Story = {
         />
 
         {searchHistory.length > 0 && (
-          <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
+          <div style={{ marginTop: 'var(--spacing-4)' }}>
+            <h4 style={{ margin: '0 0 var(--spacing-2) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
               Recent Searches:
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)' }}>
               {searchHistory.map((term, index) => (
                 <button
                   key={index}
                   onClick={() => updateText(term)}
                   style={{
-                    padding: '6px 8px',
-                    border: '1px solid #e1e3e5',
-                    borderRadius: '4px',
-                    backgroundColor: 'white',
+                    padding: 'var(--spacing-1-5) var(--spacing-2)',
+                    border: '1px solid var(--color-gray-200)',
+                    borderRadius: 'var(--border-radius-base)',
+                    backgroundColor: 'var(--color-white)',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontSize: "14px",
-                    color: '#374151'
+                    fontSize: 'var(--font-size-sm)',
+                    color: 'var(--color-gray-700)'
                   }}
                 >
                   🕐 {term}
@@ -384,7 +384,7 @@ export const WithCategories: Story = {
     );
 
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: 'var(--size-400)' }}>
         <Autocomplete
           options={options}
           selected={selectedOptions}
@@ -394,20 +394,20 @@ export const WithCategories: Story = {
           listTitle="Search Results"
         />
 
-        <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-          <h4 style={{ margin: '0 0 8px 0', fontSize: "14px", fontWeight: '600' }}>
+        <div style={{ marginTop: 'var(--spacing-4)', padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
+          <h4 style={{ margin: '0 0 var(--spacing-2) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
             Available Categories:
           </h4>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-2)' }}>
             {Object.keys(categorizedItems).map(category => (
               <span
                 key={category}
                 style={{
-                  padding: '4px 8px',
-                  backgroundColor: '#e1e3e5',
-                  borderRadius: '4px',
-                  fontSize: "12px",
-                  color: '#374151'
+                  padding: 'var(--spacing-1) var(--spacing-2)',
+                  backgroundColor: 'var(--color-gray-200)',
+                  borderRadius: 'var(--border-radius-base)',
+                  fontSize: 'var(--font-size-xs)',
+                  color: 'var(--color-gray-700)'
                 }}
               >
                 {category}
@@ -469,7 +469,7 @@ export const CustomerLookup: Story = {
     );
 
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: 'var(--size-400)' }}>
         <Autocomplete
           options={options}
           selected={selectedCustomer ? [selectedCustomer] : []}
@@ -478,34 +478,34 @@ export const CustomerLookup: Story = {
         />
 
         {customers.length > 0 && (
-          <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+          <div style={{ marginTop: 'var(--spacing-4)' }}>
+            <h4 style={{ margin: '0 0 var(--spacing-3) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
               Customer Results:
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
               {customers.map((customer, index) => (
                 <div
                   key={index}
                   style={{
-                    padding: '12px',
-                    border: '1px solid #e1e3e5',
-                    borderRadius: '6px',
-                    backgroundColor: 'white',
+                    padding: 'var(--spacing-3)',
+                    border: '1px solid var(--color-gray-200)',
+                    borderRadius: 'var(--border-radius-md)',
+                    backgroundColor: 'var(--color-white)',
                     cursor: 'pointer'
                   }}
                   onClick={() => setSelectedCustomer(customer.name)}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-                      <div style={{ fontWeight: '500' }}>{customer.name}</div>
-                      <div style={{ fontSize: "14px", color: '#6b7280' }}>{customer.email}</div>
+                      <div style={{ fontWeight: 'var(--font-weight-medium)' }}>{customer.name}</div>
+                      <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-gray-600)' }}>{customer.email}</div>
                     </div>
                     <div style={{
-                      padding: '4px 8px',
-                      backgroundColor: '#f0f9ff',
-                      borderRadius: '4px',
-                      fontSize: "12px",
-                      color: '#1e40af'
+                      padding: 'var(--spacing-1) var(--spacing-2)',
+                      backgroundColor: 'var(--color-success-50)',
+                      borderRadius: 'var(--border-radius-base)',
+                      fontSize: 'var(--font-size-xs)',
+                      color: 'var(--color-success-700)'
                     }}>
                       {customer.orders} orders
                     </div>
@@ -518,13 +518,13 @@ export const CustomerLookup: Story = {
 
         {selectedCustomer && (
           <div style={{
-            marginTop: '16px',
-            padding: '12px',
-            backgroundColor: '#f0f9ff',
-            borderRadius: '6px',
-            border: '1px solid #bfdbfe'
+            marginTop: 'var(--spacing-4)',
+            padding: 'var(--spacing-3)',
+            backgroundColor: 'var(--color-success-50)',
+            borderRadius: 'var(--border-radius-md)',
+            border: '1px solid var(--color-success-400)'
           }}>
-            <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
+            <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-success-700)' }}>
               Selected customer: <strong>{selectedCustomer}</strong>
             </p>
           </div>
@@ -573,21 +573,21 @@ export const OrderLookup: Story = {
 
     const getStatusColor = (status: string) => {
       switch (status) {
-        case 'fulfilled': return '#dcfce7';
-        case 'processing': return '#fef3c7';
-        case 'pending': return '#e0e7ff';
-        case 'cancelled': return '#fee2e2';
-        default: return '#f3f4f6';
+        case 'fulfilled': return 'var(--color-success-100)';
+        case 'processing': return 'var(--color-warning-50)';
+        case 'pending': return 'var(--color-primary-100)';
+        case 'cancelled': return 'var(--color-critical-50)';
+        default: return 'var(--color-gray-100)';
       }
     };
 
     const getStatusTextColor = (status: string) => {
       switch (status) {
-        case 'fulfilled': return '#166534';
-        case 'processing': return '#92400e';
-        case 'pending': return '#3730a3';
-        case 'cancelled': return '#991b1b';
-        default: return '#374151';
+        case 'fulfilled': return 'var(--color-success-700)';
+        case 'processing': return 'var(--color-warning-700)';
+        case 'pending': return 'var(--color-primary-700)';
+        case 'cancelled': return 'var(--color-critical-700)';
+        default: return 'var(--color-gray-700)';
       }
     };
 
@@ -603,7 +603,7 @@ export const OrderLookup: Story = {
     );
 
     return (
-      <div style={{ width: '450px' }}>
+      <div style={{ width: 'var(--size-450)' }}>
         <Autocomplete
           options={options}
           selected={selectedOrder ? [selectedOrder] : []}
@@ -612,35 +612,35 @@ export const OrderLookup: Story = {
         />
 
         {orders.length > 0 && (
-          <div style={{ marginTop: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+          <div style={{ marginTop: 'var(--spacing-4)' }}>
+            <h4 style={{ margin: '0 0 var(--spacing-3) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
               Order Results:
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-2)' }}>
               {orders.map((order, index) => (
                 <div
                   key={index}
                   style={{
-                    padding: '12px',
-                    border: '1px solid #e1e3e5',
-                    borderRadius: '6px',
-                    backgroundColor: 'white',
+                    padding: 'var(--spacing-3)',
+                    border: '1px solid var(--color-gray-200)',
+                    borderRadius: 'var(--border-radius-md)',
+                    backgroundColor: 'var(--color-white)',
                     cursor: 'pointer'
                   }}
                   onClick={() => setSelectedOrder(order.id)}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-                      <div style={{ fontWeight: '500' }}>{order.id}</div>
-                      <div style={{ fontSize: "14px", color: '#6b7280' }}>{order.customer}</div>
+                      <div style={{ fontWeight: 'var(--font-weight-medium)' }}>{order.id}</div>
+                      <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-gray-600)' }}>{order.customer}</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontWeight: '500' }}>{order.total}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+                      <span style={{ fontWeight: 'var(--font-weight-medium)' }}>{order.total}</span>
                       <span style={{
-                        padding: '4px 8px',
+                        padding: 'var(--spacing-1) var(--spacing-2)',
                         backgroundColor: getStatusColor(order.status),
-                        borderRadius: '4px',
-                        fontSize: "12px",
+                        borderRadius: 'var(--border-radius-base)',
+                        fontSize: 'var(--font-size-xs)',
                         color: getStatusTextColor(order.status),
                         textTransform: 'capitalize'
                       }}>
@@ -656,13 +656,13 @@ export const OrderLookup: Story = {
 
         {selectedOrder && (
           <div style={{
-            marginTop: '16px',
-            padding: '12px',
-            backgroundColor: '#f0f9ff',
-            borderRadius: '6px',
-            border: '1px solid #bfdbfe'
+            marginTop: 'var(--spacing-4)',
+            padding: 'var(--spacing-3)',
+            backgroundColor: 'var(--color-success-50)',
+            borderRadius: 'var(--border-radius-md)',
+            border: '1px solid var(--color-success-400)'
           }}>
-            <p style={{ margin: 0, fontSize: "14px", color: '#1e40af' }}>
+            <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-success-700)' }}>
               Selected order: <strong>{selectedOrder}</strong>
             </p>
           </div>
@@ -744,7 +744,7 @@ export const WithLoadMore: Story = {
     );
 
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: 'var(--size-400)' }}>
         <Autocomplete
           options={options}
           selected={selectedOptions}
@@ -760,8 +760,8 @@ export const WithLoadMore: Story = {
           }}
         />
 
-        <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
-          <p style={{ margin: 0, fontSize: "14px", color: '#374151' }}>
+        <div style={{ marginTop: 'var(--spacing-4)', padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
+          <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-gray-700)' }}>
             Showing {options.length} results
             {hasMore && ' (scroll to load more)'}
           </p>
@@ -839,13 +839,13 @@ export const DatePickerIntegration: Story = {
     );
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Popover
           active={popoverActive}
           activator={textField}
           onClose={() => setPopoverActive(false)}
         >
-          <div style={{ padding: '16px', minWidth: '280px' }}>
+          <div style={{ padding: 'var(--spacing-4)', minWidth: '280px' }}>
             <Autocomplete
               options={options}
               selected={selectedDate ? [selectedDate] : []}
@@ -858,14 +858,14 @@ export const DatePickerIntegration: Story = {
               listTitle="Quick Dates"
             />
 
-            <div style={{ marginTop: '16px', textAlign: 'center' }}>
+            <div style={{ marginTop: 'var(--spacing-4)', textAlign: 'center' }}>
               <button
                 style={{
-                  padding: '8px 16px',
-                  backgroundColor: '#007ace',
-                  color: 'white',
+                  padding: 'var(--spacing-2) var(--spacing-4)',
+                  backgroundColor: 'var(--color-primary-500)',
+                  color: 'var(--color-white)',
                   border: 'none',
-                  borderRadius: '4px',
+                  borderRadius: 'var(--border-radius-base)',
                   cursor: 'pointer'
                 }}
                 onClick={() => {
@@ -887,10 +887,10 @@ export const DatePickerIntegration: Story = {
 
         {selectedDate && (
           <div style={{
-            marginTop: '12px',
-            padding: '8px',
-            backgroundColor: '#f0f9ff',
-            borderRadius: '4px'
+            marginTop: 'var(--spacing-3)',
+            padding: 'var(--spacing-2)',
+            backgroundColor: 'var(--color-success-50)',
+            borderRadius: 'var(--border-radius-base)'
           }}>
             Selected: <strong>{selectedDate}</strong>
           </div>
@@ -950,12 +950,12 @@ export const FormIntegration: Story = {
     }, [formData.tags]);
 
     return (
-      <div style={{ maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ maxWidth: 'var(--size-500)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-5)' }}>
         <Card>
-          <div style={{ padding: '20px' }}>
-            <h3 style={{ margin: '0 0 20px 0', fontSize: "18px" }}>Product Form</h3>
+          <div style={{ padding: 'var(--spacing-5)' }}>
+            <h3 style={{ margin: '0 0 var(--spacing-5) 0', fontSize: 'var(--font-size-lg)' }}>Product Form</h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
               <div>
                 <Autocomplete
                   options={suggestions.products}
@@ -1008,16 +1008,16 @@ export const FormIntegration: Story = {
                 />
 
                 {formData.tags.length > 0 && (
-                  <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                  <div style={{ marginTop: 'var(--spacing-2)', display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-1)' }}>
                     {formData.tags.map((tag, index) => (
                       <span
                         key={index}
                         style={{
-                          padding: '4px 8px',
-                          backgroundColor: '#e1e3e5',
-                          borderRadius: '4px',
-                          fontSize: "12px",
-                          color: '#374151',
+                          padding: 'var(--spacing-1) var(--spacing-2)',
+                          backgroundColor: 'var(--color-gray-200)',
+                          borderRadius: 'var(--border-radius-base)',
+                          fontSize: 'var(--font-size-xs)',
+                          color: 'var(--color-gray-700)',
                           cursor: 'pointer'
                         }}
                         onClick={() => {
@@ -1055,11 +1055,11 @@ export const FormIntegration: Story = {
         </Card>
 
         <Card>
-          <div style={{ padding: '16px' }}>
-            <h4 style={{ margin: '0 0 12px 0', fontSize: "14px", fontWeight: '600' }}>
+          <div style={{ padding: 'var(--spacing-4)' }}>
+            <h4 style={{ margin: '0 0 var(--spacing-3) 0', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-semibold)' }}>
               Form Data:
             </h4>
-            <pre style={{ fontSize: "12px", margin: 0, whiteSpace: 'pre-wrap' }}>
+            <pre style={{ fontSize: 'var(--font-size-xs)', margin: 0, whiteSpace: 'pre-wrap' }}>
               {JSON.stringify(formData, null, 2)}
             </pre>
           </div>

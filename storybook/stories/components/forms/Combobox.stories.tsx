@@ -146,7 +146,7 @@ export const Default: Story = {
     );
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Combobox
           activator={textField}
           options={options}
@@ -207,7 +207,7 @@ export const MultipleSelection: Story = {
     });
 
     return (
-      <div style={{ width: '400px' }}>
+      <div style={{ width: 'var(--size-400)' }}>
         <Combobox
           allowMultiple
           activator={textField}
@@ -215,7 +215,7 @@ export const MultipleSelection: Story = {
           selected={selectedTags}
           onSelect={updateSelection}
         />
-        <div style={{ marginTop: '12px' }}>
+        <div style={{ marginTop: 'var(--spacing-3)' }}>
           <Text as="p" variant="bodySm" color="subdued">
             Selected tags: {selectedTags.length > 0 ? selectedTags.join(', ') : 'None'}
           </Text>
@@ -241,10 +241,10 @@ export const WithCustomActivator: Story = {
       <div
         onClick={() => setIsOpen(!isOpen)}
         style={{
-          padding: '12px 16px',
-          border: '1px solid #e1e3e5',
-          borderRadius: '4px',
-          backgroundColor: 'white',
+          padding: 'var(--spacing-3) var(--spacing-4)',
+          border: '1px solid var(--color-gray-200)',
+          borderRadius: 'var(--border-radius-base)',
+          backgroundColor: 'var(--color-white)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
@@ -258,7 +258,7 @@ export const WithCustomActivator: Story = {
     );
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Combobox
           activator={activator}
           options={countryOptions}
@@ -268,7 +268,7 @@ export const WithCustomActivator: Story = {
           onClose={() => setIsOpen(false)}
         />
         {selectedOption && (
-          <div style={{ marginTop: '12px' }}>
+          <div style={{ marginTop: 'var(--spacing-3)' }}>
             <Text>Selected: {countryOptions.find(opt => opt.value === selectedOption)?.label}</Text>
           </div>
         )}
@@ -329,7 +329,7 @@ export const LazyLoading: Story = {
     }));
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Combobox
           activator={textField}
           options={optionList}
@@ -339,7 +339,7 @@ export const LazyLoading: Story = {
           listbox={{ loading: isLoading }}
         />
         {isLoading && (
-          <div style={{ marginTop: '8px' }}>
+          <div style={{ marginTop: 'var(--spacing-2)' }}>
             <Text color="subdued" variant="bodySm">Loading more results...</Text>
           </div>
         )}
@@ -396,7 +396,7 @@ export const WithSections: Story = {
     }));
 
     return (
-      <div style={{ width: '350px' }}>
+      <div style={{ width: 'var(--size-350)' }}>
         <Combobox
           activator={textField}
           options={optionList}
@@ -454,7 +454,7 @@ export const WithDisabledOptions: Story = {
           selected={selectedOption ? [selectedOption] : []}
           onSelect={updateSelection}
         />
-        <div style={{ marginTop: '12px' }}>
+        <div style={{ marginTop: 'var(--spacing-3)' }}>
           <Text as="p" variant="bodySm" color="subdued">
             Out of stock and discontinued options are disabled
           </Text>
@@ -541,9 +541,9 @@ export const RealWorldExample: Story = {
             onSelect={updateTemplateSelection}
           />
 
-          <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+          <div style={{ padding: 'var(--spacing-4)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-base)' }}>
             <Text as="h4" variant="headingSm">Email Preview</Text>
-            <div style={{ marginTop: '8px' }}>
+            <div style={{ marginTop: 'var(--spacing-2)' }}>
               <Text variant="bodySm">
                 To: {recipientEmail || 'No recipient selected'}<br />
                 Template: {selectedTemplate ? templateOptions.find(t => t.value === selectedTemplate)?.label : 'No template selected'}
@@ -592,14 +592,14 @@ export const CustomStyling: Story = {
     const optionList = colorOptions.map((option) => ({
       value: option.value,
       label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
           <div
             style={{
-              width: '16px',
-              height: '16px',
+              width: 'var(--spacing-4)',
+              height: 'var(--spacing-4)',
               backgroundColor: option.color,
-              borderRadius: '2px',
-              border: '1px solid #e1e3e5',
+              borderRadius: 'var(--border-radius-sm)',
+              border: '1px solid var(--color-gray-200)',
             }}
           />
           {option.label}
@@ -609,7 +609,7 @@ export const CustomStyling: Story = {
     }));
 
     return (
-      <div style={{ width: '300px' }}>
+      <div style={{ width: 'var(--size-300)' }}>
         <Combobox
           allowMultiple
           activator={textField}
@@ -618,7 +618,7 @@ export const CustomStyling: Story = {
           onSelect={updateSelection}
         />
         {selectedColors.length > 0 && (
-          <div style={{ marginTop: '12px' }}>
+          <div style={{ marginTop: 'var(--spacing-3)' }}>
             <InlineStack gap="4px">
               {selectedColors.map(color => {
                 const colorData = colorOptions.find(opt => opt.value === color);
@@ -626,11 +626,11 @@ export const CustomStyling: Story = {
                   <div
                     key={color}
                     style={{
-                      padding: '4px 8px',
+                      padding: 'var(--spacing-1) var(--spacing-2)',
                       backgroundColor: colorData?.color,
-                      color: 'white',
-                      borderRadius: '4px',
-                      fontSize: "12px",
+                      color: 'var(--color-white)',
+                      borderRadius: 'var(--border-radius-base)',
+                      fontSize: 'var(--font-size-xs)',
                     }}
                   >
                     {colorData?.label}
@@ -695,7 +695,7 @@ export const WithValidation: Story = {
     );
 
     return (
-      <div style={{ width: '350px' }}>
+      <div style={{ width: 'var(--size-350)' }}>
         <Combobox
           activator={textField}
           options={validOptions}
@@ -703,7 +703,7 @@ export const WithValidation: Story = {
           onSelect={updateSelection}
           listbox={{ loading: isValidating }}
         />
-        <div style={{ marginTop: '12px' }}>
+        <div style={{ marginTop: 'var(--spacing-3)' }}>
           <Text as="p" variant="bodySm" color="subdued">
             {isValidating ? 'Validating product ID...' : 'Enter a valid product ID or select from the list'}
           </Text>

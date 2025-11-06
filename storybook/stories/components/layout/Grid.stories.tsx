@@ -60,8 +60,8 @@ export const Default: Story = {
 export const ResponsiveGrid: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px' }}>
-      <Text as="h2" variant="headingMd" style={{ marginBottom: '16px' }}>Responsive Product Grid</Text>
-      <Text as="p" variant="bodySm" tone="subdued" style={{ marginBottom: '24px' }}>
+      <Text as="h2" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Responsive Product Grid</Text>
+      <Text as="p" variant="bodySm" tone="subdued" style={{ marginBottom: 'var(--spacing-6)' }}>
         This grid adapts from 1 column on mobile to 4 columns on desktop
       </Text>
 
@@ -69,9 +69,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -85,9 +85,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -101,9 +101,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -117,9 +117,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -133,9 +133,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -149,9 +149,9 @@ export const ResponsiveGrid: Story = {
         <Card sectioned>
           <div style={{
             height: '120px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
-            marginBottom: '12px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
+            marginBottom: 'var(--spacing-3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -168,10 +168,10 @@ export const ResponsiveGrid: Story = {
 
 export const SpacingVariations: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '800px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)', maxWidth: '800px' }}>
       <div>
         <Text as="h3" variant="headingMd">No spacing</Text>
-        <Grid columns={{ xs: 2, md: 3 }} gap="none" style={{ marginTop: '12px' }}>
+        <Grid columns={{ xs: 2, md: 3 }} gap="none" style={{ marginTop: 'var(--spacing-3)' }}>
           <Card sectioned>
             <Badge>Item 1</Badge>
           </Card>
@@ -186,7 +186,7 @@ export const SpacingVariations: Story = {
 
       <div>
         <Text as="h3" variant="headingMd">Tight spacing</Text>
-        <Grid columns={{ xs: 2, md: 3 }} gap="200" style={{ marginTop: '12px' }}>
+        <Grid columns={{ xs: 2, md: 3 }} gap="200" style={{ marginTop: 'var(--spacing-3)' }}>
           <Card sectioned>
             <Badge>Item 1</Badge>
           </Card>
@@ -201,7 +201,7 @@ export const SpacingVariations: Story = {
 
       <div>
         <Text as="h3" variant="headingMd">Base spacing</Text>
-        <Grid columns={{ xs: 2, md: 3 }} gap="400" style={{ marginTop: '12px' }}>
+        <Grid columns={{ xs: 2, md: 3 }} gap="400" style={{ marginTop: 'var(--spacing-3)' }}>
           <Card sectioned>
             <Badge>Item 1</Badge>
           </Card>
@@ -216,7 +216,7 @@ export const SpacingVariations: Story = {
 
       <div>
         <Text as="h3" variant="headingMd">Loose spacing</Text>
-        <Grid columns={{ xs: 2, md: 3 }} gap="500" style={{ marginTop: '12px' }}>
+        <Grid columns={{ xs: 2, md: 3 }} gap="500" style={{ marginTop: 'var(--spacing-3)' }}>
           <Card sectioned>
             <Badge>Item 1</Badge>
           </Card>
@@ -231,7 +231,7 @@ export const SpacingVariations: Story = {
 
       <div>
         <Text as="h3" variant="headingMd">Extra Loose spacing</Text>
-        <Grid columns={{ xs: 2, md: 3 }} gap="800" style={{ marginTop: '12px' }}>
+        <Grid columns={{ xs: 2, md: 3 }} gap="800" style={{ marginTop: 'var(--spacing-3)' }}>
           <Card sectioned>
             <Badge>Item 1</Badge>
           </Card>
@@ -250,7 +250,7 @@ export const SpacingVariations: Story = {
 export const DashboardLayout: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', width: '100%' }}>
-      <Text as="h2" variant="headingLg" style={{ marginBottom: '24px' }}>Dashboard Overview</Text>
+      <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)' }}>Dashboard Overview</Text>
 
       <Grid
         columns={{
@@ -289,26 +289,26 @@ export const DashboardLayout: Story = {
           <Text as="h3" variant="headingMd">📈 Sales Chart</Text>
           <div style={{
             height: '200px',
-            backgroundColor: '#f4f6f8',
-            borderRadius: '4px',
+            backgroundColor: 'var(--color-gray-100)',
+            borderRadius: 'var(--border-radius-base)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: '12px'
+            marginTop: 'var(--spacing-3)'
           }}>
             <Text as="p" variant="bodySm" tone="subdued">Chart visualization area</Text>
           </div>
-          <Button fullWidth style={{ marginTop: '12px' }}>View Detailed Analytics</Button>
+          <Button fullWidth style={{ marginTop: 'var(--spacing-3)' }}>View Detailed Analytics</Button>
         </Card>
 
         <Card sectioned>
           <Text as="h3" variant="headingMd">🔔 Recent Activity</Text>
-          <div style={{ marginTop: '12px' }}>
-            <div style={{ marginBottom: '8px' }}>
+          <div style={{ marginTop: 'var(--spacing-3)' }}>
+            <div style={{ marginBottom: 'var(--spacing-2)' }}>
               <Text as="p" variant="bodySm">New order #1001</Text>
               <Text as="p" variant="bodySm" tone="subdued">2 minutes ago</Text>
             </div>
-            <div style={{ marginBottom: '8px' }}>
+            <div style={{ marginBottom: 'var(--spacing-2)' }}>
               <Text as="p" variant="bodySm">Payment received</Text>
               <Text as="p" variant="bodySm" tone="subdued">15 minutes ago</Text>
             </div>
@@ -326,14 +326,14 @@ export const DashboardLayout: Story = {
 export const ProductFeatures: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', width: '100%' }}>
-      <Text as="h2" variant="headingLg" style={{ marginBottom: '24px', textAlign: 'center' }}>Product Features</Text>
+      <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)', textAlign: 'center' }}>Product Features</Text>
 
       <Grid columns={{ xs: 1, sm: 2, lg: 3 }} gap="500">
         <Card sectioned>
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>🚀</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Fast Performance</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -345,7 +345,7 @@ export const ProductFeatures: Story = {
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>🔒</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Secure</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -357,7 +357,7 @@ export const ProductFeatures: Story = {
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>📱</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Responsive</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -369,7 +369,7 @@ export const ProductFeatures: Story = {
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>🎨</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Customizable</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -381,7 +381,7 @@ export const ProductFeatures: Story = {
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>⚡</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Real-time</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -393,7 +393,7 @@ export const ProductFeatures: Story = {
           <div style={{
             fontSize: '48px',
             textAlign: 'center',
-            marginBottom: '16px'
+            marginBottom: 'var(--spacing-4)'
           }}>🌍</div>
           <Text as="h3" variant="headingMd" style={{ textAlign: 'center' }}>Global</Text>
           <Text as="p" variant="bodySm" style={{ textAlign: 'center' }}>
@@ -409,33 +409,33 @@ export const FormSections: Story = {
   render: () => (
     <div style={{ maxWidth: '1000px', width: '100%' }}>
       <Card sectioned>
-        <Text as="h2" variant="headingLg" style={{ marginBottom: '24px' }}>Product Configuration</Text>
+        <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)' }}>Product Configuration</Text>
 
         <Grid columns={{ xs: 1, lg: 2 }} gap="600">
           <div>
-            <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Basic Information</Text>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <Text as="h3" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Basic Information</Text>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">Product Name Input</Text>
               </div>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">Description Textarea</Text>
               </div>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">Category Select</Text>
               </div>
@@ -443,29 +443,29 @@ export const FormSections: Story = {
           </div>
 
           <div>
-            <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Pricing & Inventory</Text>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <Text as="h3" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Pricing & Inventory</Text>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)' }}>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">Price Input</Text>
               </div>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">Stock Quantity</Text>
               </div>
               <div style={{
-                padding: '12px',
-                border: '1px dashed #d2d2d7',
-                borderRadius: '4px',
-                backgroundColor: '#fafafa'
+                padding: 'var(--spacing-3)',
+                border: '1px dashed var(--color-gray-300)',
+                borderRadius: 'var(--border-radius-base)',
+                backgroundColor: 'var(--color-gray-50)'
               }}>
                 <Text as="p" variant="bodySm">SKU Input</Text>
               </div>
@@ -473,12 +473,12 @@ export const FormSections: Story = {
           </div>
 
           <div>
-            <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Media</Text>
+            <Text as="h3" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Media</Text>
             <div style={{
-              padding: '40px',
-              border: '2px dashed #d2d2d7',
-              borderRadius: '4px',
-              backgroundColor: '#fafafa',
+              padding: 'var(--spacing-10)',
+              border: '2px dashed var(--color-gray-300)',
+              borderRadius: 'var(--border-radius-base)',
+              backgroundColor: 'var(--color-gray-50)',
               textAlign: 'center'
             }}>
               <Text as="p" variant="bodySm">Product Images Upload Area</Text>
@@ -486,17 +486,17 @@ export const FormSections: Story = {
           </div>
 
           <div>
-            <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Shipping Options</Text>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Text as="h3" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Shipping Options</Text>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-3)' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
                 <input type="checkbox" />
                 <Text as="p" variant="bodySm">Free shipping</Text>
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
                 <input type="checkbox" />
                 <Text as="p" variant="bodySm">Express delivery</Text>
               </label>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
                 <input type="checkbox" />
                 <Text as="p" variant="bodySm">International shipping</Text>
               </label>
@@ -504,7 +504,7 @@ export const FormSections: Story = {
           </div>
         </Grid>
 
-        <div style={{ marginTop: '32px', display: 'flex', gap: '12px' }}>
+        <div style={{ marginTop: 'var(--spacing-8)', display: 'flex', gap: 'var(--spacing-3)' }}>
           <Button variant="primary">Save Product</Button>
           <Button variant="secondary">Save Draft</Button>
           <Button variant="plain">Cancel</Button>
@@ -517,7 +517,7 @@ export const FormSections: Story = {
 export const StatisticsGrid: Story = {
   render: () => (
     <div style={{ maxWidth: '1200px', width: '100%' }}>
-      <Text as="h2" variant="headingLg" style={{ marginBottom: '24px' }}>Analytics Dashboard</Text>
+      <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)' }}>Analytics Dashboard</Text>
 
       <Grid columns={{ xs: 2, sm: 3, lg: 4, xl: 6 }} gap="400">
         <Card sectioned>
@@ -557,17 +557,17 @@ export const StatisticsGrid: Story = {
         </Card>
       </Grid>
 
-      <Grid columns={{ xs: 1, lg: 2 }} gap="400" style={{ marginTop: '24px' }}>
+      <Grid columns={{ xs: 1, lg: 2 }} gap="400" style={{ marginTop: 'var(--spacing-6)' }}>
         <Card sectioned>
           <Text as="h3" variant="headingMd">Top Products</Text>
-          <div style={{ marginTop: '16px' }}>
+          <div style={{ marginTop: 'var(--spacing-4)' }}>
             {['Classic T-Shirt', 'Denim Jeans', 'Running Shoes'].map((product, index) => (
               <div key={index} style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: '8px 0',
-                borderBottom: index < 2 ? '1px solid #e1e3e5' : 'none'
+                padding: 'var(--spacing-2) 0',
+                borderBottom: index < 2 ? '1px solid var(--color-gray-200)' : 'none'
               }}>
                 <Text as="p" variant="bodySm">{product}</Text>
                 <Badge>{245 - index * 45} sold</Badge>
@@ -578,14 +578,14 @@ export const StatisticsGrid: Story = {
 
         <Card sectioned>
           <Text as="h3" variant="headingMd">Recent Orders</Text>
-          <div style={{ marginTop: '16px' }}>
+          <div style={{ marginTop: 'var(--spacing-4)' }}>
             {['#1001', '#1002', '#1003'].map((order, index) => (
               <div key={index} style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: '8px 0',
-                borderBottom: index < 2 ? '1px solid #e1e3e5' : 'none'
+                padding: 'var(--spacing-2) 0',
+                borderBottom: index < 2 ? '1px solid var(--color-gray-200)' : 'none'
               }}>
                 <Text as="p" variant="bodySm">{order}</Text>
                 <Badge status={index === 0 ? 'success' : index === 1 ? 'attention' : 'info'}>

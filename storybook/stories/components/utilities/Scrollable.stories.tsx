@@ -67,16 +67,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <div style={{ height: '400px', padding: '40px' }}>
-      <div style={{ marginBottom: '20px' }}>
+    <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+      <div style={{ marginBottom: 'var(--spacing-5)' }}>
         <Text variant="headingMd">Basic Scrollable Container</Text>
         <Text variant="bodyMd">Scroll down to see the shadow effect:</Text>
       </div>
 
       <Scrollable height="200px" shadow>
-        <div style={{ padding: '16px' }}>
+        <div style={{ padding: 'var(--spacing-4)' }}>
           {Array.from({ length: 15 }, (_, i) => (
-            <Card key={i} sectioned style={{ marginBottom: '12px' }}>
+            <Card key={i} sectioned style={{ marginBottom: 'var(--spacing-3)' }}>
               <Text variant="headingSm">Card {i + 1}</Text>
               <Text variant="bodyMd">
                 This is card number {i + 1} in the scrollable container.
@@ -100,19 +100,19 @@ export const VerticalScrolling: Story = {
     };
 
     return (
-      <div style={{ height: '500px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '500px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Vertical Scrolling with Events</Text>
           <Text variant="bodyMd">Scroll to the bottom to trigger the event:</Text>
         </div>
 
         {scrolledToBottom && (
           <div style={{
-            marginBottom: '16px',
-            padding: '12px',
+            marginBottom: 'var(--spacing-4)',
+            padding: 'var(--spacing-3)',
             backgroundColor: '#d4edda',
             border: '1px solid #c3e6cb',
-            borderRadius: '4px'
+            borderRadius: 'var(--border-radius-base)'
           }}>
             <Text variant="bodyMd" style={{ color: '#155724' }}>
               ✅ You've reached the bottom!
@@ -121,13 +121,13 @@ export const VerticalScrolling: Story = {
         )}
 
         <Scrollable height="300px" shadow onScrolledToBottom={handleScrolledToBottom}>
-          <div style={{ padding: '16px' }}>
+          <div style={{ padding: 'var(--spacing-4)' }}>
             {Array.from({ length: 25 }, (_, i) => (
               <div key={i} style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: '#f9f9f9',
-                borderRadius: '8px',
-                marginBottom: '12px',
+                borderRadius: 'var(--border-radius-lg)',
+                marginBottom: 'var(--spacing-3)',
                 border: '1px solid #eee'
               }}>
                 <Text variant="headingSm">Section {i + 1}</Text>
@@ -151,21 +151,21 @@ export const VerticalScrolling: Story = {
 
 export const HorizontalScrolling: Story = {
   render: () => (
-    <div style={{ height: '400px', padding: '40px' }}>
-      <div style={{ marginBottom: '20px' }}>
+    <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+      <div style={{ marginBottom: 'var(--spacing-5)' }}>
         <Text variant="headingMd">Horizontal Scrolling</Text>
         <Text variant="bodyMd">Scroll horizontally to see all cards:</Text>
       </div>
 
       <Scrollable horizontal width="600px" shadow>
-        <div style={{ display: 'flex', gap: '16px', padding: '16px', minWidth: '1200px' }}>
+        <div style={{ display: 'flex', gap: '16px', padding: 'var(--spacing-4)', minWidth: '1200px' }}>
           {Array.from({ length: 8 }, (_, i) => (
             <Card key={i} style={{ width: '250px', flexShrink: 0 }}>
               <Card.Section>
                 <div style={{
                   height: '120px',
                   backgroundColor: `hsl(${i * 45}, 70%, 85%)`,
-                  borderRadius: '8px',
+                  borderRadius: 'var(--border-radius-lg)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -190,22 +190,22 @@ export const HorizontalScrolling: Story = {
 export const BothDirections: Story = {
   render: () => {
     return (
-      <div style={{ height: '500px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '500px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Both Horizontal and Vertical Scrolling</Text>
           <Text variant="bodyMd">Scroll in both directions to navigate the content:</Text>
         </div>
 
         <Scrollable height="300px" width="600px" horizontal vertical shadow>
-          <div style={{ minWidth: '1000px', padding: '16px' }}>
+          <div style={{ minWidth: '1000px', padding: 'var(--spacing-4)' }}>
             {Array.from({ length: 10 }, (_, rowIndex) => (
-              <div key={rowIndex} style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+              <div key={rowIndex} style={{ display: 'flex', gap: '12px', marginBottom: 'var(--spacing-3)' }}>
                 {Array.from({ length: 5 }, (_, colIndex) => (
                   <div key={colIndex} style={{
                     width: '200px',
                     height: '80px',
                     backgroundColor: `hsl(${(rowIndex * 5 + colIndex) * 36}, 70%, 85%)`,
-                    borderRadius: '8px',
+                    borderRadius: 'var(--border-radius-lg)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -229,8 +229,8 @@ export const BothDirections: Story = {
 export const MaxHeightContainer: Story = {
   render: () => {
     return (
-      <div style={{ height: '500px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '500px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Max Height Container</Text>
           <Text variant="bodyMd">Container grows to max height then scrolls:</Text>
         </div>
@@ -246,12 +246,12 @@ export const MaxHeightContainer: Story = {
 
           <div style={{ flex: 1 }}>
             <Scrollable maxHeight="250px" shadow>
-              <div style={{ padding: '16px' }}>
+              <div style={{ padding: 'var(--spacing-4)' }}>
                 {Array.from({ length: 20 }, (_, i) => (
                   <div key={i} style={{
-                    padding: '12px',
+                    padding: 'var(--spacing-3)',
                     backgroundColor: '#f8f9fa',
-                    borderRadius: '6px',
+                    borderRadius: 'var(--border-radius-md)',
                     marginBottom: '8px',
                     border: '1px solid #e9ecef'
                   }}>
@@ -273,8 +273,8 @@ export const MaxHeightContainer: Story = {
 export const ScrollableTable: Story = {
   render: () => {
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Scrollable Table</Text>
           <Text variant="bodyMd">Table with fixed headers and scrollable body:</Text>
         </div>
@@ -350,25 +350,25 @@ export const ChatInterface: Story = {
     };
 
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Chat Interface</Text>
           <Text variant="bodyMd">Auto-scrolling chat message container:</Text>
         </div>
 
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
+        <div style={{ border: '1px solid #ddd', borderRadius: 'var(--border-radius-lg)', overflow: 'hidden' }}>
           {/* Chat Messages */}
           <Scrollable height="250px" shadow>
-            <div style={{ padding: '16px' }}>
+            <div style={{ padding: 'var(--spacing-4)' }}>
               {messages.map((message) => (
                 <div key={message.id} style={{
-                  marginBottom: '16px',
+                  marginBottom: 'var(--spacing-4)',
                   display: 'flex',
                   justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start'
                 }}>
                   <div style={{
                     maxWidth: '70%',
-                    padding: '12px',
+                    padding: 'var(--spacing-3)',
                     borderRadius: '12px',
                     backgroundColor: message.sender === 'user' ? '#007ace' : '#f6f6f7',
                     color: message.sender === 'user' ? '#fff' : '#000'
@@ -384,7 +384,7 @@ export const ChatInterface: Story = {
 
           {/* Chat Input */}
           <div style={{
-            padding: '16px',
+            padding: 'var(--spacing-4)',
             borderTop: '1px solid #ddd',
             backgroundColor: '#f9f9f9'
           }}>
@@ -397,9 +397,9 @@ export const ChatInterface: Story = {
                 placeholder="Type your message..."
                 style={{
                   flex: 1,
-                  padding: '8px 12px',
+                  padding: 'var(--spacing-2) var(--spacing-3)',
                   border: '1px solid #ddd',
-                  borderRadius: '4px'
+                  borderRadius: 'var(--border-radius-base)'
                 }}
               />
               <Button onClick={addMessage}>Send</Button>
@@ -414,14 +414,14 @@ export const ChatInterface: Story = {
 export const ImageGallery: Story = {
   render: () => {
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Horizontal Image Gallery</Text>
           <Text variant="bodyMd">Scroll horizontally to browse images:</Text>
         </div>
 
         <Scrollable horizontal width="600px" shadow>
-          <div style={{ display: 'flex', gap: '16px', padding: '16px' }}>
+          <div style={{ display: 'flex', gap: '16px', padding: 'var(--spacing-4)' }}>
             {Array.from({ length: 10 }, (_, i) => (
               <Card key={i} style={{ width: '200px', flexShrink: 0 }}>
                 <div style={{
@@ -482,8 +482,8 @@ function ExampleComponent() {
 export default ExampleComponent;`;
 
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Code Viewer</Text>
           <Text variant="bodyMd">Scrollable code snippet with syntax highlighting style:</Text>
         </div>
@@ -492,11 +492,11 @@ export default ExampleComponent;`;
           <div style={{
             backgroundColor: '#1e1e1e',
             color: '#d4d4d4',
-            padding: '20px',
+            padding: 'var(--spacing-5)',
             fontFamily: 'Monaco, Consolas, "Courier New", monospace',
-            fontSize: "14px",
+            fontSize: "var(--font-size-sm)",
             lineHeight: '1.5',
-            borderRadius: '8px',
+            borderRadius: 'var(--border-radius-lg)',
             overflow: 'auto'
           }}>
             {code.split('\n').map((line, index) => (
@@ -529,19 +529,19 @@ export default ExampleComponent;`;
 export const WithScrollHint: Story = {
   render: () => {
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Scrollable with Hints</Text>
           <Text variant="bodyMd">Container shows scroll hints when content is available:</Text>
         </div>
 
         <Scrollable height="200px" shadow hint>
-          <div style={{ padding: '16px' }}>
+          <div style={{ padding: 'var(--spacing-4)' }}>
             <div style={{
-              padding: '16px',
+              padding: 'var(--spacing-4)',
               backgroundColor: '#e3f2fd',
-              borderRadius: '8px',
-              marginBottom: '16px',
+              borderRadius: 'var(--border-radius-lg)',
+              marginBottom: 'var(--spacing-4)',
               border: '1px solid #bbdefb'
             }}>
               <Text variant="headingSm">Start of Content</Text>
@@ -553,10 +553,10 @@ export const WithScrollHint: Story = {
 
             {Array.from({ length: 8 }, (_, i) => (
               <div key={i} style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: '#f9f9f9',
-                borderRadius: '8px',
-                marginBottom: '12px',
+                borderRadius: 'var(--border-radius-lg)',
+                marginBottom: 'var(--spacing-3)',
                 border: '1px solid #eee'
               }}>
                 <Text variant="bodyMd">
@@ -566,9 +566,9 @@ export const WithScrollHint: Story = {
             ))}
 
             <div style={{
-              padding: '16px',
+              padding: 'var(--spacing-4)',
               backgroundColor: '#e8f5e8',
-              borderRadius: '8px',
+              borderRadius: 'var(--border-radius-lg)',
               border: '1px solid #c3e6cb'
             }}>
               <Text variant="headingSm">End of Content</Text>
@@ -592,8 +592,8 @@ export const AccessibilityDemo: Story = {
     };
 
     return (
-      <div style={{ height: '400px', padding: '40px' }}>
-        <div style={{ marginBottom: '20px' }}>
+      <div style={{ height: '400px', padding: 'var(--spacing-10)' }}>
+        <div style={{ marginBottom: 'var(--spacing-5)' }}>
           <Text variant="headingMd">Accessible Scrollable Container</Text>
           <Text variant="bodyMd">
             This scrollable container includes proper accessibility features:
@@ -601,10 +601,10 @@ export const AccessibilityDemo: Story = {
         </div>
 
         <div style={{
-          padding: '12px',
+          padding: 'var(--spacing-3)',
           backgroundColor: '#f8f9fa',
-          borderRadius: '4px',
-          marginBottom: '20px',
+          borderRadius: 'var(--border-radius-base)',
+          marginBottom: 'var(--spacing-5)',
           border: '1px solid #dee2e6'
         }}>
           <Text variant="bodySm" as="p">
@@ -629,15 +629,15 @@ export const AccessibilityDemo: Story = {
             Use arrow keys or scroll wheel to navigate through content
           </div>
 
-          <div style={{ padding: '16px' }}>
+          <div style={{ padding: 'var(--spacing-4)' }}>
             {Array.from({ length: 10 }, (_, i) => (
               <div
                 key={i}
                 style={{
-                  padding: '16px',
+                  padding: 'var(--spacing-4)',
                   backgroundColor: focusedSection === i + 1 ? '#e3f2fd' : '#f9f9f9',
-                  borderRadius: '8px',
-                  marginBottom: '12px',
+                  borderRadius: 'var(--border-radius-lg)',
+                  marginBottom: 'var(--spacing-3)',
                   border: focusedSection === i + 1 ? '2px solid #2196f3' : '1px solid #eee',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease'

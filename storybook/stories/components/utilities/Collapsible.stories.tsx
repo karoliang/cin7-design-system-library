@@ -57,7 +57,7 @@ export const Default: Story = {
           id="basic-collapsible"
           transition
         >
-          <div style={{ padding: '16px', border: '1px solid #ddd', marginTop: '8px', borderRadius: '4px' }}>
+          <div style={{ padding: 'var(--spacing-4)', border: '1px solid var(--color-border-subdued)', marginTop: 'var(--spacing-2)', borderRadius: 'var(--border-radius-base)' }}>
             <Text as="p" variant="bodyMd">
               This is collapsible content that can be shown or hidden by clicking the button above.
             </Text>
@@ -88,10 +88,10 @@ export const BasicUsage: Story = {
           transition={{ duration: '500ms', timingFunction: 'ease-in-out' }}
         >
           <div style={{
-            padding: '16px',
-            marginTop: '12px',
-            backgroundColor: '#f3f4f6',
-            borderRadius: '4px'
+            padding: 'var(--spacing-4)',
+            marginTop: 'var(--spacing-3)',
+            backgroundColor: 'var(--color-bg-surface-secondary)',
+            borderRadius: 'var(--border-radius-base)'
           }}>
             <BlockStack gap="200">
               <Text as="h4" variant="headingSm">Technical Details</Text>
@@ -139,9 +139,9 @@ export const AccordionStyle: Story = {
     return (
       <Card sectioned>
         <Text as="h3" variant="headingMd">Frequently Asked Questions</Text>
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: 'var(--spacing-4)' }}>
           {sections.map((section) => (
-            <div key={section.id} style={{ marginBottom: '8px' }}>
+            <div key={section.id} style={{ marginBottom: 'var(--spacing-2)' }}>
               <Button
                 onClick={() => handleToggle(section.id)}
                 ariaExpanded={openSection === section.id}
@@ -162,10 +162,10 @@ export const AccordionStyle: Story = {
                 transition
               >
                 <div style={{
-                  padding: '16px',
+                  padding: 'var(--spacing-4)',
                   backgroundColor: '#f3f4f6',
                   borderLeft: '3px solid var(--p-color-interactive)',
-                  marginLeft: '16px'
+                  marginLeft: 'var(--spacing-4)'
                 }}>
                   <Text as="p" variant="bodyMd">
                     {section.content}
@@ -200,7 +200,7 @@ export const NestedCollapsibles: Story = {
           id="main-collapsible"
           transition
         >
-          <div style={{ padding: '16px', marginTop: '12px', backgroundColor: '#f3f4f6', borderRadius: '4px' }}>
+          <div style={{ padding: 'var(--spacing-4)', marginTop: '12px', backgroundColor: '#f3f4f6', borderRadius: 'var(--border-radius-base)' }}>
             <BlockStack gap="300">
               <Text as="h4" variant="headingSm">Configuration Options</Text>
 
@@ -224,10 +224,10 @@ export const NestedCollapsibles: Story = {
                   transition
                 >
                   <div style={{
-                    padding: '12px',
-                    marginTop: '8px',
+                    padding: 'var(--spacing-3)',
+                    marginTop: 'var(--spacing-2)',
                     backgroundColor: 'var(--p-color-bg-surface)',
-                    borderRadius: '4px',
+                    borderRadius: 'var(--border-radius-base)',
                     border: '1px solid var(--p-color-border)'
                   }}>
                     <Text as="p" variant="bodySm" tone="subdued">
@@ -268,7 +268,7 @@ export const MultipleCollapsibles: Story = {
     return (
       <Card sectioned>
         <Text as="h3" variant="headingMd">Product Information</Text>
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: 'var(--spacing-4)' }}>
           <BlockStack gap="200">
             {[
               { id: 'overview', title: 'Overview', content: 'Premium quality product designed for professional use. Features advanced technology and superior build quality.' },
@@ -292,10 +292,10 @@ export const MultipleCollapsibles: Story = {
                   transition
                 >
                   <div style={{
-                    padding: '12px',
-                    marginTop: '8px',
+                    padding: 'var(--spacing-3)',
+                    marginTop: 'var(--spacing-2)',
                     backgroundColor: '#f3f4f6',
-                    borderRadius: '4px'
+                    borderRadius: 'var(--border-radius-base)'
                   }}>
                     <Text as="p" variant="bodySm" whiteSpace="pre-line">
                       {content}
@@ -320,36 +320,36 @@ export const CollapsibleForms: Story = {
       <Card sectioned>
         <Text as="h3" variant="headingMd">Checkout Form</Text>
 
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: 'var(--spacing-4)' }}>
           <BlockStack gap="400">
             <div>
               <Text as="h4" variant="headingSm">Basic Information</Text>
               <div style={{ marginTop: '12px' }}>
-                <div style={{ marginBottom: '12px' }}>
-                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Email</label>
+                <div style={{ marginBottom: 'var(--spacing-3)' }}>
+                  <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>Email</label>
                   <input
                     type="email"
                     placeholder="customer@example.com"
                     style={{
                       width: '100%',
-                      padding: '8px 12px',
+                      padding: 'var(--spacing-2) var(--spacing-3)',
                       border: '1px solid var(--p-color-border)',
-                      borderRadius: '4px',
-                      fontSize: "14px"
+                      borderRadius: 'var(--border-radius-base)',
+                      fontSize: "var(--font-size-sm)"
                     }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>Phone</label>
+                  <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>Phone</label>
                   <input
                     type="tel"
                     placeholder="+1 (555) 123-4567"
                     style={{
                       width: '100%',
-                      padding: '8px 12px',
+                      padding: 'var(--spacing-2) var(--spacing-3)',
                       border: '1px solid var(--p-color-border)',
-                      borderRadius: '4px',
-                      fontSize: "14px"
+                      borderRadius: 'var(--border-radius-base)',
+                      fontSize: "var(--font-size-sm)"
                     }}
                   />
                 </div>
@@ -371,14 +371,14 @@ export const CollapsibleForms: Story = {
                 transition
               >
                 <div style={{
-                  padding: '16px',
+                  padding: 'var(--spacing-4)',
                   marginTop: '12px',
                   backgroundColor: '#f3f4f6',
-                  borderRadius: '4px'
+                  borderRadius: 'var(--border-radius-base)'
                 }}>
                   <BlockStack gap="200">
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>
                         Company Name
                       </label>
                       <input
@@ -386,15 +386,15 @@ export const CollapsibleForms: Story = {
                         placeholder="Acme Corporation"
                         style={{
                           width: '100%',
-                          padding: '8px 12px',
+                          padding: 'var(--spacing-2) var(--spacing-3)',
                           border: '1px solid var(--p-color-border)',
-                          borderRadius: '4px',
-                          fontSize: "14px"
+                          borderRadius: 'var(--border-radius-base)',
+                          fontSize: "var(--font-size-sm)"
                         }}
                       />
                     </div>
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>
                         Tax ID
                       </label>
                       <input
@@ -402,10 +402,10 @@ export const CollapsibleForms: Story = {
                         placeholder="123-45-6789"
                         style={{
                           width: '100%',
-                          padding: '8px 12px',
+                          padding: 'var(--spacing-2) var(--spacing-3)',
                           border: '1px solid var(--p-color-border)',
-                          borderRadius: '4px',
-                          fontSize: "14px"
+                          borderRadius: 'var(--border-radius-base)',
+                          fontSize: "var(--font-size-sm)"
                         }}
                       />
                     </div>
@@ -429,14 +429,14 @@ export const CollapsibleForms: Story = {
                 transition
               >
                 <div style={{
-                  padding: '16px',
+                  padding: 'var(--spacing-4)',
                   marginTop: '12px',
                   backgroundColor: '#f3f4f6',
-                  borderRadius: '4px'
+                  borderRadius: 'var(--border-radius-base)'
                 }}>
                   <BlockStack gap="200">
                     <div>
-                      <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
+                      <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>
                         Street Address
                       </label>
                       <input
@@ -444,16 +444,16 @@ export const CollapsibleForms: Story = {
                         placeholder="123 Main St"
                         style={{
                           width: '100%',
-                          padding: '8px 12px',
+                          padding: 'var(--spacing-2) var(--spacing-3)',
                           border: '1px solid var(--p-color-border)',
-                          borderRadius: '4px',
-                          fontSize: "14px"
+                          borderRadius: 'var(--border-radius-base)',
+                          fontSize: "var(--font-size-sm)"
                         }}
                       />
                     </div>
                     <InlineStack gap="200">
                       <div style={{ flex: 1 }}>
-                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
+                        <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>
                           City
                         </label>
                         <input
@@ -461,15 +461,15 @@ export const CollapsibleForms: Story = {
                           placeholder="New York"
                           style={{
                             width: '100%',
-                            padding: '8px 12px',
+                            padding: 'var(--spacing-2) var(--spacing-3)',
                             border: '1px solid var(--p-color-border)',
-                            borderRadius: '4px',
-                            fontSize: "14px"
+                            borderRadius: 'var(--border-radius-base)',
+                            fontSize: "var(--font-size-sm)"
                           }}
                         />
                       </div>
                       <div style={{ flex: 1 }}>
-                        <label style={{ display: 'block', marginBottom: '4px', fontSize: "14px", fontWeight: '500' }}>
+                        <label style={{ display: 'block', marginBottom: 'var(--spacing-1)', fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-medium)' }}>
                           State
                         </label>
                         <input
@@ -477,10 +477,10 @@ export const CollapsibleForms: Story = {
                           placeholder="NY"
                           style={{
                             width: '100%',
-                            padding: '8px 12px',
+                            padding: 'var(--spacing-2) var(--spacing-3)',
                             border: '1px solid var(--p-color-border)',
-                            borderRadius: '4px',
-                            fontSize: "14px"
+                            borderRadius: 'var(--border-radius-base)',
+                            fontSize: "var(--font-size-sm)"
                           }}
                         />
                       </div>
@@ -533,7 +533,7 @@ export const ProgressiveDisclosure: Story = {
           Click "Next Step" to progressively reveal more advanced content.
         </Text>
 
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: 'var(--spacing-4)' }}>
           <InlineStack gap="200">
             <Button onClick={nextStep} primary>
               Next Step
@@ -544,17 +544,17 @@ export const ProgressiveDisclosure: Story = {
           </InlineStack>
         </div>
 
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: 'var(--spacing-5)' }}>
           {steps.basic && (
             <Collapsible open={steps.basic} transition>
               <div style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: 'var(--p-color-bg-success-subdued)',
-                borderRadius: '4px',
-                marginBottom: '12px'
+                borderRadius: 'var(--border-radius-base)',
+                marginBottom: 'var(--spacing-3)'
               }}>
                 <Text as="h4" variant="headingSm">📚 Basic Concepts</Text>
-                <Text as="p" variant="bodyMd" style={{ marginTop: '8px' }}>
+                <Text as="p" variant="bodyMd" style={{ marginTop: 'var(--spacing-2)' }}>
                   Learn the fundamentals of this topic. This is where everyone starts their journey.
                 </Text>
               </div>
@@ -564,13 +564,13 @@ export const ProgressiveDisclosure: Story = {
           {steps.intermediate && (
             <Collapsible open={steps.intermediate} transition>
               <div style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: 'var(--p-color-bg-highlight-subdued)',
-                borderRadius: '4px',
-                marginBottom: '12px'
+                borderRadius: 'var(--border-radius-base)',
+                marginBottom: 'var(--spacing-3)'
               }}>
                 <Text as="h4" variant="headingSm">🎯 Intermediate Skills</Text>
-                <Text as="p" variant="bodyMd" style={{ marginTop: '8px' }}>
+                <Text as="p" variant="bodyMd" style={{ marginTop: 'var(--spacing-2)' }}>
                   Build upon the basics with more complex techniques and practical applications.
                 </Text>
               </div>
@@ -580,13 +580,13 @@ export const ProgressiveDisclosure: Story = {
           {steps.advanced && (
             <Collapsible open={steps.advanced} transition>
               <div style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: 'var(--p-color-bg-warning-subdued)',
-                borderRadius: '4px',
-                marginBottom: '12px'
+                borderRadius: 'var(--border-radius-base)',
+                marginBottom: 'var(--spacing-3)'
               }}>
                 <Text as="h4" variant="headingSm">🚀 Advanced Techniques</Text>
-                <Text as="p" variant="bodyMd" style={{ marginTop: '8px' }}>
+                <Text as="p" variant="bodyMd" style={{ marginTop: 'var(--spacing-2)' }}>
                   Master advanced concepts and learn professional-level strategies and optimizations.
                 </Text>
               </div>
@@ -596,13 +596,13 @@ export const ProgressiveDisclosure: Story = {
           {steps.expert && (
             <Collapsible open={steps.expert} transition>
               <div style={{
-                padding: '16px',
+                padding: 'var(--spacing-4)',
                 backgroundColor: 'var(--p-color-bg-critical-subdued)',
-                borderRadius: '4px',
-                marginBottom: '12px'
+                borderRadius: 'var(--border-radius-base)',
+                marginBottom: 'var(--spacing-3)'
               }}>
                 <Text as="h4" variant="headingSm">🏆 Expert Level</Text>
-                <Text as="p" variant="bodyMd" style={{ marginTop: '8px' }}>
+                <Text as="p" variant="bodyMd" style={{ marginTop: 'var(--spacing-2)' }}>
                   You've reached the highest level! Expert-level insights and cutting-edge techniques await.
                 </Text>
               </div>
@@ -625,7 +625,7 @@ export const CollapsibleWithAnimation: Story = {
 
         <div style={{ margin: '16px 0' }}>
           <Text as="p" variant="bodySm" tone="subdued">Animation Type:</Text>
-          <InlineStack gap="200" style={{ marginTop: '8px' }}>
+          <InlineStack gap="200" style={{ marginTop: 'var(--spacing-2)' }}>
             {(['smooth', 'fast', 'slow'] as const).map((type) => (
               <Button
                 key={type}
@@ -657,10 +657,10 @@ export const CollapsibleWithAnimation: Story = {
           }}
         >
           <div style={{
-            padding: '16px',
-            marginTop: '12px',
-            backgroundColor: '#f3f4f6',
-            borderRadius: '4px'
+            padding: 'var(--spacing-4)',
+            marginTop: 'var(--spacing-3)',
+            backgroundColor: 'var(--color-bg-surface-secondary)',
+            borderRadius: 'var(--border-radius-base)'
           }}>
             <BlockStack gap="200">
               <Text as="h4" variant="headingSm">Animated Content</Text>
@@ -670,7 +670,7 @@ export const CollapsibleWithAnimation: Story = {
               <div style={{
                 height: '60px',
                 background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1)',
-                borderRadius: '4px',
+                borderRadius: 'var(--border-radius-base)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

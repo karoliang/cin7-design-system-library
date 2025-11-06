@@ -132,7 +132,7 @@ export const DateRange: Story = {
           allowRange
         />
         {selected && (
-          <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
+          <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
             <Text as="p">
               From: {selected.start.toLocaleDateString()}<br/>
               To: {selected.end.toLocaleDateString()}
@@ -336,7 +336,7 @@ export const HotelBooking: Story = {
         )}
 
         {selectedRange && (
-          <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
+          <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
             <Text as="h4" variant="headingSm">Booking Summary:</Text>
             <Text as="p">Check-in: {selectedRange.start.toLocaleDateString()}</Text>
             <Text as="p">Check-out: {selectedRange.end.toLocaleDateString()}</Text>
@@ -389,13 +389,13 @@ export const EventScheduling: Story = {
         <Text as="h3" variant="headingMd">Schedule Event</Text>
 
         <div>
-          <label style={{ display: 'block', marginBottom: '8px', fontSize: "14px", fontWeight: '500' }}>
+          <label style={{ display: 'block', marginBottom: 'var(--spacing-2)', fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)' }}>
             Event Type:
           </label>
           <select
             value={eventType}
             onChange={(e) => setEventType(e.target.value)}
-            style={{ padding: '8px', border: '1px solid #d2d2d2', borderRadius: '4px', width: '200px' }}
+            style={{ padding: 'var(--spacing-2)', border: '1px solid var(--color-gray-300)', borderRadius: 'var(--border-radius-base)', width: '200px' }}
           >
             <option value="meeting">Meeting</option>
             <option value="workshop">Workshop</option>
@@ -420,7 +420,7 @@ export const EventScheduling: Story = {
         )}
 
         {selectedDate && (
-          <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
+          <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
             <Text as="h4" variant="headingSm">Event Details:</Text>
             <Text as="p">Type: {eventType.charAt(0).toUpperCase() + eventType.slice(1)}</Text>
             <Text as="p">Date: {selectedDate.toLocaleDateString('en-US', {
@@ -487,7 +487,7 @@ export const DateRangeComparison: Story = {
         </BlockStack>
 
         {(period1 || period2) && (
-          <div style={{ padding: '12px', backgroundColor: '#f3f4f6', borderRadius: '6px' }}>
+          <div style={{ padding: 'var(--spacing-3)', backgroundColor: 'var(--color-gray-100)', borderRadius: 'var(--border-radius-md)' }}>
             <Text as="h4" variant="headingSm">Comparison Summary:</Text>
             {period1 && (
               <Text as="p">
