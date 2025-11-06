@@ -1,3 +1,4 @@
+# Build configuration for Cin7 DSL documentation site with integrated Storybook
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
