@@ -6326,6 +6326,2140 @@ function CharacterCountExample({
   }
 };
 
+// Navigation - TopBar Component Examples
+export const topbarExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { TopBar } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function TopBarExample() {
+  const [searchValue, setSearchValue] = useState('');
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false);
+
+  const handleSearchResultsDismiss = useCallback(() => {
+    setSearchResultsVisible(false);
+  }, []);
+
+  const handleSearchFieldChange = useCallback((value: string) => {
+    setSearchValue(value);
+    setSearchResultsVisible(value.length > 0);
+  }, []);
+
+  const searchField = (
+    <TopBar.SearchField
+      onChange={handleSearchFieldChange}
+      value={searchValue}
+      placeholder="Search"
+    />
+  );
+
+  return (
+    <div style={{ height: '60px' }}>
+      <TopBar
+        showNavigationToggle
+        searchField={searchField}
+        searchResultsVisible={searchResultsVisible}
+        onSearchResultsDismiss={handleSearchResultsDismiss}
+      />
+    </div>
+  );
+}
+
+export default TopBarExample;`,
+
+    vanilla: `import { createTopBar, createSearchField } from '@cin7/vanilla-js';
+
+// Create search field
+const searchField = createSearchField({
+  placeholder: 'Search',
+  onChange: (value) => {
+    console.log('Search:', value);
+  }
+});
+
+// Create top bar
+const topBar = createTopBar({
+  showNavigationToggle: true,
+  searchField: searchField,
+  onNavigationToggle: () => {
+    console.log('Navigation toggled');
+  }
+});
+
+// Add to page
+document.getElementById('app').appendChild(topBar);`,
+
+    extjs: `import { PolarisTopBar } from '@cin7/extjs-adapters';
+
+// Create top bar with search
+Ext.create('Cin7.component.PolarisTopBar', {
+  showNavigationToggle: true,
+  searchConfig: {
+    placeholder: 'Search',
+    listeners: {
+      change: function(field, value) {
+        console.log('Search:', value);
+      }
+    }
+  },
+  listeners: {
+    navigationtoggle: function() {
+      console.log('Navigation toggled');
+    }
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { TopBar } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function TopBarExample(): JSX.Element {
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchResultsVisible, setSearchResultsVisible] = useState<boolean>(false);
+
+  const handleSearchResultsDismiss = useCallback((): void => {
+    setSearchResultsVisible(false);
+  }, []);
+
+  const handleSearchFieldChange = useCallback((value: string): void => {
+    setSearchValue(value);
+    setSearchResultsVisible(value.length > 0);
+  }, []);
+
+  const searchField = (
+    <TopBar.SearchField
+      onChange={handleSearchFieldChange}
+      value={searchValue}
+      placeholder="Search"
+    />
+  );
+
+  return (
+    <div style={{ height: '60px' }}>
+      <TopBar
+        showNavigationToggle
+        searchField={searchField}
+        searchResultsVisible={searchResultsVisible}
+        onSearchResultsDismiss={handleSearchResultsDismiss}
+      />
+    </div>
+  );
+}
+
+export default TopBarExample;`
+  },
+
+  withusermenu: {
+    react: `import { TopBar } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function WithUserMenuExample() {
+  const [searchValue, setSearchValue] = useState('');
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const handleToggleUserMenu = useCallback(() => {
+    setIsUserMenuOpen((prev) => !prev);
+  }, []);
+
+  const searchField = (
+    <TopBar.SearchField
+      onChange={setSearchValue}
+      value={searchValue}
+      placeholder="Search products, orders, customers..."
+    />
+  );
+
+  const userMenu = (
+    <TopBar.UserMenu
+      actions={[
+        {
+          items: [
+            { content: 'Account', icon: 'profile' },
+            { content: 'Preferences', icon: 'settings' },
+            { content: 'Log out', icon: 'logOut' },
+          ],
+        },
+      ]}
+      name="John Doe"
+      detail="john.doe@example.com"
+      initials="JD"
+      open={isUserMenuOpen}
+      onToggle={handleToggleUserMenu}
+    />
+  );
+
+  return (
+    <div style={{ height: '60px' }}>
+      <TopBar
+        showNavigationToggle
+        searchField={searchField}
+        userMenu={userMenu}
+      />
+    </div>
+  );
+}
+
+export default WithUserMenuExample;`,
+
+    vanilla: `import { createTopBar, createUserMenu } from '@cin7/vanilla-js';
+
+// Create user menu
+const userMenu = createUserMenu({
+  name: 'John Doe',
+  detail: 'john.doe@example.com',
+  initials: 'JD',
+  actions: [
+    {
+      items: [
+        { content: 'Account', icon: 'profile' },
+        { content: 'Preferences', icon: 'settings' },
+        { content: 'Log out', icon: 'logOut' }
+      ]
+    }
+  ]
+});
+
+// Create top bar with user menu
+const topBar = createTopBar({
+  showNavigationToggle: true,
+  userMenu: userMenu
+});
+
+document.getElementById('app').appendChild(topBar);`,
+
+    extjs: `import { PolarisTopBar } from '@cin7/extjs-adapters';
+
+// Create top bar with user menu
+Ext.create('Cin7.component.PolarisTopBar', {
+  showNavigationToggle: true,
+  userMenuConfig: {
+    name: 'John Doe',
+    detail: 'john.doe@example.com',
+    initials: 'JD',
+    actions: [
+      {
+        items: [
+          { content: 'Account', icon: 'profile' },
+          { content: 'Preferences', icon: 'settings' },
+          { content: 'Log out', icon: 'logOut' }
+        ]
+      }
+    ]
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { TopBar } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface MenuAction {
+  content: string;
+  icon?: string;
+}
+
+function WithUserMenuExample(): JSX.Element {
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
+
+  const handleToggleUserMenu = useCallback((): void => {
+    setIsUserMenuOpen((prev) => !prev);
+  }, []);
+
+  const searchField = (
+    <TopBar.SearchField
+      onChange={setSearchValue}
+      value={searchValue}
+      placeholder="Search products, orders, customers..."
+    />
+  );
+
+  const userMenu = (
+    <TopBar.UserMenu
+      actions={[
+        {
+          items: [
+            { content: 'Account', icon: 'profile' },
+            { content: 'Preferences', icon: 'settings' },
+            { content: 'Log out', icon: 'logOut' },
+          ],
+        },
+      ]}
+      name="John Doe"
+      detail="john.doe@example.com"
+      initials="JD"
+      open={isUserMenuOpen}
+      onToggle={handleToggleUserMenu}
+    />
+  );
+
+  return (
+    <div style={{ height: '60px' }}>
+      <TopBar
+        showNavigationToggle
+        searchField={searchField}
+        userMenu={userMenu}
+      />
+    </div>
+  );
+}
+
+export default WithUserMenuExample;`
+  }
+};
+
+// Feedback - Badge Component Examples
+export const badgeExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample() {
+  return <Badge>New</Badge>;
+}
+
+export default BadgeExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create badge
+const badge = createBadge({ text: 'New' });
+
+// Add to page
+document.getElementById('app').appendChild(badge);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create badge
+Ext.create('Cin7.component.PolarisBadge', {
+  text: 'New',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+function BadgeExample(): JSX.Element {
+  return <Badge>New</Badge>;
+}
+
+export default BadgeExample;`
+  },
+
+  tones: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function TonesExample() {
+  return (
+    <InlineStack gap="400">
+      <Badge tone="success">Success</Badge>
+      <Badge tone="info">Info</Badge>
+      <Badge tone="attention">Attention</Badge>
+      <Badge tone="warning">Warning</Badge>
+      <Badge tone="critical">Critical</Badge>
+      <Badge tone="new">New</Badge>
+    </InlineStack>
+  );
+}
+
+export default TonesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '16px';
+
+// Create badges with different tones
+const tones = [
+  { tone: 'success', text: 'Success' },
+  { tone: 'info', text: 'Info' },
+  { tone: 'attention', text: 'Attention' },
+  { tone: 'warning', text: 'Warning' },
+  { tone: 'critical', text: 'Critical' },
+  { tone: 'new', text: 'New' }
+];
+
+tones.forEach(({ tone, text }) => {
+  const badge = createBadge({ text, tone });
+  container.appendChild(badge);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create container panel
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 16
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    { xtype: 'polarisbadge', text: 'Success', tone: 'success' },
+    { xtype: 'polarisbadge', text: 'Info', tone: 'info' },
+    { xtype: 'polarisbadge', text: 'Attention', tone: 'attention' },
+    { xtype: 'polarisbadge', text: 'Warning', tone: 'warning' },
+    { xtype: 'polarisbadge', text: 'Critical', tone: 'critical' },
+    { xtype: 'polarisbadge', text: 'New', tone: 'new' }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+function TonesExample(): JSX.Element {
+  const tones: { tone: BadgeTone; label: string }[] = [
+    { tone: 'success', label: 'Success' },
+    { tone: 'info', label: 'Info' },
+    { tone: 'attention', label: 'Attention' },
+    { tone: 'warning', label: 'Warning' },
+    { tone: 'critical', label: 'Critical' },
+    { tone: 'new', label: 'New' }
+  ];
+
+  return (
+    <InlineStack gap="400">
+      {tones.map(({ tone, label }) => (
+        <Badge key={tone} tone={tone}>
+          {label}
+        </Badge>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default TonesExample;`
+  },
+
+  progress: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function ProgressExample() {
+  return (
+    <InlineStack gap="400">
+      <Badge progress="incomplete">Task 1</Badge>
+      <Badge progress="partiallyComplete">Task 2</Badge>
+      <Badge progress="complete">Task 3</Badge>
+    </InlineStack>
+  );
+}
+
+export default ProgressExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '16px';
+
+// Create progress badges
+const progressStates = [
+  { progress: 'incomplete', text: 'Task 1' },
+  { progress: 'partiallyComplete', text: 'Task 2' },
+  { progress: 'complete', text: 'Task 3' }
+];
+
+progressStates.forEach(({ progress, text }) => {
+  const badge = createBadge({ text, progress });
+  container.appendChild(badge);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create container with progress badges
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 16
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    { xtype: 'polarisbadge', text: 'Task 1', progress: 'incomplete' },
+    { xtype: 'polarisbadge', text: 'Task 2', progress: 'partiallyComplete' },
+    { xtype: 'polarisbadge', text: 'Task 3', progress: 'complete' }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeProgress = 'incomplete' | 'partiallyComplete' | 'complete';
+
+function ProgressExample(): JSX.Element {
+  const tasks: { progress: BadgeProgress; label: string }[] = [
+    { progress: 'incomplete', label: 'Task 1' },
+    { progress: 'partiallyComplete', label: 'Task 2' },
+    { progress: 'complete', label: 'Task 3' }
+  ];
+
+  return (
+    <InlineStack gap="400">
+      {tasks.map(({ progress, label }) => (
+        <Badge key={label} progress={progress}>
+          {label}
+        </Badge>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default ProgressExample;`
+  },
+
+  sizes: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function SizesExample() {
+  return (
+    <InlineStack gap="400" align="center">
+      <Badge size="small">Small</Badge>
+      <Badge size="medium">Medium</Badge>
+      <Badge size="large">Large</Badge>
+    </InlineStack>
+  );
+}
+
+export default SizesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '16px';
+container.style.alignItems = 'center';
+
+// Create badges with different sizes
+const sizes = [
+  { size: 'small', text: 'Small' },
+  { size: 'medium', text: 'Medium' },
+  { size: 'large', text: 'Large' }
+];
+
+sizes.forEach(({ size, text }) => {
+  const badge = createBadge({ text, size });
+  container.appendChild(badge);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create container with different sized badges
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 16
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    { xtype: 'polarisbadge', text: 'Small', size: 'small' },
+    { xtype: 'polarisbadge', text: 'Medium', size: 'medium' },
+    { xtype: 'polarisbadge', text: 'Large', size: 'large' }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeSize = 'small' | 'medium' | 'large';
+
+function SizesExample(): JSX.Element {
+  const sizes: { size: BadgeSize; label: string }[] = [
+    { size: 'small', label: 'Small' },
+    { size: 'medium', label: 'Medium' },
+    { size: 'large', label: 'Large' }
+  ];
+
+  return (
+    <InlineStack gap="400" align="center">
+      {sizes.map(({ size, label }) => (
+        <Badge key={size} size={size}>
+          {label}
+        </Badge>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default SizesExample;`
+  }
+};
+
+// Utilities - Tag Component Examples
+export const tagExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function TagExample() {
+  return <Tag>Sample Tag</Tag>;
+}
+
+export default TagExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+// Create tag
+const tag = createTag({ text: 'Sample Tag' });
+
+// Add to page
+document.getElementById('app').appendChild(tag);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+// Create tag
+Ext.create('Cin7.component.PolarisTag', {
+  text: 'Sample Tag',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function TagExample(): JSX.Element {
+  return <Tag>Sample Tag</Tag>;
+}
+
+export default TagExample;`
+  },
+
+  basictags: {
+    react: `import { Tag, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function BasicTagsExample() {
+  return (
+    <InlineStack gap="300">
+      <Tag>Default</Tag>
+      <Tag tone="success">Success</Tag>
+      <Tag tone="warning">Warning</Tag>
+      <Tag tone="critical">Critical</Tag>
+      <Tag tone="info">Info</Tag>
+      <Tag tone="highlight">Highlight</Tag>
+    </InlineStack>
+  );
+}
+
+export default BasicTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '12px';
+container.style.flexWrap = 'wrap';
+
+// Create tags with different tones
+const tags = [
+  { text: 'Default' },
+  { text: 'Success', tone: 'success' },
+  { text: 'Warning', tone: 'warning' },
+  { text: 'Critical', tone: 'critical' },
+  { text: 'Info', tone: 'info' },
+  { text: 'Highlight', tone: 'highlight' }
+];
+
+tags.forEach(config => {
+  const tag = createTag(config);
+  container.appendChild(tag);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+// Create container with tags
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 12
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    { xtype: 'polaristag', text: 'Default' },
+    { xtype: 'polaristag', text: 'Success', tone: 'success' },
+    { xtype: 'polaristag', text: 'Warning', tone: 'warning' },
+    { xtype: 'polaristag', text: 'Critical', tone: 'critical' },
+    { xtype: 'polaristag', text: 'Info', tone: 'info' },
+    { xtype: 'polaristag', text: 'Highlight', tone: 'highlight' }
+  ]
+});`,
+
+    typescript: `import { Tag, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type TagTone = 'base' | 'success' | 'warning' | 'critical' | 'info' | 'highlight';
+
+interface TagConfig {
+  text: string;
+  tone?: TagTone;
+}
+
+function BasicTagsExample(): JSX.Element {
+  const tags: TagConfig[] = [
+    { text: 'Default' },
+    { text: 'Success', tone: 'success' },
+    { text: 'Warning', tone: 'warning' },
+    { text: 'Critical', tone: 'critical' },
+    { text: 'Info', tone: 'info' },
+    { text: 'Highlight', tone: 'highlight' }
+  ];
+
+  return (
+    <InlineStack gap="300">
+      {tags.map(({ text, tone }) => (
+        <Tag key={text} tone={tone}>
+          {text}
+        </Tag>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default BasicTagsExample;`
+  },
+
+  removabletags: {
+    react: `import { Tag, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function RemovableTagsExample() {
+  const [tags, setTags] = useState([
+    { id: '1', text: 'Electronics' },
+    { id: '2', text: 'Books' },
+    { id: '3', text: 'Clothing' },
+    { id: '4', text: 'Home & Garden' },
+  ]);
+
+  const handleRemove = (tagId: string) => {
+    setTags(prev => prev.filter(tag => tag.id !== tagId));
+  };
+
+  return (
+    <InlineStack gap="200" wrap>
+      {tags.map(tag => (
+        <Tag
+          key={tag.id}
+          onRemove={() => handleRemove(tag.id)}
+          removable
+        >
+          {tag.text}
+        </Tag>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default RemovableTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+// State management
+let tags = [
+  { id: '1', text: 'Electronics' },
+  { id: '2', text: 'Books' },
+  { id: '3', text: 'Clothing' },
+  { id: '4', text: 'Home & Garden' }
+];
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '8px';
+container.style.flexWrap = 'wrap';
+
+// Render tags function
+function renderTags() {
+  container.innerHTML = '';
+  tags.forEach(tag => {
+    const tagEl = createTag({
+      text: tag.text,
+      removable: true,
+      onRemove: () => {
+        tags = tags.filter(t => t.id !== tag.id);
+        renderTags();
+      }
+    });
+    container.appendChild(tagEl);
+  });
+}
+
+renderTags();
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+// Create tag store
+const tagStore = Ext.create('Ext.data.Store', {
+  fields: ['id', 'text'],
+  data: [
+    { id: '1', text: 'Electronics' },
+    { id: '2', text: 'Books' },
+    { id: '3', text: 'Clothing' },
+    { id: '4', text: 'Home & Garden' }
+  ]
+});
+
+// Create container
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 8
+  },
+  renderTo: Ext.getBody()
+});
+
+// Render tags
+tagStore.each(function(record) {
+  container.add({
+    xtype: 'polaristag',
+    text: record.get('text'),
+    removable: true,
+    listeners: {
+      remove: function() {
+        tagStore.remove(record);
+        container.remove(this);
+      }
+    }
+  });
+});`,
+
+    typescript: `import { Tag, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface TagData {
+  id: string;
+  text: string;
+}
+
+function RemovableTagsExample(): JSX.Element {
+  const [tags, setTags] = useState<TagData[]>([
+    { id: '1', text: 'Electronics' },
+    { id: '2', text: 'Books' },
+    { id: '3', text: 'Clothing' },
+    { id: '4', text: 'Home & Garden' },
+  ]);
+
+  const handleRemove = (tagId: string): void => {
+    setTags(prev => prev.filter(tag => tag.id !== tagId));
+  };
+
+  return (
+    <InlineStack gap="200" wrap>
+      {tags.map(tag => (
+        <Tag
+          key={tag.id}
+          onRemove={() => handleRemove(tag.id)}
+          removable
+        >
+          {tag.text}
+        </Tag>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default RemovableTagsExample;`
+  },
+
+  clickabletags: {
+    react: `import { Tag, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ClickableTagsExample() {
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const tags = [
+    { id: 'all', text: 'All Products' },
+    { id: 'active', text: 'Active' },
+    { id: 'archived', text: 'Archived' },
+    { id: 'draft', text: 'Draft' },
+  ];
+
+  return (
+    <InlineStack gap="200">
+      {tags.map(tag => (
+        <Tag
+          key={tag.id}
+          onClick={() => setSelectedTag(tag.id)}
+          clickable
+          tone={selectedTag === tag.id ? 'highlight' : 'base'}
+        >
+          {tag.text}
+        </Tag>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default ClickableTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+// State
+let selectedTag = null;
+
+// Tags data
+const tags = [
+  { id: 'all', text: 'All Products' },
+  { id: 'active', text: 'Active' },
+  { id: 'archived', text: 'Archived' },
+  { id: 'draft', text: 'Draft' }
+];
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '8px';
+
+// Render tags
+tags.forEach(tag => {
+  const tagEl = createTag({
+    text: tag.text,
+    clickable: true,
+    tone: selectedTag === tag.id ? 'highlight' : 'base',
+    onClick: () => {
+      selectedTag = tag.id;
+      console.log('Selected:', tag.text);
+      // Re-render to update tones
+      container.querySelectorAll('.polaris-tag').forEach(el => {
+        el.classList.remove('polaris-tag--highlight');
+      });
+      tagEl.classList.add('polaris-tag--highlight');
+    }
+  });
+  container.appendChild(tagEl);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+// State
+let selectedTag = null;
+
+// Tags data
+const tags = [
+  { id: 'all', text: 'All Products' },
+  { id: 'active', text: 'Active' },
+  { id: 'archived', text: 'Archived' },
+  { id: 'draft', text: 'Draft' }
+];
+
+// Create container
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 8
+  },
+  renderTo: Ext.getBody()
+});
+
+// Create tags
+tags.forEach(tagData => {
+  const tag = Ext.create('Cin7.component.PolarisTag', {
+    text: tagData.text,
+    clickable: true,
+    tone: 'base',
+    tagId: tagData.id,
+    listeners: {
+      click: function() {
+        selectedTag = this.tagId;
+        console.log('Selected:', this.text);
+        // Update all tags
+        container.items.each(function(item) {
+          item.setTone(item.tagId === selectedTag ? 'highlight' : 'base');
+        });
+      }
+    }
+  });
+  container.add(tag);
+});`,
+
+    typescript: `import { Tag, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface TagData {
+  id: string;
+  text: string;
+}
+
+type TagTone = 'base' | 'highlight';
+
+function ClickableTagsExample(): JSX.Element {
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const tags: TagData[] = [
+    { id: 'all', text: 'All Products' },
+    { id: 'active', text: 'Active' },
+    { id: 'archived', text: 'Archived' },
+    { id: 'draft', text: 'Draft' },
+  ];
+
+  const handleTagClick = (tagId: string): void => {
+    setSelectedTag(tagId);
+  };
+
+  const getTagTone = (tagId: string): TagTone => {
+    return selectedTag === tagId ? 'highlight' : 'base';
+  };
+
+  return (
+    <InlineStack gap="200">
+      {tags.map(tag => (
+        <Tag
+          key={tag.id}
+          onClick={() => handleTagClick(tag.id)}
+          clickable
+          tone={getTagTone(tag.id)}
+        >
+          {tag.text}
+        </Tag>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default ClickableTagsExample;`
+  }
+};
+
+
+// Select Component Examples
+export const selectExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+function SelectExample() {
+  const [selected, setSelected] = useState('');
+
+  const options = [
+    {label: 'Please select', value: ''},
+    {label: 'Option 1', value: '1'},
+    {label: 'Option 2', value: '2'},
+    {label: 'Option 3', value: '3'},
+  ];
+
+  return (
+    <Select
+      label="Choose an option"
+      options={options}
+      value={selected}
+      onChange={setSelected}
+      placeholder="Select an option"
+    />
+  );
+}
+
+export default SelectExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-wrapper">
+  <label class="polaris-label">Choose an option</label>
+  <select class="polaris-select" id="select-demo">
+    <option value="">Select an option</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+const selectEl = $('#select-demo');
+
+on(selectEl, 'change', (e) => {
+  const selectedValue = e.target.value;
+  console.log('Selected:', selectedValue);
+
+  // Trigger custom event for cross-component communication
+  EventBus.emit('select:changed', { value: selectedValue });
+});
+</script>`,
+
+    extjs: `// ExtJS ComboBox using @cin7/extjs-adapters
+Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Choose an option',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label'],
+    data: [
+      {value: '', label: 'Please select'},
+      {value: '1', label: 'Option 1'},
+      {value: '2', label: 'Option 2'},
+      {value: '3', label: 'Option 3'}
+    ]
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  editable: false,
+  emptyText: 'Select an option',
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(combo, newValue) {
+      console.log('Selected:', newValue);
+      EventBus.emit('select:changed', { value: newValue });
+    }
+  }
+});`,
+
+    typescript: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface SelectOption {
+  label: string;
+  value: string;
+}
+
+interface SelectExampleProps {
+  label?: string;
+  options?: SelectOption[];
+  placeholder?: string;
+  onChange?: (value: string) => void;
+}
+
+function SelectExample({
+  label = 'Choose an option',
+  options = [
+    {label: 'Please select', value: ''},
+    {label: 'Option 1', value: '1'},
+    {label: 'Option 2', value: '2'},
+    {label: 'Option 3', value: '3'},
+  ],
+  placeholder = 'Select an option',
+  onChange
+}: SelectExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+
+  const handleChange = (value: string): void => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <Select
+      label={label}
+      options={options}
+      value={selected}
+      onChange={handleChange}
+      placeholder={placeholder}
+    />
+  );
+}
+
+export default SelectExample;`
+  },
+
+  disabled: {
+    react: `import { Select } from '@shopify/polaris';
+
+function DisabledSelectExample() {
+  const options = [
+    {label: 'Please select', value: ''},
+    {label: 'Option 1', value: '1'},
+    {label: 'Option 2', value: '2'},
+    {label: 'Option 3', value: '3'},
+  ];
+
+  return (
+    <Select
+      label="Disabled select"
+      options={options}
+      value="1"
+      disabled
+      onChange={() => {}}
+    />
+  );
+}
+
+export default DisabledSelectExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-wrapper">
+  <label class="polaris-label">Disabled select</label>
+  <select class="polaris-select" id="disabled-select" disabled>
+    <option value="">Please select</option>
+    <option value="1" selected>Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
+</div>`,
+
+    extjs: `// ExtJS ComboBox - Disabled
+Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Disabled select',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label'],
+    data: [
+      {value: '', label: 'Please select'},
+      {value: '1', label: 'Option 1'},
+      {value: '2', label: 'Option 2'},
+      {value: '3', label: 'Option 3'}
+    ]
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  editable: false,
+  value: '1',
+  disabled: true,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Select } from '@shopify/polaris';
+
+interface DisabledSelectExampleProps {
+  label?: string;
+  value?: string;
+}
+
+function DisabledSelectExample({
+  label = 'Disabled select',
+  value = '1'
+}: DisabledSelectExampleProps): JSX.Element {
+  const options = [
+    {label: 'Please select', value: ''},
+    {label: 'Option 1', value: '1'},
+    {label: 'Option 2', value: '2'},
+    {label: 'Option 3', value: '3'},
+  ];
+
+  return (
+    <Select
+      label={label}
+      options={options}
+      value={value}
+      disabled
+      onChange={() => {}}
+    />
+  );
+}
+
+export default DisabledSelectExample;`
+  },
+
+  'with-validation-error': {
+    react: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+function SelectWithErrorExample() {
+  const [selected, setSelected] = useState('');
+  const [error, setError] = useState('Payment method is required');
+
+  const options = [
+    {label: 'Select payment method', value: ''},
+    {label: 'Credit Card', value: 'credit'},
+    {label: 'Debit Card', value: 'debit'},
+    {label: 'PayPal', value: 'paypal'},
+  ];
+
+  const handleChange = (value: string) => {
+    setSelected(value);
+    if (value) {
+      setError('');
+    }
+  };
+
+  return (
+    <Select
+      label="Payment method"
+      options={options}
+      value={selected}
+      onChange={handleChange}
+      error={error}
+    />
+  );
+}
+
+export default SelectWithErrorExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-select-wrapper">
+  <label class="polaris-label">Payment method</label>
+  <select class="polaris-select polaris-select--error" id="payment-select">
+    <option value="">Select payment method</option>
+    <option value="credit">Credit Card</option>
+    <option value="debit">Debit Card</option>
+    <option value="paypal">PayPal</option>
+  </select>
+  <div class="polaris-error" id="payment-error">Payment method is required</div>
+</div>
+
+<script>
+import { $, on, addClass, removeClass } from '@cin7/vanilla-js';
+
+const selectEl = $('#payment-select');
+const errorEl = $('#payment-error');
+
+on(selectEl, 'change', (e) => {
+  const value = e.target.value;
+  if (value) {
+    removeClass(selectEl, 'polaris-select--error');
+    errorEl.style.display = 'none';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS ComboBox with validation
+Ext.create('Ext.form.field.ComboBox', {
+  fieldLabel: 'Payment method',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['value', 'label'],
+    data: [
+      {value: '', label: 'Select payment method'},
+      {value: 'credit', label: 'Credit Card'},
+      {value: 'debit', label: 'Debit Card'},
+      {value: 'paypal', label: 'PayPal'}
+    ]
+  }),
+  displayField: 'label',
+  valueField: 'value',
+  queryMode: 'local',
+  editable: false,
+  allowBlank: false,
+  blankText: 'Payment method is required',
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(combo, newValue) {
+      if (newValue) {
+        combo.clearInvalid();
+      } else {
+        combo.markInvalid('Payment method is required');
+      }
+    }
+  }
+});`,
+
+    typescript: `import { Select } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface PaymentOption {
+  label: string;
+  value: string;
+}
+
+function SelectWithErrorExample(): JSX.Element {
+  const [selected, setSelected] = useState<string>('');
+  const [error, setError] = useState<string>('Payment method is required');
+
+  const options: PaymentOption[] = [
+    {label: 'Select payment method', value: ''},
+    {label: 'Credit Card', value: 'credit'},
+    {label: 'Debit Card', value: 'debit'},
+    {label: 'PayPal', value: 'paypal'},
+  ];
+
+  const handleChange = (value: string): void => {
+    setSelected(value);
+    if (value) {
+      setError('');
+    } else {
+      setError('Payment method is required');
+    }
+  };
+
+  return (
+    <Select
+      label="Payment method"
+      options={options}
+      value={selected}
+      onChange={handleChange}
+      error={error || undefined}
+    />
+  );
+}
+
+export default SelectWithErrorExample;`
+  }
+};
+
+// Checkbox Component Examples
+export const checkboxExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckboxExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Checkbox
+      label="Subscribe to newsletter"
+      checked={checked}
+      onChange={setChecked}
+    />
+  );
+}
+
+export default CheckboxExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-wrapper">
+  <label class="polaris-checkbox-label">
+    <input type="checkbox" class="polaris-checkbox" id="newsletter-checkbox" />
+    <span class="polaris-checkbox-label-text">Subscribe to newsletter</span>
+  </label>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const checkbox = $('#newsletter-checkbox');
+
+on(checkbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  console.log('Checkbox state:', isChecked);
+  EventBus.emit('checkbox:changed', {
+    id: 'newsletter',
+    checked: isChecked
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Checkbox using @cin7/extjs-adapters
+Ext.create('Ext.form.field.Checkbox', {
+  boxLabel: 'Subscribe to newsletter',
+  checked: false,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(checkbox, newValue) {
+      console.log('Checkbox state:', newValue);
+      EventBus.emit('checkbox:changed', {
+        id: 'newsletter',
+        checked: newValue
+      });
+    }
+  }
+});`,
+
+    typescript: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface CheckboxExampleProps {
+  label?: string;
+  initialChecked?: boolean;
+  onChange?: (checked: boolean) => void;
+}
+
+function CheckboxExample({
+  label = 'Subscribe to newsletter',
+  initialChecked = false,
+  onChange
+}: CheckboxExampleProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(initialChecked);
+
+  const handleChange = (newChecked: boolean): void => {
+    setChecked(newChecked);
+    onChange?.(newChecked);
+  };
+
+  return (
+    <Checkbox
+      label={label}
+      checked={checked}
+      onChange={handleChange}
+    />
+  );
+}
+
+export default CheckboxExample;`
+  },
+
+  checked: {
+    react: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckedCheckboxExample() {
+  const [checked, setChecked] = useState(true);
+
+  return (
+    <Checkbox
+      label="Accept terms and conditions"
+      checked={checked}
+      onChange={setChecked}
+    />
+  );
+}
+
+export default CheckedCheckboxExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-wrapper">
+  <label class="polaris-checkbox-label">
+    <input type="checkbox" class="polaris-checkbox" id="terms-checkbox" checked />
+    <span class="polaris-checkbox-label-text">Accept terms and conditions</span>
+  </label>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const checkbox = $('#terms-checkbox');
+
+on(checkbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  console.log('Terms accepted:', isChecked);
+  if (!isChecked) {
+    alert('You must accept the terms to continue');
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Checkbox - Pre-checked
+Ext.create('Ext.form.field.Checkbox', {
+  boxLabel: 'Accept terms and conditions',
+  checked: true,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(checkbox, newValue) {
+      if (!newValue) {
+        Ext.Msg.alert('Required', 'You must accept the terms to continue');
+      }
+    }
+  }
+});`,
+
+    typescript: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckedCheckboxExample(): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(true);
+
+  const handleChange = (newChecked: boolean): void => {
+    setChecked(newChecked);
+    if (!newChecked) {
+      console.warn('Terms must be accepted');
+    }
+  };
+
+  return (
+    <Checkbox
+      label="Accept terms and conditions"
+      checked={checked}
+      onChange={handleChange}
+    />
+  );
+}
+
+export default CheckedCheckboxExample;`
+  },
+
+  disabled: {
+    react: `import { Checkbox, BlockStack } from '@shopify/polaris';
+
+function DisabledCheckboxExample() {
+  return (
+    <BlockStack gap="400">
+      <Checkbox label="Disabled unchecked" disabled />
+      <Checkbox label="Disabled checked" checked disabled />
+    </BlockStack>
+  );
+}
+
+export default DisabledCheckboxExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack">
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" disabled />
+      <span class="polaris-checkbox-label-text">Disabled unchecked</span>
+    </label>
+  </div>
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" checked disabled />
+      <span class="polaris-checkbox-label-text">Disabled checked</span>
+    </label>
+  </div>
+</div>`,
+
+    extjs: `// ExtJS Checkboxes - Disabled states
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [
+    {
+      xtype: 'checkbox',
+      boxLabel: 'Disabled unchecked',
+      disabled: true
+    },
+    {
+      xtype: 'checkbox',
+      boxLabel: 'Disabled checked',
+      checked: true,
+      disabled: true
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Checkbox, BlockStack } from '@shopify/polaris';
+
+function DisabledCheckboxExample(): JSX.Element {
+  return (
+    <BlockStack gap="400">
+      <Checkbox
+        label="Disabled unchecked"
+        disabled
+        onChange={() => {}}
+      />
+      <Checkbox
+        label="Disabled checked"
+        checked
+        disabled
+        onChange={() => {}}
+      />
+    </BlockStack>
+  );
+}
+
+export default DisabledCheckboxExample;`
+  },
+
+  'with-help-text': {
+    react: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckboxWithHelpTextExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Checkbox
+      label="Enable notifications"
+      checked={checked}
+      onChange={setChecked}
+      helpText="Receive email updates about your account activity"
+    />
+  );
+}
+
+export default CheckboxWithHelpTextExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-wrapper">
+  <label class="polaris-checkbox-label">
+    <input type="checkbox" class="polaris-checkbox" id="notifications-checkbox" />
+    <span class="polaris-checkbox-label-text">Enable notifications</span>
+  </label>
+  <div class="polaris-help-text">
+    Receive email updates about your account activity
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const checkbox = $('#notifications-checkbox');
+
+on(checkbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  console.log('Notifications enabled:', isChecked);
+  EventBus.emit('preferences:changed', {
+    notifications: isChecked
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Checkbox with help text
+Ext.create('Ext.form.FieldContainer', {
+  items: [
+    {
+      xtype: 'checkbox',
+      boxLabel: 'Enable notifications',
+      listeners: {
+        change: function(checkbox, newValue) {
+          console.log('Notifications enabled:', newValue);
+          EventBus.emit('preferences:changed', {
+            notifications: newValue
+          });
+        }
+      }
+    }
+  ],
+  afterBodyEl: '<div class="polaris-help-text">Receive email updates about your account activity</div>',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface CheckboxWithHelpTextProps {
+  label?: string;
+  helpText?: string;
+  onChange?: (checked: boolean) => void;
+}
+
+function CheckboxWithHelpTextExample({
+  label = 'Enable notifications',
+  helpText = 'Receive email updates about your account activity',
+  onChange
+}: CheckboxWithHelpTextProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(false);
+
+  const handleChange = (newChecked: boolean): void => {
+    setChecked(newChecked);
+    onChange?.(newChecked);
+  };
+
+  return (
+    <Checkbox
+      label={label}
+      checked={checked}
+      onChange={handleChange}
+      helpText={helpText}
+    />
+  );
+}
+
+export default CheckboxWithHelpTextExample;`
+  }
+};
+
+// RadioButton Component Examples
+export const radioButtonExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+function RadioButtonExample() {
+  const [selected, setSelected] = useState('standard');
+
+  return (
+    <RadioButton
+      label="Standard shipping"
+      name="shipping"
+      value="standard"
+      checked={selected === 'standard'}
+      onChange={() => setSelected('standard')}
+    />
+  );
+}
+
+export default RadioButtonExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-radio-wrapper">
+  <label class="polaris-radio-label">
+    <input
+      type="radio"
+      class="polaris-radio"
+      name="shipping"
+      value="standard"
+      id="standard-radio"
+      checked
+    />
+    <span class="polaris-radio-label-text">Standard shipping</span>
+  </label>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const radio = $('#standard-radio');
+
+on(radio, 'change', (e) => {
+  if (e.target.checked) {
+    console.log('Selected:', e.target.value);
+    EventBus.emit('radio:changed', {
+      name: 'shipping',
+      value: e.target.value
+    });
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Radio Button using @cin7/extjs-adapters
+Ext.create('Ext.form.field.Radio', {
+  boxLabel: 'Standard shipping',
+  name: 'shipping',
+  inputValue: 'standard',
+  checked: true,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(radio, newValue) {
+      if (newValue) {
+        console.log('Selected:', radio.inputValue);
+        EventBus.emit('radio:changed', {
+          name: 'shipping',
+          value: radio.inputValue
+        });
+      }
+    }
+  }
+});
+
+// Or using RadioGroup for multiple options
+Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Shipping Method',
+  columns: 1,
+  vertical: true,
+  items: [
+    {boxLabel: 'Standard shipping', name: 'shipping', inputValue: 'standard', checked: true},
+    {boxLabel: 'Express shipping', name: 'shipping', inputValue: 'express'},
+    {boxLabel: 'Overnight shipping', name: 'shipping', inputValue: 'overnight'}
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface RadioButtonExampleProps {
+  label?: string;
+  name?: string;
+  value?: string;
+  initialSelected?: string;
+  onChange?: (value: string) => void;
+}
+
+function RadioButtonExample({
+  label = 'Standard shipping',
+  name = 'shipping',
+  value = 'standard',
+  initialSelected = 'standard',
+  onChange
+}: RadioButtonExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string>(initialSelected);
+
+  const handleChange = (): void => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <RadioButton
+      label={label}
+      name={name}
+      value={value}
+      checked={selected === value}
+      onChange={handleChange}
+    />
+  );
+}
+
+export default RadioButtonExample;`
+  },
+
+  checked: {
+    react: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckedRadioButtonExample() {
+  const [selected, setSelected] = useState('express');
+
+  return (
+    <RadioButton
+      label="Express shipping"
+      name="shipping"
+      value="express"
+      checked={selected === 'express'}
+      onChange={() => setSelected('express')}
+    />
+  );
+}
+
+export default CheckedRadioButtonExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-radio-wrapper">
+  <label class="polaris-radio-label">
+    <input
+      type="radio"
+      class="polaris-radio"
+      name="shipping"
+      value="express"
+      id="express-radio"
+      checked
+    />
+    <span class="polaris-radio-label-text">Express shipping</span>
+  </label>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const radio = $('#express-radio');
+
+on(radio, 'change', (e) => {
+  if (e.target.checked) {
+    console.log('Selected shipping:', e.target.value);
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Radio Button - Pre-selected
+Ext.create('Ext.form.field.Radio', {
+  boxLabel: 'Express shipping',
+  name: 'shipping',
+  inputValue: 'express',
+  checked: true,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(radio, newValue) {
+      if (newValue) {
+        console.log('Selected shipping:', radio.inputValue);
+      }
+    }
+  }
+});`,
+
+    typescript: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckedRadioButtonExample(): JSX.Element {
+  const [selected, setSelected] = useState<string>('express');
+
+  const handleChange = (): void => {
+    setSelected('express');
+  };
+
+  return (
+    <RadioButton
+      label="Express shipping"
+      name="shipping"
+      value="express"
+      checked={selected === 'express'}
+      onChange={handleChange}
+    />
+  );
+}
+
+export default CheckedRadioButtonExample;`
+  },
+
+  disabled: {
+    react: `import { RadioButton, BlockStack } from '@shopify/polaris';
+
+function DisabledRadioButtonExample() {
+  return (
+    <BlockStack gap="400">
+      <RadioButton
+        label="Disabled unchecked"
+        disabled
+        name="disabled"
+        value="no"
+      />
+      <RadioButton
+        label="Disabled checked"
+        checked
+        disabled
+        name="disabled"
+        value="yes"
+      />
+    </BlockStack>
+  );
+}
+
+export default DisabledRadioButtonExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack">
+  <div class="polaris-radio-wrapper">
+    <label class="polaris-radio-label">
+      <input type="radio" class="polaris-radio" name="disabled" value="no" disabled />
+      <span class="polaris-radio-label-text">Disabled unchecked</span>
+    </label>
+  </div>
+  <div class="polaris-radio-wrapper">
+    <label class="polaris-radio-label">
+      <input type="radio" class="polaris-radio" name="disabled" value="yes" checked disabled />
+      <span class="polaris-radio-label-text">Disabled checked</span>
+    </label>
+  </div>
+</div>`,
+
+    extjs: `// ExtJS Radio Buttons - Disabled states
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [
+    {
+      xtype: 'radio',
+      boxLabel: 'Disabled unchecked',
+      name: 'disabled',
+      inputValue: 'no',
+      disabled: true
+    },
+    {
+      xtype: 'radio',
+      boxLabel: 'Disabled checked',
+      name: 'disabled',
+      inputValue: 'yes',
+      checked: true,
+      disabled: true
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { RadioButton, BlockStack } from '@shopify/polaris';
+
+function DisabledRadioButtonExample(): JSX.Element {
+  return (
+    <BlockStack gap="400">
+      <RadioButton
+        label="Disabled unchecked"
+        disabled
+        name="disabled"
+        value="no"
+        onChange={() => {}}
+      />
+      <RadioButton
+        label="Disabled checked"
+        checked
+        disabled
+        name="disabled"
+        value="yes"
+        onChange={() => {}}
+      />
+    </BlockStack>
+  );
+}
+
+export default DisabledRadioButtonExample;`
+  },
+
+  'with-help-text': {
+    react: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+function RadioButtonWithHelpTextExample() {
+  const [selected, setSelected] = useState('premium');
+
+  return (
+    <RadioButton
+      label="Premium shipping"
+      name="shipping"
+      value="premium"
+      checked={selected === 'premium'}
+      onChange={() => setSelected('premium')}
+      helpText="Delivered within 1-2 business days with tracking"
+    />
+  );
+}
+
+export default RadioButtonWithHelpTextExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-radio-wrapper">
+  <label class="polaris-radio-label">
+    <input
+      type="radio"
+      class="polaris-radio"
+      name="shipping"
+      value="premium"
+      id="premium-radio"
+      checked
+    />
+    <span class="polaris-radio-label-text">Premium shipping</span>
+  </label>
+  <div class="polaris-help-text">
+    Delivered within 1-2 business days with tracking
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const radio = $('#premium-radio');
+
+on(radio, 'change', (e) => {
+  if (e.target.checked) {
+    console.log('Premium shipping selected');
+    EventBus.emit('shipping:changed', {
+      method: 'premium',
+      delivery: '1-2 business days'
+    });
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Radio Button with help text
+Ext.create('Ext.form.FieldContainer', {
+  items: [
+    {
+      xtype: 'radio',
+      boxLabel: 'Premium shipping',
+      name: 'shipping',
+      inputValue: 'premium',
+      checked: true,
+      listeners: {
+        change: function(radio, newValue) {
+          if (newValue) {
+            console.log('Premium shipping selected');
+            EventBus.emit('shipping:changed', {
+              method: 'premium',
+              delivery: '1-2 business days'
+            });
+          }
+        }
+      }
+    }
+  ],
+  afterBodyEl: '<div class="polaris-help-text">Delivered within 1-2 business days with tracking</div>',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { RadioButton } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface RadioButtonWithHelpTextProps {
+  label?: string;
+  helpText?: string;
+  name?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+function RadioButtonWithHelpTextExample({
+  label = 'Premium shipping',
+  helpText = 'Delivered within 1-2 business days with tracking',
+  name = 'shipping',
+  value = 'premium',
+  onChange
+}: RadioButtonWithHelpTextProps): JSX.Element {
+  const [selected, setSelected] = useState<string>(value);
+
+  const handleChange = (): void => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <RadioButton
+      label={label}
+      name={name}
+      value={value}
+      checked={selected === value}
+      onChange={handleChange}
+      helpText={helpText}
+    />
+  );
+}
+
+export default RadioButtonWithHelpTextExample;`
+  }
+};
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -6336,6 +8470,24 @@ export function getCodeVariants(
     card: cardExamples,
     textfield: textFieldExamples,
     modal: modalExamples,
+    banner: bannerExamples,
+    actionlist: actionList,
+    tabs: tabsExamples,
+    pagination: paginationExamples,
+    link: linkExamples,
+    navigation: navigationExamples,
+    toast: toastExamples,
+    spinner: spinnerExamples,
+    progressbar: progressbarExamples,
+    page: pageExamples,
+    layout: layoutExamples,
+    blockstack: blockstackExamples,
+    topbar: topbarExamples,
+    badge: badgeExamples,
+    tag: tagExamples,
+    select: selectExamples,
+    checkbox: checkboxExamples,
+    radiobutton: radioButtonExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

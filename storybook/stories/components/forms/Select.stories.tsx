@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Select, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/Select',
@@ -104,6 +105,9 @@ export const Default: Story = {
     options: basicOptions,
     placeholder: 'Select an option',
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
 };
 
 export const WithValue: Story = {
@@ -120,6 +124,9 @@ export const Disabled: Story = {
     options: basicOptions,
     value: '1',
     disabled: true,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'disabled'),
   },
 };
 
@@ -155,6 +162,9 @@ export const WithError: Story = {
       {label: 'PayPal', value: 'paypal'},
     ],
     error: 'Payment method is required',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'with-validation-error'),
   },
 };
 

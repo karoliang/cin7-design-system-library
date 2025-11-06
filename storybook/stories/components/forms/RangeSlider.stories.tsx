@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { RangeSlider, Card, BlockStack, InlineStack, Text, Badge, Button } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/RangeSlider',

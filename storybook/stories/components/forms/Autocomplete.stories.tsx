@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Autocomplete, TextField, Label, Icon, Popover, Card, InlineStack, BlockStack } from '@shopify/polaris';
 import { SearchIcon, CalendarIcon, PersonIcon, ProductIcon, OrderIcon } from '@shopify/polaris-icons';
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/Autocomplete',

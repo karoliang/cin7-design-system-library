@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ColorPicker, Card, InlineStack, BlockStack, Button, TextField, Label, Popover, Icon } from '@shopify/polaris';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/ColorPicker',

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DatePicker, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
 import en from '@shopify/polaris/locales/en.json';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/DatePicker',

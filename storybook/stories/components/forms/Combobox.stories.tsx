@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Combobox, Icon, Text, BlockStack, InlineStack } from '@shopify/polaris';
 import { SearchIcon, PlusIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/Combobox',

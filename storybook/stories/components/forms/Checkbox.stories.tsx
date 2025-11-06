@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Checkbox, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/Checkbox',
@@ -61,12 +62,18 @@ export const Default: Story = {
   args: {
     label: 'Subscribe to newsletter',
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'default'),
+  },
 };
 
 export const Checked: Story = {
   args: {
     label: 'Accept terms and conditions',
     checked: true,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'checked'),
   },
 };
 
@@ -77,12 +84,18 @@ export const Disabled: Story = {
       <Checkbox label="Disabled checked" checked disabled />
     </BlockStack>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'disabled'),
+  },
 };
 
 export const WithHelpText: Story = {
   args: {
     label: 'Enable notifications',
     helpText: 'Receive email updates about your account activity',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'with-help-text'),
   },
 };
 

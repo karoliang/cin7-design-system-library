@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { RadioButton, BlockStack, InlineStack, Text } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/RadioButton',
@@ -67,6 +68,9 @@ export const Default: Story = {
     name: 'shipping',
     value: 'standard',
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
 };
 
 export const Checked: Story = {
@@ -75,6 +79,9 @@ export const Checked: Story = {
     name: 'shipping',
     value: 'express',
     checked: true,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'checked'),
   },
 };
 
@@ -85,6 +92,9 @@ export const Disabled: Story = {
       <RadioButton label="Disabled checked" checked disabled name="disabled" value="yes" />
     </BlockStack>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'disabled'),
+  },
 };
 
 export const WithHelpText: Story = {
@@ -93,6 +103,9 @@ export const WithHelpText: Story = {
     name: 'shipping',
     value: 'premium',
     helpText: 'Delivered within 1-2 business days with tracking',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'with-help-text'),
   },
 };
 
