@@ -3,6 +3,15 @@ import { ResourceItem, ResourceList, Card, BlockStack, InlineStack, Badge, Butto
 import { PersonIcon, ProductIcon, OrderIcon, NoteIcon, ViewIcon, EditIcon, DeleteIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
+// Helper function to create inline SVG placeholder images
+const createPlaceholder = (text: string, bgColor: string, textColor: string) => {
+  const svg = `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+    <rect width="60" height="60" fill="${bgColor}"/>
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}" font-family="Arial, sans-serif" font-size="24" font-weight="bold">${text}</text>
+  </svg>`;
+  return `data:image/svg+xml;base64,${btoa(svg)}`;
+};
+
 const meta = {
   title: 'Components/Data/ResourceItem',
   component: ResourceItem,
@@ -123,14 +132,14 @@ export const WithMedia: Story = {
               {
                 id: '1',
                 name: 'Wireless Headphones',
-                image: 'https://via.placeholder.com/60x60/007ace/ffffff?text=🎧',
+                image: createPlaceholder('🎧', '#007ace', '#ffffff'),
                 price: '$149.99',
                 category: 'Electronics',
               },
               {
                 id: '2',
                 name: 'Cotton T-Shirt',
-                image: 'https://via.placeholder.com/60x60/dc2626/ffffff?text=T',
+                image: createPlaceholder('T', '#dc2626', '#ffffff'),
                 price: '$24.99',
                 category: 'Clothing',
               },
@@ -575,7 +584,7 @@ export const ProductGridExample: Story = {
         compareAtPrice: '$34.99',
         inventory: 150,
         status: 'Active',
-        image: 'https://via.placeholder.com/60x60/f3f4f6/374151?text=T',
+        image: createPlaceholder('T', '#f3f4f6', '#374151'),
       },
       {
         id: '2',
@@ -584,7 +593,7 @@ export const ProductGridExample: Story = {
         compareAtPrice: null,
         inventory: 45,
         status: 'Active',
-        image: 'https://via.placeholder.com/60x60/1e40af/ffffff?text=J',
+        image: createPlaceholder('J', '#1e40af', '#ffffff'),
       },
       {
         id: '3',
@@ -593,7 +602,7 @@ export const ProductGridExample: Story = {
         compareAtPrice: '$159.99',
         inventory: 0,
         status: 'Out of Stock',
-        image: 'https://via.placeholder.com/60x60/dc2626/ffffff?text=R',
+        image: createPlaceholder('R', '#dc2626', '#ffffff'),
       },
       {
         id: '4',
@@ -602,7 +611,7 @@ export const ProductGridExample: Story = {
         compareAtPrice: null,
         inventory: 89,
         status: 'Active',
-        image: 'https://via.placeholder.com/60x60/92400e/ffffff?text=W',
+        image: createPlaceholder('W', '#92400e', '#ffffff'),
       },
     ];
 
