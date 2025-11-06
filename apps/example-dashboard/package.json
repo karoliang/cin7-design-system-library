@@ -13,7 +13,7 @@
   "dependencies": {
     "@cin7/core": "workspace:*",
     "@cin7/polaris-adapter": "workspace:*",
-    "@shopify/polaris": "^12.0.0",
+    "@shopify/polaris": "^13.9.5",
     "@tanstack/react-query": "^5.17.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

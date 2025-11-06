@@ -50,8 +50,8 @@
   "dependencies": {
     "@cin7/core": "workspace:*",
     "@cin7/design-tokens": "workspace:*",
-    "highcharts": "^11.4.0",
-    "highcharts-react-official": "^3.2.1"
+    "highcharts": "^12.4.0",
+    "highcharts-react-official": "^3.2.3"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",

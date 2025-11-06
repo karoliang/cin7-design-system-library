@@ -141,8 +141,8 @@ export function createCurrencyTooltipFormatter(
   currency: string = 'USD',
   locale: string = 'en-US'
 ): Highcharts.TooltipFormatterCallbackFunction {
-  return function (this: Highcharts.TooltipFormatterContextObject): string {
-    const point = this.point || this;
+  return function (this: Highcharts.Point): string {
+    const point = this;
     const value = point.y || 0;
     const formattedValue = formatCurrency(value, currency, locale);
 
@@ -156,8 +156,8 @@ export function createCurrencyTooltipFormatter(
 export function createPercentageTooltipFormatter(
   decimals: number = 1
 ): Highcharts.TooltipFormatterCallbackFunction {
-  return function (this: Highcharts.TooltipFormatterContextObject): string {
-    const point = this.point || this;
+  return function (this: Highcharts.Point): string {
+    const point = this;
     const value = point.y || 0;
     const formattedValue = formatPercentage(value, decimals);
 

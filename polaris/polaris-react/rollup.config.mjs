@@ -2,6 +2,7 @@
 // Rollup is used directly to build for prod.
 import {readFileSync} from 'fs';
 import * as path from 'path';
+import {fileURLToPath} from 'url';
 
 import {babel} from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -16,7 +17,7 @@ import {generateScopedName} from './config/rollup/namespaced-classname.mjs';
 import postcssPlugins from './config/postcss-plugins.js';
 
 const pkg = JSON.parse(
-  readFileSync(new URL('./package.json', import.meta.url).pathname),
+  readFileSync(fileURLToPath(new URL('./package.json', import.meta.url))),
 );
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 

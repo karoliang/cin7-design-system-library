@@ -15,7 +15,7 @@
     "@cin7/typescript-sdk": "workspace:*",
     "@cin7/polaris-adapter": "workspace:*",
     "@cin7/extjs-adapters": "workspace:*",
-    "@shopify/polaris": "^12.0.0",
+    "@shopify/polaris": "^13.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zustand": "^4.4.7"
