@@ -7,9 +7,9 @@ import {
   ExternalIcon,
   MobileIcon,
   NoteIcon,
-  ProductsIcon,
-  CustomersIcon,
-  AnalyticsIcon
+  ProductIcon,
+  PersonIcon,
+  ChartHistogramFullIcon
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -127,9 +127,9 @@ export const FeatureList: Story = {
         Premium Features
       </h3>
       <List gap="loose">
-        <List.Item icon={AnalyticsIcon}>Advanced analytics dashboard</List.Item>
-        <List.Item icon={ProductsIcon}>Unlimited product listings</List.Item>
-        <List.Item icon={CustomersIcon}>Customer segmentation tools</List.Item>
+        <List.Item icon={ChartHistogramFullIcon}>Advanced analytics dashboard</List.Item>
+        <List.Item icon={ProductIcon}>Unlimited product listings</List.Item>
+        <List.Item icon={PersonIcon}>Customer segmentation tools</List.Item>
         <List.Item icon={MobileIcon}>Mobile app integration</List.Item>
       </List>
     </div>
@@ -211,9 +211,9 @@ export const NavigationList: Story = {
     const [activeItem, setActiveItem] = useState('products');
 
     const navItems = [
-      { id: 'products', label: 'Products', icon: ProductsIcon, count: 42 },
-      { id: 'customers', label: 'Customers', icon: CustomersIcon, count: 128 },
-      { id: 'analytics', label: 'Analytics', icon: AnalyticsIcon, count: null },
+      { id: 'products', label: 'Products', icon: ProductIcon, count: 42 },
+      { id: 'customers', label: 'Customers', icon: PersonIcon, count: 128 },
+      { id: 'analytics', label: 'Analytics', icon: ChartHistogramFullIcon, count: null },
       { id: 'settings', label: 'Settings', icon: NoteIcon, count: null },
     ];
 

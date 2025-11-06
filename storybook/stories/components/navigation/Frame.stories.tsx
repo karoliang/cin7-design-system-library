@@ -17,9 +17,9 @@ import {
 import {
   HomeIcon,
   OrdersIcon,
-  ProductsIcon,
-  CustomersIcon,
-  AnalyticsIcon,
+  ProductIcon,
+  PersonIcon,
+  ChartHistogramFullIcon,
   SettingsIcon,
   LogOutIcon,
   QuestionMarkIcon,
@@ -99,7 +99,7 @@ const navigationItems = [
   },
   {
     label: 'Products',
-    icon: ProductsIcon,
+    icon: ProductIcon,
     url: '#',
     subNavigationItems: [
       {
@@ -118,12 +118,12 @@ const navigationItems = [
   },
   {
     label: 'Customers',
-    icon: CustomersIcon,
+    icon: PersonIcon,
     url: '#',
   },
   {
     label: 'Analytics',
-    icon: AnalyticsIcon,
+    icon: ChartHistogramFullIcon,
     url: '#',
   },
   {
@@ -262,14 +262,14 @@ export const WithLogo: Story = {
           items={[
             { label: 'Dashboard', icon: HomeIcon, url: '#' },
             { label: 'Orders', icon: OrdersIcon, url: '#' },
-            { label: 'Products', icon: ProductsIcon, url: '#' },
+            { label: 'Products', icon: ProductIcon, url: '#' },
           ]}
         />
         <Navigation.Section
           title="Sales Channel"
           items={[
             { label: 'Online Store', icon: HomeIcon, url: '#' },
-            { label: 'Point of Sale', icon: ProductsIcon, url: '#' },
+            { label: 'Point of Sale', icon: ProductIcon, url: '#' },
             { label: 'Buy Button', icon: OrdersIcon, url: '#' },
           ]}
         />
@@ -433,7 +433,7 @@ export const EcommerceLayout: Story = {
       },
       {
         label: 'Products',
-        icon: ProductsIcon,
+        icon: ProductIcon,
         url: '#',
         subNavigationItems: [
           { label: 'All products', url: '#' },
@@ -444,13 +444,13 @@ export const EcommerceLayout: Story = {
       },
       {
         label: 'Customers',
-        icon: CustomersIcon,
+        icon: PersonIcon,
         url: '#',
         badge: { status: 'new', content: '23' },
       },
       {
         label: 'Analytics',
-        icon: AnalyticsIcon,
+        icon: ChartHistogramFullIcon,
         url: '#',
       },
       {

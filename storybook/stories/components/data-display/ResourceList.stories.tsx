@@ -13,8 +13,8 @@ import {
 } from '@shopify/polaris';
 import {
   NoteIcon,
-  ProductsIcon,
-  CustomersIcon,
+  ProductIcon,
+  PersonIcon,
   OrdersIcon,
   CheckCircleIcon,
   AlertCircleIcon,
