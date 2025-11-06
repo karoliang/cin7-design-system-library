@@ -8460,6 +8460,1966 @@ function RadioButtonWithHelpTextExample({
 export default RadioButtonWithHelpTextExample;`
   }
 };
+
+// Avatar Component Examples
+export const avatarExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Avatar } from '@shopify/polaris';
+import React from 'react';
+
+function AvatarExample() {
+  return <Avatar name="John Doe" size="medium" />;
+}
+
+export default AvatarExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-avatar polaris-avatar--medium">
+  <span class="polaris-avatar__initials">JD</span>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar } from '@cin7/vanilla-js';
+
+const avatar = createAvatar({
+  name: 'John Doe',
+  size: 'medium',
+  generateInitials: (name) => {
+    return name.split(' ').map(n => n[0]).join('');
+  }
+});
+
+document.getElementById('user-profile').appendChild(avatar);
+</script>`,
+
+    extjs: `// ExtJS Avatar using @cin7/extjs-adapters
+Ext.create('Ext.Component', {
+  cls: 'polaris-avatar',
+  html: '<span class="polaris-avatar__initials">JD</span>',
+  width: 40,
+  height: 40,
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+const avatar = Ext.create('PolarisAvatar', {
+  name: 'John Doe',
+  size: 'medium',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar } from '@shopify/polaris';
+import React from 'react';
+
+interface AvatarExampleProps {
+  name: string;
+  size?: 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge';
+  source?: string;
+  initials?: string;
+  customer?: boolean;
+}
+
+function AvatarExample({
+  name,
+  size = 'medium',
+  source,
+  initials,
+  customer = false
+}: AvatarExampleProps): JSX.Element {
+  return (
+    <Avatar
+      name={name}
+      size={size}
+      source={source}
+      initials={initials}
+      customer={customer}
+    />
+  );
+}
+
+export default AvatarExample;`
+  }
+};
+
+// MediaCard Component Examples
+export const mediacardExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+function MediaCardExample() {
+  return (
+    <MediaCard
+      title="Modern Office Chair"
+      description="Ergonomic office chair with lumbar support and adjustable armrests. Perfect for long working hours."
+      portrait
+      primaryAction={{
+        content: 'View details',
+        onAction: () => console.log('View details clicked'),
+      }}
+    />
+  );
+}
+
+export default MediaCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media">
+    <img src="placeholder.jpg" alt="Modern Office Chair" />
+  </div>
+  <div class="polaris-media-card__content">
+    <h3 class="polaris-media-card__title">Modern Office Chair</h3>
+    <p class="polaris-media-card__description">
+      Ergonomic office chair with lumbar support and adjustable armrests.
+      Perfect for long working hours.
+    </p>
+    <button class="polaris-button polaris-button--primary">View details</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createMediaCard } from '@cin7/vanilla-js';
+
+const mediaCard = createMediaCard({
+  title: 'Modern Office Chair',
+  description: 'Ergonomic office chair with lumbar support and adjustable armrests.',
+  portrait: true,
+  primaryAction: {
+    content: 'View details',
+    onClick: () => {
+      console.log('View details clicked');
+    }
+  }
+});
+
+document.getElementById('product-section').appendChild(mediaCard);
+</script>`,
+
+    extjs: `// ExtJS MediaCard using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-media-card',
+  title: 'Modern Office Chair',
+  bodyPadding: 16,
+  html: 'Ergonomic office chair with lumbar support and adjustable armrests. Perfect for long working hours.',
+  buttons: [{
+    text: 'View details',
+    ui: 'primary',
+    handler: function() {
+      console.log('View details clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisMediaCard } from '@cin7/extjs-adapters';
+
+const mediaCard = Ext.create('PolarisMediaCard', {
+  title: 'Modern Office Chair',
+  description: 'Ergonomic office chair with lumbar support and adjustable armrests.',
+  portrait: true,
+  primaryAction: {
+    text: 'View details',
+    handler: function() {
+      console.log('View details clicked');
+    }
+  }
+});`,
+
+    typescript: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+interface MediaCardExampleProps {
+  title: string;
+  description: string;
+  portrait?: boolean;
+  primaryAction?: {
+    content: string;
+    onAction: () => void;
+  };
+  secondaryAction?: {
+    content: string;
+    onAction: () => void;
+  };
+}
+
+function MediaCardExample({
+  title,
+  description,
+  portrait = false,
+  primaryAction,
+  secondaryAction
+}: MediaCardExampleProps): JSX.Element {
+  return (
+    <MediaCard
+      title={title}
+      description={description}
+      portrait={portrait}
+      primaryAction={primaryAction}
+      secondaryAction={secondaryAction}
+    />
+  );
+}
+
+export default MediaCardExample;`
+  }
+};
+
+// Thumbnail Component Examples
+export const thumbnailExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Thumbnail } from '@shopify/polaris';
+import React from 'react';
+
+function ThumbnailExample() {
+  return (
+    <Thumbnail
+      size="medium"
+      source="https://picsum.photos/seed/product1/200/200.jpg"
+      alt="Product image"
+    />
+  );
+}
+
+export default ThumbnailExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-thumbnail polaris-thumbnail--medium">
+  <img
+    src="https://picsum.photos/seed/product1/200/200.jpg"
+    alt="Product image"
+    class="polaris-thumbnail__image"
+  />
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createThumbnail } from '@cin7/vanilla-js';
+
+const thumbnail = createThumbnail({
+  size: 'medium',
+  source: 'https://picsum.photos/seed/product1/200/200.jpg',
+  alt: 'Product image',
+  onClick: () => {
+    console.log('Thumbnail clicked');
+  }
+});
+
+document.getElementById('product-gallery').appendChild(thumbnail);
+</script>`,
+
+    extjs: `// ExtJS Thumbnail using @cin7/extjs-adapters
+Ext.create('Ext.Img', {
+  src: 'https://picsum.photos/seed/product1/200/200.jpg',
+  alt: 'Product image',
+  cls: 'polaris-thumbnail polaris-thumbnail--medium',
+  width: 80,
+  height: 80,
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisThumbnail } from '@cin7/extjs-adapters';
+
+const thumbnail = Ext.create('PolarisThumbnail', {
+  size: 'medium',
+  source: 'https://picsum.photos/seed/product1/200/200.jpg',
+  alt: 'Product image',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Thumbnail } from '@shopify/polaris';
+import React from 'react';
+
+interface ThumbnailExampleProps {
+  size?: 'small' | 'medium' | 'large';
+  source: string;
+  alt: string;
+  transparent?: boolean;
+}
+
+function ThumbnailExample({
+  size = 'medium',
+  source,
+  alt,
+  transparent = false
+}: ThumbnailExampleProps): JSX.Element {
+  return (
+    <Thumbnail
+      size={size}
+      source={source}
+      alt={alt}
+      transparent={transparent}
+    />
+  );
+}
+
+export default ThumbnailExample;`
+  }
+};
+
+// VideoThumbnail Component Examples
+export const videothumbnailExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { VideoThumbnail } from '@shopify/polaris';
+import React from 'react';
+
+function VideoThumbnailExample() {
+  return (
+    <VideoThumbnail
+      thumbnailUrl="https://picsum.photos/seed/video1/640/360.jpg"
+      videoLength={120}
+      thumbnailAlt="Video thumbnail preview"
+    />
+  );
+}
+
+export default VideoThumbnailExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-video-thumbnail">
+  <img
+    src="https://picsum.photos/seed/video1/640/360.jpg"
+    alt="Video thumbnail preview"
+    class="polaris-video-thumbnail__image"
+  />
+  <div class="polaris-video-thumbnail__play-button">
+    <svg viewBox="0 0 20 20" class="polaris-icon">
+      <path d="M6 4l10 6-10 6V4z"/>
+    </svg>
+  </div>
+  <div class="polaris-video-thumbnail__duration">2:00</div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createVideoThumbnail } from '@cin7/vanilla-js';
+
+const videoThumbnail = createVideoThumbnail({
+  thumbnailUrl: 'https://picsum.photos/seed/video1/640/360.jpg',
+  videoLength: 120,
+  alt: 'Video thumbnail preview',
+  onPlaybackStart: () => {
+    console.log('Video playback started');
+  }
+});
+
+document.getElementById('video-section').appendChild(videoThumbnail);
+</script>`,
+
+    extjs: `// ExtJS VideoThumbnail using @cin7/extjs-adapters
+Ext.create('Ext.Container', {
+  cls: 'polaris-video-thumbnail',
+  layout: 'fit',
+  items: [{
+    xtype: 'image',
+    src: 'https://picsum.photos/seed/video1/640/360.jpg',
+    alt: 'Video thumbnail preview'
+  }],
+  listeners: {
+    el: {
+      click: function() {
+        console.log('Video playback started');
+      }
+    }
+  },
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisVideoThumbnail } from '@cin7/extjs-adapters';
+
+const videoThumbnail = Ext.create('PolarisVideoThumbnail', {
+  thumbnailUrl: 'https://picsum.photos/seed/video1/640/360.jpg',
+  videoLength: 120,
+  alt: 'Video thumbnail preview',
+  onPlaybackStart: function() {
+    console.log('Video playback started');
+  }
+});`,
+
+    typescript: `import { VideoThumbnail } from '@shopify/polaris';
+import React from 'react';
+
+interface VideoThumbnailExampleProps {
+  thumbnailUrl: string;
+  videoLength: number;
+  thumbnailAlt: string;
+  showProgress?: boolean;
+  accessibilityLabel?: string;
+  onPlaybackStart?: () => void;
+}
+
+function VideoThumbnailExample({
+  thumbnailUrl,
+  videoLength,
+  thumbnailAlt,
+  showProgress = false,
+  accessibilityLabel,
+  onPlaybackStart
+}: VideoThumbnailExampleProps): JSX.Element {
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return \`\${mins}:\${secs.toString().padStart(2, '0')}\`;
+  };
+
+  return (
+    <VideoThumbnail
+      thumbnailUrl={thumbnailUrl}
+      videoLength={videoLength}
+      thumbnailAlt={thumbnailAlt}
+      showProgress={showProgress}
+      accessibilityLabel={accessibilityLabel || \`Video duration \${formatTime(videoLength)}\`}
+      onPlaybackStart={onPlaybackStart}
+    />
+  );
+}
+
+export default VideoThumbnailExample;`
+  }
+};
+
+// ==============================================================
+// DATA DISPLAY COMPONENT CODE VARIANTS
+// ==============================================================
+// This file contains multi-language code examples for Data Display components.
+// To be integrated into codeVariants.ts before "// Utility function to get code variants"
+
+// DataTable Component Examples
+export const dataTableExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { DataTable } from '@shopify/polaris';
+import React from 'react';
+
+function DataTableExample() {
+  const rows = [
+    ['#1020', 'Jul 20 at 3:46pm', '$42.00', '2 items', 'Fulfilled'],
+    ['#1019', 'Jul 20 at 2:31pm', '$125.00', '5 items', 'Unfulfilled'],
+    ['#1018', 'Jul 20 at 1:22pm', '$89.00', '3 items', 'Fulfilled'],
+  ];
+
+  return (
+    <DataTable
+      columnContentTypes={['text', 'text', 'numeric', 'text', 'text']}
+      headings={['Order', 'Date', 'Total', 'Items', 'Status']}
+      rows={rows}
+    />
+  );
+}
+
+export default DataTableExample;`,
+
+    vanilla: `import { createDataTable, EventBus } from '@cin7/vanilla-js';
+
+// Define table data
+const tableData = {
+  headings: ['Order', 'Date', 'Total', 'Items', 'Status'],
+  rows: [
+    ['#1020', 'Jul 20 at 3:46pm', '$42.00', '2 items', 'Fulfilled'],
+    ['#1019', 'Jul 20 at 2:31pm', '$125.00', '5 items', 'Unfulfilled'],
+    ['#1018', 'Jul 20 at 1:22pm', '$89.00', '3 items', 'Fulfilled'],
+  ],
+  columnTypes: ['text', 'text', 'numeric', 'text', 'text']
+};
+
+// Create and render data table
+const dataTable = createDataTable(tableData);
+document.getElementById('app').appendChild(dataTable);
+
+// Listen for row click events
+EventBus.on('datatable:row:click', (event) => {
+  console.log('Row clicked:', event.detail.rowData);
+});`,
+
+    extjs: `import { PolarisDataTable } from '@cin7/extjs-adapters';
+
+// Create DataTable using ExtJS adapter
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  width: 800,
+  items: [{
+    xtype: 'polarisdatatable',
+    headings: ['Order', 'Date', 'Total', 'Items', 'Status'],
+    columnContentTypes: ['text', 'text', 'numeric', 'text', 'text'],
+    rows: [
+      ['#1020', 'Jul 20 at 3:46pm', '$42.00', '2 items', 'Fulfilled'],
+      ['#1019', 'Jul 20 at 2:31pm', '$125.00', '5 items', 'Unfulfilled'],
+      ['#1018', 'Jul 20 at 1:22pm', '$89.00', '3 items', 'Fulfilled'],
+    ],
+    listeners: {
+      rowclick: function(table, rowIndex, rowData) {
+        console.log('Row clicked:', rowData);
+      }
+    }
+  }]
+});`,
+
+    typescript: `import { DataTable } from '@shopify/polaris';
+import React from 'react';
+
+interface OrderRow {
+  order: string;
+  date: string;
+  total: string;
+  items: string;
+  status: string;
+}
+
+interface DataTableExampleProps {
+  orders?: OrderRow[];
+}
+
+function DataTableExample({ orders }: DataTableExampleProps): JSX.Element {
+  const defaultOrders: OrderRow[] = [
+    { order: '#1020', date: 'Jul 20 at 3:46pm', total: '$42.00', items: '2 items', status: 'Fulfilled' },
+    { order: '#1019', date: 'Jul 20 at 2:31pm', total: '$125.00', items: '5 items', status: 'Unfulfilled' },
+    { order: '#1018', date: 'Jul 20 at 1:22pm', total: '$89.00', items: '3 items', status: 'Fulfilled' },
+  ];
+
+  const data = orders || defaultOrders;
+
+  const rows = data.map(order => [
+    order.order,
+    order.date,
+    order.total,
+    order.items,
+    order.status
+  ]);
+
+  return (
+    <DataTable
+      columnContentTypes={['text', 'text', 'numeric', 'text', 'text']}
+      headings={['Order', 'Date', 'Total', 'Items', 'Status']}
+      rows={rows}
+    />
+  );
+}
+
+export default DataTableExample;`
+  }
+};
+
+// DescriptionList Component Examples
+export const descriptionListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+function DescriptionListExample() {
+  const items = [
+    { term: 'Order number', description: '#1001' },
+    { term: 'Date', description: 'July 21, 2023' },
+    { term: 'Status', description: 'Fulfilled' },
+    { term: 'Payment status', description: 'Paid' },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default DescriptionListExample;`,
+
+    vanilla: `import { createDescriptionList } from '@cin7/vanilla-js';
+
+// Define description list items
+const items = [
+  { term: 'Order number', description: '#1001' },
+  { term: 'Date', description: 'July 21, 2023' },
+  { term: 'Status', description: 'Fulfilled' },
+  { term: 'Payment status', description: 'Paid' },
+];
+
+// Create and render description list
+const descriptionList = createDescriptionList({ items });
+document.getElementById('app').appendChild(descriptionList);`,
+
+    extjs: `import { PolarisDescriptionList } from '@cin7/extjs-adapters';
+
+// Create DescriptionList using ExtJS adapter
+Ext.create('Cin7.component.PolarisDescriptionList', {
+  renderTo: Ext.getBody(),
+  items: [
+    { term: 'Order number', description: '#1001' },
+    { term: 'Date', description: 'July 21, 2023' },
+    { term: 'Status', description: 'Fulfilled' },
+    { term: 'Payment status', description: 'Paid' },
+  ]
+});`,
+
+    typescript: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface DescriptionItem {
+  term: string;
+  description: string | React.ReactNode;
+}
+
+interface DescriptionListExampleProps {
+  items?: DescriptionItem[];
+  spacing?: 'tight' | 'loose';
+  columns?: 1 | 2 | 3;
+}
+
+function DescriptionListExample({
+  items,
+  spacing = 'base',
+  columns
+}: DescriptionListExampleProps): JSX.Element {
+  const defaultItems: DescriptionItem[] = [
+    { term: 'Order number', description: '#1001' },
+    { term: 'Date', description: 'July 21, 2023' },
+    { term: 'Status', description: 'Fulfilled' },
+    { term: 'Payment status', description: 'Paid' },
+  ];
+
+  return (
+    <DescriptionList
+      items={items || defaultItems}
+      spacing={spacing}
+      columns={columns}
+    />
+  );
+}
+
+export default DescriptionListExample;`
+  }
+};
+
+// ExceptionList Component Examples
+export const exceptionListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ExceptionList } from '@shopify/polaris';
+import React from 'react';
+
+function ExceptionListExample() {
+  const items = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method declined',
+      description: 'Your credit card ending in 4242 has expired. Please update your payment information.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Inventory running low',
+      description: 'You have 5 items that are running low on stock. Consider restocking soon.',
+    },
+  ];
+
+  return <ExceptionList items={items} />;
+}
+
+export default ExceptionListExample;`,
+
+    vanilla: `import { createExceptionList, EventBus } from '@cin7/vanilla-js';
+
+// Define exception items
+const exceptions = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Payment method declined',
+    description: 'Your credit card ending in 4242 has expired. Please update your payment information.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Inventory running low',
+    description: 'You have 5 items that are running low on stock. Consider restocking soon.',
+  },
+];
+
+// Create and render exception list
+const exceptionList = createExceptionList({ items: exceptions });
+document.getElementById('app').appendChild(exceptionList);
+
+// Listen for action clicks
+EventBus.on('exceptionlist:action:click', (event) => {
+  console.log('Exception action clicked:', event.detail);
+});`,
+
+    extjs: `import { PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create ExceptionList using ExtJS adapter
+Ext.create('Cin7.component.PolarisExceptionList', {
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method declined',
+      description: 'Your credit card ending in 4242 has expired. Please update your payment information.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Inventory running low',
+      description: 'You have 5 items that are running low on stock. Consider restocking soon.',
+    },
+  ]
+});`,
+
+    typescript: `import { ExceptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface ExceptionItem {
+  status: 'critical' | 'warning' | 'success' | 'info';
+  icon?: string;
+  title: string;
+  description?: string;
+  action?: {
+    content: string;
+    onAction: () => void;
+  };
+}
+
+interface ExceptionListExampleProps {
+  items?: ExceptionItem[];
+  onActionClick?: (item: ExceptionItem) => void;
+}
+
+function ExceptionListExample({
+  items,
+  onActionClick
+}: ExceptionListExampleProps): JSX.Element {
+  const defaultItems: ExceptionItem[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method declined',
+      description: 'Your credit card ending in 4242 has expired. Please update your payment information.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Inventory running low',
+      description: 'You have 5 items that are running low on stock. Consider restocking soon.',
+    },
+  ];
+
+  return <ExceptionList items={items || defaultItems} />;
+}
+
+export default ExceptionListExample;`
+  }
+};
+
+// IndexTable Component Examples
+export const indexTableExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { IndexTable, LegacyCard, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function IndexTableExample() {
+  const orders = [
+    { id: '1020', name: 'T-Shirt', sku: 'TS001', price: 25.00, quantity: 50, status: 'Active' },
+    { id: '1019', name: 'Coffee Mug', sku: 'CM002', price: 12.00, quantity: 89, status: 'Active' },
+    { id: '1018', name: 'Wireless Mouse', sku: 'WM003', price: 45.00, quantity: 0, status: 'Archived' },
+  ];
+
+  const resourceName = {
+    singular: 'product',
+    plural: 'products',
+  };
+
+  return (
+    <LegacyCard>
+      <IndexTable
+        resourceName={resourceName}
+        itemCount={orders.length}
+        headings={[
+          { title: 'Product' },
+          { title: 'SKU' },
+          { title: 'Price', alignment: 'end' },
+          { title: 'Stock', alignment: 'end' },
+          { title: 'Status', alignment: 'center' },
+        ]}
+        selectable={false}
+      >
+        {orders.map(({ id, name, sku, price, quantity, status }, index) => (
+          <IndexTable.Row id={id} key={id} position={index}>
+            <IndexTable.Cell>{name}</IndexTable.Cell>
+            <IndexTable.Cell>{sku}</IndexTable.Cell>
+            <IndexTable.Cell numeric>\${price.toFixed(2)}</IndexTable.Cell>
+            <IndexTable.Cell numeric>{quantity}</IndexTable.Cell>
+            <IndexTable.Cell>
+              <Badge status={status === 'Active' ? 'success' : 'info'}>
+                {status}
+              </Badge>
+            </IndexTable.Cell>
+          </IndexTable.Row>
+        ))}
+      </IndexTable>
+    </LegacyCard>
+  );
+}
+
+export default IndexTableExample;`,
+
+    vanilla: `import { createIndexTable, EventBus } from '@cin7/vanilla-js';
+
+// Define table data
+const tableData = {
+  resourceName: { singular: 'product', plural: 'products' },
+  headings: [
+    { title: 'Product' },
+    { title: 'SKU' },
+    { title: 'Price', alignment: 'end' },
+    { title: 'Stock', alignment: 'end' },
+    { title: 'Status', alignment: 'center' },
+  ],
+  rows: [
+    { id: '1020', cells: ['T-Shirt', 'TS001', '$25.00', '50', 'Active'] },
+    { id: '1019', cells: ['Coffee Mug', 'CM002', '$12.00', '89', 'Active'] },
+    { id: '1018', cells: ['Wireless Mouse', 'WM003', '$45.00', '0', 'Archived'] },
+  ]
+};
+
+// Create and render index table
+const indexTable = createIndexTable(tableData);
+document.getElementById('app').appendChild(indexTable);
+
+// Listen for selection changes
+EventBus.on('indextable:selection:change', (event) => {
+  console.log('Selection changed:', event.detail.selectedIds);
+});`,
+
+    extjs: `import { PolarisIndexTable } from '@cin7/extjs-adapters';
+
+// Create IndexTable using ExtJS Grid adapter
+Ext.create('Ext.grid.Panel', {
+  renderTo: Ext.getBody(),
+  width: 800,
+  height: 400,
+  polarisAdapter: true,
+  title: 'Products',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'sku', 'price', 'quantity', 'status'],
+    data: [
+      { id: '1020', name: 'T-Shirt', sku: 'TS001', price: 25.00, quantity: 50, status: 'Active' },
+      { id: '1019', name: 'Coffee Mug', sku: 'CM002', price: 12.00, quantity: 89, status: 'Active' },
+      { id: '1018', name: 'Wireless Mouse', sku: 'WM003', price: 45.00, quantity: 0, status: 'Archived' },
+    ]
+  }),
+  columns: [
+    { text: 'Product', dataIndex: 'name', flex: 1 },
+    { text: 'SKU', dataIndex: 'sku', width: 120 },
+    { text: 'Price', dataIndex: 'price', width: 100, align: 'right',
+      renderer: function(value) { return '$' + value.toFixed(2); }
+    },
+    { text: 'Stock', dataIndex: 'quantity', width: 100, align: 'right' },
+    { text: 'Status', dataIndex: 'status', width: 120, align: 'center' }
+  ],
+  selModel: {
+    mode: 'MULTI'
+  }
+});`,
+
+    typescript: `import { IndexTable, LegacyCard, Badge, IndexTableProps } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  quantity: number;
+  status: 'Active' | 'Archived';
+}
+
+interface IndexTableExampleProps {
+  products?: Product[];
+  onSelectionChange?: (selectedIds: string[]) => void;
+}
+
+function IndexTableExample({
+  products,
+  onSelectionChange
+}: IndexTableExampleProps): JSX.Element {
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const defaultProducts: Product[] = [
+    { id: '1020', name: 'T-Shirt', sku: 'TS001', price: 25.00, quantity: 50, status: 'Active' },
+    { id: '1019', name: 'Coffee Mug', sku: 'CM002', price: 12.00, quantity: 89, status: 'Active' },
+    { id: '1018', name: 'Wireless Mouse', sku: 'WM003', price: 45.00, quantity: 0, status: 'Archived' },
+  ];
+
+  const data = products || defaultProducts;
+
+  const resourceName = {
+    singular: 'product',
+    plural: 'products',
+  };
+
+  const handleSelectionChange = useCallback((ids: string[]) => {
+    setSelectedIds(ids);
+    onSelectionChange?.(ids);
+  }, [onSelectionChange]);
+
+  return (
+    <LegacyCard>
+      <IndexTable
+        resourceName={resourceName}
+        itemCount={data.length}
+        selectedItemsCount={selectedIds.length}
+        onSelectionChange={handleSelectionChange}
+        headings={[
+          { title: 'Product' },
+          { title: 'SKU' },
+          { title: 'Price', alignment: 'end' },
+          { title: 'Stock', alignment: 'end' },
+          { title: 'Status', alignment: 'center' },
+        ]}
+      >
+        {data.map(({ id, name, sku, price, quantity, status }, index) => (
+          <IndexTable.Row
+            id={id}
+            key={id}
+            position={index}
+            selected={selectedIds.includes(id)}
+          >
+            <IndexTable.Cell>{name}</IndexTable.Cell>
+            <IndexTable.Cell>{sku}</IndexTable.Cell>
+            <IndexTable.Cell numeric>\${price.toFixed(2)}</IndexTable.Cell>
+            <IndexTable.Cell numeric>{quantity}</IndexTable.Cell>
+            <IndexTable.Cell>
+              <Badge status={status === 'Active' ? 'success' : 'info'}>
+                {status}
+              </Badge>
+            </IndexTable.Cell>
+          </IndexTable.Row>
+        ))}
+      </IndexTable>
+    </LegacyCard>
+  );
+}
+
+export default IndexTableExample;`
+  }
+};
+
+// List Component Examples
+export const listExamples: Record<string, CodeVariant> = {
+  bulleted: {
+    react: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+function ListExample() {
+  return (
+    <List>
+      <List.Item>First item in the list</List.Item>
+      <List.Item>Second item in the list</List.Item>
+      <List.Item>Third item in the list</List.Item>
+    </List>
+  );
+}
+
+export default ListExample;`,
+
+    vanilla: `import { createList } from '@cin7/vanilla-js';
+
+// Define list items
+const items = [
+  'First item in the list',
+  'Second item in the list',
+  'Third item in the list'
+];
+
+// Create and render list
+const list = createList({
+  items,
+  type: 'bullet'
+});
+
+document.getElementById('app').appendChild(list);`,
+
+    extjs: `import { PolarisList } from '@cin7/extjs-adapters';
+
+// Create List using ExtJS panel
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 10,
+  html: \`
+    <ul class="polaris-list">
+      <li class="polaris-list-item">First item in the list</li>
+      <li class="polaris-list-item">Second item in the list</li>
+      <li class="polaris-list-item">Third item in the list</li>
+    </ul>
+  \`
+});
+
+// Or using custom component
+Ext.create('Cin7.component.PolarisList', {
+  renderTo: Ext.getBody(),
+  listType: 'bullet',
+  items: [
+    { text: 'First item in the list' },
+    { text: 'Second item in the list' },
+    { text: 'Third item in the list' }
+  ]
+});`,
+
+    typescript: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+interface ListItem {
+  id?: string;
+  content: string | React.ReactNode;
+  icon?: React.ComponentType;
+}
+
+interface ListExampleProps {
+  items?: ListItem[];
+  type?: 'bullet' | 'number';
+  gap?: 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
+}
+
+function ListExample({
+  items,
+  type = 'bullet',
+  gap
+}: ListExampleProps): JSX.Element {
+  const defaultItems: ListItem[] = [
+    { id: '1', content: 'First item in the list' },
+    { id: '2', content: 'Second item in the list' },
+    { id: '3', content: 'Third item in the list' }
+  ];
+
+  const data = items || defaultItems;
+
+  return (
+    <List type={type} gap={gap}>
+      {data.map((item, index) => (
+        <List.Item key={item.id || index} icon={item.icon}>
+          {item.content}
+        </List.Item>
+      ))}
+    </List>
+  );
+}
+
+export default ListExample;`
+  }
+};
+
+// ResourceItem Component Examples
+export const resourceItemExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ResourceItem, ResourceList, Card } from '@shopify/polaris';
+import React from 'react';
+
+function ResourceItemExample() {
+  const product = {
+    id: '1',
+    name: 'Basic T-Shirt',
+    sku: 'TSHIRT-BASIC-001',
+    price: '$29.99',
+    stock: 50,
+  };
+
+  return (
+    <Card>
+      <ResourceList
+        resourceName={{ singular: 'product', plural: 'products' }}
+        items={[product]}
+        renderItem={(item) => (
+          <ResourceItem
+            id={item.id}
+            name={item.name}
+            accessibilityLabel={\`View details for \${item.name}\`}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <div style={{ fontWeight: '500', marginBottom: '4px' }}>{item.name}</div>
+                <div style={{ color: '#6b7280', fontSize: '14px' }}>SKU: {item.sku}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontWeight: '500' }}>{item.price}</div>
+                <div style={{ color: '#6b7280', fontSize: '14px' }}>{item.stock} in stock</div>
+              </div>
+            </div>
+          </ResourceItem>
+        )}
+      />
+    </Card>
+  );
+}
+
+export default ResourceItemExample;`,
+
+    vanilla: `import { createResourceItem, EventBus } from '@cin7/vanilla-js';
+
+// Define resource item
+const product = {
+  id: '1',
+  name: 'Basic T-Shirt',
+  sku: 'TSHIRT-BASIC-001',
+  price: '$29.99',
+  stock: 50,
+};
+
+// Create resource item
+const resourceItem = createResourceItem({
+  id: product.id,
+  name: product.name,
+  content: \`
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <div style="font-weight: 500; margin-bottom: 4px;">\${product.name}</div>
+        <div style="color: #6b7280; font-size: 14px;">SKU: \${product.sku}</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-weight: 500;">\${product.price}</div>
+        <div style="color: #6b7280; font-size: 14px;">\${product.stock} in stock</div>
+      </div>
+    </div>
+  \`,
+  accessibilityLabel: \`View details for \${product.name}\`
+});
+
+document.getElementById('app').appendChild(resourceItem);
+
+// Listen for item click
+EventBus.on('resourceitem:click', (event) => {
+  console.log('Resource item clicked:', event.detail.id);
+});`,
+
+    extjs: `import { PolarisResourceItem } from '@cin7/extjs-adapters';
+
+// Create ResourceItem using ExtJS dataview
+Ext.create('Ext.view.View', {
+  renderTo: Ext.getBody(),
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'sku', 'price', 'stock'],
+    data: [{
+      id: '1',
+      name: 'Basic T-Shirt',
+      sku: 'TSHIRT-BASIC-001',
+      price: '$29.99',
+      stock: 50
+    }]
+  }),
+  tpl: [
+    '<tpl for=".">',
+    '<div class="resource-item" data-id="{id}">',
+    '  <div style="display: flex; justify-content: space-between; align-items: center;">',
+    '    <div>',
+    '      <div style="font-weight: 500; margin-bottom: 4px;">{name}</div>',
+    '      <div style="color: #6b7280; font-size: 14px;">SKU: {sku}</div>',
+    '    </div>',
+    '    <div style="text-align: right;">',
+    '      <div style="font-weight: 500;">{price}</div>',
+    '      <div style="color: #6b7280; font-size: 14px;">{stock} in stock</div>',
+    '    </div>',
+    '  </div>',
+    '</div>',
+    '</tpl>'
+  ],
+  itemSelector: 'div.resource-item',
+  listeners: {
+    itemclick: function(view, record) {
+      console.log('Resource item clicked:', record.getData());
+    }
+  }
+});`,
+
+    typescript: `import { ResourceItem, ResourceList, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  price: string;
+  stock: number;
+}
+
+interface ResourceItemExampleProps {
+  product?: Product;
+  onItemClick?: (id: string) => void;
+}
+
+function ResourceItemExample({
+  product,
+  onItemClick
+}: ResourceItemExampleProps): JSX.Element {
+  const defaultProduct: Product = {
+    id: '1',
+    name: 'Basic T-Shirt',
+    sku: 'TSHIRT-BASIC-001',
+    price: '$29.99',
+    stock: 50,
+  };
+
+  const item = product || defaultProduct;
+
+  const handleClick = () => {
+    onItemClick?.(item.id);
+  };
+
+  return (
+    <Card>
+      <ResourceList
+        resourceName={{ singular: 'product', plural: 'products' }}
+        items={[item]}
+        renderItem={(product) => (
+          <ResourceItem
+            id={product.id}
+            name={product.name}
+            accessibilityLabel={\`View details for \${product.name}\`}
+            onClick={handleClick}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <div style={{ fontWeight: '500', marginBottom: '4px' }}>{product.name}</div>
+                <div style={{ color: '#6b7280', fontSize: '14px' }}>SKU: {product.sku}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontWeight: '500' }}>{product.price}</div>
+                <div style={{ color: '#6b7280', fontSize: '14px' }}>{product.stock} in stock</div>
+              </div>
+            </div>
+          </ResourceItem>
+        )}
+      />
+    </Card>
+  );
+}
+
+export default ResourceItemExample;`
+  }
+};
+
+// ResourceList Component Examples
+export const resourceListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ResourceList, Card, Thumbnail, Text, Badge } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function ResourceListExample() {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const products = [
+    {
+      id: '1',
+      name: 'Basic T-Shirt',
+      description: 'Comfortable cotton t-shirt in various colors',
+      price: 25.00,
+      status: 'Active',
+      stock: 150,
+      image: 'https://picsum.photos/seed/tshirt/100/100.jpg',
+    },
+    {
+      id: '2',
+      name: 'Coffee Mug',
+      description: 'Ceramic mug with modern design',
+      price: 12.00,
+      status: 'Active',
+      stock: 89,
+      image: 'https://picsum.photos/seed/mug/100/100.jpg',
+    },
+  ];
+
+  const handleSelectionChange = useCallback((selectedIds: string[]) => {
+    setSelectedItems(selectedIds);
+  }, []);
+
+  return (
+    <ResourceList
+      resourceName={{ singular: 'product', plural: 'products' }}
+      items={products}
+      selectedItems={selectedItems}
+      onSelectionChange={handleSelectionChange}
+      renderItem={(item) => {
+        const { id, name, description, price, status, stock, image } = item;
+        const media = <Thumbnail size="small" alt={name} source={image} />;
+        const statusBadge = <Badge status={status === 'Active' ? 'success' : 'info'}>{status}</Badge>;
+
+        return (
+          <ResourceList.Item
+            id={id}
+            media={media}
+            accessibilityLabel={\`View details for \${name}\`}
+          >
+            <div style={{ flex: 1 }}>
+              <Text variant="bodyMd" fontWeight="semibold" as="h3">
+                {name}
+              </Text>
+              <Text color="subdued" as="p">
+                {description}
+              </Text>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px' }}>
+                <Text variant="bodyMd" fontWeight="medium">
+                  \${price.toFixed(2)}
+                </Text>
+                {statusBadge}
+                <Text color="subdued" variant="bodySm">
+                  {stock} in stock
+                </Text>
+              </div>
+            </div>
+          </ResourceList.Item>
+        );
+      }}
+    />
+  );
+}
+
+export default ResourceListExample;`,
+
+    vanilla: `import { createResourceList, EventBus } from '@cin7/vanilla-js';
+
+// Define resource list data
+const products = [
+  {
+    id: '1',
+    name: 'Basic T-Shirt',
+    description: 'Comfortable cotton t-shirt in various colors',
+    price: 25.00,
+    status: 'Active',
+    stock: 150,
+    image: 'https://picsum.photos/seed/tshirt/100/100.jpg',
+  },
+  {
+    id: '2',
+    name: 'Coffee Mug',
+    description: 'Ceramic mug with modern design',
+    price: 12.00,
+    status: 'Active',
+    stock: 89,
+    image: 'https://picsum.photos/seed/mug/100/100.jpg',
+  },
+];
+
+// Create resource list
+const resourceList = createResourceList({
+  resourceName: { singular: 'product', plural: 'products' },
+  items: products,
+  renderItem: (item) => {
+    return \`
+      <div class="resource-item" data-id="\${item.id}">
+        <img src="\${item.image}" alt="\${item.name}" class="resource-item-image" />
+        <div class="resource-item-content">
+          <h3 class="resource-item-title">\${item.name}</h3>
+          <p class="resource-item-description">\${item.description}</p>
+          <div class="resource-item-meta">
+            <span class="resource-item-price">$\${item.price.toFixed(2)}</span>
+            <span class="resource-item-status badge-\${item.status.toLowerCase()}">\${item.status}</span>
+            <span class="resource-item-stock">\${item.stock} in stock</span>
+          </div>
+        </div>
+      </div>
+    \`;
+  }
+});
+
+document.getElementById('app').appendChild(resourceList);
+
+// Listen for selection changes
+EventBus.on('resourcelist:selection:change', (event) => {
+  console.log('Selection changed:', event.detail.selectedIds);
+});`,
+
+    extjs: `import { PolarisResourceList } from '@cin7/extjs-adapters';
+
+// Create ResourceList using ExtJS Grid
+Ext.create('Ext.grid.Panel', {
+  renderTo: Ext.getBody(),
+  width: 800,
+  height: 400,
+  title: 'Products',
+  polarisAdapter: true,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'description', 'price', 'status', 'stock', 'image'],
+    data: [
+      {
+        id: '1',
+        name: 'Basic T-Shirt',
+        description: 'Comfortable cotton t-shirt in various colors',
+        price: 25.00,
+        status: 'Active',
+        stock: 150,
+        image: 'https://picsum.photos/seed/tshirt/100/100.jpg',
+      },
+      {
+        id: '2',
+        name: 'Coffee Mug',
+        description: 'Ceramic mug with modern design',
+        price: 12.00,
+        status: 'Active',
+        stock: 89,
+        image: 'https://picsum.photos/seed/mug/100/100.jpg',
+      },
+    ]
+  }),
+  columns: [
+    {
+      text: 'Product',
+      dataIndex: 'name',
+      flex: 1,
+      renderer: function(value, metaData, record) {
+        return \`
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="\${record.get('image')}" alt="\${value}" style="width: 40px; height: 40px; border-radius: 4px;" />
+            <div>
+              <div style="font-weight: 500;">\${value}</div>
+              <div style="color: #6b7280; font-size: 13px;">\${record.get('description')}</div>
+            </div>
+          </div>
+        \`;
+      }
+    },
+    {
+      text: 'Price',
+      dataIndex: 'price',
+      width: 100,
+      align: 'right',
+      renderer: function(value) { return '$' + value.toFixed(2); }
+    },
+    { text: 'Stock', dataIndex: 'stock', width: 100, align: 'right' },
+    {
+      text: 'Status',
+      dataIndex: 'status',
+      width: 120,
+      renderer: function(value) {
+        const color = value === 'Active' ? 'success' : 'info';
+        return \`<span class="badge-\${color}">\${value}</span>\`;
+      }
+    }
+  ],
+  selModel: {
+    mode: 'MULTI',
+    checkOnly: true
+  },
+  listeners: {
+    selectionchange: function(selModel, selected) {
+      console.log('Selection changed:', selected.map(r => r.getId()));
+    }
+  }
+});`,
+
+    typescript: `import { ResourceList, Card, Thumbnail, Text, Badge } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  status: 'Active' | 'Archived';
+  stock: number;
+  image: string;
+}
+
+interface ResourceListExampleProps {
+  products?: Product[];
+  onSelectionChange?: (selectedIds: string[]) => void;
+}
+
+function ResourceListExample({
+  products,
+  onSelectionChange
+}: ResourceListExampleProps): JSX.Element {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const defaultProducts: Product[] = [
+    {
+      id: '1',
+      name: 'Basic T-Shirt',
+      description: 'Comfortable cotton t-shirt in various colors',
+      price: 25.00,
+      status: 'Active',
+      stock: 150,
+      image: 'https://picsum.photos/seed/tshirt/100/100.jpg',
+    },
+    {
+      id: '2',
+      name: 'Coffee Mug',
+      description: 'Ceramic mug with modern design',
+      price: 12.00,
+      status: 'Active',
+      stock: 89,
+      image: 'https://picsum.photos/seed/mug/100/100.jpg',
+    },
+  ];
+
+  const items = products || defaultProducts;
+
+  const handleSelectionChange = useCallback((selectedIds: string[]) => {
+    setSelectedItems(selectedIds);
+    onSelectionChange?.(selectedIds);
+  }, [onSelectionChange]);
+
+  return (
+    <ResourceList
+      resourceName={{ singular: 'product', plural: 'products' }}
+      items={items}
+      selectedItems={selectedItems}
+      onSelectionChange={handleSelectionChange}
+      renderItem={(item) => {
+        const { id, name, description, price, status, stock, image } = item;
+        const media = <Thumbnail size="small" alt={name} source={image} />;
+        const statusBadge = <Badge status={status === 'Active' ? 'success' : 'info'}>{status}</Badge>;
+
+        return (
+          <ResourceList.Item
+            id={id}
+            media={media}
+            accessibilityLabel={\`View details for \${name}\`}
+          >
+            <div style={{ flex: 1 }}>
+              <Text variant="bodyMd" fontWeight="semibold" as="h3">
+                {name}
+              </Text>
+              <Text color="subdued" as="p">
+                {description}
+              </Text>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px' }}>
+                <Text variant="bodyMd" fontWeight="medium">
+                  \${price.toFixed(2)}
+                </Text>
+                {statusBadge}
+                <Text color="subdued" variant="bodySm">
+                  {stock} in stock
+                </Text>
+              </div>
+            </div>
+          </ResourceList.Item>
+        );
+      }}
+    />
+  );
+}
+
+export default ResourceListExample;`
+  }
+};
+
+// CalloutCard Component Examples
+export const calloutcardExamples: Record<string, CodeVariant> = {
+  layout: {
+    react: `import { CalloutCard } from '@shopify/polaris';
+import React from 'react';
+
+function CalloutCardExample() {
+  return (
+    <CalloutCard
+      title="Get more sales with Shopify"
+      illustration="https://cdn.shopify.com/s/assets/admin/checkout/custom-customers-cd8049b5ed4f62a654922285b9a5d6a7.svg"
+      primaryAction={{
+        content: 'Start selling',
+        onAction: () => console.log('Start selling clicked'),
+      }}
+      secondaryAction={{
+        content: 'Learn more',
+        url: '#',
+      }}
+    >
+      Create a online store and start selling to customers right away.
+      Shopify provides everything you need to start, run, and grow your business.
+    </CalloutCard>
+  );
+}
+
+export default CalloutCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-callout-card">
+  <div class="polaris-callout-card__illustration">
+    <img src="https://cdn.shopify.com/s/assets/admin/checkout/custom-customers-cd8049b5ed4f62a654922285b9a5d6a7.svg"
+         alt="Illustration" />
+  </div>
+  <div class="polaris-callout-card__content">
+    <h2 class="polaris-callout-card__title">Get more sales with Shopify</h2>
+    <p class="polaris-callout-card__description">
+      Create a online store and start selling to customers right away.
+      Shopify provides everything you need to start, run, and grow your business.
+    </p>
+    <div class="polaris-callout-card__actions">
+      <button class="polaris-button polaris-button--primary">Start selling</button>
+      <a href="#" class="polaris-link">Learn more</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-callout-card__actions .polaris-button', 'click', (event) => {
+  event.preventDefault();
+  console.log('Start selling clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-callout-card',
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  bodyPadding: 20,
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/assets/admin/checkout/custom-customers-cd8049b5ed4f62a654922285b9a5d6a7.svg',
+    width: 200,
+    height: 200
+  }, {
+    xtype: 'container',
+    flex: 1,
+    layout: 'vbox',
+    padding: '0 0 0 20',
+    items: [{
+      xtype: 'component',
+      html: '<h2>Get more sales with Shopify</h2>'
+    }, {
+      xtype: 'component',
+      html: '<p>Create a online store and start selling to customers right away. Shopify provides everything you need to start, run, and grow your business.</p>',
+      flex: 1
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [{
+        xtype: 'button',
+        text: 'Start selling',
+        ui: 'primary',
+        handler: function() {
+          console.log('Start selling clicked');
+        }
+      }, {
+        xtype: 'button',
+        text: 'Learn more',
+        ui: 'link',
+        margin: '0 0 0 12',
+        handler: function() {
+          window.location.href = '#';
+        }
+      }]
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { CalloutCard } from '@shopify/polaris';
+import React from 'react';
+
+interface CalloutCardExampleProps {
+  title: string;
+  description: string;
+  illustration?: string;
+  primaryActionText: string;
+  secondaryActionText?: string;
+  onPrimaryAction: () => void;
+  secondaryActionUrl?: string;
+}
+
+function CalloutCardExample({
+  title,
+  description,
+  illustration,
+  primaryActionText,
+  secondaryActionText,
+  onPrimaryAction,
+  secondaryActionUrl
+}: CalloutCardExampleProps): JSX.Element {
+  return (
+    <CalloutCard
+      title={title}
+      illustration={illustration}
+      primaryAction={{
+        content: primaryActionText,
+        onAction: onPrimaryAction,
+      }}
+      secondaryAction={
+        secondaryActionText && secondaryActionUrl
+          ? {
+              content: secondaryActionText,
+              url: secondaryActionUrl,
+            }
+          : undefined
+      }
+    >
+      {description}
+    </CalloutCard>
+  );
+}
+
+export default CalloutCardExample;`
+  }
+};
+
+// EmptyState Component Examples
+export const emptystateExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateExample() {
+  return (
+    <EmptyState
+      heading="No products found"
+      action={{
+        content: 'Add product',
+        onAction: () => console.log('Add product clicked'),
+      }}
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    >
+      Add products to your store to start selling and tracking inventory.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="Empty state" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">No products found</h2>
+    <p class="polaris-empty-state__description">
+      Add products to your store to start selling and tracking inventory.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Add product</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-empty-state__actions .polaris-button', 'click', () => {
+  console.log('Add product clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">No products found</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Add products to your store to start selling and tracking inventory.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'button',
+    text: 'Add product',
+    ui: 'primary',
+    handler: function() {
+      console.log('Add product clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateExampleProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  actionText: string;
+  secondaryActionText?: string;
+  onAction: () => void;
+  onSecondaryAction?: () => void;
+  fullWidth?: boolean;
+}
+
+function EmptyStateExample({
+  heading,
+  description,
+  image,
+  actionText,
+  secondaryActionText,
+  onAction,
+  onSecondaryAction,
+  fullWidth = false
+}: EmptyStateExampleProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: actionText,
+        onAction: onAction,
+      }}
+      secondaryAction={
+        secondaryActionText && onSecondaryAction
+          ? {
+              content: secondaryActionText,
+              onAction: onSecondaryAction,
+            }
+          : undefined
+      }
+      fullWidth={fullWidth}
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateExample;`
+  }
+};
+
+// Loading Component Examples
+export const loadingExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Loading } from '@shopify/polaris';
+import React from 'react';
+
+function LoadingExample() {
+  return (
+    <Loading
+      size="medium"
+      accessibilityLabel="Loading content"
+    />
+  );
+}
+
+export default LoadingExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-spinner polaris-spinner--size-medium" role="status" aria-label="Loading content">
+  <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <circle
+      cx="10"
+      cy="10"
+      r="7.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-dasharray="47 47"
+      class="polaris-spinner__circle"
+    />
+  </svg>
+</div>
+
+<style>
+.polaris-spinner {
+  display: inline-block;
+  animation: polaris-spinner-rotation 1s linear infinite;
+}
+
+.polaris-spinner--size-small svg {
+  width: 20px;
+  height: 20px;
+}
+
+.polaris-spinner--size-medium svg {
+  width: 40px;
+  height: 40px;
+}
+
+.polaris-spinner--size-large svg {
+  width: 60px;
+  height: 60px;
+}
+
+@keyframes polaris-spinner-rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createSpinner } from '@cin7/vanilla-js';
+
+const spinner = createSpinner({
+  size: 'medium',
+  accessibilityLabel: 'Loading content'
+});
+
+document.getElementById('app').appendChild(spinner);
+</script>`,
+
+    extjs: `// ExtJS Loading Mask using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Loading Example',
+  width: 400,
+  height: 300,
+  bodyPadding: 20,
+  html: '<p>Content will load here...</p>',
+  renderTo: Ext.getBody(),
+  listeners: {
+    afterrender: function(panel) {
+      // Show loading mask
+      panel.setLoading({
+        msg: 'Loading content...',
+        useMsg: true
+      });
+
+      // Simulate async operation
+      setTimeout(function() {
+        panel.setLoading(false);
+        panel.update('<p>Content loaded successfully!</p>');
+      }, 2000);
+    }
+  }
+});
+
+// Or standalone spinner
+Ext.create('Ext.Component', {
+  cls: 'polaris-loading-spinner',
+  html: '<div class="spinner-medium" role="status" aria-label="Loading"></div>',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Loading } from '@shopify/polaris';
+import React from 'react';
+
+type LoadingSize = 'small' | 'medium' | 'large';
+
+interface LoadingExampleProps {
+  size?: LoadingSize;
+  accessibilityLabel?: string;
+  hasFocusableElements?: boolean;
+}
+
+function LoadingExample({
+  size = 'medium',
+  accessibilityLabel = 'Loading',
+  hasFocusableElements = false
+}: LoadingExampleProps): JSX.Element {
+  return (
+    <Loading
+      size={size}
+      accessibilityLabel={accessibilityLabel}
+      hasFocusableElements={hasFocusableElements}
+    />
+  );
+}
+
+export default LoadingExample;`
+  }
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -8488,6 +10448,20 @@ export function getCodeVariants(
     select: selectExamples,
     checkbox: checkboxExamples,
     radiobutton: radioButtonExamples,
+    avatar: avatarExamples,
+    mediacard: mediacardExamples,
+    thumbnail: thumbnailExamples,
+    videothumbnail: videothumbnailExamples,
+    calloutcard: calloutcardExamples,
+    emptystate: emptystateExamples,
+    loading: loadingExamples,
+    datatable: dataTableExamples,
+    descriptionlist: descriptionListExamples,
+    exceptionlist: exceptionListExamples,
+    indextable: indexTableExamples,
+    list: listExamples,
+    resourceitem: resourceItemExamples,
+    resourcelist: resourceListExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];
