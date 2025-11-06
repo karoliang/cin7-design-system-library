@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextField } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/TextField',
@@ -67,6 +68,9 @@ export const Default: Story = {
     label: 'Customer name',
     placeholder: 'Enter customer name',
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
 };
 
 export const WithValue: Story = {
@@ -83,6 +87,9 @@ export const WithError: Story = {
     type: 'password',
     error: 'Password must be at least 8 characters',
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'with-error'),
+  },
 };
 
 export const WithHelpText: Story = {
@@ -91,6 +98,9 @@ export const WithHelpText: Story = {
     type: 'tel',
     placeholder: '(555) 123-4567',
     helpText: 'Include country code for international numbers',
+  },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'with-help-text'),
   },
 };
 
@@ -108,6 +118,9 @@ export const Disabled: Story = {
     value: 'REF-2024-001',
     disabled: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'disabled'),
+  },
 };
 
 export const Multiline: Story = {
@@ -117,9 +130,15 @@ export const Multiline: Story = {
     multiline: 4,
     maxLength: 500,
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'multiline'),
+  },
 };
 
 export const NumberInput: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'number'),
+  },
   render: () => {
     const [quantity, setQuantity] = React.useState('1');
     const [price, setPrice] = React.useState('');
@@ -376,6 +395,9 @@ export const TelephoneInput: Story = {
 };
 
 export const CharacterCount: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'character-count'),
+  },
   render: () => {
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
@@ -410,6 +432,9 @@ export const CharacterCount: Story = {
 };
 
 export const PrefixSuffix: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'with-prefix-suffix'),
+  },
   render: () => {
     const [price, setPrice] = React.useState('');
     const [weight, setWeight] = React.useState('');

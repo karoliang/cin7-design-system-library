@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Modal, Button, Text, TextField, FormLayout } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/Modal',
@@ -79,6 +80,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
   render: () => {
     const [active, setActive] = React.useState(false);
 

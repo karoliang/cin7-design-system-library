@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Banner, Button, Text } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Feedback/Banner',
@@ -59,6 +60,9 @@ export const Default: Story = {
     title: 'Order completed',
     children: 'Your order #1001 has been successfully processed and will be shipped within 2 business days.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'default'),
+  },
 };
 
 export const StatusVariants: Story = {
@@ -97,6 +101,9 @@ export const StatusVariants: Story = {
       </Banner>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'informational'),
+  },
 };
 
 export const WithActions: Story = {
@@ -129,6 +136,9 @@ export const WithActions: Story = {
       </Banner>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'with-actions'),
+  },
 };
 
 export const DismissibleBanners: Story = {
@@ -185,6 +195,9 @@ export const DismissibleBanners: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'dismissible'),
+  },
 };
 
 export const RealWorldScenarios: Story = {
@@ -240,6 +253,9 @@ export const RealWorldScenarios: Story = {
       </Banner>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'critical'),
+  },
 };
 
 export const MinimalBanners: Story = {
@@ -262,6 +278,9 @@ export const MinimalBanners: Story = {
       </Banner>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'success'),
+  },
 };
 
 export const InteractiveBanner: Story = {
@@ -306,6 +325,9 @@ export const InteractiveBanner: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'warning'),
+  },
 };
 
 export const BannersWithIcons: Story = {
@@ -342,4 +364,7 @@ export const BannersWithIcons: Story = {
       </Banner>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('banner', 'informational'),
+  },
 };

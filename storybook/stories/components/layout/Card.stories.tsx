@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card, Button, Text } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/Card',
@@ -54,6 +55,9 @@ export const Default: Story = {
       </Text>
     </Card>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'default'),
+  },
 };
 
 export const WithActions: Story = {
@@ -73,6 +77,9 @@ export const WithActions: Story = {
       </Text>
     </Card>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-header-actions'),
+  },
 };
 
 export const WithoutSection: Story = {
@@ -89,6 +96,9 @@ export const WithoutSection: Story = {
       </div>
     </Card>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-section'),
+  },
 };
 
 export const WithBackground: Story = {
@@ -113,6 +123,9 @@ export const WithBackground: Story = {
       </Card>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-subdued-background'),
+  },
 };
 
 export const InteractiveCard: Story = {
@@ -153,6 +166,9 @@ export const InteractiveCard: Story = {
         )}
       </Card>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-all-elements'),
   },
 };
 
@@ -196,6 +212,9 @@ export const CardGrid: Story = {
       </Card>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-multiple-sections'),
+  },
 };
 
 export const StatusCards: Story = {
@@ -244,4 +263,7 @@ export const StatusCards: Story = {
       </Card>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('card', 'with-subdued-section'),
+  },
 };

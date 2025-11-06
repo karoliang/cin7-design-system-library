@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/Button',
@@ -59,6 +60,9 @@ export const Default: Story = {
   args: {
     children: 'Button',
   },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
+  },
 };
 
 export const Variants: Story = {
@@ -97,6 +101,77 @@ export const States: Story = {
       <Button loading>Loading</Button>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'loading'),
+  },
+};
+
+export const Plain: Story = {
+  render: () => <Button variant="plain">View details</Button>,
+  parameters: {
+    codeVariants: getCodeVariants('button', 'plain'),
+  },
+};
+
+export const Disabled: Story = {
+  render: () => <Button disabled>Buy shipping label</Button>,
+  parameters: {
+    codeVariants: getCodeVariants('button', 'disabled'),
+  },
+};
+
+export const Large: Story = {
+  render: () => <Button size="large">Create store</Button>,
+  parameters: {
+    codeVariants: getCodeVariants('button', 'large'),
+  },
+};
+
+export const Loading: Story = {
+  render: () => <Button loading>Save product</Button>,
+  parameters: {
+    codeVariants: getCodeVariants('button', 'loading'),
+  },
+};
+
+export const PlainCritical: Story = {
+  render: () => (
+    <Button variant="plain" tone="critical">
+      Remove
+    </Button>
+  ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'plain-critical'),
+  },
+};
+
+export const PrimaryCritical: Story = {
+  render: () => (
+    <Button variant="primary" tone="critical">
+      Delete product
+    </Button>
+  ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'primary-critical'),
+  },
+};
+
+export const Disclosure: Story = {
+  render: () => {
+    const [expanded, setExpanded] = React.useState(false);
+    return (
+      <Button
+        variant="plain"
+        disclosure={expanded ? 'up' : 'down'}
+        onClick={() => setExpanded(!expanded)}
+      >
+        {expanded ? 'Show less' : 'Show more'}
+      </Button>
+    );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'disclosure'),
+  },
 };
 
 // Vanilla JS Button Component
@@ -815,6 +890,9 @@ export const FullWidth: Story = {
       <Button fullWidth>Full width</Button>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'full-width'),
+  },
 };
 
 export const WithIcons: Story = {
