@@ -69,22 +69,25 @@ cd ../../packages/highcharts-adapter
 pnpm build
 echo "✓ @cin7/highcharts-adapter built successfully"
 
-# Build Storybook
+# Build Storybook (TEMPORARILY DISABLED - fix component/icon issues first)
 echo "=================================================="
-echo "Step 8: Building Storybook..."
+echo "Step 8: Skipping Storybook build (disabled)..."
 echo "=================================================="
-cd ../../storybook
-pnpm build
-echo "✓ Storybook built successfully"
+echo "⚠️  Storybook build temporarily disabled due to component compatibility issues"
+echo "⚠️  The main documentation site will deploy without Storybook"
+cd ../polaris/polaris.shopify.com
+# cd ../../storybook
+# pnpm build
+# echo "✓ Storybook built successfully"
 
 # Copy Storybook to docs site
-echo "=================================================="
-echo "Step 9: Copying Storybook to documentation site..."
-echo "=================================================="
-cd ../polaris/polaris.shopify.com
-mkdir -p public/storybook
-cp -r ../../storybook/storybook-static/* public/storybook/
-echo "✓ Storybook copied to public/storybook/"
+# echo "=================================================="
+# echo "Step 9: Copying Storybook to documentation site..."
+# echo "=================================================="
+# cd ../polaris/polaris.shopify.com
+# mkdir -p public/storybook
+# cp -r ../../storybook/storybook-static/* public/storybook/
+# echo "✓ Storybook copied to public/storybook/"
 
 # Generate colors
 echo "=================================================="
