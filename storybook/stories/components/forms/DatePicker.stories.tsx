@@ -80,6 +80,10 @@ export const Default: Story = {
       />
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const WithPlaceholder: Story = {
@@ -104,6 +108,10 @@ export const WithPlaceholder: Story = {
       />
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const DateRange: Story = {
@@ -143,6 +151,10 @@ export const DateRange: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const MultiMonth: Story = {
@@ -167,6 +179,10 @@ export const MultiMonth: Story = {
       />
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const WithDateRestrictions: Story = {
@@ -202,6 +218,10 @@ export const WithDateRestrictions: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const PastDatesOnly: Story = {
@@ -236,6 +256,10 @@ export const PastDatesOnly: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -259,6 +283,10 @@ export const Disabled: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const WeekStartMonday: Story = {
@@ -289,6 +317,10 @@ export const WeekStartMonday: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const HotelBooking: Story = {
@@ -351,6 +383,10 @@ export const HotelBooking: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const EventScheduling: Story = {
@@ -436,6 +472,10 @@ export const EventScheduling: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const DateRangeComparison: Story = {
@@ -511,6 +551,10 @@ export const DateRangeComparison: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };
 
 export const AccessibilityExamples: Story = {
@@ -553,4 +597,8 @@ export const AccessibilityExamples: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datepicker', 'default'),
+  },
+
 };

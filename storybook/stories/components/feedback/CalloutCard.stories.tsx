@@ -77,7 +77,11 @@ export const WithIllustration: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const PromotionalContent: Story = {
@@ -96,7 +100,11 @@ export const PromotionalContent: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const FeatureAnnouncement: Story = {
@@ -115,7 +123,11 @@ export const FeatureAnnouncement: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const OnboardingGuidance: Story = {
@@ -134,7 +146,11 @@ export const OnboardingGuidance: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const TipsAndBestPractices: Story = {
@@ -153,7 +169,11 @@ export const TipsAndBestPractices: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const InteractiveCallout: Story = {
@@ -197,6 +217,10 @@ export const InteractiveCallout: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const BusinessInsights: Story = {
@@ -228,7 +252,11 @@ export const BusinessInsights: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const EducationalContent: Story = {
@@ -247,7 +275,11 @@ export const EducationalContent: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const MultipleCallouts: Story = {
@@ -292,7 +324,11 @@ export const MultipleCallouts: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const MinimalCallout: Story = {
@@ -307,7 +343,11 @@ export const MinimalCallout: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };
 
 export const CalloutWithMetrics: Story = {
@@ -338,5 +378,9 @@ export const CalloutWithMetrics: Story = {
         }}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('calloutcard', 'default'),
+  },
+
 };

@@ -169,6 +169,10 @@ export const WithMedia: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -228,6 +232,10 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const CustomerResource: Story = {
@@ -303,6 +311,10 @@ export const CustomerResource: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const OrderResource: Story = {
@@ -391,6 +403,10 @@ export const OrderResource: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const SelectableItems: Story = {
@@ -456,6 +472,10 @@ export const SelectableItems: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const FileResource: Story = {
@@ -546,6 +566,10 @@ export const FileResource: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const LoadingState: Story = {
@@ -576,6 +600,10 @@ export const LoadingState: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const ProductGridExample: Story = {
@@ -684,6 +712,10 @@ export const ProductGridExample: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const TaskResource: Story = {
@@ -773,6 +805,10 @@ export const TaskResource: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const InteractiveResourceList: Story = {
@@ -917,6 +953,10 @@ export const InteractiveResourceList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
 
 export const VerticalAlignment: Story = {
@@ -999,4 +1039,8 @@ export const VerticalAlignment: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourceitem', 'default'),
+  },
+
 };
