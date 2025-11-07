@@ -1,0 +1,1971 @@
+  productcategories: {
+    react: `import {OptionList, Card, BlockStack} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ProductCategoriesExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const categories = [
+    {
+      title: 'Electronics',
+      options: [
+        {value: 'phones', label: 'Smartphones', description: 'iPhone, Android devices'},
+        {value: 'laptops', label: 'Laptops & Computers', description: 'MacBooks, Windows PCs'},
+        {value: 'tablets', label: 'Tablets', description: 'iPad, Android tablets'},
+        {value: 'accessories', label: 'Electronics Accessories', description: 'Cases, chargers, cables'},
+      ],
+    },
+    {
+      title: 'Clothing',
+      options: [
+        {value: 'mens', label: "Men's Clothing", description: 'Shirts, pants, outerwear'},
+        {value: 'womens', label: "Women's Clothing", description: 'Dresses, tops, bottoms'},
+        {value: 'kids', label: "Kids' Clothing", description: 'Boys and girls clothing'},
+        {value: 'shoes', label: 'Footwear', description: 'Sneakers, boots, formal shoes'},
+      ],
+    },
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <h3>Product Categories</h3>
+
+        {categories.map((section, index) => (
+          <div key={index}>
+            <h4>{section.title}</h4>
+            <OptionList
+              allowMultiple
+              options={section.options}
+              selected={selected}
+              onChange={setSelected}
+            />
+          </div>
+        ))}
+
+        <div className="info-message">
+          <p>{selected.length} categorie{selected.length !== 1 ? 's' : ''} selected</p>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product Categories',
+  bodyPadding: 15,
+  layout: 'vbox',
+  items: [{
+    xtype: 'component',
+    html: '<h4>Electronics</h4>'
+  }, {
+    xtype: 'checkboxgroup',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: 'Smartphones<br><small>iPhone, Android devices</small>',
+      name: 'category',
+      inputValue: 'phones'
+    }, {
+      boxLabel: 'Laptops & Computers<br><small>MacBooks, Windows PCs</small>',
+      name: 'category',
+      inputValue: 'laptops'
+    }, {
+      boxLabel: 'Tablets<br><small>iPad, Android tablets</small>',
+      name: 'category',
+      inputValue: 'tablets'
+    }, {
+      boxLabel: 'Electronics Accessories<br><small>Cases, chargers, cables</small>',
+      name: 'category',
+      inputValue: 'accessories'
+    }]
+  }, {
+    xtype: 'component',
+    html: '<h4 style="margin-top: 20px;">Clothing</h4>'
+  }, {
+    xtype: 'checkboxgroup',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: "Men's Clothing<br><small>Shirts, pants, outerwear</small>",
+      name: 'category',
+      inputValue: 'mens'
+    }, {
+      boxLabel: "Women's Clothing<br><small>Dresses, tops, bottoms</small>",
+      name: 'category',
+      inputValue: 'womens'
+    }, {
+      boxLabel: "Kids' Clothing<br><small>Boys and girls clothing</small>",
+      name: 'category',
+      inputValue: 'kids'
+    }, {
+      boxLabel: 'Footwear<br><small>Sneakers, boots, formal shoes</small>',
+      name: 'category',
+      inputValue: 'shoes'
+    }],
+    listeners: {
+      change: function() {
+        const selected = Ext.ComponentQuery.query('checkboxgroup').reduce((acc, group) => {
+          const values = group.getValue();
+          return acc.concat(values.category || []);
+        }, []);
+        Ext.ComponentQuery.query('#categoryCount')[0].setHtml(
+          '<div class="info-message">' + selected.length + ' categories selected</div>'
+        );
+      }
+    }
+  }, {
+    xtype: 'component',
+    itemId: 'categoryCount',
+    html: '<div class="info-message">0 categories selected</div>'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Product Categories</h3>
+
+    <div class="category-section">
+      <h4>Electronics</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="category" value="phones" />
+            <div>
+              <span class="option-label">Smartphones</span>
+              <span class="option-description">iPhone, Android devices</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="laptops" />
+            <div>
+              <span class="option-label">Laptops & Computers</span>
+              <span class="option-description">MacBooks, Windows PCs</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="tablets" />
+            <div>
+              <span class="option-label">Tablets</span>
+              <span class="option-description">iPad, Android tablets</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="accessories" />
+            <div>
+              <span class="option-label">Electronics Accessories</span>
+              <span class="option-description">Cases, chargers, cables</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-section">
+      <h4>Clothing</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="category" value="mens" />
+            <div>
+              <span class="option-label">Men's Clothing</span>
+              <span class="option-description">Shirts, pants, outerwear</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="womens" />
+            <div>
+              <span class="option-label">Women's Clothing</span>
+              <span class="option-description">Dresses, tops, bottoms</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="kids" />
+            <div>
+              <span class="option-label">Kids' Clothing</span>
+              <span class="option-description">Boys and girls clothing</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="category" value="shoes" />
+            <div>
+              <span class="option-label">Footwear</span>
+              <span class="option-description">Sneakers, boots, formal shoes</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div id="categoryCount" class="info-message">0 categories selected</div>
+  </div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('input[name="category"]');
+const categoryCount = document.getElementById('categoryCount');
+
+function updateCount() {
+  const selected = Array.from(checkboxes).filter(cb => cb.checked).length;
+  categoryCount.textContent = selected + ' categor' + (selected !== 1 ? 'ies' : 'y') + ' selected';
+}
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', updateCount);
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CategoryOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface CategorySection {
+  title: string;
+  options: CategoryOption[];
+}
+
+interface ProductCategoriesProps {
+  sections?: CategorySection[];
+  onCategoryChange?: (selected: string[]) => void;
+}
+
+function ProductCategoriesExample({
+  sections = [
+    {
+      title: 'Electronics',
+      options: [
+        {value: 'phones', label: 'Smartphones', description: 'iPhone, Android devices'},
+        {value: 'laptops', label: 'Laptops & Computers', description: 'MacBooks, Windows PCs'},
+        {value: 'tablets', label: 'Tablets', description: 'iPad, Android tablets'},
+        {value: 'accessories', label: 'Electronics Accessories', description: 'Cases, chargers, cables'}
+      ]
+    },
+    {
+      title: 'Clothing',
+      options: [
+        {value: 'mens', label: "Men's Clothing", description: 'Shirts, pants, outerwear'},
+        {value: 'womens', label: "Women's Clothing", description: 'Dresses, tops, bottoms'},
+        {value: 'kids', label: "Kids' Clothing", description: 'Boys and girls clothing'},
+        {value: 'shoes', label: 'Footwear', description: 'Sneakers, boots, formal shoes'}
+      ]
+    }
+  ],
+  onCategoryChange
+}: ProductCategoriesProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+    onCategoryChange?.(newSelected);
+  }, [onCategoryChange]);
+
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <h3>Product Categories</h3>
+
+        {sections.map((section, index) => (
+          <div key={index}>
+            <h4>{section.title}</h4>
+            <OptionList
+              allowMultiple
+              options={section.options}
+              selected={selected}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
+
+        <div className="info-message">
+          <p>{selected.length} categorie{selected.length !== 1 ? 's' : ''} selected</p>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  notificationsettings: {
+    react: `import {OptionList, Card, BlockStack} from '@shopify/polaris';
+import {useState} from 'react';
+
+function NotificationSettingsExample() {
+  const [selected, setSelected] = useState<string[]>([
+    'order-created',
+    'customer-signup',
+    'low-inventory'
+  ]);
+
+  return (
+    <Card>
+      <BlockStack gap="500">
+        <h3>Email Notifications</h3>
+        <p>Select the events you want to be notified about via email.</p>
+
+        <OptionList
+          allowMultiple
+          title="Order notifications"
+          options={[
+            {value: 'order-created', label: 'New orders', description: 'When a customer places a new order'},
+            {value: 'order-updated', label: 'Order updates', description: 'When order status changes'},
+            {value: 'order-cancelled', label: 'Cancelled orders', description: 'When an order is cancelled'},
+            {value: 'refund-processed', label: 'Refunds', description: 'When a refund is processed'},
+          ]}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        <OptionList
+          allowMultiple
+          title="Customer notifications"
+          options={[
+            {value: 'customer-signup', label: 'New customers', description: 'When a new customer registers'},
+            {value: 'customer-feedback', label: 'Customer feedback', description: 'When customers leave reviews'},
+          ]}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        <OptionList
+          allowMultiple
+          title="Inventory notifications"
+          options={[
+            {value: 'low-inventory', label: 'Low inventory', description: 'When stock levels are low'},
+            {value: 'out-of-stock', label: 'Out of stock', description: 'When items go out of stock'},
+          ]}
+          selected={selected}
+          onChange={setSelected}
+        />
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Email Notifications',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'component',
+    html: '<p>Select the events you want to be notified about via email.</p>'
+  }, {
+    xtype: 'fieldset',
+    title: 'Order notifications',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'New orders<br><small>When a customer places a new order</small>',
+        name: 'notification',
+        inputValue: 'order-created',
+        checked: true
+      }, {
+        boxLabel: 'Order updates<br><small>When order status changes</small>',
+        name: 'notification',
+        inputValue: 'order-updated'
+      }, {
+        boxLabel: 'Cancelled orders<br><small>When an order is cancelled</small>',
+        name: 'notification',
+        inputValue: 'order-cancelled'
+      }, {
+        boxLabel: 'Refunds<br><small>When a refund is processed</small>',
+        name: 'notification',
+        inputValue: 'refund-processed'
+      }]
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Customer notifications',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'New customers<br><small>When a new customer registers</small>',
+        name: 'notification',
+        inputValue: 'customer-signup',
+        checked: true
+      }, {
+        boxLabel: 'Customer feedback<br><small>When customers leave reviews</small>',
+        name: 'notification',
+        inputValue: 'customer-feedback'
+      }]
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Inventory notifications',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'Low inventory<br><small>When stock levels are low</small>',
+        name: 'notification',
+        inputValue: 'low-inventory',
+        checked: true
+      }, {
+        boxLabel: 'Out of stock<br><small>When items go out of stock</small>',
+        name: 'notification',
+        inputValue: 'out-of-stock'
+      }]
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Email Notifications</h3>
+    <p>Select the events you want to be notified about via email.</p>
+
+    <div class="notification-section">
+      <h4 class="option-list__title">Order notifications</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="order-created" checked />
+            <div>
+              <span class="option-label">New orders</span>
+              <span class="option-description">When a customer places a new order</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="order-updated" />
+            <div>
+              <span class="option-label">Order updates</span>
+              <span class="option-description">When order status changes</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="order-cancelled" />
+            <div>
+              <span class="option-label">Cancelled orders</span>
+              <span class="option-description">When an order is cancelled</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="refund-processed" />
+            <div>
+              <span class="option-label">Refunds</span>
+              <span class="option-description">When a refund is processed</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="notification-section">
+      <h4 class="option-list__title">Customer notifications</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="customer-signup" checked />
+            <div>
+              <span class="option-label">New customers</span>
+              <span class="option-description">When a new customer registers</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="customer-feedback" />
+            <div>
+              <span class="option-label">Customer feedback</span>
+              <span class="option-description">When customers leave reviews</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="notification-section">
+      <h4 class="option-list__title">Inventory notifications</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="low-inventory" checked />
+            <div>
+              <span class="option-label">Low inventory</span>
+              <span class="option-description">When stock levels are low</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="notification" value="out-of-stock" />
+            <div>
+              <span class="option-label">Out of stock</span>
+              <span class="option-description">When items go out of stock</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('input[name="notification"]');
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const selected = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+    console.log('Selected notifications:', selected);
+  });
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface NotificationOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface NotificationSection {
+  title: string;
+  options: NotificationOption[];
+}
+
+interface NotificationSettingsProps {
+  sections?: NotificationSection[];
+  defaultSelected?: string[];
+  onNotificationChange?: (selected: string[]) => void;
+}
+
+function NotificationSettingsExample({
+  sections = [
+    {
+      title: 'Order notifications',
+      options: [
+        {value: 'order-created', label: 'New orders', description: 'When a customer places a new order'},
+        {value: 'order-updated', label: 'Order updates', description: 'When order status changes'},
+        {value: 'order-cancelled', label: 'Cancelled orders', description: 'When an order is cancelled'},
+        {value: 'refund-processed', label: 'Refunds', description: 'When a refund is processed'}
+      ]
+    },
+    {
+      title: 'Customer notifications',
+      options: [
+        {value: 'customer-signup', label: 'New customers', description: 'When a new customer registers'},
+        {value: 'customer-feedback', label: 'Customer feedback', description: 'When customers leave reviews'}
+      ]
+    },
+    {
+      title: 'Inventory notifications',
+      options: [
+        {value: 'low-inventory', label: 'Low inventory', description: 'When stock levels are low'},
+        {value: 'out-of-stock', label: 'Out of stock', description: 'When items go out of stock'}
+      ]
+    }
+  ],
+  defaultSelected = ['order-created', 'customer-signup', 'low-inventory'],
+  onNotificationChange
+}: NotificationSettingsProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(defaultSelected);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+    onNotificationChange?.(newSelected);
+  }, [onNotificationChange]);
+
+  return (
+    <Card>
+      <BlockStack gap="500">
+        <h3>Email Notifications</h3>
+        <p>Select the events you want to be notified about via email.</p>
+
+        {sections.map((section, index) => (
+          <OptionList
+            key={index}
+            allowMultiple
+            title={section.title}
+            options={section.options}
+            selected={selected}
+            onChange={handleChange}
+          />
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  themeselection: {
+    react: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ThemeSelectionExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const themes = [
+    {
+      value: 'light',
+      label: 'Light Theme',
+      description: 'Clean and bright interface',
+      media: <div className="theme-preview theme-preview--light" />,
+    },
+    {
+      value: 'dark',
+      label: 'Dark Theme',
+      description: 'Easy on the eyes in low light',
+      media: <div className="theme-preview theme-preview--dark" />,
+    },
+    {
+      value: 'auto',
+      label: 'Auto Theme',
+      description: 'Follows system preferences',
+      media: <div className="theme-preview theme-preview--auto" />,
+    },
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Appearance Settings</h3>
+
+        <OptionList
+          title="Choose your theme"
+          options={themes}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        {selected.length > 0 && (
+          <div>
+            <Button size="slim">Apply Theme</Button>
+          </div>
+        )}
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Appearance Settings',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'component',
+    html: '<h4>Choose your theme</h4>'
+  }, {
+    xtype: 'radiogroup',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: '<div class="theme-option"><div class="theme-preview theme-preview--light"></div>Light Theme<br><small>Clean and bright interface</small></div>',
+      name: 'theme',
+      inputValue: 'light'
+    }, {
+      boxLabel: '<div class="theme-option"><div class="theme-preview theme-preview--dark"></div>Dark Theme<br><small>Easy on the eyes in low light</small></div>',
+      name: 'theme',
+      inputValue: 'dark'
+    }, {
+      boxLabel: '<div class="theme-option"><div class="theme-preview theme-preview--auto"></div>Auto Theme<br><small>Follows system preferences</small></div>',
+      name: 'theme',
+      inputValue: 'auto'
+    }],
+    listeners: {
+      change: function(radiogroup, newValue) {
+        Ext.ComponentQuery.query('#applyButton')[0].setDisabled(false);
+      }
+    }
+  }, {
+    xtype: 'button',
+    itemId: 'applyButton',
+    text: 'Apply Theme',
+    disabled: true,
+    handler: function() {
+      Ext.Msg.alert('Success', 'Theme applied successfully');
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Appearance Settings</h3>
+
+    <div class="option-list">
+      <h4 class="option-list__title">Choose your theme</h4>
+
+      <div class="option-list__items">
+        <label class="option-item">
+          <input type="radio" name="theme" value="light" />
+          <div class="theme-preview theme-preview--light"></div>
+          <div>
+            <span class="option-label">Light Theme</span>
+            <span class="option-description">Clean and bright interface</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="theme" value="dark" />
+          <div class="theme-preview theme-preview--dark"></div>
+          <div>
+            <span class="option-label">Dark Theme</span>
+            <span class="option-description">Easy on the eyes in low light</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="theme" value="auto" />
+          <div class="theme-preview theme-preview--auto"></div>
+          <div>
+            <span class="option-label">Auto Theme</span>
+            <span class="option-description">Follows system preferences</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <button id="applyTheme" class="button" disabled>Apply Theme</button>
+  </div>
+</div>
+
+<script>
+const radioButtons = document.querySelectorAll('input[name="theme"]');
+const applyButton = document.getElementById('applyTheme');
+
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    applyButton.disabled = false;
+    console.log('Selected theme:', e.target.value);
+  });
+});
+
+applyButton.addEventListener('click', () => {
+  const selected = document.querySelector('input[name="theme"]:checked');
+  if (selected) {
+    alert('Theme applied: ' + selected.value);
+  }
+});
+</script>
+
+<style>
+.theme-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-right: 8px;
+}
+.theme-preview--light {
+  background: linear-gradient(135deg, #fff 50%, #f5f5f5 50%);
+}
+.theme-preview--dark {
+  background: linear-gradient(135deg, #333 50%, #555 50%);
+}
+.theme-preview--auto {
+  background: linear-gradient(135deg, #fff 25%, #333 25%, #333 75%, #fff 75%);
+}
+</style>`,
+    typescript: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+type ThemeMode = 'light' | 'dark' | 'auto';
+
+interface ThemeOption {
+  value: ThemeMode;
+  label: string;
+  description: string;
+  previewClass: string;
+}
+
+interface ThemeSelectionProps {
+  themes?: ThemeOption[];
+  currentTheme?: ThemeMode;
+  onThemeApply?: (theme: ThemeMode) => void;
+}
+
+function ThemeSelectionExample({
+  themes = [
+    {value: 'light', label: 'Light Theme', description: 'Clean and bright interface', previewClass: 'theme-preview--light'},
+    {value: 'dark', label: 'Dark Theme', description: 'Easy on the eyes in low light', previewClass: 'theme-preview--dark'},
+    {value: 'auto', label: 'Auto Theme', description: 'Follows system preferences', previewClass: 'theme-preview--auto'}
+  ],
+  currentTheme,
+  onThemeApply
+}: ThemeSelectionProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(currentTheme ? [currentTheme] : []);
+
+  const handleApply = useCallback(() => {
+    if (selected.length > 0) {
+      onThemeApply?.(selected[0] as ThemeMode);
+    }
+  }, [selected, onThemeApply]);
+
+  const themeOptions = themes.map(theme => ({
+    value: theme.value,
+    label: theme.label,
+    description: theme.description,
+    media: <div className={\`theme-preview \${theme.previewClass}\`} />
+  }));
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Appearance Settings</h3>
+
+        <OptionList
+          title="Choose your theme"
+          options={themeOptions}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        {selected.length > 0 && (
+          <div>
+            <Button size="slim" onClick={handleApply}>Apply Theme</Button>
+          </div>
+        )}
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  shippingoptions: {
+    react: `import {OptionList, Card, BlockStack, Badge} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ShippingOptionsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const shippingOptions = [
+    {
+      value: 'free',
+      label: 'Free Shipping',
+      description: '5-7 business days',
+      media: <Badge status="success">FREE</Badge>,
+    },
+    {
+      value: 'standard',
+      label: 'Standard Shipping',
+      description: '3-5 business days',
+      media: <span className="shipping-price">$9.99</span>,
+    },
+    {
+      value: 'express',
+      label: 'Express Shipping',
+      description: '2-3 business days',
+      media: <span className="shipping-price">$19.99</span>,
+    },
+    {
+      value: 'overnight',
+      label: 'Overnight Shipping',
+      description: 'Next business day',
+      media: <span className="shipping-price">$39.99</span>,
+    },
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Select Shipping Method</h3>
+
+        <OptionList
+          options={shippingOptions}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        {selected.length > 0 && (
+          <div className="success-message">
+            <p>
+              <strong>Shipping selected:</strong> Your order will be delivered
+              according to the selected method.
+            </p>
+          </div>
+        )}
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Select Shipping Method',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'radiogroup',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: 'Free Shipping<br><small>5-7 business days</small><span class="badge badge-success">FREE</span>',
+      name: 'shipping',
+      inputValue: 'free'
+    }, {
+      boxLabel: 'Standard Shipping<br><small>3-5 business days</small><span class="shipping-price">$9.99</span>',
+      name: 'shipping',
+      inputValue: 'standard'
+    }, {
+      boxLabel: 'Express Shipping<br><small>2-3 business days</small><span class="shipping-price">$19.99</span>',
+      name: 'shipping',
+      inputValue: 'express'
+    }, {
+      boxLabel: 'Overnight Shipping<br><small>Next business day</small><span class="shipping-price">$39.99</span>',
+      name: 'shipping',
+      inputValue: 'overnight'
+    }],
+    listeners: {
+      change: function(radiogroup, newValue) {
+        Ext.ComponentQuery.query('#shippingMessage')[0].setHtml(
+          '<div class="success-message"><strong>Shipping selected:</strong> Your order will be delivered according to the selected method.</div>'
+        );
+      }
+    }
+  }, {
+    xtype: 'component',
+    itemId: 'shippingMessage',
+    html: ''
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Select Shipping Method</h3>
+
+    <div class="option-list">
+      <div class="option-list__items">
+        <label class="option-item">
+          <input type="radio" name="shipping" value="free" />
+          <div>
+            <span class="badge badge-success">FREE</span>
+            <span class="option-label">Free Shipping</span>
+            <span class="option-description">5-7 business days</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="shipping" value="standard" />
+          <div>
+            <span class="shipping-price">$9.99</span>
+            <span class="option-label">Standard Shipping</span>
+            <span class="option-description">3-5 business days</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="shipping" value="express" />
+          <div>
+            <span class="shipping-price">$19.99</span>
+            <span class="option-label">Express Shipping</span>
+            <span class="option-description">2-3 business days</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="shipping" value="overnight" />
+          <div>
+            <span class="shipping-price">$39.99</span>
+            <span class="option-label">Overnight Shipping</span>
+            <span class="option-description">Next business day</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div id="shippingMessage" class="success-message" style="display: none;">
+      <p><strong>Shipping selected:</strong> Your order will be delivered according to the selected method.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const radioButtons = document.querySelectorAll('input[name="shipping"]');
+const shippingMessage = document.getElementById('shippingMessage');
+
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    shippingMessage.style.display = 'block';
+    console.log('Selected shipping:', e.target.value);
+  });
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack, Badge} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ShippingOption {
+  value: string;
+  label: string;
+  description: string;
+  price?: number;
+  isFree?: boolean;
+}
+
+interface ShippingOptionsProps {
+  options?: ShippingOption[];
+  onShippingSelect?: (method: string, price: number) => void;
+}
+
+function ShippingOptionsExample({
+  options = [
+    {value: 'free', label: 'Free Shipping', description: '5-7 business days', price: 0, isFree: true},
+    {value: 'standard', label: 'Standard Shipping', description: '3-5 business days', price: 9.99},
+    {value: 'express', label: 'Express Shipping', description: '2-3 business days', price: 19.99},
+    {value: 'overnight', label: 'Overnight Shipping', description: 'Next business day', price: 39.99}
+  ],
+  onShippingSelect
+}: ShippingOptionsProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+    if (newSelected.length > 0) {
+      const option = options.find(opt => opt.value === newSelected[0]);
+      if (option && onShippingSelect) {
+        onShippingSelect(option.value, option.price || 0);
+      }
+    }
+  }, [options, onShippingSelect]);
+
+  const shippingItems = options.map(opt => ({
+    value: opt.value,
+    label: opt.label,
+    description: opt.description,
+    media: opt.isFree
+      ? <Badge status="success">FREE</Badge>
+      : <span className="shipping-price">\${opt.price?.toFixed(2)}</span>
+  }));
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Select Shipping Method</h3>
+
+        <OptionList
+          options={shippingItems}
+          selected={selected}
+          onChange={handleChange}
+        />
+
+        {selected.length > 0 && (
+          <div className="success-message">
+            <p>
+              <strong>Shipping selected:</strong> Your order will be delivered
+              according to the selected method.
+            </p>
+          </div>
+        )}
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  permissionsettings: {
+    react: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function PermissionSettingsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const permissions = [
+    {
+      title: 'Store Management',
+      options: [
+        {value: 'view-products', label: 'View products', description: 'Can browse product catalog'},
+        {value: 'edit-products', label: 'Edit products', description: 'Can modify product information'},
+        {value: 'delete-products', label: 'Delete products', description: 'Can remove products from store'},
+        {value: 'manage-inventory', label: 'Manage inventory', description: 'Can update stock levels'},
+      ],
+    },
+    {
+      title: 'Order Management',
+      options: [
+        {value: 'view-orders', label: 'View orders', description: 'Can view order details'},
+        {value: 'process-orders', label: 'Process orders', description: 'Can fulfill and ship orders'},
+        {value: 'refund-orders', label: 'Process refunds', description: 'Can issue refunds and returns'},
+      ],
+    },
+    {
+      title: 'Analytics',
+      options: [
+        {value: 'view-analytics', label: 'View analytics', description: 'Can access sales reports'},
+        {value: 'export-data', label: 'Export data', description: 'Can download reports and data'},
+      ],
+    },
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="500">
+        <h3>Role Permissions</h3>
+        <p>Configure what this role can access and modify in your store.</p>
+
+        {permissions.map((section, index) => (
+          <div key={index}>
+            <h4>{section.title}</h4>
+            <OptionList
+              allowMultiple
+              options={section.options}
+              selected={selected}
+              onChange={setSelected}
+            />
+          </div>
+        ))}
+
+        <div className="permission-footer">
+          <span>{selected.length} permission{selected.length !== 1 ? 's' : ''} granted</span>
+          <Button size="slim">Save Changes</Button>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Role Permissions',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'component',
+    html: '<p>Configure what this role can access and modify in your store.</p>'
+  }, {
+    xtype: 'fieldset',
+    title: 'Store Management',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'View products<br><small>Can browse product catalog</small>',
+        name: 'permission',
+        inputValue: 'view-products'
+      }, {
+        boxLabel: 'Edit products<br><small>Can modify product information</small>',
+        name: 'permission',
+        inputValue: 'edit-products'
+      }, {
+        boxLabel: 'Delete products<br><small>Can remove products from store</small>',
+        name: 'permission',
+        inputValue: 'delete-products'
+      }, {
+        boxLabel: 'Manage inventory<br><small>Can update stock levels</small>',
+        name: 'permission',
+        inputValue: 'manage-inventory'
+      }]
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Order Management',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'View orders<br><small>Can view order details</small>',
+        name: 'permission',
+        inputValue: 'view-orders'
+      }, {
+        boxLabel: 'Process orders<br><small>Can fulfill and ship orders</small>',
+        name: 'permission',
+        inputValue: 'process-orders'
+      }, {
+        boxLabel: 'Process refunds<br><small>Can issue refunds and returns</small>',
+        name: 'permission',
+        inputValue: 'refund-orders'
+      }]
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Analytics',
+    items: [{
+      xtype: 'checkboxgroup',
+      vertical: true,
+      columns: 1,
+      items: [{
+        boxLabel: 'View analytics<br><small>Can access sales reports</small>',
+        name: 'permission',
+        inputValue: 'view-analytics'
+      }, {
+        boxLabel: 'Export data<br><small>Can download reports and data</small>',
+        name: 'permission',
+        inputValue: 'export-data'
+      }],
+      listeners: {
+        change: function() {
+          const selected = Ext.ComponentQuery.query('checkboxgroup').reduce((acc, group) => {
+            const values = group.getValue();
+            return acc.concat(values.permission || []);
+          }, []);
+          Ext.ComponentQuery.query('#permissionCount')[0].setText(
+            selected.length + ' permission' + (selected.length !== 1 ? 's' : '') + ' granted'
+          );
+        }
+      }
+    }]
+  }, {
+    xtype: 'toolbar',
+    items: [{
+      xtype: 'component',
+      itemId: 'permissionCount',
+      html: '0 permissions granted'
+    }, '->', {
+      xtype: 'button',
+      text: 'Save Changes'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Role Permissions</h3>
+    <p>Configure what this role can access and modify in your store.</p>
+
+    <div class="permission-section">
+      <h4>Store Management</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="view-products" />
+            <div>
+              <span class="option-label">View products</span>
+              <span class="option-description">Can browse product catalog</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="edit-products" />
+            <div>
+              <span class="option-label">Edit products</span>
+              <span class="option-description">Can modify product information</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="delete-products" />
+            <div>
+              <span class="option-label">Delete products</span>
+              <span class="option-description">Can remove products from store</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="manage-inventory" />
+            <div>
+              <span class="option-label">Manage inventory</span>
+              <span class="option-description">Can update stock levels</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="permission-section">
+      <h4>Order Management</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="view-orders" />
+            <div>
+              <span class="option-label">View orders</span>
+              <span class="option-description">Can view order details</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="process-orders" />
+            <div>
+              <span class="option-label">Process orders</span>
+              <span class="option-description">Can fulfill and ship orders</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="refund-orders" />
+            <div>
+              <span class="option-label">Process refunds</span>
+              <span class="option-description">Can issue refunds and returns</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="permission-section">
+      <h4>Analytics</h4>
+      <div class="option-list">
+        <div class="option-list__items">
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="view-analytics" />
+            <div>
+              <span class="option-label">View analytics</span>
+              <span class="option-description">Can access sales reports</span>
+            </div>
+          </label>
+          <label class="option-item">
+            <input type="checkbox" name="permission" value="export-data" />
+            <div>
+              <span class="option-label">Export data</span>
+              <span class="option-description">Can download reports and data</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="permission-footer">
+      <span id="permissionCount">0 permissions granted</span>
+      <button class="button">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('input[name="permission"]');
+const permissionCount = document.getElementById('permissionCount');
+
+function updateCount() {
+  const selected = Array.from(checkboxes).filter(cb => cb.checked).length;
+  permissionCount.textContent = selected + ' permission' + (selected !== 1 ? 's' : '') + ' granted';
+}
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', updateCount);
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface Permission {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface PermissionSection {
+  title: string;
+  options: Permission[];
+}
+
+interface PermissionSettingsProps {
+  sections?: PermissionSection[];
+  defaultPermissions?: string[];
+  onPermissionsChange?: (permissions: string[]) => void;
+}
+
+function PermissionSettingsExample({
+  sections = [
+    {
+      title: 'Store Management',
+      options: [
+        {value: 'view-products', label: 'View products', description: 'Can browse product catalog'},
+        {value: 'edit-products', label: 'Edit products', description: 'Can modify product information'},
+        {value: 'delete-products', label: 'Delete products', description: 'Can remove products from store'},
+        {value: 'manage-inventory', label: 'Manage inventory', description: 'Can update stock levels'}
+      ]
+    },
+    {
+      title: 'Order Management',
+      options: [
+        {value: 'view-orders', label: 'View orders', description: 'Can view order details'},
+        {value: 'process-orders', label: 'Process orders', description: 'Can fulfill and ship orders'},
+        {value: 'refund-orders', label: 'Process refunds', description: 'Can issue refunds and returns'}
+      ]
+    },
+    {
+      title: 'Analytics',
+      options: [
+        {value: 'view-analytics', label: 'View analytics', description: 'Can access sales reports'},
+        {value: 'export-data', label: 'Export data', description: 'Can download reports and data'}
+      ]
+    }
+  ],
+  defaultPermissions = [],
+  onPermissionsChange
+}: PermissionSettingsProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(defaultPermissions);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+    onPermissionsChange?.(newSelected);
+  }, [onPermissionsChange]);
+
+  return (
+    <Card>
+      <BlockStack gap="500">
+        <h3>Role Permissions</h3>
+        <p>Configure what this role can access and modify in your store.</p>
+
+        {sections.map((section, index) => (
+          <div key={index}>
+            <h4>{section.title}</h4>
+            <OptionList
+              allowMultiple
+              options={section.options}
+              selected={selected}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
+
+        <div className="permission-footer">
+          <span>{selected.length} permission{selected.length !== 1 ? 's' : ''} granted</span>
+          <Button size="slim">Save Changes</Button>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  languageselection: {
+    react: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LanguageSelectionExample() {
+  const [selected, setSelected] = useState<string[]>(['en']);
+
+  const languages = [
+    {value: 'en', label: 'English', description: 'English (United States)', media: <span>🇺🇸</span>},
+    {value: 'es', label: 'Spanish', description: 'Español (México)', media: <span>🇲🇽</span>},
+    {value: 'fr', label: 'French', description: 'Français (France)', media: <span>🇫🇷</span>},
+    {value: 'de', label: 'German', description: 'Deutsch (Deutschland)', media: <span>🇩🇪</span>},
+    {value: 'zh', label: 'Chinese', description: '中文 (简体)', media: <span>🇨🇳</span>},
+    {value: 'ja', label: 'Japanese', description: '日本語', media: <span>🇯🇵</span>},
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Language Preferences</h3>
+
+        <OptionList
+          title="Select your preferred language"
+          options={languages}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        <div>
+          <Button>Save Language</Button>
+          <Button variant="plain">Reset to Default</Button>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Language Preferences',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'component',
+    html: '<h4>Select your preferred language</h4>'
+  }, {
+    xtype: 'radiogroup',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: '🇺🇸 English<br><small>English (United States)</small>',
+      name: 'language',
+      inputValue: 'en',
+      checked: true
+    }, {
+      boxLabel: '🇲🇽 Spanish<br><small>Español (México)</small>',
+      name: 'language',
+      inputValue: 'es'
+    }, {
+      boxLabel: '🇫🇷 French<br><small>Français (France)</small>',
+      name: 'language',
+      inputValue: 'fr'
+    }, {
+      boxLabel: '🇩🇪 German<br><small>Deutsch (Deutschland)</small>',
+      name: 'language',
+      inputValue: 'de'
+    }, {
+      boxLabel: '🇨🇳 Chinese<br><small>中文 (简体)</small>',
+      name: 'language',
+      inputValue: 'zh'
+    }, {
+      boxLabel: '🇯🇵 Japanese<br><small>日本語</small>',
+      name: 'language',
+      inputValue: 'ja'
+    }]
+  }, {
+    xtype: 'toolbar',
+    items: [{
+      xtype: 'button',
+      text: 'Save Language'
+    }, {
+      xtype: 'button',
+      text: 'Reset to Default',
+      ui: 'link'
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Language Preferences</h3>
+
+    <div class="option-list">
+      <h4 class="option-list__title">Select your preferred language</h4>
+
+      <div class="option-list__items">
+        <label class="option-item">
+          <input type="radio" name="language" value="en" checked />
+          <span class="language-flag">🇺🇸</span>
+          <div>
+            <span class="option-label">English</span>
+            <span class="option-description">English (United States)</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="language" value="es" />
+          <span class="language-flag">🇲🇽</span>
+          <div>
+            <span class="option-label">Spanish</span>
+            <span class="option-description">Español (México)</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="language" value="fr" />
+          <span class="language-flag">🇫🇷</span>
+          <div>
+            <span class="option-label">French</span>
+            <span class="option-description">Français (France)</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="language" value="de" />
+          <span class="language-flag">🇩🇪</span>
+          <div>
+            <span class="option-label">German</span>
+            <span class="option-description">Deutsch (Deutschland)</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="language" value="zh" />
+          <span class="language-flag">🇨🇳</span>
+          <div>
+            <span class="option-label">Chinese</span>
+            <span class="option-description">中文 (简体)</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="radio" name="language" value="ja" />
+          <span class="language-flag">🇯🇵</span>
+          <div>
+            <span class="option-label">Japanese</span>
+            <span class="option-description">日本語</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="button">Save Language</button>
+      <button class="button button--plain">Reset to Default</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const radioButtons = document.querySelectorAll('input[name="language"]');
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    console.log('Selected language:', e.target.value);
+  });
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'zh' | 'ja';
+
+interface Language {
+  value: LanguageCode;
+  label: string;
+  description: string;
+  flag: string;
+}
+
+interface LanguageSelectionProps {
+  languages?: Language[];
+  defaultLanguage?: LanguageCode;
+  onLanguageChange?: (language: LanguageCode) => void;
+  onReset?: () => void;
+}
+
+function LanguageSelectionExample({
+  languages = [
+    {value: 'en', label: 'English', description: 'English (United States)', flag: '🇺🇸'},
+    {value: 'es', label: 'Spanish', description: 'Español (México)', flag: '🇲🇽'},
+    {value: 'fr', label: 'French', description: 'Français (France)', flag: '🇫🇷'},
+    {value: 'de', label: 'German', description: 'Deutsch (Deutschland)', flag: '🇩🇪'},
+    {value: 'zh', label: 'Chinese', description: '中文 (简体)', flag: '🇨🇳'},
+    {value: 'ja', label: 'Japanese', description: '日本語', flag: '🇯🇵'}
+  ],
+  defaultLanguage = 'en',
+  onLanguageChange,
+  onReset
+}: LanguageSelectionProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([defaultLanguage]);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+  }, []);
+
+  const handleSave = useCallback(() => {
+    if (selected.length > 0) {
+      onLanguageChange?.(selected[0] as LanguageCode);
+    }
+  }, [selected, onLanguageChange]);
+
+  const languageOptions = languages.map(lang => ({
+    value: lang.value,
+    label: lang.label,
+    description: lang.description,
+    media: <span>{lang.flag}</span>
+  }));
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <h3>Language Preferences</h3>
+
+        <OptionList
+          title="Select your preferred language"
+          options={languageOptions}
+          selected={selected}
+          onChange={handleChange}
+        />
+
+        <div>
+          <Button onClick={handleSave}>Save Language</Button>
+          <Button variant="plain" onClick={onReset}>Reset to Default</Button>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`
+  },
+  interactiveexample: {
+    react: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState} from 'react';
+
+function InteractiveExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+  const [showSummary, setShowSummary] = useState(false);
+
+  const options = [
+    {value: 'newsletter', label: 'Newsletter', description: 'Weekly updates and news'},
+    {value: 'promotions', label: 'Promotional Offers', description: 'Special deals and discounts'},
+    {value: 'new-features', label: 'New Features', description: 'Product updates and announcements'},
+    {value: 'events', label: 'Events & Webinars', description: 'Upcoming online and offline events'},
+    {value: 'research', label: 'Research Surveys', description: 'Help us improve our products'},
+  ];
+
+  const handleSave = () => {
+    setShowSummary(true);
+    setTimeout(() => setShowSummary(false), 3000);
+  };
+
+  const handleSelectAll = () => {
+    setSelected(options.map(opt => opt.value));
+  };
+
+  const handleClearAll = () => {
+    setSelected([]);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <div>
+          <h3>Communication Preferences</h3>
+          <p>Choose what types of emails you'd like to receive from us.</p>
+        </div>
+
+        <OptionList
+          allowMultiple
+          options={options}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        <div className="button-group">
+          <Button onClick={handleSave} disabled={selected.length === 0}>
+            Save Preferences
+          </Button>
+          <Button variant="plain" onClick={handleSelectAll}>
+            Select All
+          </Button>
+          <Button variant="plain" onClick={handleClearAll}>
+            Clear All
+          </Button>
+        </div>
+
+        {showSummary && (
+          <div className="success-message">
+            <p>
+              ✓ Preferences saved! You're now subscribed to {selected.length} communication type{selected.length !== 1 ? 's' : ''}.
+            </p>
+          </div>
+        )}
+
+        <div className="info-message">
+          <p>
+            <strong>Current selections:</strong> {selected.length > 0 ? selected.join(', ') : 'None selected'}
+          </p>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Communication Preferences',
+  bodyPadding: 15,
+  items: [{
+    xtype: 'component',
+    html: '<p>Choose what types of emails you\\'d like to receive from us.</p>'
+  }, {
+    xtype: 'checkboxgroup',
+    itemId: 'preferences',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: 'Newsletter<br><small>Weekly updates and news</small>',
+      name: 'pref',
+      inputValue: 'newsletter'
+    }, {
+      boxLabel: 'Promotional Offers<br><small>Special deals and discounts</small>',
+      name: 'pref',
+      inputValue: 'promotions'
+    }, {
+      boxLabel: 'New Features<br><small>Product updates and announcements</small>',
+      name: 'pref',
+      inputValue: 'new-features'
+    }, {
+      boxLabel: 'Events & Webinars<br><small>Upcoming online and offline events</small>',
+      name: 'pref',
+      inputValue: 'events'
+    }, {
+      boxLabel: 'Research Surveys<br><small>Help us improve our products</small>',
+      name: 'pref',
+      inputValue: 'research'
+    }],
+    listeners: {
+      change: function() {
+        const values = this.getValue();
+        const selected = values.pref || [];
+        Ext.ComponentQuery.query('#saveButton')[0].setDisabled(selected.length === 0);
+        Ext.ComponentQuery.query('#summary')[0].setHtml(
+          '<strong>Current selections:</strong> ' + (selected.length > 0 ? selected.join(', ') : 'None selected')
+        );
+      }
+    }
+  }, {
+    xtype: 'toolbar',
+    items: [{
+      xtype: 'button',
+      itemId: 'saveButton',
+      text: 'Save Preferences',
+      disabled: true,
+      handler: function() {
+        Ext.Msg.alert('Success', 'Preferences saved!');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Select All',
+      handler: function() {
+        const checkboxgroup = Ext.ComponentQuery.query('#preferences')[0];
+        checkboxgroup.items.each(function(checkbox) {
+          checkbox.setValue(true);
+        });
+      }
+    }, {
+      xtype: 'button',
+      text: 'Clear All',
+      handler: function() {
+        Ext.ComponentQuery.query('#preferences')[0].reset();
+      }
+    }]
+  }, {
+    xtype: 'component',
+    itemId: 'summary',
+    html: '<strong>Current selections:</strong> None selected'
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="card">
+  <div class="card-content">
+    <h3>Communication Preferences</h3>
+    <p>Choose what types of emails you'd like to receive from us.</p>
+
+    <div class="option-list">
+      <div class="option-list__items">
+        <label class="option-item">
+          <input type="checkbox" name="pref" value="newsletter" />
+          <div>
+            <span class="option-label">Newsletter</span>
+            <span class="option-description">Weekly updates and news</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="checkbox" name="pref" value="promotions" />
+          <div>
+            <span class="option-label">Promotional Offers</span>
+            <span class="option-description">Special deals and discounts</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="checkbox" name="pref" value="new-features" />
+          <div>
+            <span class="option-label">New Features</span>
+            <span class="option-description">Product updates and announcements</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="checkbox" name="pref" value="events" />
+          <div>
+            <span class="option-label">Events & Webinars</span>
+            <span class="option-description">Upcoming online and offline events</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input type="checkbox" name="pref" value="research" />
+          <div>
+            <span class="option-label">Research Surveys</span>
+            <span class="option-description">Help us improve our products</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="saveButton" class="button" disabled>Save Preferences</button>
+      <button id="selectAll" class="button button--plain">Select All</button>
+      <button id="clearAll" class="button button--plain">Clear All</button>
+    </div>
+
+    <div id="successMessage" class="success-message" style="display: none;">
+      <p>✓ Preferences saved! You're now subscribed to <span id="count"></span> communication type<span id="plural"></span>.</p>
+    </div>
+
+    <div class="info-message">
+      <p><strong>Current selections:</strong> <span id="summary">None selected</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('input[name="pref"]');
+const saveButton = document.getElementById('saveButton');
+const selectAll = document.getElementById('selectAll');
+const clearAll = document.getElementById('clearAll');
+const successMessage = document.getElementById('successMessage');
+const summary = document.getElementById('summary');
+
+function updateUI() {
+  const selected = Array.from(checkboxes).filter(cb => cb.checked);
+  saveButton.disabled = selected.length === 0;
+  summary.textContent = selected.length > 0
+    ? selected.map(cb => cb.value).join(', ')
+    : 'None selected';
+}
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', updateUI);
+});
+
+saveButton.addEventListener('click', () => {
+  const selected = Array.from(checkboxes).filter(cb => cb.checked);
+  document.getElementById('count').textContent = selected.length;
+  document.getElementById('plural').textContent = selected.length !== 1 ? 's' : '';
+  successMessage.style.display = 'block';
+  setTimeout(() => {
+    successMessage.style.display = 'none';
+  }, 3000);
+});
+
+selectAll.addEventListener('click', () => {
+  checkboxes.forEach(cb => cb.checked = true);
+  updateUI();
+});
+
+clearAll.addEventListener('click', () => {
+  checkboxes.forEach(cb => cb.checked = false);
+  updateUI();
+});
+</script>`,
+    typescript: `import {OptionList, Card, BlockStack, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CommunicationOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface InteractiveExampleProps {
+  options?: CommunicationOption[];
+  onPreferencesSave?: (preferences: string[]) => void;
+}
+
+function InteractiveExample({
+  options = [
+    {value: 'newsletter', label: 'Newsletter', description: 'Weekly updates and news'},
+    {value: 'promotions', label: 'Promotional Offers', description: 'Special deals and discounts'},
+    {value: 'new-features', label: 'New Features', description: 'Product updates and announcements'},
+    {value: 'events', label: 'Events & Webinars', description: 'Upcoming online and offline events'},
+    {value: 'research', label: 'Research Surveys', description: 'Help us improve our products'}
+  ],
+  onPreferencesSave
+}: InteractiveExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+  const [showSummary, setShowSummary] = useState(false);
+
+  const handleSave = useCallback(() => {
+    onPreferencesSave?.(selected);
+    setShowSummary(true);
+    setTimeout(() => setShowSummary(false), 3000);
+  }, [selected, onPreferencesSave]);
+
+  const handleSelectAll = useCallback(() => {
+    setSelected(options.map(opt => opt.value));
+  }, [options]);
+
+  const handleClearAll = useCallback(() => {
+    setSelected([]);
+  }, []);
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <div>
+          <h3>Communication Preferences</h3>
+          <p>Choose what types of emails you'd like to receive from us.</p>
+        </div>
+
+        <OptionList
+          allowMultiple
+          options={options}
+          selected={selected}
+          onChange={setSelected}
+        />
+
+        <div className="button-group">
+          <Button onClick={handleSave} disabled={selected.length === 0}>
+            Save Preferences
+          </Button>
+          <Button variant="plain" onClick={handleSelectAll}>
+            Select All
+          </Button>
+          <Button variant="plain" onClick={handleClearAll}>
+            Clear All
+          </Button>
+        </div>
+
+        {showSummary && (
+          <div className="success-message">
+            <p>
+              ✓ Preferences saved! You're now subscribed to {selected.length} communication type{selected.length !== 1 ? 's' : ''}.
+            </p>
+          </div>
+        )}
+
+        <div className="info-message">
+          <p>
+            <strong>Current selections:</strong> {selected.length > 0 ? selected.join(', ') : 'None selected'}
+          </p>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}`
+  }
+};

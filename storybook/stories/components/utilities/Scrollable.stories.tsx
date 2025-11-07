@@ -154,7 +154,7 @@ export const VerticalScrolling: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('scrollable', 'default'),
+    codeVariants: getCodeVariants('scrollable', 'verticalScrolling'),
   },
 
 };
@@ -196,7 +196,7 @@ export const HorizontalScrolling: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('scrollable', 'default'),
+    codeVariants: getCodeVariants('scrollable', 'horizontalScrolling'),
   },
 
 };

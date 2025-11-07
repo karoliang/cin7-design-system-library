@@ -83,7 +83,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('avatar', 'default'),
+    codeVariants: getCodeVariants('avatar', 'sizes'),
   },
 
 };
@@ -105,7 +105,7 @@ export const WithImages: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('avatar', 'default'),
+    codeVariants: getCodeVariants('avatar', 'withImages'),
   },
 
 };
@@ -137,7 +137,7 @@ export const CustomerAvatars: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('avatar', 'default'),
+    codeVariants: getCodeVariants('avatar', 'customerAvatars'),
   },
 
 };
@@ -188,7 +188,7 @@ export const Initials: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('avatar', 'default'),
+    codeVariants: getCodeVariants('avatar', 'initials'),
   },
 
 };
@@ -249,7 +249,7 @@ export const UserStatus: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('avatar', 'default'),
+    codeVariants: getCodeVariants('avatar', 'userStatus'),
   },
 
 };

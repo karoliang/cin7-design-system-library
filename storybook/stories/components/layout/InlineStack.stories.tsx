@@ -124,7 +124,7 @@ export const SpacingVariations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'spacingVariations'),
   },
 
 };
@@ -224,7 +224,7 @@ export const AlignmentOptions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'alignmentOptions'),
   },
 
 };
@@ -269,7 +269,7 @@ export const ButtonGroups: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'buttonGroups'),
   },
 
 };
@@ -297,7 +297,7 @@ export const TagCloud: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'tagCloud'),
   },
 
 };
@@ -398,7 +398,7 @@ export const ProgressIndicators: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'progressIndicators'),
   },
 
 };
@@ -468,7 +468,7 @@ export const StatusRow: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'statusRow'),
   },
 
 };
@@ -493,7 +493,7 @@ export const WrappedContent: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'wrappedContent'),
   },
 
 };
@@ -532,7 +532,7 @@ export const MetricsRow: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('inlinestack', 'default'),
+    codeVariants: getCodeVariants('inlinestack', 'metricsRow'),
   },
 
 };

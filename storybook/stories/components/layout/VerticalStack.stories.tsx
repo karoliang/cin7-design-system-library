@@ -158,7 +158,7 @@ export const SpacingVariations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
+    codeVariants: getCodeVariants('verticalstack', 'spacingVariations'),
   },
 
 };
@@ -198,7 +198,7 @@ export const AlignmentOptions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
+    codeVariants: getCodeVariants('blockstack', 'alignmentOptions'),
   },
 
 };

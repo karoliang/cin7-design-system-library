@@ -2739,49 +2739,105 @@ function AccessibilityDemoExample(): JSX.Element {
 
 export const cardExamples = {
   default: {
-    react: `import {Card, Text} from '@shopify/polaris';
+    react: `import { Card, Text } from '@shopify/polaris';
 import React from 'react';
 
-function CardDefault() {
+function CardExample() {
   return (
-    <Card>
-      <Text as="h2" variant="bodyMd">
-        Content inside a card
+    <Card sectioned>
+      <Text as="h2" variant="headingMd">
+        Order #1001
+      </Text>
+      <Text as="p" variant="bodyMd">
+        This order has been successfully processed and is ready for shipping.
       </Text>
     </Card>
   );
-}`,
-    extjs: `Ext.create('Ext.panel.Panel', {
-  title: null,
-  bodyPadding: 16,
-  cls: 'polaris-card',
-  shadow: true,
-  items: [{
-    xtype: 'component',
-    html: '<h2 class="Polaris-Text--bodyMd">Content inside a card</h2>'
-  }]
-});`,
-    vanilla: `<!-- HTML Structure -->
-<div class="polaris-card">
-  <h2 class="polaris-text-body-md">Content inside a card</h2>
-</div>
-`,
-    typescript: `import {Card, Text} from '@shopify/polaris';
-import React from 'react';
-
-interface CardDefaultProps {
-  children?: React.ReactNode;
 }
 
-function CardDefault({ children }: CardDefaultProps): JSX.Element {
+export default CardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <h2 class="polaris-heading-md">Order #1001</h2>
+    <p class="polaris-body-md">
+      This order has been successfully processed and is ready for shipping.
+    </p>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, createCard } from '@cin7/vanilla-js';
+
+const card = createCard({
+  sectioned: true,
+  content: \`
+    <h2 class="polaris-heading-md">Order #1001</h2>
+    <p class="polaris-body-md">
+      This order has been successfully processed and is ready for shipping.
+    </p>
+  \`
+});
+
+document.getElementById('app').appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-card',
+  bodyPadding: 16,
+  title: 'Order #1001',
+  html: '<p style="color: #616161; line-height: 1.6;">This order has been successfully processed and is ready for shipping.</p>',
+  border: true,
+  frame: false,
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisCard } from '@cin7/extjs-adapters';
+
+const card = Ext.create('PolarisCard', {
+  sectioned: true,
+  items: [{
+    xtype: 'component',
+    html: \`
+      <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Order #1001</h2>
+      <p style="color: #616161; line-height: 1.6;">
+        This order has been successfully processed and is ready for shipping.
+      </p>
+    \`
+  }]
+});`,
+
+    typescript: `import { Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface CardExampleProps {
+  orderId?: string;
+  message?: string;
+  sectioned?: boolean;
+}
+
+function CardExample({
+  orderId = '#1001',
+  message = 'This order has been successfully processed and is ready for shipping.',
+  sectioned = true
+}: CardExampleProps): JSX.Element {
   return (
-    <Card>
-      <Text as="h2" variant="bodyMd">
-        {children || "Content inside a card"}
+    <Card sectioned={sectioned}>
+      <Text as="h2" variant="headingMd">
+        Order {orderId}
+      </Text>
+      <Text as="p" variant="bodyMd">
+        {message}
       </Text>
     </Card>
   );
-}`
+}
+
+export default CardExample;`
   },
   'with-subdued-background': {
     react: `import {BlockStack, Card, List, Text} from '@shopify/polaris';
@@ -15178,6 +15234,83 @@ export default function Example() {
   }
 };
 
+
+// Icon Component Examples
+export const iconExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Icon } from '@shopify/polaris';
+import { SearchIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+function IconExample() {
+  return <Icon source={SearchIcon} accessibilityLabel="Search" />;
+}
+
+export default IconExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<svg class="polaris-icon" viewBox="0 0 20 20" focusable="false" aria-label="Search">
+  <path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9.707 4.293l-4.82-4.82A5.968 5.968 0 0 0 14 8 6 6 0 0 0 2 8a6 6 0 0 0 6 6 5.968 5.968 0 0 0 3.473-1.113l4.82 4.82a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414z"></path>
+</svg>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createIcon } from '@cin7/vanilla-js';
+
+const icon = createIcon({
+  name: 'search',
+  accessibilityLabel: 'Search',
+  size: 20
+});
+
+document.getElementById('icon-container').appendChild(icon);
+</script>`,
+
+    extjs: `// ExtJS Icon using icon fonts or iconCls
+Ext.create('Ext.Component', {
+  cls: 'polaris-icon',
+  html: '<svg viewBox="0 0 20 20" focusable="false" aria-label="Search">' +
+        '<path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9.707 4.293l-4.82-4.82A5.968 5.968 0 0 0 14 8 6 6 0 0 0 2 8a6 6 0 0 0 6 6 5.968 5.968 0 0 0 3.473-1.113l4.82 4.82a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414z"></path>' +
+        '</svg>',
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisIcon } from '@cin7/extjs-adapters';
+
+const icon = Ext.create('PolarisIcon', {
+  iconName: 'search',
+  accessibilityLabel: 'Search'
+});`,
+
+    typescript: `import { Icon } from '@shopify/polaris';
+import { SearchIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface IconExampleProps {
+  source: React.ComponentType;
+  accessibilityLabel?: string;
+  tone?: 'base' | 'subdued' | 'critical' | 'warning' | 'success' | 'info' | 'primary';
+}
+
+function IconExample({
+  source,
+  accessibilityLabel,
+  tone = 'base'
+}: IconExampleProps): JSX.Element {
+  return (
+    <Icon
+      source={source}
+      tone={tone}
+      accessibilityLabel={accessibilityLabel}
+    />
+  );
+}
+
+export default IconExample;`
+  }
+};
+
 // MediaCard Component Examples
 export const mediacardExamples: Record<string, CodeVariant> = {
   default: {
@@ -17359,6 +17492,7 @@ export default ResourceListExample;`
   }
 };
 
+
 // CalloutCard Component Examples
 export const calloutcardExamples: Record<string, CodeVariant> = {
   layout: {
@@ -17510,6 +17644,123 @@ function CalloutCardExample({
 }
 
 export default CalloutCardExample;`
+  },
+
+  default: {
+    react: `import { CalloutCard } from '@shopify/polaris';
+import React from 'react';
+
+function DefaultCalloutCard() {
+  return (
+    <CalloutCard
+      title="Get more sales with Shopify"
+      primaryAction={{
+        content: 'Start selling',
+        onAction: () => console.log('Start selling clicked'),
+      }}
+      secondaryAction={{
+        content: 'Learn more',
+        url: '#',
+      }}
+    >
+      Create a online store and start selling to customers right away. Shopify
+      provides everything you need to start, run, and grow your business.
+    </CalloutCard>
+  );
+}
+
+export default DefaultCalloutCard;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-callout-card">
+  <div class="polaris-callout-card__content">
+    <h2 class="polaris-callout-card__title">Get more sales with Shopify</h2>
+    <p class="polaris-callout-card__description">
+      Create a online store and start selling to customers right away. Shopify
+      provides everything you need to start, run, and grow your business.
+    </p>
+    <div class="polaris-callout-card__actions">
+      <button class="polaris-button polaris-button--primary">Start selling</button>
+      <a href="#" class="polaris-link">Learn more</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Start selling clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-callout-card',
+  bodyPadding: 20,
+  layout: 'vbox',
+  items: [{
+    xtype: 'component',
+    html: '<h2>Get more sales with Shopify</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p>Create a online store and start selling to customers right away. Shopify provides everything you need to start, run, and grow your business.</p>',
+    margin: '0 0 16 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    items: [{
+      xtype: 'button',
+      text: 'Start selling',
+      ui: 'primary',
+      handler: function() {
+        console.log('Start selling clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Learn more',
+      ui: 'link',
+      margin: '0 0 0 12',
+      handler: function() {
+        window.location.href = '#';
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { CalloutCard } from '@shopify/polaris';
+import React from 'react';
+
+interface DefaultCalloutCardProps {
+  onStartSelling?: () => void;
+  learnMoreUrl?: string;
+}
+
+function DefaultCalloutCard({
+  onStartSelling,
+  learnMoreUrl = '#'
+}: DefaultCalloutCardProps): JSX.Element {
+  return (
+    <CalloutCard
+      title="Get more sales with Shopify"
+      primaryAction={{
+        content: 'Start selling',
+        onAction: onStartSelling || (() => console.log('Start selling clicked')),
+      }}
+      secondaryAction={{
+        content: 'Learn more',
+        url: learnMoreUrl,
+      }}
+    >
+      Create a online store and start selling to customers right away. Shopify
+      provides everything you need to start, run, and grow your business.
+    </CalloutCard>
+  );
+}
+
+export default DefaultCalloutCard;`
   }
 };
 
@@ -23792,6 +24043,406 @@ function ScrollableExample({
     </Scrollable>
   );
 }`
+  },
+
+  verticalScrolling: {
+    react: `import { Scrollable, Text, Badge } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function VerticalScrollingExample() {
+  const [scrolledToBottom, setScrolledToBottom] = useState(false);
+
+  const handleScrolledToBottom = () => {
+    setScrolledToBottom(true);
+    setTimeout(() => setScrolledToBottom(false), 2000);
+  };
+
+  return (
+    <div>
+      {scrolledToBottom && (
+        <div style={{
+          marginBottom: '16px',
+          padding: '12px',
+          backgroundColor: '#d4edda',
+          border: '1px solid #c3e6cb',
+          borderRadius: '8px'
+        }}>
+          <Text variant="bodyMd" style={{ color: '#155724' }}>
+            You have reached the bottom!
+          </Text>
+        </div>
+      )}
+
+      <Scrollable height="300px" shadow onScrolledToBottom={handleScrolledToBottom}>
+        <div style={{ padding: '16px' }}>
+          {Array.from({ length: 25 }, (_, i) => (
+            <div key={i} style={{
+              padding: '16px',
+              backgroundColor: '#f9f9f9',
+              borderRadius: '8px',
+              marginBottom: '12px',
+              border: '1px solid #eee'
+            }}>
+              <Text variant="headingSm">Section {i + 1}</Text>
+              <Text variant="bodyMd">
+                This is section {i + 1} of 25. Keep scrolling to see all sections.
+              </Text>
+              {i === 24 && (
+                <div style={{ marginTop: '12px' }}>
+                  <Badge status="success">You've reached the end!</Badge>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Scrollable>
+    </div>
+  );
+}
+
+export default VerticalScrollingExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="notification" class="notification" style="display: none; padding: 12px; margin-bottom: 16px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; color: #155724;">
+  You have reached the bottom!
+</div>
+
+<div class="scrollable-vertical" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 8px;">
+  <div style="padding: 16px;" id="scrollable-content">
+    <!-- Content sections will be generated here -->
+  </div>
+</div>
+
+<style>
+.scrollable-vertical::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-vertical::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.scroll-section {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #eee;
+}
+</style>
+
+<script>
+import { on, $, show, hide } from '@cin7/vanilla-js';
+
+const scrollContainer = $('.scrollable-vertical');
+const notification = $('#notification');
+const contentArea = $('#scrollable-content');
+
+// Generate content
+for (let i = 0; i < 25; i++) {
+  const section = document.createElement('div');
+  section.className = 'scroll-section';
+  section.innerHTML = \`
+    <h4>Section \${i + 1}</h4>
+    <p>This is section \${i + 1} of 25. Keep scrolling to see all sections.</p>
+  \`;
+  contentArea.appendChild(section);
+}
+
+// Detect scroll to bottom
+on(scrollContainer, 'scroll', (e) => {
+  const el = e.target;
+  const isAtBottom = Math.abs(el.scrollHeight - el.scrollTop - el.clientHeight) < 1;
+
+  if (isAtBottom) {
+    show(notification);
+    setTimeout(() => hide(notification), 2000);
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Panel with vertical scrolling and scroll events
+Ext.create('Ext.panel.Panel', {
+  title: 'Vertical Scrolling',
+  width: 600,
+  height: 400,
+  autoScroll: true,
+  scrollable: 'vertical',
+
+  items: [{
+    xtype: 'container',
+    padding: 16,
+    html: Array.from({ length: 25 }, (_, i) =>
+      '<div class="scroll-section" style="padding: 16px; background-color: #f9f9f9; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee;">' +
+      '<h4>Section ' + (i + 1) + '</h4>' +
+      '<p>This is section ' + (i + 1) + ' of 25. Keep scrolling to see all sections.</p>' +
+      (i === 24 ? '<span style="background-color: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px;">You have reached the end!</span>' : '') +
+      '</div>'
+    ).join('')
+  }],
+
+  listeners: {
+    afterrender: function(panel) {
+      var scroller = panel.getScrollable();
+      if (scroller) {
+        scroller.on('scrollend', function(scroller, x, y) {
+          var maxY = scroller.getMaxPosition().y;
+          if (y >= maxY) {
+            Ext.Msg.alert('Scroll Event', 'You have reached the bottom!');
+          }
+        });
+      }
+    }
+  },
+
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Scrollable, Text, Badge } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface VerticalScrollingProps {
+  itemCount?: number;
+  height?: string;
+  onReachBottom?: () => void;
+}
+
+function VerticalScrollingExample({
+  itemCount = 25,
+  height = '300px',
+  onReachBottom
+}: VerticalScrollingProps): JSX.Element {
+  const [scrolledToBottom, setScrolledToBottom] = useState<boolean>(false);
+
+  const handleScrolledToBottom = useCallback(() => {
+    setScrolledToBottom(true);
+    onReachBottom?.();
+
+    const timer = setTimeout(() => setScrolledToBottom(false), 2000);
+    return () => clearTimeout(timer);
+  }, [onReachBottom]);
+
+  const sections = Array.from({ length: itemCount }, (_, i) => ({
+    id: i + 1,
+    isLast: i === itemCount - 1
+  }));
+
+  return (
+    <div>
+      {scrolledToBottom && (
+        <div style={{
+          marginBottom: '16px',
+          padding: '12px',
+          backgroundColor: '#d4edda',
+          border: '1px solid #c3e6cb',
+          borderRadius: '8px'
+        }}>
+          <Text variant="bodyMd" style={{ color: '#155724' }}>
+            You have reached the bottom!
+          </Text>
+        </div>
+      )}
+
+      <Scrollable
+        height={height}
+        shadow
+        onScrolledToBottom={handleScrolledToBottom}
+      >
+        <div style={{ padding: '16px' }}>
+          {sections.map((section) => (
+            <div key={section.id} style={{
+              padding: '16px',
+              backgroundColor: '#f9f9f9',
+              borderRadius: '8px',
+              marginBottom: '12px',
+              border: '1px solid #eee'
+            }}>
+              <Text variant="headingSm">Section {section.id}</Text>
+              <Text variant="bodyMd">
+                This is section {section.id} of {itemCount}. Keep scrolling to see all sections.
+              </Text>
+              {section.isLast && (
+                <div style={{ marginTop: '12px' }}>
+                  <Badge status="success">You've reached the end!</Badge>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </Scrollable>
+    </div>
+  );
+}
+
+export default VerticalScrollingExample;`
+  },
+
+  horizontalScrolling: {
+    react: `import { Scrollable, Card, Text } from '@shopify/polaris';
+
+function HorizontalScrollingExample() {
+  return (
+    <Scrollable horizontal width="600px" shadow>
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        padding: '16px',
+        minWidth: '1200px'
+      }}>
+        {Array.from({ length: 8 }, (_, i) => (
+          <Card key={i} style={{ width: '250px', flexShrink: 0 }}>
+            <Card.Section>
+              <div style={{
+                height: '120px',
+                backgroundColor: \`hsl(\${i * 45}, 70%, 85%)\`,
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Text variant="headingLg">Card {i + 1}</Text>
+              </div>
+            </Card.Section>
+            <Card.Section>
+              <Text variant="headingSm">Feature {i + 1}</Text>
+              <Text variant="bodySm">
+                This card demonstrates horizontal scrolling functionality.
+              </Text>
+            </Card.Section>
+          </Card>
+        ))}
+      </div>
+    </Scrollable>
+  );
+}
+
+export default HorizontalScrollingExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="scrollable-horizontal" style="width: 600px; overflow-x: auto; border: 1px solid #ddd; border-radius: 8px;">
+  <div class="card-container" style="display: flex; gap: 16px; padding: 16px; min-width: 1200px;">
+    <!-- Cards -->
+  </div>
+</div>
+
+<style>
+.scrollable-horizontal {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scrollable-horizontal::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scrollable-horizontal::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+</style>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+const container = $('.card-container');
+
+for (let i = 0; i < 8; i++) {
+  const card = document.createElement('div');
+  card.style.cssText = 'width: 250px; flex-shrink: 0; background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;';
+  card.innerHTML = \`
+    <div style="height: 120px; background: hsl(\${i * 45}, 70%, 85%); display: flex; align-items: center; justify-content: center;">
+      <h3>Card \${i + 1}</h3>
+    </div>
+    <div style="padding: 16px;">
+      <h4>Feature \${i + 1}</h4>
+      <p>This card demonstrates horizontal scrolling functionality.</p>
+    </div>
+  \`;
+  container.appendChild(card);
+}
+</script>`,
+
+    extjs: `// ExtJS Panel with horizontal scrolling
+Ext.create('Ext.panel.Panel', {
+  title: 'Horizontal Scrolling',
+  width: 600,
+  height: 300,
+  scrollable: 'horizontal',
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+
+  items: Array.from({ length: 8 }, (_, i) => ({
+    xtype: 'panel',
+    width: 250,
+    margin: '0 8 0 0',
+    html: '<div style="height: 120px; background: hsl(' + (i * 45) + ', 70%, 85%); display: flex; align-items: center; justify-content: center;">' +
+          '<h3>Card ' + (i + 1) + '</h3></div>' +
+          '<div style="padding: 16px;"><h4>Feature ' + (i + 1) + '</h4>' +
+          '<p>This card demonstrates horizontal scrolling functionality.</p></div>'
+  })),
+
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Scrollable, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface HorizontalScrollingProps {
+  cardCount?: number;
+  width?: string;
+  cardWidth?: string;
+}
+
+function HorizontalScrollingExample({
+  cardCount = 8,
+  width = '600px',
+  cardWidth = '250px'
+}: HorizontalScrollingProps): JSX.Element {
+  const cards = Array.from({ length: cardCount }, (_, i) => ({
+    id: i + 1,
+    title: \`Feature \${i + 1}\`,
+    description: 'This card demonstrates horizontal scrolling functionality.',
+    color: \`hsl(\${i * 45}, 70%, 85%)\`
+  }));
+
+  return (
+    <Scrollable horizontal width={width} shadow>
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        padding: '16px',
+        minWidth: \`\${parseInt(cardWidth) * cardCount + 16 * (cardCount - 1)}px\`
+      }}>
+        {cards.map((card) => (
+          <Card key={card.id} style={{ width: cardWidth, flexShrink: 0 }}>
+            <Card.Section>
+              <div style={{
+                height: '120px',
+                backgroundColor: card.color,
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Text variant="headingLg">Card {card.id}</Text>
+              </div>
+            </Card.Section>
+            <Card.Section>
+              <Text variant="headingSm">{card.title}</Text>
+              <Text variant="bodySm">{card.description}</Text>
+            </Card.Section>
+          </Card>
+        ))}
+      </div>
+    </Scrollable>
+  );
+}
+
+export default HorizontalScrollingExample;`
   }
 };
 
@@ -38420,6 +39071,2297 @@ function PopoverExample({
 
 export default PopoverExample;`
   }
+,
+
+  buttonActivator: {
+    react: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ButtonActivatorExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive}>
+      Open Popover
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+    >
+      <Popover.Section>
+        <Text as="p">
+          This popover is triggered by a button click. It contains simple text content.
+        </Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default ButtonActivatorExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="popoverBtn">Open Popover</button>
+  <div class="popover-content" id="popoverContent" style="display: none;">
+    <div class="popover-section">
+      <p>This popover is triggered by a button click. It contains simple text content.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 300px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-section { padding: 16px; }
+</style>
+
+<script>
+import { togglePopover, onClickOutside } from '@cin7/vanilla-js';
+
+const button = document.getElementById('popoverBtn');
+const content = document.getElementById('popoverContent');
+
+button.addEventListener('click', () => togglePopover(content));
+onClickOutside([button, content], () => content.style.display = 'none');
+</script>`,
+
+    extjs: `// ExtJS Button with Popover Panel
+const popoverPanel = Ext.create('Ext.panel.Panel', {
+  floating: true,
+  hidden: true,
+  width: 300,
+  bodyPadding: 16,
+  html: 'This popover is triggered by a button click. It contains simple text content.',
+  border: true,
+  shadow: true
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Open Popover',
+  handler: function(btn) {
+    popoverPanel.showBy(btn, 'tl-bl?');
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, Text, PopoverProps } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface ButtonActivatorPopoverProps {
+  buttonLabel?: string;
+  content: string;
+  preferredPosition?: PopoverProps['preferredPosition'];
+}
+
+function ButtonActivatorPopover({
+  buttonLabel = 'Open Popover',
+  content,
+  preferredPosition = 'below'
+}: ButtonActivatorPopoverProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive}>{buttonLabel}</Button>}
+      onClose={toggleActive}
+      preferredPosition={preferredPosition}
+    >
+      <Popover.Section>
+        <Text as="p">{content}</Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default ButtonActivatorPopover;`
+  },
+
+  textLinkActivator: {
+    react: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function TextLinkActivatorExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button plain onClick={toggleActive}>
+      View details
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+    >
+      <Popover.Section>
+        <Text as="p">
+          This popover is triggered by a text link. It's useful for showing
+          additional context or options without disrupting the flow.
+        </Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default TextLinkActivatorExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <a href="#" class="text-link" id="textLink">View details</a>
+  <div class="popover-content" id="linkPopover" style="display: none;">
+    <div class="popover-section">
+      <p>This popover is triggered by a text link. It's useful for showing
+      additional context or options without disrupting the flow.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.text-link { color: #2c6ecb; text-decoration: none; cursor: pointer; }
+.text-link:hover { text-decoration: underline; }
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 300px; max-width: 400px;
+  background: white; border: 1px solid #e1e3e5;
+  border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-section { padding: 16px; }
+</style>
+
+<script>
+import { createPopover } from '@cin7/vanilla-js';
+
+const link = document.getElementById('textLink');
+const popover = document.getElementById('linkPopover');
+
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+});
+
+document.addEventListener('click', (e) => {
+  if (!link.contains(e.target) && !popover.contains(e.target)) {
+    popover.style.display = 'none';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Text Link with Tip
+const tip = Ext.create('Ext.tip.ToolTip', {
+  width: 300,
+  html: 'This popover is triggered by a text link. It\\'s useful for showing additional context.',
+  dismissDelay: 0,
+  anchor: 'top'
+});
+
+Ext.create('Ext.Component', {
+  html: '<a href="#" class="text-link">View details</a>',
+  renderTo: Ext.getBody(),
+  listeners: {
+    afterrender: function(cmp) {
+      const link = cmp.el.down('a');
+      link.on('click', function(e) {
+        e.preventDefault();
+        tip.showBy(link);
+      });
+    }
+  }
+});`,
+
+    typescript: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface TextLinkPopoverProps {
+  linkText: string;
+  content: string;
+  maxWidth?: number;
+}
+
+function TextLinkPopover({
+  linkText,
+  content,
+  maxWidth = 400
+}: TextLinkPopoverProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button plain onClick={toggleActive}>{linkText}</Button>}
+      onClose={toggleActive}
+    >
+      <Popover.Section>
+        <div style={{ maxWidth: \`\${maxWidth}px\` }}>
+          <Text as="p">{content}</Text>
+        </div>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default TextLinkPopover;`
+  },
+
+  positions: {
+    react: `import { Popover, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function PopoverPositionsExample() {
+  const [activePopover, setActivePopover] = useState<string | null>(null);
+
+  const togglePopover = (popoverName: string) => {
+    setActivePopover(activePopover === popoverName ? null : popoverName);
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '100px' }}>
+      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+        <Popover
+          active={activePopover === 'above-left'}
+          activator={<Button onClick={() => togglePopover('above-left')}>Above Left</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="left"
+          preferredPosition="above"
+        >
+          <Popover.Section>Appears above, aligned left</Popover.Section>
+        </Popover>
+
+        <Popover
+          active={activePopover === 'above-center'}
+          activator={<Button onClick={() => togglePopover('above-center')}>Above Center</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="center"
+          preferredPosition="above"
+        >
+          <Popover.Section>Appears above, centered</Popover.Section>
+        </Popover>
+
+        <Popover
+          active={activePopover === 'above-right'}
+          activator={<Button onClick={() => togglePopover('above-right')}>Above Right</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="right"
+          preferredPosition="above"
+        >
+          <Popover.Section>Appears above, aligned right</Popover.Section>
+        </Popover>
+      </div>
+
+      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+        <Popover
+          active={activePopover === 'below-left'}
+          activator={<Button onClick={() => togglePopover('below-left')}>Below Left</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="left"
+          preferredPosition="below"
+        >
+          <Popover.Section>Appears below, aligned left</Popover.Section>
+        </Popover>
+
+        <Popover
+          active={activePopover === 'below-center'}
+          activator={<Button onClick={() => togglePopover('below-center')}>Below Center</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="center"
+          preferredPosition="below"
+        >
+          <Popover.Section>Appears below, centered</Popover.Section>
+        </Popover>
+
+        <Popover
+          active={activePopover === 'below-right'}
+          activator={<Button onClick={() => togglePopover('below-right')}>Below Right</Button>}
+          onClose={() => setActivePopover(null)}
+          preferredAlignment="right"
+          preferredPosition="below"
+        >
+          <Popover.Section>Appears below, aligned right</Popover.Section>
+        </Popover>
+      </div>
+    </div>
+  );
+}
+
+export default PopoverPositionsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="positions-demo">
+  <div class="button-row">
+    <div class="popover-wrapper" data-position="above-left">
+      <button class="polaris-button">Above Left</button>
+      <div class="popover-content popover-above align-left" style="display: none;">
+        Appears above, aligned left
+      </div>
+    </div>
+    <div class="popover-wrapper" data-position="above-center">
+      <button class="polaris-button">Above Center</button>
+      <div class="popover-content popover-above align-center" style="display: none;">
+        Appears above, centered
+      </div>
+    </div>
+    <div class="popover-wrapper" data-position="above-right">
+      <button class="polaris-button">Above Right</button>
+      <div class="popover-content popover-above align-right" style="display: none;">
+        Appears above, aligned right
+      </div>
+    </div>
+  </div>
+
+  <div class="button-row" style="margin-top: 100px;">
+    <div class="popover-wrapper" data-position="below-left">
+      <button class="polaris-button">Below Left</button>
+      <div class="popover-content popover-below align-left" style="display: none;">
+        Appears below, aligned left
+      </div>
+    </div>
+    <div class="popover-wrapper" data-position="below-center">
+      <button class="polaris-button">Below Center</button>
+      <div class="popover-content popover-below align-center" style="display: none;">
+        Appears below, centered
+      </div>
+    </div>
+    <div class="popover-wrapper" data-position="below-right">
+      <button class="polaris-button">Below Right</button>
+      <div class="popover-content popover-below align-right" style="display: none;">
+        Appears below, aligned right
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.positions-demo { padding: 40px; }
+.button-row { display: flex; gap: 20px; justify-content: center; }
+.popover-wrapper { position: relative; }
+.popover-content {
+  position: absolute; z-index: 1000; padding: 12px 16px;
+  background: white; border: 1px solid #e1e3e5;
+  border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 200px; white-space: nowrap;
+}
+.popover-above { bottom: 100%; margin-bottom: 8px; }
+.popover-below { top: 100%; margin-top: 8px; }
+.align-left { left: 0; }
+.align-center { left: 50%; transform: translateX(-50%); }
+.align-right { right: 0; }
+</style>
+
+<script>
+import { positionPopover, onClickOutside } from '@cin7/vanilla-js';
+
+document.querySelectorAll('.popover-wrapper').forEach(wrapper => {
+  const button = wrapper.querySelector('button');
+  const popover = wrapper.querySelector('.popover-content');
+
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.popover-content').forEach(p => {
+      if (p !== popover) p.style.display = 'none';
+    });
+    popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+  });
+});
+
+onClickOutside(document.querySelectorAll('.popover-wrapper'), () => {
+  document.querySelectorAll('.popover-content').forEach(p => p.style.display = 'none');
+});
+</script>`,
+
+    extjs: `// ExtJS Popover with Different Alignments
+const positions = [
+  { text: 'Above Left', align: 'tl-bl', content: 'Appears above, aligned left' },
+  { text: 'Above Center', align: 't-b', content: 'Appears above, centered' },
+  { text: 'Above Right', align: 'tr-br', content: 'Appears above, aligned right' },
+  { text: 'Below Left', align: 'bl-tl', content: 'Appears below, aligned left' },
+  { text: 'Below Center', align: 'b-t', content: 'Appears below, centered' },
+  { text: 'Below Right', align: 'br-tr', content: 'Appears below, aligned right' }
+];
+
+positions.forEach(pos => {
+  const tip = Ext.create('Ext.tip.ToolTip', {
+    html: pos.content,
+    anchor: pos.align,
+    dismissDelay: 0
+  });
+
+  Ext.create('Ext.button.Button', {
+    text: pos.text,
+    margin: '10 10 10 10',
+    handler: function(btn) {
+      tip.showBy(btn, pos.align);
+    },
+    renderTo: Ext.getBody()
+  });
+});`,
+
+    typescript: `import { Popover, Button, PopoverProps } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+type PopoverPosition = {
+  id: string;
+  label: string;
+  alignment: PopoverProps['preferredAlignment'];
+  position: PopoverProps['preferredPosition'];
+  description: string;
+};
+
+function PopoverPositionsExample(): JSX.Element {
+  const [activePopover, setActivePopover] = useState<string | null>(null);
+
+  const togglePopover = useCallback((popoverId: string) => {
+    setActivePopover((current) => current === popoverId ? null : popoverId);
+  }, []);
+
+  const positions: PopoverPosition[] = [
+    { id: 'above-left', label: 'Above Left', alignment: 'left', position: 'above', description: 'Appears above, aligned left' },
+    { id: 'above-center', label: 'Above Center', alignment: 'center', position: 'above', description: 'Appears above, centered' },
+    { id: 'above-right', label: 'Above Right', alignment: 'right', position: 'above', description: 'Appears above, aligned right' },
+    { id: 'below-left', label: 'Below Left', alignment: 'left', position: 'below', description: 'Appears below, aligned left' },
+    { id: 'below-center', label: 'Below Center', alignment: 'center', position: 'below', description: 'Appears below, centered' },
+    { id: 'below-right', label: 'Below Right', alignment: 'right', position: 'below', description: 'Appears below, aligned right' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '100px' }}>
+      {[positions.slice(0, 3), positions.slice(3, 6)].map((row, rowIndex) => (
+        <div key={rowIndex} style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+          {row.map((pos) => (
+            <Popover
+              key={pos.id}
+              active={activePopover === pos.id}
+              activator={<Button onClick={() => togglePopover(pos.id)}>{pos.label}</Button>}
+              onClose={() => setActivePopover(null)}
+              preferredAlignment={pos.alignment}
+              preferredPosition={pos.position}
+            >
+              <Popover.Section>{pos.description}</Popover.Section>
+            </Popover>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default PopoverPositionsExample;`
+  },
+
+  withActionList: {
+    react: `import { Popover, Button, ActionList } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function PopoverWithActionListExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive} disclosure>
+      Actions
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+    >
+      <ActionList
+        actionRole="menuitem"
+        items={[
+          {
+            content: 'View product details',
+            icon: 'ViewIcon',
+            onAction: toggleActive,
+          },
+          {
+            content: 'Edit product',
+            icon: 'EditIcon',
+            onAction: toggleActive,
+          },
+          {
+            content: 'Duplicate product',
+            icon: 'DuplicateIcon',
+            onAction: toggleActive,
+          },
+          {
+            content: 'Delete product',
+            icon: 'DeleteIcon',
+            destructive: true,
+            onAction: toggleActive,
+          },
+        ]}
+      />
+    </Popover>
+  );
+}
+
+export default PopoverWithActionListExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="actionsBtn">Actions ▼</button>
+  <div class="popover-content" id="actionsPopover" style="display: none;">
+    <div class="action-list">
+      <button class="action-item" data-action="view">
+        <span class="icon">👁️</span> View product details
+      </button>
+      <button class="action-item" data-action="edit">
+        <span class="icon">✏️</span> Edit product
+      </button>
+      <button class="action-item" data-action="duplicate">
+        <span class="icon">📋</span> Duplicate product
+      </button>
+      <div class="action-divider"></div>
+      <button class="action-item destructive" data-action="delete">
+        <span class="icon">🗑️</span> Delete product
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 220px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.action-list { padding: 8px; }
+.action-item {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  padding: 10px 12px; border: none; background: transparent;
+  text-align: left; cursor: pointer; border-radius: 6px;
+  font-size: 14px; transition: background 0.2s;
+}
+.action-item:hover { background: #f6f6f7; }
+.action-item.destructive { color: #d72c0d; }
+.action-item.destructive:hover { background: #fef3f2; }
+.action-divider {
+  height: 1px; background: #e1e3e5; margin: 8px 0;
+}
+.icon { font-size: 16px; }
+</style>
+
+<script>
+import { createActionList, togglePopover } from '@cin7/vanilla-js';
+
+const button = document.getElementById('actionsBtn');
+const popover = document.getElementById('actionsPopover');
+
+button.addEventListener('click', () => togglePopover(popover));
+
+document.querySelectorAll('.action-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const action = e.currentTarget.dataset.action;
+    console.log('Action selected:', action);
+    popover.style.display = 'none';
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!button.contains(e.target) && !popover.contains(e.target)) {
+    popover.style.display = 'none';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Button with Action Menu
+Ext.create('Ext.button.Button', {
+  text: 'Actions',
+  iconCls: 'x-fa fa-chevron-down',
+  menu: {
+    items: [
+      {
+        text: 'View product details',
+        iconCls: 'x-fa fa-eye',
+        handler: function() {
+          console.log('View product details');
+        }
+      },
+      {
+        text: 'Edit product',
+        iconCls: 'x-fa fa-edit',
+        handler: function() {
+          console.log('Edit product');
+        }
+      },
+      {
+        text: 'Duplicate product',
+        iconCls: 'x-fa fa-copy',
+        handler: function() {
+          console.log('Duplicate product');
+        }
+      },
+      '-', // Separator
+      {
+        text: 'Delete product',
+        iconCls: 'x-fa fa-trash',
+        cls: 'destructive-action',
+        handler: function() {
+          Ext.Msg.confirm('Delete', 'Are you sure you want to delete this product?', function(btn) {
+            if (btn === 'yes') {
+              console.log('Product deleted');
+            }
+          });
+        }
+      }
+    ]
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface PopoverWithActionListProps {
+  activatorLabel?: string;
+  actions?: ActionListItemDescriptor[];
+  onActionSelect?: (actionId: string) => void;
+}
+
+function PopoverWithActionList({
+  activatorLabel = 'Actions',
+  actions = [
+    { content: 'View product details', icon: 'ViewIcon', id: 'view' },
+    { content: 'Edit product', icon: 'EditIcon', id: 'edit' },
+    { content: 'Duplicate product', icon: 'DuplicateIcon', id: 'duplicate' },
+    { content: 'Delete product', icon: 'DeleteIcon', destructive: true, id: 'delete' },
+  ],
+  onActionSelect
+}: PopoverWithActionListProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  const handleAction = useCallback((actionId: string) => {
+    if (onActionSelect) {
+      onActionSelect(actionId);
+    }
+    toggleActive();
+  }, [onActionSelect, toggleActive]);
+
+  const itemsWithHandlers = actions.map(action => ({
+    ...action,
+    onAction: () => handleAction(action.id || action.content)
+  }));
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive} disclosure>{activatorLabel}</Button>}
+      onClose={toggleActive}
+    >
+      <ActionList
+        actionRole="menuitem"
+        items={itemsWithHandlers}
+      />
+    </Popover>
+  );
+}
+
+export default PopoverWithActionList;`
+  },
+
+  withSections: {
+    react: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function PopoverWithSectionsExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive}>
+      Account Settings
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+      sectioned
+    >
+      <Popover.Section title="Profile">
+        <Text as="p">
+          Manage your profile information and preferences.
+        </Text>
+      </Popover.Section>
+      <Popover.Section title="Security">
+        <Text as="p">
+          Configure security settings and two-factor authentication.
+        </Text>
+      </Popover.Section>
+      <Popover.Section title="Notifications">
+        <Text as="p">
+          Choose how you want to be notified about important events.
+        </Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default PopoverWithSectionsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="settingsBtn">Account Settings</button>
+  <div class="popover-content sectioned" id="settingsPopover" style="display: none;">
+    <div class="popover-section">
+      <h3 class="section-title">Profile</h3>
+      <p>Manage your profile information and preferences.</p>
+    </div>
+    <div class="popover-section">
+      <h3 class="section-title">Security</h3>
+      <p>Configure security settings and two-factor authentication.</p>
+    </div>
+    <div class="popover-section">
+      <h3 class="section-title">Notifications</h3>
+      <p>Choose how you want to be notified about important events.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content.sectioned {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 320px; max-width: 400px;
+  background: white; border: 1px solid #e1e3e5;
+  border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-section {
+  padding: 16px; border-bottom: 1px solid #e1e3e5;
+}
+.popover-section:last-child { border-bottom: none; }
+.section-title {
+  margin: 0 0 8px 0; font-size: 14px;
+  font-weight: 600; color: #202223;
+}
+.popover-section p {
+  margin: 0; font-size: 14px;
+  color: #6d7175; line-height: 1.5;
+}
+</style>
+
+<script>
+import { togglePopover, onClickOutside } from '@cin7/vanilla-js';
+
+const button = document.getElementById('settingsBtn');
+const popover = document.getElementById('settingsPopover');
+
+button.addEventListener('click', () => togglePopover(popover));
+onClickOutside([button, popover], () => popover.style.display = 'none');
+</script>`,
+
+    extjs: `// ExtJS Panel with Sections
+const settingsPanel = Ext.create('Ext.panel.Panel', {
+  floating: true,
+  hidden: true,
+  width: 350,
+  title: false,
+  bodyPadding: 0,
+  border: true,
+  shadow: true,
+  items: [
+    {
+      xtype: 'container',
+      padding: 16,
+      style: 'border-bottom: 1px solid #e1e3e5;',
+      html: '<h3 style="margin: 0 0 8px 0; font-weight: 600;">Profile</h3>' +
+            '<p style="margin: 0; color: #6d7175;">Manage your profile information and preferences.</p>'
+    },
+    {
+      xtype: 'container',
+      padding: 16,
+      style: 'border-bottom: 1px solid #e1e3e5;',
+      html: '<h3 style="margin: 0 0 8px 0; font-weight: 600;">Security</h3>' +
+            '<p style="margin: 0; color: #6d7175;">Configure security settings and two-factor authentication.</p>'
+    },
+    {
+      xtype: 'container',
+      padding: 16,
+      html: '<h3 style="margin: 0 0 8px 0; font-weight: 600;">Notifications</h3>' +
+            '<p style="margin: 0; color: #6d7175;">Choose how you want to be notified about important events.</p>'
+    }
+  ]
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Account Settings',
+  handler: function(btn) {
+    settingsPanel.showBy(btn, 'tl-bl?');
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface PopoverSection {
+  title: string;
+  content: string;
+}
+
+interface PopoverWithSectionsProps {
+  activatorLabel?: string;
+  sections: PopoverSection[];
+  sectioned?: boolean;
+}
+
+function PopoverWithSections({
+  activatorLabel = 'Account Settings',
+  sections,
+  sectioned = true
+}: PopoverWithSectionsProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive}>{activatorLabel}</Button>}
+      onClose={toggleActive}
+      sectioned={sectioned}
+    >
+      {sections.map((section, index) => (
+        <Popover.Section key={index} title={section.title}>
+          <Text as="p">{section.content}</Text>
+        </Popover.Section>
+      ))}
+    </Popover>
+  );
+}
+
+// Usage example
+const defaultSections: PopoverSection[] = [
+  { title: 'Profile', content: 'Manage your profile information and preferences.' },
+  { title: 'Security', content: 'Configure security settings and two-factor authentication.' },
+  { title: 'Notifications', content: 'Choose how you want to be notified about important events.' }
+];
+
+export default PopoverWithSections;`
+  },
+
+  withForm: {
+    react: `import { Popover, Button, FormLayout, TextField } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function PopoverWithFormExample() {
+  const [active, setActive] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+  });
+
+  const toggleActive = () => setActive(!active);
+
+  const handleFieldChange = useCallback((field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleSubmit = useCallback(() => {
+    console.log('Form submitted:', formData);
+    toggleActive();
+  }, [formData]);
+
+  const activator = (
+    <Button onClick={toggleActive}>
+      Quick Add Customer
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+      sectioned
+    >
+      <FormLayout>
+        <TextField
+          label="Customer Name"
+          value={formData.name}
+          onChange={(value) => handleFieldChange('name', value)}
+          placeholder="Enter name"
+          autoComplete="off"
+        />
+        <TextField
+          label="Email"
+          value={formData.email}
+          onChange={(value) => handleFieldChange('email', value)}
+          placeholder="customer@example.com"
+          type="email"
+          autoComplete="off"
+        />
+        <Button primary onClick={handleSubmit} fullWidth>
+          Add Customer
+        </Button>
+      </FormLayout>
+    </Popover>
+  );
+}
+
+export default PopoverWithFormExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="addCustomerBtn">Quick Add Customer</button>
+  <div class="popover-content" id="formPopover" style="display: none;">
+    <form id="customerForm" class="popover-form">
+      <div class="form-field">
+        <label for="customerName">Customer Name</label>
+        <input type="text" id="customerName" placeholder="Enter name" />
+      </div>
+      <div class="form-field">
+        <label for="customerEmail">Email</label>
+        <input type="email" id="customerEmail" placeholder="customer@example.com" />
+      </div>
+      <button type="submit" class="polaris-button primary full-width">
+        Add Customer
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 320px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-form { padding: 16px; }
+.form-field { margin-bottom: 16px; }
+.form-field label {
+  display: block; margin-bottom: 4px;
+  font-size: 14px; font-weight: 500; color: #202223;
+}
+.form-field input {
+  width: 100%; padding: 8px 12px; border: 1px solid #c9cccf;
+  border-radius: 6px; font-size: 14px;
+}
+.form-field input:focus {
+  outline: none; border-color: #2c6ecb;
+  box-shadow: 0 0 0 1px #2c6ecb;
+}
+.polaris-button.primary.full-width {
+  width: 100%; background: #2c6ecb; color: white;
+  padding: 10px; border: none; border-radius: 6px;
+  cursor: pointer; font-weight: 500;
+}
+.polaris-button.primary:hover { background: #1f5199; }
+</style>
+
+<script>
+import { togglePopover, onClickOutside } from '@cin7/vanilla-js';
+
+const button = document.getElementById('addCustomerBtn');
+const popover = document.getElementById('formPopover');
+const form = document.getElementById('customerForm');
+
+button.addEventListener('click', () => togglePopover(popover));
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = {
+    name: document.getElementById('customerName').value,
+    email: document.getElementById('customerEmail').value
+  };
+  console.log('Form submitted:', formData);
+  popover.style.display = 'none';
+  form.reset();
+});
+
+onClickOutside([button, popover], () => popover.style.display = 'none');
+</script>`,
+
+    extjs: `// ExtJS Form in Popover Window
+const formWindow = Ext.create('Ext.window.Window', {
+  title: 'Quick Add Customer',
+  width: 350,
+  modal: false,
+  floating: true,
+  closable: true,
+  closeAction: 'hide',
+  layout: 'fit',
+  items: [{
+    xtype: 'form',
+    bodyPadding: 16,
+    defaults: {
+      xtype: 'textfield',
+      anchor: '100%',
+      labelAlign: 'top'
+    },
+    items: [{
+      fieldLabel: 'Customer Name',
+      name: 'name',
+      emptyText: 'Enter name',
+      allowBlank: false
+    }, {
+      fieldLabel: 'Email',
+      name: 'email',
+      vtype: 'email',
+      emptyText: 'customer@example.com',
+      allowBlank: false
+    }],
+    buttons: [{
+      text: 'Add Customer',
+      formBind: true,
+      ui: 'primary',
+      handler: function() {
+        const form = this.up('form').getForm();
+        if (form.isValid()) {
+          const values = form.getValues();
+          console.log('Form submitted:', values);
+          formWindow.hide();
+          form.reset();
+        }
+      }
+    }]
+  }]
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Quick Add Customer',
+  handler: function(btn) {
+    formWindow.showBy(btn, 'tl-bl?');
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, FormLayout, TextField } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface CustomerFormData {
+  name: string;
+  email: string;
+}
+
+interface PopoverWithFormProps {
+  activatorLabel?: string;
+  onSubmit: (data: CustomerFormData) => void;
+  initialValues?: Partial<CustomerFormData>;
+}
+
+function PopoverWithForm({
+  activatorLabel = 'Quick Add Customer',
+  onSubmit,
+  initialValues = { name: '', email: '' }
+}: PopoverWithFormProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [formData, setFormData] = useState<CustomerFormData>({
+    name: initialValues.name || '',
+    email: initialValues.email || '',
+  });
+
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  const handleFieldChange = useCallback((field: keyof CustomerFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleSubmit = useCallback(() => {
+    if (formData.name && formData.email) {
+      onSubmit(formData);
+      setFormData({ name: '', email: '' });
+      toggleActive();
+    }
+  }, [formData, onSubmit, toggleActive]);
+
+  const isFormValid = formData.name.length > 0 && formData.email.includes('@');
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive}>{activatorLabel}</Button>}
+      onClose={toggleActive}
+      sectioned
+    >
+      <FormLayout>
+        <TextField
+          label="Customer Name"
+          value={formData.name}
+          onChange={(value) => handleFieldChange('name', value)}
+          placeholder="Enter name"
+          autoComplete="off"
+        />
+        <TextField
+          label="Email"
+          value={formData.email}
+          onChange={(value) => handleFieldChange('email', value)}
+          placeholder="customer@example.com"
+          type="email"
+          autoComplete="off"
+        />
+        <Button
+          primary
+          onClick={handleSubmit}
+          disabled={!isFormValid}
+          fullWidth
+        >
+          Add Customer
+        </Button>
+      </FormLayout>
+    </Popover>
+  );
+}
+
+export default PopoverWithForm;`
+  },
+
+  dismissible: {
+    react: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function DismissiblePopoverExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive}>
+      Dismissible Popover
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+    >
+      <Popover.Section>
+        <Text as="p">
+          This popover can be dismissed by:
+        </Text>
+        <ul>
+          <li>Clicking outside the popover</li>
+          <li>Pressing the Escape key</li>
+          <li>Clicking the close button</li>
+        </ul>
+      </Popover.Section>
+      <Popover.Section>
+        <Button plain onClick={toggleActive}>
+          Close
+        </Button>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default DismissiblePopoverExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="dismissibleBtn">Dismissible Popover</button>
+  <div class="popover-content" id="dismissiblePopover" style="display: none;">
+    <div class="popover-section">
+      <p>This popover can be dismissed by:</p>
+      <ul>
+        <li>Clicking outside the popover</li>
+        <li>Pressing the Escape key</li>
+        <li>Clicking the close button</li>
+      </ul>
+    </div>
+    <div class="popover-section">
+      <button class="plain-button" id="closePopover">Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 320px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-section {
+  padding: 16px; border-bottom: 1px solid #e1e3e5;
+}
+.popover-section:last-child { border-bottom: none; }
+.popover-section ul {
+  margin: 8px 0 0 0; padding-left: 20px;
+}
+.popover-section li {
+  margin-bottom: 4px; color: #6d7175;
+}
+.plain-button {
+  background: none; border: none; color: #2c6ecb;
+  cursor: pointer; font-size: 14px; padding: 0;
+}
+.plain-button:hover { text-decoration: underline; }
+</style>
+
+<script>
+import { togglePopover, onClickOutside, onEscape } from '@cin7/vanilla-js';
+
+const button = document.getElementById('dismissibleBtn');
+const popover = document.getElementById('dismissiblePopover');
+const closeBtn = document.getElementById('closePopover');
+
+function hidePopover() {
+  popover.style.display = 'none';
+}
+
+button.addEventListener('click', () => togglePopover(popover));
+closeBtn.addEventListener('click', hidePopover);
+
+// Click outside to dismiss
+onClickOutside([button, popover], hidePopover);
+
+// Escape key to dismiss
+onEscape(hidePopover);
+</script>`,
+
+    extjs: `// ExtJS Dismissible Popover
+const dismissiblePanel = Ext.create('Ext.panel.Panel', {
+  floating: true,
+  hidden: true,
+  width: 350,
+  bodyPadding: 16,
+  closable: true,
+  closeAction: 'hide',
+  border: true,
+  shadow: true,
+  html: '<p>This popover can be dismissed by:</p>' +
+        '<ul>' +
+        '<li>Clicking outside the popover</li>' +
+        '<li>Pressing the Escape key</li>' +
+        '<li>Clicking the close button</li>' +
+        '</ul>',
+  buttons: [{
+    text: 'Close',
+    handler: function() {
+      dismissiblePanel.hide();
+    }
+  }],
+  listeners: {
+    show: function(panel) {
+      // Handle Escape key
+      Ext.getDoc().on('keydown', function(e) {
+        if (e.getKey() === Ext.event.Event.ESC) {
+          panel.hide();
+        }
+      }, null, { single: true });
+    }
+  }
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Dismissible Popover',
+  handler: function(btn) {
+    dismissiblePanel.showBy(btn, 'tl-bl?');
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState, useCallback, useEffect } from 'react';
+
+interface DismissiblePopoverProps {
+  activatorLabel?: string;
+  content?: React.ReactNode;
+  onDismiss?: () => void;
+}
+
+function DismissiblePopover({
+  activatorLabel = 'Dismissible Popover',
+  content,
+  onDismiss
+}: DismissiblePopoverProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+
+  const toggleActive = useCallback(() => {
+    setActive((prev) => !prev);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setActive(false);
+    if (onDismiss) {
+      onDismiss();
+    }
+  }, [onDismiss]);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && active) {
+        handleClose();
+      }
+    };
+
+    if (active) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [active, handleClose]);
+
+  const defaultContent = (
+    <>
+      <Popover.Section>
+        <Text as="p">This popover can be dismissed by:</Text>
+        <ul>
+          <li>Clicking outside the popover</li>
+          <li>Pressing the Escape key</li>
+          <li>Clicking the close button</li>
+        </ul>
+      </Popover.Section>
+      <Popover.Section>
+        <Button plain onClick={handleClose}>
+          Close
+        </Button>
+      </Popover.Section>
+    </>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive}>{activatorLabel}</Button>}
+      onClose={handleClose}
+    >
+      {content || defaultContent}
+    </Popover>
+  );
+}
+
+export default DismissiblePopover;`
+  },
+
+  customWidth: {
+    react: `import { Popover, Button, Text, FormLayout } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function CustomWidthPopoverExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive}>
+      Wide Popover
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+      fullWidth
+      fluidContent
+    >
+      <Popover.Section>
+        <Text as="p">
+          This popover uses fullWidth and fluidContent to expand to its natural width.
+        </Text>
+      </Popover.Section>
+      <Popover.Section>
+        <FormLayout>
+          <Text as="p">
+            It's useful for content that needs more space, like forms or detailed information.
+          </Text>
+          <Button onClick={toggleActive}>Example Button</Button>
+        </FormLayout>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default CustomWidthPopoverExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="polaris-button" id="wideBtn">Wide Popover</button>
+  <div class="popover-content wide" id="widePopover" style="display: none;">
+    <div class="popover-section">
+      <p>This popover uses custom width to expand to its natural width.</p>
+    </div>
+    <div class="popover-section">
+      <p>It's useful for content that needs more space, like forms or detailed information.</p>
+      <button class="polaris-button">Example Button</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-content.wide {
+  min-width: 400px; max-width: 600px;
+}
+.popover-section {
+  padding: 16px; border-bottom: 1px solid #e1e3e5;
+}
+.popover-section:last-child { border-bottom: none; }
+.popover-section p {
+  margin: 0 0 12px 0; color: #202223; line-height: 1.5;
+}
+.popover-section p:last-child { margin-bottom: 0; }
+</style>
+
+<script>
+import { togglePopover, onClickOutside } from '@cin7/vanilla-js';
+
+const button = document.getElementById('wideBtn');
+const popover = document.getElementById('widePopover');
+
+button.addEventListener('click', () => togglePopover(popover));
+onClickOutside([button, popover], () => popover.style.display = 'none');
+</script>`,
+
+    extjs: `// ExtJS Wide Popover Panel
+const widePanel = Ext.create('Ext.panel.Panel', {
+  floating: true,
+  hidden: true,
+  width: 500,
+  maxWidth: 600,
+  bodyPadding: 0,
+  border: true,
+  shadow: true,
+  items: [
+    {
+      xtype: 'container',
+      padding: 16,
+      style: 'border-bottom: 1px solid #e1e3e5;',
+      html: '<p>This popover uses custom width to expand to its natural width.</p>'
+    },
+    {
+      xtype: 'container',
+      padding: 16,
+      layout: {
+        type: 'vbox',
+        align: 'stretch'
+      },
+      items: [
+        {
+          xtype: 'component',
+          html: '<p>It\\'s useful for content that needs more space, like forms or detailed information.</p>',
+          margin: '0 0 12 0'
+        },
+        {
+          xtype: 'button',
+          text: 'Example Button'
+        }
+      ]
+    }
+  ]
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Wide Popover',
+  handler: function(btn) {
+    widePanel.showBy(btn, 'tl-bl?');
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, Text, FormLayout, PopoverProps } from '@shopify/polaris';
+import React, { useState, useCallback, CSSProperties } from 'react';
+
+interface CustomWidthPopoverProps {
+  activatorLabel?: string;
+  fullWidth?: boolean;
+  fluidContent?: boolean;
+  minWidth?: number;
+  maxWidth?: number;
+  children?: React.ReactNode;
+}
+
+function CustomWidthPopover({
+  activatorLabel = 'Wide Popover',
+  fullWidth = true,
+  fluidContent = true,
+  minWidth = 400,
+  maxWidth = 600,
+  children
+}: CustomWidthPopoverProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const toggleActive = useCallback(() => setActive((prev) => !prev), []);
+
+  const contentStyle: CSSProperties = {
+    minWidth: \`\${minWidth}px\`,
+    maxWidth: \`\${maxWidth}px\`
+  };
+
+  const defaultContent = (
+    <>
+      <Popover.Section>
+        <Text as="p">
+          This popover uses fullWidth and fluidContent to expand to its natural width.
+        </Text>
+      </Popover.Section>
+      <Popover.Section>
+        <FormLayout>
+          <Text as="p">
+            It's useful for content that needs more space, like forms or detailed information.
+          </Text>
+          <Button onClick={toggleActive}>Example Button</Button>
+        </FormLayout>
+      </Popover.Section>
+    </>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggleActive}>{activatorLabel}</Button>}
+      onClose={toggleActive}
+      fullWidth={fullWidth}
+      fluidContent={fluidContent}
+    >
+      <div style={contentStyle}>
+        {children || defaultContent}
+      </div>
+    </Popover>
+  );
+}
+
+export default CustomWidthPopover;`
+  },
+
+  interactiveExamples: {
+    react: `import { Popover, Button, ActionList } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractivePopoverExamples() {
+  const [activePopover, setActivePopover] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
+
+  const togglePopover = (popoverName: string) => {
+    setActivePopover(activePopover === popoverName ? null : popoverName);
+  };
+
+  const handleAction = (action: string) => {
+    setMessage(\`Action selected: \${action}\`);
+    setActivePopover(null);
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {message && (
+        <div style={{
+          padding: '12px',
+          backgroundColor: '#f1f2f4',
+          borderRadius: '4px',
+          textAlign: 'center'
+        }}>
+          {message}
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <Popover
+          active={activePopover === 'share'}
+          activator={<Button onClick={() => togglePopover('share')}>Share</Button>}
+          onClose={() => setActivePopover(null)}
+        >
+          <ActionList
+            items={[
+              { content: 'Copy link', icon: 'LinkIcon', onAction: () => handleAction('Copy link') },
+              { content: 'Email', icon: 'EmailIcon', onAction: () => handleAction('Email') },
+              { content: 'Facebook', icon: 'FacebookIcon', onAction: () => handleAction('Facebook') },
+              { content: 'Twitter', icon: 'TwitterIcon', onAction: () => handleAction('Twitter') },
+            ]}
+          />
+        </Popover>
+
+        <Popover
+          active={activePopover === 'filter'}
+          activator={<Button onClick={() => togglePopover('filter')}>Filter</Button>}
+          onClose={() => setActivePopover(null)}
+        >
+          <ActionList
+            items={[
+              { content: 'All orders', onAction: () => handleAction('All orders') },
+              { content: 'Pending', onAction: () => handleAction('Pending') },
+              { content: 'Completed', onAction: () => handleAction('Completed') },
+              { content: 'Cancelled', onAction: () => handleAction('Cancelled') },
+            ]}
+          />
+        </Popover>
+
+        <Popover
+          active={activePopover === 'sort'}
+          activator={<Button onClick={() => togglePopover('sort')}>Sort</Button>}
+          onClose={() => setActivePopover(null)}
+        >
+          <ActionList
+            items={[
+              { content: 'Date (newest)', onAction: () => handleAction('Date (newest)') },
+              { content: 'Date (oldest)', onAction: () => handleAction('Date (oldest)') },
+              { content: 'Name (A-Z)', onAction: () => handleAction('Name (A-Z)') },
+              { content: 'Name (Z-A)', onAction: () => handleAction('Name (Z-A)') },
+            ]}
+          />
+        </Popover>
+
+        <Popover
+          active={activePopover === 'more'}
+          activator={<Button onClick={() => togglePopover('more')} disclosure>More</Button>}
+          onClose={() => setActivePopover(null)}
+        >
+          <ActionList
+            items={[
+              { content: 'View details', icon: 'ViewIcon', onAction: () => handleAction('View details') },
+              { content: 'Edit', icon: 'EditIcon', onAction: () => handleAction('Edit') },
+              { content: 'Duplicate', icon: 'DuplicateIcon', onAction: () => handleAction('Duplicate') },
+              { content: 'Delete', icon: 'DeleteIcon', destructive: true, onAction: () => handleAction('Delete') },
+            ]}
+          />
+        </Popover>
+      </div>
+    </div>
+  );
+}
+
+export default InteractivePopoverExamples;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="interactive-demo">
+  <div id="messageBox" class="message-box" style="display: none;"></div>
+
+  <div class="popover-group">
+    <div class="popover-wrapper">
+      <button class="polaris-button" data-popover="share">Share</button>
+      <div class="popover-content" id="sharePopover" style="display: none;">
+        <button class="action-item" data-action="Copy link">🔗 Copy link</button>
+        <button class="action-item" data-action="Email">📧 Email</button>
+        <button class="action-item" data-action="Facebook">👥 Facebook</button>
+        <button class="action-item" data-action="Twitter">🐦 Twitter</button>
+      </div>
+    </div>
+
+    <div class="popover-wrapper">
+      <button class="polaris-button" data-popover="filter">Filter</button>
+      <div class="popover-content" id="filterPopover" style="display: none;">
+        <button class="action-item" data-action="All orders">All orders</button>
+        <button class="action-item" data-action="Pending">Pending</button>
+        <button class="action-item" data-action="Completed">Completed</button>
+        <button class="action-item" data-action="Cancelled">Cancelled</button>
+      </div>
+    </div>
+
+    <div class="popover-wrapper">
+      <button class="polaris-button" data-popover="sort">Sort</button>
+      <div class="popover-content" id="sortPopover" style="display: none;">
+        <button class="action-item" data-action="Date (newest)">Date (newest)</button>
+        <button class="action-item" data-action="Date (oldest)">Date (oldest)</button>
+        <button class="action-item" data-action="Name (A-Z)">Name (A-Z)</button>
+        <button class="action-item" data-action="Name (Z-A)">Name (Z-A)</button>
+      </div>
+    </div>
+
+    <div class="popover-wrapper">
+      <button class="polaris-button" data-popover="more">More ▼</button>
+      <div class="popover-content" id="morePopover" style="display: none;">
+        <button class="action-item" data-action="View details">👁️ View details</button>
+        <button class="action-item" data-action="Edit">✏️ Edit</button>
+        <button class="action-item" data-action="Duplicate">📋 Duplicate</button>
+        <button class="action-item destructive" data-action="Delete">🗑️ Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.interactive-demo { display: flex; flex-direction: column; gap: 20px; }
+.message-box {
+  padding: 12px; background: #f1f2f4; border-radius: 4px;
+  text-align: center; font-size: 14px;
+}
+.popover-group { display: flex; gap: 12px; flex-wrap: wrap; }
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 200px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 8px;
+}
+.action-item {
+  display: block; width: 100%; padding: 10px 12px;
+  border: none; background: transparent; text-align: left;
+  cursor: pointer; border-radius: 6px; font-size: 14px;
+}
+.action-item:hover { background: #f6f6f7; }
+.action-item.destructive { color: #d72c0d; }
+.action-item.destructive:hover { background: #fef3f2; }
+</style>
+
+<script>
+import { managePopovers } from '@cin7/vanilla-js';
+
+const messageBox = document.getElementById('messageBox');
+
+function showMessage(text) {
+  messageBox.textContent = \`Action selected: \${text}\`;
+  messageBox.style.display = 'block';
+  setTimeout(() => {
+    messageBox.style.display = 'none';
+  }, 3000);
+}
+
+// Setup popover toggles
+document.querySelectorAll('[data-popover]').forEach(button => {
+  const popoverId = button.dataset.popover + 'Popover';
+  const popover = document.getElementById(popoverId);
+
+  button.addEventListener('click', () => {
+    // Close all other popovers
+    document.querySelectorAll('.popover-content').forEach(p => {
+      if (p !== popover) p.style.display = 'none';
+    });
+    popover.style.display = popover.style.display === 'none' ? 'block' : 'none';
+  });
+});
+
+// Setup action handlers
+document.querySelectorAll('.action-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const action = item.dataset.action;
+    showMessage(action);
+    document.querySelectorAll('.popover-content').forEach(p => p.style.display = 'none');
+  });
+});
+
+// Click outside to close
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.popover-wrapper')) {
+    document.querySelectorAll('.popover-content').forEach(p => p.style.display = 'none');
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Interactive Popovers Example
+Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      itemId: 'messageBox',
+      hidden: true,
+      padding: 12,
+      style: 'background: #f1f2f4; border-radius: 4px; text-align: center;',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      defaults: { margin: '0 12 0 0' },
+      items: [
+        {
+          xtype: 'button',
+          text: 'Share',
+          menu: {
+            items: [
+              { text: 'Copy link', iconCls: 'x-fa fa-link', handler: function() { showMessage('Copy link'); } },
+              { text: 'Email', iconCls: 'x-fa fa-envelope', handler: function() { showMessage('Email'); } },
+              { text: 'Facebook', iconCls: 'x-fa fa-facebook', handler: function() { showMessage('Facebook'); } },
+              { text: 'Twitter', iconCls: 'x-fa fa-twitter', handler: function() { showMessage('Twitter'); } }
+            ]
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Filter',
+          menu: {
+            items: [
+              { text: 'All orders', handler: function() { showMessage('All orders'); } },
+              { text: 'Pending', handler: function() { showMessage('Pending'); } },
+              { text: 'Completed', handler: function() { showMessage('Completed'); } },
+              { text: 'Cancelled', handler: function() { showMessage('Cancelled'); } }
+            ]
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Sort',
+          menu: {
+            items: [
+              { text: 'Date (newest)', handler: function() { showMessage('Date (newest)'); } },
+              { text: 'Date (oldest)', handler: function() { showMessage('Date (oldest)'); } },
+              { text: 'Name (A-Z)', handler: function() { showMessage('Name (A-Z)'); } },
+              { text: 'Name (Z-A)', handler: function() { showMessage('Name (Z-A)'); } }
+            ]
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'More',
+          iconCls: 'x-fa fa-chevron-down',
+          menu: {
+            items: [
+              { text: 'View details', iconCls: 'x-fa fa-eye', handler: function() { showMessage('View details'); } },
+              { text: 'Edit', iconCls: 'x-fa fa-edit', handler: function() { showMessage('Edit'); } },
+              { text: 'Duplicate', iconCls: 'x-fa fa-copy', handler: function() { showMessage('Duplicate'); } },
+              '-',
+              { text: 'Delete', iconCls: 'x-fa fa-trash', cls: 'destructive', handler: function() { showMessage('Delete'); } }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+});
+
+function showMessage(action) {
+  const msgBox = Ext.ComponentQuery.query('#messageBox')[0];
+  msgBox.setHtml('Action selected: ' + action);
+  msgBox.show();
+  Ext.defer(function() {
+    msgBox.hide();
+  }, 3000);
+}`,
+
+    typescript: `import { Popover, Button, ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+type PopoverConfig = {
+  id: string;
+  label: string;
+  items: ActionListItemDescriptor[];
+  disclosure?: boolean;
+};
+
+function InteractivePopoverExamples(): JSX.Element {
+  const [activePopover, setActivePopover] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>('');
+
+  const togglePopover = useCallback((popoverId: string) => {
+    setActivePopover((current) => current === popoverId ? null : popoverId);
+  }, []);
+
+  const handleAction = useCallback((action: string) => {
+    setMessage(\`Action selected: \${action}\`);
+    setActivePopover(null);
+    const timer = setTimeout(() => setMessage(''), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const popovers: PopoverConfig[] = [
+    {
+      id: 'share',
+      label: 'Share',
+      items: [
+        { content: 'Copy link', icon: 'LinkIcon', onAction: () => handleAction('Copy link') },
+        { content: 'Email', icon: 'EmailIcon', onAction: () => handleAction('Email') },
+        { content: 'Facebook', icon: 'FacebookIcon', onAction: () => handleAction('Facebook') },
+        { content: 'Twitter', icon: 'TwitterIcon', onAction: () => handleAction('Twitter') },
+      ]
+    },
+    {
+      id: 'filter',
+      label: 'Filter',
+      items: [
+        { content: 'All orders', onAction: () => handleAction('All orders') },
+        { content: 'Pending', onAction: () => handleAction('Pending') },
+        { content: 'Completed', onAction: () => handleAction('Completed') },
+        { content: 'Cancelled', onAction: () => handleAction('Cancelled') },
+      ]
+    },
+    {
+      id: 'sort',
+      label: 'Sort',
+      items: [
+        { content: 'Date (newest)', onAction: () => handleAction('Date (newest)') },
+        { content: 'Date (oldest)', onAction: () => handleAction('Date (oldest)') },
+        { content: 'Name (A-Z)', onAction: () => handleAction('Name (A-Z)') },
+        { content: 'Name (Z-A)', onAction: () => handleAction('Name (Z-A)') },
+      ]
+    },
+    {
+      id: 'more',
+      label: 'More',
+      disclosure: true,
+      items: [
+        { content: 'View details', icon: 'ViewIcon', onAction: () => handleAction('View details') },
+        { content: 'Edit', icon: 'EditIcon', onAction: () => handleAction('Edit') },
+        { content: 'Duplicate', icon: 'DuplicateIcon', onAction: () => handleAction('Duplicate') },
+        { content: 'Delete', icon: 'DeleteIcon', destructive: true, onAction: () => handleAction('Delete') },
+      ]
+    }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {message && (
+        <div style={{
+          padding: '12px',
+          backgroundColor: '#f1f2f4',
+          borderRadius: '4px',
+          textAlign: 'center'
+        }}>
+          {message}
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        {popovers.map((popover) => (
+          <Popover
+            key={popover.id}
+            active={activePopover === popover.id}
+            activator={
+              <Button
+                onClick={() => togglePopover(popover.id)}
+                disclosure={popover.disclosure}
+              >
+                {popover.label}
+              </Button>
+            }
+            onClose={() => setActivePopover(null)}
+          >
+            <ActionList items={popover.items} />
+          </Popover>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default InteractivePopoverExamples;`
+  },
+
+  accessibility: {
+    react: `import { Popover, Button, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function AccessibilityPopoverExample() {
+  const [active, setActive] = useState(false);
+  const toggleActive = () => setActive(!active);
+
+  const activator = (
+    <Button onClick={toggleActive} ariaLabel="Open accessibility features menu">
+      Accessibility Options
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={active}
+      activator={activator}
+      onClose={toggleActive}
+      preferredPosition="below"
+      autofocusTarget="first-node"
+    >
+      <Popover.Section>
+        <Text as="p">
+          This popover includes accessibility features:
+        </Text>
+        <ul>
+          <li>Proper ARIA attributes</li>
+          <li>Keyboard navigation support</li>
+          <li>Focus management</li>
+          <li>Screen reader announcements</li>
+        </ul>
+      </Popover.Section>
+      <Popover.Section>
+        <Text as="p">
+          <strong>Keyboard shortcuts:</strong><br />
+          Tab/Shift+Tab: Navigate<br />
+          Enter/Space: Select<br />
+          Escape: Close popover
+        </Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default AccessibilityPopoverExample;`,
+
+    vanilla: `<!-- HTML Structure with Accessibility -->
+<div class="popover-wrapper">
+  <button
+    class="polaris-button"
+    id="a11yBtn"
+    aria-label="Open accessibility features menu"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    Accessibility Options
+  </button>
+  <div
+    class="popover-content"
+    id="a11yPopover"
+    role="dialog"
+    aria-label="Accessibility options"
+    style="display: none;"
+  >
+    <div class="popover-section">
+      <p>This popover includes accessibility features:</p>
+      <ul>
+        <li>Proper ARIA attributes</li>
+        <li>Keyboard navigation support</li>
+        <li>Focus management</li>
+        <li>Screen reader announcements</li>
+      </ul>
+    </div>
+    <div class="popover-section">
+      <p><strong>Keyboard shortcuts:</strong></p>
+      <p>Tab/Shift+Tab: Navigate<br />
+      Enter/Space: Select<br />
+      Escape: Close popover</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 350px; background: white;
+  border: 1px solid #e1e3e5; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.popover-section {
+  padding: 16px; border-bottom: 1px solid #e1e3e5;
+}
+.popover-section:last-child { border-bottom: none; }
+.popover-section ul { margin: 8px 0 0 0; padding-left: 20px; }
+.popover-section li { margin-bottom: 4px; }
+</style>
+
+<script>
+import {
+  togglePopover,
+  onClickOutside,
+  manageFocus,
+  announceToScreenReader
+} from '@cin7/vanilla-js';
+
+const button = document.getElementById('a11yBtn');
+const popover = document.getElementById('a11yPopover');
+
+let isOpen = false;
+
+function openPopover() {
+  popover.style.display = 'block';
+  button.setAttribute('aria-expanded', 'true');
+  manageFocus(popover); // Focus first focusable element
+  announceToScreenReader('Accessibility options menu opened');
+  isOpen = true;
+}
+
+function closePopover() {
+  popover.style.display = 'none';
+  button.setAttribute('aria-expanded', 'false');
+  button.focus(); // Return focus to activator
+  announceToScreenReader('Accessibility options menu closed');
+  isOpen = false;
+}
+
+button.addEventListener('click', () => {
+  if (isOpen) {
+    closePopover();
+  } else {
+    openPopover();
+  }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (!isOpen) return;
+
+  if (e.key === 'Escape') {
+    closePopover();
+  } else if (e.key === 'Tab') {
+    // Trap focus within popover
+    const focusable = popover.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+});
+
+onClickOutside([button, popover], closePopover);
+</script>`,
+
+    extjs: `// ExtJS Accessible Popover
+const accessiblePanel = Ext.create('Ext.panel.Panel', {
+  floating: true,
+  hidden: true,
+  width: 380,
+  bodyPadding: 16,
+  border: true,
+  shadow: true,
+  focusOnToFront: true,
+  ariaLabel: 'Accessibility options',
+  html: '<p>This popover includes accessibility features:</p>' +
+        '<ul>' +
+        '<li>Proper ARIA attributes</li>' +
+        '<li>Keyboard navigation support</li>' +
+        '<li>Focus management</li>' +
+        '<li>Screen reader announcements</li>' +
+        '</ul>' +
+        '<hr style="margin: 16px 0; border: none; border-top: 1px solid #e1e3e5;" />' +
+        '<p><strong>Keyboard shortcuts:</strong></p>' +
+        '<p>Tab/Shift+Tab: Navigate<br />' +
+        'Enter/Space: Select<br />' +
+        'Escape: Close popover</p>',
+  listeners: {
+    show: function(panel) {
+      // Focus management
+      panel.focus();
+
+      // Keyboard handler
+      panel.getEl().on('keydown', function(e) {
+        if (e.getKey() === Ext.event.Event.ESC) {
+          panel.hide();
+        }
+      });
+    },
+    hide: function() {
+      // Return focus to activator
+      Ext.getCmp('a11yButton').focus();
+    }
+  }
+});
+
+Ext.create('Ext.button.Button', {
+  id: 'a11yButton',
+  text: 'Accessibility Options',
+  ariaLabel: 'Open accessibility features menu',
+  handler: function(btn) {
+    if (accessiblePanel.isVisible()) {
+      accessiblePanel.hide();
+    } else {
+      accessiblePanel.showBy(btn, 'tl-bl?');
+    }
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, Text, PopoverProps } from '@shopify/polaris';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+
+interface AccessibilityPopoverProps {
+  activatorLabel?: string;
+  ariaLabel?: string;
+  preferredPosition?: PopoverProps['preferredPosition'];
+  autofocusTarget?: PopoverProps['autofocusTarget'];
+}
+
+function AccessibilityPopover({
+  activatorLabel = 'Accessibility Options',
+  ariaLabel = 'Open accessibility features menu',
+  preferredPosition = 'below',
+  autofocusTarget = 'first-node'
+}: AccessibilityPopoverProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const activatorRef = useRef<HTMLButtonElement>(null);
+
+  const toggleActive = useCallback(() => {
+    setActive((prev) => !prev);
+  }, []);
+
+  // Announce to screen readers
+  useEffect(() => {
+    if (active) {
+      announceToScreenReader('Accessibility options menu opened');
+    } else if (activatorRef.current && !active) {
+      // Return focus to activator when closed
+      activatorRef.current.focus();
+      announceToScreenReader('Accessibility options menu closed');
+    }
+  }, [active]);
+
+  // Screen reader announcement helper
+  const announceToScreenReader = (message: string) => {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.style.position = 'absolute';
+    announcement.style.left = '-10000px';
+    announcement.style.width = '1px';
+    announcement.style.height = '1px';
+    announcement.style.overflow = 'hidden';
+    announcement.textContent = message;
+    document.body.appendChild(announcement);
+    setTimeout(() => document.body.removeChild(announcement), 1000);
+  };
+
+  return (
+    <Popover
+      active={active}
+      activator={
+        <Button
+          ref={activatorRef}
+          onClick={toggleActive}
+          ariaLabel={ariaLabel}
+        >
+          {activatorLabel}
+        </Button>
+      }
+      onClose={toggleActive}
+      preferredPosition={preferredPosition}
+      autofocusTarget={autofocusTarget}
+    >
+      <Popover.Section>
+        <Text as="p">This popover includes accessibility features:</Text>
+        <ul>
+          <li>Proper ARIA attributes</li>
+          <li>Keyboard navigation support</li>
+          <li>Focus management</li>
+          <li>Screen reader announcements</li>
+        </ul>
+      </Popover.Section>
+      <Popover.Section>
+        <Text as="p">
+          <strong>Keyboard shortcuts:</strong><br />
+          Tab/Shift+Tab: Navigate<br />
+          Enter/Space: Select<br />
+          Escape: Close popover
+        </Text>
+      </Popover.Section>
+    </Popover>
+  );
+}
+
+export default AccessibilityPopover;`
+  },
 };
 
 // Tooltip Component Examples
@@ -38993,6 +41935,7 @@ export function getCodeVariants(
     formlayout: formLayoutExamples,
     rangeslider: rangeSliderExamples,
     avatar: avatarExamples,
+    icon: iconExamples,
     mediacard: mediacardExamples,
     thumbnail: thumbnailExamples,
     videothumbnail: videothumbnailExamples,

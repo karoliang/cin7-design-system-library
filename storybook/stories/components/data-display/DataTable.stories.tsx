@@ -109,7 +109,7 @@ export const ProductTable: Story = {
     rows: sampleProducts,
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'productTable'),
   },
 
 };
@@ -144,7 +144,7 @@ export const WithCustomContent: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'withCustomContent'),
   },
 
 };
@@ -165,7 +165,7 @@ export const WithBadges: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'withBadges'),
   },
 
 };
@@ -218,7 +218,7 @@ export const Sortable: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'sortable'),
   },
 
 };
@@ -231,7 +231,7 @@ export const WithFooter: Story = {
     footerContent: `Showing ${sampleOrders.length} orders`,
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'withFooter'),
   },
 
 };
@@ -250,7 +250,7 @@ export const DenseTable: Story = {
     hasZebraStriping: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'denseTable'),
   },
 
 };
@@ -279,7 +279,7 @@ export const LargeDataset: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'largeDataset'),
   },
 
 };

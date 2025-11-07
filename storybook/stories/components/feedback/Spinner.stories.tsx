@@ -67,7 +67,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'sizes'),
   },
 
 };
@@ -92,7 +92,7 @@ export const WithText: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'withText'),
   },
 
 };
@@ -132,7 +132,7 @@ export const InCards: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'inCards'),
   },
 
 };
@@ -208,7 +208,7 @@ export const InteractiveStates: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'interactiveStates'),
   },
 
 };
@@ -262,7 +262,7 @@ export const LoadingScenarios: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'loadingScenarios'),
   },
 
 };
@@ -360,7 +360,7 @@ export const OverlaySpinners: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'overlaySpinners'),
   },
 
 };
@@ -414,7 +414,7 @@ export const CenteredLayouts: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('spinner', 'default'),
+    codeVariants: getCodeVariants('spinner', 'centeredLayouts'),
   },
 
 };

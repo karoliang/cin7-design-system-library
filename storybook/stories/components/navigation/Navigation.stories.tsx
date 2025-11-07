@@ -453,9 +453,8 @@ export const ProjectManagement: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('navigation', 'default'),
+    codeVariants: getCodeVariants('navigation', 'projectManagement'),
   },
-
 };
 
 export const AdminPanel: Story = {
@@ -687,9 +686,8 @@ export const AdminPanel: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('navigation', 'default'),
+    codeVariants: getCodeVariants('navigation', 'adminPanel'),
   },
-
 };
 
 export const LearningPlatform: Story = {
@@ -881,7 +879,6 @@ export const LearningPlatform: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('navigation', 'default'),
+    codeVariants: getCodeVariants('navigation', 'learningPlatform'),
   },
-
 };

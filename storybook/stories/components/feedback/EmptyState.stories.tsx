@@ -73,7 +73,7 @@ export const WithDescription: Story = {
     children: 'Add products to your store to start selling and tracking inventory.',
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'withDescription'),
   },
 
 };
@@ -93,7 +93,7 @@ export const WithSecondaryAction: Story = {
     children: 'Once you start making sales, you\'ll see your order history here.',
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'withSecondaryAction'),
   },
 
 };
@@ -105,7 +105,7 @@ export const NoAction: Story = {
     children: 'There are no tasks that need your attention right now.',
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'noAction'),
   },
 
 };
@@ -122,7 +122,7 @@ export const FullWidth: Story = {
     fullWidth: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'fullWidth'),
   },
 
 };
@@ -138,7 +138,7 @@ export const SearchResults: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'searchResults'),
   },
 
 };
@@ -158,7 +158,7 @@ export const ErrorState: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'errorState'),
   },
 
 };
@@ -174,7 +174,7 @@ export const MaintenanceMode: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('emptystate', 'default'),
+    codeVariants: getCodeVariants('emptystate', 'maintenanceMode'),
   },
 
 };

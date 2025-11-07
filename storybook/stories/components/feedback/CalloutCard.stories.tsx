@@ -56,7 +56,7 @@ export const Default: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('calloutcard', 'layout'),
+    codeVariants: getCodeVariants('calloutcard', 'default'),
   },
 };
 
@@ -79,7 +79,7 @@ export const WithIllustration: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('calloutcard', 'default'),
+    codeVariants: getCodeVariants('calloutcard', 'layout'),
   },
 
 };

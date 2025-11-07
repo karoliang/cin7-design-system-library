@@ -92,7 +92,7 @@ export const WithoutOutput: Story = {
     output: false,
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'withoutOutput'),
   },
 
 };
@@ -108,7 +108,7 @@ export const WithStep: Story = {
     suffix: ' items',
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'withStep'),
   },
 
 };
@@ -125,7 +125,7 @@ export const WithHelpText: Story = {
     helpText: 'Set your monthly advertising budget range',
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'withHelpText'),
   },
 
 };
@@ -142,7 +142,7 @@ export const WithError: Story = {
     error: 'Minimum stock level must be at least 20 units',
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'withError'),
   },
 
 };
@@ -159,7 +159,7 @@ export const Disabled: Story = {
     disabled: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'disabled'),
   },
 
 };
@@ -233,7 +233,7 @@ export const PriceFilter: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'priceFilter'),
   },
 
 };
@@ -326,7 +326,7 @@ export const DateRangePicker: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'default'),
+    codeVariants: getCodeVariants('rangeslider', 'dateRangePicker'),
   },
 
 };

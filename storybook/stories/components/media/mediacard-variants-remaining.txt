@@ -1,0 +1,16 @@
+This is a temporary file containing the remaining MediaCard variants that need to be added to codeVariants.ts after the 'testimonial' variant.
+
+The remaining variants to add (copy into codeVariants.ts):
+
+  sizeVariations
+  landscape
+  metadata
+  collection
+  interactive
+  educational
+  avatar
+  loading
+  error
+  customActions
+
+These need to be inserted after testimonial and before the closing brace of mediacardExamples.

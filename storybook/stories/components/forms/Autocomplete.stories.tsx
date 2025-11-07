@@ -155,7 +155,6 @@ export const Default: Story = {
   parameters: {
     codeVariants: getCodeVariants('autocomplete', 'default'),
   },
-
 };
 
 export const SingleSelection: Story = {

@@ -147,7 +147,7 @@ export const PaddingExamples: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'paddingExamples'),
   },
 
 };
@@ -177,7 +177,7 @@ export const DirectionalPadding: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'directionalPadding'),
   },
 
 };
@@ -212,7 +212,7 @@ export const BackgroundColors: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'backgroundColors'),
   },
 
 };
@@ -246,7 +246,7 @@ export const BorderStyles: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'borderStyles'),
   },
 
 };
@@ -276,7 +276,7 @@ export const BorderColors: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'borderColors'),
   },
 
 };
@@ -302,7 +302,7 @@ export const BorderRadiusExamples: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'borderRadiusExamples'),
   },
 
 };
@@ -337,7 +337,7 @@ export const ShadowEffects: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'shadowEffects'),
   },
 
 };
@@ -399,7 +399,7 @@ export const SizingExamples: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'sizingExamples'),
   },
 
 };
@@ -472,7 +472,7 @@ export const StatusIndicator: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'statusIndicator'),
   },
 
 };
@@ -542,7 +542,7 @@ export const CardAlternative: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'cardAlternative'),
   },
 
 };
@@ -607,7 +607,7 @@ export const HighlightedContent: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('box', 'default'),
+    codeVariants: getCodeVariants('box', 'highlightedContent'),
   },
 
 };

@@ -104,7 +104,7 @@ export const Default: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'buttonActivator'),
   },
 
 };
@@ -137,7 +137,7 @@ export const ButtonActivator: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'buttonActivator'),
   },
 
 };
@@ -170,7 +170,7 @@ export const TextLinkActivator: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'textLinkActivator'),
   },
 
 };
@@ -262,7 +262,7 @@ export const Positions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'positions'),
   },
 
 };
@@ -316,7 +316,7 @@ export const WithActionList: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'withActionList'),
   },
 
 };
@@ -360,7 +360,7 @@ export const WithSections: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'withSections'),
   },
 
 };
@@ -421,7 +421,7 @@ export const WithForm: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'withForm'),
   },
 
 };
@@ -464,7 +464,7 @@ export const Dismissible: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'dismissible'),
   },
 
 };
@@ -507,7 +507,7 @@ export const CustomWidth: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'customWidth'),
   },
 
 };
@@ -611,7 +611,7 @@ export const InteractiveExamples: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'interactiveExamples'),
   },
 
 };
@@ -660,7 +660,7 @@ export const AccessibilityDemo: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('popover', 'default'),
+    codeVariants: getCodeVariants('popover', 'accessibility'),
   },
 
 };

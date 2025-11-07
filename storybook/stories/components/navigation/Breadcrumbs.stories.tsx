@@ -49,7 +49,7 @@ export const ShortPath: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'shortPath'),
   },
 
 };
@@ -67,7 +67,7 @@ export const LongPath: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'longPath'),
   },
 
 };
@@ -150,7 +150,7 @@ export const ProductNavigation: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'productNavigation'),
   },
 
 };
@@ -286,7 +286,7 @@ export const EcommerceNavigation: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'ecommerceNavigation'),
   },
 
 };
@@ -466,7 +466,7 @@ export const AdminPanel: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'adminPanel'),
   },
 
 };
@@ -696,7 +696,7 @@ export const DocumentationSite: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+    codeVariants: getCodeVariants('breadcrumbs', 'documentationSite'),
   },
 
 };

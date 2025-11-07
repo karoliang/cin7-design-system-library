@@ -118,7 +118,7 @@ export const SingleSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'singleSelection'),
   },
 
 };
@@ -140,7 +140,7 @@ export const MultipleSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'multipleSelection'),
   },
 
 };
@@ -192,7 +192,7 @@ export const WithDescriptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'withDescriptions'),
   },
 
 };
@@ -215,7 +215,7 @@ export const WithError: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'withError'),
   },
 
 };
@@ -237,7 +237,7 @@ export const Disabled: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'disabled'),
   },
 
 };
@@ -266,7 +266,7 @@ export const PartiallyDisabled: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'partiallyDisabled'),
   },
 
 };
@@ -297,7 +297,7 @@ export const LongList: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'longList'),
   },
 
 };
@@ -360,7 +360,7 @@ export const ProductFilters: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'productFilters'),
   },
 
 };
@@ -451,7 +451,7 @@ export const SurveyQuestions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'surveyQuestions'),
   },
 
 };
@@ -540,7 +540,7 @@ export const PermissionSettings: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'permissionSettings'),
   },
 
 };
@@ -614,7 +614,7 @@ export const MultipleChoiceLists: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('choicelist', 'default'),
+    codeVariants: getCodeVariants('choicelist', 'multipleChoiceLists'),
   },
 
 };

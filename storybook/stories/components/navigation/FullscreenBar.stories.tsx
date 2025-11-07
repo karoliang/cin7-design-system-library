@@ -205,7 +205,7 @@ export const WithBreadcrumbs: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'withBreadcrumbs'),
   },
 
 };
@@ -288,7 +288,7 @@ export const PreviewMode: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'previewMode'),
   },
 
 };
@@ -426,7 +426,7 @@ export const EditorInterface: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'editorInterface'),
   },
 
 };
@@ -510,7 +510,7 @@ export const SearchFocused: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'searchFocused'),
   },
 
 };
@@ -589,7 +589,7 @@ export const MobileOptimized: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'mobileOptimized'),
   },
 
 };
@@ -665,7 +665,7 @@ export const WithUserAvatar: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+    codeVariants: getCodeVariants('fullscreenbar', 'withUserAvatar'),
   },
 
 };

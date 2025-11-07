@@ -102,7 +102,7 @@ export const StatusVariants: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('banner', 'informational'),
+    codeVariants: getCodeVariants('banner', 'status-variants'),
   },
 };
 
@@ -254,7 +254,7 @@ export const RealWorldScenarios: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('banner', 'critical'),
+    codeVariants: getCodeVariants('banner', 'real-world'),
   },
 };
 
@@ -279,7 +279,7 @@ export const MinimalBanners: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('banner', 'success'),
+    codeVariants: getCodeVariants('banner', 'minimal'),
   },
 };
 
@@ -326,7 +326,7 @@ export const InteractiveBanner: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('banner', 'warning'),
+    codeVariants: getCodeVariants('banner', 'interactive'),
   },
 };
 
@@ -365,6 +365,6 @@ export const BannersWithIcons: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('banner', 'informational'),
+    codeVariants: getCodeVariants('banner', 'with-icons'),
   },
 };

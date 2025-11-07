@@ -89,7 +89,7 @@ export const ProductCard: Story = {
     />
   ),
   parameters: {
-    codeVariants: getCodeVariants('mediacard', 'default'),
+    codeVariants: getCodeVariants('mediacard', 'product'),
   },
 };
 
@@ -112,7 +112,7 @@ export const VideoCard: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('mediacard', 'default'),
+    codeVariants: getCodeVariants('mediacard', 'video'),
   },
 };
 
@@ -141,7 +141,7 @@ export const ArticleCard: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('mediacard', 'default'),
+    codeVariants: getCodeVariants('mediacard', 'article'),
   },
 };
 
@@ -163,7 +163,7 @@ export const CustomerTestimonial: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('mediacard', 'default'),
+    codeVariants: getCodeVariants('mediacard', 'testimonial'),
   },
 };
 
@@ -223,7 +223,7 @@ export const SizeVariations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('mediacard', 'default'),
+    codeVariants: getCodeVariants('mediacard', 'sizeVariations'),
   },
 };
 

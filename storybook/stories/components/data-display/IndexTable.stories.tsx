@@ -205,7 +205,7 @@ export const Selectable: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'selectable'),
   },
 
 };
@@ -279,7 +279,7 @@ export const WithActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'withActions'),
   },
 
 };
@@ -356,7 +356,7 @@ export const LargeDataset: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'largeDataset'),
   },
 
 };
@@ -453,7 +453,7 @@ export const CustomerList: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'customerList'),
   },
 
 };
@@ -609,7 +609,7 @@ export const OrderManagement: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'orderManagement'),
   },
 
 };
@@ -694,7 +694,7 @@ export const WithCustomBulkActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'withCustomBulkActions'),
   },
 
 };
@@ -727,7 +727,7 @@ export const LoadingState: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'loadingState'),
   },
 
 };
@@ -752,7 +752,7 @@ export const EmptyState: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'emptyState'),
   },
 
 };
@@ -849,7 +849,7 @@ export const WithPagination: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('indextable', 'default'),
+    codeVariants: getCodeVariants('indextable', 'withPagination'),
   },
 
 };

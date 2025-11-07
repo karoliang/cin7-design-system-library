@@ -59,6 +59,9 @@ export const Default: Story = {
 };
 
 export const TwoColumnLayout: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('layout', 'twoColumn'),
+  },
   render: () => (
     <Layout>
       <Layout.Section>
@@ -131,14 +134,13 @@ export const TwoColumnLayout: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),
-  parameters: {
-    codeVariants: getCodeVariants('layout', 'default'),
-  },
-
+  )
 };
 
 export const ProductPage: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('layout', 'productPage'),
+  },
   render: () => (
     <Layout>
       <Layout.Section>
@@ -240,14 +242,13 @@ export const ProductPage: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),
-  parameters: {
-    codeVariants: getCodeVariants('layout', 'default'),
-  },
-
+  )
 };
 
 export const OrderManagement: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('layout', 'orderManagement'),
+  },
   render: () => (
     <Layout>
       <Layout.Section>
@@ -367,14 +368,13 @@ export const OrderManagement: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),
-  parameters: {
-    codeVariants: getCodeVariants('layout', 'default'),
-  },
-
+  )
 };
 
 export const SettingsPage: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('layout', 'settingsPage'),
+  },
   render: () => (
     <Layout>
       <Layout.Section>
@@ -482,14 +482,13 @@ export const SettingsPage: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),
-  parameters: {
-    codeVariants: getCodeVariants('layout', 'default'),
-  },
-
+  )
 };
 
 export const CustomerProfile: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('layout', 'default'),
+  },
   render: () => (
     <Layout>
       <Layout.Section>
@@ -623,9 +622,5 @@ export const CustomerProfile: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),
-  parameters: {
-    codeVariants: getCodeVariants('layout', 'default'),
-  },
-
+  )
 };

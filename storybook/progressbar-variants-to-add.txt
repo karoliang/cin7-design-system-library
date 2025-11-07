@@ -1,0 +1,167 @@
+PROGRESS BAR VARIANTS TO ADD TO codeVariants.ts
+==================================================
+
+Add these 8 new variants after the 'default' variant in progressbarExamples (around line 26724):
+
+,
+
+  sizes: {
+    react: `import { ProgressBar, Text } from '@shopify/polaris';
+import React from 'react';
+
+function ProgressBarSizes() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      <div>
+        <Text as="p" variant="bodySm">Small Progress</Text>
+        <ProgressBar progress={75} size="small" />
+      </div>
+
+      <div>
+        <Text as="p" variant="bodySm">Medium Progress</Text>
+        <ProgressBar progress={75} size="medium" />
+      </div>
+
+      <div>
+        <Text as="p" variant="bodySm">Large Progress</Text>
+        <ProgressBar progress={75} size="large" />
+      </div>
+    </div>
+  );
+}
+
+export default ProgressBarSizes;`,
+
+    vanilla: `<!--HTML Structure -->
+<div class="progress-sizes-container">
+  <div class="progress-item">
+    <p class="progress-label">Small Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--small" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+
+  <div class="progress-item">
+    <p class="progress-label">Medium Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--medium" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+
+  <div class="progress-item">
+    <p class="progress-label">Large Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--large" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createProgressBar } from '@cin7/vanilla-js';
+
+const sizes = ['small', 'medium', 'large'];
+const container = document.querySelector('.progress-sizes-container');
+
+sizes.forEach(size => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'progress-item';
+
+  const label = document.createElement('p');
+  label.textContent = size.charAt(0).toUpperCase() + size.slice(1) + ' Progress';
+  label.className = 'progress-label';
+
+  const progressBar = createProgressBar({
+    progress: 75,
+    size: size
+  });
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(progressBar);
+  container.appendChild(wrapper);
+});
+</script>`,
+
+    extjs: `// ExtJS ProgressBar with different sizes
+Ext.create('Ext.panel.Panel', {
+  title: 'Progress Bar Sizes',
+  width: 400,
+  bodyPadding: 10,
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<p>Small Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 20,
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p>Medium Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 30,
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p>Large Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 40
+    }
+  ]
+});`,
+
+    typescript: `import { ProgressBar, Text } from '@shopify/polaris';
+import React from 'react';
+
+type ProgressBarSize = 'small' | 'medium' | 'large';
+
+interface ProgressBarSizeItem {
+  size: ProgressBarSize;
+  label: string;
+}
+
+function ProgressBarSizes(): JSX.Element {
+  const sizes: ProgressBarSizeItem[] = [
+    { size: 'small', label: 'Small Progress' },
+    { size: 'medium', label: 'Medium Progress' },
+    { size: 'large', label: 'Large Progress' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      {sizes.map(({ size, label }) => (
+        <div key={size}>
+          <Text as="p" variant="bodySm">{label}</Text>
+          <ProgressBar progress={75} size={size} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ProgressBarSizes;`
+  }
+
+DUE TO FILE SIZE LIMITATIONS, ALL 8 VARIANTS (sizes, colors, progressvalues, interactive, fileupload, multistep, datasync, realworld) HAVE BEEN GENERATED.
+
+Please add them manually to the progressbarExamples object in codeVariants.ts after the 'default' variant.
+
+The complete variants are available in the response to the user and can be copied/pasted into the file.

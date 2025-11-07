@@ -1,0 +1,249 @@
+export default BlockStackExample;`
+  },
+
+  spacingVariations: {
+    react: `import { BlockStack, Badge, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function SpacingVariationsExample() {
+  return (
+    <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">None</Text>
+        <BlockStack gap="none">
+          <Badge>Item 1</Badge>
+          <Badge>Item 2</Badge>
+          <Badge>Item 3</Badge>
+        </BlockStack>
+      </Card>
+
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Tight</Text>
+        <BlockStack gap="200">
+          <Badge>Item 1</Badge>
+          <Badge>Item 2</Badge>
+          <Badge>Item 3</Badge>
+        </BlockStack>
+      </Card>
+
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Base</Text>
+        <BlockStack gap="400">
+          <Badge>Item 1</Badge>
+          <Badge>Item 2</Badge>
+          <Badge>Item 3</Badge>
+        </BlockStack>
+      </Card>
+
+      <Card sectioned>
+        <Text as="h3" variant="headingSm">Loose</Text>
+        <BlockStack gap="500">
+          <Badge>Item 1</Badge>
+          <Badge>Item 2</Badge>
+          <Badge>Item 3</Badge>
+        </BlockStack>
+      </Card>
+    </div>
+  );
+}
+
+export default SpacingVariationsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; gap: 32px; flex-wrap: wrap;">
+  <div class="polaris-card polaris-card--sectioned">
+    <h3 class="polaris-text--heading-sm">None</h3>
+    <div class="polaris-block-stack" data-gap="none">
+      <span class="polaris-badge">Item 1</span>
+      <span class="polaris-badge">Item 2</span>
+      <span class="polaris-badge">Item 3</span>
+    </div>
+  </div>
+
+  <div class="polaris-card polaris-card--sectioned">
+    <h3 class="polaris-text--heading-sm">Tight</h3>
+    <div class="polaris-block-stack" data-gap="200">
+      <span class="polaris-badge">Item 1</span>
+      <span class="polaris-badge">Item 2</span>
+      <span class="polaris-badge">Item 3</span>
+    </div>
+  </div>
+
+  <div class="polaris-card polaris-card--sectioned">
+    <h3 class="polaris-text--heading-sm">Base</h3>
+    <div class="polaris-block-stack" data-gap="400">
+      <span class="polaris-badge">Item 1</span>
+      <span class="polaris-badge">Item 2</span>
+      <span class="polaris-badge">Item 3</span>
+    </div>
+  </div>
+
+  <div class="polaris-card polaris-card--sectioned">
+    <h3 class="polaris-text--heading-sm">Loose</h3>
+    <div class="polaris-block-stack" data-gap="500">
+      <span class="polaris-badge">Item 1</span>
+      <span class="polaris-badge">Item 2</span>
+      <span class="polaris-badge">Item 3</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createCard, createBlockStack, createBadge } from '@cin7/vanilla-js';
+
+const spacingOptions = [
+  { label: 'None', gap: 'none' },
+  { label: 'Tight', gap: '200' },
+  { label: 'Base', gap: '400' },
+  { label: 'Loose', gap: '500' }
+];
+
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '32px';
+container.style.flexWrap = 'wrap';
+
+spacingOptions.forEach(({ label, gap }) => {
+  const card = createCard({
+    sectioned: true,
+    content: [
+      { type: 'heading', text: label, variant: 'headingSm' },
+      createBlockStack({
+        gap,
+        children: [
+          createBadge({ text: 'Item 1' }),
+          createBadge({ text: 'Item 2' }),
+          createBadge({ text: 'Item 3' })
+        ]
+      })
+    ]
+  });
+  container.appendChild(card);
+});
+
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `// ExtJS Multiple Containers with different spacing
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch',
+    gap: 32
+  },
+  items: [{
+    xtype: 'panel',
+    title: 'None',
+    bodyPadding: 12,
+    layout: {
+      type: 'vbox',
+      align: 'stretch',
+      gap: 0
+    },
+    items: [{
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 1</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 2</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 3</span>'
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Tight',
+    bodyPadding: 12,
+    layout: {
+      type: 'vbox',
+      align: 'stretch',
+      gap: 8
+    },
+    items: [{
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 1</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 2</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 3</span>'
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Base',
+    bodyPadding: 12,
+    layout: {
+      type: 'vbox',
+      align: 'stretch',
+      gap: 16
+    },
+    items: [{
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 1</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 2</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 3</span>'
+    }]
+  }, {
+    xtype: 'panel',
+    title: 'Loose',
+    bodyPadding: 12,
+    layout: {
+      type: 'vbox',
+      align: 'stretch',
+      gap: 20
+    },
+    items: [{
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 1</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 2</span>'
+    }, {
+      xtype: 'component',
+      html: '<span class="polaris-badge">Item 3</span>'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { BlockStack, Badge, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+type SpacingOption = {
+  label: string;
+  gap: 'none' | '100' | '200' | '400' | '500' | '800';
+};
+
+const spacingOptions: SpacingOption[] = [
+  { label: 'None', gap: 'none' },
+  { label: 'Tight', gap: '200' },
+  { label: 'Base', gap: '400' },
+  { label: 'Loose', gap: '500' }
+];
+
+function SpacingVariationsExample(): JSX.Element {
+  return (
+    <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+      {spacingOptions.map(({ label, gap }) => (
+        <Card key={label} sectioned>
+          <Text as="h3" variant="headingSm">{label}</Text>
+          <BlockStack gap={gap}>
+            <Badge>Item 1</Badge>
+            <Badge>Item 2</Badge>
+            <Badge>Item 3</Badge>
+          </BlockStack>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default SpacingVariationsExample;`
+  }
+};

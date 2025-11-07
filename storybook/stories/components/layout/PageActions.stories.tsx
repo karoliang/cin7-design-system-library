@@ -58,7 +58,7 @@ export const PrimaryOnly: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'primaryonly'),
   },
 
 };
@@ -86,7 +86,7 @@ export const MultipleSecondary: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'multiplesecondary'),
   },
 
 };
@@ -110,7 +110,7 @@ export const DestructiveActions: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'destructiveactions'),
   },
 
 };
@@ -131,7 +131,7 @@ export const LoadingState: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'loadingstate'),
   },
 
 };
@@ -237,7 +237,7 @@ export const ProductFormActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'productformactions'),
   },
 
 };
@@ -396,7 +396,7 @@ export const OrderManagementActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'ordermanagementactions'),
   },
 
 };
@@ -563,7 +563,7 @@ export const CustomerProfileActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'customerprofileactions'),
   },
 
 };
@@ -686,7 +686,7 @@ export const SettingsPageActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'settingspageactions'),
   },
 
 };
@@ -802,7 +802,7 @@ export const BulkActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pageactions', 'default'),
+    codeVariants: getCodeVariants('pageactions', 'bulkactions'),
   },
 
 };

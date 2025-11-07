@@ -62,7 +62,7 @@ export const Tones: Story = {
     </InlineStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'tones'),
   },
 
 };
@@ -76,7 +76,7 @@ export const Progress: Story = {
     </InlineStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'progress'),
   },
 
 };
@@ -90,7 +90,7 @@ export const Sizes: Story = {
     </InlineStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'sizes'),
   },
 
 };
@@ -105,7 +105,7 @@ export const WithNumbers: Story = {
     </InlineStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'withNumbers'),
   },
 
 };
@@ -135,7 +135,7 @@ export const StatusExamples: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'statusExamples'),
   },
 
 };
@@ -222,7 +222,7 @@ export const InteractiveBadges: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'interactiveBadges'),
   },
 
 };
@@ -271,7 +271,7 @@ export const MarketingBadges: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'marketingBadges'),
   },
 
 };
@@ -341,7 +341,7 @@ export const ProductTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'productTags'),
   },
 
 };
@@ -427,7 +427,7 @@ export const CampaignBadges: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'campaignBadges'),
   },
 
 };
@@ -514,7 +514,7 @@ export const LoyaltyBadges: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('badge', 'default'),
+    codeVariants: getCodeVariants('badge', 'loyaltyBadges'),
   },
 
 };

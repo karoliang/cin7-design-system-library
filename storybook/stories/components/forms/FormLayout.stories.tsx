@@ -68,7 +68,7 @@ export const GroupedFields: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('formlayout', 'default'),
+    codeVariants: getCodeVariants('formlayout', 'groupedFields'),
   },
 
 };
@@ -95,7 +95,7 @@ export const ThreeColumnLayout: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('formlayout', 'default'),
+    codeVariants: getCodeVariants('formlayout', 'threeColumn'),
   },
 
 };
@@ -147,7 +147,7 @@ export const ComplexForm: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('formlayout', 'default'),
+    codeVariants: getCodeVariants('formlayout', 'complex'),
   },
 
 };
@@ -259,7 +259,7 @@ export const ProductForm: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('formlayout', 'default'),
+    codeVariants: getCodeVariants('formlayout', 'product'),
   },
 
 };

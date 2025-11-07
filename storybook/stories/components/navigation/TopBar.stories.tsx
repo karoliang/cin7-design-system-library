@@ -155,7 +155,7 @@ export const WithUserMenu: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'withusermenu'),
   },
 
 };
@@ -288,7 +288,7 @@ export const EcommerceHeader: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'ecommerceheader'),
   },
 
 };
@@ -366,7 +366,7 @@ export const AdminDashboard: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'admindashboard'),
   },
 
 };
@@ -531,7 +531,7 @@ export const ProjectManagement: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'projectmanagement'),
   },
 
 };
@@ -617,7 +617,7 @@ export const CustomerSupport: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'customersupport'),
   },
 
 };
@@ -719,7 +719,7 @@ export const EducationalPlatform: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('topbar', 'default'),
+    codeVariants: getCodeVariants('topbar', 'educationalplatform'),
   },
 
 };

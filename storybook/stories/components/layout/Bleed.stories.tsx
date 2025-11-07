@@ -71,6 +71,9 @@ export const Default: Story = {
 };
 
 export const HorizontalBleed: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'horizontalBleed'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>Horizontal Bleed Example</Text>
@@ -89,13 +92,12 @@ export const HorizontalBleed: Story = {
       </Bleed>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const VerticalBleed: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'verticalBleed'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd">Vertical Bleed</Text>
@@ -129,13 +131,12 @@ export const VerticalBleed: Story = {
       </Bleed>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const FullWidthSection: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'fullWidthSection'),
+  },
   render: () => (
     <div style={{ maxWidth: '600px', width: '100%' }}>
       <Card sectioned>
@@ -197,13 +198,12 @@ export const FullWidthSection: Story = {
       </Card>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const CalloutBoxes: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'calloutBoxes'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '24px' }}>Dashboard Notifications</Text>
@@ -292,13 +292,12 @@ export const CalloutBoxes: Story = {
       </div>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const PricingTable: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'pricingTable'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingLg" style={{ marginBottom: '24px', textAlign: 'center' }}>Choose Your Plan</Text>
@@ -394,13 +393,12 @@ export const PricingTable: Story = {
       </div>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const StatusTimeline: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'statusTimeline'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '24px' }}>Order Timeline</Text>
@@ -510,13 +508,12 @@ export const StatusTimeline: Story = {
       </div>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };
 
 export const VisualSeparators: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'visualSeparators'),
+  },
   render: () => (
     <Card sectioned>
       <Text as="h3" variant="headingMd" style={{ marginBottom: '24px' }}>Report Sections</Text>
@@ -575,8 +572,4 @@ export const VisualSeparators: Story = {
       </div>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('bleed', 'default'),
-  },
-
 };

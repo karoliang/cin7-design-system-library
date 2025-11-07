@@ -99,7 +99,7 @@ export const WithText: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('tooltip', 'default'),
+    codeVariants: getCodeVariants('tooltip', 'withText'),
   },
 
 };
@@ -133,7 +133,7 @@ export const WithIcon: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('tooltip', 'default'),
+    codeVariants: getCodeVariants('tooltip', 'withIcon'),
   },
 
 };
