@@ -89,7 +89,11 @@ export const Default: Story = {
         </div>
       </Scrollable>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const VerticalScrolling: Story = {
@@ -149,6 +153,10 @@ export const VerticalScrolling: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const HorizontalScrolling: Story = {
@@ -186,7 +194,11 @@ export const HorizontalScrolling: Story = {
         </div>
       </Scrollable>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const BothDirections: Story = {
@@ -226,6 +238,10 @@ export const BothDirections: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const MaxHeightContainer: Story = {
@@ -270,6 +286,10 @@ export const MaxHeightContainer: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const ScrollableTable: Story = {
@@ -326,6 +346,10 @@ export const ScrollableTable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const ChatInterface: Story = {
@@ -411,6 +435,10 @@ export const ChatInterface: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const ImageGallery: Story = {
@@ -451,6 +479,10 @@ export const ImageGallery: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const CodeViewer: Story = {
@@ -526,6 +558,10 @@ export default ExampleComponent;`;
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const WithScrollHint: Story = {
@@ -583,6 +619,10 @@ export const WithScrollHint: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -670,4 +710,8 @@ export const AccessibilityDemo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('scrollable', 'default'),
+  },
+
 };

@@ -35,6 +35,10 @@ export const Default: Story = {
   args: {
     children: 'This is a text container that provides optimal reading width for your content. It ensures that lines of text don\'t become too long, which improves readability and user experience.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const BasicUsage: Story = {
@@ -51,7 +55,11 @@ export const BasicUsage: Story = {
         </p>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const LongFormContent: Story = {
@@ -97,7 +105,11 @@ export const LongFormContent: Story = {
         </p>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const ProductDescription: Story = {
@@ -134,7 +146,11 @@ export const ProductDescription: Story = {
         </p>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const HelpArticle: Story = {
@@ -200,7 +216,11 @@ export const HelpArticle: Story = {
         </div>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const BlogPost: Story = {
@@ -275,7 +295,11 @@ export const BlogPost: Story = {
         </p>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const ComparisonLayout: Story = {
@@ -324,7 +348,11 @@ export const ComparisonLayout: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const NarrowContent: Story = {
@@ -360,7 +388,11 @@ export const NarrowContent: Story = {
         </p>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };
 
 export const TechnicalDocumentation: Story = {
@@ -429,5 +461,9 @@ export const TechnicalDocumentation: Story = {
         </div>
       </TextContainer>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('textcontainer', 'default'),
+  },
+
 };

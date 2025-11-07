@@ -36,6 +36,10 @@ export const Default: Story = {
   args: {
     children: 'Need help? Our support team is available 24/7 to assist you with any questions.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const WithLearnMore: Story = {
@@ -46,18 +50,30 @@ export const WithLearnMore: Story = {
       content: 'View optimization guide',
     },
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const ShortText: Story = {
   args: {
     children: 'Press "?" for keyboard shortcuts.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const LongText: Story = {
   args: {
     children: 'This section allows you to configure your store\'s basic settings including name, currency, and timezone. These settings affect how your store displays prices and dates to customers. Make sure to review these settings carefully as they impact your entire store operation.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const WithIcon: Story = {
@@ -78,7 +94,11 @@ export const WithIcon: Story = {
         </FooterHelp>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const DocumentationLinks: Story = {
@@ -132,6 +152,10 @@ export const DocumentationLinks: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const InteractiveHelp: Story = {
@@ -221,6 +245,10 @@ export const InteractiveHelp: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const FormContextHelp: Story = {
@@ -260,6 +288,10 @@ export const FormContextHelp: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const SupportCenter: Story = {
@@ -351,6 +383,10 @@ export const SupportCenter: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const LearningResources: Story = {
@@ -420,6 +456,10 @@ export const LearningResources: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const ContextualHelp: Story = {
@@ -510,6 +550,10 @@ export const ContextualHelp: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
 
 export const MobileOptimized: Story = {
@@ -551,4 +595,8 @@ export const MobileOptimized: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('footerhelp', 'default'),
+  },
+
 };
