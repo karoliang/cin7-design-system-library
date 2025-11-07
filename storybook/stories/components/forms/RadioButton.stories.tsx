@@ -125,6 +125,9 @@ export const WithError: Story = {
     value: 'invalid',
     error: 'This option is not available in your region',
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'error'),
+  },
 };
 
 export const ShippingOptions: Story = {

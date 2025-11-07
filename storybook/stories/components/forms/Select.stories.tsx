@@ -174,6 +174,9 @@ export const GroupedOptions: Story = {
     options: groupedOptions,
     placeholder: 'Select a category',
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'groups'),
+  },
 };
 
 export const LanguageSelector: Story = {

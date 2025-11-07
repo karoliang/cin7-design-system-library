@@ -14868,6 +14868,4696 @@ export default CustomTooltipsExample;`
   }
 };
 
+// Link Component Examples
+export const linkExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function LinkExample() {
+  return (
+    <Link url="#products">
+      View all products
+    </Link>
+  );
+}
+
+export default LinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<a href="#products" class="polaris-link">View all products</a>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+const link = createLink({
+  text: 'View all products',
+  url: '#products',
+  onClick: (e) => {
+    e.preventDefault();
+    console.log('Link clicked!');
+    // Navigate programmatically
+    window.location.hash = 'products';
+  }
+});
+
+document.getElementById('app').appendChild(link);
+</script>`,
+
+    extjs: `// ExtJS doesn't have a native Link component, use Button with link style
+Ext.create('Ext.Component', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#products" class="polaris-link">View all products</a>',
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      e.preventDefault();
+      console.log('Link clicked!');
+      window.location.hash = 'products';
+    }
+  }
+});
+
+// Or using custom component
+import { PolarisLink } from '@cin7/extjs-adapters';
+
+const link = Ext.create('PolarisLink', {
+  text: 'View all products',
+  url: '#products',
+  handler: function() {
+    console.log('Link clicked!');
+  }
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface LinkExampleProps {
+  text: string;
+  url: string;
+  onClick?: () => void;
+}
+
+function LinkExample({
+  text,
+  url,
+  onClick
+}: LinkExampleProps): JSX.Element {
+  return (
+    <Link url={url} onClick={onClick}>
+      {text}
+    </Link>
+  );
+}
+
+export default LinkExample;`
+  },
+
+  externalLink: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function ExternalLinkExample() {
+  return (
+    <Link
+      url="https://polaris.shopify.com"
+      external
+    >
+      Visit Shopify documentation
+    </Link>
+  );
+}
+
+export default ExternalLinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<a href="https://polaris.shopify.com" class="polaris-link" target="_blank" rel="noopener noreferrer">
+  Visit Shopify documentation
+  <span aria-label="opens in new tab">↗</span>
+</a>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+const externalLink = createLink({
+  text: 'Visit Shopify documentation',
+  url: 'https://polaris.shopify.com',
+  external: true,
+  onClick: (e) => {
+    console.log('External link clicked!');
+    // Browser handles external navigation
+  }
+});
+
+document.getElementById('app').appendChild(externalLink);
+</script>`,
+
+    extjs: `// ExtJS external link
+Ext.create('Ext.Component', {
+  renderTo: Ext.getBody(),
+  html: '<a href="https://polaris.shopify.com" class="polaris-link" target="_blank" rel="noopener noreferrer">Visit Shopify documentation ↗</a>',
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      console.log('External link clicked!');
+      // Browser handles external navigation
+    }
+  }
+});
+
+// Or using custom component
+import { PolarisLink } from '@cin7/extjs-adapters';
+
+const externalLink = Ext.create('PolarisLink', {
+  text: 'Visit Shopify documentation',
+  url: 'https://polaris.shopify.com',
+  external: true
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface ExternalLinkProps {
+  url: string;
+  children: React.ReactNode;
+  ariaLabel?: string;
+}
+
+function ExternalLinkExample({
+  url,
+  children,
+  ariaLabel
+}: ExternalLinkProps): JSX.Element {
+  return (
+    <Link
+      url={url}
+      external
+      aria-label={ariaLabel}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default ExternalLinkExample;`
+  },
+
+  monochrome: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function MonochromeLinkExample() {
+  return (
+    <Link
+      url="#features"
+      monochrome
+    >
+      Learn more about our features
+    </Link>
+  );
+}
+
+export default MonochromeLinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<a href="#features" class="polaris-link polaris-link--monochrome">
+  Learn more about our features
+</a>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+const monochromeLink = createLink({
+  text: 'Learn more about our features',
+  url: '#features',
+  monochrome: true,
+  onClick: (e) => {
+    e.preventDefault();
+    console.log('Monochrome link clicked!');
+    window.location.hash = 'features';
+  }
+});
+
+document.getElementById('app').appendChild(monochromeLink);
+</script>`,
+
+    extjs: `// ExtJS monochrome link
+Ext.create('Ext.Component', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#features" class="polaris-link polaris-link--monochrome">Learn more about our features</a>',
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      e.preventDefault();
+      console.log('Monochrome link clicked!');
+      window.location.hash = 'features';
+    }
+  }
+});
+
+// Or using custom component
+import { PolarisLink } from '@cin7/extjs-adapters';
+
+const monochromeLink = Ext.create('PolarisLink', {
+  text: 'Learn more about our features',
+  url: '#features',
+  monochrome: true
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface MonochromeLinkProps {
+  url: string;
+  children: React.ReactNode;
+  onClick?: (event: React.MouseEvent) => void;
+}
+
+function MonochromeLinkExample({
+  url,
+  children,
+  onClick
+}: MonochromeLinkProps): JSX.Element {
+  return (
+    <Link
+      url={url}
+      monochrome
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default MonochromeLinkExample;`
+  },
+
+  noUnderline: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function NoUnderlineLinkExample() {
+  return (
+    <Link
+      url="#shop"
+      removeUnderline
+    >
+      Shop now
+    </Link>
+  );
+}
+
+export default NoUnderlineLinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<a href="#shop" class="polaris-link polaris-link--no-underline">
+  Shop now
+</a>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+const noUnderlineLink = createLink({
+  text: 'Shop now',
+  url: '#shop',
+  removeUnderline: true,
+  onClick: (e) => {
+    e.preventDefault();
+    console.log('No underline link clicked!');
+    window.location.hash = 'shop';
+  }
+});
+
+document.getElementById('app').appendChild(noUnderlineLink);
+</script>`,
+
+    extjs: `// ExtJS link without underline
+Ext.create('Ext.Component', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#shop" class="polaris-link polaris-link--no-underline">Shop now</a>',
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      e.preventDefault();
+      console.log('No underline link clicked!');
+      window.location.hash = 'shop';
+    }
+  }
+});
+
+// Or using custom component
+import { PolarisLink } from '@cin7/extjs-adapters';
+
+const noUnderlineLink = Ext.create('PolarisLink', {
+  text: 'Shop now',
+  url: '#shop',
+  removeUnderline: true
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface NoUnderlineLinkProps {
+  url: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+function NoUnderlineLinkExample({
+  url,
+  children,
+  className
+}: NoUnderlineLinkProps): JSX.Element {
+  return (
+    <Link
+      url={url}
+      removeUnderline
+      className={className}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default NoUnderlineLinkExample;`
+  },
+
+  inlineText: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function InlineTextLinkExample() {
+  return (
+    <div style={{ maxWidth: '400px', lineHeight: 'var(--line-height-normal)' }}>
+      <p>
+        Our product catalog includes a wide range of electronics. You can{' '}
+        <Link url="#browse">browse our collection</Link> to find the perfect items
+        for your needs. For more information, please{' '}
+        <Link url="#contact">contact our support team</Link>.
+      </p>
+      <p style={{ marginTop: '16px' }}>
+        We offer fast shipping and easy returns. Check out our{' '}
+        <Link url="#shipping">shipping policy</Link> and{' '}
+        <Link url="#returns">return guidelines</Link> for more details.
+      </p>
+    </div>
+  );
+}
+
+export default InlineTextLinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="max-width: 400px; line-height: var(--line-height-normal);">
+  <p>
+    Our product catalog includes a wide range of electronics. You can
+    <a href="#browse" class="polaris-link">browse our collection</a>
+    to find the perfect items for your needs. For more information, please
+    <a href="#contact" class="polaris-link">contact our support team</a>.
+  </p>
+  <p style="margin-top: 16px;">
+    We offer fast shipping and easy returns. Check out our
+    <a href="#shipping" class="polaris-link">shipping policy</a> and
+    <a href="#returns" class="polaris-link">return guidelines</a> for more details.
+  </p>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.maxWidth = '400px';
+container.style.lineHeight = 'var(--line-height-normal)';
+
+// Create paragraphs with inline links
+const p1 = document.createElement('p');
+p1.innerHTML = 'Our product catalog includes a wide range of electronics. You can ';
+const browseLink = createLink({ text: 'browse our collection', url: '#browse' });
+p1.appendChild(browseLink);
+p1.innerHTML += ' to find the perfect items for your needs. For more information, please ';
+const contactLink = createLink({ text: 'contact our support team', url: '#contact' });
+p1.appendChild(contactLink);
+p1.innerHTML += '.';
+
+const p2 = document.createElement('p');
+p2.style.marginTop = '16px';
+p2.innerHTML = 'We offer fast shipping and easy returns. Check out our ';
+const shippingLink = createLink({ text: 'shipping policy', url: '#shipping' });
+p2.appendChild(shippingLink);
+p2.innerHTML += ' and ';
+const returnsLink = createLink({ text: 'return guidelines', url: '#returns' });
+p2.appendChild(returnsLink);
+p2.innerHTML += ' for more details.';
+
+container.appendChild(p1);
+container.appendChild(p2);
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `// ExtJS inline text with links
+Ext.create('Ext.Component', {
+  renderTo: Ext.getBody(),
+  style: {
+    maxWidth: '400px',
+    lineHeight: 'var(--line-height-normal)'
+  },
+  html: \`
+    <p>
+      Our product catalog includes a wide range of electronics. You can
+      <a href="#browse" class="polaris-link">browse our collection</a>
+      to find the perfect items for your needs. For more information, please
+      <a href="#contact" class="polaris-link">contact our support team</a>.
+    </p>
+    <p style="margin-top: 16px;">
+      We offer fast shipping and easy returns. Check out our
+      <a href="#shipping" class="polaris-link">shipping policy</a> and
+      <a href="#returns" class="polaris-link">return guidelines</a> for more details.
+    </p>
+  \`,
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      e.preventDefault();
+      var href = e.target.getAttribute('href');
+      console.log('Inline link clicked:', href);
+      window.location.hash = href.substring(1);
+    }
+  }
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface InlineTextLinkExampleProps {
+  maxWidth?: string;
+}
+
+function InlineTextLinkExample({
+  maxWidth = '400px'
+}: InlineTextLinkExampleProps): JSX.Element {
+  return (
+    <div style={{ maxWidth, lineHeight: 'var(--line-height-normal)' }}>
+      <p>
+        Our product catalog includes a wide range of electronics. You can{' '}
+        <Link url="#browse">browse our collection</Link> to find the perfect items
+        for your needs. For more information, please{' '}
+        <Link url="#contact">contact our support team</Link>.
+      </p>
+      <p style={{ marginTop: '16px' }}>
+        We offer fast shipping and easy returns. Check out our{' '}
+        <Link url="#shipping">shipping policy</Link> and{' '}
+        <Link url="#returns">return guidelines</Link> for more details.
+      </p>
+    </div>
+  );
+}
+
+export default InlineTextLinkExample;`
+  },
+
+  navigationLinks: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function NavigationLinksExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '300px' }}>
+      <h3 style={{ margin: 0 }}>Quick Navigation</h3>
+      <Link url="#dashboard">📊 Dashboard</Link>
+      <Link url="#products">📦 Products</Link>
+      <Link url="#orders">🛒 Orders</Link>
+      <Link url="#customers">👥 Customers</Link>
+      <Link url="#analytics">📈 Analytics</Link>
+      <Link url="#settings">⚙️ Settings</Link>
+    </div>
+  );
+}
+
+export default NavigationLinksExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 300px;">
+  <h3 style="margin: 0;">Quick Navigation</h3>
+  <a href="#dashboard" class="polaris-link">📊 Dashboard</a>
+  <a href="#products" class="polaris-link">📦 Products</a>
+  <a href="#orders" class="polaris-link">🛒 Orders</a>
+  <a href="#customers" class="polaris-link">👥 Customers</a>
+  <a href="#analytics" class="polaris-link">📈 Analytics</a>
+  <a href="#settings" class="polaris-link">⚙️ Settings</a>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLink } from '@cin7/vanilla-js';
+
+const navItems = [
+  { icon: '📊', text: 'Dashboard', url: '#dashboard' },
+  { icon: '📦', text: 'Products', url: '#products' },
+  { icon: '🛒', text: 'Orders', url: '#orders' },
+  { icon: '👥', text: 'Customers', url: '#customers' },
+  { icon: '📈', text: 'Analytics', url: '#analytics' },
+  { icon: '⚙️', text: 'Settings', url: '#settings' }
+];
+
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.gap = '12px';
+container.style.maxWidth = '300px';
+
+const heading = document.createElement('h3');
+heading.textContent = 'Quick Navigation';
+heading.style.margin = '0';
+container.appendChild(heading);
+
+navItems.forEach(item => {
+  const link = createLink({
+    text: \`\${item.icon} \${item.text}\`,
+    url: item.url,
+    onClick: (e) => {
+      e.preventDefault();
+      console.log('Navigation:', item.text);
+      window.location.hash = item.url.substring(1);
+    }
+  });
+  container.appendChild(link);
+});
+
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `// ExtJS navigation links
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Quick Navigation',
+  width: 300,
+  bodyPadding: 10,
+  items: [
+    {
+      xtype: 'component',
+      html: '<a href="#dashboard" class="polaris-link">📊 Dashboard</a>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<a href="#products" class="polaris-link">📦 Products</a>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<a href="#orders" class="polaris-link">🛒 Orders</a>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<a href="#customers" class="polaris-link">👥 Customers</a>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<a href="#analytics" class="polaris-link">📈 Analytics</a>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'component',
+      html: '<a href="#settings" class="polaris-link">⚙️ Settings</a>'
+    }
+  ],
+  listeners: {
+    element: 'el',
+    delegate: 'a',
+    click: function(e) {
+      e.preventDefault();
+      var href = e.target.getAttribute('href');
+      console.log('Navigation clicked:', href);
+      window.location.hash = href.substring(1);
+    }
+  }
+});
+
+// Or using data-driven approach
+const navItems = [
+  { icon: '📊', text: 'Dashboard', url: '#dashboard' },
+  { icon: '📦', text: 'Products', url: '#products' },
+  { icon: '🛒', text: 'Orders', url: '#orders' },
+  { icon: '👥', text: 'Customers', url: '#customers' },
+  { icon: '📈', text: 'Analytics', url: '#analytics' },
+  { icon: '⚙️', text: 'Settings', url: '#settings' }
+];
+
+import { PolarisNavigationLinks } from '@cin7/extjs-adapters';
+
+const navigation = Ext.create('PolarisNavigationLinks', {
+  title: 'Quick Navigation',
+  items: navItems,
+  onNavigate: function(url) {
+    console.log('Navigating to:', url);
+  }
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface NavigationItem {
+  icon: string;
+  text: string;
+  url: string;
+}
+
+interface NavigationLinksProps {
+  title?: string;
+  items: NavigationItem[];
+  onNavigate?: (url: string) => void;
+}
+
+function NavigationLinksExample({
+  title = 'Quick Navigation',
+  items,
+  onNavigate
+}: NavigationLinksProps): JSX.Element {
+  const handleClick = (url: string) => {
+    if (onNavigate) {
+      onNavigate(url);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '300px' }}>
+      <h3 style={{ margin: 0 }}>{title}</h3>
+      {items.map((item) => (
+        <Link
+          key={item.url}
+          url={item.url}
+          onClick={() => handleClick(item.url)}
+        >
+          {item.icon} {item.text}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default NavigationLinksExample;`
+  }
+};
+
+// BlockStack Component Examples - Layout
+export const blockstackExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+function BlockStackExample() {
+  return (
+    <BlockStack gap="400">
+      <Text as="h2" variant="headingMd">Order Information</Text>
+      <Text as="p">Customer: John Doe</Text>
+      <Text as="p">Order #1001</Text>
+      <Text as="p">Status: Processing</Text>
+    </BlockStack>
+  );
+}
+
+export default BlockStackExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-block-stack" data-gap="400">
+  <h2 class="polaris-text--heading-md">Order Information</h2>
+  <p>Customer: John Doe</p>
+  <p>Order #1001</p>
+  <p>Status: Processing</p>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createBlockStack } from '@cin7/vanilla-js';
+
+const stack = createBlockStack({
+  gap: '400',
+  children: [
+    { type: 'heading', text: 'Order Information', variant: 'headingMd' },
+    { type: 'text', text: 'Customer: John Doe' },
+    { type: 'text', text: 'Order #1001' },
+    { type: 'text', text: 'Status: Processing' }
+  ]
+});
+
+document.getElementById('app').appendChild(stack);
+</script>`,
+
+    extjs: `// ExtJS Container with vertical layout
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch',
+    gap: 16
+  },
+  items: [{
+    xtype: 'component',
+    html: '<h2>Order Information</h2>',
+    cls: 'polaris-heading-md'
+  }, {
+    xtype: 'component',
+    html: 'Customer: John Doe'
+  }, {
+    xtype: 'component',
+    html: 'Order #1001'
+  }, {
+    xtype: 'component',
+    html: 'Status: Processing'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface BlockStackExampleProps {
+  orderNumber: string;
+  customerName: string;
+  status: string;
+  gap?: '100' | '200' | '400' | '500' | '800';
+}
+
+function BlockStackExample({
+  orderNumber,
+  customerName,
+  status,
+  gap = '400'
+}: BlockStackExampleProps): JSX.Element {
+  return (
+    <BlockStack gap={gap}>
+      <Text as="h2" variant="headingMd">Order Information</Text>
+      <Text as="p">Customer: {customerName}</Text>
+      <Text as="p">Order #{orderNumber}</Text>
+      <Text as="p">Status: {status}</Text>
+    </BlockStack>
+  );
+}
+
+export default BlockStackExample;`
+  }
+};
+
+// Layout Component Examples - Layout
+export const layoutExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function LayoutExample() {
+  return (
+    <Layout>
+      <Layout.Section>
+        <Card sectioned>
+          <Text as="h2" variant="headingLg">Main Content Area</Text>
+          <Text as="p" variant="bodyMd">
+            This is the primary content section where the main information and functionality resides.
+          </Text>
+        </Card>
+      </Layout.Section>
+
+      <Layout.Section secondary>
+        <Card sectioned>
+          <Text as="h3" variant="headingMd">Secondary Content</Text>
+          <Text as="p" variant="bodySm">
+            This sidebar section contains supplementary information and actions.
+          </Text>
+        </Card>
+      </Layout.Section>
+    </Layout>
+  );
+}
+
+export default LayoutExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-layout">
+  <div class="polaris-layout__section">
+    <div class="polaris-card polaris-card--sectioned">
+      <h2 class="polaris-text--heading-lg">Main Content Area</h2>
+      <p class="polaris-text--body-md">
+        This is the primary content section where the main information and functionality resides.
+      </p>
+    </div>
+  </div>
+
+  <div class="polaris-layout__section polaris-layout__section--secondary">
+    <div class="polaris-card polaris-card--sectioned">
+      <h3 class="polaris-text--heading-md">Secondary Content</h3>
+      <p class="polaris-text--body-sm">
+        This sidebar section contains supplementary information and actions.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createLayout } from '@cin7/vanilla-js';
+
+const layout = createLayout({
+  sections: [
+    {
+      primary: true,
+      content: {
+        type: 'card',
+        title: 'Main Content Area',
+        content: 'This is the primary content section...'
+      }
+    },
+    {
+      secondary: true,
+      content: {
+        type: 'card',
+        title: 'Secondary Content',
+        content: 'This sidebar section...'
+      }
+    }
+  ]
+});
+
+document.getElementById('app').appendChild(layout);
+</script>`,
+
+    extjs: `// ExtJS Border Layout
+Ext.create('Ext.panel.Panel', {
+  layout: 'border',
+  width: '100%',
+  height: 600,
+  items: [{
+    region: 'center',
+    xtype: 'panel',
+    title: 'Main Content Area',
+    html: 'This is the primary content section where the main information and functionality resides.',
+    padding: 16
+  }, {
+    region: 'east',
+    xtype: 'panel',
+    title: 'Secondary Content',
+    html: 'This sidebar section contains supplementary information and actions.',
+    width: 300,
+    padding: 16,
+    collapsible: true
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface LayoutExampleProps {
+  mainTitle: string;
+  mainContent: string;
+  sidebarTitle: string;
+  sidebarContent: string;
+}
+
+function LayoutExample({
+  mainTitle,
+  mainContent,
+  sidebarTitle,
+  sidebarContent
+}: LayoutExampleProps): JSX.Element {
+  return (
+    <Layout>
+      <Layout.Section>
+        <Card sectioned>
+          <Text as="h2" variant="headingLg">{mainTitle}</Text>
+          <Text as="p" variant="bodyMd">{mainContent}</Text>
+        </Card>
+      </Layout.Section>
+
+      <Layout.Section secondary>
+        <Card sectioned>
+          <Text as="h3" variant="headingMd">{sidebarTitle}</Text>
+          <Text as="p" variant="bodySm">{sidebarContent}</Text>
+        </Card>
+      </Layout.Section>
+    </Layout>
+  );
+}
+
+export default LayoutExample;`
+  }
+};
+
+// Page Component Examples - Layout
+export const pageExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function PageExample() {
+  return (
+    <Page
+      title="Products"
+      primaryAction={{
+        content: 'Add product',
+        onAction: () => console.log('Add product clicked'),
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="p" variant="bodyMd">
+              Manage your product catalog here. Add new products, edit existing ones, and organize them into collections.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page-header">
+    <h1 class="polaris-page-header__title">Products</h1>
+    <div class="polaris-page-header__actions">
+      <button class="polaris-button polaris-button--primary">Add product</button>
+    </div>
+  </div>
+
+  <div class="polaris-page__content">
+    <div class="polaris-card polaris-card--sectioned">
+      <p>Manage your product catalog here. Add new products, edit existing ones, and organize them into collections.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createPage } from '@cin7/vanilla-js';
+
+const page = createPage({
+  title: 'Products',
+  primaryAction: {
+    content: 'Add product',
+    onClick: () => console.log('Add product clicked')
+  },
+  content: {
+    type: 'card',
+    content: 'Manage your product catalog here...'
+  }
+});
+
+document.getElementById('app').appendChild(page);
+</script>`,
+
+    extjs: `// ExtJS Panel with Page structure
+Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  layout: 'fit',
+  width: '100%',
+  height: 600,
+  tbar: [{
+    xtype: 'tbfill'
+  }, {
+    text: 'Add product',
+    cls: 'polaris-button-primary',
+    handler: function() {
+      console.log('Add product clicked');
+    }
+  }],
+  items: [{
+    xtype: 'panel',
+    html: '<div class="polaris-card"><p>Manage your product catalog here. Add new products, edit existing ones, and organize them into collections.</p></div>',
+    padding: 16
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface PageExampleProps {
+  title: string;
+  primaryActionContent: string;
+  onPrimaryAction: () => void;
+  content: string;
+}
+
+function PageExample({
+  title,
+  primaryActionContent,
+  onPrimaryAction,
+  content
+}: PageExampleProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      primaryAction={{
+        content: primaryActionContent,
+        onAction: onPrimaryAction,
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="p" variant="bodyMd">
+              {content}
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageExample;`
+  }
+};
+
+// ProgressBar Component Examples - Feedback
+export const progressbarExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ProgressBar } from '@shopify/polaris';
+import React from 'react';
+
+function ProgressBarExample() {
+  return <ProgressBar progress={65} size="medium" />;
+}
+
+export default ProgressBarExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+  <div class="polaris-progress-bar__indicator" style="width: 65%;"></div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createProgressBar } from '@cin7/vanilla-js';
+
+const progressBar = createProgressBar({
+  progress: 65,
+  size: 'medium',
+  onChange: (value) => {
+    console.log('Progress updated:', value);
+  }
+});
+
+document.getElementById('app').appendChild(progressBar);
+</script>`,
+
+    extjs: `// ExtJS ProgressBar
+Ext.create('Ext.ProgressBar', {
+  value: 0.65,  // 65% as decimal
+  text: '65%',
+  width: 400,
+  renderTo: Ext.getBody()
+});
+
+// Or using custom implementation
+Ext.create('Ext.Component', {
+  html: '<div class="polaris-progress-bar">' +
+        '<div class="polaris-progress-bar__indicator" style="width: 65%;"></div>' +
+        '</div>',
+  width: 400,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ProgressBar } from '@shopify/polaris';
+import React from 'react';
+
+interface ProgressBarExampleProps {
+  progress: number;
+  size?: 'small' | 'medium' | 'large';
+  color?: 'primary' | 'success' | 'critical';
+  animated?: boolean;
+}
+
+function ProgressBarExample({
+  progress,
+  size = 'medium',
+  color = 'primary',
+  animated = false
+}: ProgressBarExampleProps): JSX.Element {
+  // Ensure progress is between 0 and 100
+  const normalizedProgress = Math.min(Math.max(progress, 0), 100);
+
+  return (
+    <ProgressBar
+      progress={normalizedProgress}
+      size={size}
+      color={color}
+      animated={animated}
+    />
+  );
+}
+
+export default ProgressBarExample;`
+  }
+};
+
+// Spinner Component Examples - Feedback
+export const spinnerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Spinner } from '@shopify/polaris';
+import React from 'react';
+
+function SpinnerExample() {
+  return <Spinner size="medium" accessibilityLabel="Loading content" />;
+}
+
+export default SpinnerExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-spinner" role="status">
+  <span class="polaris-spinner__svg">
+    <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="7.5" />
+    </svg>
+  </span>
+  <span class="polaris-visually-hidden">Loading content</span>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createSpinner } from '@cin7/vanilla-js';
+
+const spinner = createSpinner({
+  size: 'medium',
+  accessibilityLabel: 'Loading content'
+});
+
+document.getElementById('app').appendChild(spinner);
+</script>`,
+
+    extjs: `// ExtJS LoadMask for loading indicator
+const panel = Ext.create('Ext.panel.Panel', {
+  width: 400,
+  height: 200,
+  html: 'Content loading...',
+  renderTo: Ext.getBody()
+});
+
+// Show loading mask
+panel.setLoading({
+  msg: 'Loading content...',
+  msgCls: 'polaris-spinner-message'
+});
+
+// Hide after 3 seconds
+setTimeout(() => {
+  panel.setLoading(false);
+}, 3000);`,
+
+    typescript: `import { Spinner } from '@shopify/polaris';
+import React from 'react';
+
+interface SpinnerExampleProps {
+  size?: 'small' | 'medium' | 'large';
+  accessibilityLabel?: string;
+  hasFocusableParent?: boolean;
+}
+
+function SpinnerExample({
+  size = 'medium',
+  accessibilityLabel = 'Loading',
+  hasFocusableParent = false
+}: SpinnerExampleProps): JSX.Element {
+  return (
+    <Spinner
+      size={size}
+      accessibilityLabel={accessibilityLabel}
+      hasFocusableParent={hasFocusableParent}
+    />
+  );
+}
+
+export default SpinnerExample;`
+  }
+};
+
+// Toast Component Examples - Feedback
+export const toastExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Toast, Frame } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function ToastExample() {
+  const [active, setActive] = useState(false);
+
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  return (
+    <Frame>
+      <button onClick={toggleActive}>Show Toast</button>
+      {active && (
+        <Toast content="Message sent" onDismiss={toggleActive} />
+      )}
+    </Frame>
+  );
+}
+
+export default ToastExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<button id="show-toast">Show Toast</button>
+
+<div class="polaris-toast-wrapper" style="display: none;">
+  <div class="polaris-toast">
+    <div class="polaris-toast__content">Message sent</div>
+    <button class="polaris-toast__close">×</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createToast } from '@cin7/vanilla-js';
+
+const button = document.getElementById('show-toast');
+let toast;
+
+button.addEventListener('click', () => {
+  if (toast) {
+    toast.remove();
+  }
+
+  toast = createToast({
+    content: 'Message sent',
+    duration: 5000,
+    onDismiss: () => {
+      console.log('Toast dismissed');
+      toast = null;
+    }
+  });
+
+  document.body.appendChild(toast);
+});
+</script>`,
+
+    extjs: `// ExtJS Toast notification
+Ext.toast({
+  html: 'Message sent',
+  title: 'Success',
+  width: 300,
+  align: 'br',
+  autoCloseDelay: 5000
+});
+
+// Or using custom implementation
+function showToast(message) {
+  const toast = Ext.create('Ext.window.Toast', {
+    html: message,
+    title: 'Notification',
+    width: 300,
+    align: 'br',
+    slideInDuration: 400,
+    autoCloseDelay: 5000,
+    closable: true
+  });
+
+  toast.show();
+}
+
+showToast('Message sent');`,
+
+    typescript: `import { Toast, Frame } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface ToastExampleProps {
+  defaultMessage?: string;
+  duration?: number;
+  error?: boolean;
+}
+
+function ToastExample({
+  defaultMessage = 'Message sent',
+  duration = 5000,
+  error = false
+}: ToastExampleProps): JSX.Element {
+  const [active, setActive] = useState(false);
+
+  const toggleActive = useCallback(() => setActive((active) => !active), []);
+
+  return (
+    <Frame>
+      <button onClick={toggleActive}>Show Toast</button>
+      {active && (
+        <Toast
+          content={defaultMessage}
+          onDismiss={toggleActive}
+          duration={duration}
+          error={error}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default ToastExample;`
+  }
+};
+
+
+
+// Navigation Component Examples
+export const navigationExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React from 'react';
+
+function NavigationExample() {
+  const [location, setLocation] = React.useState('/home');
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        items={[
+          {
+            url: '/home',
+            label: 'Home',
+            icon: 'home',
+          },
+          {
+            url: '/orders',
+            label: 'Orders',
+            icon: 'orders',
+            badge: '12',
+          },
+          {
+            url: '/products',
+            label: 'Products',
+            icon: 'products',
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}
+
+export default NavigationExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation" id="navigation">
+  <div class="polaris-navigation__section">
+    <ul class="polaris-navigation__list">
+      <li class="polaris-navigation__item">
+        <a href="/home" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Home</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/orders" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📦</span>
+          <span class="polaris-navigation__text">Orders</span>
+          <span class="polaris-navigation__badge">12</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/products" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🛍️</span>
+          <span class="polaris-navigation__text">Products</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+const navigation = {
+  currentLocation: '/home',
+
+  init() {
+    const links = $('.polaris-navigation__link');
+
+    links.forEach(link => {
+      on(link, 'click', (e) => {
+        e.preventDefault();
+        const url = link.getAttribute('href');
+        this.navigate(url);
+      });
+    });
+
+    this.updateActiveState();
+  },
+
+  navigate(url) {
+    this.currentLocation = url;
+    this.updateActiveState();
+    // Handle route change
+    console.log('Navigated to:', url);
+  },
+
+  updateActiveState() {
+    const links = $('.polaris-navigation__link');
+
+    links.forEach(link => {
+      const url = link.getAttribute('href');
+      if (url === this.currentLocation) {
+        link.classList.add('polaris-navigation__link--active');
+      } else {
+        link.classList.remove('polaris-navigation__link--active');
+      }
+    });
+  }
+};
+
+navigation.init();
+</script>`,
+
+    extjs: `// ExtJS Navigation Panel using @cin7/extjs-adapters
+Ext.define('App.view.Navigation', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'app-navigation',
+
+  layout: 'fit',
+  width: 240,
+
+  items: [{
+    xtype: 'treepanel',
+    rootVisible: false,
+    store: {
+      root: {
+        expanded: true,
+        children: [
+          {
+            text: 'Home',
+            iconCls: 'fa fa-home',
+            leaf: true,
+            route: '/home'
+          },
+          {
+            text: 'Orders',
+            iconCls: 'fa fa-shopping-cart',
+            badge: '12',
+            leaf: true,
+            route: '/orders'
+          },
+          {
+            text: 'Products',
+            iconCls: 'fa fa-box',
+            leaf: true,
+            route: '/products'
+          }
+        ]
+      }
+    },
+
+    listeners: {
+      itemclick: function(view, record) {
+        const route = record.get('route');
+        if (route) {
+          console.log('Navigate to:', route);
+          // Handle navigation
+        }
+      }
+    }
+  }]
+});
+
+// Create the navigation panel
+const navigation = Ext.create('App.view.Navigation', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+}
+
+interface NavigationExampleProps {
+  items?: NavigationItem[];
+  initialLocation?: string;
+  onNavigate?: (url: string) => void;
+}
+
+function NavigationExample({
+  items = [
+    { url: '/home', label: 'Home', icon: 'home' },
+    { url: '/orders', label: 'Orders', icon: 'orders', badge: '12' },
+    { url: '/products', label: 'Products', icon: 'products' },
+  ],
+  initialLocation = '/home',
+  onNavigate
+}: NavigationExampleProps): JSX.Element {
+  const [location, setLocation] = useState<string>(initialLocation);
+
+  const handleNavigate = (url: string) => {
+    setLocation(url);
+    onNavigate?.(url);
+  };
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        items={items.map(item => ({
+          ...item,
+          onClick: () => handleNavigate(item.url)
+        }))}
+      />
+    </Navigation>
+  );
+}
+
+export default NavigationExample;`
+  },
+
+  nestedNavigation: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React from 'react';
+
+function NestedNavigationExample() {
+  const [location, setLocation] = React.useState('/dashboard');
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        title="Sales"
+        items={[
+          {
+            url: '/dashboard',
+            label: 'Dashboard',
+            icon: 'home',
+            selected: location.startsWith('/dashboard'),
+          },
+          {
+            url: '/orders',
+            label: 'Orders',
+            icon: 'orders',
+            badge: '24',
+            selected: location.startsWith('/orders'),
+            subNavigationItems: [
+              {
+                url: '/orders/all',
+                label: 'All Orders',
+                selected: location === '/orders/all',
+              },
+              {
+                url: '/orders/fulfillments',
+                label: 'Fulfillments',
+                selected: location === '/orders/fulfillments',
+              },
+              {
+                url: '/orders/returns',
+                label: 'Returns',
+                selected: location === '/orders/returns',
+                badge: '3',
+              },
+            ],
+          },
+          {
+            url: '/customers',
+            label: 'Customers',
+            icon: 'customers',
+            selected: location.startsWith('/customers'),
+            subNavigationItems: [
+              {
+                url: '/customers/all',
+                label: 'All Customers',
+                selected: location === '/customers/all',
+              },
+              {
+                url: '/customers/segments',
+                label: 'Segments',
+                selected: location === '/customers/segments',
+              },
+              {
+                url: '/customers/groups',
+                label: 'Groups',
+                selected: location === '/customers/groups',
+              },
+            ],
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}
+
+export default NestedNavigationExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation" id="navigation">
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-heading">Sales</h3>
+    <ul class="polaris-navigation__list">
+      <li class="polaris-navigation__item">
+        <a href="/dashboard" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Dashboard</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/orders" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📦</span>
+          <span class="polaris-navigation__text">Orders</span>
+          <span class="polaris-navigation__badge">24</span>
+          <span class="polaris-navigation__chevron">▼</span>
+        </a>
+        <ul class="polaris-navigation__sublist">
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/all" class="polaris-navigation__sublink">All Orders</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/fulfillments" class="polaris-navigation__sublink">Fulfillments</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/orders/returns" class="polaris-navigation__sublink">
+              Returns
+              <span class="polaris-navigation__badge">3</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/customers" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">👥</span>
+          <span class="polaris-navigation__text">Customers</span>
+          <span class="polaris-navigation__chevron">▼</span>
+        </a>
+        <ul class="polaris-navigation__sublist">
+          <li class="polaris-navigation__subitem">
+            <a href="/customers/all" class="polaris-navigation__sublink">All Customers</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/customers/segments" class="polaris-navigation__sublink">Segments</a>
+          </li>
+          <li class="polaris-navigation__subitem">
+            <a href="/customers/groups" class="polaris-navigation__sublink">Groups</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on, toggle, slideToggle } from '@cin7/vanilla-js';
+
+const nestedNavigation = {
+  currentLocation: '/dashboard',
+
+  init() {
+    // Handle main navigation clicks
+    const links = $('.polaris-navigation__link');
+    links.forEach(link => {
+      on(link, 'click', (e) => {
+        const parent = link.closest('.polaris-navigation__item--expandable');
+        if (parent) {
+          e.preventDefault();
+          this.toggleSubNav(parent);
+        } else {
+          e.preventDefault();
+          const url = link.getAttribute('href');
+          this.navigate(url);
+        }
+      });
+    });
+
+    // Handle sub-navigation clicks
+    const subLinks = $('.polaris-navigation__sublink');
+    subLinks.forEach(link => {
+      on(link, 'click', (e) => {
+        e.preventDefault();
+        const url = link.getAttribute('href');
+        this.navigate(url);
+      });
+    });
+
+    this.updateActiveState();
+  },
+
+  toggleSubNav(item) {
+    const sublist = item.querySelector('.polaris-navigation__sublist');
+    if (sublist) {
+      slideToggle(sublist);
+      toggle(item, 'polaris-navigation__item--expanded');
+    }
+  },
+
+  navigate(url) {
+    this.currentLocation = url;
+    this.updateActiveState();
+    console.log('Navigated to:', url);
+  },
+
+  updateActiveState() {
+    // Update main links
+    const links = $('.polaris-navigation__link');
+    links.forEach(link => {
+      const url = link.getAttribute('href');
+      const parent = link.closest('.polaris-navigation__item');
+
+      if (this.currentLocation.startsWith(url)) {
+        link.classList.add('polaris-navigation__link--active');
+        if (parent && parent.classList.contains('polaris-navigation__item--expandable')) {
+          parent.classList.add('polaris-navigation__item--expanded');
+          const sublist = parent.querySelector('.polaris-navigation__sublist');
+          if (sublist) sublist.style.display = 'block';
+        }
+      } else {
+        link.classList.remove('polaris-navigation__link--active');
+      }
+    });
+
+    // Update sub-links
+    const subLinks = $('.polaris-navigation__sublink');
+    subLinks.forEach(link => {
+      const url = link.getAttribute('href');
+      if (url === this.currentLocation) {
+        link.classList.add('polaris-navigation__sublink--active');
+      } else {
+        link.classList.remove('polaris-navigation__sublink--active');
+      }
+    });
+  }
+};
+
+nestedNavigation.init();
+</script>`,
+
+    extjs: `// ExtJS Nested Navigation Tree using @cin7/extjs-adapters
+Ext.define('App.view.NestedNavigation', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'app-nested-navigation',
+
+  layout: 'fit',
+  width: 240,
+
+  items: [{
+    xtype: 'treepanel',
+    rootVisible: false,
+    singleExpand: false,
+
+    store: {
+      root: {
+        expanded: true,
+        children: [
+          {
+            text: 'Sales',
+            iconCls: 'fa fa-chart-line',
+            expanded: true,
+            children: [
+              {
+                text: 'Dashboard',
+                iconCls: 'fa fa-home',
+                leaf: true,
+                route: '/dashboard'
+              },
+              {
+                text: 'Orders',
+                iconCls: 'fa fa-shopping-cart',
+                badge: '24',
+                expanded: false,
+                children: [
+                  {
+                    text: 'All Orders',
+                    leaf: true,
+                    route: '/orders/all'
+                  },
+                  {
+                    text: 'Fulfillments',
+                    leaf: true,
+                    route: '/orders/fulfillments'
+                  },
+                  {
+                    text: 'Returns',
+                    badge: '3',
+                    leaf: true,
+                    route: '/orders/returns'
+                  }
+                ]
+              },
+              {
+                text: 'Customers',
+                iconCls: 'fa fa-users',
+                expanded: false,
+                children: [
+                  {
+                    text: 'All Customers',
+                    leaf: true,
+                    route: '/customers/all'
+                  },
+                  {
+                    text: 'Segments',
+                    leaf: true,
+                    route: '/customers/segments'
+                  },
+                  {
+                    text: 'Groups',
+                    leaf: true,
+                    route: '/customers/groups'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    viewConfig: {
+      getRowClass: function(record) {
+        return record.get('badge') ? 'has-badge' : '';
+      }
+    },
+
+    listeners: {
+      itemclick: function(view, record) {
+        const route = record.get('route');
+        if (route) {
+          console.log('Navigate to:', route);
+          // Handle navigation and update active state
+          view.getSelectionModel().select(record);
+        }
+      }
+    }
+  }]
+});
+
+// Create the navigation panel
+const navigation = Ext.create('App.view.NestedNavigation', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface SubNavigationItem {
+  url: string;
+  label: string;
+  badge?: string;
+}
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+  subNavigationItems?: SubNavigationItem[];
+}
+
+interface NavigationSection {
+  title?: string;
+  items: NavigationItem[];
+}
+
+interface NestedNavigationExampleProps {
+  sections?: NavigationSection[];
+  initialLocation?: string;
+  onNavigate?: (url: string) => void;
+}
+
+function NestedNavigationExample({
+  sections = [
+    {
+      title: 'Sales',
+      items: [
+        {
+          url: '/dashboard',
+          label: 'Dashboard',
+          icon: 'home',
+        },
+        {
+          url: '/orders',
+          label: 'Orders',
+          icon: 'orders',
+          badge: '24',
+          subNavigationItems: [
+            { url: '/orders/all', label: 'All Orders' },
+            { url: '/orders/fulfillments', label: 'Fulfillments' },
+            { url: '/orders/returns', label: 'Returns', badge: '3' },
+          ],
+        },
+        {
+          url: '/customers',
+          label: 'Customers',
+          icon: 'customers',
+          subNavigationItems: [
+            { url: '/customers/all', label: 'All Customers' },
+            { url: '/customers/segments', label: 'Segments' },
+            { url: '/customers/groups', label: 'Groups' },
+          ],
+        },
+      ],
+    },
+  ],
+  initialLocation = '/dashboard',
+  onNavigate
+}: NestedNavigationExampleProps): JSX.Element {
+  const [location, setLocation] = useState<string>(initialLocation);
+
+  const handleNavigate = (url: string) => {
+    setLocation(url);
+    onNavigate?.(url);
+  };
+
+  return (
+    <Navigation location={location}>
+      {sections.map((section, index) => (
+        <Navigation.Section
+          key={index}
+          title={section.title}
+          items={section.items.map(item => ({
+            ...item,
+            selected: location.startsWith(item.url),
+            onClick: () => handleNavigate(item.url),
+            subNavigationItems: item.subNavigationItems?.map(subItem => ({
+              ...subItem,
+              selected: location === subItem.url,
+              onClick: () => handleNavigate(subItem.url),
+            })),
+          }))}
+        />
+      ))}
+    </Navigation>
+  );
+}
+
+export default NestedNavigationExample;`
+  },
+
+  ecommerceNavigation: {
+    react: `import { Navigation } from '@shopify/polaris';
+import React from 'react';
+
+function EcommerceNavigationExample() {
+  const [location, setLocation] = React.useState('/dashboard');
+
+  const handleNavigation = (url: string) => {
+    setLocation(url);
+  };
+
+  return (
+    <Navigation location={location}>
+      <Navigation.Section
+        title="Online Store"
+        items={[
+          {
+            url: '/dashboard',
+            label: 'Dashboard',
+            icon: 'home',
+            onClick: () => handleNavigation('/dashboard'),
+          },
+          {
+            url: '/products',
+            label: 'Products',
+            icon: 'products',
+            badge: '156',
+            onClick: () => handleNavigation('/products'),
+            subNavigationItems: [
+              {
+                url: '/products/all',
+                label: 'All products',
+                onClick: () => handleNavigation('/products/all'),
+              },
+              {
+                url: '/products/collections',
+                label: 'Collections',
+                onClick: () => handleNavigation('/products/collections'),
+              },
+              {
+                url: '/products/inventory',
+                label: 'Inventory',
+                onClick: () => handleNavigation('/products/inventory'),
+                badge: '23',
+              },
+              {
+                url: '/products/gift-cards',
+                label: 'Gift cards',
+                onClick: () => handleNavigation('/products/gift-cards'),
+              },
+            ],
+          },
+          {
+            url: '/customers',
+            label: 'Customers',
+            icon: 'customers',
+            onClick: () => handleNavigation('/customers'),
+            subNavigationItems: [
+              {
+                url: '/customers/all',
+                label: 'All customers',
+                onClick: () => handleNavigation('/customers/all'),
+              },
+              {
+                url: '/customers/segments',
+                label: 'Segments',
+                onClick: () => handleNavigation('/customers/segments'),
+              },
+              {
+                url: '/customers/groups',
+                label: 'Groups',
+                onClick: () => handleNavigation('/customers/groups'),
+              },
+            ],
+          },
+          {
+            url: '/analytics',
+            label: 'Analytics',
+            icon: 'analytics',
+            onClick: () => handleNavigation('/analytics'),
+            subNavigationItems: [
+              {
+                url: '/analytics/reports',
+                label: 'Reports',
+                onClick: () => handleNavigation('/analytics/reports'),
+              },
+              {
+                url: '/analytics/live-view',
+                label: 'Live view',
+                onClick: () => handleNavigation('/analytics/live-view'),
+              },
+            ],
+          },
+        ]}
+      />
+      <Navigation.Section
+        title="Apps"
+        items={[
+          {
+            url: '/apps/marketing',
+            label: 'Marketing',
+            icon: 'marketing',
+            onClick: () => handleNavigation('/apps/marketing'),
+          },
+          {
+            url: '/apps/seo',
+            label: 'SEO',
+            icon: 'seo',
+            onClick: () => handleNavigation('/apps/seo'),
+          },
+          {
+            url: '/apps/discounts',
+            label: 'Discounts',
+            icon: 'discounts',
+            onClick: () => handleNavigation('/apps/discounts'),
+            badge: '5',
+          },
+        ]}
+      />
+      <Navigation.Section
+        title="Settings"
+        items={[
+          {
+            url: '/settings/general',
+            label: 'General',
+            icon: 'settings',
+            onClick: () => handleNavigation('/settings/general'),
+          },
+          {
+            url: '/settings/payment',
+            label: 'Payment',
+            icon: 'payment',
+            onClick: () => handleNavigation('/settings/payment'),
+          },
+          {
+            url: '/settings/shipping',
+            label: 'Shipping',
+            icon: 'shipping',
+            onClick: () => handleNavigation('/settings/shipping'),
+          },
+        ]}
+      />
+    </Navigation>
+  );
+}
+
+export default EcommerceNavigationExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-navigation" id="ecommerce-navigation">
+  <!-- Online Store Section -->
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-heading">Online Store</h3>
+    <ul class="polaris-navigation__list">
+      <li class="polaris-navigation__item">
+        <a href="/dashboard" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🏠</span>
+          <span class="polaris-navigation__text">Dashboard</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/products" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🛍️</span>
+          <span class="polaris-navigation__text">Products</span>
+          <span class="polaris-navigation__badge">156</span>
+          <span class="polaris-navigation__chevron">▼</span>
+        </a>
+        <ul class="polaris-navigation__sublist">
+          <li><a href="/products/all" class="polaris-navigation__sublink">All products</a></li>
+          <li><a href="/products/collections" class="polaris-navigation__sublink">Collections</a></li>
+          <li><a href="/products/inventory" class="polaris-navigation__sublink">Inventory <span class="polaris-navigation__badge">23</span></a></li>
+          <li><a href="/products/gift-cards" class="polaris-navigation__sublink">Gift cards</a></li>
+        </ul>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/customers" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">👥</span>
+          <span class="polaris-navigation__text">Customers</span>
+          <span class="polaris-navigation__chevron">▼</span>
+        </a>
+        <ul class="polaris-navigation__sublist">
+          <li><a href="/customers/all" class="polaris-navigation__sublink">All customers</a></li>
+          <li><a href="/customers/segments" class="polaris-navigation__sublink">Segments</a></li>
+          <li><a href="/customers/groups" class="polaris-navigation__sublink">Groups</a></li>
+        </ul>
+      </li>
+      <li class="polaris-navigation__item polaris-navigation__item--expandable">
+        <a href="/analytics" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📊</span>
+          <span class="polaris-navigation__text">Analytics</span>
+          <span class="polaris-navigation__chevron">▼</span>
+        </a>
+        <ul class="polaris-navigation__sublist">
+          <li><a href="/analytics/reports" class="polaris-navigation__sublink">Reports</a></li>
+          <li><a href="/analytics/live-view" class="polaris-navigation__sublink">Live view</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Apps Section -->
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-heading">Apps</h3>
+    <ul class="polaris-navigation__list">
+      <li class="polaris-navigation__item">
+        <a href="/apps/marketing" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">📣</span>
+          <span class="polaris-navigation__text">Marketing</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/apps/seo" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🔍</span>
+          <span class="polaris-navigation__text">SEO</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/apps/discounts" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🏷️</span>
+          <span class="polaris-navigation__text">Discounts</span>
+          <span class="polaris-navigation__badge">5</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Settings Section -->
+  <div class="polaris-navigation__section">
+    <h3 class="polaris-navigation__section-heading">Settings</h3>
+    <ul class="polaris-navigation__list">
+      <li class="polaris-navigation__item">
+        <a href="/settings/general" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">⚙️</span>
+          <span class="polaris-navigation__text">General</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/settings/payment" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">💳</span>
+          <span class="polaris-navigation__text">Payment</span>
+        </a>
+      </li>
+      <li class="polaris-navigation__item">
+        <a href="/settings/shipping" class="polaris-navigation__link">
+          <span class="polaris-navigation__icon">🚚</span>
+          <span class="polaris-navigation__text">Shipping</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on, toggle, slideToggle } from '@cin7/vanilla-js';
+
+const ecommerceNavigation = {
+  currentLocation: '/dashboard',
+
+  init() {
+    // Handle all navigation links
+    this.attachLinkHandlers();
+    this.attachExpandHandlers();
+    this.updateActiveState();
+  },
+
+  attachLinkHandlers() {
+    const links = $('.polaris-navigation__link');
+    const subLinks = $('.polaris-navigation__sublink');
+
+    links.forEach(link => {
+      on(link, 'click', (e) => {
+        const parent = link.closest('.polaris-navigation__item--expandable');
+        if (!parent) {
+          e.preventDefault();
+          const url = link.getAttribute('href');
+          this.navigate(url);
+        }
+      });
+    });
+
+    subLinks.forEach(link => {
+      on(link, 'click', (e) => {
+        e.preventDefault();
+        const url = link.getAttribute('href');
+        this.navigate(url);
+      });
+    });
+  },
+
+  attachExpandHandlers() {
+    const expandableItems = $('.polaris-navigation__item--expandable');
+
+    expandableItems.forEach(item => {
+      const link = item.querySelector('.polaris-navigation__link');
+      on(link, 'click', (e) => {
+        e.preventDefault();
+        this.toggleSubNav(item);
+      });
+    });
+  },
+
+  toggleSubNav(item) {
+    const sublist = item.querySelector('.polaris-navigation__sublist');
+    if (sublist) {
+      slideToggle(sublist);
+      toggle(item, 'polaris-navigation__item--expanded');
+    }
+  },
+
+  navigate(url) {
+    this.currentLocation = url;
+    this.updateActiveState();
+    console.log('Navigated to:', url);
+    // Emit navigation event
+    document.dispatchEvent(new CustomEvent('navigate', { detail: { url } }));
+  },
+
+  updateActiveState() {
+    // Clear all active states
+    $('.polaris-navigation__link').forEach(link => {
+      link.classList.remove('polaris-navigation__link--active');
+    });
+    $('.polaris-navigation__sublink').forEach(link => {
+      link.classList.remove('polaris-navigation__sublink--active');
+    });
+
+    // Set active state for current location
+    const allLinks = [
+      ...$('.polaris-navigation__link'),
+      ...$('.polaris-navigation__sublink')
+    ];
+
+    allLinks.forEach(link => {
+      const url = link.getAttribute('href');
+      if (url === this.currentLocation) {
+        link.classList.add(
+          link.classList.contains('polaris-navigation__sublink')
+            ? 'polaris-navigation__sublink--active'
+            : 'polaris-navigation__link--active'
+        );
+
+        // Expand parent if this is a sub-link
+        const parent = link.closest('.polaris-navigation__item--expandable');
+        if (parent) {
+          parent.classList.add('polaris-navigation__item--expanded');
+          const sublist = parent.querySelector('.polaris-navigation__sublist');
+          if (sublist) sublist.style.display = 'block';
+        }
+      }
+    });
+  }
+};
+
+ecommerceNavigation.init();
+</script>`,
+
+    extjs: `// ExtJS Multi-Section Navigation using @cin7/extjs-adapters
+Ext.define('App.view.EcommerceNavigation', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'app-ecommerce-navigation',
+
+  layout: 'fit',
+  width: 280,
+  scrollable: true,
+
+  items: [{
+    xtype: 'treepanel',
+    rootVisible: false,
+    singleExpand: false,
+
+    store: {
+      root: {
+        expanded: true,
+        children: [
+          {
+            text: 'Online Store',
+            iconCls: 'fa fa-store',
+            expanded: true,
+            selectable: false,
+            children: [
+              {
+                text: 'Dashboard',
+                iconCls: 'fa fa-home',
+                leaf: true,
+                route: '/dashboard'
+              },
+              {
+                text: 'Products',
+                iconCls: 'fa fa-box',
+                badge: '156',
+                expanded: false,
+                children: [
+                  { text: 'All products', leaf: true, route: '/products/all' },
+                  { text: 'Collections', leaf: true, route: '/products/collections' },
+                  { text: 'Inventory', badge: '23', leaf: true, route: '/products/inventory' },
+                  { text: 'Gift cards', leaf: true, route: '/products/gift-cards' }
+                ]
+              },
+              {
+                text: 'Customers',
+                iconCls: 'fa fa-users',
+                expanded: false,
+                children: [
+                  { text: 'All customers', leaf: true, route: '/customers/all' },
+                  { text: 'Segments', leaf: true, route: '/customers/segments' },
+                  { text: 'Groups', leaf: true, route: '/customers/groups' }
+                ]
+              },
+              {
+                text: 'Analytics',
+                iconCls: 'fa fa-chart-line',
+                expanded: false,
+                children: [
+                  { text: 'Reports', leaf: true, route: '/analytics/reports' },
+                  { text: 'Live view', leaf: true, route: '/analytics/live-view' }
+                ]
+              }
+            ]
+          },
+          {
+            text: 'Apps',
+            iconCls: 'fa fa-th',
+            expanded: true,
+            selectable: false,
+            children: [
+              {
+                text: 'Marketing',
+                iconCls: 'fa fa-bullhorn',
+                leaf: true,
+                route: '/apps/marketing'
+              },
+              {
+                text: 'SEO',
+                iconCls: 'fa fa-search',
+                leaf: true,
+                route: '/apps/seo'
+              },
+              {
+                text: 'Discounts',
+                iconCls: 'fa fa-tag',
+                badge: '5',
+                leaf: true,
+                route: '/apps/discounts'
+              }
+            ]
+          },
+          {
+            text: 'Settings',
+            iconCls: 'fa fa-cog',
+            expanded: true,
+            selectable: false,
+            children: [
+              {
+                text: 'General',
+                iconCls: 'fa fa-cog',
+                leaf: true,
+                route: '/settings/general'
+              },
+              {
+                text: 'Payment',
+                iconCls: 'fa fa-credit-card',
+                leaf: true,
+                route: '/settings/payment'
+              },
+              {
+                text: 'Shipping',
+                iconCls: 'fa fa-truck',
+                leaf: true,
+                route: '/settings/shipping'
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    viewConfig: {
+      getRowClass: function(record) {
+        const classes = [];
+        if (record.get('badge')) classes.push('has-badge');
+        if (!record.get('selectable') && record.get('selectable') !== undefined) {
+          classes.push('section-header');
+        }
+        return classes.join(' ');
+      }
+    },
+
+    listeners: {
+      itemclick: function(view, record) {
+        // Don't navigate on section headers
+        if (record.get('selectable') === false) {
+          return;
+        }
+
+        const route = record.get('route');
+        if (route) {
+          console.log('Navigate to:', route);
+          view.getSelectionModel().select(record);
+          // Emit navigation event
+          Ext.GlobalEvents.fireEvent('navigate', route);
+        }
+      }
+    }
+  }],
+
+  // Custom renderer for badges
+  initComponent: function() {
+    this.callParent(arguments);
+
+    const tree = this.down('treepanel');
+    tree.columns = [{
+      xtype: 'treecolumn',
+      dataIndex: 'text',
+      flex: 1,
+      renderer: function(value, metaData, record) {
+        const badge = record.get('badge');
+        if (badge) {
+          return value + ' <span class="nav-badge">' + badge + '</span>';
+        }
+        return value;
+      }
+    }];
+  }
+});
+
+// Create the navigation panel
+const navigation = Ext.create('App.view.EcommerceNavigation', {
+  renderTo: Ext.getBody()
+});
+
+// Listen for navigation events
+Ext.GlobalEvents.on('navigate', function(route) {
+  console.log('Global navigation event:', route);
+  // Handle route changes in your application
+});`,
+
+    typescript: `import { Navigation } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface SubNavigationItem {
+  url: string;
+  label: string;
+  badge?: string;
+}
+
+interface NavigationItem {
+  url: string;
+  label: string;
+  icon?: string;
+  badge?: string;
+  subNavigationItems?: SubNavigationItem[];
+}
+
+interface NavigationSection {
+  title: string;
+  items: NavigationItem[];
+}
+
+interface EcommerceNavigationExampleProps {
+  onNavigate?: (url: string) => void;
+  initialLocation?: string;
+}
+
+function EcommerceNavigationExample({
+  onNavigate,
+  initialLocation = '/dashboard'
+}: EcommerceNavigationExampleProps): JSX.Element {
+  const [location, setLocation] = useState<string>(initialLocation);
+
+  const handleNavigation = useCallback((url: string) => {
+    setLocation(url);
+    onNavigate?.(url);
+  }, [onNavigate]);
+
+  const sections: NavigationSection[] = [
+    {
+      title: 'Online Store',
+      items: [
+        {
+          url: '/dashboard',
+          label: 'Dashboard',
+          icon: 'home',
+        },
+        {
+          url: '/products',
+          label: 'Products',
+          icon: 'products',
+          badge: '156',
+          subNavigationItems: [
+            { url: '/products/all', label: 'All products' },
+            { url: '/products/collections', label: 'Collections' },
+            { url: '/products/inventory', label: 'Inventory', badge: '23' },
+            { url: '/products/gift-cards', label: 'Gift cards' },
+          ],
+        },
+        {
+          url: '/customers',
+          label: 'Customers',
+          icon: 'customers',
+          subNavigationItems: [
+            { url: '/customers/all', label: 'All customers' },
+            { url: '/customers/segments', label: 'Segments' },
+            { url: '/customers/groups', label: 'Groups' },
+          ],
+        },
+        {
+          url: '/analytics',
+          label: 'Analytics',
+          icon: 'analytics',
+          subNavigationItems: [
+            { url: '/analytics/reports', label: 'Reports' },
+            { url: '/analytics/live-view', label: 'Live view' },
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Apps',
+      items: [
+        {
+          url: '/apps/marketing',
+          label: 'Marketing',
+          icon: 'marketing',
+        },
+        {
+          url: '/apps/seo',
+          label: 'SEO',
+          icon: 'seo',
+        },
+        {
+          url: '/apps/discounts',
+          label: 'Discounts',
+          icon: 'discounts',
+          badge: '5',
+        },
+      ],
+    },
+    {
+      title: 'Settings',
+      items: [
+        {
+          url: '/settings/general',
+          label: 'General',
+          icon: 'settings',
+        },
+        {
+          url: '/settings/payment',
+          label: 'Payment',
+          icon: 'payment',
+        },
+        {
+          url: '/settings/shipping',
+          label: 'Shipping',
+          icon: 'shipping',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Navigation location={location}>
+      {sections.map((section, sectionIndex) => (
+        <Navigation.Section
+          key={sectionIndex}
+          title={section.title}
+          items={section.items.map(item => ({
+            ...item,
+            onClick: () => handleNavigation(item.url),
+            subNavigationItems: item.subNavigationItems?.map(subItem => ({
+              ...subItem,
+              onClick: () => handleNavigation(subItem.url),
+            })),
+          }))}
+        />
+      ))}
+    </Navigation>
+  );
+}
+
+export default EcommerceNavigationExample;`
+  }
+};
+
+export const tabsExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function TabsExample() {
+  const [selected, setSelected] = useState(0);
+
+  const tabs = [
+    { id: 'all', content: 'All' },
+    { id: 'active', content: 'Active' },
+    { id: 'archived', content: 'Archived' },
+  ];
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={setSelected}
+    />
+  );
+}
+
+export default TabsExample;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const tabsContainer = $('#tabs-container');
+const tabs = [
+  { id: 'all', content: 'All' },
+  { id: 'active', content: 'Active' },
+  { id: 'archived', content: 'Archived' }
+];
+
+let selectedIndex = 0;
+
+function renderTabs() {
+  tabsContainer.innerHTML = tabs.map((tab, index) =>
+    \`<button
+      class="tab \${index === selectedIndex ? 'selected' : ''}"
+      data-index="\${index}"
+    >
+      \${tab.content}
+    </button>\`
+  ).join('');
+
+  on(tabsContainer, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', { index: selectedIndex, tab: tabs[selectedIndex] });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  items: [{
+    title: 'All',
+    itemId: 'all',
+    html: 'All items content'
+  }, {
+    title: 'Active',
+    itemId: 'active',
+    html: 'Active items content'
+  }, {
+    title: 'Archived',
+    itemId: 'archived',
+    html: 'Archived items content'
+  }],
+  listeners: {
+    tabchange: function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', {
+        index: tabPanel.items.indexOf(newTab),
+        id: newTab.itemId
+      });
+    }
+  }
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+}
+
+interface TabsExampleProps {
+  onTabChange?: (index: number, tab: Tab) => void;
+}
+
+function TabsExample({ onTabChange }: TabsExampleProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const tabs: Tab[] = [
+    { id: 'all', content: 'All' },
+    { id: 'active', content: 'Active' },
+    { id: 'archived', content: 'Archived' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index]);
+  };
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={handleSelect}
+    />
+  );
+}
+
+export default TabsExample;`
+  },
+  withBadges: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function TabsWithBadges() {
+  const [selected, setSelected] = useState(0);
+
+  const tabs = [
+    { id: 'all', content: 'All', badge: '24' },
+    { id: 'unread', content: 'Unread', badge: '5' },
+    { id: 'flagged', content: 'Flagged', badge: '12' },
+    { id: 'drafts', content: 'Drafts' },
+  ];
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={setSelected}
+    />
+  );
+}
+
+export default TabsWithBadges;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const tabsContainer = $('#tabs-container');
+const tabs = [
+  { id: 'all', content: 'All', badge: '24' },
+  { id: 'unread', content: 'Unread', badge: '5' },
+  { id: 'flagged', content: 'Flagged', badge: '12' },
+  { id: 'drafts', content: 'Drafts' }
+];
+
+let selectedIndex = 0;
+
+function renderTabs() {
+  tabsContainer.innerHTML = tabs.map((tab, index) =>
+    \`<button
+      class="tab \${index === selectedIndex ? 'selected' : ''}"
+      data-index="\${index}"
+    >
+      \${tab.content}
+      \${tab.badge ? \`<span class="badge">\${tab.badge}</span>\` : ''}
+    </button>\`
+  ).join('');
+
+  on(tabsContainer, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.closest('.tab').dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', { index: selectedIndex, tab: tabs[selectedIndex] });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  items: [{
+    title: 'All <span class="badge">24</span>',
+    itemId: 'all',
+    html: 'All items content'
+  }, {
+    title: 'Unread <span class="badge">5</span>',
+    itemId: 'unread',
+    html: 'Unread items content'
+  }, {
+    title: 'Flagged <span class="badge">12</span>',
+    itemId: 'flagged',
+    html: 'Flagged items content'
+  }, {
+    title: 'Drafts',
+    itemId: 'drafts',
+    html: 'Drafts content'
+  }],
+  listeners: {
+    tabchange: function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', {
+        index: tabPanel.items.indexOf(newTab),
+        id: newTab.itemId
+      });
+    }
+  }
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+  badge?: string;
+}
+
+interface TabsWithBadgesProps {
+  initialTab?: number;
+  onTabChange?: (index: number, tab: Tab) => void;
+}
+
+function TabsWithBadges({ initialTab = 0, onTabChange }: TabsWithBadgesProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(initialTab);
+
+  const tabs: Tab[] = [
+    { id: 'all', content: 'All', badge: '24' },
+    { id: 'unread', content: 'Unread', badge: '5' },
+    { id: 'flagged', content: 'Flagged', badge: '12' },
+    { id: 'drafts', content: 'Drafts' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index]);
+  };
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={handleSelect}
+    />
+  );
+}
+
+export default TabsWithBadges;`
+  },
+  fitted: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function FittedTabs() {
+  const [selected, setSelected] = useState(1);
+
+  const tabs = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'products', content: 'Products' },
+    { id: 'customers', content: 'Customers' },
+    { id: 'analytics', content: 'Analytics' },
+  ];
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={setSelected}
+      fitted
+    />
+  );
+}
+
+export default FittedTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const tabsContainer = $('#tabs-container');
+const tabs = [
+  { id: 'overview', content: 'Overview' },
+  { id: 'products', content: 'Products' },
+  { id: 'customers', content: 'Customers' },
+  { id: 'analytics', content: 'Analytics' }
+];
+
+let selectedIndex = 1;
+
+function renderTabs() {
+  tabsContainer.innerHTML = \`
+    <div class="tabs-fitted">
+      \${tabs.map((tab, index) =>
+        \`<button
+          class="tab \${index === selectedIndex ? 'selected' : ''}"
+          data-index="\${index}"
+        >
+          \${tab.content}
+        </button>\`
+      ).join('')}
+    </div>
+  \`;
+
+  on(tabsContainer, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', { index: selectedIndex, tab: tabs[selectedIndex] });
+  });
+}
+
+// CSS for fitted tabs
+const style = document.createElement('style');
+style.textContent = \`
+  .tabs-fitted { display: flex; width: 100%; }
+  .tabs-fitted .tab { flex: 1; }
+\`;
+document.head.appendChild(style);
+
+renderTabs();`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  renderTo: Ext.getBody(),
+  activeTab: 1,
+  tabBar: {
+    flex: 1,
+    layout: {
+      pack: 'stretch'
+    }
+  },
+  items: [{
+    title: 'Overview',
+    itemId: 'overview',
+    html: 'Overview content'
+  }, {
+    title: 'Products',
+    itemId: 'products',
+    html: 'Products content'
+  }, {
+    title: 'Customers',
+    itemId: 'customers',
+    html: 'Customers content'
+  }, {
+    title: 'Analytics',
+    itemId: 'analytics',
+    html: 'Analytics content'
+  }],
+  listeners: {
+    tabchange: function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', {
+        index: tabPanel.items.indexOf(newTab),
+        id: newTab.itemId
+      });
+    }
+  }
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+}
+
+interface FittedTabsProps {
+  defaultTab?: number;
+  onTabChange?: (index: number, tab: Tab) => void;
+}
+
+function FittedTabs({ defaultTab = 1, onTabChange }: FittedTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(defaultTab);
+
+  const tabs: Tab[] = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'products', content: 'Products' },
+    { id: 'customers', content: 'Customers' },
+    { id: 'analytics', content: 'Analytics' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index]);
+  };
+
+  return (
+    <Tabs
+      tabs={tabs}
+      selected={selected}
+      onSelect={handleSelect}
+      fitted
+    />
+  );
+}
+
+export default FittedTabs;`
+  },
+  manyTabs: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function ManyTabs() {
+  const [selected, setSelected] = useState(0);
+
+  const tabs = [
+    { id: 'dashboard', content: 'Dashboard' },
+    { id: 'products', content: 'Products', badge: '128' },
+    { id: 'orders', content: 'Orders', badge: '45' },
+    { id: 'customers', content: 'Customers', badge: '1.2k' },
+    { id: 'inventory', content: 'Inventory' },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'marketing', content: 'Marketing' },
+    { id: 'discounts', content: 'Discounts' },
+    { id: 'settings', content: 'Settings' },
+  ];
+
+  return (
+    <div style={{ width: '800px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+        disclosureText="More tabs"
+      />
+      <div style={{ marginTop: '16px', padding: '16px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <p>Selected tab: <strong>{tabs[selected].content}</strong></p>
+        <p>Tab ID: <strong>{tabs[selected].id}</strong></p>
+      </div>
+    </div>
+  );
+}
+
+export default ManyTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const container = $('#tabs-container');
+const tabs = [
+  { id: 'dashboard', content: 'Dashboard' },
+  { id: 'products', content: 'Products', badge: '128' },
+  { id: 'orders', content: 'Orders', badge: '45' },
+  { id: 'customers', content: 'Customers', badge: '1.2k' },
+  { id: 'inventory', content: 'Inventory' },
+  { id: 'analytics', content: 'Analytics' },
+  { id: 'marketing', content: 'Marketing' },
+  { id: 'discounts', content: 'Discounts' },
+  { id: 'settings', content: 'Settings' }
+];
+
+let selectedIndex = 0;
+const visibleCount = 6;
+
+function renderTabs() {
+  const visibleTabs = tabs.slice(0, visibleCount);
+  const overflowTabs = tabs.slice(visibleCount);
+
+  container.innerHTML = \`
+    <div class="tabs-wrapper">
+      <div class="tabs-main">
+        \${visibleTabs.map((tab, index) =>
+          \`<button
+            class="tab \${index === selectedIndex ? 'selected' : ''}"
+            data-index="\${index}"
+          >
+            \${tab.content}
+            \${tab.badge ? \`<span class="badge">\${tab.badge}</span>\` : ''}
+          </button>\`
+        ).join('')}
+      </div>
+      \${overflowTabs.length > 0 ? \`
+        <button class="tab-overflow">
+          More tabs (\${overflowTabs.length})
+        </button>
+      \` : ''}
+    </div>
+    <div class="tab-content">
+      <p>Selected tab: <strong>\${tabs[selectedIndex].content}</strong></p>
+      <p>Tab ID: <strong>\${tabs[selectedIndex].id}</strong></p>
+    </div>
+  \`;
+
+  on(container, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', { index: selectedIndex, tab: tabs[selectedIndex] });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.create('Ext.tab.Panel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  width: 800,
+  tabBar: {
+    enableOverflow: true,
+    overflowHandler: 'menu'
+  },
+  items: [{
+    title: 'Dashboard',
+    itemId: 'dashboard',
+    html: 'Dashboard content'
+  }, {
+    title: 'Products <span class="badge">128</span>',
+    itemId: 'products',
+    html: 'Products content'
+  }, {
+    title: 'Orders <span class="badge">45</span>',
+    itemId: 'orders',
+    html: 'Orders content'
+  }, {
+    title: 'Customers <span class="badge">1.2k</span>',
+    itemId: 'customers',
+    html: 'Customers content'
+  }, {
+    title: 'Inventory',
+    itemId: 'inventory',
+    html: 'Inventory content'
+  }, {
+    title: 'Analytics',
+    itemId: 'analytics',
+    html: 'Analytics content'
+  }, {
+    title: 'Marketing',
+    itemId: 'marketing',
+    html: 'Marketing content'
+  }, {
+    title: 'Discounts',
+    itemId: 'discounts',
+    html: 'Discounts content'
+  }, {
+    title: 'Settings',
+    itemId: 'settings',
+    html: 'Settings content'
+  }],
+  listeners: {
+    tabchange: function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', {
+        index: tabPanel.items.indexOf(newTab),
+        id: newTab.itemId
+      });
+    }
+  }
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+  badge?: string;
+}
+
+interface ManyTabsProps {
+  width?: number;
+  disclosureText?: string;
+  onTabChange?: (index: number, tab: Tab) => void;
+}
+
+function ManyTabs({ width = 800, disclosureText = 'More tabs', onTabChange }: ManyTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const tabs: Tab[] = [
+    { id: 'dashboard', content: 'Dashboard' },
+    { id: 'products', content: 'Products', badge: '128' },
+    { id: 'orders', content: 'Orders', badge: '45' },
+    { id: 'customers', content: 'Customers', badge: '1.2k' },
+    { id: 'inventory', content: 'Inventory' },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'marketing', content: 'Marketing' },
+    { id: 'discounts', content: 'Discounts' },
+    { id: 'settings', content: 'Settings' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index]);
+  };
+
+  return (
+    <div style={{ width: \`\${width}px\` }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleSelect}
+        disclosureText={disclosureText}
+      />
+      <div style={{ marginTop: '16px', padding: '16px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <p>Selected tab: <strong>{tabs[selected].content}</strong></p>
+        <p>Tab ID: <strong>{tabs[selected].id}</strong></p>
+      </div>
+    </div>
+  );
+}
+
+export default ManyTabs;`
+  },
+  interactive: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function InteractiveTabs() {
+  const [selected, setSelected] = useState(0);
+  const [viewCounts, setViewCounts] = useState<Record<string, number>>({
+    overview: 1,
+    products: 3,
+    customers: 0,
+    analytics: 2,
+  });
+
+  const tabs = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'products', content: 'Products' },
+    { id: 'customers', content: 'Customers' },
+    { id: 'analytics', content: 'Analytics' },
+  ];
+
+  const handleTabSelect = (index: number) => {
+    setSelected(index);
+    const tabId = tabs[index].id;
+    setViewCounts(prev => ({
+      ...prev,
+      [tabId]: prev[tabId] + 1,
+    }));
+  };
+
+  return (
+    <div style={{ width: '600px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleTabSelect}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <h3 style={{ margin: '0 0 12px 0' }}>{tabs[selected].content} View</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280' }}>
+          This is the content area for the <strong>{tabs[selected].content}</strong> tab.
+        </p>
+
+        <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)' }}>Tab Interaction Stats:</h4>
+          {tabs.map((tab) => (
+            <div key={tab.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}>
+              <span style={{ fontSize: 'var(--font-size-xs)' }}>{tab.content}:</span>
+              <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 'var(--font-weight-semibold)' }}>
+                {viewCounts[tab.id]} view{viewCounts[tab.id] !== 1 ? 's' : ''}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default InteractiveTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const container = $('#tabs-container');
+const tabs = [
+  { id: 'overview', content: 'Overview' },
+  { id: 'products', content: 'Products' },
+  { id: 'customers', content: 'Customers' },
+  { id: 'analytics', content: 'Analytics' }
+];
+
+let selectedIndex = 0;
+const viewCounts = { overview: 1, products: 3, customers: 0, analytics: 2 };
+
+function renderTabs() {
+  container.innerHTML = \`
+    <div class="tabs-wrapper">
+      \${tabs.map((tab, index) =>
+        \`<button
+          class="tab \${index === selectedIndex ? 'selected' : ''}"
+          data-index="\${index}"
+        >
+          \${tab.content}
+        </button>\`
+      ).join('')}
+    </div>
+    <div class="tab-content">
+      <h3>\${tabs[selectedIndex].content} View</h3>
+      <p>This is the content area for the <strong>\${tabs[selectedIndex].content}</strong> tab.</p>
+      <div class="stats">
+        <h4>Tab Interaction Stats:</h4>
+        \${tabs.map(tab => \`
+          <div class="stat-row">
+            <span>\${tab.content}:</span>
+            <span><strong>\${viewCounts[tab.id]} view\${viewCounts[tab.id] !== 1 ? 's' : ''}</strong></span>
+          </div>
+        \`).join('')}
+      </div>
+    </div>
+  \`;
+
+  on(container, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    const tabId = tabs[selectedIndex].id;
+    viewCounts[tabId]++;
+    renderTabs();
+    EventBus.emit('tab:selected', {
+      index: selectedIndex,
+      tab: tabs[selectedIndex],
+      viewCount: viewCounts[tabId]
+    });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.define('InteractiveTabPanel', {
+  extend: 'Ext.tab.Panel',
+
+  initComponent: function() {
+    var me = this;
+
+    me.viewCounts = {
+      overview: 1,
+      products: 3,
+      customers: 0,
+      analytics: 2
+    };
+
+    me.items = [{
+      title: 'Overview',
+      itemId: 'overview',
+      html: me.getTabContent('overview')
+    }, {
+      title: 'Products',
+      itemId: 'products',
+      html: me.getTabContent('products')
+    }, {
+      title: 'Customers',
+      itemId: 'customers',
+      html: me.getTabContent('customers')
+    }, {
+      title: 'Analytics',
+      itemId: 'analytics',
+      html: me.getTabContent('analytics')
+    }];
+
+    me.callParent(arguments);
+
+    me.on('tabchange', function(tabPanel, newTab) {
+      var tabId = newTab.itemId;
+      me.viewCounts[tabId]++;
+      newTab.update(me.getTabContent(tabId));
+      EventBus.emit('tab:selected', {
+        id: tabId,
+        viewCount: me.viewCounts[tabId]
+      });
+    });
+  },
+
+  getTabContent: function(tabId) {
+    var stats = '';
+    for (var id in this.viewCounts) {
+      stats += '<div>' + id + ': ' + this.viewCounts[id] + ' views</div>';
+    }
+    return '<div class="tab-content"><h3>' + tabId + ' View</h3>' +
+           '<div class="stats">' + stats + '</div></div>';
+  }
+});
+
+Ext.create('InteractiveTabPanel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  width: 600
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Tab {
+  id: string;
+  content: string;
+}
+
+interface ViewCounts {
+  [key: string]: number;
+}
+
+interface InteractiveTabsProps {
+  initialCounts?: ViewCounts;
+  onTabSelect?: (index: number, tab: Tab, viewCount: number) => void;
+}
+
+function InteractiveTabs({ initialCounts, onTabSelect }: InteractiveTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+  const [viewCounts, setViewCounts] = useState<ViewCounts>(initialCounts || {
+    overview: 1,
+    products: 3,
+    customers: 0,
+    analytics: 2,
+  });
+
+  const tabs: Tab[] = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'products', content: 'Products' },
+    { id: 'customers', content: 'Customers' },
+    { id: 'analytics', content: 'Analytics' },
+  ];
+
+  const handleTabSelect = (index: number) => {
+    setSelected(index);
+    const tabId = tabs[index].id;
+    const newCount = viewCounts[tabId] + 1;
+
+    setViewCounts(prev => ({
+      ...prev,
+      [tabId]: newCount,
+    }));
+
+    onTabSelect?.(index, tabs[index], newCount);
+  };
+
+  return (
+    <div style={{ width: '600px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleTabSelect}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <h3 style={{ margin: '0 0 12px 0' }}>{tabs[selected].content} View</h3>
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280' }}>
+          This is the content area for the <strong>{tabs[selected].content}</strong> tab.
+        p>
+
+        <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: 'var(--font-size-sm)' }}>Tab Interaction Stats:</h4>
+          {tabs.map((tab) => (
+            <div key={tab.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}>
+              <span style={{ fontSize: 'var(--font-size-xs)' }}>{tab.content}:</span>
+              <span style={{ fontSize: 'var(--font-size-xs)', fontWeight: 'var(--font-weight-semibold)' }}>
+                {viewCounts[tab.id]} view{viewCounts[tab.id] !== 1 ? 's' : ''}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default InteractiveTabs;`
+  },
+  productManagement: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function ProductManagementTabs() {
+  const [selected, setSelected] = useState(0);
+  const [productData] = useState({
+    details: { name: 'Wireless Headphones', price: '$89.99', sku: 'WH-001' },
+    inventory: { stock: 150, reserved: 12, available: 138 },
+    variants: { total: 5, active: 3 },
+    analytics: { views: 1234, orders: 89, conversion: '7.2%' },
+  });
+
+  const tabs = [
+    { id: 'details', content: 'Details' },
+    { id: 'inventory', content: 'Inventory', badge: productData.inventory.available.toString() },
+    { id: 'variants', content: 'Variants', badge: productData.variants.total.toString() },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'seo', content: 'SEO' },
+  ];
+
+  const renderTabContent = () => {
+    switch (tabs[selected].id) {
+      case 'details':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Product:</strong> {productData.details.name}</div>
+            <div><strong>Price:</strong> {productData.details.price}</div>
+            <div><strong>SKU:</strong> {productData.details.sku}</div>
+          </div>
+        );
+      case 'inventory':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Total Stock:</strong> {productData.inventory.stock}</div>
+            <div><strong>Reserved:</strong> {productData.inventory.reserved}</div>
+            <div><strong>Available:</strong> {productData.inventory.available}</div>
+          </div>
+        );
+      case 'variants':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Total Variants:</strong> {productData.variants.total}</div>
+            <div><strong>Active:</strong> {productData.variants.active}</div>
+            <div><strong>Inactive:</strong> {productData.variants.total - productData.variants.active}</div>
+          </div>
+        );
+      case 'analytics':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Page Views:</strong> {productData.analytics.views.toLocaleString()}</div>
+            <div><strong>Orders:</strong> {productData.analytics.orders}</div>
+            <div><strong>Conversion Rate:</strong> {productData.analytics.conversion}</div>
+          </div>
+        );
+      case 'seo':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Title:</strong> Premium Wireless Headphones - Shop Now</div>
+            <div><strong>Description:</strong> High-quality wireless headphones with noise cancellation</div>
+            <div><strong>Keywords:</strong> headphones, wireless, audio, premium</div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div style={{ width: '700px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <h3 style={{ margin: '0 0 16px 0' }}>{tabs[selected].content}</h3>
+        {renderTabContent()}
+      </div>
+    </div>
+  );
+}
+
+export default ProductManagementTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const container = $('#tabs-container');
+const tabs = [
+  { id: 'details', content: 'Details' },
+  { id: 'inventory', content: 'Inventory', badge: '138' },
+  { id: 'variants', content: 'Variants', badge: '5' },
+  { id: 'analytics', content: 'Analytics' },
+  { id: 'seo', content: 'SEO' }
+];
+
+const productData = {
+  details: { name: 'Wireless Headphones', price: '$89.99', sku: 'WH-001' },
+  inventory: { stock: 150, reserved: 12, available: 138 },
+  variants: { total: 5, active: 3 },
+  analytics: { views: 1234, orders: 89, conversion: '7.2%' },
+  seo: {
+    title: 'Premium Wireless Headphones - Shop Now',
+    description: 'High-quality wireless headphones with noise cancellation',
+    keywords: 'headphones, wireless, audio, premium'
+  }
+};
+
+let selectedIndex = 0;
+
+function renderTabContent() {
+  const tabId = tabs[selectedIndex].id;
+  const data = productData[tabId];
+
+  if (!data) return '<p>No data available</p>';
+
+  return Object.entries(data)
+    .map(([key, value]) => \`<div><strong>\${key}:</strong> \${value}</div>\`)
+    .join('');
+}
+
+function renderTabs() {
+  container.innerHTML = \`
+    <div class="tabs-wrapper">
+      \${tabs.map((tab, index) =>
+        \`<button
+          class="tab \${index === selectedIndex ? 'selected' : ''}"
+          data-index="\${index}"
+        >
+          \${tab.content}
+          \${tab.badge ? \`<span class="badge">\${tab.badge}</span>\` : ''}
+        </button>\`
+      ).join('')}
+    </div>
+    <div class="tab-content">
+      <h3>\${tabs[selectedIndex].content}</h3>
+      <div class="product-data">\${renderTabContent()}</div>
+    </div>
+  \`;
+
+  on(container, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', {
+      index: selectedIndex,
+      tab: tabs[selectedIndex]
+    });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.define('ProductManagementPanel', {
+  extend: 'Ext.tab.Panel',
+
+  initComponent: function() {
+    var me = this;
+
+    me.productData = {
+      details: { name: 'Wireless Headphones', price: '$89.99', sku: 'WH-001' },
+      inventory: { stock: 150, reserved: 12, available: 138 },
+      variants: { total: 5, active: 3 },
+      analytics: { views: 1234, orders: 89, conversion: '7.2%' }
+    };
+
+    me.items = [{
+      title: 'Details',
+      itemId: 'details',
+      html: me.renderDetails()
+    }, {
+      title: 'Inventory <span class="badge">138</span>',
+      itemId: 'inventory',
+      html: me.renderInventory()
+    }, {
+      title: 'Variants <span class="badge">5</span>',
+      itemId: 'variants',
+      html: me.renderVariants()
+    }, {
+      title: 'Analytics',
+      itemId: 'analytics',
+      html: me.renderAnalytics()
+    }, {
+      title: 'SEO',
+      itemId: 'seo',
+      html: me.renderSEO()
+    }];
+
+    me.callParent(arguments);
+
+    me.on('tabchange', function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', { id: newTab.itemId });
+    });
+  },
+
+  renderDetails: function() {
+    var d = this.productData.details;
+    return '<div><strong>Product:</strong> ' + d.name + '</div>' +
+           '<div><strong>Price:</strong> ' + d.price + '</div>' +
+           '<div><strong>SKU:</strong> ' + d.sku + '</div>';
+  },
+
+  renderInventory: function() {
+    var i = this.productData.inventory;
+    return '<div><strong>Total Stock:</strong> ' + i.stock + '</div>' +
+           '<div><strong>Reserved:</strong> ' + i.reserved + '</div>' +
+           '<div><strong>Available:</strong> ' + i.available + '</div>';
+  },
+
+  renderVariants: function() {
+    var v = this.productData.variants;
+    return '<div><strong>Total Variants:</strong> ' + v.total + '</div>' +
+           '<div><strong>Active:</strong> ' + v.active + '</div>' +
+           '<div><strong>Inactive:</strong> ' + (v.total - v.active) + '</div>';
+  },
+
+  renderAnalytics: function() {
+    var a = this.productData.analytics;
+    return '<div><strong>Page Views:</strong> ' + a.views.toLocaleString() + '</div>' +
+           '<div><strong>Orders:</strong> ' + a.orders + '</div>' +
+           '<div><strong>Conversion Rate:</strong> ' + a.conversion + '</div>';
+  },
+
+  renderSEO: function() {
+    return '<div><strong>Title:</strong> Premium Wireless Headphones - Shop Now</div>' +
+           '<div><strong>Description:</strong> High-quality wireless headphones</div>' +
+           '<div><strong>Keywords:</strong> headphones, wireless, audio, premium</div>';
+  }
+});
+
+Ext.create('ProductManagementPanel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  width: 700
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface ProductDetails {
+  name: string;
+  price: string;
+  sku: string;
+}
+
+interface Inventory {
+  stock: number;
+  reserved: number;
+  available: number;
+}
+
+interface Variants {
+  total: number;
+  active: number;
+}
+
+interface Analytics {
+  views: number;
+  orders: number;
+  conversion: string;
+}
+
+interface ProductData {
+  details: ProductDetails;
+  inventory: Inventory;
+  variants: Variants;
+  analytics: Analytics;
+}
+
+interface Tab {
+  id: string;
+  content: string;
+  badge?: string;
+}
+
+interface ProductManagementTabsProps {
+  initialData?: ProductData;
+  onTabChange?: (index: number, tabId: string) => void;
+}
+
+function ProductManagementTabs({ initialData, onTabChange }: ProductManagementTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+  const [productData] = useState<ProductData>(initialData || {
+    details: { name: 'Wireless Headphones', price: '$89.99', sku: 'WH-001' },
+    inventory: { stock: 150, reserved: 12, available: 138 },
+    variants: { total: 5, active: 3 },
+    analytics: { views: 1234, orders: 89, conversion: '7.2%' },
+  });
+
+  const tabs: Tab[] = [
+    { id: 'details', content: 'Details' },
+    { id: 'inventory', content: 'Inventory', badge: productData.inventory.available.toString() },
+    { id: 'variants', content: 'Variants', badge: productData.variants.total.toString() },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'seo', content: 'SEO' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index].id);
+  };
+
+  const renderTabContent = (): JSX.Element => {
+    switch (tabs[selected].id) {
+      case 'details':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Product:</strong> {productData.details.name}</div>
+            <div><strong>Price:</strong> {productData.details.price}</div>
+            <div><strong>SKU:</strong> {productData.details.sku}</div>
+          </div>
+        );
+      case 'inventory':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Total Stock:</strong> {productData.inventory.stock}</div>
+            <div><strong>Reserved:</strong> {productData.inventory.reserved}</div>
+            <div><strong>Available:</strong> {productData.inventory.available}</div>
+          </div>
+        );
+      case 'variants':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Total Variants:</strong> {productData.variants.total}</div>
+            <div><strong>Active:</strong> {productData.variants.active}</div>
+            <div><strong>Inactive:</strong> {productData.variants.total - productData.variants.active}</div>
+          </div>
+        );
+      case 'analytics':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Page Views:</strong> {productData.analytics.views.toLocaleString()}</div>
+            <div><strong>Orders:</strong> {productData.analytics.orders}</div>
+            <div><strong>Conversion Rate:</strong> {productData.analytics.conversion}</div>
+          </div>
+        );
+      case 'seo':
+        return (
+          <div style={{ display: 'grid', gap: '12px' }}>
+            <div><strong>Title:</strong> Premium Wireless Headphones - Shop Now</div>
+            <div><strong>Description:</strong> High-quality wireless headphones with noise cancellation</div>
+            <div><strong>Keywords:</strong> headphones, wireless, audio, premium</div>
+          </div>
+        );
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <div style={{ width: '700px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleSelect}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <h3 style={{ margin: '0 0 16px 0' }}>{tabs[selected].content}</h3>
+        {renderTabContent()}
+      </div>
+    </div>
+  );
+}
+
+export default ProductManagementTabs;`
+  },
+  orderStatus: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function OrderStatusTabs() {
+  const [selected, setSelected] = useState(0);
+
+  const statusCounts = {
+    all: 156,
+    pending: 12,
+    processing: 23,
+    shipped: 45,
+    delivered: 68,
+    cancelled: 8,
+  };
+
+  const tabs = [
+    { id: 'all', content: 'All Orders', badge: statusCounts.all.toString() },
+    { id: 'pending', content: 'Pending', badge: statusCounts.pending.toString() },
+    { id: 'processing', content: 'Processing', badge: statusCounts.processing.toString() },
+    { id: 'shipped', content: 'Shipped', badge: statusCounts.shipped.toString() },
+    { id: 'delivered', content: 'Delivered', badge: statusCounts.delivered.toString() },
+    { id: 'cancelled', content: 'Cancelled', badge: statusCounts.cancelled.toString() },
+  ];
+
+  const getStatusColor = (status: string) => {
+    const colors: Record<string, string> = {
+      pending: '#f59e0b',
+      processing: '#3b82f6',
+      shipped: '#8b5cf6',
+      delivered: '#10b981',
+      cancelled: '#ef4444',
+    };
+    return colors[status] || '#6b7280';
+  };
+
+  return (
+    <div style={{ width: '800px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <h3 style={{ margin: 0 }}>{tabs[selected].content}</h3>
+          <span
+            style={{
+              padding: '4px 12px',
+              backgroundColor: getStatusColor(tabs[selected].id),
+              color: 'white',
+              borderRadius: '12px',
+              fontSize: 'var(--font-size-sm)',
+              fontWeight: 'var(--font-weight-semibold)'
+            }}
+          >
+            {statusCounts[tabs[selected].id as keyof typeof statusCounts]} orders
+          </span>
+        </div>
+
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280' }}>
+          Managing {statusCounts[tabs[selected].id as keyof typeof statusCounts]} orders with status: <strong>{tabs[selected].content}</strong>
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Total Value</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>$12,456</div>
+          </div>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Average Order</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>$89.95</div>
+          </div>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Processing Time</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>2.3 days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default OrderStatusTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const container = $('#tabs-container');
+const statusCounts = {
+  all: 156,
+  pending: 12,
+  processing: 23,
+  shipped: 45,
+  delivered: 68,
+  cancelled: 8
+};
+
+const tabs = [
+  { id: 'all', content: 'All Orders', badge: statusCounts.all },
+  { id: 'pending', content: 'Pending', badge: statusCounts.pending },
+  { id: 'processing', content: 'Processing', badge: statusCounts.processing },
+  { id: 'shipped', content: 'Shipped', badge: statusCounts.shipped },
+  { id: 'delivered', content: 'Delivered', badge: statusCounts.delivered },
+  { id: 'cancelled', content: 'Cancelled', badge: statusCounts.cancelled }
+];
+
+let selectedIndex = 0;
+
+const statusColors = {
+  pending: '#f59e0b',
+  processing: '#3b82f6',
+  shipped: '#8b5cf6',
+  delivered: '#10b981',
+  cancelled: '#ef4444'
+};
+
+function renderTabs() {
+  const currentTab = tabs[selectedIndex];
+  const statusColor = statusColors[currentTab.id] || '#6b7280';
+
+  container.innerHTML = \`
+    <div class="tabs-wrapper">
+      \${tabs.map((tab, index) =>
+        \`<button
+          class="tab \${index === selectedIndex ? 'selected' : ''}"
+          data-index="\${index}"
+        >
+          \${tab.content}
+          <span class="badge">\${tab.badge}</span>
+        </button>\`
+      ).join('')}
+    </div>
+    <div class="tab-content">
+      <div class="header">
+        <h3>\${currentTab.content}</h3>
+        <span class="status-badge" style="background: \${statusColor}">
+          \${currentTab.badge} orders
+        </span>
+      </div>
+      <p>Managing \${currentTab.badge} orders with status: <strong>\${currentTab.content}</strong></p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Value</div>
+          <div class="stat-value">$12,456</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Average Order</div>
+          <div class="stat-value">$89.95</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Processing Time</div>
+          <div class="stat-value">2.3 days</div>
+        </div>
+      </div>
+    </div>
+  \`;
+
+  on(container, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.closest('.tab').dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', {
+      index: selectedIndex,
+      tab: tabs[selectedIndex]
+    });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.define('OrderStatusPanel', {
+  extend: 'Ext.tab.Panel',
+
+  initComponent: function() {
+    var me = this;
+
+    me.statusCounts = {
+      all: 156,
+      pending: 12,
+      processing: 23,
+      shipped: 45,
+      delivered: 68,
+      cancelled: 8
+    };
+
+    me.statusColors = {
+      pending: '#f59e0b',
+      processing: '#3b82f6',
+      shipped: '#8b5cf6',
+      delivered: '#10b981',
+      cancelled: '#ef4444'
+    };
+
+    me.items = Object.keys(me.statusCounts).map(function(status) {
+      var title = status === 'all' ? 'All Orders' :
+                  status.charAt(0).toUpperCase() + status.slice(1);
+      var count = me.statusCounts[status];
+
+      return {
+        title: title + ' <span class="badge">' + count + '</span>',
+        itemId: status,
+        html: me.renderStatusContent(status, count)
+      };
+    });
+
+    me.callParent(arguments);
+
+    me.on('tabchange', function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', {
+        id: newTab.itemId,
+        count: me.statusCounts[newTab.itemId]
+      });
+    });
+  },
+
+  renderStatusContent: function(status, count) {
+    var color = this.statusColors[status] || '#6b7280';
+    return '<div class="order-status-content">' +
+           '<div class="header">' +
+           '<h3>' + status + '</h3>' +
+           '<span class="status-badge" style="background:' + color + '">' + count + ' orders</span>' +
+           '</div>' +
+           '<div class="stats">' +
+           '<div class="stat"><span>Total Value:</span> <strong>$12,456</strong></div>' +
+           '<div class="stat"><span>Average Order:</span> <strong>$89.95</strong></div>' +
+           '<div class="stat"><span>Processing Time:</span> <strong>2.3 days</strong></div>' +
+           '</div></div>';
+  }
+});
+
+Ext.create('OrderStatusPanel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  width: 800
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface StatusCounts {
+  all: number;
+  pending: number;
+  processing: number;
+  shipped: number;
+  delivered: number;
+  cancelled: number;
+}
+
+interface Tab {
+  id: keyof StatusCounts;
+  content: string;
+  badge: string;
+}
+
+interface OrderStatusTabsProps {
+  statusCounts?: StatusCounts;
+  onStatusChange?: (status: string, count: number) => void;
+}
+
+function OrderStatusTabs({
+  statusCounts: initialCounts,
+  onStatusChange
+}: OrderStatusTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+
+  const statusCounts: StatusCounts = initialCounts || {
+    all: 156,
+    pending: 12,
+    processing: 23,
+    shipped: 45,
+    delivered: 68,
+    cancelled: 8,
+  };
+
+  const tabs: Tab[] = [
+    { id: 'all', content: 'All Orders', badge: statusCounts.all.toString() },
+    { id: 'pending', content: 'Pending', badge: statusCounts.pending.toString() },
+    { id: 'processing', content: 'Processing', badge: statusCounts.processing.toString() },
+    { id: 'shipped', content: 'Shipped', badge: statusCounts.shipped.toString() },
+    { id: 'delivered', content: 'Delivered', badge: statusCounts.delivered.toString() },
+    { id: 'cancelled', content: 'Cancelled', badge: statusCounts.cancelled.toString() },
+  ];
+
+  const getStatusColor = (status: string): string => {
+    const colors: Record<string, string> = {
+      pending: '#f59e0b',
+      processing: '#3b82f6',
+      shipped: '#8b5cf6',
+      delivered: '#10b981',
+      cancelled: '#ef4444',
+    };
+    return colors[status] || '#6b7280';
+  };
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    const currentTab = tabs[index];
+    onStatusChange?.(currentTab.id, statusCounts[currentTab.id]);
+  };
+
+  return (
+    <div style={{ width: '800px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleSelect}
+      />
+
+      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <h3 style={{ margin: 0 }}>{tabs[selected].content}</h3>
+          <span
+            style={{
+              padding: '4px 12px',
+              backgroundColor: getStatusColor(tabs[selected].id),
+              color: 'white',
+              borderRadius: '12px',
+              fontSize: 'var(--font-size-sm)',
+              fontWeight: 'var(--font-weight-semibold)'
+            }}
+          >
+            {statusCounts[tabs[selected].id]} orders
+          </span>
+        </div>
+
+        <p style={{ margin: '0 0 16px 0', color: '#6b7280' }}>
+          Managing {statusCounts[tabs[selected].id]} orders with status: <strong>{tabs[selected].content}</strong>
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Total Value</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>$12,456</div>
+          </div>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Average Order</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>$89.95</div>
+          </div>
+          <div style={{ padding: '12px', backgroundColor: 'white', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <div style={{ fontSize: 'var(--font-size-xs)', color: '#6b7280', marginBottom: '4px' }}>Processing Time</div>
+            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 'var(--font-weight-semibold)' }}>2.3 days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default OrderStatusTabs;`
+  },
+  campaignTabs: {
+    react: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CampaignTabs() {
+  const [selected, setSelected] = useState(0);
+  const [campaignData] = useState({
+    overview: { budget: '$5,000', spent: '$3,245', roi: '124%' },
+    ads: { active: 8, total: 15, ctr: '2.4%' },
+    audience: { reached: 12500, engaged: 890, new: 456 },
+    analytics: { impressions: '45.2k', clicks: '1.1k', conversions: 89 },
+  });
+
+  const tabs = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'ads', content: 'Ads', badge: campaignData.ads.active.toString() },
+    { id: 'audience', content: 'Audience' },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'settings', content: 'Settings' },
+  ];
+
+  return (
+    <div style={{ width: '750px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+        fitted
+      />
+
+      <div style={{
+        marginTop: '20px',
+        padding: '24px',
+        backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        borderRadius: '8px',
+        color: 'white'
+      }}>
+        <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-xl)' }}>
+          {tabs[selected].content}
+        </h3>
+
+        <div style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '6px',
+          padding: '16px',
+          backdropFilter: 'blur(10px)'
+        }}>
+          {tabs[selected].id === 'overview' && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>Total Budget</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.budget}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>Spent</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.spent}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>ROI</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.roi}</div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'ads' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--font-size-5xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: '8px' }}>
+                {campaignData.ads.active} / {campaignData.ads.total}
+              </div>
+              <div style={{ fontSize: 'var(--font-size-sm)', opacity: 0.8 }}>
+                Active ads with {campaignData.ads.ctr} click-through rate
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'audience' && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.reached.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>People Reached</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.engaged.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Engaged</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.new.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>New Customers</div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'analytics' && (
+            <div style={{ textAlign: 'center' }}>
+              <h4 style={{ margin: '0 0 12px 0' }}>Performance Metrics</h4>
+              <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.impressions}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Impressions</div>
+                </div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', opacity: 0.6 }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.clicks}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Clicks</div>
+                </div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', opacity: 0.6 }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.conversions}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Conversions</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'settings' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--font-size-lg)', marginBottom: '12px' }}>Campaign Configuration</div>
+              <p style={{ margin: 0, opacity: 0.8 }}>
+                Manage campaign settings, targeting, budget allocation, and scheduling options.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CampaignTabs;`,
+    vanilla: `import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const container = $('#tabs-container');
+const campaignData = {
+  overview: { budget: '$5,000', spent: '$3,245', roi: '124%' },
+  ads: { active: 8, total: 15, ctr: '2.4%' },
+  audience: { reached: 12500, engaged: 890, new: 456 },
+  analytics: { impressions: '45.2k', clicks: '1.1k', conversions: 89 }
+};
+
+const tabs = [
+  { id: 'overview', content: 'Overview' },
+  { id: 'ads', content: 'Ads', badge: '8' },
+  { id: 'audience', content: 'Audience' },
+  { id: 'analytics', content: 'Analytics' },
+  { id: 'settings', content: 'Settings' }
+];
+
+let selectedIndex = 0;
+
+function renderContent() {
+  const tabId = tabs[selectedIndex].id;
+  const data = campaignData[tabId];
+
+  switch (tabId) {
+    case 'overview':
+      return \`
+        <div class="campaign-grid">
+          <div><div class="label">Total Budget</div><div class="value">\${data.budget}</div></div>
+          <div><div class="label">Spent</div><div class="value">\${data.spent}</div></div>
+          <div><div class="label">ROI</div><div class="value">\${data.roi}</div></div>
+        </div>
+      \`;
+    case 'ads':
+      return \`
+        <div class="campaign-center">
+          <div class="big-value">\${data.active} / \${data.total}</div>
+          <div class="label">Active ads with \${data.ctr} click-through rate</div>
+        </div>
+      \`;
+    case 'audience':
+      return \`
+        <div class="campaign-grid">
+          <div><div class="value">\${data.reached.toLocaleString()}</div><div class="label">People Reached</div></div>
+          <div><div class="value">\${data.engaged.toLocaleString()}</div><div class="label">Engaged</div></div>
+          <div><div class="value">\${data.new.toLocaleString()}</div><div class="label">New Customers</div></div>
+        </div>
+      \`;
+    case 'analytics':
+      return \`
+        <div class="campaign-flow">
+          <div><div class="value">\${data.impressions}</div><div class="label">Impressions</div></div>
+          <div class="arrow">→</div>
+          <div><div class="value">\${data.clicks}</div><div class="label">Clicks</div></div>
+          <div class="arrow">→</div>
+          <div><div class="value">\${data.conversions}</div><div class="label">Conversions</div></div>
+        </div>
+      \`;
+    case 'settings':
+      return \`
+        <div class="campaign-center">
+          <div class="label" style="font-size: 1.125rem; margin-bottom: 12px">Campaign Configuration</div>
+          <p style="opacity: 0.8">Manage campaign settings, targeting, budget allocation, and scheduling options.</p>
+        </div>
+      \`;
+    default:
+      return '';
+  }
+}
+
+function renderTabs() {
+  container.innerHTML = \`
+    <div class="tabs-fitted">
+      \${tabs.map((tab, index) =>
+        \`<button
+          class="tab \${index === selectedIndex ? 'selected' : ''}"
+          data-index="\${index}"
+        >
+          \${tab.content}
+          \${tab.badge ? \`<span class="badge">\${tab.badge}</span>\` : ''}
+        </button>\`
+      ).join('')}
+    </div>
+    <div class="campaign-content">
+      <h3>\${tabs[selectedIndex].content}</h3>
+      <div class="campaign-panel">
+        \${renderContent()}
+      </div>
+    </div>
+  \`;
+
+  on(container, 'click', '.tab', (e) => {
+    selectedIndex = parseInt(e.target.dataset.index);
+    renderTabs();
+    EventBus.emit('tab:selected', {
+      index: selectedIndex,
+      tab: tabs[selectedIndex]
+    });
+  });
+}
+
+renderTabs();`,
+    extjs: `Ext.define('CampaignTabPanel', {
+  extend: 'Ext.tab.Panel',
+
+  initComponent: function() {
+    var me = this;
+
+    me.campaignData = {
+      overview: { budget: '$5,000', spent: '$3,245', roi: '124%' },
+      ads: { active: 8, total: 15, ctr: '2.4%' },
+      audience: { reached: 12500, engaged: 890, new: 456 },
+      analytics: { impressions: '45.2k', clicks: '1.1k', conversions: 89 }
+    };
+
+    me.items = [{
+      title: 'Overview',
+      itemId: 'overview',
+      html: me.renderOverview()
+    }, {
+      title: 'Ads <span class="badge">8</span>',
+      itemId: 'ads',
+      html: me.renderAds()
+    }, {
+      title: 'Audience',
+      itemId: 'audience',
+      html: me.renderAudience()
+    }, {
+      title: 'Analytics',
+      itemId: 'analytics',
+      html: me.renderAnalytics()
+    }, {
+      title: 'Settings',
+      itemId: 'settings',
+      html: me.renderSettings()
+    }];
+
+    me.tabBar = {
+      flex: 1,
+      layout: { pack: 'stretch' }
+    };
+
+    me.callParent(arguments);
+
+    me.on('tabchange', function(tabPanel, newTab) {
+      EventBus.emit('tab:selected', { id: newTab.itemId });
+    });
+  },
+
+  renderOverview: function() {
+    var d = this.campaignData.overview;
+    return '<div class="campaign-grid">' +
+           '<div><strong>Total Budget:</strong> ' + d.budget + '</div>' +
+           '<div><strong>Spent:</strong> ' + d.spent + '</div>' +
+           '<div><strong>ROI:</strong> ' + d.roi + '</div></div>';
+  },
+
+  renderAds: function() {
+    var d = this.campaignData.ads;
+    return '<div class="campaign-center"><h2>' + d.active + ' / ' + d.total + '</h2>' +
+           '<p>Active ads with ' + d.ctr + ' click-through rate</p></div>';
+  },
+
+  renderAudience: function() {
+    var d = this.campaignData.audience;
+    return '<div class="campaign-grid">' +
+           '<div><strong>' + d.reached.toLocaleString() + '</strong><br>People Reached</div>' +
+           '<div><strong>' + d.engaged.toLocaleString() + '</strong><br>Engaged</div>' +
+           '<div><strong>' + d.new.toLocaleString() + '</strong><br>New Customers</div></div>';
+  },
+
+  renderAnalytics: function() {
+    var d = this.campaignData.analytics;
+    return '<div class="campaign-flow">' +
+           '<div><strong>' + d.impressions + '</strong><br>Impressions</div>' +
+           '<div>→</div>' +
+           '<div><strong>' + d.clicks + '</strong><br>Clicks</div>' +
+           '<div>→</div>' +
+           '<div><strong>' + d.conversions + '</strong><br>Conversions</div></div>';
+  },
+
+  renderSettings: function() {
+    return '<div class="campaign-center">' +
+           '<h3>Campaign Configuration</h3>' +
+           '<p>Manage campaign settings, targeting, budget allocation, and scheduling options.</p></div>';
+  }
+});
+
+Ext.create('CampaignTabPanel', {
+  renderTo: Ext.getBody(),
+  activeTab: 0,
+  width: 750
+});`,
+    typescript: `import { Tabs } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface CampaignOverview {
+  budget: string;
+  spent: string;
+  roi: string;
+}
+
+interface CampaignAds {
+  active: number;
+  total: number;
+  ctr: string;
+}
+
+interface CampaignAudience {
+  reached: number;
+  engaged: number;
+  new: number;
+}
+
+interface CampaignAnalytics {
+  impressions: string;
+  clicks: string;
+  conversions: number;
+}
+
+interface CampaignData {
+  overview: CampaignOverview;
+  ads: CampaignAds;
+  audience: CampaignAudience;
+  analytics: CampaignAnalytics;
+}
+
+interface Tab {
+  id: string;
+  content: string;
+  badge?: string;
+}
+
+interface CampaignTabsProps {
+  data?: CampaignData;
+  onTabChange?: (index: number, tabId: string) => void;
+}
+
+function CampaignTabs({ data: initialData, onTabChange }: CampaignTabsProps): JSX.Element {
+  const [selected, setSelected] = useState<number>(0);
+  const [campaignData] = useState<CampaignData>(initialData || {
+    overview: { budget: '$5,000', spent: '$3,245', roi: '124%' },
+    ads: { active: 8, total: 15, ctr: '2.4%' },
+    audience: { reached: 12500, engaged: 890, new: 456 },
+    analytics: { impressions: '45.2k', clicks: '1.1k', conversions: 89 },
+  });
+
+  const tabs: Tab[] = [
+    { id: 'overview', content: 'Overview' },
+    { id: 'ads', content: 'Ads', badge: campaignData.ads.active.toString() },
+    { id: 'audience', content: 'Audience' },
+    { id: 'analytics', content: 'Analytics' },
+    { id: 'settings', content: 'Settings' },
+  ];
+
+  const handleSelect = (index: number) => {
+    setSelected(index);
+    onTabChange?.(index, tabs[index].id);
+  };
+
+  return (
+    <div style={{ width: '750px' }}>
+      <Tabs
+        tabs={tabs}
+        selected={selected}
+        onSelect={handleSelect}
+        fitted
+      />
+
+      <div style={{
+        marginTop: '20px',
+        padding: '24px',
+        backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        borderRadius: '8px',
+        color: 'white'
+      }}>
+        <h3 style={{ margin: '0 0 20px 0', fontSize: 'var(--font-size-xl)' }}>
+          {tabs[selected].content}
+        </h3>
+
+        <div style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '6px',
+          padding: '16px',
+          backdropFilter: 'blur(10px)'
+        }}>
+          {tabs[selected].id === 'overview' && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>Total Budget</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.budget}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>Spent</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.spent}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8, marginBottom: '4px' }}>ROI</div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.overview.roi}</div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'ads' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--font-size-5xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: '8px' }}>
+                {campaignData.ads.active} / {campaignData.ads.total}
+              </div>
+              <div style={{ fontSize: 'var(--font-size-sm)', opacity: 0.8 }}>
+                Active ads with {campaignData.ads.ctr} click-through rate
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'audience' && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.reached.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>People Reached</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.engaged.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Engaged</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.audience.new.toLocaleString()}</div>
+                <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>New Customers</div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'analytics' && (
+            <div style={{ textAlign: 'center' }}>
+              <h4 style={{ margin: '0 0 12px 0' }}>Performance Metrics</h4>
+              <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.impressions}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Impressions</div>
+                </div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', opacity: 0.6 }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.clicks}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Clicks</div>
+                </div>
+                <div style={{ fontSize: 'var(--font-size-2xl)', opacity: 0.6 }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 'var(--font-size-xl)', fontWeight: 'var(--font-weight-bold)' }}>{campaignData.analytics.conversions}</div>
+                  <div style={{ fontSize: 'var(--font-size-xs)', opacity: 0.8 }}>Conversions</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {tabs[selected].id === 'settings' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--font-size-lg)', marginBottom: '12px' }}>Campaign Configuration</div>
+              <p style={{ margin: 0, opacity: 0.8 }}>
+                Manage campaign settings, targeting, budget allocation, and scheduling options.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CampaignTabs;`
+  }
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,

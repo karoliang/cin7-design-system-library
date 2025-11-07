@@ -111,6 +111,9 @@ export const WithError: Story = {
     label: 'Age verification',
     error: 'You must be 18 or older to continue',
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'error'),
+  },
 };
 
 export const Interactive: Story = {
