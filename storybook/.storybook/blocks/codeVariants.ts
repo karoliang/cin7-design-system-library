@@ -10122,6 +10122,1169 @@ function CheckboxWithErrorExample({
 }
 
 export default CheckboxWithErrorExample;`
+  },
+
+  required: {
+    react: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+function RequiredCheckboxExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <Checkbox
+      label="I agree to the privacy policy"
+      checked={checked}
+      onChange={setChecked}
+      required
+    />
+  );
+}
+
+export default RequiredCheckboxExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-checkbox-wrapper">
+  <label class="polaris-checkbox-label">
+    <input type="checkbox" class="polaris-checkbox" id="privacy-checkbox" required />
+    <span class="polaris-checkbox-label-text">
+      I agree to the privacy policy
+      <span class="polaris-required-indicator" aria-hidden="true">*</span>
+    </span>
+  </label>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const checkbox = $('#privacy-checkbox');
+
+on(checkbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  console.log('Privacy policy agreement:', isChecked);
+
+  if (!isChecked) {
+    console.warn('Privacy policy agreement is required');
+  }
+
+  EventBus.emit('required-checkbox:changed', {
+    id: 'privacy',
+    checked: isChecked,
+    valid: isChecked
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Required Checkbox
+Ext.create('Ext.form.field.Checkbox', {
+  boxLabel: 'I agree to the privacy policy <span style="color:red;">*</span>',
+  checked: false,
+  allowBlank: false,
+  renderTo: Ext.getBody(),
+  listeners: {
+    change: function(checkbox, newValue) {
+      console.log('Privacy policy agreement:', newValue);
+
+      if (!newValue) {
+        checkbox.markInvalid('This field is required');
+      } else {
+        checkbox.clearInvalid();
+      }
+
+      EventBus.emit('required-checkbox:changed', {
+        id: 'privacy',
+        checked: newValue,
+        valid: newValue
+      });
+    }
+  },
+  validator: function(value) {
+    return value === true || 'You must agree to the privacy policy';
+  }
+});`,
+
+    typescript: `import { Checkbox } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface RequiredCheckboxProps {
+  label?: string;
+  required?: boolean;
+  onChange?: (checked: boolean) => void;
+  onValidationChange?: (isValid: boolean) => void;
+}
+
+function RequiredCheckboxExample({
+  label = 'I agree to the privacy policy',
+  required = true,
+  onChange,
+  onValidationChange
+}: RequiredCheckboxProps): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(false);
+
+  const handleChange = (newChecked: boolean): void => {
+    setChecked(newChecked);
+    onChange?.(newChecked);
+
+    if (required) {
+      onValidationChange?.(newChecked);
+    }
+  };
+
+  return (
+    <Checkbox
+      label={label}
+      checked={checked}
+      onChange={handleChange}
+      required={required}
+    />
+  );
+}
+
+export default RequiredCheckboxExample;`
+  },
+
+  interactive: {
+    react: `import { Checkbox, BlockStack, Text } from '@shopify/polaris';
+import { useState } from 'react';
+
+function InteractiveCheckboxExample() {
+  const [checked, setChecked] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const [notifications, setNotifications] = useState({
+    email: true,
+    sms: false,
+    push: true,
+  });
+
+  return (
+    <BlockStack gap="400" maxWidth="400px">
+      <div>
+        <Checkbox
+          label="Single checkbox with state"
+          checked={checked}
+          onChange={setChecked}
+        />
+        <Text as="p" variant="bodySm" tone="subdued">
+          Status: {checked ? 'Checked' : 'Unchecked'}
+        </Text>
+      </div>
+
+      <div>
+        <Checkbox
+          label="I agree to the terms of service"
+          checked={agreed}
+          onChange={setAgreed}
+          required
+          helpText="You must agree to continue"
+        />
+        <Text as="p" variant="bodySm" tone={agreed ? 'success' : 'critical'}>
+          {agreed ? '✓ Terms accepted' : '✗ Terms not accepted'}
+        </Text>
+      </div>
+
+      <BlockStack gap="200">
+        <Text as="h3" variant="headingMd">Notification preferences:</Text>
+        <Checkbox
+          label="Email notifications"
+          checked={notifications.email}
+          onChange={(value) => setNotifications(prev => ({ ...prev, email: value }))}
+          helpText="Receive updates via email"
+        />
+        <Checkbox
+          label="SMS notifications"
+          checked={notifications.sms}
+          onChange={(value) => setNotifications(prev => ({ ...prev, sms: value }))}
+          helpText="Receive text message alerts"
+        />
+        <Checkbox
+          label="Push notifications"
+          checked={notifications.push}
+          onChange={(value) => setNotifications(prev => ({ ...prev, push: value }))}
+          helpText="Receive browser push notifications"
+        />
+      </BlockStack>
+    </BlockStack>
+  );
+}
+
+export default InteractiveCheckboxExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack" style="max-width: 400px;">
+  <div class="polaris-checkbox-section">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="single-checkbox" />
+      <span class="polaris-checkbox-label-text">Single checkbox with state</span>
+    </label>
+    <p class="polaris-text-subdued" id="single-status">Status: Unchecked</p>
+  </div>
+
+  <div class="polaris-checkbox-section">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="terms-checkbox" required />
+      <span class="polaris-checkbox-label-text">I agree to the terms of service</span>
+    </label>
+    <div class="polaris-help-text">You must agree to continue</div>
+    <p id="terms-status" class="polaris-text-critical">✗ Terms not accepted</p>
+  </div>
+
+  <div class="polaris-checkbox-section">
+    <h3 class="polaris-heading-md">Notification preferences:</h3>
+
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="email-checkbox" checked />
+      <span class="polaris-checkbox-label-text">Email notifications</span>
+    </label>
+    <div class="polaris-help-text">Receive updates via email</div>
+
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="sms-checkbox" />
+      <span class="polaris-checkbox-label-text">SMS notifications</span>
+    </label>
+    <div class="polaris-help-text">Receive text message alerts</div>
+
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="push-checkbox" checked />
+      <span class="polaris-checkbox-label-text">Push notifications</span>
+    </label>
+    <div class="polaris-help-text">Receive browser push notifications</div>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+// Single checkbox with status
+const singleCheckbox = $('#single-checkbox');
+const singleStatus = $('#single-status');
+
+on(singleCheckbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  singleStatus.textContent = \`Status: \${isChecked ? 'Checked' : 'Unchecked'}\`;
+});
+
+// Terms checkbox
+const termsCheckbox = $('#terms-checkbox');
+const termsStatus = $('#terms-status');
+
+on(termsCheckbox, 'change', (e) => {
+  const isChecked = e.target.checked;
+  if (isChecked) {
+    termsStatus.textContent = '✓ Terms accepted';
+    termsStatus.className = 'polaris-text-success';
+  } else {
+    termsStatus.textContent = '✗ Terms not accepted';
+    termsStatus.className = 'polaris-text-critical';
+  }
+});
+
+// Notification preferences
+const notificationPrefs = {
+  email: $('#email-checkbox'),
+  sms: $('#sms-checkbox'),
+  push: $('#push-checkbox')
+};
+
+Object.keys(notificationPrefs).forEach(key => {
+  on(notificationPrefs[key], 'change', (e) => {
+    console.log(\`\${key} notifications:\`, e.target.checked);
+    EventBus.emit('notifications:changed', {
+      [key]: e.target.checked
+    });
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Interactive Checkbox Group
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  width: 400,
+  items: [
+    // Single checkbox with status
+    {
+      xtype: 'container',
+      items: [
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Single checkbox with state',
+          itemId: 'singleCheckbox',
+          listeners: {
+            change: function(checkbox, newValue) {
+              this.up('container').down('#statusLabel').setText(
+                'Status: ' + (newValue ? 'Checked' : 'Unchecked')
+              );
+            }
+          }
+        },
+        {
+          xtype: 'label',
+          itemId: 'statusLabel',
+          text: 'Status: Unchecked',
+          style: 'color: #6b7280;'
+        }
+      ]
+    },
+
+    // Terms checkbox with validation
+    {
+      xtype: 'container',
+      margin: '20 0 0 0',
+      items: [
+        {
+          xtype: 'checkbox',
+          boxLabel: 'I agree to the terms of service',
+          allowBlank: false,
+          listeners: {
+            change: function(checkbox, newValue) {
+              const statusLabel = this.up('container').down('#termsStatus');
+              if (newValue) {
+                statusLabel.setText('✓ Terms accepted');
+                statusLabel.setStyle('color: #16a34a;');
+              } else {
+                statusLabel.setText('✗ Terms not accepted');
+                statusLabel.setStyle('color: #dc2626;');
+              }
+            }
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'You must agree to continue',
+          style: 'color: #6b7280; font-size: 0.875rem;'
+        },
+        {
+          xtype: 'label',
+          itemId: 'termsStatus',
+          text: '✗ Terms not accepted',
+          style: 'color: #dc2626;'
+        }
+      ]
+    },
+
+    // Notification preferences
+    {
+      xtype: 'container',
+      margin: '20 0 0 0',
+      items: [
+        {
+          xtype: 'label',
+          text: 'Notification preferences:',
+          style: 'font-weight: 600; font-size: 1.125rem; margin-bottom: 10px;'
+        },
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Email notifications',
+          checked: true,
+          listeners: {
+            change: function(cb, val) {
+              EventBus.emit('notifications:changed', { email: val });
+            }
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'Receive updates via email',
+          style: 'color: #6b7280; font-size: 0.875rem; margin-left: 20px;'
+        },
+        {
+          xtype: 'checkbox',
+          boxLabel: 'SMS notifications',
+          checked: false,
+          listeners: {
+            change: function(cb, val) {
+              EventBus.emit('notifications:changed', { sms: val });
+            }
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'Receive text message alerts',
+          style: 'color: #6b7280; font-size: 0.875rem; margin-left: 20px;'
+        },
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Push notifications',
+          checked: true,
+          listeners: {
+            change: function(cb, val) {
+              EventBus.emit('notifications:changed', { push: val });
+            }
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'Receive browser push notifications',
+          style: 'color: #6b7280; font-size: 0.875rem; margin-left: 20px;'
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Checkbox, BlockStack, Text } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface NotificationPreferences {
+  email: boolean;
+  sms: boolean;
+  push: boolean;
+}
+
+interface InteractiveCheckboxProps {
+  onPreferencesChange?: (preferences: NotificationPreferences) => void;
+}
+
+function InteractiveCheckboxExample({
+  onPreferencesChange
+}: InteractiveCheckboxProps = {}): JSX.Element {
+  const [checked, setChecked] = useState<boolean>(false);
+  const [agreed, setAgreed] = useState<boolean>(false);
+  const [notifications, setNotifications] = useState<NotificationPreferences>({
+    email: true,
+    sms: false,
+    push: true,
+  });
+
+  const updateNotifications = (key: keyof NotificationPreferences, value: boolean): void => {
+    const newPrefs = { ...notifications, [key]: value };
+    setNotifications(newPrefs);
+    onPreferencesChange?.(newPrefs);
+  };
+
+  return (
+    <BlockStack gap="400" maxWidth="400px">
+      <div>
+        <Checkbox
+          label="Single checkbox with state"
+          checked={checked}
+          onChange={setChecked}
+        />
+        <Text as="p" variant="bodySm" tone="subdued">
+          Status: {checked ? 'Checked' : 'Unchecked'}
+        </Text>
+      </div>
+
+      <div>
+        <Checkbox
+          label="I agree to the terms of service"
+          checked={agreed}
+          onChange={setAgreed}
+          required
+          helpText="You must agree to continue"
+        />
+        <Text as="p" variant="bodySm" tone={agreed ? 'success' : 'critical'}>
+          {agreed ? '✓ Terms accepted' : '✗ Terms not accepted'}
+        </Text>
+      </div>
+
+      <BlockStack gap="200">
+        <Text as="h3" variant="headingMd">Notification preferences:</Text>
+        <Checkbox
+          label="Email notifications"
+          checked={notifications.email}
+          onChange={(value) => updateNotifications('email', value)}
+          helpText="Receive updates via email"
+        />
+        <Checkbox
+          label="SMS notifications"
+          checked={notifications.sms}
+          onChange={(value) => updateNotifications('sms', value)}
+          helpText="Receive text message alerts"
+        />
+        <Checkbox
+          label="Push notifications"
+          checked={notifications.push}
+          onChange={(value) => updateNotifications('push', value)}
+          helpText="Receive browser push notifications"
+        />
+      </BlockStack>
+    </BlockStack>
+  );
+}
+
+export default InteractiveCheckboxExample;`
+  },
+
+  'form-validation': {
+    react: `import { Checkbox, BlockStack, Text, InlineStack } from '@shopify/polaris';
+import { useState } from 'react';
+
+function FormValidationExample() {
+  const [formData, setFormData] = useState({
+    terms: false,
+    age: false,
+    consent: false,
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const handleCheckboxChange = (field: string, value: boolean) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setTouched(prev => ({ ...prev, [field]: true }));
+
+    if (value && errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.terms) {
+      newErrors.terms = 'You must accept the terms and conditions';
+    }
+    if (!formData.age) {
+      newErrors.age = 'Age verification is required';
+    }
+    if (!formData.consent) {
+      newErrors.consent = 'Data processing consent is required';
+    }
+
+    setErrors(newErrors);
+    setTouched({ terms: true, age: true, consent: true });
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    const isValid = validateForm();
+    if (isValid) {
+      alert('Form submitted successfully!');
+    }
+  };
+
+  return (
+    <BlockStack gap="400" maxWidth="500px">
+      <Text as="h2" variant="headingMd">Registration Form</Text>
+
+      <Checkbox
+        label="I accept the terms and conditions"
+        checked={formData.terms}
+        onChange={(value) => handleCheckboxChange('terms', value)}
+        error={touched.terms ? errors.terms : undefined}
+        required
+      />
+
+      <Checkbox
+        label="I confirm I am 18 years of age or older"
+        checked={formData.age}
+        onChange={(value) => handleCheckboxChange('age', value)}
+        error={touched.age ? errors.age : undefined}
+        required
+      />
+
+      <Checkbox
+        label="I consent to data processing as described in the privacy policy"
+        checked={formData.consent}
+        onChange={(value) => handleCheckboxChange('consent', value)}
+        error={touched.consent ? errors.consent : undefined}
+        required
+        helpText="Your data will be processed in accordance with GDPR regulations"
+      />
+
+      <InlineStack gap="200">
+        <button onClick={handleSubmit} style={{ padding: '8px 16px', backgroundColor: '#007ace', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+          Submit Form
+        </button>
+      </InlineStack>
+
+      {Object.keys(errors).length > 0 && (
+        <Text as="p" tone="critical">
+          Please complete all required fields
+        </Text>
+      )}
+    </BlockStack>
+  );
+}
+
+export default FormValidationExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form" style="max-width: 500px;">
+  <h2 class="polaris-heading-md">Registration Form</h2>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="terms-checkbox" required />
+      <span class="polaris-checkbox-label-text">I accept the terms and conditions *</span>
+    </label>
+    <div class="polaris-error" id="terms-error" style="display: none;"></div>
+  </div>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="age-checkbox" required />
+      <span class="polaris-checkbox-label-text">I confirm I am 18 years of age or older *</span>
+    </label>
+    <div class="polaris-error" id="age-error" style="display: none;"></div>
+  </div>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label">
+      <input type="checkbox" class="polaris-checkbox" id="consent-checkbox" required />
+      <span class="polaris-checkbox-label-text">I consent to data processing as described in the privacy policy *</span>
+    </label>
+    <div class="polaris-help-text">Your data will be processed in accordance with GDPR regulations</div>
+    <div class="polaris-error" id="consent-error" style="display: none;"></div>
+  </div>
+
+  <button id="submit-btn" class="polaris-button polaris-button--primary">Submit Form</button>
+  <p id="form-error" class="polaris-text-critical" style="display: none;">Please complete all required fields</p>
+</div>
+
+<script>
+import { $, on, addClass, removeClass } from '@cin7/vanilla-js';
+
+const formData = {
+  terms: false,
+  age: false,
+  consent: false
+};
+
+const touched = {
+  terms: false,
+  age: false,
+  consent: false
+};
+
+const checkboxes = {
+  terms: $('#terms-checkbox'),
+  age: $('#age-checkbox'),
+  consent: $('#consent-checkbox')
+};
+
+const errors = {
+  terms: $('#terms-error'),
+  age: $('#age-error'),
+  consent: $('#consent-error')
+};
+
+const errorMessages = {
+  terms: 'You must accept the terms and conditions',
+  age: 'Age verification is required',
+  consent: 'Data processing consent is required'
+};
+
+// Handle checkbox changes
+Object.keys(checkboxes).forEach(field => {
+  on(checkboxes[field], 'change', (e) => {
+    formData[field] = e.target.checked;
+    touched[field] = true;
+
+    if (e.target.checked) {
+      errors[field].style.display = 'none';
+      removeClass(checkboxes[field], 'polaris-checkbox--error');
+    }
+  });
+});
+
+// Form validation and submission
+const submitBtn = $('#submit-btn');
+const formError = $('#form-error');
+
+on(submitBtn, 'click', () => {
+  let isValid = true;
+
+  Object.keys(formData).forEach(field => {
+    touched[field] = true;
+
+    if (!formData[field]) {
+      isValid = false;
+      errors[field].textContent = errorMessages[field];
+      errors[field].style.display = 'block';
+      addClass(checkboxes[field], 'polaris-checkbox--error');
+    }
+  });
+
+  if (isValid) {
+    alert('Form submitted successfully!');
+    formError.style.display = 'none';
+  } else {
+    formError.style.display = 'block';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Form Validation with Checkboxes
+Ext.create('Ext.form.Panel', {
+  title: 'Registration Form',
+  width: 500,
+  bodyPadding: 20,
+  renderTo: Ext.getBody(),
+
+  items: [
+    {
+      xtype: 'checkbox',
+      name: 'terms',
+      boxLabel: 'I accept the terms and conditions',
+      allowBlank: false,
+      blankText: 'You must accept the terms and conditions',
+      listeners: {
+        change: function(checkbox, newValue) {
+          if (newValue) {
+            checkbox.clearInvalid();
+          }
+        }
+      }
+    },
+    {
+      xtype: 'checkbox',
+      name: 'age',
+      boxLabel: 'I confirm I am 18 years of age or older',
+      allowBlank: false,
+      blankText: 'Age verification is required',
+      listeners: {
+        change: function(checkbox, newValue) {
+          if (newValue) {
+            checkbox.clearInvalid();
+          }
+        }
+      }
+    },
+    {
+      xtype: 'checkbox',
+      name: 'consent',
+      boxLabel: 'I consent to data processing as described in the privacy policy',
+      allowBlank: false,
+      blankText: 'Data processing consent is required',
+      afterBoxLabelTextTpl: '<div style="color: #6b7280; font-size: 0.875rem; margin-top: 4px;">Your data will be processed in accordance with GDPR regulations</div>',
+      listeners: {
+        change: function(checkbox, newValue) {
+          if (newValue) {
+            checkbox.clearInvalid();
+          }
+        }
+      }
+    }
+  ],
+
+  buttons: [
+    {
+      text: 'Submit Form',
+      formBind: true,
+      handler: function() {
+        const form = this.up('form').getForm();
+
+        if (form.isValid()) {
+          Ext.Msg.alert('Success', 'Form submitted successfully!');
+
+          // Emit event for cross-layer communication
+          EventBus.emit('form:submitted', form.getValues());
+        } else {
+          Ext.Msg.alert('Validation Error', 'Please complete all required fields');
+        }
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { Checkbox, BlockStack, Text, InlineStack } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface FormData {
+  terms: boolean;
+  age: boolean;
+  consent: boolean;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
+
+interface TouchedFields {
+  [key: string]: boolean;
+}
+
+interface FormValidationProps {
+  onSubmit?: (data: FormData) => void;
+  onValidationChange?: (isValid: boolean) => void;
+}
+
+function FormValidationExample({
+  onSubmit,
+  onValidationChange
+}: FormValidationProps = {}): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    terms: false,
+    age: false,
+    consent: false,
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<TouchedFields>({});
+
+  const handleCheckboxChange = useCallback((field: keyof FormData, value: boolean): void => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setTouched(prev => ({ ...prev, [field]: true }));
+
+    // Clear error when user checks the box
+    if (value && errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  }, [errors]);
+
+  const validateForm = useCallback((): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.terms) {
+      newErrors.terms = 'You must accept the terms and conditions';
+    }
+    if (!formData.age) {
+      newErrors.age = 'Age verification is required';
+    }
+    if (!formData.consent) {
+      newErrors.consent = 'Data processing consent is required';
+    }
+
+    setErrors(newErrors);
+    setTouched({ terms: true, age: true, consent: true });
+
+    const isValid = Object.keys(newErrors).length === 0;
+    onValidationChange?.(isValid);
+
+    return isValid;
+  }, [formData, onValidationChange]);
+
+  const handleSubmit = useCallback((): void => {
+    const isValid = validateForm();
+    if (isValid) {
+      onSubmit?.(formData);
+      alert('Form submitted successfully!');
+    }
+  }, [formData, validateForm, onSubmit]);
+
+  const hasErrors = Object.keys(errors).length > 0;
+
+  return (
+    <BlockStack gap="400" maxWidth="500px">
+      <Text as="h2" variant="headingMd">Registration Form</Text>
+
+      <Checkbox
+        label="I accept the terms and conditions"
+        checked={formData.terms}
+        onChange={(value) => handleCheckboxChange('terms', value)}
+        error={touched.terms ? errors.terms : undefined}
+        required
+      />
+
+      <Checkbox
+        label="I confirm I am 18 years of age or older"
+        checked={formData.age}
+        onChange={(value) => handleCheckboxChange('age', value)}
+        error={touched.age ? errors.age : undefined}
+        required
+      />
+
+      <Checkbox
+        label="I consent to data processing as described in the privacy policy"
+        checked={formData.consent}
+        onChange={(value) => handleCheckboxChange('consent', value)}
+        error={touched.consent ? errors.consent : undefined}
+        required
+        helpText="Your data will be processed in accordance with GDPR regulations"
+      />
+
+      <InlineStack gap="200">
+        <button
+          onClick={handleSubmit}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#007ace',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Submit Form
+        </button>
+      </InlineStack>
+
+      {hasErrors && (
+        <Text as="p" tone="critical">
+          Please complete all required fields
+        </Text>
+      )}
+    </BlockStack>
+  );
+}
+
+export default FormValidationExample;`
+  },
+
+  accessibility: {
+    react: `import { Checkbox, BlockStack, Text } from '@shopify/polaris';
+
+function AccessibilityExample() {
+  return (
+    <BlockStack gap="400" maxWidth="500px">
+      <Text as="h3" variant="headingMd">Accessibility Best Practices</Text>
+
+      <Checkbox
+        label="Option with descriptive aria-describedby"
+        helpText="This checkbox provides additional context for screen readers"
+        ariaDescribedBy="checkbox-help"
+      />
+
+      <Checkbox
+        label="Required field with clear indication"
+        required
+        helpText="This field is required for form submission"
+      />
+
+      <Checkbox
+        label="Option with error state"
+        error="This option must be selected to continue"
+      />
+
+      <BlockStack gap="200">
+        <Text as="p" variant="bodySm">
+          ✓ All checkboxes have associated labels<br/>
+          ✓ Required fields are clearly marked<br/>
+          ✓ Error states provide descriptive messages<br/>
+          ✓ Help text provides additional context
+        </Text>
+      </BlockStack>
+    </BlockStack>
+  );
+}
+
+export default AccessibilityExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-stack" style="max-width: 500px;">
+  <h3 class="polaris-heading-md">Accessibility Best Practices</h3>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label" for="aria-checkbox">
+      <input
+        type="checkbox"
+        class="polaris-checkbox"
+        id="aria-checkbox"
+        aria-describedby="checkbox-help"
+      />
+      <span class="polaris-checkbox-label-text">Option with descriptive aria-describedby</span>
+    </label>
+    <div class="polaris-help-text" id="checkbox-help">
+      This checkbox provides additional context for screen readers
+    </div>
+  </div>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label" for="required-checkbox">
+      <input
+        type="checkbox"
+        class="polaris-checkbox"
+        id="required-checkbox"
+        required
+        aria-required="true"
+      />
+      <span class="polaris-checkbox-label-text">
+        Required field with clear indication
+        <span class="polaris-required-indicator" aria-label="Required">*</span>
+      </span>
+    </label>
+    <div class="polaris-help-text">This field is required for form submission</div>
+  </div>
+
+  <div class="polaris-checkbox-wrapper">
+    <label class="polaris-checkbox-label" for="error-checkbox">
+      <input
+        type="checkbox"
+        class="polaris-checkbox polaris-checkbox--error"
+        id="error-checkbox"
+        aria-invalid="true"
+        aria-describedby="error-message"
+      />
+      <span class="polaris-checkbox-label-text">Option with error state</span>
+    </label>
+    <div class="polaris-error" id="error-message" role="alert">
+      This option must be selected to continue
+    </div>
+  </div>
+
+  <div class="polaris-text-body">
+    <p>✓ All checkboxes have associated labels</p>
+    <p>✓ Required fields are clearly marked</p>
+    <p>✓ Error states provide descriptive messages</p>
+    <p>✓ Help text provides additional context</p>
+  </div>
+</div>
+
+<style>
+.polaris-checkbox-wrapper {
+  margin-bottom: 1rem;
+}
+
+.polaris-required-indicator {
+  color: #dc2626;
+  margin-left: 0.25rem;
+}
+
+.polaris-help-text {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.polaris-error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+</style>`,
+
+    extjs: `// ExtJS Accessible Checkboxes
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  width: 500,
+  items: [
+    {
+      xtype: 'label',
+      text: 'Accessibility Best Practices',
+      style: 'font-weight: 600; font-size: 1.125rem; margin-bottom: 16px;'
+    },
+
+    // Checkbox with descriptive ARIA attributes
+    {
+      xtype: 'container',
+      margin: '0 0 16 0',
+      items: [
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Option with descriptive aria-describedby',
+          inputId: 'aria-checkbox',
+          ariaLabel: 'Option with additional context for screen readers',
+          ariaDescribedBy: 'checkbox-help'
+        },
+        {
+          xtype: 'label',
+          itemId: 'checkbox-help',
+          text: 'This checkbox provides additional context for screen readers',
+          style: 'color: #6b7280; font-size: 0.875rem; margin-left: 20px;'
+        }
+      ]
+    },
+
+    // Required field with clear indication
+    {
+      xtype: 'container',
+      margin: '0 0 16 0',
+      items: [
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Required field with clear indication <span style="color: #dc2626;">*</span>',
+          inputId: 'required-checkbox',
+          allowBlank: false,
+          ariaAttributes: {
+            required: true
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'This field is required for form submission',
+          style: 'color: #6b7280; font-size: 0.875rem; margin-left: 20px;'
+        }
+      ]
+    },
+
+    // Checkbox with error state
+    {
+      xtype: 'container',
+      margin: '0 0 16 0',
+      items: [
+        {
+          xtype: 'checkbox',
+          boxLabel: 'Option with error state',
+          inputId: 'error-checkbox',
+          activeError: 'This option must be selected to continue',
+          msgTarget: 'under',
+          ariaAttributes: {
+            invalid: true,
+            describedby: 'error-message'
+          }
+        }
+      ]
+    },
+
+    // Best practices summary
+    {
+      xtype: 'container',
+      margin: '20 0 0 0',
+      html:
+        '<p>✓ All checkboxes have associated labels</p>' +
+        '<p>✓ Required fields are clearly marked</p>' +
+        '<p>✓ Error states provide descriptive messages</p>' +
+        '<p>✓ Help text provides additional context</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Checkbox, BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface AccessibilityFeatures {
+  hasLabels: boolean;
+  hasRequiredMarkers: boolean;
+  hasErrorMessages: boolean;
+  hasHelpText: boolean;
+}
+
+interface AccessibilityExampleProps {
+  features?: AccessibilityFeatures;
+}
+
+function AccessibilityExample({
+  features = {
+    hasLabels: true,
+    hasRequiredMarkers: true,
+    hasErrorMessages: true,
+    hasHelpText: true
+  }
+}: AccessibilityExampleProps): JSX.Element {
+  return (
+    <BlockStack gap="400" maxWidth="500px">
+      <Text as="h3" variant="headingMd">Accessibility Best Practices</Text>
+
+      <Checkbox
+        label="Option with descriptive aria-describedby"
+        helpText="This checkbox provides additional context for screen readers"
+        ariaDescribedBy="checkbox-help"
+      />
+
+      <Checkbox
+        label="Required field with clear indication"
+        required
+        helpText="This field is required for form submission"
+      />
+
+      <Checkbox
+        label="Option with error state"
+        error="This option must be selected to continue"
+      />
+
+      <BlockStack gap="200">
+        <Text as="p" variant="bodySm">
+          {features.hasLabels && '✓ All checkboxes have associated labels'}
+          <br/>
+          {features.hasRequiredMarkers && '✓ Required fields are clearly marked'}
+          <br/>
+          {features.hasErrorMessages && '✓ Error states provide descriptive messages'}
+          <br/>
+          {features.hasHelpText && '✓ Help text provides additional context'}
+        </Text>
+      </BlockStack>
+    </BlockStack>
+  );
+}
+
+export default AccessibilityExample;`
   }
 };
 
@@ -22916,6 +24079,767 @@ function PageExample({
 
 export default PageExample;`
   }
+,
+
+  withSubtitle: {
+    react: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function PageWithSubtitle() {
+  return (
+    <Page
+      title="Orders"
+      subtitle="Manage and track customer orders"
+      primaryAction={{
+        content: 'Create order',
+        onAction: () => console.log('Create order clicked'),
+      }}
+      secondaryActions={[
+        {
+          content: 'Export',
+          onAction: () => console.log('Export clicked'),
+        },
+        {
+          content: 'Import',
+          onAction: () => console.log('Import clicked'),
+        },
+      ]}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="p" variant="bodyMd">
+              View and manage all customer orders from this dashboard.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithSubtitle;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page-header">
+    <div class="polaris-page-header__title-wrapper">
+      <h1 class="polaris-page-header__title">Orders</h1>
+      <p class="polaris-page-header__subtitle">Manage and track customer orders</p>
+    </div>
+    <div class="polaris-page-header__actions">
+      <div class="polaris-button-group">
+        <button class="polaris-button">Export</button>
+        <button class="polaris-button">Import</button>
+      </div>
+      <button class="polaris-button polaris-button--primary">Create order</button>
+    </div>
+  </div>
+
+  <div class="polaris-page__content">
+    <div class="polaris-card polaris-card--sectioned">
+      <p>View and manage all customer orders from this dashboard.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createPage } from '@cin7/vanilla-js';
+
+const page = createPage({
+  title: 'Orders',
+  subtitle: 'Manage and track customer orders',
+  primaryAction: {
+    content: 'Create order',
+    onClick: () => console.log('Create order clicked')
+  },
+  secondaryActions: [
+    { content: 'Export', onClick: () => console.log('Export clicked') },
+    { content: 'Import', onClick: () => console.log('Import clicked') }
+  ]
+});
+
+document.getElementById('app').appendChild(page);
+</script>`,
+
+    extjs: `// ExtJS Panel with subtitle and secondary actions
+Ext.create('Ext.panel.Panel', {
+  title: 'Orders',
+  layout: 'fit',
+  width: '100%',
+  height: 600,
+  header: {
+    title: '<div><div class="page-title">Orders</div><div class="page-subtitle">Manage and track customer orders</div></div>'
+  },
+  tbar: [{
+    xtype: 'tbfill'
+  }, {
+    text: 'Export',
+    handler: () => console.log('Export clicked')
+  }, {
+    text: 'Import',
+    handler: () => console.log('Import clicked')
+  }, {
+    text: 'Create order',
+    cls: 'polaris-button-primary',
+    handler: () => console.log('Create order clicked')
+  }],
+  items: [{
+    xtype: 'panel',
+    html: '<div class="polaris-card"><p>View and manage all customer orders from this dashboard.</p></div>',
+    padding: 16
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface PageAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface PageWithSubtitleProps {
+  title: string;
+  subtitle: string;
+  primaryAction: PageAction;
+  secondaryActions?: PageAction[];
+}
+
+function PageWithSubtitle({
+  title,
+  subtitle,
+  primaryAction,
+  secondaryActions
+}: PageWithSubtitleProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      subtitle={subtitle}
+      primaryAction={primaryAction}
+      secondaryActions={secondaryActions}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="p" variant="bodyMd">
+              View and manage all customer orders from this dashboard.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithSubtitle;`
+  },
+
+  withBreadcrumbs: {
+    react: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function PageWithBreadcrumbs() {
+  return (
+    <Page
+      title="Product Details"
+      breadcrumbs={[
+        { content: 'Products', url: '#' },
+        { content: 'Classic T-Shirt', url: '#' },
+      ]}
+      primaryAction={{
+        content: 'Save',
+        onAction: () => console.log('Save clicked'),
+      }}
+      secondaryActions={[
+        { content: 'Duplicate', onAction: () => console.log('Duplicate clicked') },
+        { content: 'Delete', destructive: true, onAction: () => console.log('Delete clicked') },
+      ]}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="h3" variant="headingMd">Product Information</Text>
+            <Text as="p" variant="bodyMd" style={{ marginTop: '12px' }}>
+              Classic cotton t-shirt with comfortable fit.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithBreadcrumbs;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <nav class="polaris-breadcrumbs">
+    <a href="#" class="polaris-breadcrumbs__item">Products</a>
+    <span class="polaris-breadcrumbs__separator">/</span>
+    <a href="#" class="polaris-breadcrumbs__item">Classic T-Shirt</a>
+  </nav>
+
+  <div class="polaris-page-header">
+    <h1 class="polaris-page-header__title">Product Details</h1>
+    <div class="polaris-page-header__actions">
+      <div class="polaris-button-group">
+        <button class="polaris-button">Duplicate</button>
+        <button class="polaris-button polaris-button--destructive">Delete</button>
+      </div>
+      <button class="polaris-button polaris-button--primary">Save</button>
+    </div>
+  </div>
+
+  <div class="polaris-page__content">
+    <div class="polaris-card polaris-card--sectioned">
+      <h3 class="polaris-text--heading-md">Product Information</h3>
+      <p style="margin-top: 12px;">Classic cotton t-shirt with comfortable fit.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createPage, createBreadcrumbs } from '@cin7/vanilla-js';
+
+const page = createPage({
+  title: 'Product Details',
+  breadcrumbs: [
+    { content: 'Products', url: '#' },
+    { content: 'Classic T-Shirt', url: '#' }
+  ],
+  primaryAction: {
+    content: 'Save',
+    onClick: () => console.log('Save clicked')
+  },
+  secondaryActions: [
+    { content: 'Duplicate', onClick: () => console.log('Duplicate clicked') },
+    { content: 'Delete', destructive: true, onClick: () => console.log('Delete clicked') }
+  ]
+});
+
+document.getElementById('app').appendChild(page);
+</script>`,
+
+    extjs: `// ExtJS Panel with breadcrumb navigation
+Ext.create('Ext.panel.Panel', {
+  title: 'Product Details',
+  layout: 'fit',
+  width: '100%',
+  height: 600,
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      xtype: 'breadcrumb',
+      store: Ext.create('Ext.data.TreeStore', {
+        root: {
+          expanded: true,
+          children: [
+            { text: 'Products', leaf: false },
+            { text: 'Classic T-Shirt', leaf: true }
+          ]
+        }
+      })
+    }]
+  }],
+  tbar: [{
+    xtype: 'tbfill'
+  }, {
+    text: 'Duplicate',
+    handler: () => console.log('Duplicate clicked')
+  }, {
+    text: 'Delete',
+    cls: 'polaris-button-destructive',
+    handler: () => console.log('Delete clicked')
+  }, {
+    text: 'Save',
+    cls: 'polaris-button-primary',
+    handler: () => console.log('Save clicked')
+  }],
+  items: [{
+    xtype: 'panel',
+    html: '<div class="polaris-card"><h3>Product Information</h3><p>Classic cotton t-shirt with comfortable fit.</p></div>',
+    padding: 16
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface Breadcrumb {
+  content: string;
+  url: string;
+}
+
+interface PageAction {
+  content: string;
+  destructive?: boolean;
+  onAction: () => void;
+}
+
+interface PageWithBreadcrumbsProps {
+  title: string;
+  breadcrumbs: Breadcrumb[];
+  primaryAction: PageAction;
+  secondaryActions?: PageAction[];
+}
+
+function PageWithBreadcrumbs({
+  title,
+  breadcrumbs,
+  primaryAction,
+  secondaryActions
+}: PageWithBreadcrumbsProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      breadcrumbs={breadcrumbs}
+      primaryAction={primaryAction}
+      secondaryActions={secondaryActions}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="h3" variant="headingMd">Product Information</Text>
+            <Text as="p" variant="bodyMd" style={{ marginTop: '12px' }}>
+              Classic cotton t-shirt with comfortable fit.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithBreadcrumbs;`
+  },
+
+  withActionGroups: {
+    react: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function PageWithActionGroups() {
+  return (
+    <Page
+      title="Analytics"
+      primaryAction={{
+        content: 'Generate report',
+        onAction: () => console.log('Generate report clicked'),
+      }}
+      secondaryActions={[
+        { content: 'Export data', onAction: () => console.log('Export clicked') },
+      ]}
+      actionGroups={[
+        {
+          title: 'Reports',
+          actions: [
+            { content: 'Sales report', onAction: () => console.log('Sales report') },
+            { content: 'Customer report', onAction: () => console.log('Customer report') },
+            { content: 'Inventory report', onAction: () => console.log('Inventory report') },
+          ],
+        },
+        {
+          title: 'Settings',
+          actions: [
+            { content: 'Date range', onAction: () => console.log('Date range') },
+            { content: 'Filters', onAction: () => console.log('Filters') },
+          ],
+        },
+      ]}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="h3" variant="headingMd">Dashboard Overview</Text>
+            <Text as="p" variant="bodyMd" style={{ marginTop: '12px' }}>
+              View comprehensive analytics and insights.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithActionGroups;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page">
+  <div class="polaris-page-header">
+    <h1 class="polaris-page-header__title">Analytics</h1>
+    <div class="polaris-page-header__actions">
+      <button class="polaris-button">Export data</button>
+      <div class="polaris-action-menu">
+        <button class="polaris-button">Reports ▾</button>
+      </div>
+      <div class="polaris-action-menu">
+        <button class="polaris-button">Settings ▾</button>
+      </div>
+      <button class="polaris-button polaris-button--primary">Generate report</button>
+    </div>
+  </div>
+
+  <div class="polaris-page__content">
+    <div class="polaris-card polaris-card--sectioned">
+      <h3>Dashboard Overview</h3>
+      <p style="margin-top: 12px;">View comprehensive analytics and insights.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createPage, createActionMenu } from '@cin7/vanilla-js';
+
+const page = createPage({
+  title: 'Analytics',
+  primaryAction: {
+    content: 'Generate report',
+    onClick: () => console.log('Generate report clicked')
+  },
+  secondaryActions: [
+    { content: 'Export data', onClick: () => console.log('Export clicked') }
+  ],
+  actionGroups: [
+    {
+      title: 'Reports',
+      actions: [
+        { content: 'Sales report', onClick: () => console.log('Sales report') },
+        { content: 'Customer report', onClick: () => console.log('Customer report') },
+        { content: 'Inventory report', onClick: () => console.log('Inventory report') }
+      ]
+    },
+    {
+      title: 'Settings',
+      actions: [
+        { content: 'Date range', onClick: () => console.log('Date range') },
+        { content: 'Filters', onClick: () => console.log('Filters') }
+      ]
+    }
+  ]
+});
+
+document.getElementById('app').appendChild(page);
+</script>`,
+
+    extjs: `// ExtJS Panel with menu groups
+Ext.create('Ext.panel.Panel', {
+  title: 'Analytics',
+  layout: 'fit',
+  width: '100%',
+  height: 600,
+  tbar: [{
+    xtype: 'tbfill'
+  }, {
+    text: 'Export data',
+    handler: () => console.log('Export clicked')
+  }, {
+    text: 'Reports',
+    menu: [{
+      text: 'Sales report',
+      handler: () => console.log('Sales report')
+    }, {
+      text: 'Customer report',
+      handler: () => console.log('Customer report')
+    }, {
+      text: 'Inventory report',
+      handler: () => console.log('Inventory report')
+    }]
+  }, {
+    text: 'Settings',
+    menu: [{
+      text: 'Date range',
+      handler: () => console.log('Date range')
+    }, {
+      text: 'Filters',
+      handler: () => console.log('Filters')
+    }]
+  }, {
+    text: 'Generate report',
+    cls: 'polaris-button-primary',
+    handler: () => console.log('Generate report clicked')
+  }],
+  items: [{
+    xtype: 'panel',
+    html: '<div class="polaris-card"><h3>Dashboard Overview</h3><p>View comprehensive analytics and insights.</p></div>',
+    padding: 16
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Page, Layout, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface PageAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface ActionGroup {
+  title: string;
+  actions: PageAction[];
+}
+
+interface PageWithActionGroupsProps {
+  title: string;
+  primaryAction: PageAction;
+  secondaryActions?: PageAction[];
+  actionGroups?: ActionGroup[];
+}
+
+function PageWithActionGroups({
+  title,
+  primaryAction,
+  secondaryActions,
+  actionGroups
+}: PageWithActionGroupsProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      primaryAction={primaryAction}
+      secondaryActions={secondaryActions}
+      actionGroups={actionGroups}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <Text as="h3" variant="headingMd">Dashboard Overview</Text>
+            <Text as="p" variant="bodyMd" style={{ marginTop: '12px' }}>
+              View comprehensive analytics and insights.
+            </Text>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default PageWithActionGroups;`
+  },
+
+  customerPage: {
+    react: `// Variant customerPage - See default variant for full example
+// This variant adds titleMetadata with Badge and uses two-column layout`,
+
+    vanilla: `// Variant customerPage - See default variant for full example
+// This variant adds titleMetadata with Badge and uses two-column layout`,
+
+    extjs: `// Variant customerPage - See default variant for full example
+// This variant adds titleMetadata with Badge and uses two-column layout`,
+
+    typescript: `// Variant customerPage - See default variant for full example
+// This variant adds titleMetadata with Badge and uses two-column layout`
+  },
+
+  productCatalog: {
+    react: `// Variant productCatalog - See default variant for full example
+// This variant demonstrates product grid layout with badges and cards`,
+
+    vanilla: `// Variant productCatalog - See default variant for full example
+// This variant demonstrates product grid layout with badges and cards`,
+
+    extjs: `// Variant productCatalog - See default variant for full example
+// This variant demonstrates product grid layout with badges and cards`,
+
+    typescript: `// Variant productCatalog - See default variant for full example
+// This variant demonstrates product grid layout with badges and cards`
+  },
+
+  orderManagement: {
+    react: `// Variant orderManagement - See default variant for full example
+// This variant adds pagination and demonstrates table-like data display`,
+
+    vanilla: `// Variant orderManagement - See default variant for full example
+// This variant adds pagination and demonstrates table-like data display`,
+
+    extjs: `// Variant orderManagement - See default variant for full example
+// This variant adds pagination and demonstrates table-like data display`,
+
+    typescript: `// Variant orderManagement - See default variant for full example
+// This variant adds pagination and demonstrates table-like data display`
+  },
+
+  settingsPage: {
+    react: `// Variant settingsPage - See default variant for full example
+// This variant uses backAction and demonstrates form-like layout`,
+
+    vanilla: `// Variant settingsPage - See default variant for full example
+// This variant uses backAction and demonstrates form-like layout`,
+
+    extjs: `// Variant settingsPage - See default variant for full example
+// This variant uses backAction and demonstrates form-like layout`,
+
+    typescript: `// Variant settingsPage - See default variant for full example
+// This variant uses backAction and demonstrates form-like layout`
+  },
+
+  fullWidthPage: {
+    react: `import { Page, Layout, Card, Text, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function FullWidthPage() {
+  return (
+    <Page
+      title="Full Width Dashboard"
+      fullWidth
+      primaryAction={{
+        content: 'Refresh Data',
+        onAction: () => console.log('Refresh clicked'),
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+              <div style={{ padding: '20px', backgroundColor: '#f4f6f8', borderRadius: '8px', textAlign: 'center' }}>
+                <Text as="p" variant="headingLg">$45,234</Text>
+                <Text as="p" variant="bodySm" tone="subdued">Total Revenue</Text>
+                <Badge status="success">+12.5%</Badge>
+              </div>
+              <div style={{ padding: '20px', backgroundColor: '#f4f6f8', borderRadius: '8px', textAlign: 'center' }}>
+                <Text as="p" variant="headingLg">1,892</Text>
+                <Text as="p" variant="bodySm" tone="subdued">Total Orders</Text>
+                <Badge status="success">+8.2%</Badge>
+              </div>
+            </div>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default FullWidthPage;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page polaris-page--full-width">
+  <div class="polaris-page-header">
+    <h1 class="polaris-page-header__title">Full Width Dashboard</h1>
+    <div class="polaris-page-header__actions">
+      <button class="polaris-button polaris-button--primary">Refresh Data</button>
+    </div>
+  </div>
+
+  <div class="polaris-page__content">
+    <div class="polaris-card polaris-card--sectioned">
+      <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+        <div class="stat-card">
+          <p class="stat-value">$45,234</p>
+          <p class="stat-label">Total Revenue</p>
+          <span class="polaris-badge polaris-badge--success">+12.5%</span>
+        </div>
+        <div class="stat-card">
+          <p class="stat-value">1,892</p>
+          <p class="stat-label">Total Orders</p>
+          <span class="polaris-badge polaris-badge--success">+8.2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createPage } from '@cin7/vanilla-js';
+
+const page = createPage({
+  title: 'Full Width Dashboard',
+  fullWidth: true,
+  primaryAction: {
+    content: 'Refresh Data',
+    onClick: () => console.log('Refresh clicked')
+  }
+});
+
+document.getElementById('app').appendChild(page);
+</script>`,
+
+    extjs: `// ExtJS Full Width Panel
+Ext.create('Ext.panel.Panel', {
+  title: 'Full Width Dashboard',
+  layout: 'fit',
+  width: '100%',
+  height: 600,
+  tbar: [{
+    xtype: 'tbfill'
+  }, {
+    text: 'Refresh Data',
+    cls: 'polaris-button-primary',
+    handler: () => console.log('Refresh clicked')
+  }],
+  items: [{
+    xtype: 'panel',
+    layout: {
+      type: 'column'
+    },
+    items: [{
+      xtype: 'panel',
+      columnWidth: 0.5,
+      html: '<div class="stat-card"><p class="value">$45,234</p><p class="label">Total Revenue</p><span class="badge success">+12.5%</span></div>',
+      padding: 16
+    }, {
+      xtype: 'panel',
+      columnWidth: 0.5,
+      html: '<div class="stat-card"><p class="value">1,892</p><p class="label">Total Orders</p><span class="badge success">+8.2%</span></div>',
+      padding: 16
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Page, Layout, Card, Text, Badge } from '@shopify/polaris';
+import React from 'react';
+
+interface StatCardProps {
+  value: string;
+  label: string;
+  change: string;
+  status: 'success' | 'attention' | 'critical';
+}
+
+interface FullWidthPageProps {
+  title: string;
+  stats: StatCardProps[];
+  onRefresh: () => void;
+}
+
+function FullWidthPage({
+  title,
+  stats,
+  onRefresh
+}: FullWidthPageProps): JSX.Element {
+  return (
+    <Page
+      title={title}
+      fullWidth
+      primaryAction={{
+        content: 'Refresh Data',
+        onAction: onRefresh,
+      }}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card sectioned>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+              {stats.map((stat, index) => (
+                <div key={index} style={{ padding: '20px', backgroundColor: '#f4f6f8', borderRadius: '8px', textAlign: 'center' }}>
+                  <Text as="p" variant="headingLg">{stat.value}</Text>
+                  <Text as="p" variant="bodySm" tone="subdued">{stat.label}</Text>
+                  <Badge status={stat.status}>{stat.change}</Badge>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}
+
+export default FullWidthPage;`
+  },
+
 };
 
 // ProgressBar Component Examples - Feedback

@@ -117,9 +117,8 @@ export const Required: Story = {
     required: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'required'),
   },
-
 };
 
 export const WithError: Story = {
@@ -179,9 +178,8 @@ export const ShippingOptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'shipping-options'),
   },
-
 };
 
 export const PaymentMethods: Story = {
@@ -266,9 +264,8 @@ export const PaymentMethods: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'payment-methods'),
   },
-
 };
 
 export const ProductVariants: Story = {
@@ -328,9 +325,8 @@ export const ProductVariants: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'product-variants'),
   },
-
 };
 
 export const SurveyQuestions: Story = {
@@ -423,9 +419,8 @@ export const SurveyQuestions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'survey-questions'),
   },
-
 };
 
 export const AccessibilityExamples: Story = {
@@ -466,7 +461,6 @@ export const AccessibilityExamples: Story = {
     </BlockStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'default'),
+    codeVariants: getCodeVariants('radiobutton', 'accessibility-examples'),
   },
-
 };

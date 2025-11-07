@@ -123,7 +123,7 @@ export const WithSubtitle: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'withSubtitle'),
   },
 
 };
@@ -171,7 +171,7 @@ export const WithBreadcrumbs: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'withBreadcrumbs'),
   },
 
 };
@@ -236,7 +236,7 @@ export const WithActionGroups: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'withActionGroups'),
   },
 
 };
@@ -345,7 +345,7 @@ export const CustomerPage: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'customerPage'),
   },
 
 };
@@ -446,7 +446,7 @@ export const ProductCatalog: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'productCatalog'),
   },
 
 };
@@ -550,7 +550,7 @@ export const OrderManagement: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'orderManagement'),
   },
 
 };
@@ -704,7 +704,7 @@ export const SettingsPage: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'settingsPage'),
   },
 
 };
@@ -784,7 +784,7 @@ export const FullWidthPage: Story = {
     </Page>
   ),
   parameters: {
-    codeVariants: getCodeVariants('page', 'default'),
+    codeVariants: getCodeVariants('page', 'fullWidthPage'),
   },
 
 };

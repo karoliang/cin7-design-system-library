@@ -105,9 +105,8 @@ export const Required: Story = {
     required: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('checkbox', 'default'),
+    codeVariants: getCodeVariants('checkbox', 'required'),
   },
-
 };
 
 export const WithError: Story = {
@@ -181,9 +180,8 @@ export const Interactive: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('checkbox', 'default'),
+    codeVariants: getCodeVariants('checkbox', 'interactive'),
   },
-
 };
 
 export const FormValidation: Story = {
@@ -276,9 +274,8 @@ export const FormValidation: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('checkbox', 'default'),
+    codeVariants: getCodeVariants('checkbox', 'form-validation'),
   },
-
 };
 
 export const AccessibilityExamples: Story = {
@@ -314,7 +311,6 @@ export const AccessibilityExamples: Story = {
     </BlockStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('checkbox', 'default'),
+    codeVariants: getCodeVariants('checkbox', 'accessibility'),
   },
-
 };
