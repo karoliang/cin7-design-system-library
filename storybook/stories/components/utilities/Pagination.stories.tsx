@@ -220,6 +220,10 @@ export const ProductCatalog: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'default'),
+  },
+
 };
 
 export const DataTable: Story = {
@@ -421,6 +425,10 @@ export const DataTable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'default'),
+  },
+
 };
 
 export const SearchResults: Story = {
@@ -643,6 +651,10 @@ export const SearchResults: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'default'),
+  },
+
 };
 
 export const PhotoGallery: Story = {
@@ -863,4 +875,8 @@ export const PhotoGallery: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pagination', 'default'),
+  },
+
 };

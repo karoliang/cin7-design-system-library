@@ -68,6 +68,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const BasicUsage: Story = {
@@ -110,6 +114,10 @@ export const BasicUsage: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const AccordionStyle: Story = {
@@ -180,6 +188,10 @@ export const AccordionStyle: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const NestedCollapsibles: Story = {
@@ -249,6 +261,10 @@ export const NestedCollapsibles: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const MultipleCollapsibles: Story = {
@@ -311,6 +327,10 @@ export const MultipleCollapsibles: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const CollapsibleForms: Story = {
@@ -496,6 +516,10 @@ export const CollapsibleForms: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const ProgressiveDisclosure: Story = {
@@ -614,6 +638,10 @@ export const ProgressiveDisclosure: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };
 
 export const CollapsibleWithAnimation: Story = {
@@ -687,4 +715,8 @@ export const CollapsibleWithAnimation: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('collapsible', 'default'),
+  },
+
 };

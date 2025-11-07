@@ -129,6 +129,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const ProductFilters: Story = {
@@ -234,6 +238,10 @@ export const ProductFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const OrderFilters: Story = {
@@ -329,6 +337,10 @@ export const OrderFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const CustomerFilters: Story = {
@@ -428,6 +440,10 @@ export const CustomerFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const WithAppliedFilters: Story = {
@@ -510,6 +526,10 @@ export const WithAppliedFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const HideQueryField: Story = {
@@ -581,6 +601,10 @@ export const HideQueryField: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const HideFilters: Story = {
@@ -607,6 +631,10 @@ export const HideFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const AdvancedProductFilters: Story = {
@@ -720,6 +748,10 @@ export const AdvancedProductFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const TagBasedFilters: Story = {
@@ -822,6 +854,10 @@ export const TagBasedFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const DateRangeFilters: Story = {
@@ -900,6 +936,10 @@ export const DateRangeFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const DisabledFilters: Story = {
@@ -964,6 +1004,10 @@ export const DisabledFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };
 
 export const InteractiveExample: Story = {
@@ -1149,4 +1193,8 @@ export const InteractiveExample: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('filters', 'default'),
+  },
+
 };

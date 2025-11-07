@@ -95,7 +95,11 @@ export const BorderColorVariations: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const ThicknessVariations: Story = {
@@ -120,7 +124,11 @@ export const ThicknessVariations: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const BetweenButtons: Story = {
@@ -149,7 +157,11 @@ export const BetweenButtons: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const TimelineDividers: Story = {
@@ -187,7 +199,11 @@ export const TimelineDividers: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const ContentSections: Story = {
@@ -223,7 +239,11 @@ export const ContentSections: Story = {
         </Text>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const PriceComparison: Story = {
@@ -283,7 +303,11 @@ export const PriceComparison: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const StatusDividers: Story = {
@@ -339,7 +363,11 @@ export const StatusDividers: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const FormSections: Story = {
@@ -430,7 +458,11 @@ export const FormSections: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
 
 export const VerticalSpacing: Story = {
@@ -461,5 +493,9 @@ export const VerticalSpacing: Story = {
         </Text>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('divider', 'default'),
+  },
+
 };
