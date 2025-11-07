@@ -35,6 +35,10 @@ export const Default: Story = {
       { content: 'Electronics', url: '#' },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const ShortPath: Story = {
@@ -44,6 +48,10 @@ export const ShortPath: Story = {
       { content: 'About', url: '#' },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const LongPath: Story = {
@@ -58,6 +66,10 @@ export const LongPath: Story = {
       { content: 'Wireless', url: '#' },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const ProductNavigation: Story = {
@@ -137,6 +149,10 @@ export const ProductNavigation: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const EcommerceNavigation: Story = {
@@ -269,6 +285,10 @@ export const EcommerceNavigation: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const AdminPanel: Story = {
@@ -445,6 +465,10 @@ export const AdminPanel: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };
 
 export const DocumentationSite: Story = {
@@ -671,4 +695,8 @@ export const DocumentationSite: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
+  },
+
 };

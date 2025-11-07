@@ -223,6 +223,10 @@ export const Default: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };
 
 export const WithLogo: Story = {
@@ -308,6 +312,10 @@ export const WithLogo: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };
 
 export const WithNotifications: Story = {
@@ -403,6 +411,10 @@ export const WithNotifications: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };
 
 export const EcommerceLayout: Story = {
@@ -552,6 +564,10 @@ export const EcommerceLayout: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };
 
 export const MinimalLayout: Story = {
@@ -615,6 +631,10 @@ export const MinimalLayout: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };
 
 export const ResponsiveBehavior: Story = {
@@ -692,4 +712,8 @@ export const ResponsiveBehavior: Story = {
       </Frame>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('frame', 'default'),
+  },
+
 };

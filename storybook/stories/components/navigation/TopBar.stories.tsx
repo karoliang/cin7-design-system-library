@@ -84,6 +84,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const WithUserMenu: Story = {
@@ -150,6 +154,10 @@ export const WithUserMenu: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const EcommerceHeader: Story = {
@@ -279,6 +287,10 @@ export const EcommerceHeader: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const AdminDashboard: Story = {
@@ -353,6 +365,10 @@ export const AdminDashboard: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const ProjectManagement: Story = {
@@ -514,6 +530,10 @@ export const ProjectManagement: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const CustomerSupport: Story = {
@@ -596,6 +616,10 @@ export const CustomerSupport: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };
 
 export const EducationalPlatform: Story = {
@@ -694,4 +718,8 @@ export const EducationalPlatform: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('topbar', 'default'),
+  },
+
 };

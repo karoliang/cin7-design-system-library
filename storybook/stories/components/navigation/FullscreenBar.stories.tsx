@@ -154,6 +154,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const WithBreadcrumbs: Story = {
@@ -200,6 +204,10 @@ export const WithBreadcrumbs: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const PreviewMode: Story = {
@@ -279,6 +287,10 @@ export const PreviewMode: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const EditorInterface: Story = {
@@ -413,6 +425,10 @@ export const EditorInterface: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const SearchFocused: Story = {
@@ -493,6 +509,10 @@ export const SearchFocused: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const MobileOptimized: Story = {
@@ -568,6 +588,10 @@ export const MobileOptimized: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
 
 export const WithUserAvatar: Story = {
@@ -640,4 +664,8 @@ export const WithUserAvatar: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('fullscreenbar', 'default'),
+  },
+
 };
