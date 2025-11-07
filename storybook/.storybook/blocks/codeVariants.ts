@@ -20082,6 +20082,380 @@ export default BreadcrumbsExample;`
   }
 };
 
+// Popover Component Examples
+export const popoverExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Popover, Button, ActionList } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function PopoverExample() {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = useCallback(
+    () => setPopoverActive((active) => !active),
+    [],
+  );
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure>
+      More actions
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={popoverActive}
+      activator={activator}
+      autofocusTarget="first-node"
+      onClose={togglePopoverActive}
+    >
+      <ActionList
+        items={[
+          { content: 'Import', onAction: () => console.log('Import') },
+          { content: 'Export', onAction: () => console.log('Export') },
+        ]}
+      />
+    </Popover>
+  );
+}
+
+export default PopoverExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="popover-wrapper">
+  <button class="popover-activator" id="popoverActivator">
+    More actions ▼
+  </button>
+  <div class="popover-content" id="popoverContent" style="display: none;">
+    <button class="action-item">Import</button>
+    <button class="action-item">Export</button>
+  </div>
+</div>
+
+<style>
+.popover-wrapper { position: relative; display: inline-block; }
+.popover-content {
+  position: absolute; top: 100%; left: 0; z-index: 1000;
+  margin-top: 8px; min-width: 200px; background: white;
+  border: 1px solid #ccc; border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 8px;
+}
+.action-item {
+  display: block; width: 100%; padding: 8px 12px;
+  border: none; background: transparent; text-align: left;
+  cursor: pointer; border-radius: 4px;
+}
+.action-item:hover { background: #f5f5f5; }
+</style>
+
+<script>
+const activator = document.getElementById('popoverActivator');
+const content = document.getElementById('popoverContent');
+
+activator.addEventListener('click', () => {
+  content.style.display = content.style.display === 'none' ? 'block' : 'none';
+});
+
+document.addEventListener('click', (e) => {
+  if (!activator.contains(e.target) && !content.contains(e.target)) {
+    content.style.display = 'none';
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Menu
+Ext.create('Ext.button.Button', {
+  text: 'More actions',
+  menu: {
+    items: [
+      { text: 'Import', handler: () => console.log('Import') },
+      { text: 'Export', handler: () => console.log('Export') }
+    ]
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Popover, Button, ActionList, ActionListItemDescriptor } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface PopoverExampleProps {
+  activatorLabel?: string;
+  actions?: ActionListItemDescriptor[];
+}
+
+function PopoverExample({
+  activatorLabel = 'More actions',
+  actions = [
+    { content: 'Import' },
+    { content: 'Export' },
+  ]
+}: PopoverExampleProps): JSX.Element {
+  const [active, setActive] = useState(false);
+  const toggle = useCallback(() => setActive((a) => !a), []);
+
+  return (
+    <Popover
+      active={active}
+      activator={<Button onClick={toggle} disclosure>{activatorLabel}</Button>}
+      onClose={toggle}
+    >
+      <ActionList items={actions} />
+    </Popover>
+  );
+}
+
+export default PopoverExample;`
+  }
+};
+
+// Tooltip Component Examples
+export const tooltipExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Tooltip, Button } from '@shopify/polaris';
+import React from 'react';
+
+function TooltipExample() {
+  return (
+    <Tooltip content="This is a helpful tooltip">
+      <Button>Hover me</Button>
+    </Tooltip>
+  );
+}
+
+export default TooltipExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="tooltip-wrapper">
+  <button id="tooltipTrigger">Hover me</button>
+  <div class="tooltip" id="tooltip" style="display: none;">
+    This is a helpful tooltip
+  </div>
+</div>
+
+<style>
+.tooltip-wrapper { position: relative; display: inline-block; }
+.tooltip {
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%); margin-bottom: 8px;
+  padding: 8px 12px; background: #333; color: white;
+  font-size: 14px; border-radius: 4px; white-space: nowrap;
+  pointer-events: none; z-index: 1000;
+}
+.tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%); border: 4px solid transparent;
+  border-top-color: #333;
+}
+</style>
+
+<script>
+const trigger = document.getElementById('tooltipTrigger');
+const tooltip = document.getElementById('tooltip');
+
+trigger.addEventListener('mouseenter', () => {
+  tooltip.style.display = 'block';
+});
+
+trigger.addEventListener('mouseleave', () => {
+  tooltip.style.display = 'none';
+});
+</script>`,
+
+    extjs: `// ExtJS Tooltip
+Ext.create('Ext.button.Button', {
+  text: 'Hover me',
+  tooltip: 'This is a helpful tooltip',
+  renderTo: Ext.getBody()
+});
+
+// Custom tooltip
+Ext.create('Ext.button.Button', {
+  text: 'Hover me',
+  renderTo: Ext.getBody(),
+  listeners: {
+    render: function(btn) {
+      Ext.create('Ext.tip.ToolTip', {
+        target: btn.el,
+        html: 'This is a helpful tooltip'
+      });
+    }
+  }
+});`,
+
+    typescript: `import { Tooltip, Button } from '@shopify/polaris';
+import React from 'react';
+
+interface TooltipExampleProps {
+  content: string;
+  children?: React.ReactNode;
+  preferredPosition?: 'above' | 'below' | 'mostSpace';
+}
+
+function TooltipExample({
+  content,
+  children = <Button>Hover me</Button>,
+  preferredPosition = 'above'
+}: TooltipExampleProps): JSX.Element {
+  return (
+    <Tooltip content={content} preferredPosition={preferredPosition}>
+      {children}
+    </Tooltip>
+  );
+}
+
+export default TooltipExample;`
+  }
+};
+
+// Sheet Component Examples
+export const sheetExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Sheet, Button, Text } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function SheetExample() {
+  const [open, setOpen] = useState(false);
+  const toggle = useCallback(() => setOpen((o) => !o), []);
+
+  return (
+    <>
+      <Button onClick={toggle}>Open sheet</Button>
+      <Sheet open={open} onClose={toggle} accessibilityLabel="Filter products">
+        <div style={{ padding: '20px' }}>
+          <Text as="h2" variant="headingMd">Sheet content</Text>
+          <Text as="p">Slide-in panel for forms, filters, or other content.</Text>
+        </div>
+      </Sheet>
+    </>
+  );
+}
+
+export default SheetExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<button id="openSheet">Open sheet</button>
+<div class="sheet-backdrop" id="backdrop" style="display: none;"></div>
+<div class="sheet" id="sheet" style="display: none;">
+  <div class="sheet-header">
+    <h2>Sheet content</h2>
+    <button id="closeSheet">×</button>
+  </div>
+  <div class="sheet-body">
+    <p>Slide-in panel for forms, filters, or other content.</p>
+  </div>
+</div>
+
+<style>
+.sheet-backdrop {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999;
+}
+.sheet {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 400px;
+  background: white; box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+  z-index: 1000; animation: slideIn 0.3s;
+}
+.sheet-header {
+  display: flex; justify-content: space-between;
+  padding: 16px; border-bottom: 1px solid #ccc;
+}
+.sheet-body { padding: 20px; overflow-y: auto; }
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+</style>
+
+<script>
+const openBtn = document.getElementById('openSheet');
+const closeBtn = document.getElementById('closeSheet');
+const sheet = document.getElementById('sheet');
+const backdrop = document.getElementById('backdrop');
+
+function open() {
+  sheet.style.display = 'block';
+  backdrop.style.display = 'block';
+}
+
+function close() {
+  sheet.style.display = 'none';
+  backdrop.style.display = 'none';
+}
+
+openBtn.addEventListener('click', open);
+closeBtn.addEventListener('click', close);
+backdrop.addEventListener('click', close);
+</script>`,
+
+    extjs: `// ExtJS Sliding Panel
+const sheet = Ext.create('Ext.panel.Panel', {
+  title: 'Sheet content',
+  floating: true,
+  closable: true,
+  width: 400,
+  height: '100%',
+  bodyPadding: 20,
+  html: 'Slide-in panel for forms, filters, or other content.',
+  x: Ext.Element.getViewportWidth(),
+  y: 0,
+  listeners: {
+    beforeshow: function(panel) {
+      panel.animate({
+        duration: 300,
+        to: { x: Ext.Element.getViewportWidth() - 400 }
+      });
+    }
+  }
+});
+
+Ext.create('Ext.button.Button', {
+  text: 'Open sheet',
+  handler: () => sheet.show(),
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Sheet, Button, Text } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface SheetExampleProps {
+  title?: string;
+  children?: React.ReactNode;
+  onOpen?: () => void;
+  onClose?: () => void;
+}
+
+function SheetExample({
+  title = 'Sheet content',
+  children,
+  onOpen,
+  onClose
+}: SheetExampleProps): JSX.Element {
+  const [open, setOpen] = useState(false);
+
+  const toggle = useCallback(() => {
+    const newState = !open;
+    setOpen(newState);
+    if (newState && onOpen) onOpen();
+    if (!newState && onClose) onClose();
+  }, [open, onOpen, onClose]);
+
+  return (
+    <>
+      <Button onClick={toggle}>Open sheet</Button>
+      <Sheet open={open} onClose={toggle} accessibilityLabel="Sheet panel">
+        <div style={{ padding: '20px' }}>
+          <Text as="h2" variant="headingMd">{title}</Text>
+          {children || <Text as="p">Slide-in panel for forms, filters, or other content.</Text>}
+        </div>
+      </Sheet>
+    </>
+  );
+}
+
+export default SheetExample;`
+  }
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -20146,6 +20520,9 @@ export function getCodeVariants(
     actionmenu: actionMenuExamples,
     image: imageExamples,
     breadcrumbs: breadcrumbsExamples,
+    popover: popoverExamples,
+    tooltip: tooltipExamples,
+    sheet: sheetExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

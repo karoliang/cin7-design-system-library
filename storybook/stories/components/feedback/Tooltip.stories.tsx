@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Tooltip, Button, Text, Icon, Badge } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/Tooltip',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Tooltips provide contextual information when users hover over or focus on an element. They\'re perfect for explaining icons, providing additional context, or showing brief help text.',
       },
     },
+    codeVariants: getCodeVariants('tooltip', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

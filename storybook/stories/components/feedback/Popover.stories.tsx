@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Popover, Button, Text, ActionList, FormLayout, TextField } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/Popover',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Popovers are small overlays that open when users interact with an element. They\'re used to display additional content or actions in context without leaving the current page.',
       },
     },
+    codeVariants: getCodeVariants('popover', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

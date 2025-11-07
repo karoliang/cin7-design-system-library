@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Sheet, Button, Text, FormLayout, TextField, Card, Badge } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/Sheet',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Sheets are slide-out panels that appear from the edge of the screen. They\'re perfect for navigation, secondary actions, or detailed information that doesn\'t require a full modal.',
       },
     },
+    codeVariants: getCodeVariants('sheet', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {
