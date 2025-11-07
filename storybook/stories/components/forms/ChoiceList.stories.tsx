@@ -96,6 +96,10 @@ export const Default: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const SingleSelection: Story = {
@@ -113,6 +117,10 @@ export const SingleSelection: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const MultipleSelection: Story = {
@@ -131,6 +139,10 @@ export const MultipleSelection: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const WithDescriptions: Story = {
@@ -179,6 +191,10 @@ export const WithDescriptions: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -198,6 +214,10 @@ export const WithError: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -216,6 +236,10 @@ export const Disabled: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const PartiallyDisabled: Story = {
@@ -241,6 +265,10 @@ export const PartiallyDisabled: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const LongList: Story = {
@@ -268,6 +296,10 @@ export const LongList: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const ProductFilters: Story = {
@@ -327,6 +359,10 @@ export const ProductFilters: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const SurveyQuestions: Story = {
@@ -414,6 +450,10 @@ export const SurveyQuestions: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const PermissionSettings: Story = {
@@ -499,6 +539,10 @@ export const PermissionSettings: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
 
 export const MultipleChoiceLists: Story = {
@@ -569,4 +613,8 @@ export const MultipleChoiceLists: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('choicelist', 'default'),
+  },
+
 };
