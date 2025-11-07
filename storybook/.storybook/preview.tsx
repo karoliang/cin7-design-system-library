@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 import React from 'react';
 import { AppProvider } from '@shopify/polaris';
+import enTranslations from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/build/esm/styles.css';
 
 const preview: Preview = {
@@ -14,7 +15,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <AppProvider i18n={{}}>
+      <AppProvider i18n={enTranslations}>
         <Story />
       </AppProvider>
     ),
