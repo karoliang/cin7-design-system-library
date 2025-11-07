@@ -76,6 +76,10 @@ export const Default: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const WithIconButtonActivator: Story = {
@@ -102,6 +106,10 @@ export const WithIconButtonActivator: Story = {
       <Button size="slim" icon={MenuHorizontalIcon} />
     ),
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const GroupedActions: Story = {
@@ -141,6 +149,10 @@ export const GroupedActions: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const RollupVariations: Story = {
@@ -201,7 +213,11 @@ export const RollupVariations: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const DisabledActions: Story = {
@@ -233,6 +249,10 @@ export const DisabledActions: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const ActionsWithBadges: Story = {
@@ -273,6 +293,10 @@ export const ActionsWithBadges: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const LongActionList: Story = {
@@ -289,6 +313,10 @@ export const LongActionList: Story = {
       { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => {} },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const InteractiveMenu: Story = {
@@ -337,6 +365,10 @@ export const InteractiveMenu: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const ContextualUsage: Story = {
@@ -450,6 +482,10 @@ export const ContextualUsage: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -481,7 +517,11 @@ export const AccessibilityDemo: Story = {
         />
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };
 
 export const WithinPopover: Story = {
@@ -525,4 +565,8 @@ export const WithinPopover: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('actionmenu', 'default'),
+  },
+
 };

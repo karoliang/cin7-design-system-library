@@ -56,6 +56,10 @@ export const Default: Story = {
     },
     image: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const WithDescription: Story = {
@@ -68,6 +72,10 @@ export const WithDescription: Story = {
     image: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
     children: 'Add products to your store to start selling and tracking inventory.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const WithSecondaryAction: Story = {
@@ -84,6 +92,10 @@ export const WithSecondaryAction: Story = {
     image: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
     children: 'Once you start making sales, you\'ll see your order history here.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const NoAction: Story = {
@@ -92,6 +104,10 @@ export const NoAction: Story = {
     image: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
     children: 'There are no tasks that need your attention right now.',
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const FullWidth: Story = {
@@ -105,6 +121,10 @@ export const FullWidth: Story = {
     children: 'Set up your preferences to start seeing data here.',
     fullWidth: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const SearchResults: Story = {
@@ -117,6 +137,10 @@ export const SearchResults: Story = {
       onAction: () => console.log('Clear search clicked'),
     },
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const ErrorState: Story = {
@@ -133,6 +157,10 @@ export const ErrorState: Story = {
       onAction: () => console.log('Contact support clicked'),
     },
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const MaintenanceMode: Story = {
@@ -145,6 +173,10 @@ export const MaintenanceMode: Story = {
       onAction: () => console.log('Get notified clicked'),
     },
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const OnboardingWelcome: Story = {
@@ -262,6 +294,10 @@ export const OnboardingWelcome: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const DataImportFlow: Story = {
@@ -413,6 +449,10 @@ export const DataImportFlow: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const CollectionStates: Story = {
@@ -470,6 +510,10 @@ export const CollectionStates: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };
 
 export const MobileEmptyStates: Story = {
@@ -521,4 +565,8 @@ export const MobileEmptyStates: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('emptystate', 'default'),
+  },
+
 };

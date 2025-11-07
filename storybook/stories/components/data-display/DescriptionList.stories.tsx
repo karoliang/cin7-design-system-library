@@ -91,6 +91,10 @@ export const ProductDetails: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const CustomerInformation: Story = {
@@ -126,6 +130,10 @@ export const CustomerInformation: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const WithBadges: Story = {
@@ -149,6 +157,10 @@ export const WithBadges: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const WithIcons: Story = {
@@ -192,6 +204,10 @@ export const WithIcons: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const TwoColumns: Story = {
@@ -232,6 +248,10 @@ export const TwoColumns: Story = {
     ],
     columns: 2,
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const TightSpacing: Story = {
@@ -264,6 +284,10 @@ export const TightSpacing: Story = {
     ],
     spacing: 'tight',
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const ComplexProductSpecs: Story = {
@@ -397,6 +421,10 @@ export const ComplexProductSpecs: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const OrderDetails: Story = {
@@ -526,6 +554,10 @@ export const OrderDetails: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const UserProfile: Story = {
@@ -662,6 +694,10 @@ export const UserProfile: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const SystemMetrics: Story = {
@@ -757,6 +793,10 @@ export const SystemMetrics: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const ProductComparison: Story = {
@@ -889,6 +929,10 @@ export const ProductComparison: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -941,4 +985,8 @@ export const WithActions: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('descriptionlist', 'default'),
+  },
+
 };

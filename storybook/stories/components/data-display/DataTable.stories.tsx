@@ -108,6 +108,10 @@ export const ProductTable: Story = {
     headings: ['Product', 'Category', 'Price', 'Stock', 'Status'],
     rows: sampleProducts,
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const WithCustomContent: Story = {
@@ -138,7 +142,11 @@ export const WithCustomContent: Story = {
         ]}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const WithBadges: Story = {
@@ -155,7 +163,11 @@ export const WithBadges: Story = {
         ]}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const Sortable: Story = {
@@ -205,6 +217,10 @@ export const Sortable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const WithFooter: Story = {
@@ -214,6 +230,10 @@ export const WithFooter: Story = {
     rows: sampleOrders,
     footerContent: `Showing ${sampleOrders.length} orders`,
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const DenseTable: Story = {
@@ -229,6 +249,10 @@ export const DenseTable: Story = {
     increasedTableDensity: true,
     hasZebraStriping: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const LargeDataset: Story = {
@@ -254,6 +278,10 @@ export const LargeDataset: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const FinancialData: Story = {
@@ -277,6 +305,10 @@ export const FinancialData: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const UserManagement: Story = {
@@ -315,6 +347,10 @@ export const UserManagement: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const InventoryTable: Story = {
@@ -356,6 +392,10 @@ export const InventoryTable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
 
 export const InteractiveTable: Story = {
@@ -457,4 +497,8 @@ export const InteractiveTable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('datatable', 'default'),
+  },
+
 };
