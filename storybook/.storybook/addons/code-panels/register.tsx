@@ -28,19 +28,17 @@ const panels = [
   },
 ];
 
-// Register the addon once (prevent HMR double registration)
-if (!addons.getElements('panel').some((el: any) => el.id?.startsWith(ADDON_ID))) {
-  addons.register(ADDON_ID, () => {
-    // Register each panel
-    panels.forEach(({ id, title, language }) => {
-      addons.add(id, {
-        type: types.PANEL,
-        title,
-        match: ({ viewMode }) => viewMode === 'story',
-        render: ({ active }) => (
-          <CodePanel active={!!active} language={language} />
-        ),
-      });
+// Register the addon
+addons.register(ADDON_ID, () => {
+  // Register each panel
+  panels.forEach(({ id, title, language }) => {
+    addons.add(id, {
+      type: types.PANEL,
+      title,
+      match: ({ viewMode }) => viewMode === 'story',
+      render: ({ active }) => (
+        <CodePanel active={!!active} language={language} />
+      ),
     });
   });
-}
+});
