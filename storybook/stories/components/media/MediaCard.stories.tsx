@@ -88,6 +88,9 @@ export const ProductCard: Story = {
       }}
     />
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const VideoCard: Story = {
@@ -108,6 +111,9 @@ export const VideoCard: Story = {
       />
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const ArticleCard: Story = {
@@ -134,6 +140,9 @@ export const ArticleCard: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const CustomerTestimonial: Story = {
@@ -153,6 +162,9 @@ export const CustomerTestimonial: Story = {
       />
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const SizeVariations: Story = {
@@ -210,6 +222,9 @@ export const SizeVariations: Story = {
       </div>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const LandscapeMode: Story = {
@@ -248,6 +263,9 @@ export const LandscapeMode: Story = {
       </div>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const WithMetadata: Story = {
@@ -282,6 +300,9 @@ export const WithMetadata: Story = {
         </MediaCard>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
   },
 };
 
@@ -336,6 +357,9 @@ export const ProductCollection: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
   },
 };
 
@@ -420,6 +444,9 @@ export const InteractiveCard: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const EducationalContent: Story = {
@@ -488,6 +515,9 @@ export const EducationalContent: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const WithAvatar: Story = {
@@ -547,6 +577,9 @@ export const WithAvatar: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const LoadingState: Story = {
@@ -583,6 +616,9 @@ export const LoadingState: Story = {
       `}</style>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const ErrorState: Story = {
@@ -602,6 +638,9 @@ export const ErrorState: Story = {
       />
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
 
 export const CustomActions: Story = {
@@ -622,4 +661,7 @@ export const CustomActions: Story = {
       />
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('mediacard', 'default'),
+  },
 };
