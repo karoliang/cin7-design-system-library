@@ -145,7 +145,11 @@ export const VerticalStack: Story = {
         <Text as="p" variant="bodySm">Content for the third section maintaining consistent spacing.</Text>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const HorizontalStack: Story = {
@@ -160,7 +164,11 @@ export const HorizontalStack: Story = {
         <Button variant="plain">Cancel</Button>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const SpacingVariations: Story = {
@@ -211,7 +219,11 @@ export const SpacingVariations: Story = {
         </CustomAlphaStack>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const DistributionOptions: Story = {
@@ -271,7 +283,11 @@ export const DistributionOptions: Story = {
         </CustomAlphaStack>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const AlignmentOptions: Story = {
@@ -367,7 +383,11 @@ export const AlignmentOptions: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const WrappingStack: Story = {
@@ -393,7 +413,11 @@ export const WrappingStack: Story = {
         <Badge>Clearance</Badge>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const FormLayout: Story = {
@@ -452,7 +476,11 @@ export const FormLayout: Story = {
         </CustomAlphaStack>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const CardGrid: Story = {
@@ -506,7 +534,11 @@ export const CardGrid: Story = {
         </Card>
       </CustomAlphaStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const ProgressSteps: Story = {
@@ -589,7 +621,11 @@ export const ProgressSteps: Story = {
         </div>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const StatusCards: Story = {
@@ -651,7 +687,11 @@ export const StatusCards: Story = {
         </Card>
       </CustomAlphaStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
 
 export const ComplexLayout: Story = {
@@ -721,5 +761,9 @@ export const ComplexLayout: Story = {
         </CustomAlphaStack>
       </CustomAlphaStack>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('alphastack', 'default'),
+  },
+
 };
