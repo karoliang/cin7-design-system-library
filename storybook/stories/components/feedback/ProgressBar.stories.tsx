@@ -72,7 +72,7 @@ export const Sizes: Story = {
         <ProgressBar progress={75} size="large" />
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('progressbar', 'default'),
   },
@@ -97,7 +97,7 @@ export const Colors: Story = {
         <ProgressBar progress={60} color="critical" />
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('progressbar', 'default'),
   },
@@ -132,7 +132,7 @@ export const ProgressValues: Story = {
         <ProgressBar progress={100} color="success" />
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('progressbar', 'default'),
   },
@@ -491,7 +491,7 @@ export const RealWorldScenarios: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('progressbar', 'default'),
   },

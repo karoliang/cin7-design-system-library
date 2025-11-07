@@ -77,7 +77,7 @@ export const WithIllustration: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -100,7 +100,7 @@ export const PromotionalContent: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -123,7 +123,7 @@ export const FeatureAnnouncement: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -146,7 +146,7 @@ export const OnboardingGuidance: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -169,7 +169,7 @@ export const TipsAndBestPractices: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -252,7 +252,7 @@ export const BusinessInsights: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -275,7 +275,7 @@ export const EducationalContent: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -324,7 +324,7 @@ export const MultipleCallouts: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -343,7 +343,7 @@ export const MinimalCallout: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },
@@ -378,7 +378,7 @@ export const CalloutWithMetrics: Story = {
         }}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('calloutcard', 'default'),
   },

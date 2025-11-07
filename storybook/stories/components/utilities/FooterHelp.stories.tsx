@@ -94,7 +94,7 @@ export const WithIcon: Story = {
         </FooterHelp>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('footerhelp', 'default'),
   },

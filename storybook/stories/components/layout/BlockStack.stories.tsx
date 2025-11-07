@@ -113,7 +113,7 @@ export const SpacingVariations: Story = {
         </BlockStack>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },
@@ -164,7 +164,7 @@ export const AlignmentOptions: Story = {
         </BlockStack>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },
@@ -223,7 +223,7 @@ export const FormLayout: Story = {
         </div>
       </BlockStack>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },
@@ -260,7 +260,7 @@ export const CardList: Story = {
         </BlockStack>
       </Card>
     </BlockStack>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },
@@ -315,7 +315,7 @@ export const StatusIndicators: Story = {
         </BlockStack>
       </Card>
     </BlockStack>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },
@@ -367,7 +367,7 @@ export const WithDifferentContent: Story = {
         </div>
       </BlockStack>
     </BlockStack>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('blockstack', 'default'),
   },

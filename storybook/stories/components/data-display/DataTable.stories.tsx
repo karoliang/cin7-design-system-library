@@ -142,7 +142,7 @@ export const WithCustomContent: Story = {
         ]}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('datatable', 'default'),
   },
@@ -163,7 +163,7 @@ export const WithBadges: Story = {
         ]}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('datatable', 'default'),
   },

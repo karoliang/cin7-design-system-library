@@ -330,7 +330,7 @@ export const Disabled: Story = {
         </div>
       </DropZone>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('dropzone', 'default'),
   },

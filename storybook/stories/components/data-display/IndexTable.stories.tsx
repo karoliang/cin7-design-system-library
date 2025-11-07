@@ -725,7 +725,7 @@ export const LoadingState: Story = {
         </IndexTable>
       </LegacyCard>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('indextable', 'default'),
   },
@@ -750,7 +750,7 @@ export const EmptyState: Story = {
         />
       </LegacyCard>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('indextable', 'default'),
   },

@@ -55,7 +55,7 @@ export const BasicUsage: Story = {
         </p>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -105,7 +105,7 @@ export const LongFormContent: Story = {
         </p>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -146,7 +146,7 @@ export const ProductDescription: Story = {
         </p>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -216,7 +216,7 @@ export const HelpArticle: Story = {
         </div>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -295,7 +295,7 @@ export const BlogPost: Story = {
         </p>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -348,7 +348,7 @@ export const ComparisonLayout: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -388,7 +388,7 @@ export const NarrowContent: Story = {
         </p>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },
@@ -461,7 +461,7 @@ export const TechnicalDocumentation: Story = {
         </div>
       </TextContainer>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('textcontainer', 'default'),
   },

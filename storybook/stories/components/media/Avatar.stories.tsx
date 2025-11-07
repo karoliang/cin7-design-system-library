@@ -81,7 +81,7 @@ export const Sizes: Story = {
         <Text variant="bodySm" color="subdued">Extra Large</Text>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('avatar', 'default'),
   },
@@ -103,7 +103,7 @@ export const WithImages: Story = {
         </div>
       </div>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('avatar', 'default'),
   },
@@ -135,7 +135,7 @@ export const CustomerAvatars: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('avatar', 'default'),
   },
@@ -558,7 +558,7 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('avatar', 'default'),
   },
@@ -611,7 +611,7 @@ export const ErrorAndLoading: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('avatar', 'default'),
   },

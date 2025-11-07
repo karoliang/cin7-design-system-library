@@ -35,7 +35,7 @@ export const Default: Story = {
         <TextField label="Message" multiline={3} placeholder="Enter your message..." />
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -66,7 +66,7 @@ export const GroupedFields: Story = {
         <TextField label="Address" placeholder="123 Main St" />
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -93,7 +93,7 @@ export const ThreeColumnLayout: Story = {
         </FormLayout.Group>
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -145,7 +145,7 @@ export const ComplexForm: Story = {
         </FormLayout.Group>
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -335,7 +335,7 @@ export const SettingsForm: Story = {
         </div>
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -512,7 +512,7 @@ export const NestedFormLayout: Story = {
         </div>
       </FormLayout>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },
@@ -573,7 +573,7 @@ export const ResponsiveLayout: Story = {
         </FormLayout>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('formlayout', 'default'),
   },

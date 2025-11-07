@@ -59,7 +59,7 @@ export const Default: Story = {
         </ButtonGroup>
       </BlockStack>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },
@@ -184,7 +184,7 @@ export const IconButtons: Story = {
         </ButtonGroup>
       </BlockStack>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },
@@ -209,7 +209,7 @@ export const FullWidthGroup: Story = {
         </BlockStack>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },
@@ -343,7 +343,7 @@ export const SizeVariations: Story = {
         </div>
       </BlockStack>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },
@@ -519,7 +519,7 @@ export const ConnectedButtons: Story = {
         </div>
       </BlockStack>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },
@@ -550,7 +550,7 @@ export const ResponsiveGroup: Story = {
         </BlockStack>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('buttongroup', 'default'),
   },

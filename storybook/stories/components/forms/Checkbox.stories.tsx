@@ -312,7 +312,7 @@ export const AccessibilityExamples: Story = {
         </Text>
       </BlockStack>
     </BlockStack>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('checkbox', 'default'),
   },

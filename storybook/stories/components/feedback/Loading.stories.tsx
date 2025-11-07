@@ -77,7 +77,7 @@ export const SizeVariants: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('loading', 'default'),
   },
@@ -155,7 +155,7 @@ export const WithBackgrounds: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('loading', 'default'),
   },
@@ -299,7 +299,7 @@ export const InlineLoading: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('loading', 'default'),
   },
@@ -556,7 +556,7 @@ export const AccessibilityDemo: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('loading', 'default'),
   },

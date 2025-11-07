@@ -213,7 +213,7 @@ export const RollupVariations: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('actionmenu', 'default'),
   },
@@ -517,7 +517,7 @@ export const AccessibilityDemo: Story = {
         />
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('actionmenu', 'default'),
   },

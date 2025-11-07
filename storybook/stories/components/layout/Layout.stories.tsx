@@ -131,7 +131,7 @@ export const TwoColumnLayout: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('layout', 'default'),
   },
@@ -240,7 +240,7 @@ export const ProductPage: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('layout', 'default'),
   },
@@ -367,7 +367,7 @@ export const OrderManagement: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('layout', 'default'),
   },
@@ -482,7 +482,7 @@ export const SettingsPage: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('layout', 'default'),
   },
@@ -623,7 +623,7 @@ export const CustomerProfile: Story = {
         </Card>
       </Layout.Section>
     </Layout>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('layout', 'default'),
   },

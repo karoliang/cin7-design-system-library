@@ -77,7 +77,7 @@ export const Default: Story = {
         <Button>Hover over me</Button>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -97,7 +97,7 @@ export const WithText: Story = {
         </span>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -131,7 +131,7 @@ export const WithIcon: Story = {
         </div>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -221,7 +221,7 @@ export const Positions: Story = {
         <Button>Bottom Right</Button>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -238,7 +238,7 @@ export const WideTooltip: Story = {
         <Button>Wide Tooltip Example</Button>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -344,7 +344,7 @@ export const FormHelpText: Story = {
         </Tooltip>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -417,7 +417,7 @@ export const TableTooltips: Story = {
         </table>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -450,7 +450,7 @@ export const LightTheme: Story = {
         </Tooltip>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -468,7 +468,7 @@ export const PersistentOnHover: Story = {
         <Button>Hover and move to tooltip</Button>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -497,7 +497,7 @@ export const ComplexContent: Story = {
         <Button>Shipping Details</Button>
       </Tooltip>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -545,7 +545,7 @@ export const StatusIndicators: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },
@@ -601,7 +601,7 @@ export const AccessibilityDemo: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tooltip', 'default'),
   },

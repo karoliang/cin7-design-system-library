@@ -121,7 +121,7 @@ export const WithSubtitle: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -169,7 +169,7 @@ export const WithBreadcrumbs: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -234,7 +234,7 @@ export const WithActionGroups: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -343,7 +343,7 @@ export const CustomerPage: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -444,7 +444,7 @@ export const ProductCatalog: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -548,7 +548,7 @@ export const OrderManagement: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -702,7 +702,7 @@ export const SettingsPage: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },
@@ -782,7 +782,7 @@ export const FullWidthPage: Story = {
         </Layout.Section>
       </Layout>
     </Page>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('page', 'default'),
   },

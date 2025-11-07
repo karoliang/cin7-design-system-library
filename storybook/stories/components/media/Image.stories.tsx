@@ -83,7 +83,7 @@ export const BasicImage: Story = {
       width="400px"
       height="300px"
     />
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('image', 'default'),
   },
@@ -144,7 +144,7 @@ export const ResponsiveImage: Story = {
         />
       </div>
     </Card>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('image', 'default'),
   },

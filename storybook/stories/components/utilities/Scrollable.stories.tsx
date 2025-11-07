@@ -89,7 +89,7 @@ export const Default: Story = {
         </div>
       </Scrollable>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('scrollable', 'default'),
   },
@@ -194,7 +194,7 @@ export const HorizontalScrolling: Story = {
         </div>
       </Scrollable>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('scrollable', 'default'),
   },

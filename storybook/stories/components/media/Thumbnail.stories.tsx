@@ -85,7 +85,7 @@ export const Sizes: Story = {
         <Text variant="bodySm" color="subdued">Large</Text>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('thumbnail', 'default'),
   },
@@ -201,7 +201,7 @@ export const WithOverlays: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('thumbnail', 'default'),
   },
@@ -488,7 +488,7 @@ export const LoadingAndError: Story = {
         }
       `}</style>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('thumbnail', 'default'),
   },
@@ -611,7 +611,7 @@ export const TransparentBackground: Story = {
         The second thumbnail has a transparent background, which works well for logos or images with transparent areas.
       </Text>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('thumbnail', 'default'),
   },
@@ -737,7 +737,7 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('thumbnail', 'default'),
   },

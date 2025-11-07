@@ -51,7 +51,7 @@ export const SingleKeys: Story = {
         <KeyboardKey>Fn</KeyboardKey>
       </InlineStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
@@ -67,7 +67,7 @@ export const LetterKeys: Story = {
         ))}
       </InlineStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
@@ -83,7 +83,7 @@ export const NumberKeys: Story = {
         ))}
       </InlineStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
@@ -119,7 +119,7 @@ export const SymbolKeys: Story = {
         <KeyboardKey>~</KeyboardKey>
       </InlineStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
@@ -155,7 +155,7 @@ export const ArrowKeys: Story = {
         </InlineStack>
       </BlockStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },
@@ -241,7 +241,7 @@ export const KeyCombinations: Story = {
         </div>
       </BlockStack>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('keyboardkey', 'default'),
   },

@@ -78,7 +78,7 @@ export const WithPlayButton: Story = {
         onPlaybackStart={() => console.log('Video playback started')}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('videothumbnail', 'default'),
   },
@@ -627,7 +627,7 @@ export const LoadingState: Story = {
         }
       `}</style>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('videothumbnail', 'default'),
   },
@@ -692,7 +692,7 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('videothumbnail', 'default'),
   },

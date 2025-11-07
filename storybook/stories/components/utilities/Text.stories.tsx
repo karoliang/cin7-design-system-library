@@ -103,7 +103,7 @@ export const Variants: Story = {
         <Text variant="headingXl" as="h1">Heading XL - Page titles and major headlines</Text>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -121,7 +121,7 @@ export const Tones: Story = {
       <Text variant="bodyMd" tone="critical">Critical tone - Error messages</Text>
       <Text variant="bodyMd" tone="info">Info tone - Informational content</Text>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -136,7 +136,7 @@ export const FontWeights: Story = {
       <Text variant="bodyMd" fontWeight="semibold">Semibold weight - Moderately emphasized</Text>
       <Text variant="bodyMd" fontWeight="bold">Bold weight - Strongly emphasized</Text>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -159,7 +159,7 @@ export const Alignment: Story = {
         <Text variant="bodyMd" alignment="justify">Justified text - Creates clean columns and professional layouts</Text>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -211,7 +211,7 @@ export const MarketingCopy: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -269,7 +269,7 @@ export const ProductDescriptions: Story = {
         </Text>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -326,7 +326,7 @@ export const FeatureLists: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },
@@ -668,7 +668,7 @@ export const SpecializedText: Story = {
         </div>
       </div>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('text', 'default'),
   },

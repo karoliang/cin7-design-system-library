@@ -566,7 +566,7 @@ export const LoadingState: Story = {
         )}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('resourcelist', 'default'),
   },
@@ -587,7 +587,7 @@ export const EmptyState: Story = {
         )}
       />
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('resourcelist', 'default'),
   },

@@ -448,7 +448,7 @@ export const NestedLists: Story = {
         </List.Item>
       </List>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('list', 'bulleted'),
   },
@@ -569,7 +569,7 @@ export const ComparisonList: Story = {
         </List.Item>
       </List>
     </div>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('list', 'bulleted'),
   },

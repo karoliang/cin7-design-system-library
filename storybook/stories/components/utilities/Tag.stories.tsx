@@ -81,7 +81,7 @@ export const BasicTags: Story = {
       <Tag tone="info">Info</Tag>
       <Tag tone="highlight">Highlight</Tag>
     </InlineStack>
-  ),,
+  ),
   parameters: {
     codeVariants: getCodeVariants('tag', 'default'),
   },
