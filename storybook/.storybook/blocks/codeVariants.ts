@@ -14849,6 +14849,175 @@ function TextContainerExample({
   }
 };
 
+// AppProvider Component Examples
+export const appProviderExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { AppProvider, Page, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function AppProviderExample() {
+  return (
+    <AppProvider i18n={{}}>
+      <Page title="My Application">
+        <Card>
+          <BlockStack gap="400">
+            <Text as="h2" variant="headingMd">Welcome to Cin7 DSL</Text>
+            <Text as="p">
+              This application is wrapped with AppProvider to provide
+              global context, theming, and i18n support.
+            </Text>
+            <Button variant="primary">Get Started</Button>
+          </BlockStack>
+        </Card>
+      </Page>
+    </AppProvider>
+  );
+}
+
+export default AppProviderExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="app" data-theme="light" data-locale="en">
+  <div class="page">
+    <div class="page-header">
+      <h1>My Application</h1>
+    </div>
+    <div class="card">
+      <h2>Welcome to Cin7 DSL</h2>
+      <p>
+        This application uses a vanilla JS context provider pattern
+        to manage global state, theming, and internationalization.
+      </p>
+      <button class="polaris-button polaris-button--primary">
+        Get Started
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript context provider using @cin7/vanilla-js
+import { createContext } from '@cin7/vanilla-js';
+
+const AppContext = createContext({
+  theme: 'light',
+  locale: 'en',
+  i18n: {}
+});
+
+// Initialize app with context
+const app = document.getElementById('app');
+AppContext.provide(app, {
+  theme: app.dataset.theme,
+  locale: app.dataset.locale,
+  i18n: {} // Load translations here
+});
+
+// Components can access context
+const context = AppContext.use(app);
+console.log('App theme:', context.theme);
+console.log('App locale:', context.locale);
+</script>`,
+
+    extjs: `// ExtJS Application with global configuration
+Ext.application({
+  name: 'Cin7App',
+
+  // Global app configuration (similar to AppProvider)
+  appConfig: {
+    theme: 'neptune',
+    locale: 'en',
+    i18n: {}
+  },
+
+  launch: function() {
+    // Create viewport with configured theme
+    Ext.create('Ext.container.Viewport', {
+      layout: 'fit',
+      items: [{
+        xtype: 'panel',
+        title: 'My Application',
+        bodyPadding: 16,
+        items: [{
+          xtype: 'container',
+          html: '<h2>Welcome to Cin7 DSL</h2>' +
+                '<p>This application uses ExtJS application ' +
+                'configuration to provide global context.</p>'
+        }, {
+          xtype: 'button',
+          text: 'Get Started',
+          ui: 'action',
+          margin: '16 0 0 0',
+          handler: function() {
+            console.log('Get started clicked');
+          }
+        }]
+      }]
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Page, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface AppConfig {
+  theme?: 'light' | 'dark';
+  locale?: string;
+  features?: {
+    enableBetaFeatures: boolean;
+    enableAnalytics: boolean;
+  };
+}
+
+interface AppProviderExampleProps {
+  config?: AppConfig;
+  children?: React.ReactNode;
+}
+
+function AppProviderExample({
+  config = {
+    theme: 'light',
+    locale: 'en',
+    features: {
+      enableBetaFeatures: false,
+      enableAnalytics: true
+    }
+  },
+  children
+}: AppProviderExampleProps): JSX.Element {
+  const i18nConfig = {
+    Polaris: {
+      Common: {
+        save: 'Save',
+        cancel: 'Cancel',
+        delete: 'Delete'
+      }
+    }
+  };
+
+  return (
+    <AppProvider i18n={i18nConfig}>
+      {children || (
+        <Page title="My Application">
+          <Card>
+            <BlockStack gap="400">
+              <Text as="h2" variant="headingMd">Welcome to Cin7 DSL</Text>
+              <Text as="p">
+                Theme: {config.theme}, Locale: {config.locale}
+              </Text>
+              <Button variant="primary">Get Started</Button>
+            </BlockStack>
+          </Card>
+        </Page>
+      )}
+    </AppProvider>
+  );
+}
+
+export default AppProviderExample;`
+  }
+};
+
 // IndexFilters Component Examples
 export const indexFiltersExamples: Record<string, CodeVariant> = {
   default: {
@@ -22018,6 +22187,122 @@ export default ActionMenuExample;`
   }
 };
 
+// ButtonGroup Component Examples
+export const buttonGroupExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ButtonGroup, Button } from '@shopify/polaris';
+import React from 'react';
+
+function ButtonGroupExample() {
+  return (
+    <ButtonGroup>
+      <Button variant="primary">Save</Button>
+      <Button>Cancel</Button>
+      <Button variant="plain">Help</Button>
+    </ButtonGroup>
+  );
+}
+
+export default ButtonGroupExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="button-group">
+  <button class="polaris-button polaris-button--primary">Save</button>
+  <button class="polaris-button">Cancel</button>
+  <button class="polaris-button polaris-button--plain">Help</button>
+</div>
+
+<style>
+.button-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+const buttons = $('.button-group button');
+buttons.forEach((btn, index) => {
+  on(btn, 'click', () => {
+    const actions = ['save', 'cancel', 'help'];
+    console.log(\`\${actions[index]} action triggered\`);
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Button Group using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    pack: 'start'
+  },
+  defaults: {
+    margin: '0 8 0 0'
+  },
+  items: [
+    {
+      xtype: 'button',
+      text: 'Save',
+      ui: 'action',
+      handler: function() {
+        console.log('Save clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Cancel',
+      handler: function() {
+        console.log('Cancel clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Help',
+      ui: 'plain',
+      handler: function() {
+        console.log('Help clicked');
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, ButtonProps } from '@shopify/polaris';
+import React from 'react';
+
+interface ButtonConfig {
+  label: string;
+  variant?: ButtonProps['variant'];
+  onClick: () => void;
+}
+
+interface ButtonGroupExampleProps {
+  buttons: ButtonConfig[];
+}
+
+function ButtonGroupExample({ buttons }: ButtonGroupExampleProps): JSX.Element {
+  return (
+    <ButtonGroup>
+      {buttons.map((btn, index) => (
+        <Button
+          key={index}
+          variant={btn.variant}
+          onClick={btn.onClick}
+        >
+          {btn.label}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}
+
+export default ButtonGroupExample;`
+  }
+};
+
 // Image Component Examples
 export const imageExamples: Record<string, CodeVariant> = {
   default: {
@@ -22723,6 +23008,7 @@ export function getCodeVariants(
 ): CodeVariant | null {
   const examples: Record<string, Record<string, CodeVariant>> = {
     button: buttonExamples,
+    buttongroup: buttonGroupExamples,
     card: cardExamples,
     textfield: textFieldExamples,
     modal: modalExamples,
@@ -22792,6 +23078,7 @@ export function getCodeVariants(
     frame: frameExamples,
     scrollable: scrollableExamples,
     textcontainer: textContainerExamples,
+    appprovider: appProviderExamples,
     indexfilters: indexFiltersExamples,
     pageactions: pageActionsExamples,
     optionlist: optionListExamples,
