@@ -176,7 +176,7 @@ export const FooterLinks: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'footerLinks'),
   },
 
 };
@@ -254,7 +254,7 @@ export const CardActions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'cardActions'),
   },
 
 };
@@ -330,7 +330,7 @@ export const HelpDocumentation: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'helpDocumentation'),
   },
 
 };
@@ -364,7 +364,7 @@ export const BreadcrumbStyle: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'breadcrumbStyle'),
   },
 
 };
@@ -424,7 +424,7 @@ export const TagCloud: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'tagCloud'),
   },
 
 };
@@ -499,7 +499,7 @@ export const TableOfContents: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'tableOfContents'),
   },
 
 };
@@ -613,7 +613,7 @@ export const SocialLinks: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('link', 'default'),
+    codeVariants: getCodeVariants('link', 'socialLinks'),
   },
 
 };

@@ -7307,6 +7307,1081 @@ function BannerWithActions({
 }
 
 export default BannerWithActions;`
+  },
+
+  'status-variants': {
+    react: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+function StatusVariantsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Banner
+        title="Success"
+        status="success"
+        dismissible
+      >
+        Payment was processed successfully. Order confirmation has been sent to your email.
+      </Banner>
+
+      <Banner
+        title="Information"
+        status="info"
+        dismissible
+      >
+        New features have been added to your dashboard. Check out the latest updates.
+      </Banner>
+
+      <Banner
+        title="Warning"
+        status="warning"
+        dismissible
+      >
+        Your subscription will expire in 3 days. Renew now to avoid interruption.
+      </Banner>
+
+      <Banner
+        title="Critical Error"
+        status="critical"
+        dismissible
+      >
+        Payment method declined. Please update your billing information to continue service.
+      </Banner>
+    </div>
+  );
+}
+
+export default StatusVariantsExample;`,
+
+    vanilla: `<!-- HTML Structure for multiple status banners -->
+<div id="banners-container" style="display: flex; flex-direction: column; gap: 16px;">
+  <!-- Success Banner -->
+  <div class="polaris-banner polaris-banner--success" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Success</h3>
+      <p>Payment was processed successfully. Order confirmation has been sent to your email.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- Info Banner -->
+  <div class="polaris-banner polaris-banner--info" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Information</h3>
+      <p>New features have been added to your dashboard. Check out the latest updates.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- Warning Banner -->
+  <div class="polaris-banner polaris-banner--warning" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Warning</h3>
+      <p>Your subscription will expire in 3 days. Renew now to avoid interruption.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- Critical Banner -->
+  <div class="polaris-banner polaris-banner--critical" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Critical Error</h3>
+      <p>Payment method declined. Please update your billing information to continue service.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss">×</button>
+  </div>
+</div>
+
+<script>
+// Add dismiss handlers for all banners
+document.querySelectorAll('.polaris-banner__dismiss').forEach(button => {
+  button.addEventListener('click', (e) => {
+    e.target.closest('.polaris-banner').remove();
+  });
+});
+</script>`,
+
+    extjs: `// Create a container with multiple banner panels
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0',
+    bodyPadding: 16
+  },
+  items: [{
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--success',
+    layout: 'hbox',
+    items: [{
+      xtype: 'container',
+      flex: 1,
+      html: '<h3>Success</h3><p>Payment was processed successfully. Order confirmation has been sent to your email.</p>'
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--info',
+    layout: 'hbox',
+    items: [{
+      xtype: 'container',
+      flex: 1,
+      html: '<h3>Information</h3><p>New features have been added to your dashboard. Check out the latest updates.</p>'
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--warning',
+    layout: 'hbox',
+    items: [{
+      xtype: 'container',
+      flex: 1,
+      html: '<h3>Warning</h3><p>Your subscription will expire in 3 days. Renew now to avoid interruption.</p>'
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--critical',
+    layout: 'hbox',
+    items: [{
+      xtype: 'container',
+      flex: 1,
+      html: '<h3>Critical Error</h3><p>Payment method declined. Please update your billing information to continue service.</p>'
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+type BannerStatus = 'success' | 'info' | 'warning' | 'critical';
+
+interface StatusBanner {
+  id: string;
+  title: string;
+  status: BannerStatus;
+  message: string;
+}
+
+const statusBanners: StatusBanner[] = [
+  {
+    id: 'success',
+    title: 'Success',
+    status: 'success',
+    message: 'Payment was processed successfully. Order confirmation has been sent to your email.'
+  },
+  {
+    id: 'info',
+    title: 'Information',
+    status: 'info',
+    message: 'New features have been added to your dashboard. Check out the latest updates.'
+  },
+  {
+    id: 'warning',
+    title: 'Warning',
+    status: 'warning',
+    message: 'Your subscription will expire in 3 days. Renew now to avoid interruption.'
+  },
+  {
+    id: 'critical',
+    title: 'Critical Error',
+    status: 'critical',
+    message: 'Payment method declined. Please update your billing information to continue service.'
+  }
+];
+
+function StatusVariantsExample(): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {statusBanners.map((banner) => (
+        <Banner
+          key={banner.id}
+          title={banner.title}
+          status={banner.status}
+          dismissible
+        >
+          {banner.message}
+        </Banner>
+      ))}
+    </div>
+  );
+}
+
+export default StatusVariantsExample;`
+  },
+
+  minimal: {
+    react: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+function MinimalBannersExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Banner status="success">
+        Changes saved successfully
+      </Banner>
+
+      <Banner status="info">
+        New features available in settings
+      </Banner>
+
+      <Banner status="warning">
+        Connection lost. Retrying...
+      </Banner>
+
+      <Banner status="critical">
+        Failed to save changes. Please try again.
+      </Banner>
+    </div>
+  );
+}
+
+export default MinimalBannersExample;`,
+
+    vanilla: `<!-- Minimal banners without titles -->
+<div id="minimal-banners" style="display: flex; flex-direction: column; gap: 16px;">
+  <div class="polaris-banner polaris-banner--success" role="status">
+    <div class="polaris-banner__content">
+      <p>Changes saved successfully</p>
+    </div>
+  </div>
+
+  <div class="polaris-banner polaris-banner--info" role="status">
+    <div class="polaris-banner__content">
+      <p>New features available in settings</p>
+    </div>
+  </div>
+
+  <div class="polaris-banner polaris-banner--warning" role="alert">
+    <div class="polaris-banner__content">
+      <p>Connection lost. Retrying...</p>
+    </div>
+  </div>
+
+  <div class="polaris-banner polaris-banner--critical" role="alert">
+    <div class="polaris-banner__content">
+      <p>Failed to save changes. Please try again.</p>
+    </div>
+  </div>
+</div>`,
+
+    extjs: `// Minimal banners without titles or actions
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0',
+    bodyPadding: 12
+  },
+  items: [{
+    xtype: 'component',
+    cls: 'polaris-banner polaris-banner--success',
+    html: '<p>Changes saved successfully</p>'
+  }, {
+    xtype: 'component',
+    cls: 'polaris-banner polaris-banner--info',
+    html: '<p>New features available in settings</p>'
+  }, {
+    xtype: 'component',
+    cls: 'polaris-banner polaris-banner--warning',
+    html: '<p>Connection lost. Retrying...</p>'
+  }, {
+    xtype: 'component',
+    cls: 'polaris-banner polaris-banner--critical',
+    html: '<p>Failed to save changes. Please try again.</p>'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+interface MinimalBannerData {
+  id: string;
+  status: 'success' | 'info' | 'warning' | 'critical';
+  message: string;
+}
+
+const minimalBanners: MinimalBannerData[] = [
+  { id: '1', status: 'success', message: 'Changes saved successfully' },
+  { id: '2', status: 'info', message: 'New features available in settings' },
+  { id: '3', status: 'warning', message: 'Connection lost. Retrying...' },
+  { id: '4', status: 'critical', message: 'Failed to save changes. Please try again.' }
+];
+
+function MinimalBannersExample(): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {minimalBanners.map((banner) => (
+        <Banner key={banner.id} status={banner.status}>
+          {banner.message}
+        </Banner>
+      ))}
+    </div>
+  );
+}
+
+export default MinimalBannersExample;`
+  },
+
+  interactive: {
+    react: `import { Banner, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractiveBannerExample() {
+  const [showBanner, setShowBanner] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleAction = async () => {
+    setIsProcessing(true);
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setShowBanner(false);
+    // Reset after delay
+    setTimeout(() => {
+      setShowBanner(true);
+      setIsProcessing(false);
+    }, 1000);
+  };
+
+  return (
+    <div style={{ maxWidth: '600px' }}>
+      {showBanner && (
+        <Banner
+          title="Action required"
+          status="warning"
+          action={{
+            content: isProcessing ? 'Processing...' : 'Complete action',
+            onAction: handleAction,
+            loading: isProcessing,
+            disabled: isProcessing,
+          }}
+          dismissible={!isProcessing}
+          onDismiss={() => setShowBanner(false)}
+        >
+          Please complete the required action to continue using this feature.
+        </Banner>
+      )}
+
+      {!showBanner && (
+        <div style={{ padding: '16px', textAlign: 'center' }}>
+          <Button onClick={() => setShowBanner(true)}>Show banner again</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default InteractiveBannerExample;`,
+
+    vanilla: `<!-- Interactive banner with state management -->
+<div id="banner-wrapper">
+  <div id="interactive-banner" class="polaris-banner polaris-banner--warning" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Action required</h3>
+      <p>Please complete the required action to continue using this feature.</p>
+      <button class="polaris-button" id="action-button">Complete action</button>
+    </div>
+    <button class="polaris-banner__dismiss" id="dismiss-button" aria-label="Dismiss">×</button>
+  </div>
+
+  <div id="show-banner-section" style="display: none; padding: 16px; text-align: center;">
+    <button class="polaris-button" id="show-banner-button">Show banner again</button>
+  </div>
+</div>
+
+<script>
+const banner = document.getElementById('interactive-banner');
+const actionButton = document.getElementById('action-button');
+const dismissButton = document.getElementById('dismiss-button');
+const showBannerSection = document.getElementById('show-banner-section');
+const showBannerButton = document.getElementById('show-banner-button');
+
+let isProcessing = false;
+
+actionButton.addEventListener('click', async () => {
+  if (isProcessing) return;
+
+  isProcessing = true;
+  actionButton.textContent = 'Processing...';
+  actionButton.disabled = true;
+  dismissButton.disabled = true;
+
+  // Simulate async operation
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  banner.style.display = 'none';
+  showBannerSection.style.display = 'block';
+
+  // Reset after delay
+  setTimeout(() => {
+    isProcessing = false;
+    actionButton.textContent = 'Complete action';
+    actionButton.disabled = false;
+    dismissButton.disabled = false;
+  }, 1000);
+});
+
+dismissButton.addEventListener('click', () => {
+  banner.style.display = 'none';
+  showBannerSection.style.display = 'block';
+});
+
+showBannerButton.addEventListener('click', () => {
+  banner.style.display = '';
+  showBannerSection.style.display = 'none';
+});
+</script>`,
+
+    extjs: `// Interactive banner with loading state
+Ext.define('InteractiveBanner', {
+  extend: 'Ext.container.Container',
+
+  layout: 'card',
+
+  initComponent: function() {
+    this.items = [{
+      itemId: 'banner',
+      xtype: 'panel',
+      cls: 'polaris-banner polaris-banner--warning',
+      bodyPadding: 16,
+      layout: 'hbox',
+      items: [{
+        xtype: 'container',
+        flex: 1,
+        layout: 'vbox',
+        items: [{
+          xtype: 'component',
+          html: '<h3>Action required</h3>'
+        }, {
+          xtype: 'component',
+          html: '<p>Please complete the required action to continue using this feature.</p>'
+        }, {
+          xtype: 'button',
+          itemId: 'actionButton',
+          text: 'Complete action',
+          margin: '8 0 0 0',
+          handler: this.handleAction,
+          scope: this
+        }]
+      }, {
+        xtype: 'button',
+        itemId: 'dismissButton',
+        text: '×',
+        handler: this.handleDismiss,
+        scope: this
+      }]
+    }, {
+      itemId: 'placeholder',
+      xtype: 'container',
+      padding: 16,
+      layout: {
+        type: 'vbox',
+        align: 'center'
+      },
+      items: [{
+        xtype: 'button',
+        text: 'Show banner again',
+        handler: function() {
+          this.up().up().getLayout().setActiveItem(0);
+        }
+      }]
+    }];
+
+    this.callParent(arguments);
+  },
+
+  handleAction: function() {
+    var actionBtn = this.down('#actionButton');
+    var dismissBtn = this.down('#dismissButton');
+
+    actionBtn.setText('Processing...');
+    actionBtn.setDisabled(true);
+    dismissBtn.setDisabled(true);
+
+    Ext.defer(function() {
+      this.getLayout().setActiveItem(1);
+
+      Ext.defer(function() {
+        actionBtn.setText('Complete action');
+        actionBtn.setDisabled(false);
+        dismissBtn.setDisabled(false);
+      }, 1000, this);
+    }, 2000, this);
+  },
+
+  handleDismiss: function() {
+    this.getLayout().setActiveItem(1);
+  }
+});
+
+Ext.create('InteractiveBanner', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Banner, Button } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface InteractiveBannerState {
+  showBanner: boolean;
+  isProcessing: boolean;
+}
+
+function InteractiveBannerExample(): JSX.Element {
+  const [state, setState] = useState<InteractiveBannerState>({
+    showBanner: true,
+    isProcessing: false
+  });
+
+  const handleAction = useCallback(async (): Promise<void> => {
+    setState(prev => ({ ...prev, isProcessing: true }));
+
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    setState({ showBanner: false, isProcessing: false });
+
+    // Reset after delay
+    setTimeout(() => {
+      setState({ showBanner: true, isProcessing: false });
+    }, 1000);
+  }, []);
+
+  const handleDismiss = useCallback((): void => {
+    setState(prev => ({ ...prev, showBanner: false }));
+  }, []);
+
+  const handleShowBanner = useCallback((): void => {
+    setState({ showBanner: true, isProcessing: false });
+  }, []);
+
+  return (
+    <div style={{ maxWidth: '600px' }}>
+      {state.showBanner && (
+        <Banner
+          title="Action required"
+          status="warning"
+          action={{
+            content: state.isProcessing ? 'Processing...' : 'Complete action',
+            onAction: handleAction,
+            loading: state.isProcessing,
+            disabled: state.isProcessing,
+          }}
+          dismissible={!state.isProcessing}
+          onDismiss={handleDismiss}
+        >
+          Please complete the required action to continue using this feature.
+        </Banner>
+      )}
+
+      {!state.showBanner && (
+        <div style={{ padding: '16px', textAlign: 'center' }}>
+          <Button onClick={handleShowBanner}>Show banner again</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default InteractiveBannerExample;`
+  },
+
+  'real-world': {
+    react: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+function RealWorldScenariosExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Banner
+        title="Order processing"
+        status="info"
+        action={{
+          content: 'Track order',
+          onAction: () => console.log('Track order'),
+        }}
+      >
+        Your order #1001 is being processed. You will receive a notification when it ships.
+      </Banner>
+
+      <Banner
+        title="Inventory alert"
+        status="warning"
+        action={{
+          content: 'View inventory',
+          onAction: () => console.log('View inventory'),
+        }}
+        secondaryAction={{
+          content: 'Set restock alert',
+          onAction: () => console.log('Set alert'),
+        }}
+      >
+        5 items are running low on stock. Consider restocking soon to avoid fulfillment delays.
+      </Banner>
+
+      <Banner
+        title="Integration successful"
+        status="success"
+        dismissible
+      >
+        Your Shopify store has been successfully connected. Product sync will begin automatically.
+      </Banner>
+
+      <Banner
+        title="API rate limit exceeded"
+        status="critical"
+        action={{
+          content: 'Upgrade plan',
+          onAction: () => console.log('Upgrade plan'),
+        }}
+        secondaryAction={{
+          content: 'View usage',
+          onAction: () => console.log('View usage'),
+        }}
+      >
+        You've exceeded your API quota. Upgrade your plan or wait for the limit to reset.
+      </Banner>
+    </div>
+  );
+}
+
+export default RealWorldScenariosExample;`,
+
+    vanilla: `<!-- Real-world scenario banners -->
+<div id="real-world-banners" style="display: flex; flex-direction: column; gap: 16px;">
+  <!-- Order Processing -->
+  <div class="polaris-banner polaris-banner--info" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Order processing</h3>
+      <p>Your order #1001 is being processed. You will receive a notification when it ships.</p>
+      <button class="polaris-button" onclick="console.log('Track order')">Track order</button>
+    </div>
+  </div>
+
+  <!-- Inventory Alert -->
+  <div class="polaris-banner polaris-banner--warning" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Inventory alert</h3>
+      <p>5 items are running low on stock. Consider restocking soon to avoid fulfillment delays.</p>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button class="polaris-button" onclick="console.log('View inventory')">View inventory</button>
+        <button class="polaris-button polaris-button--plain" onclick="console.log('Set alert')">Set restock alert</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integration Success -->
+  <div class="polaris-banner polaris-banner--success" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">Integration successful</h3>
+      <p>Your Shopify store has been successfully connected. Product sync will begin automatically.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss" onclick="this.parentElement.remove()">×</button>
+  </div>
+
+  <!-- API Rate Limit -->
+  <div class="polaris-banner polaris-banner--critical" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">API rate limit exceeded</h3>
+      <p>You've exceeded your API quota. Upgrade your plan or wait for the limit to reset.</p>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button class="polaris-button" onclick="console.log('Upgrade plan')">Upgrade plan</button>
+        <button class="polaris-button polaris-button--plain" onclick="console.log('View usage')">View usage</button>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+    extjs: `// Real-world scenario banners
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0'
+  },
+  items: [{
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--info',
+    bodyPadding: 16,
+    layout: 'vbox',
+    items: [{
+      html: '<h3>Order processing</h3><p>Your order #1001 is being processed. You will receive a notification when it ships.</p>'
+    }, {
+      xtype: 'button',
+      text: 'Track order',
+      margin: '8 0 0 0',
+      handler: function() { console.log('Track order'); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--warning',
+    bodyPadding: 16,
+    layout: 'vbox',
+    items: [{
+      html: '<h3>Inventory alert</h3><p>5 items are running low on stock. Consider restocking soon to avoid fulfillment delays.</p>'
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      margin: '8 0 0 0',
+      items: [{
+        xtype: 'button',
+        text: 'View inventory',
+        handler: function() { console.log('View inventory'); }
+      }, {
+        xtype: 'button',
+        text: 'Set restock alert',
+        margin: '0 0 0 8',
+        handler: function() { console.log('Set alert'); }
+      }]
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--success',
+    bodyPadding: 16,
+    layout: 'hbox',
+    items: [{
+      flex: 1,
+      html: '<h3>Integration successful</h3><p>Your Shopify store has been successfully connected. Product sync will begin automatically.</p>'
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--critical',
+    bodyPadding: 16,
+    layout: 'vbox',
+    items: [{
+      html: '<h3>API rate limit exceeded</h3><p>You\\'ve exceeded your API quota. Upgrade your plan or wait for the limit to reset.</p>'
+    }, {
+      xtype: 'container',
+      layout: 'hbox',
+      margin: '8 0 0 0',
+      items: [{
+        xtype: 'button',
+        text: 'Upgrade plan',
+        handler: function() { console.log('Upgrade plan'); }
+      }, {
+        xtype: 'button',
+        text: 'View usage',
+        margin: '0 0 0 8',
+        handler: function() { console.log('View usage'); }
+      }]
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+interface RealWorldBanner {
+  id: string;
+  title: string;
+  status: 'success' | 'info' | 'warning' | 'critical';
+  message: string;
+  action?: {
+    content: string;
+    onAction: () => void;
+  };
+  secondaryAction?: {
+    content: string;
+    onAction: () => void;
+  };
+  dismissible?: boolean;
+}
+
+const realWorldBanners: RealWorldBanner[] = [
+  {
+    id: 'order-processing',
+    title: 'Order processing',
+    status: 'info',
+    message: 'Your order #1001 is being processed. You will receive a notification when it ships.',
+    action: {
+      content: 'Track order',
+      onAction: () => console.log('Track order')
+    }
+  },
+  {
+    id: 'inventory-alert',
+    title: 'Inventory alert',
+    status: 'warning',
+    message: '5 items are running low on stock. Consider restocking soon to avoid fulfillment delays.',
+    action: {
+      content: 'View inventory',
+      onAction: () => console.log('View inventory')
+    },
+    secondaryAction: {
+      content: 'Set restock alert',
+      onAction: () => console.log('Set alert')
+    }
+  },
+  {
+    id: 'integration-success',
+    title: 'Integration successful',
+    status: 'success',
+    message: 'Your Shopify store has been successfully connected. Product sync will begin automatically.',
+    dismissible: true
+  },
+  {
+    id: 'api-limit',
+    title: 'API rate limit exceeded',
+    status: 'critical',
+    message: "You've exceeded your API quota. Upgrade your plan or wait for the limit to reset.",
+    action: {
+      content: 'Upgrade plan',
+      onAction: () => console.log('Upgrade plan')
+    },
+    secondaryAction: {
+      content: 'View usage',
+      onAction: () => console.log('View usage')
+    }
+  }
+];
+
+function RealWorldScenariosExample(): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {realWorldBanners.map((banner) => (
+        <Banner
+          key={banner.id}
+          title={banner.title}
+          status={banner.status}
+          action={banner.action}
+          secondaryAction={banner.secondaryAction}
+          dismissible={banner.dismissible}
+        >
+          {banner.message}
+        </Banner>
+      ))}
+    </div>
+  );
+}
+
+export default RealWorldScenariosExample;`
+  },
+
+  'with-icons': {
+    react: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+function BannersWithIconsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Banner
+        title="🚀 Performance improved"
+        status="success"
+        dismissible
+      >
+        Your store is now loading 40% faster after recent optimizations.
+      </Banner>
+
+      <Banner
+        title="🔒 Security update"
+        status="info"
+        action={{
+          content: 'Review changes',
+          onAction: () => console.log('Review security'),
+        }}
+      >
+        New security features have been added to protect your account.
+      </Banner>
+
+      <Banner
+        title="⚠️ Storage almost full"
+        status="warning"
+        action={{
+          content: 'Manage storage',
+          onAction: () => console.log('Manage storage'),
+        }}
+      >
+        You're using 90% of your storage capacity. Consider upgrading or removing unused files.
+      </Banner>
+    </div>
+  );
+}
+
+export default BannersWithIconsExample;`,
+
+    vanilla: `<!-- Banners with emoji icons in titles -->
+<div id="icon-banners" style="display: flex; flex-direction: column; gap: 16px;">
+  <!-- Performance Banner -->
+  <div class="polaris-banner polaris-banner--success" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">🚀 Performance improved</h3>
+      <p>Your store is now loading 40% faster after recent optimizations.</p>
+    </div>
+    <button class="polaris-banner__dismiss" aria-label="Dismiss" onclick="this.parentElement.remove()">×</button>
+  </div>
+
+  <!-- Security Update Banner -->
+  <div class="polaris-banner polaris-banner--info" role="status">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">🔒 Security update</h3>
+      <p>New security features have been added to protect your account.</p>
+      <button class="polaris-button" onclick="console.log('Review security')">Review changes</button>
+    </div>
+  </div>
+
+  <!-- Storage Warning Banner -->
+  <div class="polaris-banner polaris-banner--warning" role="alert">
+    <div class="polaris-banner__content">
+      <h3 class="polaris-banner__title">⚠️ Storage almost full</h3>
+      <p>You're using 90% of your storage capacity. Consider upgrading or removing unused files.</p>
+      <button class="polaris-button" onclick="console.log('Manage storage')">Manage storage</button>
+    </div>
+  </div>
+</div>`,
+
+    extjs: `// Banners with emoji icons
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 16 0',
+    bodyPadding: 16
+  },
+  items: [{
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--success',
+    layout: 'hbox',
+    items: [{
+      xtype: 'container',
+      flex: 1,
+      layout: 'vbox',
+      items: [{
+        html: '<h3>🚀 Performance improved</h3>'
+      }, {
+        html: '<p>Your store is now loading 40% faster after recent optimizations.</p>'
+      }]
+    }, {
+      xtype: 'button',
+      text: '×',
+      handler: function() { this.up('panel').destroy(); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--info',
+    layout: 'vbox',
+    items: [{
+      html: '<h3>🔒 Security update</h3>'
+    }, {
+      html: '<p>New security features have been added to protect your account.</p>'
+    }, {
+      xtype: 'button',
+      text: 'Review changes',
+      margin: '8 0 0 0',
+      handler: function() { console.log('Review security'); }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-banner polaris-banner--warning',
+    layout: 'vbox',
+    items: [{
+      html: '<h3>⚠️ Storage almost full</h3>'
+    }, {
+      html: '<p>You\\'re using 90% of your storage capacity. Consider upgrading or removing unused files.</p>'
+    }, {
+      xtype: 'button',
+      text: 'Manage storage',
+      margin: '8 0 0 0',
+      handler: function() { console.log('Manage storage'); }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Banner } from '@shopify/polaris';
+import React from 'react';
+
+interface IconBanner {
+  id: string;
+  icon: string;
+  title: string;
+  status: 'success' | 'info' | 'warning' | 'critical';
+  message: string;
+  action?: {
+    content: string;
+    onAction: () => void;
+  };
+  dismissible?: boolean;
+}
+
+const iconBanners: IconBanner[] = [
+  {
+    id: 'performance',
+    icon: '🚀',
+    title: 'Performance improved',
+    status: 'success',
+    message: 'Your store is now loading 40% faster after recent optimizations.',
+    dismissible: true
+  },
+  {
+    id: 'security',
+    icon: '🔒',
+    title: 'Security update',
+    status: 'info',
+    message: 'New security features have been added to protect your account.',
+    action: {
+      content: 'Review changes',
+      onAction: () => console.log('Review security')
+    }
+  },
+  {
+    id: 'storage',
+    icon: '⚠️',
+    title: 'Storage almost full',
+    status: 'warning',
+    message: "You're using 90% of your storage capacity. Consider upgrading or removing unused files.",
+    action: {
+      content: 'Manage storage',
+      onAction: () => console.log('Manage storage')
+    }
+  }
+];
+
+function BannersWithIconsExample(): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {iconBanners.map((banner) => (
+        <Banner
+          key={banner.id}
+          title={\`\${banner.icon} \${banner.title}\`}
+          status={banner.status}
+          action={banner.action}
+          dismissible={banner.dismissible}
+        >
+          {banner.message}
+        </Banner>
+      ))}
+    </div>
+  );
+}
+
+export default BannersWithIconsExample;`
   }
 };
 export const textFieldExamples: Record<string, CodeVariant> = {
@@ -8698,6 +9773,1018 @@ function SizesExample(): JSX.Element {
 }
 
 export default SizesExample;`
+  },
+
+  withNumbers: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function WithNumbersExample() {
+  return (
+    <InlineStack gap="400">
+      <Badge>1</Badge>
+      <Badge tone="attention">12</Badge>
+      <Badge tone="warning">99+</Badge>
+      <Badge tone="success">1000</Badge>
+    </InlineStack>
+  );
+}
+
+export default WithNumbersExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.gap = '16px';
+
+// Create number badges
+const badges = [
+  { text: '1' },
+  { text: '12', tone: 'attention' },
+  { text: '99+', tone: 'warning' },
+  { text: '1000', tone: 'success' }
+];
+
+badges.forEach(({ text, tone }) => {
+  const badge = createBadge({ text, tone });
+  container.appendChild(badge);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create container with number badges
+const container = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    gap: 16
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    { xtype: 'polarisbadge', text: '1' },
+    { xtype: 'polarisbadge', text: '12', tone: 'attention' },
+    { xtype: 'polarisbadge', text: '99+', tone: 'warning' },
+    { xtype: 'polarisbadge', text: '1000', tone: 'success' }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+interface NumberBadge {
+  count: string;
+  tone?: BadgeTone;
+}
+
+function WithNumbersExample(): JSX.Element {
+  const badges: NumberBadge[] = [
+    { count: '1' },
+    { count: '12', tone: 'attention' },
+    { count: '99+', tone: 'warning' },
+    { count: '1000', tone: 'success' }
+  ];
+
+  return (
+    <InlineStack gap="400">
+      {badges.map((badge, index) => (
+        <Badge key={index} tone={badge.tone}>
+          {badge.count}
+        </Badge>
+      ))}
+    </InlineStack>
+  );
+}
+
+export default WithNumbersExample;`
+  },
+
+  statusExamples: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function StatusExamplesExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div>
+        <p style={{ marginBottom: '8px' }}>Order Status:</p>
+        <InlineStack gap="200">
+          <Badge tone="success">Shipped</Badge>
+          <Badge tone="attention">Processing</Badge>
+          <Badge tone="warning">Backordered</Badge>
+          <Badge tone="critical">Cancelled</Badge>
+        </InlineStack>
+      </div>
+
+      <div>
+        <p style={{ marginBottom: '8px' }}>Inventory Status:</p>
+        <InlineStack gap="200">
+          <Badge tone="success">In Stock</Badge>
+          <Badge tone="warning">Low Stock</Badge>
+          <Badge tone="critical">Out of Stock</Badge>
+          <Badge tone="info">Discontinued</Badge>
+        </InlineStack>
+      </div>
+    </div>
+  );
+}
+
+export default StatusExamplesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+// Create main container
+const mainContainer = document.createElement('div');
+mainContainer.style.display = 'flex';
+mainContainer.style.flexDirection = 'column';
+mainContainer.style.gap = '16px';
+
+// Order Status Section
+const orderSection = document.createElement('div');
+const orderLabel = document.createElement('p');
+orderLabel.textContent = 'Order Status:';
+orderLabel.style.marginBottom = '8px';
+orderSection.appendChild(orderLabel);
+
+const orderContainer = document.createElement('div');
+orderContainer.style.display = 'flex';
+orderContainer.style.gap = '8px';
+
+const orderStatuses = [
+  { text: 'Shipped', tone: 'success' },
+  { text: 'Processing', tone: 'attention' },
+  { text: 'Backordered', tone: 'warning' },
+  { text: 'Cancelled', tone: 'critical' }
+];
+
+orderStatuses.forEach(({ text, tone }) => {
+  const badge = createBadge({ text, tone });
+  orderContainer.appendChild(badge);
+});
+
+orderSection.appendChild(orderContainer);
+
+// Inventory Status Section
+const inventorySection = document.createElement('div');
+const inventoryLabel = document.createElement('p');
+inventoryLabel.textContent = 'Inventory Status:';
+inventoryLabel.style.marginBottom = '8px';
+inventorySection.appendChild(inventoryLabel);
+
+const inventoryContainer = document.createElement('div');
+inventoryContainer.style.display = 'flex';
+inventoryContainer.style.gap = '8px';
+
+const inventoryStatuses = [
+  { text: 'In Stock', tone: 'success' },
+  { text: 'Low Stock', tone: 'warning' },
+  { text: 'Out of Stock', tone: 'critical' },
+  { text: 'Discontinued', tone: 'info' }
+];
+
+inventoryStatuses.forEach(({ text, tone }) => {
+  const badge = createBadge({ text, tone });
+  inventoryContainer.appendChild(badge);
+});
+
+inventorySection.appendChild(inventoryContainer);
+
+mainContainer.appendChild(orderSection);
+mainContainer.appendChild(inventorySection);
+document.getElementById('app').appendChild(mainContainer);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Create main container
+const mainContainer = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  renderTo: Ext.getBody(),
+  items: [
+    // Order Status Section
+    {
+      xtype: 'panel',
+      html: '<p style="margin-bottom: 8px;">Order Status:</p>',
+      border: false
+    },
+    {
+      xtype: 'panel',
+      layout: {
+        type: 'hbox',
+        gap: 8
+      },
+      border: false,
+      items: [
+        { xtype: 'polarisbadge', text: 'Shipped', tone: 'success' },
+        { xtype: 'polarisbadge', text: 'Processing', tone: 'attention' },
+        { xtype: 'polarisbadge', text: 'Backordered', tone: 'warning' },
+        { xtype: 'polarisbadge', text: 'Cancelled', tone: 'critical' }
+      ]
+    },
+    // Inventory Status Section
+    {
+      xtype: 'panel',
+      html: '<p style="margin-bottom: 8px;">Inventory Status:</p>',
+      border: false,
+      margin: '16 0 0 0'
+    },
+    {
+      xtype: 'panel',
+      layout: {
+        type: 'hbox',
+        gap: 8
+      },
+      border: false,
+      items: [
+        { xtype: 'polarisbadge', text: 'In Stock', tone: 'success' },
+        { xtype: 'polarisbadge', text: 'Low Stock', tone: 'warning' },
+        { xtype: 'polarisbadge', text: 'Out of Stock', tone: 'critical' },
+        { xtype: 'polarisbadge', text: 'Discontinued', tone: 'info' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+interface StatusBadge {
+  label: string;
+  tone: BadgeTone;
+}
+
+interface StatusCategory {
+  title: string;
+  statuses: StatusBadge[];
+}
+
+function StatusExamplesExample(): JSX.Element {
+  const statusCategories: StatusCategory[] = [
+    {
+      title: 'Order Status:',
+      statuses: [
+        { label: 'Shipped', tone: 'success' },
+        { label: 'Processing', tone: 'attention' },
+        { label: 'Backordered', tone: 'warning' },
+        { label: 'Cancelled', tone: 'critical' }
+      ]
+    },
+    {
+      title: 'Inventory Status:',
+      statuses: [
+        { label: 'In Stock', tone: 'success' },
+        { label: 'Low Stock', tone: 'warning' },
+        { label: 'Out of Stock', tone: 'critical' },
+        { label: 'Discontinued', tone: 'info' }
+      ]
+    }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {statusCategories.map((category, index) => (
+        <div key={index}>
+          <p style={{ marginBottom: '8px' }}>{category.title}</p>
+          <InlineStack gap="200">
+            {category.statuses.map((status) => (
+              <Badge key={status.label} tone={status.tone}>
+                {status.label}
+              </Badge>
+            ))}
+          </InlineStack>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default StatusExamplesExample;`
+  }
+,
+
+  interactiveBadges: {
+    react: `import { Badge, Button, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractiveBadgesExample() {
+  const [activeBadge, setActiveBadge] = useState('all');
+  const [unreadCount, setUnreadCount] = useState(5);
+  const [tasks, setTasks] = useState([
+    { id: 1, status: 'complete', label: 'Setup account' },
+    { id: 2, status: 'complete', label: 'Add payment method' },
+    { id: 3, status: 'incomplete', label: 'Verify email' },
+  ]);
+
+  const handleTaskClick = (taskId: number) => {
+    setTasks(prev => prev.map(task =>
+      task.id === taskId
+        ? { ...task, status: task.status === 'complete' ? 'incomplete' : 'complete' }
+        : task
+    ));
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '500px' }}>
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Filter Messages</h3>
+        <InlineStack gap="200">
+          <Button
+            size="small"
+            variant={activeBadge === 'all' ? 'primary' : 'plain'}
+            onClick={() => setActiveBadge('all')}
+          >
+            All
+          </Button>
+          <Button
+            size="small"
+            variant={activeBadge === 'unread' ? 'primary' : 'plain'}
+            onClick={() => setActiveBadge('unread')}
+          >
+            Unread {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
+          </Button>
+        </InlineStack>
+      </div>
+
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Onboarding Tasks</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {tasks.map(task => (
+            <div key={task.id} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Badge
+                progress={task.status === 'complete' ? 'complete' : 'incomplete'}
+                tone={task.status === 'complete' ? 'success' : 'attention'}
+              >
+                {task.status === 'complete' ? '✓' : '○'}
+              </Badge>
+              <span style={{
+                textDecoration: task.status === 'complete' ? 'line-through' : 'none',
+                opacity: task.status === 'complete' ? 0.6 : 1
+              }}>
+                {task.label}
+              </span>
+              <Button
+                size="micro"
+                variant="plain"
+                onClick={() => handleTaskClick(task.id)}
+              >
+                {task.status === 'complete' ? 'Undo' : 'Complete'}
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default InteractiveBadgesExample;`,
+
+    vanilla: `import { createBadge, on } from '@cin7/vanilla-js';
+
+let unreadCount = 5;
+const tasks = [
+  { id: 1, status: 'complete', label: 'Setup account' },
+  { id: 2, status: 'complete', label: 'Add payment method' },
+  { id: 3, status: 'incomplete', label: 'Verify email' }
+];
+
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.gap = '24px';
+
+const filterButtons = document.createElement('div');
+const allButton = document.createElement('button');
+allButton.textContent = 'All';
+allButton.className = 'polaris-button polaris-button--primary';
+
+const unreadButton = document.createElement('button');
+unreadButton.textContent = \`Unread \${unreadCount}\`;
+
+filterButtons.appendChild(allButton);
+filterButtons.appendChild(unreadButton);
+
+tasks.forEach(task => {
+  const badge = createBadge({
+    text: task.status === 'complete' ? '✓' : '○',
+    tone: task.status === 'complete' ? 'success' : 'attention'
+  });
+  container.appendChild(badge);
+});
+
+container.appendChild(filterButtons);
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge, PolarisButton } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  title: 'Interactive Badges',
+  width: 500,
+  layout: 'vbox',
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polarisbutton', text: 'All', variant: 'primary' },
+        { xtype: 'polarisbutton', text: 'Unread', margin: '0 0 0 8' }
+      ]
+    },
+    {
+      xtype: 'panel',
+      margin: '24 0 0 0',
+      items: [
+        { xtype: 'polarisbadge', text: '✓', progress: 'complete', tone: 'success' },
+        { xtype: 'polarisbadge', text: '○', progress: 'incomplete', tone: 'attention' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge, Button, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface Task {
+  id: number;
+  status: 'complete' | 'incomplete';
+  label: string;
+}
+
+type FilterType = 'all' | 'unread';
+
+function InteractiveBadgesExample(): JSX.Element {
+  const [activeBadge, setActiveBadge] = useState<FilterType>('all');
+  const [unreadCount, setUnreadCount] = useState<number>(5);
+  const [tasks, setTasks] = useState<Task[]>([
+    { id: 1, status: 'complete', label: 'Setup account' },
+    { id: 2, status: 'complete', label: 'Add payment method' },
+    { id: 3, status: 'incomplete', label: 'Verify email' },
+  ]);
+
+  const handleTaskClick = (taskId: number): void => {
+    setTasks(prev => prev.map(task =>
+      task.id === taskId
+        ? { ...task, status: task.status === 'complete' ? 'incomplete' : 'complete' }
+        : task
+    ));
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '500px' }}>
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Filter Messages</h3>
+        <InlineStack gap="200">
+          <Button
+            size="small"
+            variant={activeBadge === 'all' ? 'primary' : 'plain'}
+            onClick={() => setActiveBadge('all')}
+          >
+            All
+          </Button>
+          <Button
+            size="small"
+            variant={activeBadge === 'unread' ? 'primary' : 'plain'}
+            onClick={() => setActiveBadge('unread')}
+          >
+            Unread {unreadCount > 0 && <Badge>{unreadCount}</Badge>}
+          </Button>
+        </InlineStack>
+      </div>
+
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Onboarding Tasks</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {tasks.map(task => (
+            <div key={task.id} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Badge
+                progress={task.status === 'complete' ? 'complete' : 'incomplete'}
+                tone={task.status === 'complete' ? 'success' : 'attention'}
+              >
+                {task.status === 'complete' ? '✓' : '○'}
+              </Badge>
+              <span style={{
+                textDecoration: task.status === 'complete' ? 'line-through' : 'none',
+                opacity: task.status === 'complete' ? 0.6 : 1
+              }}>
+                {task.label}
+              </span>
+              <Button
+                size="micro"
+                variant="plain"
+                onClick={() => handleTaskClick(task.id)}
+              >
+                {task.status === 'complete' ? 'Undo' : 'Complete'}
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default InteractiveBadgesExample;`
+  },
+
+  marketingBadges: {
+    react: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function MarketingBadgesExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Promotional Badges</h3>
+        <InlineStack gap="300" wrap>
+          <Badge tone="success">Free Shipping</Badge>
+          <Badge tone="attention">Limited Time</Badge>
+          <Badge tone="warning">Low Stock</Badge>
+          <Badge tone="new">New Arrival</Badge>
+          <Badge tone="info">Best Seller</Badge>
+        </InlineStack>
+      </div>
+
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Pricing & Discount Badges</h3>
+        <InlineStack gap="300" wrap>
+          <Badge tone="success">Save 20%</Badge>
+          <Badge tone="attention">50% OFF</Badge>
+          <Badge tone="warning">Last Chance</Badge>
+          <Badge tone="critical">Sale Ends Soon</Badge>
+        </InlineStack>
+      </div>
+    </div>
+  );
+}
+
+export default MarketingBadgesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.gap = '24px';
+
+const promoSection = document.createElement('div');
+const promoTitle = document.createElement('h3');
+promoTitle.textContent = 'Promotional Badges';
+promoSection.appendChild(promoTitle);
+
+const promoBadges = [
+  { text: 'Free Shipping', tone: 'success' },
+  { text: 'Limited Time', tone: 'attention' },
+  { text: 'Low Stock', tone: 'warning' },
+  { text: 'New Arrival', tone: 'new' },
+  { text: 'Best Seller', tone: 'info' }
+];
+
+promoBadges.forEach(({ text, tone }) => {
+  const badge = createBadge({ text, tone });
+  promoSection.appendChild(badge);
+});
+
+container.appendChild(promoSection);
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  title: 'Marketing Badges',
+  width: 600,
+  layout: 'vbox',
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polarisbadge', text: 'Free Shipping', tone: 'success' },
+        { xtype: 'polarisbadge', text: 'Limited Time', tone: 'attention' },
+        { xtype: 'polarisbadge', text: 'Low Stock', tone: 'warning' },
+        { xtype: 'polarisbadge', text: 'New Arrival', tone: 'new' },
+        { xtype: 'polarisbadge', text: 'Best Seller', tone: 'info' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+interface BadgeItem {
+  label: string;
+  tone: BadgeTone;
+}
+
+function MarketingBadgesExample(): JSX.Element {
+  const promoBadges: BadgeItem[] = [
+    { label: 'Free Shipping', tone: 'success' },
+    { label: 'Limited Time', tone: 'attention' },
+    { label: 'Low Stock', tone: 'warning' },
+    { label: 'New Arrival', tone: 'new' },
+    { label: 'Best Seller', tone: 'info' }
+  ];
+
+  const pricingBadges: BadgeItem[] = [
+    { label: 'Save 20%', tone: 'success' },
+    { label: '50% OFF', tone: 'attention' },
+    { label: 'Last Chance', tone: 'warning' },
+    { label: 'Sale Ends Soon', tone: 'critical' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Promotional Badges</h3>
+        <InlineStack gap="300" wrap>
+          {promoBadges.map((badge) => (
+            <Badge key={badge.label} tone={badge.tone}>
+              {badge.label}
+            </Badge>
+          ))}
+        </InlineStack>
+      </div>
+
+      <div>
+        <h3 style={{ margin: '0 0 12px 0' }}>Pricing & Discount Badges</h3>
+        <InlineStack gap="300" wrap>
+          {pricingBadges.map((badge) => (
+            <Badge key={badge.label} tone={badge.tone}>
+              {badge.label}
+            </Badge>
+          ))}
+        </InlineStack>
+      </div>
+    </div>
+  );
+}
+
+export default MarketingBadgesExample;`
+  },
+
+  productTags: {
+    react: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+function ProductTagsExample() {
+  const products = [
+    { name: 'Classic T-Shirt', tags: ['Best Seller', 'Free Shipping'], price: '$29.99' },
+    { name: 'Premium Headphones', tags: ['New', 'Limited Time'], price: '$129.99' }
+  ];
+
+  const getTone = (tag: string): any => {
+    if (tag === 'Best Seller') return 'success';
+    if (tag === 'New') return 'new';
+    if (tag === 'Limited Time') return 'attention';
+    return 'info';
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
+      {products.map((product, index) => (
+        <div key={index} style={{ padding: '16px', border: '1px solid #e1e3e5', borderRadius: '8px' }}>
+          <h4>{product.name}</h4>
+          <p>{product.price}</p>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {product.tags.map((tag, i) => (
+              <Badge key={i} tone={getTone(tag)}>{tag}</Badge>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ProductTagsExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+const products = [
+  { name: 'Classic T-Shirt', tags: ['Best Seller', 'Free Shipping'], price: '$29.99' },
+  { name: 'Premium Headphones', tags: ['New', 'Limited Time'], price: '$129.99' }
+];
+
+const getTone = (tag) => {
+  if (tag === 'Best Seller') return 'success';
+  if (tag === 'New') return 'new';
+  if (tag === 'Limited Time') return 'attention';
+  return 'info';
+};
+
+const container = document.createElement('div');
+products.forEach(product => {
+  const card = document.createElement('div');
+  card.style.padding = '16px';
+  card.style.border = '1px solid #e1e3e5';
+
+  product.tags.forEach(tag => {
+    const badge = createBadge({ text: tag, tone: getTone(tag) });
+    card.appendChild(badge);
+  });
+
+  container.appendChild(card);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  title: 'Product Tags',
+  width: 600,
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polarisbadge', text: 'Best Seller', tone: 'success' },
+        { xtype: 'polarisbadge', text: 'Free Shipping', tone: 'info' },
+        { xtype: 'polarisbadge', text: 'New', tone: 'new' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+interface Product {
+  name: string;
+  tags: string[];
+  price: string;
+}
+
+function ProductTagsExample(): JSX.Element {
+  const products: Product[] = [
+    { name: 'Classic T-Shirt', tags: ['Best Seller', 'Free Shipping'], price: '$29.99' },
+    { name: 'Premium Headphones', tags: ['New', 'Limited Time'], price: '$129.99' }
+  ];
+
+  const getTone = (tag: string): BadgeTone => {
+    if (tag === 'Best Seller') return 'success';
+    if (tag === 'New') return 'new';
+    if (tag === 'Limited Time') return 'attention';
+    return 'info';
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
+      {products.map((product, index) => (
+        <div key={index} style={{ padding: '16px', border: '1px solid #e1e3e5' }}>
+          <h4>{product.name}</h4>
+          <p>{product.price}</p>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {product.tags.map((tag, i) => (
+              <Badge key={i} tone={getTone(tag)}>{tag}</Badge>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ProductTagsExample;`
+  },
+
+  campaignBadges: {
+    react: `import { Badge } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function CampaignBadgesExample() {
+  const [selectedCampaign, setSelectedCampaign] = useState('black-friday');
+
+  const campaigns = [
+    { id: 'black-friday', name: 'Black Friday', status: 'active', discount: '50% OFF' },
+    { id: 'cyber-monday', name: 'Cyber Monday', status: 'upcoming', discount: '40% OFF' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '700px' }}>
+      {campaigns.map((campaign) => (
+        <div key={campaign.id} onClick={() => setSelectedCampaign(campaign.id)}
+             style={{ padding: '16px', border: '2px solid #e1e3e5', borderRadius: '8px', cursor: 'pointer' }}>
+          <h4>{campaign.name}</h4>
+          <Badge tone="success">{campaign.status}</Badge>
+          <Badge tone="attention">{campaign.discount}</Badge>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CampaignBadgesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+const campaigns = [
+  { id: 'black-friday', name: 'Black Friday', status: 'active', discount: '50% OFF' },
+  { id: 'cyber-monday', name: 'Cyber Monday', status: 'upcoming', discount: '40% OFF' }
+];
+
+const container = document.createElement('div');
+campaigns.forEach(campaign => {
+  const card = document.createElement('div');
+  card.style.padding = '16px';
+
+  const statusBadge = createBadge({ text: campaign.status, tone: 'success' });
+  const discountBadge = createBadge({ text: campaign.discount, tone: 'attention' });
+
+  card.appendChild(statusBadge);
+  card.appendChild(discountBadge);
+  container.appendChild(card);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  title: 'Campaign Badges',
+  width: 700,
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polarisbadge', text: 'Active', tone: 'success' },
+        { xtype: 'polarisbadge', text: '50% OFF', tone: 'attention' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+type CampaignStatus = 'active' | 'upcoming' | 'scheduled' | 'ending';
+
+interface Campaign {
+  id: string;
+  name: string;
+  status: CampaignStatus;
+  discount: string;
+}
+
+function CampaignBadgesExample(): JSX.Element {
+  const [selectedCampaign, setSelectedCampaign] = useState<string>('black-friday');
+
+  const campaigns: Campaign[] = [
+    { id: 'black-friday', name: 'Black Friday', status: 'active', discount: '50% OFF' },
+    { id: 'cyber-monday', name: 'Cyber Monday', status: 'upcoming', discount: '40% OFF' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '700px' }}>
+      {campaigns.map((campaign) => (
+        <div key={campaign.id} onClick={() => setSelectedCampaign(campaign.id)}
+             style={{ padding: '16px', border: '2px solid #e1e3e5', borderRadius: '8px', cursor: 'pointer' }}>
+          <h4>{campaign.name}</h4>
+          <Badge tone="success">{campaign.status}</Badge>
+          <Badge tone="attention">{campaign.discount}</Badge>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CampaignBadgesExample;`
+  },
+
+  loyaltyBadges: {
+    react: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+function LoyaltyBadgesExample() {
+  const tiers = [
+    { tier: 'Bronze', badges: ['Member', '1 Year', '50 Points'], color: '#CD7F32' },
+    { tier: 'Silver', badges: ['VIP', '2 Years', '250 Points'], color: '#C0C0C0' },
+    { tier: 'Gold', badges: ['Premium', '5+ Years', '1000+ Points'], color: '#FFD700' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '800px' }}>
+      {tiers.map((tier, index) => (
+        <div key={index} style={{ padding: '20px', border: \`2px solid \${tier.color}\`, borderRadius: '8px' }}>
+          <h4>{tier.tier} Tier</h4>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {tier.badges.map((badge, i) => (
+              <Badge key={i} tone={index >= 2 ? 'success' : 'info'}>{badge}</Badge>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default LoyaltyBadgesExample;`,
+
+    vanilla: `import { createBadge } from '@cin7/vanilla-js';
+
+const tiers = [
+  { tier: 'Bronze', badges: ['Member', '1 Year', '50 Points'], color: '#CD7F32' },
+  { tier: 'Silver', badges: ['VIP', '2 Years', '250 Points'], color: '#C0C0C0' },
+  { tier: 'Gold', badges: ['Premium', '5+ Years', '1000+ Points'], color: '#FFD700' }
+];
+
+const container = document.createElement('div');
+tiers.forEach((tier, index) => {
+  const card = document.createElement('div');
+  card.style.padding = '20px';
+  card.style.border = \`2px solid \${tier.color}\`;
+
+  tier.badges.forEach(badgeText => {
+    const badge = createBadge({
+      text: badgeText,
+      tone: index >= 2 ? 'success' : 'info'
+    });
+    card.appendChild(badge);
+  });
+
+  container.appendChild(card);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  title: 'Loyalty Badges',
+  width: 800,
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polarisbadge', text: 'Member', tone: 'info' },
+        { xtype: 'polarisbadge', text: 'VIP', tone: 'attention' },
+        { xtype: 'polarisbadge', text: 'Premium', tone: 'success' }
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { Badge } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention';
+
+interface CustomerTier {
+  tier: string;
+  badges: string[];
+  color: string;
+}
+
+function LoyaltyBadgesExample(): JSX.Element {
+  const tiers: CustomerTier[] = [
+    { tier: 'Bronze', badges: ['Member', '1 Year', '50 Points'], color: '#CD7F32' },
+    { tier: 'Silver', badges: ['VIP', '2 Years', '250 Points'], color: '#C0C0C0' },
+    { tier: 'Gold', badges: ['Premium', '5+ Years', '1000+ Points'], color: '#FFD700' }
+  ];
+
+  const getTone = (index: number): BadgeTone => {
+    if (index >= 2) return 'success';
+    if (index === 1) return 'attention';
+    return 'info';
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '800px' }}>
+      {tiers.map((tier, index) => (
+        <div key={index} style={{ padding: '20px', border: \`2px solid \${tier.color}\`, borderRadius: '8px' }}>
+          <h4>{tier.tier} Tier</h4>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {tier.badges.map((badge, i) => (
+              <Badge key={i} tone={getTone(index)}>{badge}</Badge>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default LoyaltyBadgesExample;`
   }
 };
 
@@ -11901,6 +13988,1193 @@ function AvatarExample({
 }
 
 export default AvatarExample;`
+  },
+
+  sizes: {
+    react: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+function AvatarSizesExample() {
+  const sizes: Array<'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge'> = [
+    'extraSmall', 'small', 'medium', 'large', 'extraLarge'
+  ];
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      {sizes.map((size) => (
+        <div key={size} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+          <Avatar size={size} name="John Doe" />
+          <Text variant="bodySm" color="subdued">{size}</Text>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default AvatarSizesExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="avatar-sizes-container" style="display: flex; align-items: center; gap: 16px;">
+  <div class="avatar-item">
+    <div class="polaris-avatar polaris-avatar--extra-small">
+      <span class="polaris-avatar__initials">JD</span>
+    </div>
+    <span class="avatar-label">Extra Small</span>
+  </div>
+  <div class="avatar-item">
+    <div class="polaris-avatar polaris-avatar--small">
+      <span class="polaris-avatar__initials">JD</span>
+    </div>
+    <span class="avatar-label">Small</span>
+  </div>
+  <div class="avatar-item">
+    <div class="polaris-avatar polaris-avatar--medium">
+      <span class="polaris-avatar__initials">JD</span>
+    </div>
+    <span class="avatar-label">Medium</span>
+  </div>
+  <div class="avatar-item">
+    <div class="polaris-avatar polaris-avatar--large">
+      <span class="polaris-avatar__initials">JD</span>
+    </div>
+    <span class="avatar-label">Large</span>
+  </div>
+  <div class="avatar-item">
+    <div class="polaris-avatar polaris-avatar--extra-large">
+      <span class="polaris-avatar__initials">JD</span>
+    </div>
+    <span class="avatar-label">Extra Large</span>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar } from '@cin7/vanilla-js';
+
+const sizes = ['extraSmall', 'small', 'medium', 'large', 'extraLarge'];
+const container = document.getElementById('avatar-sizes');
+
+sizes.forEach(size => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'avatar-item';
+
+  const avatar = createAvatar({
+    name: 'John Doe',
+    size: size
+  });
+
+  const label = document.createElement('span');
+  label.textContent = size;
+  label.className = 'avatar-label';
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(label);
+  container.appendChild(wrapper);
+});
+</script>`,
+
+    extjs: `// ExtJS Avatar Sizes using @cin7/extjs-adapters
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+const sizes = ['extraSmall', 'small', 'medium', 'large', 'extraLarge'];
+const avatarItems = [];
+
+sizes.forEach(size => {
+  avatarItems.push({
+    xtype: 'container',
+    layout: {
+      type: 'vbox',
+      align: 'center'
+    },
+    items: [
+      Ext.create('PolarisAvatar', {
+        name: 'John Doe',
+        size: size
+      }),
+      {
+        xtype: 'label',
+        text: size,
+        style: {
+          fontSize: '12px',
+          color: '#637381',
+          marginTop: '8px'
+        }
+      }
+    ]
+  });
+});
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle',
+    pack: 'start'
+  },
+  defaults: {
+    margin: '0 16 0 0'
+  },
+  items: avatarItems,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+type AvatarSize = 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge';
+
+interface AvatarSizeItem {
+  size: AvatarSize;
+  label: string;
+}
+
+function AvatarSizesExample(): JSX.Element {
+  const sizes: AvatarSizeItem[] = [
+    { size: 'extraSmall', label: 'Extra Small' },
+    { size: 'small', label: 'Small' },
+    { size: 'medium', label: 'Medium' },
+    { size: 'large', label: 'Large' },
+    { size: 'extraLarge', label: 'Extra Large' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      {sizes.map(({ size, label }) => (
+        <div
+          key={size}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+        >
+          <Avatar size={size} name="John Doe" />
+          <Text variant="bodySm" color="subdued">{label}</Text>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default AvatarSizesExample;`
+  },
+
+  withImages: {
+    react: `import { Avatar, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+function AvatarWithImageExample() {
+  return (
+    <Card padding="400">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <Avatar
+          size="large"
+          source="https://picsum.photos/seed/user1/100/100.jpg"
+          name="John Doe"
+        />
+        <div>
+          <Text variant="headingMd" as="h3">John Doe</Text>
+          <Text color="subdued">john.doe@example.com</Text>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+export default AvatarWithImageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card" style="padding: 16px;">
+  <div class="user-profile" style="display: flex; align-items: center; gap: 24px;">
+    <div class="polaris-avatar polaris-avatar--large">
+      <img src="https://picsum.photos/seed/user1/100/100.jpg" alt="John Doe" class="polaris-avatar__image" />
+    </div>
+    <div class="user-info">
+      <h3 class="user-name">John Doe</h3>
+      <p class="user-email" style="color: #637381;">john.doe@example.com</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar, $ } from '@cin7/vanilla-js';
+
+const userProfile = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  avatar: 'https://picsum.photos/seed/user1/100/100.jpg'
+};
+
+const avatar = createAvatar({
+  name: userProfile.name,
+  size: 'large',
+  source: userProfile.avatar
+});
+
+const container = $('.user-profile');
+container.appendChild(avatar);
+
+// Add user info
+const userInfo = document.createElement('div');
+userInfo.className = 'user-info';
+userInfo.innerHTML = \`
+  <h3>\${userProfile.name}</h3>
+  <p style="color: #637381;">\${userProfile.email}</p>
+\`;
+container.appendChild(userInfo);
+</script>`,
+
+    extjs: `// ExtJS Avatar with Image using @cin7/extjs-adapters
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-card',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  items: [
+    Ext.create('PolarisAvatar', {
+      name: 'John Doe',
+      size: 'large',
+      source: 'https://picsum.photos/seed/user1/100/100.jpg',
+      margin: '0 24 0 0'
+    }),
+    {
+      xtype: 'container',
+      layout: 'vbox',
+      items: [
+        {
+          xtype: 'label',
+          text: 'John Doe',
+          style: {
+            fontSize: '16px',
+            fontWeight: 'bold',
+            marginBottom: '4px'
+          }
+        },
+        {
+          xtype: 'label',
+          text: 'john.doe@example.com',
+          style: {
+            fontSize: '14px',
+            color: '#637381'
+          }
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface UserProfile {
+  name: string;
+  email: string;
+  avatarUrl: string;
+}
+
+interface AvatarWithImageProps {
+  user: UserProfile;
+}
+
+function AvatarWithImageExample({ user }: AvatarWithImageProps): JSX.Element {
+  return (
+    <Card padding="400">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <Avatar
+          size="large"
+          source={user.avatarUrl}
+          name={user.name}
+        />
+        <div>
+          <Text variant="headingMd" as="h3">{user.name}</Text>
+          <Text color="subdued">{user.email}</Text>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+// Usage
+const defaultUser: UserProfile = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  avatarUrl: 'https://picsum.photos/seed/user1/100/100.jpg'
+};
+
+export default function Example() {
+  return <AvatarWithImageExample user={defaultUser} />;
+}`
+  },
+
+  customerAvatars: {
+    react: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+function CustomerAvatarsExample() {
+  const customers = [
+    { name: 'John Smith', type: 'Premium Customer' },
+    { name: 'Jane Johnson', type: 'New Customer' },
+    { name: 'Bob Williams', type: 'Regular Customer' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {customers.map((customer) => (
+        <div key={customer.name} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <Avatar customer size="medium" name={customer.name} />
+          <div>
+            <Text variant="bodyMd" fontWeight="medium">{customer.name}</Text>
+            <Text color="subdued">{customer.type}</Text>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CustomerAvatarsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="customer-list" style="display: flex; flex-direction: column; gap: 24px;">
+  <div class="customer-item" style="display: flex; align-items: center; gap: 16px;">
+    <div class="polaris-avatar polaris-avatar--customer polaris-avatar--medium">
+      <span class="polaris-avatar__initials">JS</span>
+    </div>
+    <div class="customer-info">
+      <div class="customer-name" style="font-weight: 500;">John Smith</div>
+      <div class="customer-type" style="color: #637381;">Premium Customer</div>
+    </div>
+  </div>
+  <div class="customer-item" style="display: flex; align-items: center; gap: 16px;">
+    <div class="polaris-avatar polaris-avatar--customer polaris-avatar--medium">
+      <span class="polaris-avatar__initials">JJ</span>
+    </div>
+    <div class="customer-info">
+      <div class="customer-name" style="font-weight: 500;">Jane Johnson</div>
+      <div class="customer-type" style="color: #637381;">New Customer</div>
+    </div>
+  </div>
+  <div class="customer-item" style="display: flex; align-items: center; gap: 16px;">
+    <div class="polaris-avatar polaris-avatar--customer polaris-avatar--medium">
+      <span class="polaris-avatar__initials">BW</span>
+    </div>
+    <div class="customer-info">
+      <div class="customer-name" style="font-weight: 500;">Bob Williams</div>
+      <div class="customer-type" style="color: #637381;">Regular Customer</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar } from '@cin7/vanilla-js';
+
+const customers = [
+  { name: 'John Smith', type: 'Premium Customer' },
+  { name: 'Jane Johnson', type: 'New Customer' },
+  { name: 'Bob Williams', type: 'Regular Customer' }
+];
+
+const container = document.getElementById('customer-list');
+
+customers.forEach(customer => {
+  const item = document.createElement('div');
+  item.className = 'customer-item';
+  item.style.cssText = 'display: flex; align-items: center; gap: 16px;';
+
+  const avatar = createAvatar({
+    name: customer.name,
+    size: 'medium',
+    customer: true
+  });
+
+  const info = document.createElement('div');
+  info.innerHTML = \`
+    <div style="font-weight: 500;">\${customer.name}</div>
+    <div style="color: #637381;">\${customer.type}</div>
+  \`;
+
+  item.appendChild(avatar);
+  item.appendChild(info);
+  container.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS Customer Avatars using @cin7/extjs-adapters
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+const customers = [
+  { name: 'John Smith', type: 'Premium Customer' },
+  { name: 'Jane Johnson', type: 'New Customer' },
+  { name: 'Bob Williams', type: 'Regular Customer' }
+];
+
+const customerItems = customers.map(customer => ({
+  xtype: 'container',
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  margin: '0 0 24 0',
+  items: [
+    Ext.create('PolarisAvatar', {
+      name: customer.name,
+      size: 'medium',
+      customer: true,
+      margin: '0 16 0 0'
+    }),
+    {
+      xtype: 'container',
+      layout: 'vbox',
+      items: [
+        {
+          xtype: 'label',
+          text: customer.name,
+          style: {
+            fontWeight: '500',
+            marginBottom: '4px'
+          }
+        },
+        {
+          xtype: 'label',
+          text: customer.type,
+          style: {
+            color: '#637381'
+          }
+        }
+      ]
+    }
+  ]
+}));
+
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: customerItems,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface Customer {
+  name: string;
+  type: string;
+}
+
+interface CustomerAvatarsProps {
+  customers: Customer[];
+}
+
+function CustomerAvatarsExample({ customers }: CustomerAvatarsProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {customers.map((customer) => (
+        <div
+          key={customer.name}
+          style={{ display: 'flex', alignItems: 'center', gap: '16px' }}
+        >
+          <Avatar customer size="medium" name={customer.name} />
+          <div>
+            <Text variant="bodyMd" fontWeight="medium">{customer.name}</Text>
+            <Text color="subdued">{customer.type}</Text>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Usage
+const defaultCustomers: Customer[] = [
+  { name: 'John Smith', type: 'Premium Customer' },
+  { name: 'Jane Johnson', type: 'New Customer' },
+  { name: 'Bob Williams', type: 'Regular Customer' }
+];
+
+export default function Example() {
+  return <CustomerAvatarsExample customers={defaultCustomers} />;
+}`
+  },
+
+  initials: {
+    react: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+function AvatarInitialsExample() {
+  const names = [
+    'John Doe',
+    'Jane Smith',
+    'Alice Johnson',
+    'Bob Williams',
+    'Charlie Brown',
+    'Diana Prince',
+  ];
+
+  const customInitials = [
+    { initials: 'JD', label: 'JD' },
+    { initials: 'ABC', label: 'ABC' },
+    { initials: '1', label: 'Number 1' },
+    { initials: '😊', label: 'Emoji' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Text variant="headingMd" as="h3">Initials from Names</Text>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+        {names.map((name) => (
+          <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <Avatar size="large" name={name} />
+            <Text variant="bodySm" as="p">{name}</Text>
+          </div>
+        ))}
+      </div>
+
+      <Text variant="headingMd" as="h3" style={{ marginTop: '24px' }}>Custom Initials</Text>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+        {customInitials.map((item) => (
+          <div key={item.initials} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <Avatar size="large" initials={item.initials} />
+            <Text variant="bodySm" as="p">{item.label}</Text>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default AvatarInitialsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="avatar-initials-container">
+  <h3>Initials from Names</h3>
+  <div class="avatar-grid" style="display: flex; flex-wrap: wrap; gap: 16px;">
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">JD</span>
+      </div>
+      <span class="avatar-label">John Doe</span>
+    </div>
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">JS</span>
+      </div>
+      <span class="avatar-label">Jane Smith</span>
+    </div>
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">AJ</span>
+      </div>
+      <span class="avatar-label">Alice Johnson</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 24px;">Custom Initials</h3>
+  <div class="avatar-grid" style="display: flex; flex-wrap: wrap; gap: 16px;">
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">JD</span>
+      </div>
+      <span class="avatar-label">JD</span>
+    </div>
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">ABC</span>
+      </div>
+      <span class="avatar-label">ABC</span>
+    </div>
+    <div class="avatar-item" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <span class="polaris-avatar__initials">1</span>
+      </div>
+      <span class="avatar-label">Number 1</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar } from '@cin7/vanilla-js';
+
+// Helper to generate initials from name
+function getInitials(name) {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase();
+}
+
+const names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Williams'];
+const customInitials = [
+  { initials: 'JD', label: 'JD' },
+  { initials: 'ABC', label: 'ABC' },
+  { initials: '1', label: 'Number 1' }
+];
+
+// Create avatars from names
+const namesContainer = document.getElementById('names-grid');
+names.forEach(name => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'avatar-item';
+
+  const avatar = createAvatar({
+    name: name,
+    size: 'large'
+  });
+
+  const label = document.createElement('span');
+  label.textContent = name;
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(label);
+  namesContainer.appendChild(wrapper);
+});
+
+// Create avatars with custom initials
+const initialsContainer = document.getElementById('initials-grid');
+customInitials.forEach(item => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'avatar-item';
+
+  const avatar = createAvatar({
+    initials: item.initials,
+    size: 'large'
+  });
+
+  const label = document.createElement('span');
+  label.textContent = item.label;
+
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(label);
+  initialsContainer.appendChild(wrapper);
+});
+</script>`,
+
+    extjs: `// ExtJS Avatar Initials using @cin7/extjs-adapters
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+// Helper to generate initials from name
+function getInitials(name) {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase();
+}
+
+const names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Williams'];
+const customInitials = [
+  { initials: 'JD', label: 'JD' },
+  { initials: 'ABC', label: 'ABC' },
+  { initials: '1', label: 'Number 1' }
+];
+
+// Create avatar items from names
+const nameAvatars = names.map(name => ({
+  xtype: 'container',
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  margin: '0 16 0 0',
+  items: [
+    Ext.create('PolarisAvatar', {
+      name: name,
+      size: 'large'
+    }),
+    {
+      xtype: 'label',
+      text: name,
+      style: {
+        marginTop: '8px',
+        fontSize: '12px'
+      }
+    }
+  ]
+}));
+
+// Create avatar items with custom initials
+const initialsAvatars = customInitials.map(item => ({
+  xtype: 'container',
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  margin: '0 16 0 0',
+  items: [
+    Ext.create('PolarisAvatar', {
+      initials: item.initials,
+      size: 'large'
+    }),
+    {
+      xtype: 'label',
+      text: item.label,
+      style: {
+        marginTop: '8px',
+        fontSize: '12px'
+      }
+    }
+  ]
+}));
+
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [
+    {
+      xtype: 'label',
+      text: 'Initials from Names',
+      style: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginBottom: '16px'
+      }
+    },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: nameAvatars
+    },
+    {
+      xtype: 'label',
+      text: 'Custom Initials',
+      style: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginTop: '24px',
+        marginBottom: '16px'
+      }
+    },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: initialsAvatars
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface AvatarItem {
+  id: string;
+  name?: string;
+  initials?: string;
+  label: string;
+}
+
+interface AvatarInitialsProps {
+  names?: string[];
+  customInitials?: Array<{ initials: string; label: string }>;
+}
+
+function AvatarInitialsExample({
+  names = ['John Doe', 'Jane Smith', 'Alice Johnson', 'Bob Williams'],
+  customInitials = [
+    { initials: 'JD', label: 'JD' },
+    { initials: 'ABC', label: 'ABC' },
+    { initials: '1', label: 'Number 1' }
+  ]
+}: AvatarInitialsProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Text variant="headingMd" as="h3">Initials from Names</Text>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+        {names.map((name) => (
+          <div
+            key={name}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            <Avatar size="large" name={name} />
+            <Text variant="bodySm" as="p">{name}</Text>
+          </div>
+        ))}
+      </div>
+
+      <Text variant="headingMd" as="h3" style={{ marginTop: '24px' }}>
+        Custom Initials
+      </Text>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+        {customInitials.map((item) => (
+          <div
+            key={item.initials}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            <Avatar size="large" initials={item.initials} />
+            <Text variant="bodySm" as="p">{item.label}</Text>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default AvatarInitialsExample;`
+  },
+
+  userStatus: {
+    react: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+type UserStatus = 'online' | 'away' | 'offline' | 'busy';
+
+interface User {
+  name: string;
+  status: UserStatus;
+  lastSeen: string;
+  avatarUrl: string;
+}
+
+function UserStatusExample() {
+  const users: User[] = [
+    { name: 'John Doe', status: 'online', lastSeen: 'Active now', avatarUrl: 'https://picsum.photos/seed/john/100/100.jpg' },
+    { name: 'Jane Smith', status: 'away', lastSeen: 'Away from desk', avatarUrl: 'https://picsum.photos/seed/jane/100/100.jpg' },
+    { name: 'Bob Johnson', status: 'offline', lastSeen: 'Last seen 2 hours ago', avatarUrl: 'https://picsum.photos/seed/bob/100/100.jpg' },
+    { name: 'Alice Wilson', status: 'busy', lastSeen: 'In a meeting', avatarUrl: 'https://picsum.photos/seed/alice/100/100.jpg' },
+  ];
+
+  const getStatusColor = (status: UserStatus): string => {
+    const colors = {
+      online: '#2a6f3a',
+      away: '#e4930d',
+      offline: '#637381',
+      busy: '#d72c0d',
+    };
+    return colors[status];
+  };
+
+  const StatusIndicator = ({ status }: { status: UserStatus }) => (
+    <div
+      style={{
+        width: '12px',
+        height: '12px',
+        borderRadius: '50%',
+        backgroundColor: getStatusColor(status),
+        border: '2px solid white',
+        position: 'absolute',
+        bottom: '0',
+        right: '0',
+      }}
+    />
+  );
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Text variant="headingMd" as="h3">User Status Indicators</Text>
+      {users.map((user) => (
+        <div key={user.name} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ position: 'relative' }}>
+            <Avatar
+              size="large"
+              source={user.avatarUrl}
+              name={user.name}
+            />
+            <StatusIndicator status={user.status} />
+          </div>
+          <div>
+            <Text variant="bodyMd" fontWeight="medium">{user.name}</Text>
+            <Text color="subdued" variant="bodySm">{user.lastSeen}</Text>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default UserStatusExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="user-status-list">
+  <h3>User Status Indicators</h3>
+
+  <div class="user-item" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+    <div class="avatar-wrapper" style="position: relative;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <img src="https://picsum.photos/seed/john/100/100.jpg" alt="John Doe" class="polaris-avatar__image" />
+      </div>
+      <div class="status-indicator status-online" style="
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #2a6f3a;
+        border: 2px solid white;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      "></div>
+    </div>
+    <div class="user-info">
+      <div style="font-weight: 500;">John Doe</div>
+      <div style="color: #637381; font-size: 12px;">Active now</div>
+    </div>
+  </div>
+
+  <div class="user-item" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+    <div class="avatar-wrapper" style="position: relative;">
+      <div class="polaris-avatar polaris-avatar--large">
+        <img src="https://picsum.photos/seed/jane/100/100.jpg" alt="Jane Smith" class="polaris-avatar__image" />
+      </div>
+      <div class="status-indicator status-away" style="
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #e4930d;
+        border: 2px solid white;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      "></div>
+    </div>
+    <div class="user-info">
+      <div style="font-weight: 500;">Jane Smith</div>
+      <div style="color: #637381; font-size: 12px;">Away from desk</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createAvatar, $ } from '@cin7/vanilla-js';
+
+const statusColors = {
+  online: '#2a6f3a',
+  away: '#e4930d',
+  offline: '#637381',
+  busy: '#d72c0d'
+};
+
+function createStatusIndicator(status) {
+  const indicator = document.createElement('div');
+  indicator.className = \`status-indicator status-\${status}\`;
+  indicator.style.cssText = \`
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: \${statusColors[status]};
+    border: 2px solid white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  \`;
+  return indicator;
+}
+
+const users = [
+  { name: 'John Doe', status: 'online', lastSeen: 'Active now', avatarUrl: 'https://picsum.photos/seed/john/100/100.jpg' },
+  { name: 'Jane Smith', status: 'away', lastSeen: 'Away from desk', avatarUrl: 'https://picsum.photos/seed/jane/100/100.jpg' },
+  { name: 'Bob Johnson', status: 'offline', lastSeen: 'Last seen 2 hours ago', avatarUrl: 'https://picsum.photos/seed/bob/100/100.jpg' }
+];
+
+const container = $('#user-status-list');
+
+users.forEach(user => {
+  const item = document.createElement('div');
+  item.className = 'user-item';
+  item.style.cssText = 'display: flex; align-items: center; gap: 16px; margin-bottom: 16px;';
+
+  const avatarWrapper = document.createElement('div');
+  avatarWrapper.style.position = 'relative';
+
+  const avatar = createAvatar({
+    name: user.name,
+    size: 'large',
+    source: user.avatarUrl
+  });
+
+  const statusIndicator = createStatusIndicator(user.status);
+
+  avatarWrapper.appendChild(avatar);
+  avatarWrapper.appendChild(statusIndicator);
+
+  const userInfo = document.createElement('div');
+  userInfo.innerHTML = \`
+    <div style="font-weight: 500;">\${user.name}</div>
+    <div style="color: #637381; font-size: 12px;">\${user.lastSeen}</div>
+  \`;
+
+  item.appendChild(avatarWrapper);
+  item.appendChild(userInfo);
+  container.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS User Status Avatars using @cin7/extjs-adapters
+import { PolarisAvatar } from '@cin7/extjs-adapters';
+
+const statusColors = {
+  online: '#2a6f3a',
+  away: '#e4930d',
+  offline: '#637381',
+  busy: '#d72c0d'
+};
+
+const users = [
+  { name: 'John Doe', status: 'online', lastSeen: 'Active now', avatarUrl: 'https://picsum.photos/seed/john/100/100.jpg' },
+  { name: 'Jane Smith', status: 'away', lastSeen: 'Away from desk', avatarUrl: 'https://picsum.photos/seed/jane/100/100.jpg' },
+  { name: 'Bob Johnson', status: 'offline', lastSeen: 'Last seen 2 hours ago', avatarUrl: 'https://picsum.photos/seed/bob/100/100.jpg' },
+  { name: 'Alice Wilson', status: 'busy', lastSeen: 'In a meeting', avatarUrl: 'https://picsum.photos/seed/alice/100/100.jpg' }
+];
+
+const userItems = users.map(user => ({
+  xtype: 'container',
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  margin: '0 0 16 0',
+  items: [
+    {
+      xtype: 'container',
+      width: 60,
+      height: 60,
+      style: {
+        position: 'relative'
+      },
+      html: \`
+        <div class="avatar-container" style="position: relative;">
+          <img src="\${user.avatarUrl}" alt="\${user.name}"
+               style="width: 50px; height: 50px; border-radius: 50%;" />
+          <div style="
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: \${statusColors[user.status]};
+            border: 2px solid white;
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+          "></div>
+        </div>
+      \`,
+      margin: '0 16 0 0'
+    },
+    {
+      xtype: 'container',
+      layout: 'vbox',
+      items: [
+        {
+          xtype: 'label',
+          text: user.name,
+          style: {
+            fontWeight: '500',
+            marginBottom: '4px'
+          }
+        },
+        {
+          xtype: 'label',
+          text: user.lastSeen,
+          style: {
+            color: '#637381',
+            fontSize: '12px'
+          }
+        }
+      ]
+    }
+  ]
+}));
+
+Ext.create('Ext.container.Container', {
+  layout: 'vbox',
+  items: [
+    {
+      xtype: 'label',
+      text: 'User Status Indicators',
+      style: {
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginBottom: '16px'
+      }
+    },
+    ...userItems
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Avatar, Text } from '@shopify/polaris';
+import React from 'react';
+
+type UserStatus = 'online' | 'away' | 'offline' | 'busy';
+
+interface User {
+  name: string;
+  status: UserStatus;
+  lastSeen: string;
+  avatarUrl: string;
+}
+
+interface UserStatusProps {
+  users: User[];
+}
+
+const statusColors: Record<UserStatus, string> = {
+  online: '#2a6f3a',
+  away: '#e4930d',
+  offline: '#637381',
+  busy: '#d72c0d',
+};
+
+const StatusIndicator: React.FC<{ status: UserStatus }> = ({ status }) => (
+  <div
+    style={{
+      width: '12px',
+      height: '12px',
+      borderRadius: '50%',
+      backgroundColor: statusColors[status],
+      border: '2px solid white',
+      position: 'absolute',
+      bottom: '0',
+      right: '0',
+    }}
+    aria-label={\`Status: \${status}\`}
+  />
+);
+
+function UserStatusExample({ users }: UserStatusProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <Text variant="headingMd" as="h3">User Status Indicators</Text>
+      {users.map((user) => (
+        <div
+          key={user.name}
+          style={{ display: 'flex', alignItems: 'center', gap: '16px' }}
+        >
+          <div style={{ position: 'relative' }}>
+            <Avatar
+              size="large"
+              source={user.avatarUrl}
+              name={user.name}
+            />
+            <StatusIndicator status={user.status} />
+          </div>
+          <div>
+            <Text variant="bodyMd" fontWeight="medium">{user.name}</Text>
+            <Text color="subdued" variant="bodySm">{user.lastSeen}</Text>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Usage
+const defaultUsers: User[] = [
+  { name: 'John Doe', status: 'online', lastSeen: 'Active now', avatarUrl: 'https://picsum.photos/seed/john/100/100.jpg' },
+  { name: 'Jane Smith', status: 'away', lastSeen: 'Away from desk', avatarUrl: 'https://picsum.photos/seed/jane/100/100.jpg' },
+  { name: 'Bob Johnson', status: 'offline', lastSeen: 'Last seen 2 hours ago', avatarUrl: 'https://picsum.photos/seed/bob/100/100.jpg' },
+  { name: 'Alice Wilson', status: 'busy', lastSeen: 'In a meeting', avatarUrl: 'https://picsum.photos/seed/alice/100/100.jpg' }
+];
+
+export default function Example() {
+  return <UserStatusExample users={defaultUsers} />;
+}`
   }
 };
 
@@ -11927,7 +15201,7 @@ function MediaCardExample() {
 export default MediaCardExample;`,
 
     vanilla: `<!-- HTML Structure -->
-<div class="polaris-media-card">
+<div class="polaris-media-card polaris-media-card--portrait">
   <div class="polaris-media-card__media">
     <img src="placeholder.jpg" alt="Modern Office Chair" />
   </div>
@@ -11943,29 +15217,19 @@ export default MediaCardExample;`,
 
 <script>
 // JavaScript behavior using @cin7/vanilla-js
-import { createMediaCard } from '@cin7/vanilla-js';
+import { $, on } from '@cin7/vanilla-js';
 
-const mediaCard = createMediaCard({
-  title: 'Modern Office Chair',
-  description: 'Ergonomic office chair with lumbar support and adjustable armrests.',
-  portrait: true,
-  primaryAction: {
-    content: 'View details',
-    onClick: () => {
-      console.log('View details clicked');
-    }
-  }
+on('.polaris-button--primary', 'click', () => {
+  console.log('View details clicked');
 });
-
-document.getElementById('product-section').appendChild(mediaCard);
 </script>`,
 
     extjs: `// ExtJS MediaCard using @cin7/extjs-adapters
 Ext.create('Ext.panel.Panel', {
-  cls: 'polaris-media-card',
+  cls: 'polaris-media-card polaris-media-card--portrait',
   title: 'Modern Office Chair',
   bodyPadding: 16,
-  html: 'Ergonomic office chair with lumbar support and adjustable armrests. Perfect for long working hours.',
+  html: '<p>Ergonomic office chair with lumbar support and adjustable armrests. Perfect for long working hours.</p>',
   buttons: [{
     text: 'View details',
     ui: 'primary',
@@ -11974,21 +15238,6 @@ Ext.create('Ext.panel.Panel', {
     }
   }],
   renderTo: Ext.getBody()
-});
-
-// Or using Polaris adapter
-import { PolarisMediaCard } from '@cin7/extjs-adapters';
-
-const mediaCard = Ext.create('PolarisMediaCard', {
-  title: 'Modern Office Chair',
-  description: 'Ergonomic office chair with lumbar support and adjustable armrests.',
-  portrait: true,
-  primaryAction: {
-    text: 'View details',
-    handler: function() {
-      console.log('View details clicked');
-    }
-  }
 });`,
 
     typescript: `import { MediaCard } from '@shopify/polaris';
@@ -12002,31 +15251,780 @@ interface MediaCardExampleProps {
     content: string;
     onAction: () => void;
   };
-  secondaryAction?: {
-    content: string;
-    onAction: () => void;
-  };
 }
 
-function MediaCardExample({
+const MediaCardExample: React.FC<MediaCardExampleProps> = ({
   title,
   description,
   portrait = false,
-  primaryAction,
-  secondaryAction
-}: MediaCardExampleProps): JSX.Element {
+  primaryAction
+}) => {
   return (
     <MediaCard
       title={title}
       description={description}
       portrait={portrait}
       primaryAction={primaryAction}
-      secondaryAction={secondaryAction}
+    />
+  );
+};
+
+export default MediaCardExample;`
+  },
+
+  product: {
+    react: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+function ProductCardExample() {
+  return (
+    <MediaCard
+      title="Premium Leather Bag"
+      description="Handcrafted genuine leather briefcase with multiple compartments and vintage design. Ideal for professionals who value quality and style."
+      portrait
+      primaryAction={{
+        content: 'Add to cart',
+        onAction: () => console.log('Add to cart'),
+      }}
+      secondaryAction={{
+        content: 'Save for later',
+        onAction: () => console.log('Save for later'),
+      }}
     />
   );
 }
 
-export default MediaCardExample;`
+export default ProductCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card polaris-media-card--portrait">
+  <div class="polaris-media-card__media">
+    <img src="leather-bag.jpg" alt="Premium Leather Bag" />
+  </div>
+  <div class="polaris-media-card__content">
+    <h3 class="polaris-media-card__title">Premium Leather Bag</h3>
+    <p class="polaris-media-card__description">
+      Handcrafted genuine leather briefcase with multiple compartments and vintage design.
+      Ideal for professionals who value quality and style.
+    </p>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" data-action="add-cart">Add to cart</button>
+      <button class="polaris-button" data-action="save">Save for later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+on('[data-action="add-cart"]', 'click', () => {
+  console.log('Add to cart');
+});
+
+on('[data-action="save"]', 'click', () => {
+  console.log('Save for later');
+});
+</script>`,
+
+    extjs: `// ExtJS Product Card using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-media-card polaris-media-card--portrait',
+  title: 'Premium Leather Bag',
+  bodyPadding: 16,
+  html: '<p>Handcrafted genuine leather briefcase with multiple compartments and vintage design. Ideal for professionals who value quality and style.</p>',
+  buttons: [{
+    text: 'Add to cart',
+    ui: 'primary',
+    handler: function() {
+      console.log('Add to cart');
+    }
+  }, {
+    text: 'Save for later',
+    handler: function() {
+      console.log('Save for later');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+interface ProductCardProps {
+  title: string;
+  description: string;
+  onAddToCart: () => void;
+  onSaveForLater: () => void;
+}
+
+const ProductCardExample: React.FC<ProductCardProps> = ({
+  title,
+  description,
+  onAddToCart,
+  onSaveForLater
+}) => {
+  return (
+    <MediaCard
+      title={title}
+      description={description}
+      portrait
+      primaryAction={{
+        content: 'Add to cart',
+        onAction: onAddToCart,
+      }}
+      secondaryAction={{
+        content: 'Save for later',
+        onAction: onSaveForLater,
+      }}
+    />
+  );
+};
+
+export default ProductCardExample;`
+  },
+
+  video: {
+    react: `import { MediaCard } from '@shopify/polaris';
+import { PlayIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+function VideoCardExample() {
+  return (
+    <MediaCard
+      title="Product Demo Video"
+      description="Watch our comprehensive product demonstration showing all features and benefits. Learn how to maximize your productivity with this innovative solution."
+      primaryAction={{
+        content: 'Watch now',
+        onAction: () => console.log('Watch video'),
+        icon: PlayIcon,
+      }}
+      secondaryAction={{
+        content: 'More videos',
+        onAction: () => console.log('More videos'),
+      }}
+    />
+  );
+}
+
+export default VideoCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media polaris-media-card__media--video">
+    <video poster="video-thumbnail.jpg" controls>
+      <source src="demo-video.mp4" type="video/mp4" />
+    </video>
+    <div class="polaris-media-card__play-overlay">
+      <svg class="polaris-icon" viewBox="0 0 20 20">
+        <path d="M6 4l10 6-10 6V4z" />
+      </svg>
+    </div>
+  </div>
+  <div class="polaris-media-card__content">
+    <h3 class="polaris-media-card__title">Product Demo Video</h3>
+    <p class="polaris-media-card__description">
+      Watch our comprehensive product demonstration showing all features and benefits.
+    </p>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" data-action="watch">
+        <span class="polaris-icon">▶</span>
+        Watch now
+      </button>
+      <button class="polaris-button" data-action="more">More videos</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+on('[data-action="watch"]', 'click', () => {
+  const video = $('video');
+  video.play();
+  console.log('Watch video');
+});
+
+on('[data-action="more"]', 'click', () => {
+  console.log('More videos');
+});
+</script>`,
+
+    extjs: `// ExtJS Video Card using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-media-card',
+  title: 'Product Demo Video',
+  bodyPadding: 16,
+  html: '<p>Watch our comprehensive product demonstration showing all features and benefits. Learn how to maximize your productivity with this innovative solution.</p>',
+  items: [{
+    xtype: 'component',
+    html: '<video poster="video-thumbnail.jpg" controls><source src="demo-video.mp4" type="video/mp4" /></video>'
+  }],
+  buttons: [{
+    text: 'Watch now',
+    iconCls: 'x-fa fa-play',
+    ui: 'primary',
+    handler: function() {
+      console.log('Watch video');
+    }
+  }, {
+    text: 'More videos',
+    handler: function() {
+      console.log('More videos');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { MediaCard } from '@shopify/polaris';
+import { PlayIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface VideoCardProps {
+  title: string;
+  description: string;
+  onWatch: () => void;
+  onMoreVideos: () => void;
+}
+
+const VideoCardExample: React.FC<VideoCardProps> = ({
+  title,
+  description,
+  onWatch,
+  onMoreVideos
+}) => {
+  return (
+    <MediaCard
+      title={title}
+      description={description}
+      primaryAction={{
+        content: 'Watch now',
+        onAction: onWatch,
+        icon: PlayIcon,
+      }}
+      secondaryAction={{
+        content: 'More videos',
+        onAction: onMoreVideos,
+      }}
+    />
+  );
+};
+
+export default VideoCardExample;`
+  },
+
+  article: {
+    react: `import { MediaCard } from '@shopify/polaris';
+import { ExternalIcon, PinFilledIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+function ArticleCardExample() {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  return (
+    <MediaCard
+      title="10 Tips for Better Time Management"
+      description="Discover proven strategies to boost your productivity and make the most of your workday. Learn from industry experts and transform how you manage your time effectively."
+      primaryAction={{
+        content: 'Read article',
+        onAction: () => console.log('Read article'),
+        icon: ExternalIcon,
+      }}
+      secondaryAction={{
+        content: isBookmarked ? 'Bookmarked' : 'Bookmark',
+        onAction: () => setIsBookmarked(!isBookmarked),
+        icon: PinFilledIcon,
+        tone: isBookmarked ? 'success' : undefined,
+      }}
+    />
+  );
+}
+
+export default ArticleCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media">
+    <img src="article-image.jpg" alt="Time Management" />
+  </div>
+  <div class="polaris-media-card__content">
+    <h3 class="polaris-media-card__title">10 Tips for Better Time Management</h3>
+    <p class="polaris-media-card__description">
+      Discover proven strategies to boost your productivity and make the most of your workday.
+    </p>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" data-action="read">
+        <span class="polaris-icon">↗</span>
+        Read article
+      </button>
+      <button class="polaris-button" data-action="bookmark">
+        <span class="polaris-icon">📌</span>
+        <span class="bookmark-text">Bookmark</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on, toggleClass } from '@cin7/vanilla-js';
+
+let isBookmarked = false;
+
+on('[data-action="read"]', 'click', () => {
+  console.log('Read article');
+});
+
+on('[data-action="bookmark"]', 'click', (e) => {
+  isBookmarked = !isBookmarked;
+  const button = e.target.closest('button');
+  const text = button.querySelector('.bookmark-text');
+  text.textContent = isBookmarked ? 'Bookmarked' : 'Bookmark';
+  toggleClass(button, 'polaris-button--success', isBookmarked);
+  console.log('Bookmark toggled');
+});
+</script>`,
+
+    extjs: `// ExtJS Article Card using @cin7/extjs-adapters
+Ext.define('ArticleCard', {
+  extend: 'Ext.panel.Panel',
+  cls: 'polaris-media-card',
+  title: '10 Tips for Better Time Management',
+  bodyPadding: 16,
+  html: '<p>Discover proven strategies to boost your productivity and make the most of your workday.</p>',
+
+  initComponent: function() {
+    this.isBookmarked = false;
+
+    this.buttons = [{
+      text: 'Read article',
+      iconCls: 'x-fa fa-external-link',
+      ui: 'primary',
+      handler: function() {
+        console.log('Read article');
+      }
+    }, {
+      text: 'Bookmark',
+      iconCls: 'x-fa fa-bookmark',
+      itemId: 'bookmarkBtn',
+      scope: this,
+      handler: function(btn) {
+        this.isBookmarked = !this.isBookmarked;
+        btn.setText(this.isBookmarked ? 'Bookmarked' : 'Bookmark');
+        btn.setUi(this.isBookmarked ? 'success' : 'default');
+      }
+    }];
+
+    this.callParent(arguments);
+  }
+});
+
+Ext.create('ArticleCard', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { MediaCard } from '@shopify/polaris';
+import { ExternalIcon, PinFilledIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+interface ArticleCardProps {
+  title: string;
+  description: string;
+}
+
+const ArticleCardExample: React.FC<ArticleCardProps> = ({
+  title,
+  description
+}) => {
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+
+  const handleBookmark = () => {
+    setIsBookmarked((prev) => !prev);
+    console.log('Bookmark toggled');
+  };
+
+  return (
+    <MediaCard
+      title={title}
+      description={description}
+      primaryAction={{
+        content: 'Read article',
+        onAction: () => console.log('Read article'),
+        icon: ExternalIcon,
+      }}
+      secondaryAction={{
+        content: isBookmarked ? 'Bookmarked' : 'Bookmark',
+        onAction: handleBookmark,
+        icon: PinFilledIcon,
+        tone: isBookmarked ? 'success' : undefined,
+      }}
+    />
+  );
+};
+
+export default ArticleCardExample;`
+  },
+
+  testimonial: {
+    react: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+function TestimonialCardExample() {
+  return (
+    <MediaCard
+      title="Sarah Johnson - CEO at TechCorp"
+      description="This solution transformed our workflow completely. We've seen a 40% increase in productivity and our team loves using it. The support team has been exceptional throughout our journey."
+      primaryAction={{
+        content: 'Read full story',
+        onAction: () => console.log('Read full story'),
+      }}
+      secondaryAction={{
+        content: 'More testimonials',
+        onAction: () => console.log('More testimonials'),
+      }}
+    />
+  );
+}
+
+export default TestimonialCardExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-media-card">
+  <div class="polaris-media-card__media">
+    <img src="sarah-johnson.jpg" alt="Sarah Johnson" />
+  </div>
+  <div class="polaris-media-card__content">
+    <h3 class="polaris-media-card__title">Sarah Johnson - CEO at TechCorp</h3>
+    <p class="polaris-media-card__description">
+      "This solution transformed our workflow completely. We've seen a 40% increase in productivity
+      and our team loves using it. The support team has been exceptional throughout our journey."
+    </p>
+    <div class="polaris-media-card__actions">
+      <button class="polaris-button polaris-button--primary" data-action="read">Read full story</button>
+      <button class="polaris-button" data-action="more">More testimonials</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('[data-action="read"]', 'click', () => {
+  console.log('Read full story');
+});
+
+on('[data-action="more"]', 'click', () => {
+  console.log('More testimonials');
+});
+</script>`,
+
+    extjs: `// ExtJS Testimonial Card using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-media-card',
+  title: 'Sarah Johnson - CEO at TechCorp',
+  bodyPadding: 16,
+  html: '<p>"This solution transformed our workflow completely. We\'ve seen a 40% increase in productivity and our team loves using it. The support team has been exceptional throughout our journey."</p>',
+  buttons: [{
+    text: 'Read full story',
+    ui: 'primary',
+    handler: function() {
+      console.log('Read full story');
+    }
+  }, {
+    text: 'More testimonials',
+    handler: function() {
+      console.log('More testimonials');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { MediaCard } from '@shopify/polaris';
+import React from 'react';
+
+interface TestimonialCardProps {
+  name: string;
+  title: string;
+  testimonial: string;
+  onReadMore: () => void;
+  onMoreTestimonials: () => void;
+}
+
+const TestimonialCardExample: React.FC<TestimonialCardProps> = ({
+  name,
+  title: jobTitle,
+  testimonial,
+  onReadMore,
+  onMoreTestimonials
+}) => {
+  return (
+    <MediaCard
+      title={\`\${name} - \${jobTitle}\`}
+      description={testimonial}
+      primaryAction={{
+        content: 'Read full story',
+        onAction: onReadMore,
+      }}
+      secondaryAction={{
+        content: 'More testimonials',
+        onAction: onMoreTestimonials,
+      }}
+    />
+  );
+};
+
+export default TestimonialCardExample;`
+  },
+
+  sizeVariations: {
+    react: `import { MediaCard, Text } from '@shopify/polaris';
+import React from 'react';
+
+function SizeVariationsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Text variant="headingMd" as="h3">Media Card Sizes</Text>
+
+      <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+        <MediaCard
+          size="small"
+          title="Compact Product"
+          description="Brief description of the product feature and benefits."
+          primaryAction={{
+            content: 'View',
+            onAction: () => console.log('View small'),
+          }}
+        />
+
+        <MediaCard
+          size="medium"
+          title="Standard Product"
+          description="Medium length description that provides more detail about the product features and benefits for customers."
+          primaryAction={{
+            content: 'View details',
+            onAction: () => console.log('View medium'),
+          }}
+          secondaryAction={{
+            content: 'Save',
+            onAction: () => console.log('Save medium'),
+          }}
+        />
+
+        <MediaCard
+          size="large"
+          title="Premium Product with Extended Features"
+          description="This comprehensive product description provides detailed information about all the features, benefits, and use cases."
+          primaryAction={{
+            content: 'Learn more',
+            onAction: () => console.log('View large'),
+          }}
+          secondaryAction={{
+            content: 'Add to favorites',
+            onAction: () => console.log('Add to favorites'),
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default SizeVariationsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="size-variations-container">
+  <h3 class="polaris-heading-md">Media Card Sizes</h3>
+
+  <div class="size-variations-grid">
+    <!-- Small -->
+    <div class="polaris-media-card polaris-media-card--small">
+      <div class="polaris-media-card__content">
+        <h3 class="polaris-media-card__title">Compact Product</h3>
+        <p class="polaris-media-card__description">Brief description of the product feature and benefits.</p>
+        <button class="polaris-button polaris-button--primary">View</button>
+      </div>
+    </div>
+
+    <!-- Medium -->
+    <div class="polaris-media-card polaris-media-card--medium">
+      <div class="polaris-media-card__content">
+        <h3 class="polaris-media-card__title">Standard Product</h3>
+        <p class="polaris-media-card__description">
+          Medium length description that provides more detail about the product features.
+        </p>
+        <div class="polaris-media-card__actions">
+          <button class="polaris-button polaris-button--primary">View details</button>
+          <button class="polaris-button">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Large -->
+    <div class="polaris-media-card polaris-media-card--large">
+      <div class="polaris-media-card__content">
+        <h3 class="polaris-media-card__title">Premium Product with Extended Features</h3>
+        <p class="polaris-media-card__description">
+          This comprehensive product description provides detailed information about all features.
+        </p>
+        <div class="polaris-media-card__actions">
+          <button class="polaris-button polaris-button--primary">Learn more</button>
+          <button class="polaris-button">Add to favorites</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.size-variations-grid {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+</style>`,
+
+    extjs: `// ExtJS Size Variations using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  layout: 'hbox',
+  defaults: {
+    margin: '0 12 0 0'
+  },
+  items: [{
+    xtype: 'panel',
+    cls: 'polaris-media-card polaris-media-card--small',
+    title: 'Compact Product',
+    width: 280,
+    bodyPadding: 12,
+    html: 'Brief description of the product feature and benefits.',
+    buttons: [{
+      text: 'View',
+      ui: 'primary',
+      handler: function() {
+        console.log('View small');
+      }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-media-card polaris-media-card--medium',
+    title: 'Standard Product',
+    width: 400,
+    bodyPadding: 16,
+    html: 'Medium length description that provides more detail about the product features and benefits.',
+    buttons: [{
+      text: 'View details',
+      ui: 'primary',
+      handler: function() {
+        console.log('View medium');
+      }
+    }, {
+      text: 'Save',
+      handler: function() {
+        console.log('Save medium');
+      }
+    }]
+  }, {
+    xtype: 'panel',
+    cls: 'polaris-media-card polaris-media-card--large',
+    title: 'Premium Product with Extended Features',
+    width: 480,
+    bodyPadding: 20,
+    html: 'This comprehensive product description provides detailed information about all features.',
+    buttons: [{
+      text: 'Learn more',
+      ui: 'primary',
+      handler: function() {
+        console.log('View large');
+      }
+    }, {
+      text: 'Add to favorites',
+      handler: function() {
+        console.log('Add to favorites');
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { MediaCard, Text } from '@shopify/polaris';
+import React from 'react';
+
+type MediaCardSize = 'small' | 'medium' | 'large';
+
+interface CardConfig {
+  size: MediaCardSize;
+  title: string;
+  description: string;
+  primaryAction: {
+    content: string;
+    onAction: () => void;
+  };
+  secondaryAction?: {
+    content: string;
+    onAction: () => void;
+  };
+}
+
+const SizeVariationsExample: React.FC = () => {
+  const cards: CardConfig[] = [
+    {
+      size: 'small',
+      title: 'Compact Product',
+      description: 'Brief description of the product feature and benefits.',
+      primaryAction: {
+        content: 'View',
+        onAction: () => console.log('View small'),
+      },
+    },
+    {
+      size: 'medium',
+      title: 'Standard Product',
+      description: 'Medium length description that provides more detail about the product features.',
+      primaryAction: {
+        content: 'View details',
+        onAction: () => console.log('View medium'),
+      },
+      secondaryAction: {
+        content: 'Save',
+        onAction: () => console.log('Save medium'),
+      },
+    },
+    {
+      size: 'large',
+      title: 'Premium Product with Extended Features',
+      description: 'This comprehensive product description provides detailed information.',
+      primaryAction: {
+        content: 'Learn more',
+        onAction: () => console.log('View large'),
+      },
+      secondaryAction: {
+        content: 'Add to favorites',
+        onAction: () => console.log('Add to favorites'),
+      },
+    },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Text variant="headingMd" as="h3">Media Card Sizes</Text>
+
+      <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+        {cards.map((card, index) => (
+          <MediaCard
+            key={index}
+            size={card.size}
+            title={card.title}
+            description={card.description}
+            primaryAction={card.primaryAction}
+            secondaryAction={card.secondaryAction}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default SizeVariationsExample;`
   }
 };
 
@@ -13530,9 +17528,7 @@ function EmptyStateExample() {
         onAction: () => console.log('Add product clicked'),
       }}
       image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-    >
-      Add products to your store to start selling and tracking inventory.
-    </EmptyState>
+    />
   );
 }
 
@@ -13542,13 +17538,10 @@ export default EmptyStateExample;`,
 <div class="polaris-empty-state">
   <div class="polaris-empty-state__image">
     <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
-         alt="Empty state" />
+         alt="No products found" />
   </div>
   <div class="polaris-empty-state__content">
     <h2 class="polaris-empty-state__heading">No products found</h2>
-    <p class="polaris-empty-state__description">
-      Add products to your store to start selling and tracking inventory.
-    </p>
     <div class="polaris-empty-state__actions">
       <button class="polaris-button polaris-button--primary">Add product</button>
     </div>
@@ -13559,7 +17552,7 @@ export default EmptyStateExample;`,
 // JavaScript behavior using @cin7/vanilla-js
 import { on } from '@cin7/vanilla-js';
 
-on('.polaris-empty-state__actions .polaris-button', 'click', () => {
+on('.polaris-button--primary', 'click', () => {
   console.log('Add product clicked');
 });
 </script>`,
@@ -13581,10 +17574,6 @@ Ext.create('Ext.panel.Panel', {
     xtype: 'component',
     html: '<h2 style="text-align: center; margin: 20px 0 10px;">No products found</h2>'
   }, {
-    xtype: 'component',
-    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Add products to your store to start selling and tracking inventory.</p>',
-    margin: '0 0 20 0'
-  }, {
     xtype: 'button',
     text: 'Add product',
     ui: 'primary',
@@ -13598,27 +17587,124 @@ Ext.create('Ext.panel.Panel', {
     typescript: `import { EmptyState } from '@shopify/polaris';
 import React from 'react';
 
-interface EmptyStateExampleProps {
+interface EmptyStateProps {
   heading: string;
-  description?: string;
   image?: string;
-  actionText: string;
-  secondaryActionText?: string;
   onAction: () => void;
-  onSecondaryAction?: () => void;
-  fullWidth?: boolean;
 }
 
-function EmptyStateExample({
+function EmptyStateExample({ heading, image, onAction }: EmptyStateProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: 'Add product',
+        onAction: onAction,
+      }}
+    />
+  );
+}
+
+export default EmptyStateExample;`
+  },
+
+  withDescription: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateWithDescription() {
+  return (
+    <EmptyState
+      heading="Manage your inventory"
+      action={{
+        content: 'Add products',
+        onAction: () => console.log('Add products clicked'),
+      }}
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    >
+      Add products to your store to start selling and tracking inventory.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateWithDescription;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="Manage your inventory" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">Manage your inventory</h2>
+    <p class="polaris-empty-state__description">
+      Add products to your store to start selling and tracking inventory.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Add products</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Add products clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">Manage your inventory</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Add products to your store to start selling and tracking inventory.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'button',
+    text: 'Add products',
+    ui: 'primary',
+    handler: function() {
+      console.log('Add products clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateWithDescriptionProps {
+  heading: string;
+  description: string;
+  image?: string;
+  actionText: string;
+  onAction: () => void;
+}
+
+function EmptyStateWithDescription({
   heading,
   description,
   image,
   actionText,
-  secondaryActionText,
-  onAction,
-  onSecondaryAction,
-  fullWidth = false
-}: EmptyStateExampleProps): JSX.Element {
+  onAction
+}: EmptyStateWithDescriptionProps): JSX.Element {
   return (
     <EmptyState
       heading={heading}
@@ -13627,22 +17713,725 @@ function EmptyStateExample({
         content: actionText,
         onAction: onAction,
       }}
-      secondaryAction={
-        secondaryActionText && onSecondaryAction
-          ? {
-              content: secondaryActionText,
-              onAction: onSecondaryAction,
-            }
-          : undefined
-      }
-      fullWidth={fullWidth}
     >
       {description}
     </EmptyState>
   );
 }
 
-export default EmptyStateExample;`
+export default EmptyStateWithDescription;`
+  },
+
+  withSecondaryAction: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateWithSecondaryAction() {
+  return (
+    <EmptyState
+      heading="No orders yet"
+      action={{
+        content: 'Create order',
+        onAction: () => console.log('Create order clicked'),
+      }}
+      secondaryAction={{
+        content: 'Import orders',
+        onAction: () => console.log('Import orders clicked'),
+      }}
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    >
+      Once you start making sales, you'll see your order history here.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateWithSecondaryAction;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="No orders yet" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">No orders yet</h2>
+    <p class="polaris-empty-state__description">
+      Once you start making sales, you'll see your order history here.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Create order</button>
+      <button class="polaris-button">Import orders</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Create order clicked');
+});
+
+on('.polaris-button:not(.polaris-button--primary)', 'click', () => {
+  console.log('Import orders clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">No orders yet</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Once you start making sales, you\\'ll see your order history here.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'center'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Create order',
+      ui: 'primary',
+      margin: '0 10 0 0',
+      handler: function() {
+        console.log('Create order clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Import orders',
+      handler: function() {
+        console.log('Import orders clicked');
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateWithSecondaryActionProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  primaryAction: {
+    content: string;
+    onAction: () => void;
+  };
+  secondaryAction: {
+    content: string;
+    onAction: () => void;
+  };
+}
+
+function EmptyStateWithSecondaryAction({
+  heading,
+  description,
+  image,
+  primaryAction,
+  secondaryAction
+}: EmptyStateWithSecondaryActionProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={primaryAction}
+      secondaryAction={secondaryAction}
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateWithSecondaryAction;`
+  },
+
+  noAction: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateNoAction() {
+  return (
+    <EmptyState
+      heading="All caught up!"
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+    >
+      There are no tasks that need your attention right now.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateNoAction;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="All caught up!" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">All caught up!</h2>
+    <p class="polaris-empty-state__description">
+      There are no tasks that need your attention right now.
+    </p>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+// No action button needed for this state
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">All caught up!</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">There are no tasks that need your attention right now.</p>'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateNoActionProps {
+  heading: string;
+  description?: string;
+  image?: string;
+}
+
+function EmptyStateNoAction({
+  heading,
+  description,
+  image
+}: EmptyStateNoActionProps): JSX.Element {
+  return (
+    <EmptyState heading={heading} image={image}>
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateNoAction;`
+  },
+
+  fullWidth: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateFullWidth() {
+  return (
+    <EmptyState
+      heading="No data available"
+      action={{
+        content: 'Configure settings',
+        onAction: () => console.log('Configure clicked'),
+      }}
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      fullWidth
+    >
+      Set up your preferences to start seeing data here.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateFullWidth;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state polaris-empty-state--full-width">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="No data available" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">No data available</h2>
+    <p class="polaris-empty-state__description">
+      Set up your preferences to start seeing data here.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Configure settings</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-empty-state--full-width {
+  width: 100%;
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Configure clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  width: '100%',
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">No data available</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Set up your preferences to start seeing data here.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'button',
+    text: 'Configure settings',
+    ui: 'primary',
+    handler: function() {
+      console.log('Configure clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateFullWidthProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  actionText: string;
+  onAction: () => void;
+}
+
+function EmptyStateFullWidth({
+  heading,
+  description,
+  image,
+  actionText,
+  onAction
+}: EmptyStateFullWidthProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: actionText,
+        onAction: onAction,
+      }}
+      fullWidth
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateFullWidth;`
+  },
+
+  searchResults: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateSearchResults() {
+  return (
+    <EmptyState
+      heading="No results found"
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      action={{
+        content: 'Clear search',
+        onAction: () => console.log('Clear search clicked'),
+      }}
+    >
+      Try checking your spelling or using more general terms
+    </EmptyState>
+  );
+}
+
+export default EmptyStateSearchResults;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="No results found" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">No results found</h2>
+    <p class="polaris-empty-state__description">
+      Try checking your spelling or using more general terms
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Clear search</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Clear search clicked');
+  // Clear search input and refresh results
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">No results found</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">Try checking your spelling or using more general terms</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'button',
+    text: 'Clear search',
+    ui: 'primary',
+    handler: function() {
+      console.log('Clear search clicked');
+      // Clear search field and refresh
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateSearchResultsProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  onClearSearch: () => void;
+}
+
+function EmptyStateSearchResults({
+  heading,
+  description,
+  image,
+  onClearSearch
+}: EmptyStateSearchResultsProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: 'Clear search',
+        onAction: onClearSearch,
+      }}
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateSearchResults;`
+  },
+
+  errorState: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateError() {
+  return (
+    <EmptyState
+      heading="Something went wrong"
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      action={{
+        content: 'Try again',
+        onAction: () => console.log('Try again clicked'),
+      }}
+      secondaryAction={{
+        content: 'Contact support',
+        onAction: () => console.log('Contact support clicked'),
+      }}
+    >
+      There was an error loading your data. Please try again.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateError;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state polaris-empty-state--error">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="Something went wrong" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">Something went wrong</h2>
+    <p class="polaris-empty-state__description">
+      There was an error loading your data. Please try again.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Try again</button>
+      <button class="polaris-button">Contact support</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Try again clicked');
+  // Reload data
+});
+
+on('.polaris-button:not(.polaris-button--primary)', 'click', () => {
+  console.log('Contact support clicked');
+  // Open support dialog
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state polaris-empty-state--error',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">Something went wrong</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">There was an error loading your data. Please try again.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'center'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Try again',
+      ui: 'primary',
+      margin: '0 10 0 0',
+      handler: function() {
+        console.log('Try again clicked');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Contact support',
+      handler: function() {
+        console.log('Contact support clicked');
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateErrorProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  onRetry: () => void;
+  onContactSupport: () => void;
+}
+
+function EmptyStateError({
+  heading,
+  description,
+  image,
+  onRetry,
+  onContactSupport
+}: EmptyStateErrorProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: 'Try again',
+        onAction: onRetry,
+      }}
+      secondaryAction={{
+        content: 'Contact support',
+        onAction: onContactSupport,
+      }}
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateError;`
+  },
+
+  maintenanceMode: {
+    react: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+function EmptyStateMaintenance() {
+  return (
+    <EmptyState
+      heading="Under maintenance"
+      image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+      action={{
+        content: 'Get notified',
+        onAction: () => console.log('Get notified clicked'),
+      }}
+    >
+      This section is temporarily unavailable while we make improvements. Check back soon.
+    </EmptyState>
+  );
+}
+
+export default EmptyStateMaintenance;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-empty-state polaris-empty-state--maintenance">
+  <div class="polaris-empty-state__image">
+    <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
+         alt="Under maintenance" />
+  </div>
+  <div class="polaris-empty-state__content">
+    <h2 class="polaris-empty-state__heading">Under maintenance</h2>
+    <p class="polaris-empty-state__description">
+      This section is temporarily unavailable while we make improvements. Check back soon.
+    </p>
+    <div class="polaris-empty-state__actions">
+      <button class="polaris-button polaris-button--primary">Get notified</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('.polaris-button--primary', 'click', () => {
+  console.log('Get notified clicked');
+  // Subscribe to notifications
+});
+</script>`,
+
+    extjs: `// ExtJS Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-empty-state polaris-empty-state--maintenance',
+  bodyPadding: 40,
+  layout: {
+    type: 'vbox',
+    align: 'center'
+  },
+  items: [{
+    xtype: 'image',
+    src: 'https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png',
+    width: 300,
+    height: 200
+  }, {
+    xtype: 'component',
+    html: '<h2 style="text-align: center; margin: 20px 0 10px;">Under maintenance</h2>'
+  }, {
+    xtype: 'component',
+    html: '<p style="text-align: center; color: #6d7175; max-width: 400px;">This section is temporarily unavailable while we make improvements. Check back soon.</p>',
+    margin: '0 0 20 0'
+  }, {
+    xtype: 'button',
+    text: 'Get notified',
+    ui: 'primary',
+    handler: function() {
+      console.log('Get notified clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { EmptyState } from '@shopify/polaris';
+import React from 'react';
+
+interface EmptyStateMaintenanceProps {
+  heading: string;
+  description?: string;
+  image?: string;
+  onGetNotified: () => void;
+}
+
+function EmptyStateMaintenance({
+  heading,
+  description,
+  image,
+  onGetNotified
+}: EmptyStateMaintenanceProps): JSX.Element {
+  return (
+    <EmptyState
+      heading={heading}
+      image={image}
+      action={{
+        content: 'Get notified',
+        onAction: onGetNotified,
+      }}
+    >
+      {description}
+    </EmptyState>
+  );
+}
+
+export default EmptyStateMaintenance;`
   }
 };
 
@@ -13779,6 +18568,1578 @@ function LoadingExample({
 export default LoadingExample;`
   }
 };
+
+// SkeletonPage Component Examples
+export const skeletonPageExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { SkeletonPage, SkeletonBodyText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageExample() {
+  return (
+    <SkeletonPage title="Products">
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonBodyText />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-skeleton-page" role="status" aria-label="Loading page">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-body-text">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-skeleton-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.polaris-skeleton-page__header {
+  margin-bottom: 24px;
+}
+
+.polaris-skeleton-display-text {
+  height: 32px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite;
+  border-radius: 4px;
+  max-width: 200px;
+}
+
+.polaris-skeleton-body-text__line {
+  height: 16px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const skeletonPage = createSkeletonPage({
+  title: 'Products',
+  sections: [
+    {
+      type: 'card',
+      content: { bodyLines: 3 }
+    }
+  ]
+});
+
+document.getElementById('app').appendChild(skeletonPage);
+</script>`,
+
+    extjs: `// ExtJS Loading Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  width: '100%',
+  height: 600,
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [{
+    xtype: 'panel',
+    cls: 'skeleton-card',
+    bodyPadding: 16,
+    html: [
+      '<div class="skeleton-text" style="height: 20px; width: 100%; margin-bottom: 12px;"></div>',
+      '<div class="skeleton-text" style="height: 20px; width: 90%; margin-bottom: 12px;"></div>',
+      '<div class="skeleton-text" style="height: 20px; width: 80%;"></div>'
+    ].join(''),
+    style: {
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      border: '1px solid #e1e3e5'
+    }
+  }],
+  renderTo: Ext.getBody(),
+  listeners: {
+    afterrender: function(panel) {
+      // Add shimmer animation
+      Ext.util.CSS.createStyleSheet([
+        '.skeleton-text {',
+        '  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);',
+        '  background-size: 200% 100%;',
+        '  animation: skeleton-shimmer 2s infinite;',
+        '  border-radius: 4px;',
+        '}',
+        '@keyframes skeleton-shimmer {',
+        '  0% { background-position: 200% 0; }',
+        '  100% { background-position: -200% 0; }',
+        '}'
+      ].join('\\n'));
+    }
+  }
+});
+
+// Or using Polaris adapter
+import { PolarisSkeletonPage } from '@cin7/extjs-adapters';
+
+const skeletonPage = Ext.create('PolarisSkeletonPage', {
+  title: 'Products',
+  sections: [{
+    type: 'card',
+    bodyLines: 3
+  }]
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonPageExampleProps {
+  title?: string;
+  sectionsCount?: number;
+}
+
+function SkeletonPageExample({
+  title = 'Products',
+  sectionsCount = 1
+}: SkeletonPageExampleProps): JSX.Element {
+  return (
+    <SkeletonPage title={title}>
+      <Layout>
+        {Array.from({ length: sectionsCount }).map((_, index) => (
+          <Layout.Section key={index}>
+            <Card>
+              <BlockStack gap="400">
+                <SkeletonBodyText />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageExample;`
+  },
+
+  withprimaryaction: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageWithPrimaryAction() {
+  return (
+    <SkeletonPage
+      title="Products"
+      primaryAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={3} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithPrimaryAction;`,
+
+    vanilla: `<!-- HTML Structure with Primary Action -->
+<div class="polaris-skeleton-page" role="status" aria-label="Loading page">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+        <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-skeleton-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.polaris-skeleton-button {
+  width: 100px;
+  height: 36px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite;
+  border-radius: 4px;
+}
+</style>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const skeletonPage = createSkeletonPage({
+  title: 'Products',
+  primaryAction: true,
+  sections: [
+    {
+      type: 'card',
+      content: {
+        displayText: 'small',
+        bodyLines: 3
+      }
+    }
+  ]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  width: '100%',
+  height: 600,
+  bodyPadding: 20,
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36,
+        html: '<div class="skeleton-shimmer"></div>'
+      }
+    ]
+  }],
+  items: [{
+    xtype: 'panel',
+    cls: 'skeleton-card',
+    bodyPadding: 16,
+    html: [
+      '<div class="skeleton-text skeleton-display-small" style="height: 24px; width: 40%; margin-bottom: 16px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 100%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 90%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 80%;"></div>'
+    ].join('')
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface SkeletonPageWithActionsProps {
+  title: string;
+  showPrimaryAction?: boolean;
+  displayTextSize?: 'small' | 'medium' | 'large';
+  bodyTextLines?: number;
+}
+
+function SkeletonPageWithPrimaryAction({
+  title,
+  showPrimaryAction = true,
+  displayTextSize = 'small',
+  bodyTextLines = 3
+}: SkeletonPageWithActionsProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      primaryAction={showPrimaryAction}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size={displayTextSize} />
+              <SkeletonBodyText lines={bodyTextLines} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithPrimaryAction;`
+  },
+
+  withbackaction: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageWithBackAction() {
+  return (
+    <SkeletonPage
+      title="Product details"
+      backAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={5} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithBackAction;`,
+
+    vanilla: `<!-- HTML Structure with Back Action -->
+<div class="polaris-skeleton-page" role="status" aria-label="Loading page">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__back-action">
+      <div class="polaris-skeleton-icon"></div>
+    </div>
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+        <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-skeleton-page__back-action {
+  margin-right: 16px;
+}
+
+.polaris-skeleton-icon {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 2s infinite;
+  border-radius: 4px;
+}
+</style>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const skeletonPage = createSkeletonPage({
+  title: 'Product details',
+  backAction: true,
+  sections: [{
+    type: 'card',
+    content: {
+      displayText: 'small',
+      bodyLines: 5
+    }
+  }]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product details',
+  width: '100%',
+  height: 600,
+  bodyPadding: 20,
+  tools: [{
+    type: 'left',
+    cls: 'skeleton-back-action',
+    handler: function() {
+      // Back action handler
+    }
+  }],
+  items: [{
+    xtype: 'panel',
+    cls: 'skeleton-card',
+    bodyPadding: 16,
+    html: [
+      '<div class="skeleton-text skeleton-display-small" style="height: 24px; width: 40%; margin-bottom: 16px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 100%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 95%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 90%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 85%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 75%;"></div>'
+    ].join('')
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface DetailPageSkeletonProps {
+  title: string;
+  hasBackAction?: boolean;
+  contentLines?: number;
+}
+
+function SkeletonPageWithBackAction({
+  title,
+  hasBackAction = true,
+  contentLines = 5
+}: DetailPageSkeletonProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      backAction={hasBackAction}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={contentLines} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithBackAction;`
+  },
+
+  withallactions: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageWithAllActions() {
+  return (
+    <SkeletonPage
+      title="Product details"
+      primaryAction
+      backAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="medium" />
+              <SkeletonBodyText lines={4} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithAllActions;`,
+
+    vanilla: `<!-- HTML Structure with All Actions -->
+<div class="polaris-skeleton-page" role="status" aria-label="Loading page">
+  <div class="polaris-skeleton-page__header">
+    <div style="display: flex; align-items: center;">
+      <div class="polaris-skeleton-page__back-action">
+        <div class="polaris-skeleton-icon"></div>
+      </div>
+      <div class="polaris-skeleton-page__title">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+      </div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--medium"></div>
+        <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const skeletonPage = createSkeletonPage({
+  title: 'Product details',
+  primaryAction: true,
+  backAction: true,
+  sections: [{
+    type: 'card',
+    content: {
+      displayText: 'medium',
+      bodyLines: 4
+    }
+  }]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product details',
+  width: '100%',
+  height: 600,
+  bodyPadding: 20,
+  tools: [{
+    type: 'left',
+    cls: 'skeleton-back-action'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36,
+        html: '<div class="skeleton-shimmer"></div>'
+      }
+    ]
+  }],
+  items: [{
+    xtype: 'panel',
+    cls: 'skeleton-card',
+    bodyPadding: 16,
+    html: [
+      '<div class="skeleton-text skeleton-display-medium" style="height: 28px; width: 50%; margin-bottom: 16px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 100%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 95%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 90%; margin-bottom: 8px;"></div>',
+      '<div class="skeleton-text" style="height: 16px; width: 85%;"></div>'
+    ].join('')
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface FullFeaturedSkeletonPageProps {
+  title: string;
+  displayTextSize?: 'small' | 'medium' | 'large';
+  bodyLines?: number;
+  showPrimaryAction?: boolean;
+  showBackAction?: boolean;
+}
+
+function SkeletonPageWithAllActions({
+  title,
+  displayTextSize = 'medium',
+  bodyLines = 4,
+  showPrimaryAction = true,
+  showBackAction = true
+}: FullFeaturedSkeletonPageProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      primaryAction={showPrimaryAction}
+      backAction={showBackAction}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size={displayTextSize} />
+              <SkeletonBodyText lines={bodyLines} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithAllActions;`
+  },
+
+  fullwidth: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function FullWidthSkeletonPage() {
+  return (
+    <SkeletonPage
+      title="Dashboard"
+      fullWidth
+      primaryAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneThird">
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default FullWidthSkeletonPage;`,
+
+    vanilla: `<!-- Full Width Skeleton Page -->
+<div class="polaris-skeleton-page polaris-skeleton-page--full-width" role="status">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-layout">
+      <div class="polaris-layout__section">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 12px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section polaris-layout__section--one-third">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 12px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section polaris-layout__section--one-third">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 12px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section polaris-layout__section--one-third">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 12px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-skeleton-page--full-width {
+  max-width: 100%;
+  padding: 20px 40px;
+}
+
+.polaris-layout {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.polaris-layout__section {
+  grid-column: span 12;
+}
+
+.polaris-layout__section--one-third {
+  grid-column: span 4;
+}
+</style>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const dashboardSkeleton = createSkeletonPage({
+  title: 'Dashboard',
+  fullWidth: true,
+  primaryAction: true,
+  sections: [
+    { type: 'card', content: { displayText: 'small', bodyLines: 2 } },
+    { type: 'card', width: 'oneThird', content: { displayText: 'small', bodyLines: 2 } },
+    { type: 'card', width: 'oneThird', content: { displayText: 'small', bodyLines: 2 } },
+    { type: 'card', width: 'oneThird', content: { displayText: 'small', bodyLines: 2 } }
+  ]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Dashboard',
+  width: '100%',
+  height: 600,
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36
+      }
+    ]
+  }],
+  items: [
+    {
+      xtype: 'container',
+      cls: 'skeleton-card',
+      margin: '0 0 20 0',
+      html: [
+        '<div class="skeleton-text skeleton-display-small"></div>',
+        '<div class="skeleton-text" style="margin-top: 12px;"></div>',
+        '<div class="skeleton-text" style="width: 90%;"></div>'
+      ].join('')
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'stretch'
+      },
+      defaults: {
+        flex: 1,
+        margin: '0 10 0 0'
+      },
+      items: [
+        {
+          xtype: 'container',
+          cls: 'skeleton-card',
+          html: [
+            '<div class="skeleton-text skeleton-display-small"></div>',
+            '<div class="skeleton-text" style="margin-top: 12px;"></div>',
+            '<div class="skeleton-text"></div>'
+          ].join('')
+        },
+        {
+          xtype: 'container',
+          cls: 'skeleton-card',
+          html: [
+            '<div class="skeleton-text skeleton-display-small"></div>',
+            '<div class="skeleton-text" style="margin-top: 12px;"></div>',
+            '<div class="skeleton-text"></div>'
+          ].join('')
+        },
+        {
+          xtype: 'container',
+          cls: 'skeleton-card',
+          margin: 0,
+          html: [
+            '<div class="skeleton-text skeleton-display-small"></div>',
+            '<div class="skeleton-text" style="margin-top: 12px;"></div>',
+            '<div class="skeleton-text"></div>'
+          ].join('')
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface DashboardSkeletonProps {
+  title?: string;
+  showPrimaryAction?: boolean;
+  widgetCount?: number;
+}
+
+function FullWidthSkeletonPage({
+  title = 'Dashboard',
+  showPrimaryAction = true,
+  widgetCount = 3
+}: DashboardSkeletonProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      fullWidth
+      primaryAction={showPrimaryAction}
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        {Array.from({ length: widgetCount }).map((_, index) => (
+          <Layout.Section key={index} variant="oneThird">
+            <Card>
+              <BlockStack gap="400">
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText lines={2} />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default FullWidthSkeletonPage;`
+  },
+
+  narrowwidth: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function NarrowWidthSkeletonPage() {
+  return (
+    <SkeletonPage
+      title="Settings"
+      narrowWidth
+      primaryAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={3} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default NarrowWidthSkeletonPage;`,
+
+    vanilla: `<!-- Narrow Width Skeleton Page -->
+<div class="polaris-skeleton-page polaris-skeleton-page--narrow-width" role="status">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-card" style="margin-bottom: 20px;">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+        <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+    <div class="polaris-card">
+      <div class="polaris-card__section">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+        <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+          <div class="polaris-skeleton-body-text__line"></div>
+          <div class="polaris-skeleton-body-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-skeleton-page--narrow-width {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+</style>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const settingsSkeleton = createSkeletonPage({
+  title: 'Settings',
+  narrowWidth: true,
+  primaryAction: true,
+  sections: [
+    { type: 'card', content: { displayText: 'small', bodyLines: 3 } },
+    { type: 'card', content: { displayText: 'small', bodyLines: 2 } }
+  ]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Settings',
+  width: 600,
+  height: 600,
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36
+      }
+    ]
+  }],
+  items: [
+    {
+      xtype: 'panel',
+      cls: 'skeleton-card',
+      bodyPadding: 16,
+      margin: '0 0 20 0',
+      html: [
+        '<div class="skeleton-text skeleton-display-small"></div>',
+        '<div class="skeleton-text" style="margin-top: 16px;"></div>',
+        '<div class="skeleton-text" style="width: 95%;"></div>',
+        '<div class="skeleton-text" style="width: 90%;"></div>'
+      ].join('')
+    },
+    {
+      xtype: 'panel',
+      cls: 'skeleton-card',
+      bodyPadding: 16,
+      html: [
+        '<div class="skeleton-text skeleton-display-small"></div>',
+        '<div class="skeleton-text" style="margin-top: 16px;"></div>',
+        '<div class="skeleton-text" style="width: 90%;"></div>'
+      ].join('')
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface SettingsSkeletonProps {
+  title?: string;
+  sectionCount?: number;
+  showPrimaryAction?: boolean;
+}
+
+function NarrowWidthSkeletonPage({
+  title = 'Settings',
+  sectionCount = 2,
+  showPrimaryAction = true
+}: SettingsSkeletonProps): JSX.Element {
+  const sections = Array.from({ length: sectionCount }).map((_, index) => ({
+    lines: index === 0 ? 3 : 2
+  }));
+
+  return (
+    <SkeletonPage
+      title={title}
+      narrowWidth
+      primaryAction={showPrimaryAction}
+    >
+      <Layout>
+        {sections.map((section, index) => (
+          <Layout.Section key={index}>
+            <Card>
+              <BlockStack gap="400">
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText lines={section.lines} />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default NarrowWidthSkeletonPage;`
+  },
+
+  complexlayout: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function ComplexLayoutSkeletonPage() {
+  return (
+    <SkeletonPage
+      title="Product management"
+      primaryAction
+      backAction
+    >
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="medium" />
+              <SkeletonBodyText lines={3} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneHalf">
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={4} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section variant="oneHalf">
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText lines={4} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <SkeletonBodyText lines={2} />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default ComplexLayoutSkeletonPage;`,
+
+    vanilla: `<!-- Complex Layout Skeleton Page -->
+<div class="polaris-skeleton-page" role="status">
+  <div class="polaris-skeleton-page__header">
+    <div style="display: flex; align-items: center;">
+      <div class="polaris-skeleton-page__back-action">
+        <div class="polaris-skeleton-icon"></div>
+      </div>
+      <div class="polaris-skeleton-page__title">
+        <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+      </div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-layout">
+      <div class="polaris-layout__section">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--medium"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section polaris-layout__section--one-half">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section polaris-layout__section--one-half">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small"></div>
+          <div class="polaris-skeleton-body-text" style="margin-top: 16px;">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="polaris-layout__section">
+        <div class="polaris-card">
+          <div class="polaris-skeleton-body-text">
+            <div class="polaris-skeleton-body-text__line"></div>
+            <div class="polaris-skeleton-body-text__line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-layout__section--one-half {
+  grid-column: span 6;
+}
+</style>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const complexSkeleton = createSkeletonPage({
+  title: 'Product management',
+  primaryAction: true,
+  backAction: true,
+  sections: [
+    { type: 'card', content: { displayText: 'medium', bodyLines: 3 } },
+    { type: 'card', width: 'oneHalf', content: { displayText: 'small', bodyLines: 4 } },
+    { type: 'card', width: 'oneHalf', content: { displayText: 'small', bodyLines: 4 } },
+    { type: 'card', content: { bodyLines: 2 } }
+  ]
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Product management',
+  width: '100%',
+  height: 700,
+  bodyPadding: 20,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  tools: [{
+    type: 'left',
+    cls: 'skeleton-back-action'
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36
+      }
+    ]
+  }],
+  items: [
+    {
+      xtype: 'panel',
+      cls: 'skeleton-card',
+      bodyPadding: 16,
+      margin: '0 0 20 0',
+      html: [
+        '<div class="skeleton-text skeleton-display-medium"></div>',
+        '<div class="skeleton-text" style="margin-top: 16px;"></div>',
+        '<div class="skeleton-text" style="width: 95%;"></div>',
+        '<div class="skeleton-text" style="width: 90%;"></div>'
+      ].join('')
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'stretch'
+      },
+      margin: '0 0 20 0',
+      defaults: {
+        flex: 1,
+        cls: 'skeleton-card',
+        bodyPadding: 16
+      },
+      items: [
+        {
+          xtype: 'panel',
+          margin: '0 10 0 0',
+          html: [
+            '<div class="skeleton-text skeleton-display-small"></div>',
+            '<div class="skeleton-text" style="margin-top: 16px;"></div>',
+            '<div class="skeleton-text"></div>',
+            '<div class="skeleton-text"></div>',
+            '<div class="skeleton-text"></div>'
+          ].join('')
+        },
+        {
+          xtype: 'panel',
+          html: [
+            '<div class="skeleton-text skeleton-display-small"></div>',
+            '<div class="skeleton-text" style="margin-top: 16px;"></div>',
+            '<div class="skeleton-text"></div>',
+            '<div class="skeleton-text"></div>',
+            '<div class="skeleton-text"></div>'
+          ].join('')
+        }
+      ]
+    },
+    {
+      xtype: 'panel',
+      cls: 'skeleton-card',
+      bodyPadding: 16,
+      html: [
+        '<div class="skeleton-text"></div>',
+        '<div class="skeleton-text" style="width: 90%;"></div>'
+      ].join('')
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface ComplexLayoutSection {
+  displayTextSize?: 'small' | 'medium' | 'large';
+  bodyLines: number;
+  width?: 'full' | 'oneHalf' | 'oneThird';
+}
+
+interface ComplexSkeletonPageProps {
+  title: string;
+  sections?: ComplexLayoutSection[];
+  showPrimaryAction?: boolean;
+  showBackAction?: boolean;
+}
+
+function ComplexLayoutSkeletonPage({
+  title,
+  sections = [
+    { displayTextSize: 'medium', bodyLines: 3, width: 'full' },
+    { displayTextSize: 'small', bodyLines: 4, width: 'oneHalf' },
+    { displayTextSize: 'small', bodyLines: 4, width: 'oneHalf' },
+    { bodyLines: 2, width: 'full' }
+  ],
+  showPrimaryAction = true,
+  showBackAction = true
+}: ComplexSkeletonPageProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      primaryAction={showPrimaryAction}
+      backAction={showBackAction}
+    >
+      <Layout>
+        {sections.map((section, index) => (
+          <Layout.Section
+            key={index}
+            variant={section.width === 'oneHalf' ? 'oneHalf' : undefined}
+          >
+            <Card>
+              <BlockStack gap="400">
+                {section.displayTextSize && (
+                  <SkeletonDisplayText size={section.displayTextSize} />
+                )}
+                <SkeletonBodyText lines={section.bodyLines} />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default ComplexLayoutSkeletonPage;`
+  },
+
+  withmultiplecards: {
+    react: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function SkeletonPageWithMultipleCards() {
+  return (
+    <SkeletonPage
+      title="Orders"
+      primaryAction
+    >
+      <Layout>
+        {[1, 2, 3, 4].map((item) => (
+          <Layout.Section key={item}>
+            <Card>
+              <BlockStack gap="400">
+                <InlineStack gap="400" align="space-between">
+                  <SkeletonDisplayText size="small" />
+                  <div style={{ width: '60px' }}>
+                    <SkeletonBodyText lines={1} />
+                  </div>
+                </InlineStack>
+                <SkeletonBodyText lines={2} />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithMultipleCards;`,
+
+    vanilla: `<!-- Skeleton Page with Multiple Cards -->
+<div class="polaris-skeleton-page" role="status">
+  <div class="polaris-skeleton-page__header">
+    <div class="polaris-skeleton-page__title">
+      <div class="polaris-skeleton-display-text polaris-skeleton-display-text--large"></div>
+    </div>
+    <div class="polaris-skeleton-page__actions">
+      <div class="polaris-skeleton-button polaris-skeleton-button--primary"></div>
+    </div>
+  </div>
+  <div class="polaris-skeleton-page__content">
+    <div class="polaris-layout">
+      <div class="polaris-layout__section">
+        <div class="polaris-card" style="margin-bottom: 16px;">
+          <div class="polaris-card__section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small" style="width: 150px;"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 60px;"></div>
+            </div>
+            <div class="polaris-skeleton-body-text">
+              <div class="polaris-skeleton-body-text__line"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="polaris-card" style="margin-bottom: 16px;">
+          <div class="polaris-card__section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small" style="width: 150px;"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 60px;"></div>
+            </div>
+            <div class="polaris-skeleton-body-text">
+              <div class="polaris-skeleton-body-text__line"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="polaris-card" style="margin-bottom: 16px;">
+          <div class="polaris-card__section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small" style="width: 150px;"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 60px;"></div>
+            </div>
+            <div class="polaris-skeleton-body-text">
+              <div class="polaris-skeleton-body-text__line"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="polaris-card">
+          <div class="polaris-card__section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div class="polaris-skeleton-display-text polaris-skeleton-display-text--small" style="width: 150px;"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 60px;"></div>
+            </div>
+            <div class="polaris-skeleton-body-text">
+              <div class="polaris-skeleton-body-text__line"></div>
+              <div class="polaris-skeleton-body-text__line" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createSkeletonPage } from '@cin7/vanilla-js';
+
+const ordersSkeleton = createSkeletonPage({
+  title: 'Orders',
+  primaryAction: true,
+  sections: Array.from({ length: 4 }).map(() => ({
+    type: 'card',
+    content: {
+      header: { displayText: 'small', badge: true },
+      bodyLines: 2
+    }
+  }))
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  title: 'Orders',
+  width: '100%',
+  height: 700,
+  bodyPadding: 20,
+  autoScroll: true,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [
+      { xtype: 'tbfill' },
+      {
+        xtype: 'component',
+        cls: 'skeleton-button-primary',
+        width: 100,
+        height: 36
+      }
+    ]
+  }],
+  items: Array.from({ length: 4 }).map(function(_, index) {
+    return {
+      xtype: 'panel',
+      cls: 'skeleton-card',
+      bodyPadding: 16,
+      margin: index < 3 ? '0 0 16 0' : 0,
+      html: [
+        '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">',
+        '  <div class="skeleton-text skeleton-display-small" style="width: 150px;"></div>',
+        '  <div class="skeleton-text" style="width: 60px; height: 16px;"></div>',
+        '</div>',
+        '<div class="skeleton-text" style="height: 16px; margin-bottom: 8px;"></div>',
+        '<div class="skeleton-text" style="height: 16px; width: 85%;"></div>'
+      ].join('')
+    };
+  }),
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { SkeletonPage, SkeletonBodyText, SkeletonDisplayText, Card, Layout, BlockStack, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+interface OrderListSkeletonProps {
+  title?: string;
+  itemCount?: number;
+  showPrimaryAction?: boolean;
+}
+
+function SkeletonPageWithMultipleCards({
+  title = 'Orders',
+  itemCount = 4,
+  showPrimaryAction = true
+}: OrderListSkeletonProps): JSX.Element {
+  return (
+    <SkeletonPage
+      title={title}
+      primaryAction={showPrimaryAction}
+    >
+      <Layout>
+        {Array.from({ length: itemCount }).map((_, index) => (
+          <Layout.Section key={index}>
+            <Card>
+              <BlockStack gap="400">
+                <InlineStack gap="400" align="space-between">
+                  <SkeletonDisplayText size="small" />
+                  <div style={{ width: '60px' }}>
+                    <SkeletonBodyText lines={1} />
+                  </div>
+                </InlineStack>
+                <SkeletonBodyText lines={2} />
+              </BlockStack>
+            </Card>
+          </Layout.Section>
+        ))}
+      </Layout>
+    </SkeletonPage>
+  );
+}
+
+export default SkeletonPageWithMultipleCards;`
+  }
+};
+
 
 // FullscreenBar Component Examples
 export const fullscreenbarExamples: Record<string, CodeVariant> = {
@@ -23708,6 +30069,467 @@ function NavigationLinksExample({
 }
 
 export default NavigationLinksExample;`
+  },
+
+  footerLinks: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function FooterLinksExample() {
+  return (
+    <div style={{
+      padding: '40px',
+      backgroundColor: '#1f2937',
+      color: 'white',
+      borderRadius: '8px'
+    }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
+        <div>
+          <h4 style={{ margin: '0 0 16px 0' }}>Product</h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Link url="#features" monochrome>Features</Link>
+            <Link url="#pricing" monochrome>Pricing</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default FooterLinksExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="padding: 40px; background-color: #1f2937;">
+  <a href="#features" class="polaris-link polaris-link--monochrome">Features</a>
+</div>
+
+<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const footer = document.createElement('div');
+footer.style.backgroundColor = '#1f2937';
+const link = createLink({ text: 'Features', url: '#features', monochrome: true });
+footer.appendChild(link);
+document.getElementById('app').appendChild(footer);
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 40,
+  html: '<a href="#features" class="polaris-link polaris-link--monochrome">Features</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface FooterLinksProps {
+  links: Array<{ text: string; url: string }>;
+}
+
+function FooterLinksExample({ links }: FooterLinksProps): JSX.Element {
+  return (
+    <div style={{ padding: '40px', backgroundColor: '#1f2937' }}>
+      {links.map((link) => (
+        <Link key={link.url} url={link.url} monochrome>{link.text}</Link>
+      ))}
+    </div>
+  );
+}
+
+export default FooterLinksExample;`
+  },
+
+  cardActions: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function CardActionsExample() {
+  return (
+    <div style={{ padding: '20px', backgroundColor: 'white', borderRadius: '8px' }}>
+      <h3>Product Catalog</h3>
+      <p>Manage your products and inventory.</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Link url="#products">View Products</Link>
+        <Link url="#add-product" removeUnderline>+ Add New</Link>
+      </div>
+    </div>
+  );
+}
+
+export default CardActionsExample;`,
+
+    vanilla: `<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const card = document.createElement('div');
+card.style.padding = '20px';
+
+const viewLink = createLink({ text: 'View Products', url: '#products' });
+const addLink = createLink({ text: '+ Add New', url: '#add-product', removeUnderline: true });
+
+card.appendChild(viewLink);
+card.appendChild(addLink);
+document.getElementById('app').appendChild(card);
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Product Catalog',
+  html: '<a href="#products" class="polaris-link">View Products</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface CardActionsProps {
+  title: string;
+  primaryUrl: string;
+  secondaryUrl: string;
+}
+
+function CardActionsExample({ title, primaryUrl, secondaryUrl }: CardActionsProps): JSX.Element {
+  return (
+    <div style={{ padding: '20px' }}>
+      <h3>{title}</h3>
+      <Link url={primaryUrl}>View</Link>
+      <Link url={secondaryUrl} removeUnderline>Add</Link>
+    </div>
+  );
+}
+
+export default CardActionsExample;`
+  },
+
+  helpDocumentation: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function HelpDocumentationExample() {
+  return (
+    <div>
+      <div style={{ padding: '20px', backgroundColor: '#f0f9ff', borderRadius: '8px' }}>
+        <h3>Quick Start</h3>
+        <Link url="#quick-start">Read Guide →</Link>
+      </div>
+      <div>
+        <Link url="https://api.docs.example.com" external>View API Docs →</Link>
+      </div>
+    </div>
+  );
+}
+
+export default HelpDocumentationExample;`,
+
+    vanilla: `<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const banner = document.createElement('div');
+banner.style.padding = '20px';
+const link = createLink({ text: 'Read Guide →', url: '#quick-start' });
+banner.appendChild(link);
+document.getElementById('app').appendChild(banner);
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#quick-start" class="polaris-link">Read Guide →</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface HelpDocumentationProps {
+  quickStartUrl: string;
+  apiDocsUrl: string;
+}
+
+function HelpDocumentationExample({ quickStartUrl, apiDocsUrl }: HelpDocumentationProps): JSX.Element {
+  return (
+    <div>
+      <Link url={quickStartUrl}>Read Guide →</Link>
+      <Link url={apiDocsUrl} external>View API Docs →</Link>
+    </div>
+  );
+}
+
+export default HelpDocumentationExample;`
+  },
+
+  breadcrumbStyle: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function BreadcrumbStyleExample() {
+  return (
+    <nav style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Link url="#home" monochrome>Home</Link>
+      <span>›</span>
+      <Link url="#products" monochrome>Products</Link>
+      <span>›</span>
+      <span>Audio Equipment</span>
+    </nav>
+  );
+}
+
+export default BreadcrumbStyleExample;`,
+
+    vanilla: `<nav class="breadcrumb">
+  <a href="#home" class="polaris-link polaris-link--monochrome">Home</a>
+  <span>›</span>
+  <span>Audio Equipment</span>
+</nav>
+
+<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const nav = document.createElement('nav');
+const homeLink = createLink({ text: 'Home', url: '#home', monochrome: true });
+nav.appendChild(homeLink);
+document.getElementById('app').appendChild(nav);
+</script>`,
+
+    extjs: `Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  layout: 'hbox',
+  items: [
+    { xtype: 'component', html: '<a href="#home" class="polaris-link polaris-link--monochrome">Home</a>' },
+    { xtype: 'component', html: '<span>›</span>' }
+  ]
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface BreadcrumbItem {
+  text: string;
+  url?: string;
+}
+
+interface BreadcrumbStyleProps {
+  items: BreadcrumbItem[];
+}
+
+function BreadcrumbStyleExample({ items }: BreadcrumbStyleProps): JSX.Element {
+  return (
+    <nav style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      {items.map((item, index) => (
+        <React.Fragment key={index}>
+          {item.url ? <Link url={item.url} monochrome>{item.text}</Link> : <span>{item.text}</span>}
+          {index < items.length - 1 && <span>›</span>}
+        </React.Fragment>
+      ))}
+    </nav>
+  );
+}
+
+export default BreadcrumbStyleExample;`
+  },
+
+  tagCloud: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function TagCloudExample() {
+  const tags = [
+    { name: 'React', count: 45, url: '#react' },
+    { name: 'JavaScript', count: 38, url: '#javascript' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+      {tags.map((tag) => (
+        <Link key={tag.name} url={tag.url} removeUnderline>
+          {tag.name} ({tag.count})
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default TagCloudExample;`,
+
+    vanilla: `<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const tags = [
+  { name: 'React', count: 45, url: '#react' },
+  { name: 'JavaScript', count: 38, url: '#javascript' }
+];
+
+const container = document.createElement('div');
+tags.forEach(tag => {
+  const link = createLink({ text: \`\${tag.name} (\${tag.count})\`, url: tag.url, removeUnderline: true });
+  container.appendChild(link);
+});
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#react" class="polaris-link polaris-link--no-underline">React (45)</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface Tag {
+  name: string;
+  count: number;
+  url: string;
+}
+
+interface TagCloudProps {
+  tags: Tag[];
+}
+
+function TagCloudExample({ tags }: TagCloudProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+      {tags.map((tag) => (
+        <Link key={tag.name} url={tag.url} removeUnderline>
+          {tag.name} ({tag.count})
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default TagCloudExample;`
+  },
+
+  tableOfContents: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function TableOfContentsExample() {
+  return (
+    <div style={{ padding: '20px' }}>
+      <div style={{ marginBottom: '16px' }}>
+        <Link url="#introduction" style={{ fontWeight: 'var(--font-weight-semibold)' }}>
+          1. Introduction
+        </Link>
+        <div style={{ marginLeft: '20px', marginTop: '8px' }}>
+          <Link url="#overview" monochrome>1.1 Overview</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default TableOfContentsExample;`,
+
+    vanilla: `<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const toc = document.createElement('div');
+const mainLink = createLink({ text: '1. Introduction', url: '#introduction' });
+mainLink.style.fontWeight = 'var(--font-weight-semibold)';
+toc.appendChild(mainLink);
+
+const sub = document.createElement('div');
+sub.style.marginLeft = '20px';
+const subLink = createLink({ text: '1.1 Overview', url: '#overview', monochrome: true });
+sub.appendChild(subLink);
+toc.appendChild(sub);
+
+document.getElementById('app').appendChild(toc);
+</script>`,
+
+    extjs: `Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  html: '<a href="#introduction" class="polaris-link" style="font-weight: var(--font-weight-semibold);">1. Introduction</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface TocSection {
+  number: string;
+  title: string;
+  url: string;
+}
+
+interface TableOfContentsProps {
+  sections: TocSection[];
+}
+
+function TableOfContentsExample({ sections }: TableOfContentsProps): JSX.Element {
+  return (
+    <div style={{ padding: '20px' }}>
+      {sections.map((section) => (
+        <div key={section.url}>
+          <Link url={section.url} style={{ fontWeight: 'var(--font-weight-semibold)' }}>
+            {section.number}. {section.title}
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default TableOfContentsExample;`
+  },
+
+  socialLinks: {
+    react: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+function SocialLinksExample() {
+  return (
+    <div>
+      <h3>Connect With Us</h3>
+      <div style={{ display: 'flex', gap: '16px' }}>
+        <Link url="https://twitter.com/example" external>𝕏</Link>
+        <Link url="https://github.com/example" external>GitHub</Link>
+      </div>
+    </div>
+  );
+}
+
+export default SocialLinksExample;`,
+
+    vanilla: `<script>
+import { createLink } from '@cin7/vanilla-js';
+
+const container = document.createElement('div');
+const twitterLink = createLink({ text: '𝕏', url: 'https://twitter.com/example', external: true });
+const githubLink = createLink({ text: 'GitHub', url: 'https://github.com/example', external: true });
+
+container.appendChild(twitterLink);
+container.appendChild(githubLink);
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  html: '<a href="https://twitter.com/example" target="_blank">𝕏</a>'
+});`,
+
+    typescript: `import { Link } from '@shopify/polaris';
+import React from 'react';
+
+interface SocialPlatform {
+  name: string;
+  url: string;
+}
+
+interface SocialLinksProps {
+  platforms: SocialPlatform[];
+}
+
+function SocialLinksExample({ platforms }: SocialLinksProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', gap: '16px' }}>
+      {platforms.map((platform) => (
+        <Link key={platform.name} url={platform.url} external>
+          {platform.name}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default SocialLinksExample;`
   }
 };
 
@@ -24921,7 +31743,162 @@ function ProgressBarExample({
 }
 
 export default ProgressBarExample;`
-  }
+,
+
+  sizes: {
+    react: `import { ProgressBar, Text } from '@shopify/polaris';
+import React from 'react';
+
+function ProgressBarSizes() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      <div>
+        <Text as="p" variant="bodySm">Small Progress</Text>
+        <ProgressBar progress={75} size="small" />
+      </div>
+
+      <div>
+        <Text as="p" variant="bodySm">Medium Progress</Text>
+        <ProgressBar progress={75} size="medium" />
+      </div>
+
+      <div>
+        <Text as="p" variant="bodySm">Large Progress</Text>
+        <ProgressBar progress={75} size="large" />
+      </div>
+    </div>
+  );
+}
+
+export default ProgressBarSizes;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="progress-sizes-container">
+  <div class="progress-item">
+    <p class="progress-label">Small Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--small" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+
+  <div class="progress-item">
+    <p class="progress-label">Medium Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--medium" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+
+  <div class="progress-item">
+    <p class="progress-label">Large Progress</p>
+    <div class="polaris-progress-bar polaris-progress-bar--large" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+      <div class="polaris-progress-bar__indicator" style="width: 75%;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createProgressBar } from '@cin7/vanilla-js';
+
+const sizes = ['small', 'medium', 'large'];
+const container = document.querySelector('.progress-sizes-container');
+
+sizes.forEach(size => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'progress-item';
+
+  const label = document.createElement('p');
+  label.textContent = size.charAt(0).toUpperCase() + size.slice(1) + ' Progress';
+  label.className = 'progress-label';
+
+  const progressBar = createProgressBar({
+    progress: 75,
+    size: size
+  });
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(progressBar);
+  container.appendChild(wrapper);
+});
+</script>`,
+
+    extjs: `// ExtJS ProgressBar with different sizes
+Ext.create('Ext.panel.Panel', {
+  title: 'Progress Bar Sizes',
+  width: 400,
+  bodyPadding: 10,
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<p>Small Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 20,
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p>Medium Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 30,
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p>Large Progress</p>'
+    },
+    {
+      xtype: 'progressbar',
+      value: 0.75,
+      text: '75%',
+      height: 40
+    }
+  ]
+});`,
+
+    typescript: `import { ProgressBar, Text } from '@shopify/polaris';
+import React from 'react';
+
+type ProgressBarSize = 'small' | 'medium' | 'large';
+
+interface ProgressBarSizeItem {
+  size: ProgressBarSize;
+  label: string;
+}
+
+function ProgressBarSizes(): JSX.Element {
+  const sizes: ProgressBarSizeItem[] = [
+    { size: 'small', label: 'Small Progress' },
+    { size: 'medium', label: 'Medium Progress' },
+    { size: 'large', label: 'Large Progress' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '400px' }}>
+      {sizes.map(({ size, label }) => (
+        <div key={size}>
+          <Text as="p" variant="bodySm">{label}</Text>
+          <ProgressBar progress={75} size={size} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default ProgressBarSizes;`
+  }  }
 };
 
 // Spinner Component Examples - Feedback
@@ -31453,19 +38430,23 @@ import React from 'react';
 
 function TooltipExample() {
   return (
-    <Tooltip content="This is a helpful tooltip">
-      <Button>Hover me</Button>
-    </Tooltip>
+    <div style={{ padding: '40px' }}>
+      <Tooltip content="This is helpful tooltip text">
+        <Button>Hover over me</Button>
+      </Tooltip>
+    </div>
   );
 }
 
 export default TooltipExample;`,
 
     vanilla: `<!-- HTML Structure -->
-<div class="tooltip-wrapper">
-  <button id="tooltipTrigger">Hover me</button>
-  <div class="tooltip" id="tooltip" style="display: none;">
-    This is a helpful tooltip
+<div style="padding: 40px;">
+  <div class="tooltip-wrapper">
+    <button id="tooltipTrigger" class="polaris-button">Hover over me</button>
+    <div class="tooltip" id="tooltip">
+      This is helpful tooltip text
+    </div>
   </div>
 </div>
 
@@ -31476,8 +38457,10 @@ export default TooltipExample;`,
   transform: translateX(-50%); margin-bottom: 8px;
   padding: 8px 12px; background: #333; color: white;
   font-size: 14px; border-radius: 4px; white-space: nowrap;
-  pointer-events: none; z-index: 1000;
+  pointer-events: none; z-index: 1000; opacity: 0;
+  visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
 }
+.tooltip.visible { opacity: 1; visibility: visible; }
 .tooltip::after {
   content: ''; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%); border: 4px solid transparent;
@@ -31486,34 +38469,38 @@ export default TooltipExample;`,
 </style>
 
 <script>
+import { on, addClass, removeClass } from '@cin7/vanilla-js';
+
 const trigger = document.getElementById('tooltipTrigger');
 const tooltip = document.getElementById('tooltip');
 
-trigger.addEventListener('mouseenter', () => {
-  tooltip.style.display = 'block';
-});
-
-trigger.addEventListener('mouseleave', () => {
-  tooltip.style.display = 'none';
-});
+on(trigger, 'mouseenter', () => addClass(tooltip, 'visible'));
+on(trigger, 'mouseleave', () => removeClass(tooltip, 'visible'));
+on(trigger, 'focus', () => addClass(tooltip, 'visible'));
+on(trigger, 'blur', () => removeClass(tooltip, 'visible'));
 </script>`,
 
-    extjs: `// ExtJS Tooltip
+    extjs: `// ExtJS Tooltip with Button
 Ext.create('Ext.button.Button', {
-  text: 'Hover me',
-  tooltip: 'This is a helpful tooltip',
-  renderTo: Ext.getBody()
+  text: 'Hover over me',
+  tooltip: 'This is helpful tooltip text',
+  renderTo: Ext.getBody(),
+  margin: '40'
 });
 
-// Custom tooltip
+// Advanced tooltip with custom configuration
 Ext.create('Ext.button.Button', {
-  text: 'Hover me',
+  text: 'Hover over me',
   renderTo: Ext.getBody(),
+  margin: '40',
   listeners: {
     render: function(btn) {
       Ext.create('Ext.tip.ToolTip', {
         target: btn.el,
-        html: 'This is a helpful tooltip'
+        html: 'This is helpful tooltip text',
+        anchor: 'bottom',
+        showDelay: 100,
+        dismissDelay: 5000
       });
     }
   }
@@ -31526,21 +38513,295 @@ interface TooltipExampleProps {
   content: string;
   children?: React.ReactNode;
   preferredPosition?: 'above' | 'below' | 'mostSpace';
+  preferredAlignment?: 'left' | 'center' | 'right';
 }
 
 function TooltipExample({
-  content,
-  children = <Button>Hover me</Button>,
-  preferredPosition = 'above'
+  content = 'This is helpful tooltip text',
+  children = <Button>Hover over me</Button>,
+  preferredPosition = 'above',
+  preferredAlignment = 'center'
 }: TooltipExampleProps): JSX.Element {
   return (
-    <Tooltip content={content} preferredPosition={preferredPosition}>
-      {children}
-    </Tooltip>
+    <div style={{ padding: '40px' }}>
+      <Tooltip
+        content={content}
+        preferredPosition={preferredPosition}
+        preferredAlignment={preferredAlignment}
+      >
+        {children}
+      </Tooltip>
+    </div>
   );
 }
 
 export default TooltipExample;`
+  },
+
+  withText: {
+    react: `import { Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+function TextTooltipExample() {
+  return (
+    <div style={{ padding: '40px' }}>
+      <Tooltip content="Click here to view detailed order information and tracking status">
+        <span style={{
+          textDecoration: 'underline',
+          cursor: 'help',
+          color: '#007ace'
+        }}>
+          Order details
+        </span>
+      </Tooltip>
+    </div>
+  );
+}
+
+export default TextTooltipExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="padding: 40px;">
+  <div class="tooltip-wrapper">
+    <span id="orderDetails" class="tooltip-text-trigger">
+      Order details
+    </span>
+    <div class="tooltip" id="orderTooltip">
+      Click here to view detailed order information and tracking status
+    </div>
+  </div>
+</div>
+
+<style>
+.tooltip-text-trigger {
+  text-decoration: underline; cursor: help; color: #007ace;
+}
+.tooltip-wrapper { position: relative; display: inline-block; }
+.tooltip {
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%); margin-bottom: 8px;
+  padding: 8px 12px; background: #333; color: white;
+  font-size: 14px; border-radius: 4px; max-width: 300px;
+  pointer-events: none; z-index: 1000; opacity: 0;
+  visibility: hidden; transition: opacity 0.2s;
+}
+.tooltip.visible { opacity: 1; visibility: visible; }
+</style>
+
+<script>
+import { on, addClass, removeClass } from '@cin7/vanilla-js';
+
+const trigger = document.getElementById('orderDetails');
+const tooltip = document.getElementById('orderTooltip');
+
+on(trigger, 'mouseenter', () => addClass(tooltip, 'visible'));
+on(trigger, 'mouseleave', () => removeClass(tooltip, 'visible'));
+</script>`,
+
+    extjs: `// ExtJS Tooltip on Text Element
+Ext.onReady(function() {
+  const container = Ext.create('Ext.container.Container', {
+    renderTo: Ext.getBody(),
+    padding: 40,
+    html: '<span id="orderDetails" style="text-decoration: underline; cursor: help; color: #007ace;">Order details</span>'
+  });
+
+  Ext.create('Ext.tip.ToolTip', {
+    target: 'orderDetails',
+    html: 'Click here to view detailed order information and tracking status',
+    anchor: 'bottom',
+    width: 300
+  });
+});`,
+
+    typescript: `import { Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+interface TextTooltipProps {
+  content: string;
+  text: string;
+  href?: string;
+}
+
+function TextTooltipExample({
+  content = 'Click here to view detailed order information and tracking status',
+  text = 'Order details',
+  href
+}: TextTooltipProps): JSX.Element {
+  const textStyle: React.CSSProperties = {
+    textDecoration: 'underline',
+    cursor: 'help',
+    color: '#007ace'
+  };
+
+  return (
+    <div style={{ padding: '40px' }}>
+      <Tooltip content={content}>
+        {href ? (
+          <a href={href} style={textStyle}>{text}</a>
+        ) : (
+          <span style={textStyle}>{text}</span>
+        )}
+      </Tooltip>
+    </div>
+  );
+}
+
+export default TextTooltipExample;`
+  },
+
+  withIcon: {
+    react: `import { Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+function IconTooltipExample() {
+  return (
+    <div style={{ padding: '40px', display: 'flex', gap: '20px', alignItems: 'center' }}>
+      <Tooltip content="This product is currently out of stock">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>⚠️</span>
+        </div>
+      </Tooltip>
+
+      <Tooltip content="Information verified and confirmed">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>✅</span>
+        </div>
+      </Tooltip>
+
+      <Tooltip content="Requires immediate attention">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>🔔</span>
+        </div>
+      </Tooltip>
+
+      <Tooltip content="Help and documentation">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>❓</span>
+        </div>
+      </Tooltip>
+    </div>
+  );
+}
+
+export default IconTooltipExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="padding: 40px; display: flex; gap: 20px; align-items: center;">
+  <div class="tooltip-wrapper">
+    <div class="icon-wrapper" data-tooltip="out-of-stock">⚠️</div>
+    <div class="tooltip" id="tooltip-1">This product is currently out of stock</div>
+  </div>
+
+  <div class="tooltip-wrapper">
+    <div class="icon-wrapper" data-tooltip="verified">✅</div>
+    <div class="tooltip" id="tooltip-2">Information verified and confirmed</div>
+  </div>
+
+  <div class="tooltip-wrapper">
+    <div class="icon-wrapper" data-tooltip="attention">🔔</div>
+    <div class="tooltip" id="tooltip-3">Requires immediate attention</div>
+  </div>
+
+  <div class="tooltip-wrapper">
+    <div class="icon-wrapper" data-tooltip="help">❓</div>
+    <div class="tooltip" id="tooltip-4">Help and documentation</div>
+  </div>
+</div>
+
+<style>
+.icon-wrapper { display: flex; align-items: center; cursor: help; }
+.tooltip-wrapper { position: relative; display: inline-block; }
+.tooltip {
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%); margin-bottom: 8px;
+  padding: 8px 12px; background: #333; color: white;
+  font-size: 14px; border-radius: 4px; white-space: nowrap;
+  pointer-events: none; z-index: 1000; opacity: 0;
+  visibility: hidden; transition: opacity 0.2s;
+}
+.tooltip.visible { opacity: 1; visibility: visible; }
+</style>
+
+<script>
+import { on, addClass, removeClass } from '@cin7/vanilla-js';
+
+document.querySelectorAll('.icon-wrapper').forEach((icon, index) => {
+  const tooltip = document.getElementById(\`tooltip-\${index + 1}\`);
+  on(icon, 'mouseenter', () => addClass(tooltip, 'visible'));
+  on(icon, 'mouseleave', () => removeClass(tooltip, 'visible'));
+});
+</script>`,
+
+    extjs: `// ExtJS Icon Tooltips
+Ext.onReady(function() {
+  const icons = [
+    { html: '⚠️', tooltip: 'This product is currently out of stock' },
+    { html: '✅', tooltip: 'Information verified and confirmed' },
+    { html: '🔔', tooltip: 'Requires immediate attention' },
+    { html: '❓', tooltip: 'Help and documentation' }
+  ];
+
+  const container = Ext.create('Ext.container.Container', {
+    renderTo: Ext.getBody(),
+    layout: 'hbox',
+    padding: 40,
+    defaults: { margin: '0 10 0 0' },
+    items: icons.map((icon, index) => ({
+      xtype: 'component',
+      itemId: 'icon' + index,
+      html: \`<div style="display: flex; align-items: center; cursor: help;">\${icon.html}</div>\`,
+      listeners: {
+        render: function(cmp) {
+          Ext.create('Ext.tip.ToolTip', {
+            target: cmp.el,
+            html: icon.tooltip
+          });
+        }
+      }
+    }))
+  });
+});`,
+
+    typescript: `import { Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+interface IconTooltipItem {
+  icon: string;
+  content: string;
+}
+
+interface IconTooltipExampleProps {
+  icons?: IconTooltipItem[];
+}
+
+function IconTooltipExample({
+  icons = [
+    { icon: '⚠️', content: 'This product is currently out of stock' },
+    { icon: '✅', content: 'Information verified and confirmed' },
+    { icon: '🔔', content: 'Requires immediate attention' },
+    { icon: '❓', content: 'Help and documentation' }
+  ]
+}: IconTooltipExampleProps): JSX.Element {
+  return (
+    <div style={{
+      padding: '40px',
+      display: 'flex',
+      gap: '20px',
+      alignItems: 'center'
+    }}>
+      {icons.map((item, index) => (
+        <Tooltip key={index} content={item.content}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span>{item.icon}</span>
+          </div>
+        </Tooltip>
+      ))}
+    </div>
+  );
+}
+
+export default IconTooltipExample;`
   }
 };
 
@@ -31738,6 +38999,7 @@ export function getCodeVariants(
     calloutcard: calloutcardExamples,
     emptystate: emptystateExamples,
     loading: loadingExamples,
+    skeletonpage: skeletonPageExamples,
     datatable: dataTableExamples,
     descriptionlist: descriptionListExamples,
     exceptionlist: exceptionListExamples,
