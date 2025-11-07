@@ -218,7 +218,7 @@ export const SingleSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'singleSelection'),
   },
 
 };
@@ -335,7 +335,7 @@ export const WithAsyncSearch: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'withAsyncSearch'),
   },
 
 };
@@ -432,7 +432,7 @@ export const WithCategories: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'withCategories'),
   },
 
 };
@@ -550,7 +550,7 @@ export const CustomerLookup: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'customerLookup'),
   },
 
 };
@@ -692,7 +692,7 @@ export const OrderLookup: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'orderLookup'),
   },
 
 };
@@ -795,7 +795,7 @@ export const WithLoadMore: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'withLoadMore'),
   },
 
 };
@@ -928,7 +928,7 @@ export const DatePickerIntegration: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'datePickerIntegration'),
   },
 
 };
@@ -1101,7 +1101,7 @@ export const FormIntegration: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'default'),
+    codeVariants: getCodeVariants('autocomplete', 'formIntegration'),
   },
 
 };
