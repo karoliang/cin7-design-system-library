@@ -81,7 +81,11 @@ export const BasicTags: Story = {
       <Tag tone="info">Info</Tag>
       <Tag tone="highlight">Highlight</Tag>
     </InlineStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const RemovableTags: Story = {
@@ -125,6 +129,10 @@ export const RemovableTags: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const ClickableTags: Story = {
@@ -161,6 +169,10 @@ export const ClickableTags: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const TagSizes: Story = {
@@ -193,6 +205,10 @@ export const TagSizes: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const StatusTags: Story = {
@@ -227,6 +243,10 @@ export const StatusTags: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const TagInputSystem: Story = {
@@ -329,6 +349,10 @@ export const TagInputSystem: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const FilterTags: Story = {
@@ -432,6 +456,10 @@ export const FilterTags: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const InteractiveTagCloud: Story = {
@@ -541,6 +569,10 @@ export const InteractiveTagCloud: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const TagGroups: Story = {
@@ -603,6 +635,10 @@ export const TagGroups: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };
 
 export const DisabledTags: Story = {
@@ -642,4 +678,8 @@ export const DisabledTags: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('tag', 'default'),
+  },
+
 };

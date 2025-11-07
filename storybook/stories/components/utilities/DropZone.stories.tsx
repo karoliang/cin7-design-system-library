@@ -95,6 +95,10 @@ export const Default: Story = {
       </DropZone>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const MultipleFiles: Story = {
@@ -141,6 +145,10 @@ export const MultipleFiles: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const ImageUpload: Story = {
@@ -180,6 +188,10 @@ export const ImageUpload: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const DocumentUpload: Story = {
@@ -237,6 +249,10 @@ export const DocumentUpload: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const WithPreview: Story = {
@@ -297,6 +313,10 @@ export const WithPreview: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -310,7 +330,11 @@ export const Disabled: Story = {
         </div>
       </DropZone>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const ProductImageUpload: Story = {
@@ -401,6 +425,10 @@ export const ProductImageUpload: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const FileSizeValidation: Story = {
@@ -478,6 +506,10 @@ export const FileSizeValidation: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const CustomDropZone: Story = {
@@ -546,6 +578,10 @@ export const CustomDropZone: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };
 
 export const CompactDropZone: Story = {
@@ -570,4 +606,8 @@ export const CompactDropZone: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('dropzone', 'default'),
+  },
+
 };

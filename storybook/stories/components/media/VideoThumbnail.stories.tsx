@@ -78,7 +78,11 @@ export const WithPlayButton: Story = {
         onPlaybackStart={() => console.log('Video playback started')}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const VideoLengthDisplay: Story = {
@@ -127,6 +131,10 @@ export const VideoLengthDisplay: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const VideoGallery: Story = {
@@ -182,6 +190,10 @@ export const VideoGallery: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const CourseContent: Story = {
@@ -305,6 +317,10 @@ export const CourseContent: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const InteractivePreview: Story = {
@@ -467,6 +483,10 @@ export const InteractivePreview: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const WithMetadata: Story = {
@@ -552,6 +572,10 @@ export const WithMetadata: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const LoadingState: Story = {
@@ -603,7 +627,11 @@ export const LoadingState: Story = {
         }
       `}</style>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const Accessibility: Story = {
@@ -664,7 +692,11 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const ResponsiveDesign: Story = {
@@ -719,6 +751,10 @@ export const ResponsiveDesign: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
 
 export const CustomStyling: Story = {
@@ -788,4 +824,8 @@ export const CustomStyling: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('videothumbnail', 'default'),
+  },
+
 };
