@@ -60,6 +60,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const WithHexInput: Story = {
@@ -90,6 +94,10 @@ export const WithHexInput: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const WithPresets: Story = {
@@ -122,6 +130,10 @@ export const WithPresets: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const WithAlpha: Story = {
@@ -160,6 +172,10 @@ export const WithAlpha: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const ProductColorCustomizer: Story = {
@@ -331,6 +347,10 @@ export const ProductColorCustomizer: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const ThemeCustomizer: Story = {
@@ -532,6 +552,10 @@ export const ThemeCustomizer: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const BrandColorSelector: Story = {
@@ -704,6 +728,10 @@ export const BrandColorSelector: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const GradientCreator: Story = {
@@ -820,6 +848,10 @@ export const GradientCreator: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };
 
 export const ColorPickerInPopover: Story = {
@@ -887,4 +919,8 @@ export const ColorPickerInPopover: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('colorpicker', 'default'),
+  },
+
 };

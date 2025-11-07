@@ -157,6 +157,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const MultipleSelection: Story = {
@@ -224,6 +228,10 @@ export const MultipleSelection: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const WithCustomActivator: Story = {
@@ -276,6 +284,10 @@ export const WithCustomActivator: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const LazyLoading: Story = {
@@ -347,6 +359,10 @@ export const LazyLoading: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const WithSections: Story = {
@@ -407,6 +423,10 @@ export const WithSections: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const WithDisabledOptions: Story = {
@@ -463,6 +483,10 @@ export const WithDisabledOptions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const RealWorldExample: Story = {
@@ -555,6 +579,10 @@ export const RealWorldExample: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const CustomStyling: Story = {
@@ -644,6 +672,10 @@ export const CustomStyling: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };
 
 export const WithValidation: Story = {
@@ -712,4 +744,8 @@ export const WithValidation: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('combobox', 'default'),
+  },
+
 };

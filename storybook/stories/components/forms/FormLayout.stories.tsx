@@ -35,7 +35,11 @@ export const Default: Story = {
         <TextField label="Message" multiline={3} placeholder="Enter your message..." />
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const GroupedFields: Story = {
@@ -62,7 +66,11 @@ export const GroupedFields: Story = {
         <TextField label="Address" placeholder="123 Main St" />
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const ThreeColumnLayout: Story = {
@@ -85,7 +93,11 @@ export const ThreeColumnLayout: Story = {
         </FormLayout.Group>
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const ComplexForm: Story = {
@@ -133,7 +145,11 @@ export const ComplexForm: Story = {
         </FormLayout.Group>
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const ProductForm: Story = {
@@ -242,6 +258,10 @@ export const ProductForm: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const SettingsForm: Story = {
@@ -315,7 +335,11 @@ export const SettingsForm: Story = {
         </div>
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const SurveyForm: Story = {
@@ -417,6 +441,10 @@ export const SurveyForm: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const NestedFormLayout: Story = {
@@ -484,7 +512,11 @@ export const NestedFormLayout: Story = {
         </div>
       </FormLayout>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };
 
 export const ResponsiveLayout: Story = {
@@ -541,5 +573,9 @@ export const ResponsiveLayout: Story = {
         </FormLayout>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('formlayout', 'default'),
+  },
+
 };

@@ -152,6 +152,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const SingleSelection: Story = {
@@ -213,6 +217,10 @@ export const SingleSelection: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const WithAsyncSearch: Story = {
@@ -326,6 +334,10 @@ export const WithAsyncSearch: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const WithCategories: Story = {
@@ -419,6 +431,10 @@ export const WithCategories: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const CustomerLookup: Story = {
@@ -533,6 +549,10 @@ export const CustomerLookup: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const OrderLookup: Story = {
@@ -671,6 +691,10 @@ export const OrderLookup: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const WithLoadMore: Story = {
@@ -770,6 +794,10 @@ export const WithLoadMore: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const DatePickerIntegration: Story = {
@@ -899,6 +927,10 @@ export const DatePickerIntegration: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };
 
 export const FormIntegration: Story = {
@@ -1068,4 +1100,8 @@ export const FormIntegration: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('autocomplete', 'default'),
+  },
+
 };

@@ -96,6 +96,10 @@ export const BasicGroup: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const ProductFeatures: Story = {
@@ -163,6 +167,10 @@ export const ProductFeatures: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const AccessControl: Story = {
@@ -225,6 +233,10 @@ export const AccessControl: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const WithValidation: Story = {
@@ -291,6 +303,10 @@ export const WithValidation: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const FilterGroup: Story = {
@@ -354,6 +370,10 @@ export const FilterGroup: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const SettingsGroup: Story = {
@@ -416,6 +436,10 @@ export const SettingsGroup: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const IndeterminateState: Story = {
@@ -483,6 +507,10 @@ export const IndeterminateState: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const NestedGroups: Story = {
@@ -571,6 +599,10 @@ export const NestedGroups: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
 
 export const DisabledGroup: Story = {
@@ -616,4 +648,8 @@ export const DisabledGroup: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
+  },
+
 };
