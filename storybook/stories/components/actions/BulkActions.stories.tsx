@@ -280,6 +280,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const WithPageActions: Story = {
@@ -379,6 +383,10 @@ export const WithPageActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const MenuActionType: Story = {
@@ -466,6 +474,10 @@ export const MenuActionType: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const WithLoadingStates: Story = {
@@ -536,6 +548,10 @@ export const WithLoadingStates: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const WithConditionalActions: Story = {
@@ -655,6 +671,10 @@ export const WithConditionalActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const WithAccessibility: Story = {
@@ -716,6 +736,10 @@ export const WithAccessibility: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };
 
 export const IntegrationExample: Story = {
@@ -870,4 +894,8 @@ export const IntegrationExample: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('bulkactions', 'default'),
+  },
+
 };

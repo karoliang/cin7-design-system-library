@@ -60,7 +60,11 @@ export const Tones: Story = {
       <Badge tone="critical">Critical</Badge>
       <Badge tone="new">New</Badge>
     </InlineStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const Progress: Story = {
@@ -70,7 +74,11 @@ export const Progress: Story = {
       <Badge progress="partiallyComplete">Task 2</Badge>
       <Badge progress="complete">Task 3</Badge>
     </InlineStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const Sizes: Story = {
@@ -80,7 +88,11 @@ export const Sizes: Story = {
       <Badge size="medium">Medium</Badge>
       <Badge size="large">Large</Badge>
     </InlineStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const WithNumbers: Story = {
@@ -91,7 +103,11 @@ export const WithNumbers: Story = {
       <Badge tone="warning">99+</Badge>
       <Badge tone="success">1000</Badge>
     </InlineStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const StatusExamples: Story = {
@@ -117,7 +133,11 @@ export const StatusExamples: Story = {
         </InlineStack>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const InteractiveBadges: Story = {
@@ -201,6 +221,10 @@ export const InteractiveBadges: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const MarketingBadges: Story = {
@@ -245,7 +269,11 @@ export const MarketingBadges: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const ProductTags: Story = {
@@ -312,6 +340,10 @@ export const ProductTags: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const CampaignBadges: Story = {
@@ -394,6 +426,10 @@ export const CampaignBadges: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
 
 export const LoyaltyBadges: Story = {
@@ -477,4 +513,8 @@ export const LoyaltyBadges: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('badge', 'default'),
+  },
+
 };
