@@ -10080,8 +10080,8 @@ const resourceItem = createResourceItem({
   content: \`
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <div>
-        <div style="font-weight: 500; margin-bottom: 4px;">\${product.name}</div>
-        <div style="color: #6b7280; font-size: 14px;">SKU: \${product.sku}</div>
+        <div style="font-weight: 500; margin-bottom: 4px;">\\${product.name}</div>
+        <div style="color: #6b7280; font-size: 14px;">SKU: \\${product.sku}</div>
       </div>
       <div style="text-align: right;">
         <div style="font-weight: 500;">\\${product.price}</div>
@@ -10089,7 +10089,7 @@ const resourceItem = createResourceItem({
       </div>
     </div>
   \`,
-  accessibilityLabel: \`View details for \${product.name}\`
+  accessibilityLabel: \`View details for \\${product.name}\`
 });
 
 document.getElementById('app').appendChild(resourceItem);
@@ -10181,7 +10181,7 @@ function ResourceItemExample({
           <ResourceItem
             id={product.id}
             name={product.name}
-            accessibilityLabel={\`View details for \${product.name}\`}
+            accessibilityLabel={\`View details for \\${product.name}\`}
             onClick={handleClick}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -16108,7 +16108,7 @@ export const ecommerceComponentsExamples: Record<string, CodeVariant> = {
   default: {
     react: `import { Card, Button } from '@shopify/polaris';
 function ProductCard({ product }: { product: any }) {
-  return <Card><h3>{product.name}</h3><p>\${product.price}</p><Button>Add to Cart</Button></Card>;
+  return <Card><h3>{product.name}</h3><p>\\${product.price}</p><Button>Add to Cart</Button></Card>;
 }`,
     extjs: `Ext.create('Ext.panel.Panel', {
   html: '<div class="product"><h3>Product</h3><button>Add to Cart</button></div>'
@@ -16120,7 +16120,7 @@ function ProductCard({ product }: { product: any }) {
 </div>`,
     typescript: `interface Product { name: string; price: number; }
 function ProductCard({ product }: { product: Product }) {
-  return <div><h3>{product.name}</h3><p>\${product.price}</p></div>;
+  return <div><h3>{product.name}</h3><p>\\${product.price}</p></div>;
 }`
   }
 };
