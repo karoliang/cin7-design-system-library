@@ -85,7 +85,11 @@ export const Sizes: Story = {
         <Text variant="bodySm" color="subdued">Large</Text>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const ProductGallery: Story = {
@@ -133,6 +137,10 @@ export const ProductGallery: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const WithOverlays: Story = {
@@ -193,7 +201,11 @@ export const WithOverlays: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const FilePreviews: Story = {
@@ -239,6 +251,10 @@ export const FilePreviews: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -296,6 +312,10 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const UserGeneratedContent: Story = {
@@ -382,6 +402,10 @@ export const UserGeneratedContent: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const LoadingAndError: Story = {
@@ -464,7 +488,11 @@ export const LoadingAndError: Story = {
         }
       `}</style>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const Selection: Story = {
@@ -555,6 +583,10 @@ export const Selection: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const TransparentBackground: Story = {
@@ -579,7 +611,11 @@ export const TransparentBackground: Story = {
         The second thumbnail has a transparent background, which works well for logos or images with transparent areas.
       </Text>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const ProductVariants: Story = {
@@ -640,6 +676,10 @@ export const ProductVariants: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };
 
 export const Accessibility: Story = {
@@ -697,5 +737,9 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('thumbnail', 'default'),
+  },
+
 };

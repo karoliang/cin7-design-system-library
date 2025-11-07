@@ -81,7 +81,11 @@ export const Sizes: Story = {
         <Text variant="bodySm" color="subdued">Extra Large</Text>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const WithImages: Story = {
@@ -99,7 +103,11 @@ export const WithImages: Story = {
         </div>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const CustomerAvatars: Story = {
@@ -127,7 +135,11 @@ export const CustomerAvatars: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const Initials: Story = {
@@ -175,6 +187,10 @@ export const Initials: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const UserStatus: Story = {
@@ -232,6 +248,10 @@ export const UserStatus: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const TeamAvatars: Story = {
@@ -260,6 +280,10 @@ export const TeamAvatars: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const AvatarGroup: Story = {
@@ -353,6 +377,10 @@ export const AvatarGroup: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const BrandAvatars: Story = {
@@ -388,6 +416,10 @@ export const BrandAvatars: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const WithBadges: Story = {
@@ -413,6 +445,10 @@ export const WithBadges: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const Interactive: Story = {
@@ -463,6 +499,10 @@ export const Interactive: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const Accessibility: Story = {
@@ -518,7 +558,11 @@ export const Accessibility: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };
 
 export const ErrorAndLoading: Story = {
@@ -567,5 +611,9 @@ export const ErrorAndLoading: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('avatar', 'default'),
+  },
+
 };

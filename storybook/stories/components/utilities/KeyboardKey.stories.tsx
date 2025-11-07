@@ -51,7 +51,11 @@ export const SingleKeys: Story = {
         <KeyboardKey>Fn</KeyboardKey>
       </InlineStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const LetterKeys: Story = {
@@ -63,7 +67,11 @@ export const LetterKeys: Story = {
         ))}
       </InlineStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const NumberKeys: Story = {
@@ -75,7 +83,11 @@ export const NumberKeys: Story = {
         ))}
       </InlineStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const SymbolKeys: Story = {
@@ -107,7 +119,11 @@ export const SymbolKeys: Story = {
         <KeyboardKey>~</KeyboardKey>
       </InlineStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const ArrowKeys: Story = {
@@ -139,7 +155,11 @@ export const ArrowKeys: Story = {
         </InlineStack>
       </BlockStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const KeyCombinations: Story = {
@@ -221,7 +241,11 @@ export const KeyCombinations: Story = {
         </div>
       </BlockStack>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const ShortcutGuide: Story = {
@@ -287,6 +311,10 @@ export const ShortcutGuide: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const InteractiveKeyboard: Story = {
@@ -417,6 +445,10 @@ export const InteractiveKeyboard: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const GamingKeyboard: Story = {
@@ -502,6 +534,10 @@ export const GamingKeyboard: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const AccessibilityInfo: Story = {
@@ -591,6 +627,10 @@ export const AccessibilityInfo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };
 
 export const CustomStyling: Story = {
@@ -674,4 +714,8 @@ export const CustomStyling: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('keyboardkey', 'default'),
+  },
+
 };

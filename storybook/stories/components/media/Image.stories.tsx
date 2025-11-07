@@ -69,6 +69,10 @@ export const Default: Story = {
     width: '400px',
     height: '300px',
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const BasicImage: Story = {
@@ -79,7 +83,11 @@ export const BasicImage: Story = {
       width="400px"
       height="300px"
     />
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const AspectRatios: Story = {
@@ -111,6 +119,10 @@ export const AspectRatios: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const ResponsiveImage: Story = {
@@ -132,7 +144,11 @@ export const ResponsiveImage: Story = {
         />
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const BorderStyles: Story = {
@@ -163,6 +179,10 @@ export const BorderStyles: Story = {
       </InlineStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const ProductShowcase: Story = {
@@ -216,6 +236,10 @@ export const ProductShowcase: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const GalleryLayout: Story = {
@@ -272,6 +296,10 @@ export const GalleryLayout: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const LoadingStates: Story = {
@@ -323,6 +351,10 @@ export const LoadingStates: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const AvatarImages: Story = {
@@ -381,6 +413,10 @@ export const AvatarImages: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const ErrorHandling: Story = {
@@ -433,6 +469,10 @@ export const ErrorHandling: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
 
 export const BackgroundImages: Story = {
@@ -486,4 +526,8 @@ export const BackgroundImages: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('image', 'default'),
+  },
+
 };
