@@ -244,6 +244,7 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    layout: 'centered', // Center all components in the preview canvas by default
     controls: {
       matchers: {
         color: /(background|color)$/i,
