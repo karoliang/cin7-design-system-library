@@ -5,6 +5,8 @@ const config: StorybookConfig = {
   stories: [
     // Core story structure - use absolute path for reliable discovery
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    // Exclude examples from sidebar
+    "!../stories/integration/examples/**",
   ],
   addons: [
     "@storybook/addon-links",

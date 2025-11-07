@@ -476,47 +476,16 @@ export const NestedProviders: Story = {
 
 export const CompleteApplication: Story = {
   render: () => {
-    const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
     const [modalActive, setModalActive] = useState(false);
     const [toastActive, setToastActive] = useState(false);
-
-    const toggleMobileNavigation = useCallback(() => {
-      setMobileNavigationActive((active) => !active);
-    }, []);
 
     const toggleModal = useCallback(() => setModalActive((active) => !active), []);
     const toggleToast = useCallback(() => setToastActive((active) => !active), []);
 
-    const topBar = (
-      <TopBar
-        showNavigationToggle
-        onNavigationToggle={toggleMobileNavigation}
-        searchField={{
-          placeholder: 'Search...',
-          value: searchValue,
-          onChange: setSearchValue,
-        }}
-        userMenu={{
-          name: 'John Doe',
-          initials: 'JD',
-          actions: [
-            {
-              items: [
-                { content: 'Settings' },
-                { content: 'Logout' },
-              ],
-            },
-          ],
-        }}
-      />
-    );
-
     return (
       <AppProvider i18n={{}}>
-        <Frame topBar={topBar}>
-          <div style={{ height: '100vh' }}>
-            <Page
+        <div style={{ padding: '24px', maxWidth: '1200px' }}>
+          <Page
               title="Complete Application"
               breadcrumbs={[{ content: 'Home', url: '#' }]}
               primaryAction={{
@@ -533,8 +502,8 @@ export const CompleteApplication: Story = {
                           Complete AppProvider Example
                         </Text>
                         <Text>
-                          This is a complete application using AppProvider with Frame, TopBar,
-                          Page, Layout, and other Polaris components working together.
+                          This is a complete application using AppProvider with Page, Layout,
+                          Modal, Toast, and other Polaris components working together.
                         </Text>
                         <InlineStack gap="12px">
                           <Button onClick={toggleModal}>Open Modal</Button>
@@ -580,7 +549,6 @@ export const CompleteApplication: Story = {
               onDismiss={toggleToast}
             />
           )}
-        </Frame>
       </AppProvider>
     );
   },
