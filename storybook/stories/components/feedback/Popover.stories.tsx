@@ -103,6 +103,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const ButtonActivator: Story = {
@@ -132,6 +136,10 @@ export const ButtonActivator: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const TextLinkActivator: Story = {
@@ -161,6 +169,10 @@ export const TextLinkActivator: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const Positions: Story = {
@@ -249,6 +261,10 @@ export const Positions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const WithActionList: Story = {
@@ -299,6 +315,10 @@ export const WithActionList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const WithSections: Story = {
@@ -339,6 +359,10 @@ export const WithSections: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const WithForm: Story = {
@@ -396,6 +420,10 @@ export const WithForm: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const Dismissible: Story = {
@@ -435,6 +463,10 @@ export const Dismissible: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const CustomWidth: Story = {
@@ -474,6 +506,10 @@ export const CustomWidth: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const InteractiveExamples: Story = {
@@ -574,6 +610,10 @@ export const InteractiveExamples: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -619,4 +659,8 @@ export const AccessibilityDemo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('popover', 'default'),
+  },
+
 };

@@ -204,6 +204,10 @@ export const Selectable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -274,6 +278,10 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const LargeDataset: Story = {
@@ -347,6 +355,10 @@ export const LargeDataset: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const CustomerList: Story = {
@@ -440,6 +452,10 @@ export const CustomerList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const OrderManagement: Story = {
@@ -592,6 +608,10 @@ export const OrderManagement: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const WithCustomBulkActions: Story = {
@@ -673,6 +693,10 @@ export const WithCustomBulkActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const LoadingState: Story = {
@@ -701,7 +725,11 @@ export const LoadingState: Story = {
         </IndexTable>
       </LegacyCard>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const EmptyState: Story = {
@@ -722,7 +750,11 @@ export const EmptyState: Story = {
         />
       </LegacyCard>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };
 
 export const WithPagination: Story = {
@@ -816,4 +848,8 @@ export const WithPagination: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('indextable', 'default'),
+  },
+
 };

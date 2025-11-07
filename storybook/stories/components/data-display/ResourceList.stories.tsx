@@ -316,6 +316,10 @@ export const Selectable: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const CustomerList: Story = {
@@ -385,6 +389,10 @@ export const CustomerList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const WithSearch: Story = {
@@ -457,6 +465,10 @@ export const WithSearch: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -534,6 +546,10 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const LoadingState: Story = {
@@ -550,7 +566,11 @@ export const LoadingState: Story = {
         )}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const EmptyState: Story = {
@@ -567,7 +587,11 @@ export const EmptyState: Story = {
         )}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const OrderList: Story = {
@@ -697,6 +721,10 @@ export const OrderList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const WithFilters: Story = {
@@ -785,6 +813,10 @@ export const WithFilters: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };
 
 export const CustomizedItems: Story = {
@@ -861,4 +893,8 @@ export const CustomizedItems: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('resourcelist', 'default'),
+  },
+
 };

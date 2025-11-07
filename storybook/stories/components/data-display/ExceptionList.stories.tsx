@@ -44,6 +44,10 @@ export const Default: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const ErrorList: Story = {
@@ -78,7 +82,11 @@ export const ErrorList: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const WarningList: Story = {
@@ -113,7 +121,11 @@ export const WarningList: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const MixedStatuses: Story = {
@@ -154,7 +166,11 @@ export const MixedStatuses: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const ValidationErrors: Story = {
@@ -201,7 +217,11 @@ export const ValidationErrors: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const ShippingIssues: Story = {
@@ -236,7 +256,11 @@ export const ShippingIssues: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const InteractiveExceptionList: Story = {
@@ -319,6 +343,10 @@ export const InteractiveExceptionList: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const SystemAlerts: Story = {
@@ -359,7 +387,11 @@ export const SystemAlerts: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const CustomerFeedback: Story = {
@@ -400,7 +432,11 @@ export const CustomerFeedback: Story = {
         ]}
       />
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
 
 export const MinimalList: Story = {
@@ -421,5 +457,9 @@ export const MinimalList: Story = {
         ]}
       />
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('exceptionlist', 'default'),
+  },
+
 };
