@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button, Card, TextField } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Basic components showcase - using Button as the primary component
 const BasicComponentsShowcase = () => (
@@ -29,6 +30,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ButtonExamples: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
+  },
   render: () => (
     <div style={{ display: 'flex', gap: '12px' }}>
       <Button>Primary</Button>
@@ -39,6 +43,9 @@ export const ButtonExamples: Story = {
 };
 
 export const CardExamples: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('card', 'default'),
+  },
   render: () => (
     <Card sectioned>
       <p>This is a basic card with sectioned content.</p>
@@ -47,6 +54,9 @@ export const CardExamples: Story = {
 };
 
 export const TextFieldExamples: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
   render: () => (
     <TextField
       label="Basic text field"
