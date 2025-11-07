@@ -10084,8 +10084,8 @@ const resourceItem = createResourceItem({
         <div style="color: #6b7280; font-size: 14px;">SKU: \${product.sku}</div>
       </div>
       <div style="text-align: right;">
-        <div style="font-weight: 500;">\${product.price}</div>
-        <div style="color: #6b7280; font-size: 14px;">\${product.stock} in stock</div>
+        <div style="font-weight: 500;">\\${product.price}</div>
+        <div style="color: #6b7280; font-size: 14px;">\\${product.stock} in stock</div>
       </div>
     </div>
   \`,
@@ -14247,6 +14247,1937 @@ function BulkActionsExample({
 }`
   }
 };
+
+// Filters Component Examples
+export const filtersExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Filters, Select } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function FiltersExample() {
+  const [queryValue, setQueryValue] = useState('');
+  const [appliedFilters, setAppliedFilters] = useState([]);
+
+  const handleQueryChange = useCallback((value: string) => {
+    setQueryValue(value);
+  }, []);
+
+  const handleQueryClear = useCallback(() => {
+    setQueryValue('');
+  }, []);
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <Select
+          label="Status"
+          options={[
+            { label: 'All', value: '' },
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+          ]}
+          onChange={() => {}}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <Filters
+      queryValue={queryValue}
+      filters={filters}
+      appliedFilters={appliedFilters}
+      onQueryChange={handleQueryChange}
+      onQueryClear={handleQueryClear}
+      onFiltersChange={setAppliedFilters}
+    />
+  );
+}`,
+
+    extjs: `// ExtJS Grid with filtering toolbar
+Ext.create('Ext.grid.Panel', {
+  title: 'Product Filters',
+  tbar: [{
+    xtype: 'textfield',
+    fieldLabel: 'Search',
+    name: 'search',
+    width: 300,
+    listeners: {
+      change: function(field, newValue) {
+        const grid = this.up('grid');
+        const store = grid.getStore();
+        store.clearFilter();
+        if (newValue) {
+          store.filter('name', newValue);
+        }
+      }
+    }
+  }, {
+    xtype: 'combo',
+    fieldLabel: 'Status',
+    store: ['All', 'Active', 'Draft', 'Archived'],
+    value: 'All',
+    width: 200,
+    listeners: {
+      select: function(combo, record) {
+        const grid = this.up('grid');
+        const store = grid.getStore();
+        if (record.get('field1') !== 'All') {
+          store.filter('status', record.get('field1'));
+        } else {
+          store.clearFilter();
+        }
+      }
+    }
+  }],
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Status', dataIndex: 'status', width: 100 }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="filters-container">
+  <div class="search-box">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search..."
+      class="filter-search"
+    />
+  </div>
+
+  <div class="filter-controls">
+    <select id="status-filter" class="filter-select">
+      <option value="">All Status</option>
+      <option value="active">Active</option>
+      <option value="draft">Draft</option>
+      <option value="archived">Archived</option>
+    </select>
+  </div>
+
+  <div id="applied-filters" class="applied-filters"></div>
+</div>
+
+<script>
+import { on, $ } from '@cin7/vanilla-js';
+
+const searchInput = $('#search-input');
+const statusFilter = $('#status-filter');
+const appliedFiltersEl = $('#applied-filters');
+
+on(searchInput, 'input', (e) => {
+  const query = e.target.value;
+  // Filter data based on query
+  filterData({ query, status: statusFilter.value });
+});
+
+on(statusFilter, 'change', (e) => {
+  const status = e.target.value;
+  filterData({ query: searchInput.value, status });
+  updateAppliedFilters(status);
+});
+
+function filterData(filters) {
+  // Apply filters to your data
+  console.log('Filtering with:', filters);
+}
+</script>`,
+
+    typescript: `import { Filters, Select } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface Filter {
+  key: string;
+  label: string;
+  filter: JSX.Element;
+}
+
+interface FiltersExampleProps {
+  onFiltersApply?: (filters: any[]) => void;
+}
+
+function FiltersExample({
+  onFiltersApply
+}: FiltersExampleProps): JSX.Element {
+  const [queryValue, setQueryValue] = useState<string>('');
+  const [appliedFilters, setAppliedFilters] = useState<any[]>([]);
+
+  const handleQueryChange = useCallback((value: string) => {
+    setQueryValue(value);
+  }, []);
+
+  const handleQueryClear = useCallback(() => {
+    setQueryValue('');
+  }, []);
+
+  const handleFiltersChange = useCallback((filters: any[]) => {
+    setAppliedFilters(filters);
+    onFiltersApply?.(filters);
+  }, [onFiltersApply]);
+
+  const filters: Filter[] = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <Select
+          label="Status"
+          options={[
+            { label: 'All', value: '' },
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+          ]}
+          onChange={() => {}}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <Filters
+      queryValue={queryValue}
+      filters={filters}
+      appliedFilters={appliedFilters}
+      onQueryChange={handleQueryChange}
+      onQueryClear={handleQueryClear}
+      onFiltersChange={handleFiltersChange}
+    />
+  );
+}`
+  }
+};
+
+// Scrollable Component Examples
+export const scrollableExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Scrollable, Card, Text } from '@shopify/polaris';
+
+function ScrollableExample() {
+  return (
+    <Scrollable height="200px" shadow>
+      <div style={{ padding: '16px' }}>
+        {Array.from({ length: 15 }, (_, i) => (
+          <Card key={i} sectioned style={{ marginBottom: '12px' }}>
+            <Text variant="headingSm">Card {i + 1}</Text>
+            <Text variant="bodyMd">
+              This is card number {i + 1} in the scrollable container.
+            </Text>
+          </Card>
+        ))}
+      </div>
+    </Scrollable>
+  );
+}`,
+
+    extjs: `// ExtJS Panel with scrollable content
+Ext.create('Ext.panel.Panel', {
+  title: 'Scrollable Content',
+  width: 400,
+  height: 300,
+  autoScroll: true,
+  scrollable: true,
+  items: [{
+    xtype: 'container',
+    html: Array.from({ length: 20 }, (_, i) =>
+      '<div style="padding: 16px; margin: 8px; border: 1px solid #ccc;">' +
+      '<h4>Item ' + (i + 1) + '</h4>' +
+      '<p>This is scrollable content item ' + (i + 1) + '</p>' +
+      '</div>'
+    ).join('')
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="scrollable-container" style="height: 300px; overflow-y: auto;">
+  <div class="scrollable-content">
+    <div class="scroll-item">Item 1</div>
+    <div class="scroll-item">Item 2</div>
+    <div class="scroll-item">Item 3</div>
+    <!-- More items... -->
+  </div>
+</div>
+
+<style>
+.scrollable-container {
+  position: relative;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.scroll-item {
+  padding: 16px;
+  margin: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: white;
+}
+</style>
+
+<script>
+import { on, $ } from '@cin7/vanilla-js';
+
+const scrollContainer = $('.scrollable-container');
+
+// Detect scroll to bottom
+on(scrollContainer, 'scroll', (e) => {
+  const el = e.target;
+  const isBottom = el.scrollHeight - el.scrollTop === el.clientHeight;
+  if (isBottom) {
+    console.log('Scrolled to bottom!');
+  }
+});
+</script>`,
+
+    typescript: `import { Scrollable, Card, Text } from '@shopify/polaris';
+import { ReactNode } from 'react';
+
+interface ScrollableExampleProps {
+  height?: string;
+  children?: ReactNode;
+  onScrolledToBottom?: () => void;
+}
+
+function ScrollableExample({
+  height = '200px',
+  children,
+  onScrolledToBottom
+}: ScrollableExampleProps): JSX.Element {
+  const items = Array.from({ length: 15 }, (_, i) => ({
+    id: i + 1,
+    title: 'Card ' + (i + 1),
+    content: 'This is card number ' + (i + 1)
+  }));
+
+  return (
+    <Scrollable
+      height={height}
+      shadow
+      onScrolledToBottom={onScrolledToBottom}
+    >
+      <div style={{ padding: '16px' }}>
+        {children || items.map((item) => (
+          <Card key={item.id} sectioned style={{ marginBottom: '12px' }}>
+            <Text variant="headingSm">{item.title}</Text>
+            <Text variant="bodyMd">{item.content}</Text>
+          </Card>
+        ))}
+      </div>
+    </Scrollable>
+  );
+}`
+  }
+};
+
+// Collapsible Component Examples
+export const collapsibleExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Collapsible, Button } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CollapsibleExample() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <Button
+        onClick={() => setOpen(!open)}
+        ariaExpanded={open}
+        ariaControls="basic-collapsible"
+      >
+        {open ? 'Hide' : 'Show'} Details
+      </Button>
+      <Collapsible
+        open={open}
+        id="basic-collapsible"
+        transition
+      >
+        <div style={{
+          padding: '16px',
+          border: '1px solid #ddd',
+          marginTop: '8px'
+        }}>
+          This is collapsible content that can be shown or hidden.
+        </div>
+      </Collapsible>
+    </div>
+  );
+}`,
+
+    extjs: `// ExtJS Panel with collapsible region
+Ext.create('Ext.panel.Panel', {
+  title: 'Main Panel',
+  width: 400,
+  height: 300,
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'panel',
+    title: 'Collapsible Details',
+    collapsible: true,
+    collapsed: true,
+    height: 150,
+    html: 'This is collapsible content that can be expanded or collapsed.'
+  }, {
+    region: 'center',
+    xtype: 'panel',
+    html: 'Main content area'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="collapsible-wrapper">
+  <button
+    id="toggle-btn"
+    class="collapsible-trigger"
+    aria-expanded="false"
+    aria-controls="collapsible-content"
+  >
+    Show Details
+  </button>
+
+  <div
+    id="collapsible-content"
+    class="collapsible-content"
+    style="display: none;"
+  >
+    <div class="content-inner">
+      This is collapsible content that can be shown or hidden.
+    </div>
+  </div>
+</div>
+
+<style>
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.collapsible-content.open {
+  max-height: 500px;
+}
+
+.content-inner {
+  padding: 16px;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+</style>
+
+<script>
+import { on, $, toggleClass } from '@cin7/vanilla-js';
+
+const toggleBtn = $('#toggle-btn');
+const content = $('#collapsible-content');
+
+on(toggleBtn, 'click', () => {
+  const isOpen = content.classList.contains('open');
+
+  toggleClass(content, 'open');
+  toggleBtn.textContent = isOpen ? 'Show Details' : 'Hide Details';
+  toggleBtn.setAttribute('aria-expanded', !isOpen);
+});
+</script>`,
+
+    typescript: `import { Collapsible, Button } from '@shopify/polaris';
+import { useState, ReactNode } from 'react';
+
+interface CollapsibleExampleProps {
+  title?: string;
+  children?: ReactNode;
+  defaultOpen?: boolean;
+  onToggle?: (isOpen: boolean) => void;
+}
+
+function CollapsibleExample({
+  title = 'Details',
+  children,
+  defaultOpen = false,
+  onToggle
+}: CollapsibleExampleProps): JSX.Element {
+  const [open, setOpen] = useState<boolean>(defaultOpen);
+
+  const handleToggle = () => {
+    const newState = !open;
+    setOpen(newState);
+    onToggle?.(newState);
+  };
+
+  return (
+    <div>
+      <Button
+        onClick={handleToggle}
+        ariaExpanded={open}
+        ariaControls="collapsible-content"
+      >
+        {open ? 'Hide' : 'Show'} {title}
+      </Button>
+      <Collapsible
+        open={open}
+        id="collapsible-content"
+        transition
+      >
+        <div style={{
+          padding: '16px',
+          border: '1px solid #ddd',
+          marginTop: '8px',
+          borderRadius: '4px'
+        }}>
+          {children || 'This is collapsible content.'}
+        </div>
+      </Collapsible>
+    </div>
+  );
+}`
+  }
+};
+
+// TextContainer Component Examples
+export const textContainerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { TextContainer } from '@shopify/polaris';
+
+function TextContainerExample() {
+  return (
+    <TextContainer>
+      <h2>Welcome to Our Platform</h2>
+      <p>
+        This text container provides optimal reading width for your content.
+        It ensures that lines of text don't become too long, which improves
+        readability and user experience.
+      </p>
+    </TextContainer>
+  );
+}`,
+
+    extjs: `// ExtJS Panel with constrained text width
+Ext.create('Ext.panel.Panel', {
+  title: 'Text Content',
+  width: 600,
+  bodyPadding: 20,
+  style: {
+    maxWidth: '65ch' // Optimal reading width
+  },
+  html:
+    '<h2>Welcome to Our Platform</h2>' +
+    '<p style="line-height: 1.6;">' +
+    'This text container provides optimal reading width for your content. ' +
+    'It ensures that lines of text don\\'t become too long, which improves ' +
+    'readability and user experience.' +
+    '</p>',
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="text-container">
+  <h2>Welcome to Our Platform</h2>
+  <p>
+    This text container provides optimal reading width for your content.
+    It ensures that lines of text don't become too long, which improves
+    readability and user experience.
+  </p>
+</div>
+
+<style>
+.text-container {
+  max-width: 65ch; /* Optimal reading width */
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.text-container h2 {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.text-container p {
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.text-container p + p {
+  margin-top: 16px;
+}
+</style>`,
+
+    typescript: `import { TextContainer } from '@shopify/polaris';
+import { ReactNode } from 'react';
+
+interface TextContainerExampleProps {
+  spacing?: boolean;
+  children: ReactNode;
+}
+
+function TextContainerExample({
+  spacing = false,
+  children
+}: TextContainerExampleProps): JSX.Element {
+  return (
+    <TextContainer spacing={spacing}>
+      {children || (
+        <>
+          <h2>Welcome to Our Platform</h2>
+          <p>
+            This text container provides optimal reading width for your content.
+            It ensures that lines of text don't become too long, which improves
+            readability and user experience.
+          </p>
+        </>
+      )}
+    </TextContainer>
+  );
+}`
+  }
+};
+
+// IndexFilters Component Examples
+export const indexFiltersExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import {
+  IndexFilters,
+  Card,
+  Filters,
+  ChoiceList,
+  useSetIndexFiltersMode
+} from '@shopify/polaris';
+import { useState } from 'react';
+
+function IndexFiltersExample() {
+  const [queryValue, setQueryValue] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [sortSelected, setSortSelected] = useState(['created_desc']);
+  const { mode, setMode } = useSetIndexFiltersMode();
+
+  const filters = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+          ]}
+          selected={[]}
+          onChange={() => {}}
+          allowMultiple
+        />
+      ),
+    },
+  ];
+
+  const sortOptions = [
+    { label: 'Created', value: 'created_asc', directionLabel: 'Oldest first' },
+    { label: 'Created', value: 'created_desc', directionLabel: 'Newest first' },
+  ];
+
+  return (
+    <Card padding="0">
+      <IndexFilters
+        sortOptions={sortOptions}
+        sortSelected={sortSelected}
+        onSortChange={setSortSelected}
+        queryValue={queryValue}
+        onQueryChange={setQueryValue}
+        onQueryClear={() => setQueryValue('')}
+        selected={selected}
+        onSelectionChange={setSelected}
+        tabs={[
+          { content: 'All', id: 'all', panelID: 'all-content' },
+          { content: 'Active', id: 'active', panelID: 'active-content' },
+        ]}
+        mode={mode}
+        setMode={setMode}
+        filters={
+          <Filters
+            queryValue={queryValue}
+            filters={filters}
+            appliedFilters={[]}
+          />
+        }
+      />
+    </Card>
+  );
+}`,
+
+    extjs: `// ExtJS Grid with comprehensive filtering and sorting
+Ext.create('Ext.grid.Panel', {
+  title: 'Products',
+  width: 800,
+  height: 500,
+  selModel: {
+    mode: 'MULTI',
+    checkboxSelect: true
+  },
+  tbar: [{
+    xtype: 'textfield',
+    emptyText: 'Search...',
+    width: 300,
+    listeners: {
+      change: function(field, value) {
+        const store = this.up('grid').getStore();
+        store.clearFilter();
+        if (value) {
+          store.filter([{
+            property: 'name',
+            value: value,
+            anyMatch: true,
+            caseSensitive: false
+          }]);
+        }
+      }
+    }
+  }, '->', {
+    xtype: 'combo',
+    fieldLabel: 'Sort by',
+    store: [
+      ['created_asc', 'Created (Oldest first)'],
+      ['created_desc', 'Created (Newest first)'],
+      ['name_asc', 'Name (A-Z)'],
+      ['name_desc', 'Name (Z-A)']
+    ],
+    value: 'created_desc',
+    listeners: {
+      select: function(combo, record) {
+        const store = this.up('grid').getStore();
+        const [field, direction] = record.get('field1').split('_');
+        store.sort(field, direction.toUpperCase());
+      }
+    }
+  }],
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Status', dataIndex: 'status', width: 100 },
+    { text: 'Created', dataIndex: 'created', width: 150 }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="index-filters">
+  <div class="filters-toolbar">
+    <input
+      type="text"
+      id="search-query"
+      placeholder="Search..."
+      class="search-input"
+    />
+
+    <div class="filter-controls">
+      <button id="filter-btn" class="filter-button">
+        Filters
+      </button>
+
+      <select id="sort-select" class="sort-select">
+        <option value="created_desc">Newest first</option>
+        <option value="created_asc">Oldest first</option>
+        <option value="name_asc">Name (A-Z)</option>
+        <option value="name_desc">Name (Z-A)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="all">All</button>
+    <button class="tab" data-tab="active">Active</button>
+    <button class="tab" data-tab="draft">Draft</button>
+  </div>
+
+  <div id="results-container" class="results"></div>
+</div>
+
+<script>
+import { on, $, $$ } from '@cin7/vanilla-js';
+
+const searchInput = $('#search-query');
+const sortSelect = $('#sort-select');
+const tabs = $$('.tab');
+
+on(searchInput, 'input', (e) => {
+  filterResults({ query: e.target.value });
+});
+
+on(sortSelect, 'change', (e) => {
+  sortResults(e.target.value);
+});
+
+tabs.forEach(tab => {
+  on(tab, 'click', (e) => {
+    tabs.forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    filterResults({ tab: e.target.dataset.tab });
+  });
+});
+</script>`,
+
+    typescript: `import {
+  IndexFilters,
+  Card,
+  Filters,
+  ChoiceList,
+  useSetIndexFiltersMode,
+  IndexFiltersProps
+} from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface Filter {
+  key: string;
+  label: string;
+  filter: JSX.Element;
+}
+
+interface IndexFiltersExampleProps {
+  onFilterChange?: (filters: any) => void;
+  onSortChange?: (sort: string[]) => void;
+}
+
+function IndexFiltersExample({
+  onFilterChange,
+  onSortChange
+}: IndexFiltersExampleProps): JSX.Element {
+  const [queryValue, setQueryValue] = useState<string>('');
+  const [selected, setSelected] = useState<string[]>([]);
+  const [sortSelected, setSortSelected] = useState<string[]>(['created_desc']);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const { mode, setMode } = useSetIndexFiltersMode();
+
+  const handleSortChange = useCallback((sort: string[]) => {
+    setSortSelected(sort);
+    onSortChange?.(sort);
+  }, [onSortChange]);
+
+  const filters: Filter[] = [
+    {
+      key: 'status',
+      label: 'Status',
+      filter: (
+        <ChoiceList
+          title="Status"
+          titleHidden
+          choices={[
+            { label: 'Active', value: 'active' },
+            { label: 'Draft', value: 'draft' },
+          ]}
+          selected={[]}
+          onChange={() => {}}
+          allowMultiple
+        />
+      ),
+    },
+  ];
+
+  const sortOptions = [
+    { label: 'Created', value: 'created_asc', directionLabel: 'Oldest first' },
+    { label: 'Created', value: 'created_desc', directionLabel: 'Newest first' },
+  ];
+
+  return (
+    <Card padding="0">
+      <IndexFilters
+        sortOptions={sortOptions}
+        sortSelected={sortSelected}
+        onSortChange={handleSortChange}
+        queryValue={queryValue}
+        onQueryChange={setQueryValue}
+        onQueryClear={() => setQueryValue('')}
+        selected={selected}
+        onSelectionChange={setSelected}
+        tabs={[
+          { content: 'All', id: 'all', panelID: 'all-content' },
+          { content: 'Active', id: 'active', panelID: 'active-content' },
+        ]}
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
+        mode={mode}
+        setMode={setMode}
+        filters={
+          <Filters
+            queryValue={queryValue}
+            filters={filters}
+            appliedFilters={[]}
+          />
+        }
+      />
+    </Card>
+  );
+}`
+  }
+};
+
+// CheckboxGroup Component Examples
+export const checkboxGroupExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import {Checkbox, BlockStack, Text, Card} from '@shopify/polaris';
+import React, {useState} from 'react';
+
+function CheckboxGroup() {
+  const [preferences, setPreferences] = useState({
+    email: true,
+    sms: false,
+    push: true,
+  });
+
+  const handleCheckboxChange = (key: keyof typeof preferences) =>
+    (checked: boolean) => {
+      setPreferences(prev => ({...prev, [key]: checked}));
+    };
+
+  return (
+    <Card padding="400">
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">
+          Notification Preferences
+        </Text>
+
+        <Checkbox
+          label="Email notifications"
+          checked={preferences.email}
+          onChange={handleCheckboxChange('email')}
+          helpText="Receive updates via email"
+        />
+
+        <Checkbox
+          label="SMS notifications"
+          checked={preferences.sms}
+          onChange={handleCheckboxChange('sms')}
+          helpText="Get text alerts"
+        />
+
+        <Checkbox
+          label="Push notifications"
+          checked={preferences.push}
+          onChange={handleCheckboxChange('push')}
+          helpText="Receive browser notifications"
+        />
+      </BlockStack>
+    </Card>
+  );
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'Notification Preferences',
+  bodyPadding: 16,
+  width: 400,
+  items: [{
+    xtype: 'checkboxgroup',
+    fieldLabel: 'Select Preferences',
+    vertical: true,
+    columns: 1,
+    items: [{
+      boxLabel: 'Email notifications',
+      name: 'email',
+      checked: true,
+      listeners: {
+        change: function(field, checked) {
+          console.log('Email notifications:', checked);
+        }
+      }
+    }, {
+      boxLabel: 'SMS notifications',
+      name: 'sms',
+      checked: false,
+      listeners: {
+        change: function(field, checked) {
+          console.log('SMS notifications:', checked);
+        }
+      }
+    }, {
+      boxLabel: 'Push notifications',
+      name: 'push',
+      checked: true,
+      listeners: {
+        change: function(field, checked) {
+          console.log('Push notifications:', checked);
+        }
+      }
+    }]
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="checkbox-group">
+  <h3 class="checkbox-group__title">Notification Preferences</h3>
+
+  <div class="checkbox-field">
+    <input type="checkbox" id="email-notif" checked />
+    <label for="email-notif">
+      <span class="checkbox-label">Email notifications</span>
+      <span class="checkbox-help">Receive updates via email</span>
+    </label>
+  </div>
+
+  <div class="checkbox-field">
+    <input type="checkbox" id="sms-notif" />
+    <label for="sms-notif">
+      <span class="checkbox-label">SMS notifications</span>
+      <span class="checkbox-help">Get text alerts</span>
+    </label>
+  </div>
+
+  <div class="checkbox-field">
+    <input type="checkbox" id="push-notif" checked />
+    <label for="push-notif">
+      <span class="checkbox-label">Push notifications</span>
+      <span class="checkbox-help">Receive browser notifications</span>
+    </label>
+  </div>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('.checkbox-field input');
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', (e) => {
+    const isChecked = e.target.checked;
+    const label = e.target.nextElementSibling.querySelector('.checkbox-label').textContent;
+    console.log(\`\${label}: \${isChecked}\`);
+  });
+});
+</script>`,
+    typescript: `import {Checkbox, BlockStack, Text, Card} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface CheckboxGroupProps {
+  title?: string;
+  defaultValues?: Record<string, boolean>;
+  onPreferencesChange?: (preferences: Record<string, boolean>) => void;
+}
+
+interface PreferenceItem {
+  key: string;
+  label: string;
+  helpText: string;
+}
+
+function CheckboxGroup({
+  title = 'Notification Preferences',
+  defaultValues = {email: true, sms: false, push: true},
+  onPreferencesChange
+}: CheckboxGroupProps): JSX.Element {
+  const [preferences, setPreferences] = useState<Record<string, boolean>>(
+    defaultValues
+  );
+
+  const items: PreferenceItem[] = [
+    {key: 'email', label: 'Email notifications', helpText: 'Receive updates via email'},
+    {key: 'sms', label: 'SMS notifications', helpText: 'Get text alerts'},
+    {key: 'push', label: 'Push notifications', helpText: 'Receive browser notifications'}
+  ];
+
+  const handleCheckboxChange = useCallback((key: string) =>
+    (checked: boolean) => {
+      const newPreferences = {...preferences, [key]: checked};
+      setPreferences(newPreferences);
+      onPreferencesChange?.(newPreferences);
+    }, [preferences, onPreferencesChange]
+  );
+
+  return (
+    <Card padding="400">
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">{title}</Text>
+        {items.map(item => (
+          <Checkbox
+            key={item.key}
+            label={item.label}
+            checked={preferences[item.key]}
+            onChange={handleCheckboxChange(item.key)}
+            helpText={item.helpText}
+          />
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}`
+  }
+};
+
+// OptionList Component Examples
+export const optionListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function OptionListExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Select options"
+      options={[
+        {value: 'today', label: 'Today'},
+        {value: 'yesterday', label: 'Yesterday'},
+        {value: 'lastWeek', label: 'Last 7 days'},
+        {value: 'lastMonth', label: 'Last 30 days'},
+        {value: 'custom', label: 'Custom range'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Select options',
+  vertical: true,
+  columns: 1,
+  items: [{
+    boxLabel: 'Today',
+    name: 'dateRange',
+    inputValue: 'today'
+  }, {
+    boxLabel: 'Yesterday',
+    name: 'dateRange',
+    inputValue: 'yesterday'
+  }, {
+    boxLabel: 'Last 7 days',
+    name: 'dateRange',
+    inputValue: 'lastWeek'
+  }, {
+    boxLabel: 'Last 30 days',
+    name: 'dateRange',
+    inputValue: 'lastMonth'
+  }, {
+    boxLabel: 'Custom range',
+    name: 'dateRange',
+    inputValue: 'custom'
+  }],
+  listeners: {
+    change: function(radiogroup, newValue) {
+      console.log('Selected:', newValue.dateRange);
+    }
+  }
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="option-list">
+  <h4 class="option-list__title">Select options</h4>
+
+  <div class="option-list__items">
+    <label class="option-item">
+      <input type="radio" name="dateRange" value="today" />
+      <span>Today</span>
+    </label>
+
+    <label class="option-item">
+      <input type="radio" name="dateRange" value="yesterday" />
+      <span>Yesterday</span>
+    </label>
+
+    <label class="option-item">
+      <input type="radio" name="dateRange" value="lastWeek" />
+      <span>Last 7 days</span>
+    </label>
+
+    <label class="option-item">
+      <input type="radio" name="dateRange" value="lastMonth" />
+      <span>Last 30 days</span>
+    </label>
+
+    <label class="option-item">
+      <input type="radio" name="dateRange" value="custom" />
+      <span>Custom range</span>
+    </label>
+  </div>
+</div>
+
+<script>
+const radioButtons = document.querySelectorAll('input[name="dateRange"]');
+radioButtons.forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    console.log('Selected:', e.target.value);
+  });
+});
+</script>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface OptionItem {
+  value: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+}
+
+interface OptionListProps {
+  title?: string;
+  options?: OptionItem[];
+  allowMultiple?: boolean;
+  defaultSelected?: string[];
+  onSelectionChange?: (selected: string[]) => void;
+}
+
+function OptionListExample({
+  title = 'Select options',
+  options = [
+    {value: 'today', label: 'Today'},
+    {value: 'yesterday', label: 'Yesterday'},
+    {value: 'lastWeek', label: 'Last 7 days'},
+    {value: 'lastMonth', label: 'Last 30 days'},
+    {value: 'custom', label: 'Custom range'}
+  ],
+  allowMultiple = false,
+  defaultSelected = [],
+  onSelectionChange
+}: OptionListProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(defaultSelected);
+
+  const handleChange = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+    onSelectionChange?.(newSelected);
+  }, [onSelectionChange]);
+
+  return (
+    <OptionList
+      title={title}
+      options={options}
+      selected={selected}
+      onChange={handleChange}
+      allowMultiple={allowMultiple}
+    />
+  );
+}`
+  }
+};
+
+// FooterHelp Component Examples
+export const footerHelpExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { FooterHelp } from '@shopify/polaris';
+import React from 'react';
+
+function FooterHelpExample() {
+  return (
+    <FooterHelp>
+      Need help? Our support team is available 24/7 to assist you with any questions.
+    </FooterHelp>
+  );
+}
+
+export default FooterHelpExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-footer-help">
+  <div class="polaris-footer-help__content">
+    Need help? Our support team is available 24/7 to assist you with any questions.
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createFooterHelp } from '@cin7/vanilla-js';
+
+const footerHelp = createFooterHelp({
+  content: 'Need help? Our support team is available 24/7 to assist you with any questions.'
+});
+
+document.getElementById('app').appendChild(footerHelp);
+</script>`,
+    extjs: `// ExtJS Footer Help using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  cls: 'polaris-footer-help',
+  html: 'Need help? Our support team is available 24/7 to assist you with any questions.',
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisFooterHelp } from '@cin7/extjs-adapters';
+
+const footerHelp = Ext.create('PolarisFooterHelp', {
+  content: 'Need help? Our support team is available 24/7 to assist you with any questions.',
+  learnMore: {
+    url: 'https://help.shopify.com',
+    content: 'View guide'
+  }
+});`,
+    typescript: `import { FooterHelp } from '@shopify/polaris';
+import React from 'react';
+
+interface FooterHelpExampleProps {
+  children: React.ReactNode;
+  learnMore?: {
+    url: string;
+    content: string;
+    onAction?: () => void;
+  };
+}
+
+function FooterHelpExample({
+  children,
+  learnMore
+}: FooterHelpExampleProps): JSX.Element {
+  return (
+    <FooterHelp learnMore={learnMore}>
+      {children}
+    </FooterHelp>
+  );
+}
+
+export default FooterHelpExample;`
+  }
+};
+
+// KeypressListener Component Examples
+export const keypressListenerExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { KeypressListener } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function KeypressListenerExample() {
+  const [message, setMessage] = useState('');
+
+  const handleEnter = (event: KeyboardEvent) => {
+    setMessage('Enter key pressed!');
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  return (
+    <div>
+      <p>Press the Enter key to trigger the listener.</p>
+      {message && <p>{message}</p>}
+      <KeypressListener keyCode="Enter" handler={handleEnter} />
+    </div>
+  );
+}
+
+export default KeypressListenerExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div id="keypress-demo">
+  <p>Press the Enter key to trigger the listener.</p>
+  <p id="message"></p>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+const messageEl = document.getElementById('message');
+
+on(document, 'keydown', (event) => {
+  if (event.key === 'Enter') {
+    messageEl.textContent = 'Enter key pressed!';
+    setTimeout(() => {
+      messageEl.textContent = '';
+    }, 3000);
+  }
+});
+</script>`,
+    extjs: `// ExtJS KeyPress Handler using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  html: '<p>Press the Enter key to trigger the listener.</p>',
+  listeners: {
+    afterrender: function(cmp) {
+      Ext.getDoc().on('keydown', function(event) {
+        if (event.getKey() === Ext.event.Event.ENTER) {
+          Ext.Msg.alert('Keypress', 'Enter key pressed!');
+        }
+      });
+    }
+  },
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisKeypressListener } from '@cin7/extjs-adapters';
+
+const listener = Ext.create('PolarisKeypressListener', {
+  keyCode: 'Enter',
+  handler: function(event) {
+    console.log('Enter key pressed!');
+  }
+});`,
+    typescript: `import { KeypressListener } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface KeypressListenerExampleProps {
+  keyCode: string;
+  onKeyPress?: (event: KeyboardEvent) => void;
+  preventDefault?: boolean;
+}
+
+function KeypressListenerExample({
+  keyCode,
+  onKeyPress,
+  preventDefault = false
+}: KeypressListenerExampleProps): JSX.Element {
+  const [message, setMessage] = useState<string>('');
+
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    setMessage(\`\${keyCode} key pressed!\`);
+    setTimeout(() => setMessage(''), 3000);
+    onKeyPress?.(event);
+  }, [keyCode, onKeyPress]);
+
+  return (
+    <>
+      <p>Press the {keyCode} key to trigger the listener.</p>
+      {message && <p>{message}</p>}
+      <KeypressListener
+        keyCode={keyCode}
+        handler={handleKeyPress}
+        preventDefault={preventDefault}
+      />
+    </>
+  );
+}
+
+export default KeypressListenerExample;`
+  }
+};
+
+// Frame Component Examples
+export const frameExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Frame, TopBar, Navigation, Page, Avatar } from '@shopify/polaris';
+import { HomeIcon, OrderIcon, ProductIcon } from '@shopify/polaris-icons';
+import React, { useState, useCallback } from 'react';
+
+function FrameExample() {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
+
+  const toggleMobileNavigation = useCallback(() => {
+    setMobileNavigationActive((active) => !active);
+  }, []);
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      onNavigationToggle={toggleMobileNavigation}
+      userMenu={{
+        name: 'John Doe',
+        detail: 'Store owner',
+        initials: 'JD',
+        avatar: <Avatar customer size="small" name="John Doe" />,
+      }}
+    />
+  );
+
+  const navigationMarkup = (
+    <Navigation location="/">
+      <Navigation.Section
+        items={[
+          { label: 'Home', icon: HomeIcon, url: '#' },
+          { label: 'Orders', icon: OrderIcon, url: '#' },
+          { label: 'Products', icon: ProductIcon, url: '#' },
+        ]}
+      />
+    </Navigation>
+  );
+
+  return (
+    <Frame
+      topBar={topBarMarkup}
+      navigation={navigationMarkup}
+      showMobileNavigation={mobileNavigationActive}
+      onNavigationDismiss={toggleMobileNavigation}
+    >
+      <Page title="Dashboard">
+        <p>Welcome to your dashboard</p>
+      </Page>
+    </Frame>
+  );
+}
+
+export default FrameExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame">
+  <div class="polaris-top-bar">
+    <button class="polaris-top-bar__navigation-toggle">☰</button>
+    <div class="polaris-top-bar__user">John Doe</div>
+  </div>
+  <nav class="polaris-navigation">
+    <ul class="polaris-navigation__items">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Orders</a></li>
+      <li><a href="#">Products</a></li>
+    </ul>
+  </nav>
+  <main class="polaris-frame__content">
+    <div class="polaris-page">
+      <h1>Dashboard</h1>
+      <p>Welcome to your dashboard</p>
+    </div>
+  </main>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on, toggleClass } from '@cin7/vanilla-js';
+
+const navToggle = document.querySelector('.polaris-top-bar__navigation-toggle');
+const navigation = document.querySelector('.polaris-navigation');
+
+on(navToggle, 'click', () => {
+  toggleClass(navigation, 'is-visible');
+});
+</script>`,
+    extjs: `// ExtJS Frame/Viewport using @cin7/extjs-adapters
+Ext.create('Ext.container.Viewport', {
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'toolbar',
+    items: [{
+      text: 'Menu',
+      iconCls: 'x-fa fa-bars'
+    }, '->', {
+      text: 'John Doe',
+      iconCls: 'x-fa fa-user'
+    }]
+  }, {
+    region: 'west',
+    xtype: 'treepanel',
+    title: 'Navigation',
+    width: 250,
+    collapsible: true,
+    rootVisible: false,
+    store: Ext.create('Ext.data.TreeStore', {
+      root: {
+        children: [
+          { text: 'Home', iconCls: 'x-fa fa-home', leaf: true },
+          { text: 'Orders', iconCls: 'x-fa fa-shopping-cart', leaf: true },
+          { text: 'Products', iconCls: 'x-fa fa-box', leaf: true }
+        ]
+      }
+    })
+  }, {
+    region: 'center',
+    xtype: 'panel',
+    title: 'Dashboard',
+    html: '<p>Welcome to your dashboard</p>'
+  }]
+});`,
+    typescript: `import { Frame, TopBar, Navigation, Page, Avatar } from '@shopify/polaris';
+import { HomeIcon, OrderIcon, ProductIcon } from '@shopify/polaris-icons';
+import React, { useState, useCallback, ReactNode } from 'react';
+
+interface NavigationItem {
+  label: string;
+  icon: any;
+  url: string;
+  badge?: {
+    status: string;
+    content: string;
+  };
+}
+
+interface FrameExampleProps {
+  userName?: string;
+  userDetail?: string;
+  navigationItems?: NavigationItem[];
+  children: ReactNode;
+}
+
+function FrameExample({
+  userName = 'John Doe',
+  userDetail = 'Store owner',
+  navigationItems = [
+    { label: 'Home', icon: HomeIcon, url: '#' },
+    { label: 'Orders', icon: OrderIcon, url: '#' },
+    { label: 'Products', icon: ProductIcon, url: '#' },
+  ],
+  children
+}: FrameExampleProps): JSX.Element {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState<boolean>(false);
+
+  const toggleMobileNavigation = useCallback(() => {
+    setMobileNavigationActive((active) => !active);
+  }, []);
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      onNavigationToggle={toggleMobileNavigation}
+      userMenu={{
+        name: userName,
+        detail: userDetail,
+        initials: userName.split(' ').map(n => n[0]).join(''),
+      }}
+    />
+  );
+
+  const navigationMarkup = (
+    <Navigation location="/">
+      <Navigation.Section items={navigationItems} />
+    </Navigation>
+  );
+
+  return (
+    <Frame
+      topBar={topBarMarkup}
+      navigation={navigationMarkup}
+      showMobileNavigation={mobileNavigationActive}
+      onNavigationDismiss={toggleMobileNavigation}
+    >
+      {children}
+    </Frame>
+  );
+}
+
+export default FrameExample;`
+  }
+};
+
+// PageActions Component Examples
+export const pageActionsExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { PageActions } from '@shopify/polaris';
+import React from 'react';
+
+function PageActionsExample() {
+  return (
+    <PageActions
+      primaryAction={{
+        content: 'Save',
+        onAction: () => console.log('Save clicked'),
+      }}
+      secondaryActions={[
+        {
+          content: 'Cancel',
+          onAction: () => console.log('Cancel clicked'),
+        },
+      ]}
+    />
+  );
+}
+
+export default PageActionsExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-page-actions">
+  <div class="polaris-page-actions__secondary">
+    <button class="polaris-button" id="cancel-btn">Cancel</button>
+  </div>
+  <div class="polaris-page-actions__primary">
+    <button class="polaris-button polaris-button--primary" id="save-btn">Save</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { on } from '@cin7/vanilla-js';
+
+on('#save-btn', 'click', () => {
+  console.log('Save clicked');
+});
+
+on('#cancel-btn', 'click', () => {
+  console.log('Cancel clicked');
+});
+</script>`,
+    extjs: `// ExtJS Toolbar with Actions using @cin7/extjs-adapters
+Ext.create('Ext.toolbar.Toolbar', {
+  dock: 'bottom',
+  items: [{
+    text: 'Cancel',
+    handler: function() {
+      console.log('Cancel clicked');
+    }
+  }, '->', {
+    text: 'Save',
+    ui: 'action',
+    handler: function() {
+      console.log('Save clicked');
+    }
+  }],
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisPageActions } from '@cin7/extjs-adapters';
+
+const pageActions = Ext.create('PolarisPageActions', {
+  primaryAction: {
+    text: 'Save',
+    handler: function() {
+      console.log('Save clicked');
+    }
+  },
+  secondaryActions: [{
+    text: 'Cancel',
+    handler: function() {
+      console.log('Cancel clicked');
+    }
+  }]
+});`,
+    typescript: `import { PageActions } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface PageAction {
+  content: string;
+  onAction: () => void;
+  loading?: boolean;
+  disabled?: boolean;
+  destructive?: boolean;
+}
+
+interface PageActionsExampleProps {
+  onSave?: () => void;
+  onCancel?: () => void;
+  saveLabel?: string;
+  cancelLabel?: string;
+}
+
+function PageActionsExample({
+  onSave,
+  onCancel,
+  saveLabel = 'Save',
+  cancelLabel = 'Cancel'
+}: PageActionsExampleProps): JSX.Element {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSave = useCallback(() => {
+    setLoading(true);
+    onSave?.();
+    setTimeout(() => setLoading(false), 2000);
+  }, [onSave]);
+
+  const handleCancel = useCallback(() => {
+    onCancel?.();
+  }, [onCancel]);
+
+  return (
+    <PageActions
+      primaryAction={{
+        content: saveLabel,
+        onAction: handleSave,
+        loading: loading,
+      }}
+      secondaryActions={[
+        {
+          content: cancelLabel,
+          onAction: handleCancel,
+          disabled: loading,
+        },
+      ]}
+    />
+  );
+}
+
+export default PageActionsExample;`
+  }
+};
+
+
+// LineChart Component Examples
+export const lineChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function LineChart() {
+  const options = {
+    title: { text: 'Sales Trend' },
+    series: [{ data: [1, 2, 3, 4, 5] }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: { data: [{month: 'Jan', value: 100}] },
+  axes: [{type: 'numeric', position: 'left'}],
+  series: [{type: 'line', yField: 'value'}]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  title: { text: 'Sales Trend' },
+  series: [{ data: [1, 2, 3, 4, 5] }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+const options: Highcharts.Options = {
+  title: { text: 'Sales Trend' },
+  series: [{ type: 'line', data: [1, 2, 3, 4, 5] }]
+};
+Highcharts.chart('container', options);`
+  }
+};
+
+// BarChart Component Examples
+export const barChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function BarChart() {
+  const options = {
+    chart: { type: 'column' },
+    title: { text: 'Sales by Category' },
+    series: [{ data: [10, 20, 30] }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: { data: [{category: 'A', value: 100}] },
+  series: [{type: 'bar', yField: 'value'}]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'column' },
+  series: [{ data: [10, 20, 30] }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+const options: Highcharts.Options = {
+  chart: { type: 'column' },
+  series: [{ type: 'column', data: [10, 20, 30] }]
+};
+Highcharts.chart('container', options);`
+  }
+};
+
+// PieChart Component Examples
+export const pieChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function PieChart() {
+  const options = {
+    chart: { type: 'pie' },
+    title: { text: 'Market Share' },
+    series: [{ data: [['A', 45], ['B', 30], ['C', 25]] }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.PolarChart', {
+  store: { data: [{name: 'A', value: 45}] },
+  series: [{type: 'pie', angleField: 'value'}]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'pie' },
+  series: [{ data: [['A', 45], ['B', 30]] }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+const options: Highcharts.Options = {
+  chart: { type: 'pie' },
+  series: [{ type: 'pie', data: [['A', 45], ['B', 30]] }]
+};
+Highcharts.chart('container', options);`
+  }
+};
+
+// FormPanel Component Examples
+export const formPanelExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { TextField, Button, Card } from '@shopify/polaris';
+import { useState } from 'react';
+
+function FormPanel() {
+  const [name, setName] = useState('');
+  return <Card><TextField label="Name" value={name} onChange={setName} /><Button>Submit</Button></Card>;
+}`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  items: [{xtype: 'textfield', fieldLabel: 'Name'}],
+  buttons: [{text: 'Submit'}]
+});`,
+    vanilla: `<form><input type="text" placeholder="Name" /><button>Submit</button></form>`,
+    typescript: `import { TextField, Button } from '@shopify/polaris';
+function FormPanel({ onSubmit }: { onSubmit: (data: any) => void }) {
+  return <form onSubmit={onSubmit}><TextField label="Name" /></form>;
+}`
+  }
+};
+
+// CoreUtilities Component Examples
+export const coreUtilitiesExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { useCallback } from 'react';
+function CoreUtilities() {
+  const handleClick = useCallback(() => console.log('clicked'), []);
+  return <button onClick={handleClick}>Click me</button>;
+}`,
+    extjs: `Ext.get('button').on('click', function() { console.log('clicked'); });`,
+    vanilla: `document.querySelector('button').addEventListener('click', () => console.log('clicked'));`,
+    typescript: `const button = document.querySelector<HTMLButtonElement>('button');
+button?.addEventListener('click', () => console.log('clicked'));`
+  }
+};
+
+// EcommerceComponents Component Examples
+export const ecommerceComponentsExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Card, Button } from '@shopify/polaris';
+function ProductCard({ product }: { product: any }) {
+  return <Card><h3>{product.name}</h3><p>\${product.price}</p><Button>Add to Cart</Button></Card>;
+}`,
+    extjs: `Ext.create('Ext.panel.Panel', {
+  html: '<div class="product"><h3>Product</h3><button>Add to Cart</button></div>'
+});`,
+    vanilla: `<div class="product-card">
+  <h3>Product Name</h3>
+  <p>$99.99</p>
+  <button>Add to Cart</button>
+</div>`,
+    typescript: `interface Product { name: string; price: number; }
+function ProductCard({ product }: { product: Product }) {
+  return <div><h3>{product.name}</h3><p>\${product.price}</p></div>;
+}`
+  }
+};
+
+// UseCase Component Examples
+export const useCaseExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { useState } from 'react';
+function UseCase() {
+  const [data, setData] = useState(null);
+  const execute = async () => { const res = await fetch('/api'); setData(await res.json()); };
+  return <button onClick={execute}>Execute</button>;
+}`,
+    extjs: `Ext.define('App.UseCase', {
+  execute: function() { Ext.Ajax.request({ url: '/api' }); }
+});`,
+    vanilla: `async function executeUseCase() {
+  const response = await fetch('/api');
+  return await response.json();
+}`,
+    typescript: `interface UseCase<T, R> {
+  execute(input: T): Promise<R>;
+}
+class CreateUser implements UseCase<{name: string}, {id: number}> {
+  async execute(input) { return { id: 1 }; }
+}`
+  }
+};
+
+// Repository Component Examples
+export const repositoryExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { useState, useEffect } from 'react';
+function Repository() {
+  const [items, setItems] = useState([]);
+  useEffect(() => { fetch('/api/items').then(r => r.json()).then(setItems); }, []);
+  return <ul>{items.map(i => <li key={i.id}>{i.name}</li>)}</ul>;
+}`,
+    extjs: `Ext.create('Ext.data.Store', {
+  proxy: { type: 'rest', url: '/api/items' },
+  autoLoad: true
+});`,
+    vanilla: `async function fetchAll() {
+  const response = await fetch('/api/items');
+  return await response.json();
+}`,
+    typescript: `interface Repository<T> {
+  findAll(): Promise<T[]>;
+  findById(id: number): Promise<T | null>;
+}
+class ProductRepository implements Repository<Product> {
+  async findAll() { return []; }
+  async findById(id: number) { return null; }
+}`
+  }
+};
+
 
 // Autocomplete Component Examples - Forms
 export const autocompleteExamples: Record<string, CodeVariant> = {
