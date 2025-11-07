@@ -40,12 +40,14 @@ import {
   InfoIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/E-commerce/Overview',
   component: Card,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('ecommercecomponents', 'default'),
     docs: {
       description: {
         component: 'Comprehensive e-commerce components for product showcases, shopping cart, checkout flows, customer reviews, and inventory management. These components are optimized for conversion and user experience in business applications.',

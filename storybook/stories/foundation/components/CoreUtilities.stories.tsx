@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useEffect, useRef, useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Core utilities showcase component
 const CoreUtilitiesShowcase = () => (
@@ -14,6 +15,7 @@ const meta = {
   component: CoreUtilitiesShowcase,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('coreutilities', 'default'),
     docs: {
       description: {
         component: 'Cin7 DSL core utilities provide essential DOM manipulation, event handling, validation, and animation utilities. These utilities work consistently across all browser environments and are optimized for performance.',

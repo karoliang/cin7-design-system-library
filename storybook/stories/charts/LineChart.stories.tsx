@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { LineChart } from '@cin7/highcharts-adapter/react';
+import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Charts/LineChart',
   component: LineChart,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('linechart', 'default'),
     docs: {
       description: {
         component: 'Line charts are ideal for showing trends over time, comparing multiple data series, and visualizing continuous data. Use smooth curves (splines) for more polished visualizations or straight lines for precise data representation.',

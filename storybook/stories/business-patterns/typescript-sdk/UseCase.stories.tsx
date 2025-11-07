@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, FormLayout, TextField, Select } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Mock implementation for demonstration
 const MockUseCase = {
@@ -19,6 +20,7 @@ const meta = {
   component: Card,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('usecase', 'default'),
     docs: {
       description: {
         component: 'Use Case pattern implementation for TypeScript SDK. Demonstrates business logic encapsulation and application workflow management.',

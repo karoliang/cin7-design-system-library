@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, DataTable } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Mock implementation for demonstration
 const MockRepository = {
@@ -16,6 +17,7 @@ const meta = {
   component: DataTable,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('repository', 'default'),
     docs: {
       description: {
         component: 'Repository pattern implementation for TypeScript SDK. Demonstrates data access layer with CRUD operations and entity management.',

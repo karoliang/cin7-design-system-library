@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card, Page, Layout, Grid, BlockStack, Text, Badge, Button, DataTable } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Mock ExtJS Form Panel implementation
 const ExtFormPanel = ({ title, fields, onSubmit }) => {
@@ -77,6 +78,7 @@ const meta = {
   component: ExtFormPanel,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('formpanel', 'default'),
     docs: {
       description: {
         component: 'ExtJS Form Panel adapter for enterprise forms. Demonstrates integration with ExtJS grid and data store components.',

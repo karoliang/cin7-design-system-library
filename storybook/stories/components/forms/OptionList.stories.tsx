@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { OptionList, Card, BlockStack, InlineStack, Button, Badge, Icon, Checkbox, RadioButton } from '@shopify/polaris';
 import { PersonIcon, ProductIcon, OrderIcon, SettingsIcon, DiscountIcon, ShippingLabelIcon } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Selection/OptionList',
   component: OptionList,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('optionlist', 'default'),
     docs: {
       description: {
         component: 'OptionList displays a list of selectable options. It\'s commonly used for settings panels, configuration choices, category selection, and any scenario where users need to choose from a list of options.',

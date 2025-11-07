@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PageActions, Card, BlockStack, InlineStack, Text, Button, Badge } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/PageActions',
   component: PageActions,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('pageactions', 'default'),
     docs: {
       description: {
         component: 'PageActions provides a standardized way to display primary and secondary actions at the bottom of a page or section. Perfect for forms, detail pages, and workflows.',

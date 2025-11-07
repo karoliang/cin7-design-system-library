@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PieChart } from '@cin7/highcharts-adapter/react';
+import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Charts/PieChart',
   component: PieChart,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('piechart', 'default'),
     docs: {
       description: {
         component: 'Pie charts are ideal for showing part-to-whole relationships, composition breakdown, and percentage distribution. Use donut charts for a modern appearance or semi-circle charts for compact displays.',

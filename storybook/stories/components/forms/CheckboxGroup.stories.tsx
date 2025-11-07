@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Checkbox, BlockStack, InlineStack, Text, Card, Divider } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Forms/CheckboxGroup',
   component: Checkbox,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('checkboxgroup', 'default'),
     docs: {
       description: {
         component: 'Checkbox groups are collections of related checkboxes that allow users to select multiple options from a set. They are useful for presenting related choices, filtering options, or settings that can be enabled independently.',

@@ -21,6 +21,7 @@ import {
   MenuHorizontalIcon,
 } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Custom BulkActions component for Polaris v13.9.5 compatibility
 const CustomBulkActions: React.FC<{
@@ -96,6 +97,7 @@ const meta = {
   component: CustomBulkActions,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('bulkactions', 'default'),
     docs: {
       description: {
         component: 'BulkActions provides a set of actions that can be performed on multiple selected items. It\'s commonly used in tables and lists to allow users to perform actions on multiple items at once.',

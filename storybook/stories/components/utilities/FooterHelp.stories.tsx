@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { FooterHelp, Button, Card, InlineStack, BlockStack, Text, Icon } from '@shopify/polaris';
 import { QuestionCircleIcon, InfoIcon, ExternalIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/FooterHelp',
   component: FooterHelp,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('footerhelp', 'default'),
     docs: {
       description: {
         component: 'FooterHelp displays contextual help text at the bottom of a page or section. It\'s useful for providing additional guidance, links to documentation, or support information.',

@@ -26,12 +26,14 @@ import {
   NotificationIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Layout/Frame',
   component: Frame,
   parameters: {
     layout: 'fullscreen',
+    codeVariants: getCodeVariants('frame', 'default'),
     docs: {
       description: {
         component: 'Frame provides the main application layout structure with navigation, top bar, and content areas. It\'s the foundation for building complete Shopify-style applications.',

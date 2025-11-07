@@ -18,12 +18,14 @@ import {
 } from '@shopify/polaris';
 import { SearchIcon, FilterIcon, SortAscendingIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Tables/IndexFilters',
   component: IndexFilters,
   parameters: {
     layout: 'full',
+    codeVariants: getCodeVariants('indexfilters', 'default'),
     docs: {
       description: {
         component: 'IndexFilters provides comprehensive filtering, sorting, and search functionality for data tables and resource lists. It combines search, filters, and view controls into a unified interface.',

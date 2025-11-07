@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { BarChart } from '@cin7/highcharts-adapter/react';
+import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Charts/BarChart',
   component: BarChart,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('barchart', 'default'),
     docs: {
       description: {
         component: 'Bar charts are ideal for comparing values across categories, showing rankings, and visualizing discrete data. Use vertical columns for time-based categories or horizontal bars for long category names.',

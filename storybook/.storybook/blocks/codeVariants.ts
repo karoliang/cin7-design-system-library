@@ -13919,6 +13919,335 @@ export default ContextMenuExample;`
   }
 };
 
+// BulkActions Component Examples
+export const bulkActionsExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { IndexTable, Card, useIndexResourceState, BulkActions } from '@shopify/polaris';
+import { useState } from 'react';
+
+function BulkActionsExample() {
+  const customers = [
+    { id: '1', name: 'Mae Jemison', location: 'Decatur, USA' },
+    { id: '2', name: 'Ellen Ochoa', location: 'Los Angeles, USA' },
+    { id: '3', name: 'Sally Ride', location: 'San Diego, USA' },
+  ];
+
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(customers);
+
+  const promotedBulkActions = [
+    {
+      content: 'Edit customers',
+      onAction: () => console.log('Edit customers', selectedResources),
+    },
+  ];
+
+  const bulkActions = [
+    {
+      content: 'Add tags',
+      onAction: () => console.log('Add tags', selectedResources),
+    },
+    {
+      content: 'Remove tags',
+      onAction: () => console.log('Remove tags', selectedResources),
+    },
+    {
+      content: 'Delete customers',
+      onAction: () => console.log('Delete customers', selectedResources),
+    },
+  ];
+
+  return (
+    <Card>
+      <IndexTable
+        resourceName={{ singular: 'customer', plural: 'customers' }}
+        itemCount={customers.length}
+        selectedItemsCount={
+          allResourcesSelected ? 'All' : selectedResources.length
+        }
+        onSelectionChange={handleSelectionChange}
+        promotedBulkActions={promotedBulkActions}
+        bulkActions={bulkActions}
+        headings={[{ title: 'Name' }, { title: 'Location' }]}
+      >
+        {customers.map(({ id, name, location }, index) => (
+          <IndexTable.Row
+            id={id}
+            key={id}
+            selected={selectedResources.includes(id)}
+            position={index}
+          >
+            <IndexTable.Cell>{name}</IndexTable.Cell>
+            <IndexTable.Cell>{location}</IndexTable.Cell>
+          </IndexTable.Row>
+        ))}
+      </IndexTable>
+    </Card>
+  );
+}`,
+
+    extjs: `// ExtJS Grid with bulk actions toolbar
+Ext.create('Ext.grid.Panel', {
+  title: 'Customer List',
+  store: {
+    data: [
+      { id: 1, name: 'Mae Jemison', location: 'Decatur, USA' },
+      { id: 2, name: 'Ellen Ochoa', location: 'Los Angeles, USA' },
+      { id: 3, name: 'Sally Ride', location: 'San Diego, USA' }
+    ]
+  },
+  columns: [
+    { text: 'Name', dataIndex: 'name', flex: 1 },
+    { text: 'Location', dataIndex: 'location', flex: 1 }
+  ],
+  selModel: {
+    mode: 'MULTI',
+    listeners: {
+      selectionchange: function(sm, selected) {
+        const toolbar = this.up('grid').down('toolbar');
+        const count = selected.length;
+        toolbar.setVisible(count > 0);
+        toolbar.down('#selectionText').setText(
+          count + ' customer' + (count !== 1 ? 's' : '') + ' selected'
+        );
+      }
+    }
+  },
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    hidden: true,
+    items: [{
+      xtype: 'tbtext',
+      itemId: 'selectionText',
+      text: '0 customers selected'
+    }, '->', {
+      text: 'Edit Customers',
+      iconCls: 'icon-edit',
+      handler: function() {
+        const grid = this.up('grid');
+        const selected = grid.getSelection();
+        console.log('Edit', selected);
+      }
+    }, {
+      text: 'Add Tags',
+      iconCls: 'icon-tag',
+      handler: function() {
+        const grid = this.up('grid');
+        const selected = grid.getSelection();
+        console.log('Add tags', selected);
+      }
+    }, {
+      text: 'Delete',
+      iconCls: 'icon-delete',
+      cls: 'destructive-btn',
+      handler: function() {
+        const grid = this.up('grid');
+        const selected = grid.getSelection();
+        Ext.Msg.confirm('Delete',
+          'Delete ' + selected.length + ' customer(s)?',
+          function(btn) {
+            if (btn === 'yes') {
+              console.log('Delete', selected);
+            }
+          }
+        );
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="customer-list">
+  <div class="bulk-actions-bar" id="bulk-actions" style="display: none;">
+    <span id="selection-count">0 customers selected</span>
+    <div class="actions">
+      <button class="btn-primary" id="edit-btn">Edit Customers</button>
+      <button class="btn-secondary" id="tags-btn">Add Tags</button>
+      <button class="btn-destructive" id="delete-btn">Delete</button>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="select-all"></th>
+        <th>Name</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody id="customer-tbody">
+      <tr data-id="1">
+        <td><input type="checkbox" class="row-select" value="1"></td>
+        <td>Mae Jemison</td>
+        <td>Decatur, USA</td>
+      </tr>
+      <tr data-id="2">
+        <td><input type="checkbox" class="row-select" value="2"></td>
+        <td>Ellen Ochoa</td>
+        <td>Los Angeles, USA</td>
+      </tr>
+      <tr data-id="3">
+        <td><input type="checkbox" class="row-select" value="3"></td>
+        <td>Sally Ride</td>
+        <td>San Diego, USA</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+// Bulk actions behavior
+const bulkActionsBar = document.getElementById('bulk-actions');
+const selectionCount = document.getElementById('selection-count');
+const selectAll = document.getElementById('select-all');
+const rowCheckboxes = document.querySelectorAll('.row-select');
+
+function updateBulkActions() {
+  const selected = Array.from(rowCheckboxes).filter(cb => cb.checked);
+  const count = selected.length;
+
+  if (count > 0) {
+    bulkActionsBar.style.display = 'flex';
+    selectionCount.textContent = count + ' customer' + (count !== 1 ? 's' : '') + ' selected';
+  } else {
+    bulkActionsBar.style.display = 'none';
+  }
+
+  selectAll.checked = count === rowCheckboxes.length;
+  selectAll.indeterminate = count > 0 && count < rowCheckboxes.length;
+}
+
+selectAll.addEventListener('change', (e) => {
+  rowCheckboxes.forEach(cb => cb.checked = e.target.checked);
+  updateBulkActions();
+});
+
+rowCheckboxes.forEach(cb => {
+  cb.addEventListener('change', updateBulkActions);
+});
+
+document.getElementById('edit-btn').addEventListener('click', () => {
+  const selected = Array.from(rowCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  console.log('Edit customers:', selected);
+});
+
+document.getElementById('tags-btn').addEventListener('click', () => {
+  const selected = Array.from(rowCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  console.log('Add tags:', selected);
+});
+
+document.getElementById('delete-btn').addEventListener('click', () => {
+  const selected = Array.from(rowCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  if (confirm('Delete ' + selected.length + ' customer(s)?')) {
+    console.log('Delete customers:', selected);
+  }
+});
+</script>`,
+
+    typescript: `import { IndexTable, Card, useIndexResourceState, BulkActions } from '@shopify/polaris';
+import { useState } from 'react';
+
+interface Customer {
+  id: string;
+  name: string;
+  location: string;
+}
+
+interface BulkActionsExampleProps {
+  customers?: Customer[];
+  onEdit?: (ids: string[]) => void;
+  onAddTags?: (ids: string[]) => void;
+  onDelete?: (ids: string[]) => void;
+}
+
+function BulkActionsExample({
+  customers = [
+    { id: '1', name: 'Mae Jemison', location: 'Decatur, USA' },
+    { id: '2', name: 'Ellen Ochoa', location: 'Los Angeles, USA' },
+    { id: '3', name: 'Sally Ride', location: 'San Diego, USA' },
+  ],
+  onEdit,
+  onAddTags,
+  onDelete,
+}: BulkActionsExampleProps): JSX.Element {
+  const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(customers);
+
+  const promotedBulkActions = [
+    {
+      content: 'Edit customers',
+      onAction: () => {
+        console.log('Edit customers', selectedResources);
+        onEdit?.(selectedResources);
+      },
+    },
+  ];
+
+  const bulkActions = [
+    {
+      content: 'Add tags',
+      onAction: () => {
+        console.log('Add tags', selectedResources);
+        onAddTags?.(selectedResources);
+      },
+    },
+    {
+      content: 'Remove tags',
+      onAction: () => console.log('Remove tags', selectedResources),
+    },
+    {
+      content: 'Delete customers',
+      onAction: () => {
+        console.log('Delete customers', selectedResources);
+        onDelete?.(selectedResources);
+      },
+    },
+  ];
+
+  const resourceName = {
+    singular: 'customer',
+    plural: 'customers',
+  };
+
+  return (
+    <Card>
+      <IndexTable
+        resourceName={resourceName}
+        itemCount={customers.length}
+        selectedItemsCount={
+          allResourcesSelected ? 'All' : selectedResources.length
+        }
+        onSelectionChange={handleSelectionChange}
+        promotedBulkActions={promotedBulkActions}
+        bulkActions={bulkActions}
+        headings={[{ title: 'Name' }, { title: 'Location' }]}
+      >
+        {customers.map(({ id, name, location }, index) => (
+          <IndexTable.Row
+            id={id}
+            key={id}
+            selected={selectedResources.includes(id)}
+            position={index}
+          >
+            <IndexTable.Cell>{name}</IndexTable.Cell>
+            <IndexTable.Cell>{location}</IndexTable.Cell>
+          </IndexTable.Row>
+        ))}
+      </IndexTable>
+    </Card>
+  );
+}`
+  }
+};
+
 // Autocomplete Component Examples - Forms
 export const autocompleteExamples: Record<string, CodeVariant> = {
   default: {
@@ -20468,6 +20797,7 @@ export function getCodeVariants(
     modal: modalExamples,
     banner: bannerExamples,
     actionlist: actionList,
+    bulkactions: bulkActionsExamples,
     tabs: tabsExamples,
     pagination: paginationExamples,
     link: linkExamples,
@@ -20483,6 +20813,7 @@ export function getCodeVariants(
     tag: tagExamples,
     select: selectExamples,
     checkbox: checkboxExamples,
+    checkboxgroup: checkboxGroupExamples,
     radiobutton: radioButtonExamples,
     autocomplete: autocompleteExamples,
     choicelist: choiceListExamples,
@@ -20516,6 +20847,7 @@ export function getCodeVariants(
     divider: dividerExamples,
     dropzone: dropzoneExamples,
     keyboardkey: keyboardkeyExamples,
+    keypresslistener: keypressListenerExamples,
     text: textExamples,
     actionmenu: actionMenuExamples,
     image: imageExamples,
@@ -20523,6 +20855,23 @@ export function getCodeVariants(
     popover: popoverExamples,
     tooltip: tooltipExamples,
     sheet: sheetExamples,
+    filters: filtersExamples,
+    collapsible: collapsibleExamples,
+    footerhelp: footerHelpExamples,
+    frame: frameExamples,
+    scrollable: scrollableExamples,
+    textcontainer: textContainerExamples,
+    indexfilters: indexFiltersExamples,
+    pageactions: pageActionsExamples,
+    optionlist: optionListExamples,
+    linechart: lineChartExamples,
+    barchart: barChartExamples,
+    piechart: pieChartExamples,
+    formpanel: formPanelExamples,
+    coreutilities: coreUtilitiesExamples,
+    ecommercecomponents: ecommerceComponentsExamples,
+    usecase: useCaseExamples,
+    repository: repositoryExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

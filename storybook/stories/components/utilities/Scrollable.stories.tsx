@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Scrollable, Button, Text, Card, Badge, Avatar } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/Scrollable',
   component: Scrollable,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('scrollable', 'default'),
     docs: {
       description: {
         component: 'Scrollable is a wrapper component that provides consistent scrolling behavior across browsers and devices. It handles scrollbar styling, scroll shadow effects, and scroll event management.',

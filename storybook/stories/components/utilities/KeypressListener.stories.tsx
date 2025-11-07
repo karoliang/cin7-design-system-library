@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { KeypressListener, Button, Text, Card, Badge, Toast } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Overlays/KeypressListener',
   component: KeypressListener,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('keypresslistener', 'default'),
     docs: {
       description: {
         component: 'KeypressListener captures keyboard events globally and triggers callbacks. It\'s essential for implementing keyboard shortcuts, accessibility features, and custom keyboard interactions.',

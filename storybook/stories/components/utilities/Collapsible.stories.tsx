@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Collapsible, Button, Card, Text, InlineStack, BlockStack } from '@shopify/polaris';
 import { ChevronDownIcon, ChevronUpIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Utilities/Collapsible',
   component: Collapsible,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('collapsible', 'default'),
     docs: {
       description: {
         component: 'Collapsible components can expand and collapse content, helping users manage screen real estate by hiding information until it\'s needed. They\'re perfect for progressive disclosure of information.',

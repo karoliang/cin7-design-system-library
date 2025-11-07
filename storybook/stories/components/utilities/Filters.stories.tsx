@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Filters, Card, Button, Badge, InlineStack, BlockStack, TextField, Select, Checkbox, DatePicker, Popover, Icon } from '@shopify/polaris';
 import { SearchIcon, CalendarIcon, FilterIcon, XSmallIcon } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Filters',
   component: Filters,
   parameters: {
     layout: 'padded',
+    codeVariants: getCodeVariants('filters', 'default'),
     docs: {
       description: {
         component: 'Filters allow users to refine and narrow down data sets by applying various criteria. They\'re essential for data tables, product listings, order management, and any scenario where users need to find specific items within large datasets.',

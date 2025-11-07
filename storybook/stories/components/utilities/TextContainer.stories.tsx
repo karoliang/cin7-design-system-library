@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextContainer } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Structure/TextContainer',
   component: TextContainer,
   parameters: {
     layout: 'centered',
+    codeVariants: getCodeVariants('textcontainer', 'default'),
     docs: {
       description: {
         component: 'TextContainer provides optimal reading width and spacing for text content. It ensures text remains readable on all screen sizes by limiting line length and providing appropriate padding.',
