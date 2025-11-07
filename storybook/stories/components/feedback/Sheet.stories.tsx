@@ -97,6 +97,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const Sizes: Story = {
@@ -154,6 +158,10 @@ export const Sizes: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const OpenFromDirections: Story = {
@@ -217,6 +225,10 @@ export const OpenFromDirections: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const NavigationSheet: Story = {
@@ -277,6 +289,10 @@ export const NavigationSheet: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const FormSheet: Story = {
@@ -358,6 +374,10 @@ export const FormSheet: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const DetailsSheet: Story = {
@@ -426,6 +446,10 @@ export const DetailsSheet: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const FiltersSheet: Story = {
@@ -522,6 +546,10 @@ export const FiltersSheet: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const BorderlessSheet: Story = {
@@ -556,6 +584,10 @@ export const BorderlessSheet: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const WithScroll: Story = {
@@ -618,6 +650,10 @@ export const WithScroll: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -678,4 +714,8 @@ export const AccessibilityDemo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('sheet', 'default'),
+  },
+
 };

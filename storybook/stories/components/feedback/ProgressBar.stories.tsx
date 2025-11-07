@@ -48,6 +48,10 @@ export const Default: Story = {
     progress: 65,
     size: 'medium',
   },
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const Sizes: Story = {
@@ -68,7 +72,11 @@ export const Sizes: Story = {
         <ProgressBar progress={75} size="large" />
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const Colors: Story = {
@@ -89,7 +97,11 @@ export const Colors: Story = {
         <ProgressBar progress={60} color="critical" />
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const ProgressValues: Story = {
@@ -120,7 +132,11 @@ export const ProgressValues: Story = {
         <ProgressBar progress={100} color="success" />
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const InteractiveProgress: Story = {
@@ -181,6 +197,10 @@ export const InteractiveProgress: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const FileUpload: Story = {
@@ -246,6 +266,10 @@ export const FileUpload: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const MultiStepProcess: Story = {
@@ -329,6 +353,10 @@ export const MultiStepProcess: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const DataSync: Story = {
@@ -398,6 +426,10 @@ export const DataSync: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };
 
 export const RealWorldScenarios: Story = {
@@ -459,5 +491,9 @@ export const RealWorldScenarios: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('progressbar', 'default'),
+  },
+
 };

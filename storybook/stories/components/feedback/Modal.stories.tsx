@@ -193,6 +193,10 @@ export const Sizes: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const FormModal: Story = {
@@ -260,6 +264,10 @@ export const FormModal: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const ModalWithoutActions: Story = {
@@ -296,6 +304,10 @@ export const ModalWithoutActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const ModalWithFooter: Story = {
@@ -347,6 +359,10 @@ export const ModalWithFooter: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const NestedModals: Story = {
@@ -406,6 +422,10 @@ export const NestedModals: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const IframeModal: Story = {
@@ -435,6 +455,10 @@ export const IframeModal: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -483,4 +507,8 @@ export const AccessibilityDemo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('modal', 'default'),
+  },
+
 };
