@@ -197,6 +197,10 @@ export const Default: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const WithCustomI18n: Story = {
@@ -266,6 +270,10 @@ export const WithCustomI18n: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const WithCustomTheme: Story = {
@@ -336,6 +344,10 @@ export const WithCustomTheme: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const WithCustomLinkComponent: Story = {
@@ -395,6 +407,10 @@ export const WithCustomLinkComponent: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const NestedProviders: Story = {
@@ -451,6 +467,10 @@ export const NestedProviders: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const CompleteApplication: Story = {
@@ -563,6 +583,10 @@ export const CompleteApplication: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
 
 export const ErrorBoundary: Story = {
@@ -600,4 +624,8 @@ export const ErrorBoundary: Story = {
       </AppProvider>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('appprovider', 'default'),
+  },
+
 };
