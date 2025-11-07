@@ -41,6 +41,10 @@ export const Default: Story = {
     size: 'medium',
     accessibilityLabel: 'Loading content',
   },
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const Sizes: Story = {
@@ -61,7 +65,11 @@ export const Sizes: Story = {
         <Text variant="bodySm" as="span">Large</Text>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const WithText: Story = {
@@ -82,7 +90,11 @@ export const WithText: Story = {
         <Text as="span">Uploading files to server...</Text>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const InCards: Story = {
@@ -118,7 +130,11 @@ export const InCards: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const InteractiveStates: Story = {
@@ -191,6 +207,10 @@ export const InteractiveStates: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const LoadingScenarios: Story = {
@@ -240,7 +260,11 @@ export const LoadingScenarios: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const OverlaySpinners: Story = {
@@ -334,7 +358,11 @@ export const OverlaySpinners: Story = {
         </div>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };
 
 export const CenteredLayouts: Story = {
@@ -384,5 +412,9 @@ export const CenteredLayouts: Story = {
         <Spinner size="small" accessibilityLabel="Loading" />
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('spinner', 'default'),
+  },
+
 };

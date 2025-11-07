@@ -41,6 +41,10 @@ export const Default: Story = {
     size: 'medium',
     accessibilityLabel: 'Loading content',
   },
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const SizeVariants: Story = {
@@ -73,7 +77,11 @@ export const SizeVariants: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const WithBackgrounds: Story = {
@@ -147,7 +155,11 @@ export const WithBackgrounds: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const InteractiveLoading: Story = {
@@ -226,6 +238,10 @@ export const InteractiveLoading: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const InlineLoading: Story = {
@@ -283,7 +299,11 @@ export const InlineLoading: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const LoadingInForms: Story = {
@@ -360,6 +380,10 @@ export const LoadingInForms: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const LoadingSteps: Story = {
@@ -463,6 +487,10 @@ export const LoadingSteps: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };
 
 export const AccessibilityDemo: Story = {
@@ -528,5 +556,9 @@ export const AccessibilityDemo: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('loading', 'default'),
+  },
+
 };

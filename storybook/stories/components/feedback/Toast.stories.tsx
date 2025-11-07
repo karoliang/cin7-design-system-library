@@ -60,6 +60,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const StatusVariants: Story = {
@@ -111,6 +115,10 @@ export const StatusVariants: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const WithActions: Story = {
@@ -135,6 +143,10 @@ export const WithActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const CustomDuration: Story = {
@@ -183,6 +195,10 @@ export const CustomDuration: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const SequentialToasts: Story = {
@@ -225,6 +241,10 @@ export const SequentialToasts: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const ErrorHandling: Story = {
@@ -280,6 +300,10 @@ export const ErrorHandling: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const RealWorldScenarios: Story = {
@@ -326,6 +350,10 @@ export const RealWorldScenarios: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
 
 export const InteractiveDemo: Story = {
@@ -383,4 +411,8 @@ export const InteractiveDemo: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('toast', 'default'),
+  },
+
 };
