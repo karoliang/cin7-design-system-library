@@ -85,6 +85,9 @@ export const Variants: Story = {
       </div>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'primary'),
+  },
 };
 
 export const Sizes: Story = {
@@ -96,6 +99,9 @@ export const Sizes: Story = {
       <Button size="large">Large</Button>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'large'),
+  },
 };
 
 export const States: Story = {
@@ -704,6 +710,9 @@ export const VanillaJS: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
+  },
 };
 
 export const ExtJS: Story = {
@@ -767,6 +776,9 @@ export const ExtJS: Story = {
         )}
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
   },
 };
 
@@ -886,6 +898,9 @@ export const TypeScript: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
+  },
 };
 
 export const FullWidth: Story = {
@@ -908,6 +923,9 @@ export const WithIcons: Story = {
       <Button variant="critical">Delete</Button>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('button', 'default'),
+  },
 };
 
 export const Interactive: Story = {
@@ -944,5 +962,8 @@ export const Interactive: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('button', 'loading'),
   },
 };
