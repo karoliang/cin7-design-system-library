@@ -19558,6 +19558,530 @@ export default CampaignTabs;`
   }
 };
 
+// ActionMenu Component Examples
+export const actionMenuExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { ActionMenu } from '@shopify/polaris';
+import { EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+function ActionMenuExample() {
+  return (
+    <ActionMenu
+      actions={[
+        {
+          content: 'Edit',
+          icon: EditIcon,
+          onAction: () => console.log('Edit clicked'),
+        },
+        {
+          content: 'Duplicate',
+          icon: DuplicateIcon,
+          onAction: () => console.log('Duplicate clicked'),
+        },
+        {
+          content: 'Archive',
+          icon: ArchiveIcon,
+          onAction: () => console.log('Archive clicked'),
+        },
+        {
+          content: 'Delete',
+          icon: DeleteIcon,
+          destructive: true,
+          onAction: () => console.log('Delete clicked'),
+        },
+      ]}
+      activatorContent="Actions"
+    />
+  );
+}
+
+export default ActionMenuExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="action-menu-wrapper">
+  <button class="action-menu-trigger" id="actionMenuTrigger">
+    <span>Actions</span>
+    <svg class="icon"><use href="#chevron-down" /></svg>
+  </button>
+  <ul class="action-menu-list" id="actionMenuList" style="display: none;">
+    <li><button class="menu-item" data-action="edit">Edit</button></li>
+    <li><button class="menu-item" data-action="duplicate">Duplicate</button></li>
+    <li><button class="menu-item" data-action="archive">Archive</button></li>
+    <li><button class="menu-item menu-item--destructive" data-action="delete">Delete</button></li>
+  </ul>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on, toggleClass } from '@cin7/vanilla-js';
+
+const trigger = $('#actionMenuTrigger');
+const menu = $('#actionMenuList');
+
+on(trigger, 'click', () => {
+  toggleClass(menu, 'visible');
+});
+
+// Handle menu item clicks
+const items = menu.querySelectorAll('.menu-item');
+items.forEach(item => {
+  on(item, 'click', (e) => {
+    const action = e.target.dataset.action;
+    console.log(\`\${action} clicked\`);
+    toggleClass(menu, 'visible');
+  });
+});
+
+// Close menu when clicking outside
+on(document, 'click', (e) => {
+  if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.remove('visible');
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Button with Menu using @cin7/extjs-adapters
+Ext.create('Ext.button.Button', {
+  text: 'Actions',
+  menu: {
+    items: [
+      {
+        text: 'Edit',
+        iconCls: 'icon-edit',
+        handler: function() {
+          console.log('Edit clicked');
+        }
+      },
+      {
+        text: 'Duplicate',
+        iconCls: 'icon-duplicate',
+        handler: function() {
+          console.log('Duplicate clicked');
+        }
+      },
+      {
+        text: 'Archive',
+        iconCls: 'icon-archive',
+        handler: function() {
+          console.log('Archive clicked');
+        }
+      },
+      '-', // Separator
+      {
+        text: 'Delete',
+        iconCls: 'icon-delete',
+        cls: 'destructive-action',
+        handler: function() {
+          console.log('Delete clicked');
+        }
+      }
+    ]
+  },
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisActionMenu } from '@cin7/extjs-adapters';
+
+const actionMenu = Ext.create('PolarisActionMenu', {
+  text: 'Actions',
+  actions: [
+    { text: 'Edit', action: 'edit' },
+    { text: 'Duplicate', action: 'duplicate' },
+    { text: 'Archive', action: 'archive' },
+    { text: 'Delete', action: 'delete', destructive: true }
+  ]
+});`,
+
+    typescript: `import { ActionMenu, ActionMenuProps } from '@shopify/polaris';
+import { EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface ActionMenuExampleProps {
+  onEdit?: () => void;
+  onDuplicate?: () => void;
+  onArchive?: () => void;
+  onDelete?: () => void;
+  activatorLabel?: string;
+}
+
+type ActionHandler = () => void;
+
+interface MenuAction {
+  content: string;
+  icon?: React.ComponentType;
+  onAction: ActionHandler;
+  destructive?: boolean;
+}
+
+function ActionMenuExample({
+  onEdit = () => console.log('Edit clicked'),
+  onDuplicate = () => console.log('Duplicate clicked'),
+  onArchive = () => console.log('Archive clicked'),
+  onDelete = () => console.log('Delete clicked'),
+  activatorLabel = 'Actions'
+}: ActionMenuExampleProps): JSX.Element {
+  const actions: MenuAction[] = [
+    {
+      content: 'Edit',
+      icon: EditIcon,
+      onAction: onEdit,
+    },
+    {
+      content: 'Duplicate',
+      icon: DuplicateIcon,
+      onAction: onDuplicate,
+    },
+    {
+      content: 'Archive',
+      icon: ArchiveIcon,
+      onAction: onArchive,
+    },
+    {
+      content: 'Delete',
+      icon: DeleteIcon,
+      destructive: true,
+      onAction: onDelete,
+    },
+  ];
+
+  return (
+    <ActionMenu
+      actions={actions}
+      activatorContent={activatorLabel}
+    />
+  );
+}
+
+export default ActionMenuExample;`
+  }
+};
+
+// Image Component Examples
+export const imageExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Image } from '@shopify/polaris';
+import React from 'react';
+
+function ImageExample() {
+  return (
+    <Image
+      source="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop"
+      alt="Mountain landscape with lake"
+      width="400px"
+      height="300px"
+    />
+  );
+}
+
+export default ImageExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="image-container">
+  <img
+    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop"
+    alt="Mountain landscape with lake"
+    class="polaris-image"
+    width="400"
+    height="300"
+    loading="lazy"
+  />
+</div>
+
+<style>
+.image-container {
+  display: inline-block;
+  position: relative;
+}
+
+.polaris-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--border-radius-base);
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js for lazy loading
+import { createImage } from '@cin7/vanilla-js';
+
+const image = createImage({
+  src: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
+  alt: 'Mountain landscape with lake',
+  width: 400,
+  height: 300,
+  lazy: true,
+  onLoad: () => {
+    console.log('Image loaded successfully');
+  },
+  onError: () => {
+    console.error('Image failed to load');
+  }
+});
+
+document.getElementById('app').appendChild(image);
+</script>`,
+
+    extjs: `// ExtJS Image Component
+Ext.create('Ext.Img', {
+  src: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
+  alt: 'Mountain landscape with lake',
+  width: 400,
+  height: 300,
+  renderTo: Ext.getBody(),
+  listeners: {
+    load: function() {
+      console.log('Image loaded successfully');
+    },
+    error: function() {
+      console.error('Image failed to load');
+    }
+  }
+});
+
+// Or using Polaris adapter with responsive srcset
+import { PolarisImage } from '@cin7/extjs-adapters';
+
+const image = Ext.create('PolarisImage', {
+  src: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop',
+  alt: 'Mountain landscape with lake',
+  width: 400,
+  height: 300,
+  aspectRatio: '4/3',
+  border: 'rounded',
+  srcSet: [
+    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop 400w',
+    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop 800w',
+    'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&h=900&fit=crop 1200w'
+  ].join(', '),
+  sizes: '(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px'
+});`,
+
+    typescript: `import { Image, ImageProps } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface ImageExampleProps {
+  source: string;
+  alt: string;
+  width?: string | number;
+  height?: string | number;
+  aspectRatio?: '1/1' | '4/3' | '16/9' | '3/2' | '2/1';
+  border?: 'none' | 'base' | 'rounded' | 'large' | 'full';
+  loading?: 'lazy' | 'eager';
+  onLoad?: () => void;
+  onError?: () => void;
+}
+
+function ImageExample({
+  source,
+  alt,
+  width = '400px',
+  height = '300px',
+  aspectRatio,
+  border = 'rounded',
+  loading = 'lazy',
+  onLoad,
+  onError
+}: ImageExampleProps): JSX.Element {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const handleLoad = () => {
+    setIsLoaded(true);
+    onLoad?.();
+  };
+
+  const handleError = () => {
+    setHasError(true);
+    onError?.();
+  };
+
+  return (
+    <div className="image-wrapper">
+      <Image
+        source={source}
+        alt={alt}
+        width={width}
+        height={height}
+        aspectRatio={aspectRatio}
+        border={border}
+        loading={loading}
+        onLoad={handleLoad}
+        onError={handleError}
+      />
+      {hasError && (
+        <div className="image-error">Failed to load image</div>
+      )}
+    </div>
+  );
+}
+
+export default ImageExample;`
+  }
+};
+
+// Breadcrumbs Component Examples
+export const breadcrumbsExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Breadcrumbs } from '@shopify/polaris';
+import React from 'react';
+
+function BreadcrumbsExample() {
+  return (
+    <Breadcrumbs
+      breadcrumbs={[
+        { content: 'Products', url: '/products' },
+        { content: 'Inventory', url: '/products/inventory' },
+      ]}
+    />
+  );
+}
+
+export default BreadcrumbsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumbs-list">
+    <li class="breadcrumbs-item">
+      <a href="/products" class="breadcrumbs-link">Products</a>
+      <span class="breadcrumbs-separator" aria-hidden="true">/</span>
+    </li>
+    <li class="breadcrumbs-item">
+      <a href="/products/inventory" class="breadcrumbs-link">Inventory</a>
+    </li>
+  </ol>
+</nav>
+
+<style>
+.breadcrumbs-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.breadcrumbs-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs-link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumbs-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs-separator {
+  margin: 0 8px;
+  color: var(--color-text-subdued);
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createBreadcrumbs } from '@cin7/vanilla-js';
+
+const breadcrumbs = createBreadcrumbs({
+  items: [
+    { text: 'Products', url: '/products' },
+    { text: 'Inventory', url: '/products/inventory' }
+  ],
+  onClick: (item) => {
+    console.log('Navigating to:', item.url);
+  }
+});
+
+document.getElementById('app').appendChild(breadcrumbs);
+</script>`,
+
+    extjs: `// ExtJS Breadcrumb using Toolbar
+Ext.create('Ext.toolbar.Toolbar', {
+  cls: 'breadcrumb-toolbar',
+  items: [
+    {
+      xtype: 'button',
+      text: 'Products',
+      iconCls: 'icon-chevron-right',
+      iconAlign: 'right',
+      handler: function() {
+        window.location.href = '/products';
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Inventory',
+      handler: function() {
+        window.location.href = '/products/inventory';
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisBreadcrumbs } from '@cin7/extjs-adapters';
+
+const breadcrumbs = Ext.create('PolarisBreadcrumbs', {
+  breadcrumbs: [
+    { content: 'Products', url: '/products' },
+    { content: 'Inventory', url: '/products/inventory' }
+  ],
+  onAction: function(url) {
+    window.location.href = url;
+  }
+});`,
+
+    typescript: `import { Breadcrumbs, BreadcrumbsProps } from '@shopify/polaris';
+import React from 'react';
+import { useRouter } from 'next/router';
+
+interface BreadcrumbItem {
+  content: string;
+  url: string;
+  onAction?: () => void;
+}
+
+interface BreadcrumbsExampleProps {
+  items: BreadcrumbItem[];
+  onNavigate?: (url: string) => void;
+}
+
+function BreadcrumbsExample({
+  items,
+  onNavigate
+}: BreadcrumbsExampleProps): JSX.Element {
+  const router = useRouter();
+
+  const handleBreadcrumbClick = (url: string, customAction?: () => void) => {
+    if (customAction) {
+      customAction();
+    } else if (onNavigate) {
+      onNavigate(url);
+    } else {
+      router.push(url);
+    }
+  };
+
+  const breadcrumbs = items.map(item => ({
+    content: item.content,
+    url: item.url,
+    onAction: item.onAction || (() => handleBreadcrumbClick(item.url, item.onAction))
+  }));
+
+  return <Breadcrumbs breadcrumbs={breadcrumbs} />;
+}
+
+export default BreadcrumbsExample;`
+  }
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -19619,6 +20143,9 @@ export function getCodeVariants(
     dropzone: dropzoneExamples,
     keyboardkey: keyboardkeyExamples,
     text: textExamples,
+    actionmenu: actionMenuExamples,
+    image: imageExamples,
+    breadcrumbs: breadcrumbsExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

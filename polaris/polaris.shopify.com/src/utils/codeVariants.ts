@@ -32852,11 +32852,341 @@ function AccountConnectionDefault({
   }
 };
 
+// ActionMenu Examples
+export const actionMenuExamples = {
+  default: {
+    react: `import {ActionMenu, Button} from '@shopify/polaris';
+import {EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon} from '@shopify/polaris-icons';
+
+function ActionMenuDefault() {
+  return (
+    <ActionMenu
+      actions={[
+        {
+          content: 'Edit',
+          icon: EditIcon,
+          onAction: () => console.log('Edit clicked'),
+        },
+        {
+          content: 'Duplicate',
+          icon: DuplicateIcon,
+          onAction: () => console.log('Duplicate clicked'),
+        },
+        {
+          content: 'Archive',
+          icon: ArchiveIcon,
+          onAction: () => console.log('Archive clicked'),
+        },
+        {
+          content: 'Delete',
+          icon: DeleteIcon,
+          destructive: true,
+          onAction: () => console.log('Delete clicked'),
+        },
+      ]}
+      activatorContent="Actions"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Actions',
+  menu: {
+    items: [{
+      text: 'Edit',
+      iconCls: 'x-fa fa-edit',
+      handler: function() {
+        console.log('Edit clicked');
+      }
+    }, {
+      text: 'Duplicate',
+      iconCls: 'x-fa fa-copy',
+      handler: function() {
+        console.log('Duplicate clicked');
+      }
+    }, {
+      text: 'Archive',
+      iconCls: 'x-fa fa-archive',
+      handler: function() {
+        console.log('Archive clicked');
+      }
+    }, '-', {
+      text: 'Delete',
+      iconCls: 'x-fa fa-trash',
+      cls: 'menu-item-destructive',
+      handler: function() {
+        Ext.Msg.confirm('Delete', 'Are you sure you want to delete this item?', function(btn) {
+          if (btn === 'yes') {
+            console.log('Delete confirmed');
+          }
+        });
+      }
+    }]
+  },
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-action-menu">
+  <button class="polaris-button polaris-button--disclosure" id="action-menu-button">
+    Actions
+    <span class="polaris-icon">▼</span>
+  </button>
+  <div class="polaris-action-list" id="action-menu" style="display: none;">
+    <button class="polaris-action-list__item" data-action="edit">
+      <span class="polaris-icon">✏️</span>
+      <span>Edit</span>
+    </button>
+    <button class="polaris-action-list__item" data-action="duplicate">
+      <span class="polaris-icon">📋</span>
+      <span>Duplicate</span>
+    </button>
+    <button class="polaris-action-list__item" data-action="archive">
+      <span class="polaris-icon">📦</span>
+      <span>Archive</span>
+    </button>
+    <div class="polaris-action-list__divider"></div>
+    <button class="polaris-action-list__item polaris-action-list__item--destructive" data-action="delete">
+      <span class="polaris-icon">🗑️</span>
+      <span>Delete</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior
+const button = document.getElementById('action-menu-button');
+const menu = document.getElementById('action-menu');
+let isOpen = false;
+
+button.addEventListener('click', () => {
+  isOpen = !isOpen;
+  menu.style.display = isOpen ? 'block' : 'none';
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.polaris-action-menu')) {
+    isOpen = false;
+    menu.style.display = 'none';
+  }
+});
+
+// Handle action clicks
+menu.querySelectorAll('.polaris-action-list__item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const action = e.currentTarget.getAttribute('data-action');
+    console.log(\`\${action} clicked\`);
+    isOpen = false;
+    menu.style.display = 'none';
+  });
+});
+</script>`,
+    typescript: `import {ActionMenu} from '@shopify/polaris';
+import {EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface ActionItem {
+  content: string;
+  icon: React.ComponentType;
+  destructive?: boolean;
+  onAction: () => void;
+}
+
+interface ActionMenuDefaultProps {
+  actions?: ActionItem[];
+  activatorContent?: string;
+  onOpen?: () => void;
+  onClose?: () => void;
+}
+
+function ActionMenuDefault({
+  actions = [
+    {
+      content: 'Edit',
+      icon: EditIcon,
+      onAction: () => console.log('Edit clicked'),
+    },
+    {
+      content: 'Duplicate',
+      icon: DuplicateIcon,
+      onAction: () => console.log('Duplicate clicked'),
+    },
+    {
+      content: 'Archive',
+      icon: ArchiveIcon,
+      onAction: () => console.log('Archive clicked'),
+    },
+    {
+      content: 'Delete',
+      icon: DeleteIcon,
+      destructive: true,
+      onAction: () => console.log('Delete clicked'),
+    },
+  ],
+  activatorContent = "Actions",
+  onOpen,
+  onClose
+}: ActionMenuDefaultProps): JSX.Element {
+  return (
+    <ActionMenu
+      actions={actions}
+      activatorContent={activatorContent}
+      onOpen={onOpen}
+      onClose={onClose}
+    />
+  );
+}`
+  }
+};
+
+// Image Examples
+export const imageExamples = {
+  default: {
+    react: `import {Image} from '@shopify/polaris';
+
+function ImageDefault() {
+  return (
+    <Image
+      source="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+      alt="Black leather choker necklace"
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.Img', {
+  src: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
+  alt: 'Black leather choker necklace',
+  style: 'max-width: 100%; height: auto;',
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-image">
+  <img
+    src="https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg"
+    alt="Black leather choker necklace"
+    class="polaris-image__img"
+  />
+</div>`,
+    typescript: `import {Image} from '@shopify/polaris';
+import React from 'react';
+
+interface ImageDefaultProps {
+  source: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  onLoad?: () => void;
+  onError?: () => void;
+}
+
+function ImageDefault({
+  source,
+  alt,
+  width,
+  height,
+  onLoad,
+  onError
+}: ImageDefaultProps): JSX.Element {
+  return (
+    <Image
+      source={source}
+      alt={alt}
+      width={width}
+      height={height}
+      onLoad={onLoad}
+      onError={onError}
+    />
+  );
+}`
+  }
+};
+
+// Breadcrumbs Examples
+export const breadcrumbsExamples = {
+  default: {
+    react: `import {Breadcrumbs} from '@shopify/polaris';
+
+function BreadcrumbsDefault() {
+  return (
+    <Breadcrumbs
+      breadcrumbs={[
+        {content: 'Products', url: '/products'},
+        {content: 'Inventory', url: '/products/inventory'},
+      ]}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.toolbar.Toolbar', {
+  items: [{
+    xtype: 'button',
+    text: 'Products',
+    iconCls: 'x-fa fa-arrow-left',
+    handler: function() {
+      window.location.href = '/products';
+    }
+  }, {
+    xtype: 'tbtext',
+    text: '›'
+  }, {
+    xtype: 'button',
+    text: 'Inventory',
+    ui: 'link',
+    handler: function() {
+      window.location.href = '/products/inventory';
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- HTML Structure -->
+<nav class="polaris-breadcrumbs">
+  <ol class="polaris-breadcrumbs__list">
+    <li class="polaris-breadcrumbs__item">
+      <a href="/products" class="polaris-breadcrumbs__link">Products</a>
+    </li>
+    <li class="polaris-breadcrumbs__item">
+      <a href="/products/inventory" class="polaris-breadcrumbs__link">Inventory</a>
+    </li>
+  </ol>
+</nav>
+
+<script>
+// JavaScript behavior
+document.querySelectorAll('.polaris-breadcrumbs__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Navigating to:', link.getAttribute('href'));
+    // Handle navigation
+  });
+});
+</script>`,
+    typescript: `import {Breadcrumbs} from '@shopify/polaris';
+import React from 'react';
+
+interface Breadcrumb {
+  content: string;
+  url: string;
+  onAction?: () => void;
+}
+
+interface BreadcrumbsDefaultProps {
+  breadcrumbs: Breadcrumb[];
+}
+
+function BreadcrumbsDefault({
+  breadcrumbs
+}: BreadcrumbsDefaultProps): JSX.Element {
+  return (
+    <Breadcrumbs breadcrumbs={breadcrumbs} />
+  );
+}`
+  }
+};
+
 const componentExamples: Record<string, any> = {
   'account-connection': accountConnectionExamples,
   'action-list': actionListExamples,
+  'action-menu': actionMenuExamples,
   'app-provider': appProviderExamples,
   'autocomplete': autocompleteExamples,
+  'breadcrumbs': breadcrumbsExamples,
   'choice-list': choiceListExamples,
   'collapsible': collapsibleExamples,
   'color-picker': colorPickerExamples,
@@ -32925,6 +33255,7 @@ const componentExamples: Record<string, any> = {
   'tabs': tabsExamples,
   'list': listExamples,
   'icon': iconExamples,
+  'image': imageExamples,
   'avatar': avatarExamples,
   'bleed': bleedExamples,
   'box': boxExamples,
@@ -32977,6 +33308,7 @@ export function parseExampleFileName(fileName: string): { component: string, exa
     'inline-grid',
     'inline-stack',
     'media-card',
+    'action-menu',
     'action-list',
     'description-list',
     'option-list',
@@ -33005,11 +33337,13 @@ export function parseExampleFileName(fileName: string): { component: string, exa
     'visually-hidden',
     'top-bar',
     // Single word components
+    'breadcrumbs',
     'button',
     'badge',
     'banner',
     'avatar',
     'icon',
+    'image',
     'thumbnail',
     'bleed',
     'box',

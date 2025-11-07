@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ActionMenu, Button, Popover, Text } from '@shopify/polaris';
 import { MenuHorizontalIcon, EditIcon, DeleteIcon, DuplicateIcon, ArchiveIcon, ViewIcon } from '@shopify/polaris-icons';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Actions/ActionMenu',
@@ -13,6 +14,7 @@ const meta = {
         component: 'ActionMenu displays a dropdown menu of actions that can be performed on an item. It\'s commonly used in tables, cards, and lists to provide contextual actions without cluttering the interface.',
       },
     },
+    codeVariants: getCodeVariants('actionmenu', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

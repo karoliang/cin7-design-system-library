@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Image, Card, Text, InlineStack, BlockStack, Button } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Utilities/Image',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Images are used to display visual content. They support responsive sizing, alt text for accessibility, and various aspect ratios for different use cases.',
       },
     },
+    codeVariants: getCodeVariants('image', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {

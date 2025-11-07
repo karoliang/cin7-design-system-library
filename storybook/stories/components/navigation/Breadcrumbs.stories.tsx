@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Breadcrumbs } from '@shopify/polaris';
 import React from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Navigation/Breadcrumbs',
@@ -12,6 +13,7 @@ const meta = {
         component: 'Breadcrumbs provide secondary navigation to help users understand their location within a website hierarchy. They show the path from the homepage to the current page and allow users to navigate back to previous levels.',
       },
     },
+    codeVariants: getCodeVariants('breadcrumbs', 'default'),
   },
   tags: ['autodocs'],
   argTypes: {
