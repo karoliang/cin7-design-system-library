@@ -112,7 +112,7 @@ export const SegmentedControl: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'segmented'),
   },
 
 };
@@ -211,7 +211,7 @@ export const FullWidthGroup: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'fullwidth'),
   },
 
 };
@@ -264,7 +264,7 @@ export const ToggleGroup: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'segmented'),
   },
 
 };
@@ -304,7 +304,7 @@ export const NavigationGroup: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'segmented'),
   },
 
 };
@@ -552,7 +552,7 @@ export const ResponsiveGroup: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'fullwidth'),
   },
 
 };

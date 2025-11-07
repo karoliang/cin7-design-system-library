@@ -22300,6 +22300,235 @@ function ButtonGroupExample({ buttons }: ButtonGroupExampleProps): JSX.Element {
 }
 
 export default ButtonGroupExample;`
+  },
+
+  segmented: {
+    react: `import { ButtonGroup, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function SegmentedButtonGroupExample() {
+  const [selected, setSelected] = useState('day');
+
+  return (
+    <ButtonGroup segmented>
+      <Button
+        variant={selected === 'day' ? 'primary' : 'plain'}
+        onClick={() => setSelected('day')}
+        pressed={selected === 'day'}
+      >
+        Day
+      </Button>
+      <Button
+        variant={selected === 'week' ? 'primary' : 'plain'}
+        onClick={() => setSelected('week')}
+        pressed={selected === 'week'}
+      >
+        Week
+      </Button>
+      <Button
+        variant={selected === 'month' ? 'primary' : 'plain'}
+        onClick={() => setSelected('month')}
+        pressed={selected === 'month'}
+      >
+        Month
+      </Button>
+    </ButtonGroup>
+  );
+}
+
+export default SegmentedButtonGroupExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="button-group-segmented">
+  <button class="segmented-button active" data-value="day">Day</button>
+  <button class="segmented-button" data-value="week">Week</button>
+  <button class="segmented-button" data-value="month">Month</button>
+</div>
+
+<style>
+.button-group-segmented {
+  display: inline-flex;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.segmented-button {
+  padding: 8px 16px;
+  border: none;
+  border-right: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+}
+.segmented-button:last-child { border-right: none; }
+.segmented-button.active { background: #0066cc; color: white; }
+</style>
+
+<script>
+import { $$, on } from '@cin7/vanilla-js';
+
+const buttons = $$('.segmented-button');
+buttons.forEach(btn => {
+  on(btn, 'click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Segmented Button
+Ext.create('Ext.container.Container', {
+  layout: 'hbox',
+  defaults: {
+    xtype: 'button',
+    enableToggle: true,
+    toggleGroup: 'period',
+    allowDepress: false
+  },
+  items: [{
+    text: 'Day',
+    pressed: true
+  }, {
+    text: 'Week'
+  }, {
+    text: 'Month'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+type Period = 'day' | 'week' | 'month';
+
+interface SegmentedProps {
+  onChange?: (value: Period) => void;
+}
+
+function SegmentedButtonGroupExample({ onChange }: SegmentedProps): JSX.Element {
+  const [selected, setSelected] = useState<Period>('day');
+
+  const handleSelect = (value: Period) => {
+    setSelected(value);
+    onChange?.(value);
+  };
+
+  return (
+    <ButtonGroup segmented>
+      {(['day', 'week', 'month'] as Period[]).map(period => (
+        <Button
+          key={period}
+          variant={selected === period ? 'primary' : 'plain'}
+          onClick={() => handleSelect(period)}
+          pressed={selected === period}
+        >
+          {period.charAt(0).toUpperCase() + period.slice(1)}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}
+
+export default SegmentedButtonGroupExample;`
+  },
+
+  fullwidth: {
+    react: `import { ButtonGroup, Button } from '@shopify/polaris';
+import React from 'react';
+
+function FullWidthButtonGroupExample() {
+  return (
+    <ButtonGroup fullWidth>
+      <Button variant="primary">Continue to Checkout</Button>
+      <Button variant="secondary">Save for Later</Button>
+    </ButtonGroup>
+  );
+}
+
+export default FullWidthButtonGroupExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="button-group-fullwidth">
+  <button class="button-primary">Continue to Checkout</button>
+  <button class="button-secondary">Save for Later</button>
+</div>
+
+<style>
+.button-group-fullwidth {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.button-group-fullwidth button {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.button-primary {
+  background: #0066cc;
+  color: white;
+}
+.button-secondary {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+</style>`,
+
+    extjs: `// ExtJS Full Width Buttons
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    pack: 'stretch'
+  },
+  width: '100%',
+  defaults: {
+    flex: 1,
+    margin: '0 4 0 0'
+  },
+  items: [{
+    xtype: 'button',
+    text: 'Continue to Checkout',
+    ui: 'action'
+  }, {
+    xtype: 'button',
+    text: 'Save for Later',
+    margin: 0
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, ButtonProps } from '@shopify/polaris';
+import React from 'react';
+
+interface FullWidthAction {
+  label: string;
+  variant: ButtonProps['variant'];
+  onClick: () => void;
+}
+
+interface FullWidthProps {
+  actions: FullWidthAction[];
+}
+
+function FullWidthButtonGroupExample({ actions }: FullWidthProps): JSX.Element {
+  return (
+    <ButtonGroup fullWidth>
+      {actions.map((action, index) => (
+        <Button
+          key={index}
+          variant={action.variant}
+          onClick={action.onClick}
+        >
+          {action.label}
+        </Button>
+      ))}
+    </ButtonGroup>
+  );
+}
+
+export default FullWidthButtonGroupExample;`
   }
 };
 
