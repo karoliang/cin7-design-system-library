@@ -15,6 +15,7 @@ import {
   TopBar,
 } from '@shopify/polaris';
 import { useState, useCallback } from 'react';
+import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
   title: 'Components/Providers/AppProvider',
@@ -271,7 +272,7 @@ export const WithCustomI18n: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'with-custom-i18n'),
   },
 
 };
@@ -345,7 +346,7 @@ export const WithCustomTheme: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'with-custom-theme'),
   },
 
 };
@@ -408,7 +409,7 @@ export const WithCustomLinkComponent: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'with-custom-link'),
   },
 
 };
@@ -468,7 +469,7 @@ export const NestedProviders: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'nested-providers'),
   },
 
 };
@@ -584,7 +585,7 @@ export const CompleteApplication: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'complete-app'),
   },
 
 };
@@ -625,7 +626,7 @@ export const ErrorBoundary: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('appprovider', 'default'),
+    codeVariants: getCodeVariants('appprovider', 'error-boundary'),
   },
 
 };

@@ -15015,6 +15015,2886 @@ function AppProviderExample({
 }
 
 export default AppProviderExample;`
+  },
+
+  'with-custom-i18n': {
+    react: `import { AppProvider, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+const customI18n = {
+  Polaris: {
+    Common: {
+      checkbox: '同意',
+      undo: '撤销',
+      cancel: '取消',
+      save: '保存',
+      delete: '删除',
+      add: '添加',
+      remove: '移除',
+      edit: '编辑',
+      close: '关闭',
+      search: '搜索',
+      loading: '加载中...',
+      more: '更多',
+      less: '更少',
+    },
+    Button: {
+      disabled: '按钮已禁用',
+      undo: '撤销操作',
+      save: '保存更改',
+    },
+    Modal: {
+      close: '关闭对话框',
+    },
+    Toast: {
+      success: '成功',
+      error: '错误',
+      warning: '警告',
+      info: '信息',
+    },
+  },
+};
+
+function CustomI18nExample() {
+  const [active, setActive] = useState(false);
+  const [toastActive, setToastActive] = useState(false);
+
+  const toggleModal = useCallback(() => setActive((active) => !active), []);
+  const toggleToast = useCallback(() => setToastActive((active) => !active), []);
+
+  const modalActivator = <Button onClick={toggleModal}>打开对话框</Button>;
+
+  return (
+    <AppProvider i18n={customI18n}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">自定义中文界面</Text>
+              <Text>
+                这是使用自定义中文翻译的 AppProvider。所有按钮和文本都显示为中文。
+              </Text>
+              <InlineStack gap="12px">
+                {modalActivator}
+                <Button onClick={toggleToast}>显示提示</Button>
+              </InlineStack>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <Modal
+          activator={modalActivator}
+          open={active}
+          onClose={toggleModal}
+          title="中文主题模态框"
+          primaryAction={{
+            content: '保存',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: '取消',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              这个模态框使用自定义的中文翻译。所有的按钮和文本都显示为中文。
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {toastActive && (
+          <Toast
+            content="这是一个中文提示通知"
+            onDismiss={toggleToast}
+          />
+        )}
+      </div>
+    </AppProvider>
+  );
+}
+
+export default CustomI18nExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="app" data-locale="zh">
+  <div class="card" style="padding: 24px; max-width: 600px;">
+    <h2>自定义中文界面</h2>
+    <p>这是使用自定义中文翻译的应用程序。所有按钮和文本都显示为中文。</p>
+    <div style="display: flex; gap: 12px; margin-top: 16px;">
+      <button class="polaris-button" id="modalBtn">打开对话框</button>
+      <button class="polaris-button" id="toastBtn">显示提示</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="polaris-modal" style="display: none;">
+    <div class="polaris-modal__overlay"></div>
+    <div class="polaris-modal__dialog">
+      <div class="polaris-modal__header">
+        <h2>中文主题模态框</h2>
+        <button class="polaris-modal__close" id="modalClose">关闭</button>
+      </div>
+      <div class="polaris-modal__body">
+        <p>这个模态框使用自定义的中文翻译。所有的按钮和文本都显示为中文。</p>
+      </div>
+      <div class="polaris-modal__footer">
+        <button class="polaris-button polaris-button--primary" id="modalSave">保存</button>
+        <button class="polaris-button" id="modalCancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="polaris-toast" style="display: none;">
+    <span>这是一个中文提示通知</span>
+    <button id="toastClose">×</button>
+  </div>
+</div>
+
+<script>
+// Custom i18n translations
+const customI18n = {
+  buttons: {
+    open: '打开对话框',
+    show: '显示提示',
+    save: '保存',
+    cancel: '取消',
+    close: '关闭'
+  },
+  messages: {
+    toast: '这是一个中文提示通知',
+    modalTitle: '中文主题模态框',
+    modalContent: '这个模态框使用自定义的中文翻译。'
+  }
+};
+
+// Apply translations
+document.getElementById('modalBtn').addEventListener('click', () => {
+  document.getElementById('modal').style.display = 'block';
+});
+
+document.getElementById('toastBtn').addEventListener('click', () => {
+  const toast = document.getElementById('toast');
+  toast.style.display = 'flex';
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 3000);
+});
+
+document.querySelectorAll('#modalClose, #modalSave, #modalCancel').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+  });
+});
+
+document.getElementById('toastClose').addEventListener('click', () => {
+  document.getElementById('toast').style.display = 'none';
+});
+</script>
+
+<style>
+.polaris-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+.polaris-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.polaris-modal__dialog {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 24px;
+}
+.polaris-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #202123;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+</style>`,
+
+    extjs: `// ExtJS Application with custom Chinese i18n
+Ext.application({
+  name: 'Cin7App',
+
+  // Custom Chinese translations
+  i18nConfig: {
+    buttons: {
+      open: '打开对话框',
+      show: '显示提示',
+      save: '保存',
+      cancel: '取消',
+      close: '关闭'
+    },
+    messages: {
+      toast: '这是一个中文提示通知',
+      modalTitle: '中文主题模态框',
+      modalContent: '这个模态框使用自定义的中文翻译。'
+    }
+  },
+
+  launch: function() {
+    const i18n = this.i18nConfig;
+
+    // Create main panel with Chinese text
+    Ext.create('Ext.panel.Panel', {
+      renderTo: Ext.getBody(),
+      title: '自定义中文界面',
+      width: 600,
+      bodyPadding: 24,
+      items: [{
+        xtype: 'container',
+        html: '<p>这是使用自定义中文翻译的应用程序。所有按钮和文本都显示为中文。</p>'
+      }, {
+        xtype: 'container',
+        layout: 'hbox',
+        margin: '16 0 0 0',
+        defaults: {
+          margin: '0 12 0 0'
+        },
+        items: [{
+          xtype: 'button',
+          text: i18n.buttons.open,
+          handler: function() {
+            Ext.create('Ext.window.Window', {
+              title: i18n.messages.modalTitle,
+              width: 500,
+              modal: true,
+              bodyPadding: 16,
+              html: '<p>' + i18n.messages.modalContent + '</p>',
+              buttons: [{
+                text: i18n.buttons.save,
+                handler: function() {
+                  this.up('window').close();
+                }
+              }, {
+                text: i18n.buttons.cancel,
+                handler: function() {
+                  this.up('window').close();
+                }
+              }]
+            }).show();
+          }
+        }, {
+          xtype: 'button',
+          text: i18n.buttons.show,
+          handler: function() {
+            Ext.toast({
+              html: i18n.messages.toast,
+              closable: true,
+              align: 'b',
+              slideInDuration: 400
+            });
+          }
+        }]
+      }]
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+/**
+ * Custom i18n translation configuration
+ */
+interface I18nTranslation {
+  [key: string]: string | I18nTranslation;
+}
+
+interface CustomI18nConfig {
+  Polaris: {
+    Common: {
+      [key: string]: string;
+    };
+    Button: {
+      [key: string]: string;
+    };
+    Modal: {
+      [key: string]: string;
+    };
+    Toast: {
+      [key: string]: string;
+    };
+  };
+}
+
+/**
+ * Chinese translation configuration for Polaris components
+ */
+const customI18n: CustomI18nConfig = {
+  Polaris: {
+    Common: {
+      checkbox: '同意',
+      undo: '撤销',
+      cancel: '取消',
+      save: '保存',
+      delete: '删除',
+      add: '添加',
+      remove: '移除',
+      edit: '编辑',
+      close: '关闭',
+      search: '搜索',
+      loading: '加载中...',
+      more: '更多',
+      less: '更少',
+    },
+    Button: {
+      disabled: '按钮已禁用',
+      undo: '撤销操作',
+      save: '保存更改',
+    },
+    Modal: {
+      close: '关闭对话框',
+    },
+    Toast: {
+      success: '成功',
+      error: '错误',
+      warning: '警告',
+      info: '信息',
+    },
+  },
+};
+
+interface CustomI18nExampleProps {
+  locale?: string;
+}
+
+/**
+ * Example demonstrating AppProvider with custom Chinese i18n translations
+ */
+function CustomI18nExample({ locale = 'zh' }: CustomI18nExampleProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [toastActive, setToastActive] = useState<boolean>(false);
+
+  const toggleModal = useCallback(() => setActive((active) => !active), []);
+  const toggleToast = useCallback(() => setToastActive((active) => !active), []);
+
+  const modalActivator = <Button onClick={toggleModal}>打开对话框</Button>;
+
+  return (
+    <AppProvider i18n={customI18n}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">自定义中文界面</Text>
+              <Text>
+                这是使用自定义中文翻译的 AppProvider。所有按钮和文本都显示为中文。
+                当前语言: {locale}
+              </Text>
+              <InlineStack gap="12px">
+                {modalActivator}
+                <Button onClick={toggleToast}>显示提示</Button>
+              </InlineStack>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <Modal
+          activator={modalActivator}
+          open={active}
+          onClose={toggleModal}
+          title="中文主题模态框"
+          primaryAction={{
+            content: '保存',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: '取消',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              这个模态框使用自定义的中文翻译。所有的按钮和文本都显示为中文。
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {toastActive && (
+          <Toast
+            content="这是一个中文提示通知"
+            onDismiss={toggleToast}
+          />
+        )}
+      </div>
+    </AppProvider>
+  );
+}
+
+export default CustomI18nExample;`
+  },
+
+  'with-custom-theme': {
+    react: `import { AppProvider, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+const darkTheme = {
+  colors: {
+    surface: '#1a1a1a',
+    onSurface: '#ffffff',
+    interactive: '#ffffff',
+    decorative: '#4a4a4a',
+    subText: '#a0a0a0',
+    border: '#333333',
+    background: '#000000',
+    backgroundHovered: '#2a2a2a',
+    backgroundPressed: '#3a3a3a',
+    backgroundSelected: '#4a4a4a',
+    borderHovered: '#555555',
+    borderDisabled: '#2a2a2a',
+    shadow: 'rgba(0, 0, 0, 0.3)',
+    icon: '#ffffff',
+    iconDisabled: '#666666',
+    iconOnSurface: '#ffffff',
+    text: '#ffffff',
+    textDisabled: '#666666',
+    textOnSurface: '#ffffff',
+    critical: '#ff6b6b',
+    warning: '#ffa726',
+    highlight: '#42a5f5',
+    success: '#66bb6a',
+    primary: '#42a5f5',
+    secondary: '#7e57c2',
+  },
+};
+
+function DarkThemeExample() {
+  const [active, setActive] = useState(false);
+  const [toastActive, setToastActive] = useState(false);
+
+  const toggleModal = useCallback(() => setActive((active) => !active), []);
+  const toggleToast = useCallback(() => setToastActive((active) => !active), []);
+
+  const modalActivator = <Button onClick={toggleModal}>Dark Theme Modal</Button>;
+
+  return (
+    <AppProvider theme={darkTheme}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Dark Theme Interface</Text>
+              <Text>
+                This interface uses a custom dark theme with inverted colors and dark backgrounds.
+              </Text>
+              <InlineStack gap="12px">
+                {modalActivator}
+                <Button onClick={toggleToast}>Show Toast</Button>
+              </InlineStack>
+              <div style={{ padding: '12px', backgroundColor: '#2a2a2a', borderRadius: '4px' }}>
+                <Text variant="bodySm">
+                  Dark theme colors are applied throughout the interface.
+                </Text>
+              </div>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <Modal
+          activator={modalActivator}
+          open={active}
+          onClose={toggleModal}
+          title="Dark Theme Modal"
+          primaryAction={{
+            content: 'Save',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: 'Cancel',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              This modal uses the dark theme configuration with custom colors
+              for backgrounds, text, and interactive elements.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {toastActive && (
+          <Toast
+            content="Dark theme toast notification"
+            onDismiss={toggleToast}
+          />
+        )}
+      </div>
+    </AppProvider>
+  );
+}
+
+export default DarkThemeExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="app" data-theme="dark">
+  <div class="card dark-theme" style="padding: 24px; max-width: 600px;">
+    <h2 style="color: #ffffff;">Dark Theme Interface</h2>
+    <p style="color: #a0a0a0;">
+      This interface uses a custom dark theme with inverted colors and dark backgrounds.
+    </p>
+    <div style="display: flex; gap: 12px; margin-top: 16px;">
+      <button class="polaris-button dark" id="modalBtn">Dark Theme Modal</button>
+      <button class="polaris-button dark" id="toastBtn">Show Toast</button>
+    </div>
+    <div style="padding: 12px; background-color: #2a2a2a; border-radius: 4px; margin-top: 16px;">
+      <p style="color: #ffffff; font-size: 14px; margin: 0;">
+        Dark theme colors are applied throughout the interface.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="polaris-modal dark-theme" style="display: none;">
+    <div class="polaris-modal__overlay"></div>
+    <div class="polaris-modal__dialog dark">
+      <div class="polaris-modal__header">
+        <h2 style="color: #ffffff;">Dark Theme Modal</h2>
+        <button class="polaris-modal__close" id="modalClose">×</button>
+      </div>
+      <div class="polaris-modal__body">
+        <p style="color: #a0a0a0;">
+          This modal uses the dark theme configuration with custom colors
+          for backgrounds, text, and interactive elements.
+        </p>
+      </div>
+      <div class="polaris-modal__footer">
+        <button class="polaris-button polaris-button--primary dark" id="modalSave">Save</button>
+        <button class="polaris-button dark" id="modalCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="polaris-toast dark" style="display: none;">
+    <span>Dark theme toast notification</span>
+    <button id="toastClose">×</button>
+  </div>
+</div>
+
+<script>
+// Dark theme configuration
+const darkTheme = {
+  colors: {
+    surface: '#1a1a1a',
+    text: '#ffffff',
+    textSubdued: '#a0a0a0',
+    border: '#333333',
+    background: '#000000',
+    backgroundHovered: '#2a2a2a',
+    primary: '#42a5f5',
+  }
+};
+
+// Apply theme to document
+document.body.style.backgroundColor = darkTheme.colors.background;
+
+// Event listeners
+document.getElementById('modalBtn').addEventListener('click', () => {
+  document.getElementById('modal').style.display = 'block';
+});
+
+document.getElementById('toastBtn').addEventListener('click', () => {
+  const toast = document.getElementById('toast');
+  toast.style.display = 'flex';
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 3000);
+});
+
+document.querySelectorAll('#modalClose, #modalSave, #modalCancel').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+  });
+});
+
+document.getElementById('toastClose').addEventListener('click', () => {
+  document.getElementById('toast').style.display = 'none';
+});
+</script>
+
+<style>
+.dark-theme {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+.polaris-button.dark {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #333333;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.polaris-button.dark:hover {
+  background-color: #3a3a3a;
+}
+.polaris-button--primary.dark {
+  background-color: #42a5f5;
+  border-color: #42a5f5;
+}
+.polaris-modal__dialog.dark {
+  background: #1a1a1a;
+  border: 1px solid #333333;
+}
+.polaris-toast.dark {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+</style>`,
+
+    extjs: `// ExtJS Application with dark theme configuration
+Ext.application({
+  name: 'Cin7App',
+
+  // Dark theme configuration
+  themeConfig: {
+    name: 'dark',
+    colors: {
+      surface: '#1a1a1a',
+      text: '#ffffff',
+      textSubdued: '#a0a0a0',
+      border: '#333333',
+      background: '#000000',
+      backgroundHovered: '#2a2a2a',
+      primary: '#42a5f5',
+    }
+  },
+
+  launch: function() {
+    const theme = this.themeConfig;
+
+    // Apply dark theme CSS
+    Ext.util.CSS.createStyleSheet(
+      '.x-panel { background-color: ' + theme.colors.surface + '; color: ' + theme.colors.text + '; }' +
+      '.x-panel-header { background-color: ' + theme.colors.background + '; color: ' + theme.colors.text + '; border-color: ' + theme.colors.border + '; }' +
+      '.x-btn { background-color: ' + theme.colors.backgroundHovered + '; color: ' + theme.colors.text + '; }' +
+      '.x-btn-primary { background-color: ' + theme.colors.primary + '; }'
+    );
+
+    // Create main panel
+    Ext.create('Ext.panel.Panel', {
+      renderTo: Ext.getBody(),
+      title: 'Dark Theme Interface',
+      width: 600,
+      bodyPadding: 24,
+      bodyCls: 'dark-theme',
+      items: [{
+        xtype: 'container',
+        html: '<p style="color: ' + theme.colors.textSubdued + ';">This interface uses a custom dark theme with inverted colors and dark backgrounds.</p>'
+      }, {
+        xtype: 'container',
+        layout: 'hbox',
+        margin: '16 0 0 0',
+        defaults: {
+          margin: '0 12 0 0'
+        },
+        items: [{
+          xtype: 'button',
+          text: 'Dark Theme Modal',
+          handler: function() {
+            Ext.create('Ext.window.Window', {
+              title: 'Dark Theme Modal',
+              width: 500,
+              modal: true,
+              bodyPadding: 16,
+              bodyCls: 'dark-theme',
+              html: '<p style="color: ' + theme.colors.textSubdued + ';">This modal uses the dark theme configuration with custom colors for backgrounds, text, and interactive elements.</p>',
+              buttons: [{
+                text: 'Save',
+                ui: 'primary',
+                handler: function() {
+                  this.up('window').close();
+                }
+              }, {
+                text: 'Cancel',
+                handler: function() {
+                  this.up('window').close();
+                }
+              }]
+            }).show();
+          }
+        }, {
+          xtype: 'button',
+          text: 'Show Toast',
+          handler: function() {
+            Ext.toast({
+              html: 'Dark theme toast notification',
+              closable: true,
+              align: 'b',
+              slideInDuration: 400
+            });
+          }
+        }]
+      }, {
+        xtype: 'container',
+        margin: '16 0 0 0',
+        padding: 12,
+        style: {
+          backgroundColor: theme.colors.backgroundHovered,
+          borderRadius: '4px'
+        },
+        html: '<p style="color: ' + theme.colors.text + '; font-size: 14px; margin: 0;">Dark theme colors are applied throughout the interface.</p>'
+      }]
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+/**
+ * Dark theme color configuration
+ */
+interface ThemeColors {
+  surface: string;
+  onSurface: string;
+  interactive: string;
+  decorative: string;
+  subText: string;
+  border: string;
+  background: string;
+  backgroundHovered: string;
+  backgroundPressed: string;
+  backgroundSelected: string;
+  borderHovered: string;
+  borderDisabled: string;
+  shadow: string;
+  icon: string;
+  iconDisabled: string;
+  iconOnSurface: string;
+  text: string;
+  textDisabled: string;
+  textOnSurface: string;
+  critical: string;
+  warning: string;
+  highlight: string;
+  success: string;
+  primary: string;
+  secondary: string;
+}
+
+interface Theme {
+  colors: ThemeColors;
+  logo?: {
+    light: string;
+    dark: string;
+  };
+}
+
+/**
+ * Custom dark theme configuration
+ */
+const darkTheme: Theme = {
+  colors: {
+    surface: '#1a1a1a',
+    onSurface: '#ffffff',
+    interactive: '#ffffff',
+    decorative: '#4a4a4a',
+    subText: '#a0a0a0',
+    border: '#333333',
+    background: '#000000',
+    backgroundHovered: '#2a2a2a',
+    backgroundPressed: '#3a3a3a',
+    backgroundSelected: '#4a4a4a',
+    borderHovered: '#555555',
+    borderDisabled: '#2a2a2a',
+    shadow: 'rgba(0, 0, 0, 0.3)',
+    icon: '#ffffff',
+    iconDisabled: '#666666',
+    iconOnSurface: '#ffffff',
+    text: '#ffffff',
+    textDisabled: '#666666',
+    textOnSurface: '#ffffff',
+    critical: '#ff6b6b',
+    warning: '#ffa726',
+    highlight: '#42a5f5',
+    success: '#66bb6a',
+    primary: '#42a5f5',
+    secondary: '#7e57c2',
+  },
+};
+
+interface DarkThemeExampleProps {
+  theme?: Theme;
+}
+
+/**
+ * Example demonstrating AppProvider with custom dark theme
+ */
+function DarkThemeExample({ theme = darkTheme }: DarkThemeExampleProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [toastActive, setToastActive] = useState<boolean>(false);
+
+  const toggleModal = useCallback(() => setActive((active) => !active), []);
+  const toggleToast = useCallback(() => setToastActive((active) => !active), []);
+
+  const modalActivator = <Button onClick={toggleModal}>Dark Theme Modal</Button>;
+
+  return (
+    <AppProvider theme={theme}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Dark Theme Interface</Text>
+              <Text>
+                This interface uses a custom dark theme with inverted colors and dark backgrounds.
+                Primary color: {theme.colors.primary}
+              </Text>
+              <InlineStack gap="12px">
+                {modalActivator}
+                <Button onClick={toggleToast}>Show Toast</Button>
+              </InlineStack>
+              <div style={{
+                padding: '12px',
+                backgroundColor: theme.colors.backgroundHovered,
+                borderRadius: '4px'
+              }}>
+                <Text variant="bodySm">
+                  Dark theme colors are applied throughout the interface.
+                </Text>
+              </div>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <Modal
+          activator={modalActivator}
+          open={active}
+          onClose={toggleModal}
+          title="Dark Theme Modal"
+          primaryAction={{
+            content: 'Save',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: 'Cancel',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              This modal uses the dark theme configuration with custom colors
+              for backgrounds, text, and interactive elements.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {toastActive && (
+          <Toast
+            content="Dark theme toast notification"
+            onDismiss={toggleToast}
+          />
+        )}
+      </div>
+    </AppProvider>
+  );
+}
+
+export default DarkThemeExample;`
+  },
+
+  'with-custom-link': {
+    react: `import { AppProvider, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+// Custom link component for routing integration
+const CustomLink = ({ children, url, ...rest }: any) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log('Custom link clicked:', url);
+    alert(\`Custom link to: \${url}\`);
+    // In a real app, this would integrate with React Router, Next.js, etc.
+  };
+
+  return (
+    <a
+      href={url}
+      onClick={handleClick}
+      style={{
+        color: '#5c6ac4',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+      }}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+};
+
+function CustomLinkExample() {
+  return (
+    <AppProvider
+      i18n={{}}
+      linkComponent={CustomLink}
+    >
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Custom Link Component</Text>
+              <Text>
+                This AppProvider uses a custom link component for all internal links.
+                Click the links below to see the custom behavior.
+              </Text>
+              <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+                <BlockStack gap="8px">
+                  <Text>
+                    <CustomLink url="/custom-route">
+                      This is a custom link component
+                    </CustomLink>
+                  </Text>
+                  <Text>
+                    <CustomLink url="/products">
+                      Navigate to products
+                    </CustomLink>
+                  </Text>
+                  <Text>
+                    <CustomLink url="/settings">
+                      Go to settings
+                    </CustomLink>
+                  </Text>
+                </BlockStack>
+              </div>
+              <Text variant="bodySm" color="subdued">
+                The custom link component intercepts all link clicks and provides
+                custom routing behavior instead of default browser navigation.
+                This allows integration with React Router, Next.js, or other routing solutions.
+              </Text>
+            </BlockStack>
+          </div>
+        </Card>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default CustomLinkExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="app">
+  <div class="card" style="padding: 24px; max-width: 600px;">
+    <h2>Custom Link Component</h2>
+    <p>
+      This application uses a custom link component for all internal links.
+      Click the links below to see the custom behavior.
+    </p>
+    <div style="padding: 12px; background-color: #f8f9fa; border-radius: 4px; margin-top: 16px;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <a href="/custom-route" class="custom-link" data-custom-link>
+          This is a custom link component
+        </a>
+        <a href="/products" class="custom-link" data-custom-link>
+          Navigate to products
+        </a>
+        <a href="/settings" class="custom-link" data-custom-link>
+          Go to settings
+        </a>
+      </div>
+    </div>
+    <p style="color: #6d7175; font-size: 14px; margin-top: 16px;">
+      The custom link component intercepts all link clicks and provides
+      custom routing behavior instead of default browser navigation.
+    </p>
+  </div>
+</div>
+
+<script>
+// Custom link handler
+class CustomLinkComponent {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Intercept all custom link clicks
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('[data-custom-link]');
+      if (link) {
+        e.preventDefault();
+        const url = link.getAttribute('href');
+        this.navigate(url);
+      }
+    });
+  }
+
+  navigate(url) {
+    console.log('Custom link clicked:', url);
+    alert(\`Custom link to: \${url}\`);
+
+    // In a real application, you would:
+    // 1. Update browser history: history.pushState({}, '', url);
+    // 2. Load new content dynamically
+    // 3. Update page title
+    // 4. Trigger analytics
+  }
+}
+
+// Initialize custom link component
+const customLinks = new CustomLinkComponent();
+</script>
+
+<style>
+.custom-link {
+  color: #5c6ac4;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+.custom-link:hover {
+  color: #3f4eae;
+}
+</style>`,
+
+    extjs: `// ExtJS Application with custom link component
+Ext.define('Cin7.CustomLink', {
+  extend: 'Ext.Component',
+  xtype: 'customlink',
+
+  config: {
+    url: '',
+    text: ''
+  },
+
+  initComponent: function() {
+    this.callParent();
+    this.html = '<a href="' + this.url + '" class="custom-link">' + this.text + '</a>';
+  },
+
+  afterRender: function() {
+    this.callParent();
+
+    // Attach click handler
+    this.el.on('click', function(e, target) {
+      if (target.classList.contains('custom-link')) {
+        e.preventDefault();
+        const url = target.getAttribute('href');
+        this.handleNavigation(url);
+      }
+    }, this);
+  },
+
+  handleNavigation: function(url) {
+    console.log('Custom link clicked:', url);
+    Ext.Msg.alert('Custom Navigation', 'Navigating to: ' + url);
+
+    // In a real application, you would:
+    // 1. Update browser history
+    // 2. Load new content
+    // 3. Update application state
+  }
+});
+
+Ext.application({
+  name: 'Cin7App',
+
+  launch: function() {
+    Ext.create('Ext.panel.Panel', {
+      renderTo: Ext.getBody(),
+      title: 'Custom Link Component',
+      width: 600,
+      bodyPadding: 24,
+      items: [{
+        xtype: 'container',
+        html: '<p>This application uses a custom link component for all internal links. Click the links below to see the custom behavior.</p>'
+      }, {
+        xtype: 'container',
+        padding: 12,
+        margin: '16 0 0 0',
+        style: {
+          backgroundColor: '#f8f9fa',
+          borderRadius: '4px'
+        },
+        layout: {
+          type: 'vbox',
+          align: 'stretch'
+        },
+        items: [{
+          xtype: 'customlink',
+          url: '/custom-route',
+          text: 'This is a custom link component',
+          margin: '0 0 8 0'
+        }, {
+          xtype: 'customlink',
+          url: '/products',
+          text: 'Navigate to products',
+          margin: '0 0 8 0'
+        }, {
+          xtype: 'customlink',
+          url: '/settings',
+          text: 'Go to settings'
+        }]
+      }, {
+        xtype: 'container',
+        margin: '16 0 0 0',
+        html: '<p style="color: #6d7175; font-size: 14px;">The custom link component intercepts all link clicks and provides custom routing behavior instead of default browser navigation.</p>'
+      }]
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+/**
+ * Custom link component props
+ */
+interface CustomLinkProps {
+  children: React.ReactNode;
+  url: string;
+  external?: boolean;
+  [key: string]: any;
+}
+
+/**
+ * Custom link component for routing integration
+ * In a real app, this would integrate with React Router, Next.js, etc.
+ */
+const CustomLink: React.FC<CustomLinkProps> = ({
+  children,
+  url,
+  external = false,
+  ...rest
+}) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!external) {
+      e.preventDefault();
+      console.log('Custom link clicked:', url);
+      alert(\`Custom link to: \${url}\`);
+
+      // In a real application:
+      // - Use history.pushState() for browser history
+      // - Trigger route change in router
+      // - Load new content
+      // - Update analytics
+    }
+  };
+
+  return (
+    <a
+      href={url}
+      onClick={handleClick}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      style={{
+        color: '#5c6ac4',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+      }}
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+};
+
+/**
+ * Route configuration type
+ */
+interface Route {
+  path: string;
+  label: string;
+}
+
+interface CustomLinkExampleProps {
+  routes?: Route[];
+}
+
+/**
+ * Example demonstrating AppProvider with custom link component
+ */
+function CustomLinkExample({
+  routes = [
+    { path: '/custom-route', label: 'This is a custom link component' },
+    { path: '/products', label: 'Navigate to products' },
+    { path: '/settings', label: 'Go to settings' }
+  ]
+}: CustomLinkExampleProps): JSX.Element {
+  return (
+    <AppProvider
+      i18n={{}}
+      linkComponent={CustomLink}
+    >
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Custom Link Component</Text>
+              <Text>
+                This AppProvider uses a custom link component for all internal links.
+                Click the links below to see the custom behavior.
+              </Text>
+              <div style={{
+                padding: '12px',
+                backgroundColor: '#f8f9fa',
+                borderRadius: '4px'
+              }}>
+                <BlockStack gap="8px">
+                  {routes.map((route, index) => (
+                    <Text key={index}>
+                      <CustomLink url={route.path}>
+                        {route.label}
+                      </CustomLink>
+                    </Text>
+                  ))}
+                </BlockStack>
+              </div>
+              <Text variant="bodySm" color="subdued">
+                The custom link component intercepts all link clicks and provides
+                custom routing behavior instead of default browser navigation.
+                This allows integration with React Router, Next.js, or other routing solutions.
+              </Text>
+            </BlockStack>
+          </div>
+        </Card>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default CustomLinkExample;`
+  },
+
+  'nested-providers': {
+    react: `import { AppProvider, Card, Button, Text, BlockStack, Badge } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+const darkTheme = {
+  colors: {
+    surface: '#1a1a1a',
+    onSurface: '#ffffff',
+    interactive: '#ffffff',
+    text: '#ffffff',
+    primary: '#42a5f5',
+  },
+};
+
+function NestedProvidersExample() {
+  const [outerTheme, setOuterTheme] = useState('default');
+  const [innerTheme, setInnerTheme] = useState('default');
+
+  const toggleOuterTheme = () => {
+    setOuterTheme(outerTheme === 'default' ? 'dark' : 'default');
+  };
+
+  const toggleInnerTheme = () => {
+    setInnerTheme(innerTheme === 'default' ? 'dark' : 'default');
+  };
+
+  return (
+    <AppProvider theme={outerTheme === 'dark' ? darkTheme : {}}>
+      <div style={{ padding: '24px', width: '700px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Nested AppProviders</Text>
+              <Text>
+                This demonstrates nested AppProvider instances with different theme configurations.
+                Each provider can have its own theme, i18n, and link components.
+              </Text>
+              <Button onClick={toggleOuterTheme}>
+                Toggle Outer Theme ({outerTheme})
+              </Button>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <div style={{
+          marginTop: '24px',
+          padding: '24px',
+          border: '2px dashed #e1e3e5',
+          borderRadius: '4px'
+        }}>
+          <AppProvider theme={innerTheme === 'dark' ? darkTheme : {}}>
+            <Card>
+              <div style={{ padding: '24px' }}>
+                <BlockStack gap="16px">
+                  <Text variant="headingMd" as="h3">Inner Provider</Text>
+                  <Text>
+                    This card is inside a nested AppProvider with its own theme.
+                    The inner provider can override the outer provider's configuration.
+                  </Text>
+                  <Button onClick={toggleInnerTheme}>
+                    Toggle Inner Theme ({innerTheme})
+                  </Button>
+                  <Badge>
+                    Outer: {outerTheme} | Inner: {innerTheme}
+                  </Badge>
+                </BlockStack>
+              </div>
+            </Card>
+          </AppProvider>
+        </div>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default NestedProvidersExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="outer-app" data-theme="default">
+  <div class="card" style="padding: 24px; max-width: 700px;">
+    <h2>Nested AppProviders</h2>
+    <p>
+      This demonstrates nested context providers with different theme configurations.
+      Each provider can have its own theme and configuration.
+    </p>
+    <button class="polaris-button" id="toggleOuter">
+      Toggle Outer Theme (<span id="outerThemeLabel">default</span>)
+    </button>
+  </div>
+
+  <div style="margin-top: 24px; padding: 24px; border: 2px dashed #e1e3e5; border-radius: 4px;">
+    <div id="inner-app" data-theme="default">
+      <div class="card" style="padding: 24px;">
+        <h3>Inner Provider</h3>
+        <p>
+          This card is inside a nested provider with its own theme.
+          The inner provider can override the outer provider's configuration.
+        </p>
+        <button class="polaris-button" id="toggleInner">
+          Toggle Inner Theme (<span id="innerThemeLabel">default</span>)
+        </button>
+        <div style="margin-top: 12px;">
+          <span class="polaris-badge">
+            Outer: <span id="outerStatus">default</span> |
+            Inner: <span id="innerStatus">default</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Theme configurations
+const themes = {
+  default: {
+    background: '#ffffff',
+    text: '#000000',
+    surface: '#f8f9fa'
+  },
+  dark: {
+    background: '#1a1a1a',
+    text: '#ffffff',
+    surface: '#2a2a2a'
+  }
+};
+
+let outerTheme = 'default';
+let innerTheme = 'default';
+
+// Apply theme to element
+function applyTheme(element, theme) {
+  const themeConfig = themes[theme];
+  element.style.backgroundColor = themeConfig.background;
+  element.style.color = themeConfig.text;
+  const cards = element.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.style.backgroundColor = themeConfig.surface;
+    card.style.color = themeConfig.text;
+  });
+}
+
+// Toggle outer theme
+document.getElementById('toggleOuter').addEventListener('click', () => {
+  outerTheme = outerTheme === 'default' ? 'dark' : 'default';
+  applyTheme(document.getElementById('outer-app'), outerTheme);
+  document.getElementById('outerThemeLabel').textContent = outerTheme;
+  document.getElementById('outerStatus').textContent = outerTheme;
+});
+
+// Toggle inner theme
+document.getElementById('toggleInner').addEventListener('click', () => {
+  innerTheme = innerTheme === 'default' ? 'dark' : 'default';
+  applyTheme(document.getElementById('inner-app'), innerTheme);
+  document.getElementById('innerThemeLabel').textContent = innerTheme;
+  document.getElementById('innerStatus').textContent = innerTheme;
+});
+
+// Initial theme application
+applyTheme(document.getElementById('outer-app'), outerTheme);
+applyTheme(document.getElementById('inner-app'), innerTheme);
+</script>
+
+<style>
+.polaris-badge {
+  background-color: #e3e3e3;
+  color: #202123;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-block;
+}
+</style>`,
+
+    extjs: `// ExtJS Application with nested configuration contexts
+Ext.define('Cin7.NestedProvidersExample', {
+  extend: 'Ext.container.Container',
+  xtype: 'nestedproviders',
+
+  layout: 'vbox',
+  padding: 24,
+  width: 700,
+
+  themes: {
+    default: {
+      background: '#ffffff',
+      text: '#000000',
+      surface: '#f8f9fa'
+    },
+    dark: {
+      background: '#1a1a1a',
+      text: '#ffffff',
+      surface: '#2a2a2a'
+    }
+  },
+
+  initComponent: function() {
+    this.outerTheme = 'default';
+    this.innerTheme = 'default';
+
+    this.items = [{
+      xtype: 'panel',
+      title: 'Nested AppProviders',
+      bodyPadding: 24,
+      items: [{
+        xtype: 'container',
+        html: '<p>This demonstrates nested configuration contexts with different theme configurations. Each context can have its own theme and configuration.</p>'
+      }, {
+        xtype: 'button',
+        text: 'Toggle Outer Theme (default)',
+        itemId: 'outerBtn',
+        margin: '16 0 0 0',
+        handler: 'onToggleOuter',
+        scope: this
+      }]
+    }, {
+      xtype: 'container',
+      margin: '24 0 0 0',
+      padding: 24,
+      style: {
+        border: '2px dashed #e1e3e5',
+        borderRadius: '4px'
+      },
+      items: [{
+        xtype: 'panel',
+        itemId: 'innerPanel',
+        title: 'Inner Provider',
+        bodyPadding: 24,
+        items: [{
+          xtype: 'container',
+          html: '<p>This panel is inside a nested context with its own theme. The inner context can override the outer context\'s configuration.</p>'
+        }, {
+          xtype: 'button',
+          text: 'Toggle Inner Theme (default)',
+          itemId: 'innerBtn',
+          margin: '16 0 0 0',
+          handler: 'onToggleInner',
+          scope: this
+        }, {
+          xtype: 'container',
+          itemId: 'statusBadge',
+          margin: '12 0 0 0',
+          html: '<span style="background-color: #e3e3e3; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Outer: default | Inner: default</span>'
+        }]
+      }]
+    }];
+
+    this.callParent();
+  },
+
+  onToggleOuter: function() {
+    this.outerTheme = this.outerTheme === 'default' ? 'dark' : 'default';
+    const theme = this.themes[this.outerTheme];
+
+    // Apply outer theme
+    const outerPanel = this.down('panel');
+    outerPanel.setStyle({
+      backgroundColor: theme.surface,
+      color: theme.text
+    });
+
+    // Update button text
+    const btn = this.down('#outerBtn');
+    btn.setText('Toggle Outer Theme (' + this.outerTheme + ')');
+
+    this.updateStatus();
+  },
+
+  onToggleInner: function() {
+    this.innerTheme = this.innerTheme === 'default' ? 'dark' : 'default';
+    const theme = this.themes[this.innerTheme];
+
+    // Apply inner theme
+    const innerPanel = this.down('#innerPanel');
+    innerPanel.setStyle({
+      backgroundColor: theme.surface,
+      color: theme.text
+    });
+
+    // Update button text
+    const btn = this.down('#innerBtn');
+    btn.setText('Toggle Inner Theme (' + this.innerTheme + ')');
+
+    this.updateStatus();
+  },
+
+  updateStatus: function() {
+    const badge = this.down('#statusBadge');
+    badge.update('<span style="background-color: #e3e3e3; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Outer: ' + this.outerTheme + ' | Inner: ' + this.innerTheme + '</span>');
+  }
+});
+
+// Create and render
+Ext.onReady(function() {
+  Ext.create('Cin7.NestedProvidersExample', {
+    renderTo: Ext.getBody()
+  });
+});`,
+
+    typescript: `import { AppProvider, Card, Button, Text, BlockStack, Badge } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+/**
+ * Theme configuration type
+ */
+interface Theme {
+  colors: {
+    surface: string;
+    onSurface: string;
+    interactive: string;
+    text: string;
+    primary: string;
+  };
+}
+
+/**
+ * Dark theme configuration
+ */
+const darkTheme: Theme = {
+  colors: {
+    surface: '#1a1a1a',
+    onSurface: '#ffffff',
+    interactive: '#ffffff',
+    text: '#ffffff',
+    primary: '#42a5f5',
+  },
+};
+
+type ThemeType = 'default' | 'dark';
+
+interface NestedProvidersExampleProps {
+  initialOuterTheme?: ThemeType;
+  initialInnerTheme?: ThemeType;
+}
+
+/**
+ * Example demonstrating nested AppProvider instances with independent themes
+ * This pattern is useful for:
+ * - Feature-specific themes
+ * - Different i18n contexts in different parts of the app
+ * - Isolated component configurations
+ */
+function NestedProvidersExample({
+  initialOuterTheme = 'default',
+  initialInnerTheme = 'default'
+}: NestedProvidersExampleProps): JSX.Element {
+  const [outerTheme, setOuterTheme] = useState<ThemeType>(initialOuterTheme);
+  const [innerTheme, setInnerTheme] = useState<ThemeType>(initialInnerTheme);
+
+  const toggleOuterTheme = () => {
+    setOuterTheme(prev => prev === 'default' ? 'dark' : 'default');
+  };
+
+  const toggleInnerTheme = () => {
+    setInnerTheme(prev => prev === 'default' ? 'dark' : 'default');
+  };
+
+  const getThemeConfig = (theme: ThemeType): Theme | {} => {
+    return theme === 'dark' ? darkTheme : {};
+  };
+
+  return (
+    <AppProvider theme={getThemeConfig(outerTheme)}>
+      <div style={{ padding: '24px', width: '700px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Nested AppProviders</Text>
+              <Text>
+                This demonstrates nested AppProvider instances with different theme configurations.
+                Each provider can have its own theme, i18n, and link components.
+              </Text>
+              <Button onClick={toggleOuterTheme}>
+                Toggle Outer Theme ({outerTheme})
+              </Button>
+              <Text variant="bodySm" color="subdued">
+                Current outer theme: {outerTheme}
+              </Text>
+            </BlockStack>
+          </div>
+        </Card>
+
+        <div style={{
+          marginTop: '24px',
+          padding: '24px',
+          border: '2px dashed #e1e3e5',
+          borderRadius: '4px'
+        }}>
+          <AppProvider theme={getThemeConfig(innerTheme)}>
+            <Card>
+              <div style={{ padding: '24px' }}>
+                <BlockStack gap="16px">
+                  <Text variant="headingMd" as="h3">Inner Provider</Text>
+                  <Text>
+                    This card is inside a nested AppProvider with its own theme.
+                    The inner provider can override the outer provider's configuration.
+                  </Text>
+                  <Button onClick={toggleInnerTheme}>
+                    Toggle Inner Theme ({innerTheme})
+                  </Button>
+                  <Badge>
+                    Outer: {outerTheme} | Inner: {innerTheme}
+                  </Badge>
+                  <Text variant="bodySm" color="subdued">
+                    Current inner theme: {innerTheme}
+                  </Text>
+                </BlockStack>
+              </div>
+            </Card>
+          </AppProvider>
+        </div>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default NestedProvidersExample;`
+  },
+
+  'complete-app': {
+    react: `import { AppProvider, Frame, TopBar, Page, Layout, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function CompleteApplicationExample() {
+  const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [modalActive, setModalActive] = useState(false);
+  const [toastActive, setToastActive] = useState(false);
+
+  const toggleMobileNavigation = useCallback(() => {
+    setMobileNavigationActive((active) => !active);
+  }, []);
+
+  const toggleModal = useCallback(() => setModalActive((active) => !active), []);
+  const toggleToast = useCallback(() => setToastActive((active) => !active), []);
+
+  const topBar = (
+    <TopBar
+      showNavigationToggle
+      onNavigationToggle={toggleMobileNavigation}
+      searchField={{
+        placeholder: 'Search...',
+        value: searchValue,
+        onChange: setSearchValue,
+      }}
+      userMenu={{
+        name: 'John Doe',
+        initials: 'JD',
+        actions: [
+          {
+            items: [
+              { content: 'Settings' },
+              { content: 'Logout' },
+            ],
+          },
+        ],
+      }}
+    />
+  );
+
+  return (
+    <AppProvider i18n={{}}>
+      <Frame topBar={topBar}>
+        <div style={{ height: '100vh' }}>
+          <Page
+            title="Complete Application"
+            breadcrumbs={[{ content: 'Home', url: '#' }]}
+            primaryAction={{
+              content: 'New Item',
+              onAction: toggleModal,
+            }}
+          >
+            <Layout>
+              <Layout.Section>
+                <Card>
+                  <div style={{ padding: '24px' }}>
+                    <BlockStack gap="16px">
+                      <Text variant="headingMd" as="h2">
+                        Complete AppProvider Example
+                      </Text>
+                      <Text>
+                        This is a complete application using AppProvider with Frame, TopBar,
+                        Page, Layout, and other Polaris components working together.
+                      </Text>
+                      <InlineStack gap="12px">
+                        <Button onClick={toggleModal}>Open Modal</Button>
+                        <Button onClick={toggleToast}>Show Toast</Button>
+                      </InlineStack>
+                      <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+                        <Text variant="bodySm">
+                          This demonstrates a full application structure with:
+                          • Global context via AppProvider
+                          • Frame for app shell
+                          • TopBar with navigation and search
+                          • Page with breadcrumbs and actions
+                          • Layout for responsive content
+                        </Text>
+                      </div>
+                    </BlockStack>
+                  </div>
+                </Card>
+              </Layout.Section>
+
+              <Layout.Section secondary>
+                <Card title="Theme Status">
+                  <div style={{ padding: '16px' }}>
+                    <BlockStack gap="8px">
+                      <Text>✅ Default theme active</Text>
+                      <Text>✅ English translations loaded</Text>
+                      <Text>✅ Global context available</Text>
+                      <Text>✅ Frame and TopBar configured</Text>
+                    </BlockStack>
+                  </div>
+                </Card>
+              </Layout.Section>
+            </Layout>
+          </Page>
+        </div>
+
+        <Modal
+          open={modalActive}
+          onClose={toggleModal}
+          title="Application Modal"
+          primaryAction={{
+            content: 'Save',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: 'Cancel',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              This modal is part of a complete application powered by AppProvider.
+              All components share the same context, theme, and i18n configuration.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {toastActive && (
+          <Toast
+            content="Application notification from AppProvider"
+            onDismiss={toggleToast}
+          />
+        )}
+      </Frame>
+    </AppProvider>
+  );
+}
+
+export default CompleteApplicationExample;`,
+
+    vanilla: `<!-- HTML Structure for Complete Application -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Application</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+    .app-frame { display: flex; flex-direction: column; height: 100vh; }
+    .top-bar { background: #00848e; color: white; padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+    .top-bar-search { flex: 1; max-width: 400px; }
+    .top-bar-search input { width: 100%; padding: 8px 12px; border-radius: 4px; border: none; }
+    .top-bar-user { display: flex; align-items: center; gap: 8px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #00848e; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+    .page { flex: 1; overflow-y: auto; background: #f4f6f8; }
+    .page-header { background: white; border-bottom: 1px solid #e1e3e5; padding: 16px 24px; }
+    .page-header h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+    .breadcrumbs { font-size: 14px; color: #6d7175; margin-bottom: 8px; }
+    .page-actions { margin-top: 12px; }
+
+    .page-content { padding: 24px; }
+    .layout { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    .card { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 24px; }
+    .card h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+
+    .polaris-button { background: #008296; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    .polaris-button:hover { background: #006a7a; }
+    .polaris-button-group { display: flex; gap: 12px; margin: 16px 0; }
+
+    .status-box { background: #f8f9fa; padding: 12px; border-radius: 4px; margin-top: 16px; }
+    .status-item { margin: 8px 0; }
+
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal.active { display: flex; }
+    .modal-dialog { background: white; border-radius: 8px; max-width: 500px; width: 90%; }
+    .modal-header { padding: 16px 24px; border-bottom: 1px solid #e1e3e5; }
+    .modal-body { padding: 24px; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid #e1e3e5; display: flex; gap: 12px; justify-content: flex-end; }
+
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #202123; color: white; padding: 12px 24px; border-radius: 8px; display: none; align-items: center; gap: 12px; }
+    .toast.active { display: flex; }
+  </style>
+</head>
+<body>
+  <div id="app" class="app-frame">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="toggle-nav">☰</button>
+      <div class="top-bar-search">
+        <input type="search" placeholder="Search..." id="searchInput">
+      </div>
+      <div class="top-bar-user">
+        <div class="user-avatar">JD</div>
+        <span>John Doe</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page">
+      <div class="page-header">
+        <div class="breadcrumbs">
+          <a href="#">Home</a> › Complete Application
+        </div>
+        <h1>Complete Application</h1>
+        <div class="page-actions">
+          <button class="polaris-button" id="newItemBtn">New Item</button>
+        </div>
+      </div>
+
+      <div class="page-content">
+        <div class="layout">
+          <div>
+            <div class="card">
+              <h2>Complete AppProvider Example</h2>
+              <p>
+                This is a complete application using a provider pattern with frame, navigation,
+                page layout, and other components working together.
+              </p>
+              <div class="polaris-button-group">
+                <button class="polaris-button" id="modalBtn">Open Modal</button>
+                <button class="polaris-button" id="toastBtn">Show Toast</button>
+              </div>
+              <div class="status-box">
+                <p><strong>This demonstrates a full application structure with:</strong></p>
+                <p>• Global context via provider pattern</p>
+                <p>• Frame for app shell</p>
+                <p>• TopBar with navigation and search</p>
+                <p>• Page with breadcrumbs and actions</p>
+                <p>• Layout for responsive content</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h2>Theme Status</h2>
+              <div class="status-item">✅ Default theme active</div>
+              <div class="status-item">✅ English translations loaded</div>
+              <div class="status-item">✅ Global context available</div>
+              <div class="status-item">✅ Frame and TopBar configured</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h2>Application Modal</h2>
+        </div>
+        <div class="modal-body">
+          <p>
+            This modal is part of a complete application powered by the provider pattern.
+            All components share the same context, theme, and configuration.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="polaris-button" id="modalSave">Save</button>
+          <button class="polaris-button" id="modalCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+      <span>Application notification from provider</span>
+      <button id="toastClose" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">×</button>
+    </div>
+  </div>
+
+  <script>
+    // Modal handlers
+    document.querySelectorAll('#newItemBtn, #modalBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modal').classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('#modalSave, #modalCancel').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('modal').classList.remove('active');
+      });
+    });
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modal')) {
+        document.getElementById('modal').classList.remove('active');
+      }
+    });
+
+    // Toast handlers
+    document.getElementById('toastBtn').addEventListener('click', () => {
+      const toast = document.getElementById('toast');
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 3000);
+    });
+
+    document.getElementById('toastClose').addEventListener('click', () => {
+      document.getElementById('toast').classList.remove('active');
+    });
+
+    // Search handler
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      console.log('Search:', e.target.value);
+    });
+  </script>
+</body>
+</html>`,
+
+    extjs: `// ExtJS Complete Application with MVC architecture
+Ext.application({
+  name: 'Cin7App',
+
+  // Application configuration (similar to AppProvider)
+  appConfig: {
+    theme: 'neptune',
+    locale: 'en',
+    i18n: {}
+  },
+
+  launch: function() {
+    // Create main viewport with Frame structure
+    Ext.create('Ext.container.Viewport', {
+      layout: 'border',
+      items: [{
+        // Top Bar (similar to Polaris TopBar)
+        region: 'north',
+        xtype: 'toolbar',
+        height: 60,
+        style: {
+          background: '#00848e'
+        },
+        items: [{
+          xtype: 'button',
+          text: '☰',
+          handler: function() {
+            console.log('Toggle navigation');
+          }
+        }, {
+          xtype: 'textfield',
+          emptyText: 'Search...',
+          width: 400,
+          margin: '0 0 0 16',
+          listeners: {
+            change: function(field, newValue) {
+              console.log('Search:', newValue);
+            }
+          }
+        }, '->', {
+          xtype: 'component',
+          html: '<div style="display: flex; align-items: center; gap: 8px; color: white;">' +
+                '<div style="width: 32px; height: 32px; border-radius: 50%; background: white; color: #00848e; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>' +
+                '<span>John Doe</span>' +
+                '</div>'
+        }]
+      }, {
+        // Main content area (Page + Layout)
+        region: 'center',
+        xtype: 'panel',
+        title: 'Complete Application',
+        layout: {
+          type: 'hbox',
+          align: 'stretch',
+          padding: 24
+        },
+        dockedItems: [{
+          xtype: 'toolbar',
+          dock: 'top',
+          items: [{
+            xtype: 'button',
+            text: 'Home',
+            disabled: true
+          }, {
+            xtype: 'tbtext',
+            text: '›'
+          }, {
+            xtype: 'tbtext',
+            text: 'Complete Application'
+          }, '->', {
+            xtype: 'button',
+            text: 'New Item',
+            ui: 'action',
+            handler: function() {
+              Ext.create('Ext.window.Window', {
+                title: 'Application Modal',
+                width: 500,
+                modal: true,
+                bodyPadding: 16,
+                html: '<p>This modal is part of a complete application powered by the provider pattern. All components share the same context, theme, and configuration.</p>',
+                buttons: [{
+                  text: 'Save',
+                  handler: function() {
+                    this.up('window').close();
+                  }
+                }, {
+                  text: 'Cancel',
+                  handler: function() {
+                    this.up('window').close();
+                  }
+                }]
+              }).show();
+            }
+          }]
+        }],
+        items: [{
+          // Main section
+          flex: 2,
+          xtype: 'panel',
+          title: 'Complete AppProvider Example',
+          bodyPadding: 24,
+          margin: '0 12 0 0',
+          items: [{
+            xtype: 'container',
+            html: '<p>This is a complete application using a provider pattern with frame, navigation, page layout, and other components working together.</p>'
+          }, {
+            xtype: 'container',
+            layout: 'hbox',
+            margin: '16 0',
+            defaults: {
+              margin: '0 12 0 0'
+            },
+            items: [{
+              xtype: 'button',
+              text: 'Open Modal',
+              handler: function() {
+                Ext.create('Ext.window.Window', {
+                  title: 'Application Modal',
+                  width: 500,
+                  modal: true,
+                  bodyPadding: 16,
+                  html: '<p>This modal is part of a complete application powered by the provider pattern.</p>',
+                  buttons: ['Save', 'Cancel']
+                }).show();
+              }
+            }, {
+              xtype: 'button',
+              text: 'Show Toast',
+              handler: function() {
+                Ext.toast({
+                  html: 'Application notification from provider',
+                  closable: true,
+                  align: 'b',
+                  slideInDuration: 400
+                });
+              }
+            }]
+          }, {
+            xtype: 'container',
+            padding: 12,
+            margin: '16 0 0 0',
+            style: {
+              backgroundColor: '#f8f9fa',
+              borderRadius: '4px'
+            },
+            html: '<p><strong>This demonstrates a full application structure with:</strong></p>' +
+                  '<p>• Global context via provider pattern</p>' +
+                  '<p>• Frame for app shell</p>' +
+                  '<p>• TopBar with navigation and search</p>' +
+                  '<p>• Page with breadcrumbs and actions</p>' +
+                  '<p>• Layout for responsive content</p>'
+          }]
+        }, {
+          // Secondary section
+          flex: 1,
+          xtype: 'panel',
+          title: 'Theme Status',
+          bodyPadding: 16,
+          html: '<div>✅ Default theme active</div>' +
+                '<div>✅ English translations loaded</div>' +
+                '<div>✅ Global context available</div>' +
+                '<div>✅ Frame and TopBar configured</div>'
+        }]
+      }]
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Frame, TopBar, Page, Layout, Card, Button, Text, BlockStack, InlineStack, Modal, Toast } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+/**
+ * User menu configuration
+ */
+interface UserConfig {
+  name: string;
+  initials: string;
+  email?: string;
+}
+
+/**
+ * Application state interface
+ */
+interface AppState {
+  mobileNavigationActive: boolean;
+  searchValue: string;
+  modalActive: boolean;
+  toastActive: boolean;
+}
+
+interface CompleteApplicationExampleProps {
+  user?: UserConfig;
+  initialSearchValue?: string;
+}
+
+/**
+ * Complete application example demonstrating full AppProvider integration
+ * with Frame, TopBar, Page, Layout, and other structural components.
+ *
+ * This represents a production-ready application structure with:
+ * - Global context management via AppProvider
+ * - Application shell via Frame
+ * - Navigation via TopBar
+ * - Content structure via Page and Layout
+ * - Modal and Toast for user interactions
+ */
+function CompleteApplicationExample({
+  user = { name: 'John Doe', initials: 'JD', email: 'john@example.com' },
+  initialSearchValue = ''
+}: CompleteApplicationExampleProps): JSX.Element {
+  const [appState, setAppState] = useState<AppState>({
+    mobileNavigationActive: false,
+    searchValue: initialSearchValue,
+    modalActive: false,
+    toastActive: false,
+  });
+
+  const toggleMobileNavigation = useCallback(() => {
+    setAppState(prev => ({
+      ...prev,
+      mobileNavigationActive: !prev.mobileNavigationActive
+    }));
+  }, []);
+
+  const toggleModal = useCallback(() => {
+    setAppState(prev => ({
+      ...prev,
+      modalActive: !prev.modalActive
+    }));
+  }, []);
+
+  const toggleToast = useCallback(() => {
+    setAppState(prev => ({
+      ...prev,
+      toastActive: !prev.toastActive
+    }));
+  }, []);
+
+  const handleSearchChange = useCallback((value: string) => {
+    setAppState(prev => ({
+      ...prev,
+      searchValue: value
+    }));
+  }, []);
+
+  const topBar = (
+    <TopBar
+      showNavigationToggle
+      onNavigationToggle={toggleMobileNavigation}
+      searchField={{
+        placeholder: 'Search...',
+        value: appState.searchValue,
+        onChange: handleSearchChange,
+      }}
+      userMenu={{
+        name: user.name,
+        initials: user.initials,
+        actions: [
+          {
+            items: [
+              { content: 'Settings' },
+              { content: 'Logout' },
+            ],
+          },
+        ],
+      }}
+    />
+  );
+
+  return (
+    <AppProvider i18n={{}}>
+      <Frame topBar={topBar}>
+        <div style={{ height: '100vh' }}>
+          <Page
+            title="Complete Application"
+            breadcrumbs={[{ content: 'Home', url: '#' }]}
+            primaryAction={{
+              content: 'New Item',
+              onAction: toggleModal,
+            }}
+          >
+            <Layout>
+              <Layout.Section>
+                <Card>
+                  <div style={{ padding: '24px' }}>
+                    <BlockStack gap="16px">
+                      <Text variant="headingMd" as="h2">
+                        Complete AppProvider Example
+                      </Text>
+                      <Text>
+                        This is a complete application using AppProvider with Frame, TopBar,
+                        Page, Layout, and other Polaris components working together.
+                      </Text>
+                      <InlineStack gap="12px">
+                        <Button onClick={toggleModal}>Open Modal</Button>
+                        <Button onClick={toggleToast}>Show Toast</Button>
+                      </InlineStack>
+                      <div style={{
+                        padding: '12px',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '4px'
+                      }}>
+                        <BlockStack gap="4px">
+                          <Text variant="bodySm">
+                            <strong>This demonstrates a full application structure with:</strong>
+                          </Text>
+                          <Text variant="bodySm">• Global context via AppProvider</Text>
+                          <Text variant="bodySm">• Frame for app shell</Text>
+                          <Text variant="bodySm">• TopBar with navigation and search</Text>
+                          <Text variant="bodySm">• Page with breadcrumbs and actions</Text>
+                          <Text variant="bodySm">• Layout for responsive content</Text>
+                        </BlockStack>
+                      </div>
+                    </BlockStack>
+                  </div>
+                </Card>
+              </Layout.Section>
+
+              <Layout.Section secondary>
+                <Card title="Theme Status">
+                  <div style={{ padding: '16px' }}>
+                    <BlockStack gap="8px">
+                      <Text>✅ Default theme active</Text>
+                      <Text>✅ English translations loaded</Text>
+                      <Text>✅ Global context available</Text>
+                      <Text>✅ Frame and TopBar configured</Text>
+                      {user.email && (
+                        <Text>✅ User: {user.email}</Text>
+                      )}
+                    </BlockStack>
+                  </div>
+                </Card>
+              </Layout.Section>
+            </Layout>
+          </Page>
+        </div>
+
+        <Modal
+          open={appState.modalActive}
+          onClose={toggleModal}
+          title="Application Modal"
+          primaryAction={{
+            content: 'Save',
+            onAction: toggleModal,
+          }}
+          secondaryActions={[
+            {
+              content: 'Cancel',
+              onAction: toggleModal,
+            },
+          ]}
+        >
+          <Modal.Section>
+            <Text>
+              This modal is part of a complete application powered by AppProvider.
+              All components share the same context, theme, and i18n configuration.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        {appState.toastActive && (
+          <Toast
+            content="Application notification from AppProvider"
+            onDismiss={toggleToast}
+          />
+        )}
+      </Frame>
+    </AppProvider>
+  );
+}
+
+export default CompleteApplicationExample;`
+  },
+
+  'error-boundary': {
+    react: `import { AppProvider, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React, { useState, Component, ErrorInfo } from 'react';
+
+// Error Boundary Component
+class ErrorBoundary extends Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2" color="critical">
+                Error Occurred
+              </Text>
+              <Text>
+                {this.state.error?.message || 'An unexpected error occurred'}
+              </Text>
+              <Button onClick={() => this.setState({ hasError: false, error: null })}>
+                Try Again
+              </Button>
+            </BlockStack>
+          </div>
+        </Card>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// Component that can throw an error
+function ProblematicComponent({ shouldError }: { shouldError: boolean }) {
+  if (shouldError) {
+    throw new Error('Test error for boundary demonstration');
+  }
+
+  return <Text>Component is working correctly</Text>;
+}
+
+function ErrorBoundaryExample() {
+  const [shouldError, setShouldError] = useState(false);
+
+  return (
+    <AppProvider i18n={{}}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Error Boundary Testing</Text>
+              <Text>
+                AppProvider works with error boundaries to handle component errors gracefully.
+                Error boundaries catch errors in the component tree and display fallback UI.
+              </Text>
+
+              <ErrorBoundary>
+                <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+                  <BlockStack gap="8px">
+                    <Text variant="bodySm" fontWeight="bold">
+                      Protected Component Area:
+                    </Text>
+                    <ProblematicComponent shouldError={shouldError} />
+                  </BlockStack>
+                </div>
+              </ErrorBoundary>
+
+              <Button
+                destructive
+                onClick={() => setShouldError(true)}
+              >
+                Trigger Error
+              </Button>
+
+              <Text variant="bodySm" color="subdued">
+                Note: Clicking "Trigger Error" will throw an error that will be caught
+                by the error boundary. In a real application, the error boundary prevents
+                the entire app from crashing and provides a way to recover.
+              </Text>
+            </BlockStack>
+          </div>
+        </Card>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default ErrorBoundaryExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="app">
+  <div class="card" style="padding: 24px; max-width: 600px;">
+    <h2>Error Boundary Testing</h2>
+    <p>
+      Application context works with error handling to manage component errors gracefully.
+      Error handlers catch errors and display fallback UI.
+    </p>
+
+    <div id="protectedArea" style="padding: 12px; background-color: #f8f9fa; border-radius: 4px; margin: 16px 0;">
+      <p style="font-weight: bold; font-size: 14px; margin-bottom: 8px;">Protected Component Area:</p>
+      <div id="componentContent">
+        <p>Component is working correctly</p>
+      </div>
+    </div>
+
+    <button class="polaris-button polaris-button--destructive" id="errorBtn">
+      Trigger Error
+    </button>
+
+    <p style="color: #6d7175; font-size: 14px; margin-top: 16px;">
+      Note: Clicking "Trigger Error" will throw an error that will be caught
+      by the error handler. In a real application, error handling prevents
+      the entire app from crashing and provides a way to recover.
+    </p>
+  </div>
+</div>
+
+<script>
+// Error boundary pattern in vanilla JavaScript
+class ErrorHandler {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.originalContent = this.container.innerHTML;
+  }
+
+  // Wrap component execution in try-catch
+  tryRender(renderFunction) {
+    try {
+      renderFunction();
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  // Display error UI
+  handleError(error) {
+    console.error('Error caught by handler:', error);
+    this.container.innerHTML = \`
+      <div class="error-state" style="padding: 16px; background: #fee; border: 1px solid #fcc; border-radius: 4px;">
+        <h3 style="color: #c00; margin: 0 0 8px 0;">Error Occurred</h3>
+        <p style="margin: 0 0 12px 0;">\${error.message}</p>
+        <button class="polaris-button" id="retryBtn">Try Again</button>
+      </div>
+    \`;
+
+    // Add retry handler
+    document.getElementById('retryBtn').addEventListener('click', () => {
+      this.container.innerHTML = this.originalContent;
+    });
+  }
+
+  // Simulate error
+  throwError() {
+    throw new Error('Test error for boundary demonstration');
+  }
+}
+
+// Initialize error handler
+const errorHandler = new ErrorHandler('componentContent');
+
+// Trigger error button
+document.getElementById('errorBtn').addEventListener('click', () => {
+  errorHandler.tryRender(() => {
+    errorHandler.throwError();
+  });
+});
+
+// Global error handler for uncaught errors
+window.addEventListener('error', (event) => {
+  console.error('Global error handler:', event.error);
+  // In production, you might send this to an error tracking service
+});
+
+// Promise rejection handler
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', event.reason);
+});
+</script>
+
+<style>
+.polaris-button {
+  background: #008296;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.polaris-button:hover {
+  background: #006a7a;
+}
+.polaris-button--destructive {
+  background: #d72c0d;
+}
+.polaris-button--destructive:hover {
+  background: #bf2609;
+}
+</style>`,
+
+    extjs: `// ExtJS Application with error handling
+Ext.define('Cin7.ErrorBoundary', {
+  extend: 'Ext.container.Container',
+  xtype: 'errorboundary',
+
+  config: {
+    hasError: false,
+    errorMessage: ''
+  },
+
+  layout: 'fit',
+
+  initComponent: function() {
+    this.callParent();
+    this.setupErrorHandling();
+  },
+
+  setupErrorHandling: function() {
+    // Catch errors in child components
+    this.on('afterrender', function() {
+      this.el.on('error', this.handleError, this, { delegate: '*' });
+    });
+  },
+
+  handleError: function(error) {
+    console.error('Error caught by boundary:', error);
+    this.setHasError(true);
+    this.setErrorMessage(error.message || 'An unexpected error occurred');
+    this.renderErrorState();
+  },
+
+  renderErrorState: function() {
+    this.removeAll();
+    this.add({
+      xtype: 'container',
+      padding: 24,
+      style: {
+        backgroundColor: '#fee',
+        border: '1px solid #fcc',
+        borderRadius: '4px'
+      },
+      items: [{
+        xtype: 'component',
+        html: '<h3 style="color: #c00; margin: 0 0 8px 0;">Error Occurred</h3>'
+      }, {
+        xtype: 'component',
+        html: '<p style="margin: 0 0 12px 0;">' + this.getErrorMessage() + '</p>'
+      }, {
+        xtype: 'button',
+        text: 'Try Again',
+        handler: this.reset,
+        scope: this
+      }]
+    });
+  },
+
+  reset: function() {
+    this.setHasError(false);
+    this.setErrorMessage('');
+    this.removeAll();
+    this.fireEvent('reset');
+  }
+});
+
+// Example usage
+Ext.application({
+  name: 'Cin7App',
+
+  launch: function() {
+    // Global error handler
+    Ext.Error.handle = function(err) {
+      console.error('Global error handler:', err);
+      Ext.Msg.alert('Error', err.msg || 'An error occurred');
+      return true; // Prevent default error handling
+    };
+
+    const errorBoundary = Ext.create('Cin7.ErrorBoundary', {
+      renderTo: Ext.getBody(),
+      width: 600
+    });
+
+    const mainPanel = Ext.create('Ext.panel.Panel', {
+      title: 'Error Boundary Testing',
+      bodyPadding: 24,
+      items: [{
+        xtype: 'container',
+        html: '<p>Application context works with error handling to manage component errors gracefully. Error handlers catch errors and display fallback UI.</p>'
+      }, {
+        xtype: 'container',
+        itemId: 'protectedArea',
+        padding: 12,
+        margin: '16 0',
+        style: {
+          backgroundColor: '#f8f9fa',
+          borderRadius: '4px'
+        },
+        html: '<p><strong>Protected Component Area:</strong></p><p>Component is working correctly</p>'
+      }, {
+        xtype: 'button',
+        text: 'Trigger Error',
+        ui: 'destructive',
+        handler: function() {
+          try {
+            throw new Error('Test error for boundary demonstration');
+          } catch (error) {
+            errorBoundary.handleError(error);
+          }
+        }
+      }, {
+        xtype: 'container',
+        margin: '16 0 0 0',
+        html: '<p style="color: #6d7175; font-size: 14px;">Note: Clicking "Trigger Error" will throw an error that will be caught by the error handler. In a real application, error handling prevents the entire app from crashing and provides a way to recover.</p>'
+      }]
+    });
+
+    errorBoundary.add(mainPanel);
+
+    // Reset handler
+    errorBoundary.on('reset', function() {
+      errorBoundary.add(mainPanel);
+    });
+  }
+});`,
+
+    typescript: `import { AppProvider, Card, Button, Text, BlockStack } from '@shopify/polaris';
+import React, { useState, Component, ErrorInfo, ReactNode } from 'react';
+
+/**
+ * Error boundary props and state types
+ */
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  fallback?: (error: Error, reset: () => void) => ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+/**
+ * Error Boundary component that catches and handles React errors
+ */
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('Error caught by boundary:', error, errorInfo);
+
+    // Call optional error handler
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+
+    // In production, send to error tracking service
+    // logErrorToService(error, errorInfo);
+  }
+
+  reset = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError && this.state.error) {
+      // Use custom fallback if provided
+      if (this.props.fallback) {
+        return this.props.fallback(this.state.error, this.reset);
+      }
+
+      // Default error UI
+      return (
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2" tone="critical">
+                Error Occurred
+              </Text>
+              <Text>
+                {this.state.error.message || 'An unexpected error occurred'}
+              </Text>
+              <Button onClick={this.reset}>
+                Try Again
+              </Button>
+            </BlockStack>
+          </div>
+        </Card>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+/**
+ * Component that can throw an error for testing
+ */
+interface ProblematicComponentProps {
+  shouldError: boolean;
+}
+
+function ProblematicComponent({ shouldError }: ProblematicComponentProps): JSX.Element {
+  if (shouldError) {
+    throw new Error('Test error for boundary demonstration');
+  }
+
+  return <Text>Component is working correctly</Text>;
+}
+
+/**
+ * Error logging function (would integrate with service like Sentry)
+ */
+function logError(error: Error, errorInfo: ErrorInfo): void {
+  console.error('Logging error to service:', {
+    message: error.message,
+    stack: error.stack,
+    componentStack: errorInfo.componentStack,
+    timestamp: new Date().toISOString()
+  });
+}
+
+interface ErrorBoundaryExampleProps {
+  enableLogging?: boolean;
+}
+
+/**
+ * Example demonstrating error boundary integration with AppProvider
+ */
+function ErrorBoundaryExample({ enableLogging = true }: ErrorBoundaryExampleProps): JSX.Element {
+  const [shouldError, setShouldError] = useState<boolean>(false);
+
+  const handleError = (error: Error, errorInfo: ErrorInfo): void => {
+    if (enableLogging) {
+      logError(error, errorInfo);
+    }
+  };
+
+  return (
+    <AppProvider i18n={{}}>
+      <div style={{ padding: '24px', width: '600px' }}>
+        <Card>
+          <div style={{ padding: '24px' }}>
+            <BlockStack gap="16px">
+              <Text variant="headingMd" as="h2">Error Boundary Testing</Text>
+              <Text>
+                AppProvider works with error boundaries to handle component errors gracefully.
+                Error boundaries catch errors in the component tree and display fallback UI.
+              </Text>
+
+              <ErrorBoundary onError={handleError}>
+                <div style={{
+                  padding: '12px',
+                  backgroundColor: '#f8f9fa',
+                  borderRadius: '4px'
+                }}>
+                  <BlockStack gap="8px">
+                    <Text variant="bodySm" fontWeight="bold">
+                      Protected Component Area:
+                    </Text>
+                    <ProblematicComponent shouldError={shouldError} />
+                  </BlockStack>
+                </div>
+              </ErrorBoundary>
+
+              <Button
+                destructive
+                onClick={() => setShouldError(true)}
+                disabled={shouldError}
+              >
+                Trigger Error
+              </Button>
+
+              <Text variant="bodySm" tone="subdued">
+                Note: Clicking "Trigger Error" will throw an error that will be caught
+                by the error boundary. In a real application, the error boundary prevents
+                the entire app from crashing and provides a way to recover.
+                {enableLogging && ' Errors are logged to the console.'}
+              </Text>
+            </BlockStack>
+          </div>
+        </Card>
+      </div>
+    </AppProvider>
+  );
+}
+
+export default ErrorBoundaryExample;`
   }
 };
 
