@@ -50,6 +50,11 @@ const meta = {
       control: 'boolean',
       description: 'Render as submit button',
     },
+    onClick: { action: 'clicked' },
+    onFocus: { action: 'focused' },
+    onBlur: { action: 'blurred' },
+    onMouseEnter: { action: 'mouse entered' },
+    onMouseLeave: { action: 'mouse left' },
   },
 } satisfies Meta<typeof Button>;
 
