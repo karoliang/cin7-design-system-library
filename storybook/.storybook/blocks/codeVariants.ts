@@ -22529,6 +22529,1977 @@ function FullWidthButtonGroupExample({ actions }: FullWidthProps): JSX.Element {
 }
 
 export default FullWidthButtonGroupExample;`
+  },
+  'variant-group': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+export function VariantGroupExample() {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">Action Variants</Text>
+
+        <div>
+          <Text as="p" variant="bodySm">Primary Actions:</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary">Save</Button>
+            <Button variant="primary">Submit</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="p" variant="bodySm">Secondary Actions:</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="secondary">Edit</Button>
+            <Button variant="secondary">Delete</Button>
+            <Button variant="secondary">Export</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="p" variant="bodySm">Tertiary Actions:</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="tertiary">Preview</Button>
+            <Button variant="tertiary">Download</Button>
+            <Button variant="tertiary">Share</Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default VariantGroupExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="variant-demo">
+  <h3>Action Variants</h3>
+
+  <div class="variant-section">
+    <p>Primary Actions:</p>
+    <div class="button-group button-group-tight">
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+
+  <div class="variant-section">
+    <p>Secondary Actions:</p>
+    <div class="button-group button-group-tight">
+      <button class="btn btn-secondary">Edit</button>
+      <button class="btn btn-secondary">Delete</button>
+      <button class="btn btn-secondary">Export</button>
+    </div>
+  </div>
+
+  <div class="variant-section">
+    <p>Tertiary Actions:</p>
+    <div class="button-group button-group-tight">
+      <button class="btn btn-tertiary">Preview</button>
+      <button class="btn btn-tertiary">Download</button>
+      <button class="btn btn-tertiary">Share</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.variant-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.variant-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.button-group-tight {
+  gap: 4px;
+}
+.btn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+.btn-secondary {
+  background: white;
+  color: #202223;
+}
+.btn-tertiary {
+  background: transparent;
+  color: #0066cc;
+  border-color: transparent;
+}
+</style>`,
+
+    extjs: `// ExtJS Button Variant Groups
+Ext.create('Ext.panel.Panel', {
+  title: 'Action Variants',
+  bodyPadding: 16,
+  width: 400,
+  items: [{
+    xtype: 'container',
+    html: '<p>Primary Actions:</p>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      ui: 'default-toolbar'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save',
+      cls: 'primary-action'
+    }, {
+      xtype: 'button',
+      text: 'Submit',
+      cls: 'primary-action'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<p style="margin-top: 16px;">Secondary Actions:</p>',
+    margin: '16 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Edit'
+    }, {
+      xtype: 'button',
+      text: 'Delete'
+    }, {
+      xtype: 'button',
+      text: 'Export'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<p style="margin-top: 16px;">Tertiary Actions:</p>',
+    margin: '16 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      ui: 'default-toolbar'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Preview',
+      cls: 'tertiary-action'
+    }, {
+      xtype: 'button',
+      text: 'Download',
+      cls: 'tertiary-action'
+    }, {
+      xtype: 'button',
+      text: 'Share',
+      cls: 'tertiary-action'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+interface ActionGroup {
+  title: string;
+  variant: ButtonVariant;
+  actions: string[];
+}
+
+interface VariantGroupProps {
+  groups?: ActionGroup[];
+  onAction?: (variant: ButtonVariant, action: string) => void;
+}
+
+export function VariantGroupExample({
+  groups = [
+    { title: 'Primary Actions', variant: 'primary', actions: ['Save', 'Submit'] },
+    { title: 'Secondary Actions', variant: 'secondary', actions: ['Edit', 'Delete', 'Export'] },
+    { title: 'Tertiary Actions', variant: 'tertiary', actions: ['Preview', 'Download', 'Share'] }
+  ],
+  onAction
+}: VariantGroupProps): JSX.Element {
+  const handleAction = (variant: ButtonVariant, action: string) => {
+    onAction?.(variant, action);
+    console.log(\`\${variant} action: \${action}\`);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">Action Variants</Text>
+
+        {groups.map((group, index) => (
+          <div key={index}>
+            <Text as="p" variant="bodySm">{group.title}:</Text>
+            <ButtonGroup gap="tight">
+              {group.actions.map((action, actionIndex) => (
+                <Button
+                  key={actionIndex}
+                  variant={group.variant}
+                  onClick={() => handleAction(group.variant, action)}
+                >
+                  {action}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default VariantGroupExample;`
+  },
+  'icon-buttons': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import { EditIcon, DeleteIcon, ExportIcon, DuplicateIcon, ChevronLeftIcon, ChevronRightIcon, SearchIcon, RefreshIcon, SettingsIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+export function IconButtonsExample() {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">Icon Actions</Text>
+
+        <ButtonGroup gap="tight">
+          <Button variant="plain" icon={EditIcon}>Edit</Button>
+          <Button variant="plain" icon={DeleteIcon}>Delete</Button>
+          <Button variant="plain" icon={ExportIcon}>Export</Button>
+          <Button variant="plain" icon={DuplicateIcon}>Copy</Button>
+        </ButtonGroup>
+
+        <ButtonGroup gap="tight">
+          <Button variant="plain" icon={ChevronLeftIcon}>Previous</Button>
+          <Button variant="plain" icon={ChevronRightIcon}>Next</Button>
+        </ButtonGroup>
+
+        <ButtonGroup gap="tight">
+          <Button variant="plain" icon={SearchIcon}>Search</Button>
+          <Button variant="plain" icon={RefreshIcon}>Refresh</Button>
+          <Button variant="plain" icon={SettingsIcon}>Settings</Button>
+        </ButtonGroup>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default IconButtonsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="icon-buttons-demo">
+  <h3>Icon Actions</h3>
+
+  <div class="button-group">
+    <button class="btn-icon">
+      <span class="icon">✏️</span>
+      <span>Edit</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">🗑️</span>
+      <span>Delete</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">📤</span>
+      <span>Export</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">📋</span>
+      <span>Copy</span>
+    </button>
+  </div>
+
+  <div class="button-group">
+    <button class="btn-icon">
+      <span class="icon">⬅️</span>
+      <span>Previous</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">➡️</span>
+      <span>Next</span>
+    </button>
+  </div>
+
+  <div class="button-group">
+    <button class="btn-icon">
+      <span class="icon">🔍</span>
+      <span>Search</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">🔄</span>
+      <span>Refresh</span>
+    </button>
+    <button class="btn-icon">
+      <span class="icon">⚙️</span>
+      <span>Settings</span>
+    </button>
+  </div>
+</div>
+
+<style>
+.icon-buttons-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.btn-icon {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #202223;
+}
+.btn-icon:hover {
+  background: #f3f4f6;
+}
+.icon {
+  font-size: 16px;
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $$, on } from '@cin7/vanilla-js';
+
+$$('.btn-icon').forEach(btn => {
+  on(btn, 'click', (e) => {
+    const text = btn.querySelector('span:last-child').textContent;
+    console.log('Icon button clicked:', text);
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Icon Buttons
+Ext.create('Ext.panel.Panel', {
+  title: 'Icon Actions',
+  bodyPadding: 16,
+  width: 500,
+  items: [{
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Edit',
+      iconCls: 'x-fa fa-edit'
+    }, {
+      xtype: 'button',
+      text: 'Delete',
+      iconCls: 'x-fa fa-trash'
+    }, {
+      xtype: 'button',
+      text: 'Export',
+      iconCls: 'x-fa fa-download'
+    }, {
+      xtype: 'button',
+      text: 'Copy',
+      iconCls: 'x-fa fa-copy'
+    }]
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    margin: '12 0 0 0',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Previous',
+      iconCls: 'x-fa fa-chevron-left'
+    }, {
+      xtype: 'button',
+      text: 'Next',
+      iconCls: 'x-fa fa-chevron-right'
+    }]
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    margin: '12 0 0 0',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Search',
+      iconCls: 'x-fa fa-search'
+    }, {
+      xtype: 'button',
+      text: 'Refresh',
+      iconCls: 'x-fa fa-refresh'
+    }, {
+      xtype: 'button',
+      text: 'Settings',
+      iconCls: 'x-fa fa-cog'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import type { IconSource } from '@shopify/polaris';
+import {
+  EditIcon,
+  DeleteIcon,
+  ExportIcon,
+  DuplicateIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SearchIcon,
+  RefreshIcon,
+  SettingsIcon
+} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface IconAction {
+  label: string;
+  icon: IconSource;
+  onClick: () => void;
+}
+
+interface IconButtonGroup {
+  actions: IconAction[];
+}
+
+interface IconButtonsProps {
+  groups?: IconButtonGroup[];
+  variant?: 'plain' | 'primary' | 'secondary';
+  gap?: 'tight' | 'loose' | 'extraTight';
+}
+
+export function IconButtonsExample({
+  groups = [
+    {
+      actions: [
+        { label: 'Edit', icon: EditIcon, onClick: () => console.log('Edit') },
+        { label: 'Delete', icon: DeleteIcon, onClick: () => console.log('Delete') },
+        { label: 'Export', icon: ExportIcon, onClick: () => console.log('Export') },
+        { label: 'Copy', icon: DuplicateIcon, onClick: () => console.log('Copy') }
+      ]
+    },
+    {
+      actions: [
+        { label: 'Previous', icon: ChevronLeftIcon, onClick: () => console.log('Previous') },
+        { label: 'Next', icon: ChevronRightIcon, onClick: () => console.log('Next') }
+      ]
+    },
+    {
+      actions: [
+        { label: 'Search', icon: SearchIcon, onClick: () => console.log('Search') },
+        { label: 'Refresh', icon: RefreshIcon, onClick: () => console.log('Refresh') },
+        { label: 'Settings', icon: SettingsIcon, onClick: () => console.log('Settings') }
+      ]
+    }
+  ],
+  variant = 'plain',
+  gap = 'tight'
+}: IconButtonsProps): JSX.Element {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text as="h3" variant="headingMd">Icon Actions</Text>
+
+        {groups.map((group, groupIndex) => (
+          <ButtonGroup key={groupIndex} gap={gap}>
+            {group.actions.map((action, actionIndex) => (
+              <Button
+                key={actionIndex}
+                variant={variant}
+                icon={action.icon}
+                onClick={action.onClick}
+              >
+                {action.label}
+              </Button>
+            ))}
+          </ButtonGroup>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default IconButtonsExample;`
+  },
+  'size-variations': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+export function SizeVariationsExample() {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Button Size Variations</Text>
+
+        <div>
+          <Text as="p" variant="bodySm">Micro Buttons:</Text>
+          <ButtonGroup gap="tight">
+            <Button size="micro" variant="primary">Save</Button>
+            <Button size="micro" variant="secondary">Cancel</Button>
+            <Button size="micro" variant="tertiary">Help</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="p" variant="bodySm">Slim Buttons:</Text>
+          <ButtonGroup gap="tight">
+            <Button size="slim" variant="primary">Save</Button>
+            <Button size="slim" variant="secondary">Cancel</Button>
+            <Button size="slim" variant="tertiary">Help</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="p" variant="bodySm">Medium Buttons (Default):</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary">Save</Button>
+            <Button variant="secondary">Cancel</Button>
+            <Button variant="tertiary">Help</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="p" variant="bodySm">Large Buttons:</Text>
+          <ButtonGroup gap="tight">
+            <Button size="large" variant="primary">Save Changes</Button>
+            <Button size="large" variant="secondary">Discard</Button>
+            <Button size="large" variant="tertiary">Learn More</Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default SizeVariationsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="size-variations-demo">
+  <h3>Button Size Variations</h3>
+
+  <div class="size-section">
+    <p>Micro Buttons:</p>
+    <div class="button-group">
+      <button class="btn btn-primary btn-micro">Save</button>
+      <button class="btn btn-secondary btn-micro">Cancel</button>
+      <button class="btn btn-tertiary btn-micro">Help</button>
+    </div>
+  </div>
+
+  <div class="size-section">
+    <p>Slim Buttons:</p>
+    <div class="button-group">
+      <button class="btn btn-primary btn-slim">Save</button>
+      <button class="btn btn-secondary btn-slim">Cancel</button>
+      <button class="btn btn-tertiary btn-slim">Help</button>
+    </div>
+  </div>
+
+  <div class="size-section">
+    <p>Medium Buttons (Default):</p>
+    <div class="button-group">
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-secondary">Cancel</button>
+      <button class="btn btn-tertiary">Help</button>
+    </div>
+  </div>
+
+  <div class="size-section">
+    <p>Large Buttons:</p>
+    <div class="button-group">
+      <button class="btn btn-primary btn-large">Save Changes</button>
+      <button class="btn btn-secondary btn-large">Discard</button>
+      <button class="btn btn-tertiary btn-large">Learn More</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.size-variations-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.size-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-micro {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+.btn-slim {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+.btn-large {
+  padding: 14px 20px;
+  font-size: 16px;
+}
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+.btn-secondary {
+  background: white;
+  color: #202223;
+}
+.btn-tertiary {
+  background: transparent;
+  color: #0066cc;
+  border-color: transparent;
+}
+</style>`,
+
+    extjs: `// ExtJS Button Size Variations
+Ext.create('Ext.panel.Panel', {
+  title: 'Button Size Variations',
+  bodyPadding: 16,
+  width: 500,
+  items: [{
+    xtype: 'container',
+    html: '<p>Micro Buttons:</p>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      scale: 'small'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save',
+      ui: 'default-small'
+    }, {
+      xtype: 'button',
+      text: 'Cancel'
+    }, {
+      xtype: 'button',
+      text: 'Help'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<p style="margin-top: 24px;">Slim Buttons:</p>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save',
+      scale: 'medium'
+    }, {
+      xtype: 'button',
+      text: 'Cancel',
+      scale: 'medium'
+    }, {
+      xtype: 'button',
+      text: 'Help',
+      scale: 'medium'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<p style="margin-top: 24px;">Medium Buttons (Default):</p>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save'
+    }, {
+      xtype: 'button',
+      text: 'Cancel'
+    }, {
+      xtype: 'button',
+      text: 'Help'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<p style="margin-top: 24px;">Large Buttons:</p>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      scale: 'large'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save Changes'
+    }, {
+      xtype: 'button',
+      text: 'Discard'
+    }, {
+      xtype: 'button',
+      text: 'Learn More'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+type ButtonSize = 'micro' | 'slim' | 'medium' | 'large';
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+interface SizeGroupConfig {
+  label: string;
+  size: ButtonSize;
+  buttons: Array<{
+    label: string;
+    variant: ButtonVariant;
+  }>;
+}
+
+interface SizeVariationsProps {
+  groups?: SizeGroupConfig[];
+  gap?: 'tight' | 'loose' | 'extraTight';
+}
+
+export function SizeVariationsExample({
+  groups = [
+    {
+      label: 'Micro Buttons',
+      size: 'micro',
+      buttons: [
+        { label: 'Save', variant: 'primary' },
+        { label: 'Cancel', variant: 'secondary' },
+        { label: 'Help', variant: 'tertiary' }
+      ]
+    },
+    {
+      label: 'Slim Buttons',
+      size: 'slim',
+      buttons: [
+        { label: 'Save', variant: 'primary' },
+        { label: 'Cancel', variant: 'secondary' },
+        { label: 'Help', variant: 'tertiary' }
+      ]
+    },
+    {
+      label: 'Medium Buttons (Default)',
+      size: 'medium',
+      buttons: [
+        { label: 'Save', variant: 'primary' },
+        { label: 'Cancel', variant: 'secondary' },
+        { label: 'Help', variant: 'tertiary' }
+      ]
+    },
+    {
+      label: 'Large Buttons',
+      size: 'large',
+      buttons: [
+        { label: 'Save Changes', variant: 'primary' },
+        { label: 'Discard', variant: 'secondary' },
+        { label: 'Learn More', variant: 'tertiary' }
+      ]
+    }
+  ],
+  gap = 'tight'
+}: SizeVariationsProps): JSX.Element {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Button Size Variations</Text>
+
+        {groups.map((group, index) => (
+          <div key={index}>
+            <Text as="p" variant="bodySm">{group.label}:</Text>
+            <ButtonGroup gap={gap}>
+              {group.buttons.map((button, btnIndex) => (
+                <Button
+                  key={btnIndex}
+                  size={group.size === 'medium' ? undefined : group.size}
+                  variant={button.variant}
+                >
+                  {button.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default SizeVariationsExample;`
+  },
+  'action-groups': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+export function ActionGroupsExample() {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Common Action Groups</Text>
+
+        <div>
+          <Text as="h4" variant="headingSm">Form Actions</Text>
+          <Text as="p" variant="bodySm" tone="subdued">Primary and secondary actions</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary">Submit</Button>
+            <Button variant="secondary">Save Draft</Button>
+            <Button variant="plain">Cancel</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">CRUD Operations</Text>
+          <Text as="p" variant="bodySm" tone="subdued">Create, Read, Update, Delete</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary">Create New</Button>
+            <Button variant="secondary">Edit</Button>
+            <Button variant="secondary">Duplicate</Button>
+            <Button variant="critical">Delete</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Export Options</Text>
+          <Text as="p" variant="bodySm" tone="subdued">Different export formats</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="tertiary">Export PDF</Button>
+            <Button variant="tertiary">Export Excel</Button>
+            <Button variant="tertiary">Export CSV</Button>
+            <Button variant="tertiary">Print</Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ActionGroupsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="action-groups-demo">
+  <h3>Common Action Groups</h3>
+
+  <div class="action-section">
+    <h4>Form Actions</h4>
+    <p class="description">Primary and secondary actions</p>
+    <div class="button-group">
+      <button class="btn btn-primary">Submit</button>
+      <button class="btn btn-secondary">Save Draft</button>
+      <button class="btn btn-plain">Cancel</button>
+    </div>
+  </div>
+
+  <div class="action-section">
+    <h4>CRUD Operations</h4>
+    <p class="description">Create, Read, Update, Delete</p>
+    <div class="button-group">
+      <button class="btn btn-primary">Create New</button>
+      <button class="btn btn-secondary">Edit</button>
+      <button class="btn btn-secondary">Duplicate</button>
+      <button class="btn btn-critical">Delete</button>
+    </div>
+  </div>
+
+  <div class="action-section">
+    <h4>Export Options</h4>
+    <p class="description">Different export formats</p>
+    <div class="button-group">
+      <button class="btn btn-tertiary">Export PDF</button>
+      <button class="btn btn-tertiary">Export Excel</button>
+      <button class="btn btn-tertiary">Export CSV</button>
+      <button class="btn btn-tertiary">Print</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.action-groups-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.description {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+.btn-secondary {
+  background: white;
+  color: #202223;
+}
+.btn-tertiary {
+  background: transparent;
+  color: #0066cc;
+  border-color: transparent;
+}
+.btn-plain {
+  background: transparent;
+  color: #202223;
+  border-color: transparent;
+}
+.btn-critical {
+  background: #d32f2f;
+  color: white;
+  border-color: #d32f2f;
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $$, on } from '@cin7/vanilla-js';
+
+$$('.btn').forEach(btn => {
+  on(btn, 'click', (e) => {
+    console.log('Action clicked:', btn.textContent);
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Common Action Groups
+Ext.create('Ext.panel.Panel', {
+  title: 'Common Action Groups',
+  bodyPadding: 16,
+  width: 600,
+  items: [{
+    xtype: 'container',
+    html: '<h4>Form Actions</h4><p style="color: #6b7280; margin: 4px 0 8px 0;">Primary and secondary actions</p>'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Submit',
+      ui: 'default-toolbar',
+      cls: 'primary-action'
+    }, {
+      xtype: 'button',
+      text: 'Save Draft'
+    }, {
+      xtype: 'button',
+      text: 'Cancel',
+      ui: 'default-toolbar'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">CRUD Operations</h4><p style="color: #6b7280; margin: 4px 0 8px 0;">Create, Read, Update, Delete</p>',
+    margin: '24 0 0 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Create New',
+      ui: 'default-toolbar',
+      cls: 'primary-action'
+    }, {
+      xtype: 'button',
+      text: 'Edit'
+    }, {
+      xtype: 'button',
+      text: 'Duplicate'
+    }, {
+      xtype: 'button',
+      text: 'Delete',
+      cls: 'critical-action',
+      handler: function() {
+        Ext.Msg.confirm('Confirm', 'Are you sure you want to delete?', function(btn) {
+          if (btn === 'yes') {
+            console.log('Delete confirmed');
+          }
+        });
+      }
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Export Options</h4><p style="color: #6b7280; margin: 4px 0 8px 0;">Different export formats</p>',
+    margin: '24 0 0 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Export PDF',
+      iconCls: 'x-fa fa-file-pdf'
+    }, {
+      xtype: 'button',
+      text: 'Export Excel',
+      iconCls: 'x-fa fa-file-excel'
+    }, {
+      xtype: 'button',
+      text: 'Export CSV',
+      iconCls: 'x-fa fa-file'
+    }, {
+      xtype: 'button',
+      text: 'Print',
+      iconCls: 'x-fa fa-print'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+type ActionVariant = 'primary' | 'secondary' | 'tertiary' | 'plain' | 'critical';
+
+interface ActionButton {
+  label: string;
+  variant: ActionVariant;
+  onAction?: () => void;
+}
+
+interface ActionGroup {
+  title: string;
+  description: string;
+  actions: ActionButton[];
+}
+
+interface ActionGroupsProps {
+  groups?: ActionGroup[];
+  gap?: 'tight' | 'loose' | 'extraTight';
+}
+
+const defaultGroups: ActionGroup[] = [
+  {
+    title: 'Form Actions',
+    description: 'Primary and secondary actions',
+    actions: [
+      { label: 'Submit', variant: 'primary', onAction: () => console.log('Submit') },
+      { label: 'Save Draft', variant: 'secondary', onAction: () => console.log('Save Draft') },
+      { label: 'Cancel', variant: 'plain', onAction: () => console.log('Cancel') }
+    ]
+  },
+  {
+    title: 'CRUD Operations',
+    description: 'Create, Read, Update, Delete',
+    actions: [
+      { label: 'Create New', variant: 'primary', onAction: () => console.log('Create') },
+      { label: 'Edit', variant: 'secondary', onAction: () => console.log('Edit') },
+      { label: 'Duplicate', variant: 'secondary', onAction: () => console.log('Duplicate') },
+      { label: 'Delete', variant: 'critical', onAction: () => console.log('Delete') }
+    ]
+  },
+  {
+    title: 'Export Options',
+    description: 'Different export formats',
+    actions: [
+      { label: 'Export PDF', variant: 'tertiary', onAction: () => console.log('PDF') },
+      { label: 'Export Excel', variant: 'tertiary', onAction: () => console.log('Excel') },
+      { label: 'Export CSV', variant: 'tertiary', onAction: () => console.log('CSV') },
+      { label: 'Print', variant: 'tertiary', onAction: () => console.log('Print') }
+    ]
+  }
+];
+
+export function ActionGroupsExample({
+  groups = defaultGroups,
+  gap = 'tight'
+}: ActionGroupsProps): JSX.Element {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Common Action Groups</Text>
+
+        {groups.map((group, index) => (
+          <div key={index}>
+            <Text as="h4" variant="headingSm">{group.title}</Text>
+            <Text as="p" variant="bodySm" tone="subdued">{group.description}</Text>
+            <ButtonGroup gap={gap}>
+              {group.actions.map((action, actionIndex) => (
+                <Button
+                  key={actionIndex}
+                  variant={action.variant}
+                  onClick={action.onAction}
+                >
+                  {action.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ActionGroupsExample;`
+  },
+  'state-variations': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+export function StateVariationsExample() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleAsyncAction = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Button State Variations</Text>
+
+        <div>
+          <Text as="h4" variant="headingSm">Normal State</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary">Primary Action</Button>
+            <Button variant="secondary">Secondary Action</Button>
+            <Button variant="tertiary">Tertiary Action</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Loading State</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary" loading>
+              Processing...
+            </Button>
+            <Button variant="secondary" loading>
+              Loading...
+            </Button>
+            <Button variant="tertiary" loading>
+              Please wait...
+            </Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Disabled State</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary" disabled>
+              Disabled Primary
+            </Button>
+            <Button variant="secondary" disabled>
+              Disabled Secondary
+            </Button>
+            <Button variant="tertiary" disabled>
+              Disabled Tertiary
+            </Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Interactive Demo</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary" loading={isLoading} onClick={handleAsyncAction}>
+              {isLoading ? 'Processing...' : 'Start Process'}
+            </Button>
+            <Button variant="secondary" disabled={isDisabled} onClick={() => setIsDisabled(!isDisabled)}>
+              {isDisabled ? 'Re-enable' : 'Disable'}
+            </Button>
+            <Button variant="tertiary" onClick={() => {}}>
+              Reset
+            </Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default StateVariationsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="state-variations-demo">
+  <h3>Button State Variations</h3>
+
+  <div class="state-section">
+    <h4>Normal State</h4>
+    <div class="button-group">
+      <button class="btn btn-primary">Primary Action</button>
+      <button class="btn btn-secondary">Secondary Action</button>
+      <button class="btn btn-tertiary">Tertiary Action</button>
+    </div>
+  </div>
+
+  <div class="state-section">
+    <h4>Loading State</h4>
+    <div class="button-group">
+      <button class="btn btn-primary btn-loading">
+        <span class="spinner"></span>
+        Processing...
+      </button>
+      <button class="btn btn-secondary btn-loading">
+        <span class="spinner"></span>
+        Loading...
+      </button>
+      <button class="btn btn-tertiary btn-loading">
+        <span class="spinner"></span>
+        Please wait...
+      </button>
+    </div>
+  </div>
+
+  <div class="state-section">
+    <h4>Disabled State</h4>
+    <div class="button-group">
+      <button class="btn btn-primary" disabled>Disabled Primary</button>
+      <button class="btn btn-secondary" disabled>Disabled Secondary</button>
+      <button class="btn btn-tertiary" disabled>Disabled Tertiary</button>
+    </div>
+  </div>
+
+  <div class="state-section">
+    <h4>Interactive Demo</h4>
+    <div class="button-group">
+      <button class="btn btn-primary" id="async-btn">Start Process</button>
+      <button class="btn btn-secondary" id="toggle-btn">Disable</button>
+      <button class="btn btn-tertiary" id="reset-btn">Reset</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.state-variations-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.state-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+.btn-secondary {
+  background: white;
+  color: #202223;
+}
+.btn-tertiary {
+  background: transparent;
+  color: #0066cc;
+  border-color: transparent;
+}
+.btn-loading {
+  cursor: wait;
+  opacity: 0.6;
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+const asyncBtn = $('#async-btn');
+const toggleBtn = $('#toggle-btn');
+const resetBtn = $('#reset-btn');
+
+let isDisabled = false;
+
+on(asyncBtn, 'click', () => {
+  asyncBtn.classList.add('btn-loading');
+  asyncBtn.innerHTML = '<span class="spinner"></span>Processing...';
+
+  setTimeout(() => {
+    asyncBtn.classList.remove('btn-loading');
+    asyncBtn.textContent = 'Start Process';
+  }, 2000);
+});
+
+on(toggleBtn, 'click', () => {
+  isDisabled = !isDisabled;
+  toggleBtn.disabled = isDisabled;
+  toggleBtn.textContent = isDisabled ? 'Re-enable' : 'Disable';
+});
+
+on(resetBtn, 'click', () => {
+  console.log('Reset clicked');
+});
+</script>`,
+
+    extjs: `// ExtJS Button State Variations
+Ext.create('Ext.panel.Panel', {
+  title: 'Button State Variations',
+  bodyPadding: 16,
+  width: 600,
+  items: [{
+    xtype: 'container',
+    html: '<h4>Normal State</h4>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Primary Action',
+      ui: 'default-toolbar'
+    }, {
+      xtype: 'button',
+      text: 'Secondary Action'
+    }, {
+      xtype: 'button',
+      text: 'Tertiary Action'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Loading State</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      disabled: true
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Processing...',
+      iconCls: 'x-fa fa-spinner fa-spin'
+    }, {
+      xtype: 'button',
+      text: 'Loading...',
+      iconCls: 'x-fa fa-spinner fa-spin'
+    }, {
+      xtype: 'button',
+      text: 'Please wait...',
+      iconCls: 'x-fa fa-spinner fa-spin'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Disabled State</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0',
+      disabled: true
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Disabled Primary'
+    }, {
+      xtype: 'button',
+      text: 'Disabled Secondary'
+    }, {
+      xtype: 'button',
+      text: 'Disabled Tertiary'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Interactive Demo</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: 'hbox',
+    defaults: {
+      margin: '0 4 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Start Process',
+      itemId: 'asyncBtn',
+      handler: function(btn) {
+        btn.setText('Processing...');
+        btn.setDisabled(true);
+        btn.setIconCls('x-fa fa-spinner fa-spin');
+
+        Ext.defer(function() {
+          btn.setText('Start Process');
+          btn.setDisabled(false);
+          btn.setIconCls('');
+        }, 2000);
+      }
+    }, {
+      xtype: 'button',
+      text: 'Disable',
+      itemId: 'toggleBtn',
+      handler: function(btn) {
+        const isDisabled = btn.disabled;
+        btn.setDisabled(!isDisabled);
+        btn.setText(isDisabled ? 'Re-enable' : 'Disable');
+      }
+    }, {
+      xtype: 'button',
+      text: 'Reset',
+      handler: function() {
+        console.log('Reset clicked');
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface ButtonState {
+  loading?: boolean;
+  disabled?: boolean;
+  variant: 'primary' | 'secondary' | 'tertiary';
+  label: string;
+}
+
+interface StateSection {
+  title: string;
+  buttons: ButtonState[];
+}
+
+interface StateVariationsProps {
+  onAsyncAction?: () => Promise<void>;
+  asyncDelay?: number;
+}
+
+export function StateVariationsExample({
+  onAsyncAction,
+  asyncDelay = 2000
+}: StateVariationsProps): JSX.Element {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleAsyncAction = async () => {
+    setIsLoading(true);
+
+    try {
+      if (onAsyncAction) {
+        await onAsyncAction();
+      } else {
+        await new Promise(resolve => setTimeout(resolve, asyncDelay));
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleToggle = () => {
+    setIsDisabled(prev => !prev);
+  };
+
+  const normalStates: ButtonState[] = [
+    { variant: 'primary', label: 'Primary Action' },
+    { variant: 'secondary', label: 'Secondary Action' },
+    { variant: 'tertiary', label: 'Tertiary Action' }
+  ];
+
+  const loadingStates: ButtonState[] = [
+    { variant: 'primary', label: 'Processing...', loading: true },
+    { variant: 'secondary', label: 'Loading...', loading: true },
+    { variant: 'tertiary', label: 'Please wait...', loading: true }
+  ];
+
+  const disabledStates: ButtonState[] = [
+    { variant: 'primary', label: 'Disabled Primary', disabled: true },
+    { variant: 'secondary', label: 'Disabled Secondary', disabled: true },
+    { variant: 'tertiary', label: 'Disabled Tertiary', disabled: true }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Button State Variations</Text>
+
+        <div>
+          <Text as="h4" variant="headingSm">Normal State</Text>
+          <ButtonGroup gap="tight">
+            {normalStates.map((state, index) => (
+              <Button key={index} variant={state.variant}>
+                {state.label}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Loading State</Text>
+          <ButtonGroup gap="tight">
+            {loadingStates.map((state, index) => (
+              <Button key={index} variant={state.variant} loading={state.loading}>
+                {state.label}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Disabled State</Text>
+          <ButtonGroup gap="tight">
+            {disabledStates.map((state, index) => (
+              <Button key={index} variant={state.variant} disabled={state.disabled}>
+                {state.label}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Interactive Demo</Text>
+          <ButtonGroup gap="tight">
+            <Button variant="primary" loading={isLoading} onClick={handleAsyncAction}>
+              {isLoading ? 'Processing...' : 'Start Process'}
+            </Button>
+            <Button variant="secondary" disabled={isDisabled} onClick={handleToggle}>
+              {isDisabled ? 'Re-enable' : 'Disable'}
+            </Button>
+            <Button variant="tertiary" onClick={() => console.log('Reset')}>
+              Reset
+            </Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default StateVariationsExample;`
+  },
+  'connected-buttons': {
+    react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+export function ConnectedButtonsExample() {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Connected Button Groups</Text>
+
+        <div>
+          <Text as="h4" variant="headingSm">Top Connected</Text>
+          <ButtonGroup connectedTop gap="tight">
+            <Button variant="primary">First</Button>
+            <Button variant="primary">Second</Button>
+            <Button variant="primary">Third</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Connected Segmented</Text>
+          <ButtonGroup segmented gap="tight">
+            <Button variant="primary">Option A</Button>
+            <Button variant="primary">Option B</Button>
+            <Button variant="primary">Option C</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Loose Spacing</Text>
+          <ButtonGroup gap="loose">
+            <Button variant="primary">Save</Button>
+            <Button variant="secondary">Cancel</Button>
+            <Button variant="tertiary">Help</Button>
+          </ButtonGroup>
+        </div>
+
+        <div>
+          <Text as="h4" variant="headingSm">Extra Tight Spacing</Text>
+          <ButtonGroup gap="extraTight">
+            <Button variant="primary">A</Button>
+            <Button variant="secondary">B</Button>
+            <Button variant="tertiary">C</Button>
+          </ButtonGroup>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ConnectedButtonsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="connected-buttons-demo">
+  <h3>Connected Button Groups</h3>
+
+  <div class="button-section">
+    <h4>Top Connected</h4>
+    <div class="button-group button-group-connected-top">
+      <button class="btn btn-primary">First</button>
+      <button class="btn btn-primary">Second</button>
+      <button class="btn btn-primary">Third</button>
+    </div>
+  </div>
+
+  <div class="button-section">
+    <h4>Connected Segmented</h4>
+    <div class="button-group button-group-segmented">
+      <button class="btn btn-primary">Option A</button>
+      <button class="btn btn-primary">Option B</button>
+      <button class="btn btn-primary">Option C</button>
+    </div>
+  </div>
+
+  <div class="button-section">
+    <h4>Loose Spacing</h4>
+    <div class="button-group button-group-loose">
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-secondary">Cancel</button>
+      <button class="btn btn-tertiary">Help</button>
+    </div>
+  </div>
+
+  <div class="button-section">
+    <h4>Extra Tight Spacing</h4>
+    <div class="button-group button-group-extra-tight">
+      <button class="btn btn-primary">A</button>
+      <button class="btn btn-secondary">B</button>
+      <button class="btn btn-tertiary">C</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.connected-buttons-demo {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.button-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+.button-group-connected-top {
+  border-top: 2px solid #0066cc;
+}
+.button-group-segmented {
+  display: inline-flex;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.button-group-segmented .btn {
+  border-radius: 0;
+  border-right: 1px solid #d1d5db;
+}
+.button-group-segmented .btn:last-child {
+  border-right: none;
+}
+.button-group-loose {
+  gap: 16px;
+}
+.button-group-extra-tight {
+  gap: 2px;
+}
+.btn {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-primary {
+  background: #0066cc;
+  color: white;
+  border-color: #0066cc;
+}
+.btn-secondary {
+  background: white;
+  color: #202223;
+}
+.btn-tertiary {
+  background: transparent;
+  color: #0066cc;
+  border-color: transparent;
+}
+</style>`,
+
+    extjs: `// ExtJS Connected Button Groups
+Ext.create('Ext.panel.Panel', {
+  title: 'Connected Button Groups',
+  bodyPadding: 16,
+  width: 500,
+  items: [{
+    xtype: 'container',
+    html: '<h4>Top Connected</h4>',
+    margin: '0 0 8 0'
+  }, {
+    xtype: 'toolbar',
+    border: false,
+    style: 'border-top: 2px solid #0066cc;',
+    items: [{
+      text: 'First'
+    }, {
+      text: 'Second'
+    }, {
+      text: 'Third'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Connected Segmented</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'segmentedbutton',
+    allowMultiple: false,
+    items: [{
+      text: 'Option A',
+      pressed: true
+    }, {
+      text: 'Option B'
+    }, {
+      text: 'Option C'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Loose Spacing</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'start'
+    },
+    defaults: {
+      margin: '0 16 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'Save'
+    }, {
+      xtype: 'button',
+      text: 'Cancel'
+    }, {
+      xtype: 'button',
+      text: 'Help'
+    }]
+  }, {
+    xtype: 'container',
+    html: '<h4 style="margin-top: 24px;">Extra Tight Spacing</h4>',
+    margin: '24 0 8 0'
+  }, {
+    xtype: 'container',
+    layout: {
+      type: 'hbox',
+      pack: 'start'
+    },
+    defaults: {
+      margin: '0 2 0 0'
+    },
+    items: [{
+      xtype: 'button',
+      text: 'A'
+    }, {
+      xtype: 'button',
+      text: 'B'
+    }, {
+      xtype: 'button',
+      text: 'C'
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+type GapSize = 'tight' | 'loose' | 'extraTight';
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+interface ButtonConfig {
+  label: string;
+  variant: ButtonVariant;
+}
+
+interface ButtonGroupConfig {
+  title: string;
+  connectedTop?: boolean;
+  segmented?: boolean;
+  gap?: GapSize;
+  buttons: ButtonConfig[];
+}
+
+interface ConnectedButtonsProps {
+  groups?: ButtonGroupConfig[];
+}
+
+const defaultGroups: ButtonGroupConfig[] = [
+  {
+    title: 'Top Connected',
+    connectedTop: true,
+    gap: 'tight',
+    buttons: [
+      { label: 'First', variant: 'primary' },
+      { label: 'Second', variant: 'primary' },
+      { label: 'Third', variant: 'primary' }
+    ]
+  },
+  {
+    title: 'Connected Segmented',
+    segmented: true,
+    gap: 'tight',
+    buttons: [
+      { label: 'Option A', variant: 'primary' },
+      { label: 'Option B', variant: 'primary' },
+      { label: 'Option C', variant: 'primary' }
+    ]
+  },
+  {
+    title: 'Loose Spacing',
+    gap: 'loose',
+    buttons: [
+      { label: 'Save', variant: 'primary' },
+      { label: 'Cancel', variant: 'secondary' },
+      { label: 'Help', variant: 'tertiary' }
+    ]
+  },
+  {
+    title: 'Extra Tight Spacing',
+    gap: 'extraTight',
+    buttons: [
+      { label: 'A', variant: 'primary' },
+      { label: 'B', variant: 'secondary' },
+      { label: 'C', variant: 'tertiary' }
+    ]
+  }
+];
+
+export function ConnectedButtonsExample({
+  groups = defaultGroups
+}: ConnectedButtonsProps): JSX.Element {
+  return (
+    <Card>
+      <BlockStack gap="600">
+        <Text as="h3" variant="headingMd">Connected Button Groups</Text>
+
+        {groups.map((group, index) => (
+          <div key={index}>
+            <Text as="h4" variant="headingSm">{group.title}</Text>
+            <ButtonGroup
+              connectedTop={group.connectedTop}
+              segmented={group.segmented}
+              gap={group.gap}
+            >
+              {group.buttons.map((button, btnIndex) => (
+                <Button key={btnIndex} variant={button.variant}>
+                  {button.label}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ConnectedButtonsExample;`
   }
 };
 

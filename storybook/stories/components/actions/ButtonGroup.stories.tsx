@@ -154,7 +154,7 @@ export const VariantGroup: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'variant-group'),
   },
 
 };
@@ -186,7 +186,7 @@ export const IconButtons: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'icon-buttons'),
   },
 
 };
@@ -345,7 +345,7 @@ export const SizeVariations: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'size-variations'),
   },
 
 };
@@ -393,7 +393,7 @@ export const ActionGroups: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'action-groups'),
   },
 
 };
@@ -471,7 +471,7 @@ export const StateVariations: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'state-variations'),
   },
 
 };
@@ -521,7 +521,7 @@ export const ConnectedButtons: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('buttongroup', 'default'),
+    codeVariants: getCodeVariants('buttongroup', 'connected-buttons'),
   },
 
 };
