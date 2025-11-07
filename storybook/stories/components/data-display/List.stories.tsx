@@ -69,6 +69,9 @@ export const BulletedList: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const NumberedList: Story = {
@@ -82,6 +85,9 @@ export const NumberedList: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const WithIcons: Story = {
@@ -95,6 +101,9 @@ export const WithIcons: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const WithBadges: Story = {
@@ -122,6 +131,9 @@ export const WithBadges: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const FeatureList: Story = {
@@ -138,6 +150,9 @@ export const FeatureList: Story = {
       </List>
     </div>
   ),
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
 };
 
 export const TaskList: Story = {
@@ -208,6 +223,10 @@ export const TaskList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const NavigationList: Story = {
@@ -264,6 +283,10 @@ export const NavigationList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const ChecklistList: Story = {
@@ -349,6 +372,10 @@ export const ChecklistList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const SpacingExamples: Story = {
@@ -386,6 +413,10 @@ export const SpacingExamples: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const NestedLists: Story = {
@@ -417,7 +448,11 @@ export const NestedLists: Story = {
         </List.Item>
       </List>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const InteractiveList: Story = {
@@ -483,6 +518,10 @@ export const InteractiveList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const ComparisonList: Story = {
@@ -530,7 +569,11 @@ export const ComparisonList: Story = {
         </List.Item>
       </List>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
 
 export const StatusList: Story = {
@@ -578,4 +621,8 @@ export const StatusList: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('list', 'bulleted'),
+  },
+
 };
