@@ -88,7 +88,11 @@ export const HorizontalBleed: Story = {
         </div>
       </Bleed>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const VerticalBleed: Story = {
@@ -124,7 +128,11 @@ export const VerticalBleed: Story = {
         </div>
       </Bleed>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const FullWidthSection: Story = {
@@ -188,7 +196,11 @@ export const FullWidthSection: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const CalloutBoxes: Story = {
@@ -279,7 +291,11 @@ export const CalloutBoxes: Story = {
         </Bleed>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const PricingTable: Story = {
@@ -377,7 +393,11 @@ export const PricingTable: Story = {
         ))}
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const StatusTimeline: Story = {
@@ -489,7 +509,11 @@ export const StatusTimeline: Story = {
         </Bleed>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };
 
 export const VisualSeparators: Story = {
@@ -550,5 +574,9 @@ export const VisualSeparators: Story = {
         </Bleed>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('bleed', 'default'),
+  },
+
 };

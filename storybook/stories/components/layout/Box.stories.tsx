@@ -145,7 +145,11 @@ export const PaddingExamples: Story = {
         <Text as="p" variant="bodySm">Extra loose padding</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const DirectionalPadding: Story = {
@@ -171,7 +175,11 @@ export const DirectionalPadding: Story = {
         <Text as="p" variant="bodySm">Different vertical and horizontal padding</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const BackgroundColors: Story = {
@@ -202,7 +210,11 @@ export const BackgroundColors: Story = {
         <Text as="p" variant="bodySm">Inverted background color</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const BorderStyles: Story = {
@@ -232,7 +244,11 @@ export const BorderStyles: Story = {
         <Text as="p" variant="bodySm">No border</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const BorderColors: Story = {
@@ -258,7 +274,11 @@ export const BorderColors: Story = {
         <Text as="p" variant="bodySm">Success border color</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const BorderRadiusExamples: Story = {
@@ -280,7 +300,11 @@ export const BorderRadiusExamples: Story = {
         <Text as="p" variant="bodySm">Full border radius (pill shape)</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const ShadowEffects: Story = {
@@ -311,7 +335,11 @@ export const ShadowEffects: Story = {
         <Text as="p" variant="bodySm">Very high elevation</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const SizingExamples: Story = {
@@ -369,7 +397,11 @@ export const SizingExamples: Story = {
         <Text as="p" variant="bodySm">Max 400px width, 60px height</Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const StatusIndicator: Story = {
@@ -438,7 +470,11 @@ export const StatusIndicator: Story = {
         </Text>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const CardAlternative: Story = {
@@ -505,6 +541,10 @@ export const CardAlternative: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };
 
 export const HighlightedContent: Story = {
@@ -565,5 +605,9 @@ export const HighlightedContent: Story = {
         </div>
       </Box>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('box', 'default'),
+  },
+
 };

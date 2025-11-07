@@ -168,7 +168,11 @@ export const ResponsiveGrid: Story = {
         </Card>
       </Grid>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };
 
 export const SpacingVariations: Story = {
@@ -249,7 +253,11 @@ export const SpacingVariations: Story = {
         </Grid>
       </div>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };
 
 export const DashboardLayout: Story = {
@@ -325,7 +333,11 @@ export const DashboardLayout: Story = {
         </Card>
       </Grid>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };
 
 export const ProductFeatures: Story = {
@@ -407,7 +419,11 @@ export const ProductFeatures: Story = {
         </Card>
       </Grid>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };
 
 export const FormSections: Story = {
@@ -516,7 +532,11 @@ export const FormSections: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };
 
 export const StatisticsGrid: Story = {
@@ -602,5 +622,9 @@ export const StatisticsGrid: Story = {
         </Card>
       </Grid>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
+
 };

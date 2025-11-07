@@ -122,7 +122,11 @@ export const SpacingVariations: Story = {
         </InlineStack>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const AlignmentOptions: Story = {
@@ -218,7 +222,11 @@ export const AlignmentOptions: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const ButtonGroups: Story = {
@@ -259,7 +267,11 @@ export const ButtonGroups: Story = {
         </div>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const TagCloud: Story = {
@@ -283,7 +295,11 @@ export const TagCloud: Story = {
         </InlineStack>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const ProgressIndicators: Story = {
@@ -380,7 +396,11 @@ export const ProgressIndicators: Story = {
         </InlineStack>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const StatusRow: Story = {
@@ -446,7 +466,11 @@ export const StatusRow: Story = {
         </InlineStack>
       </Card>
     </div>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const WrappedContent: Story = {
@@ -467,7 +491,11 @@ export const WrappedContent: Story = {
         </InlineStack>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
 
 export const MetricsRow: Story = {
@@ -502,5 +530,9 @@ export const MetricsRow: Story = {
         </InlineStack>
       </div>
     </Card>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('inlinestack', 'default'),
+  },
+
 };
