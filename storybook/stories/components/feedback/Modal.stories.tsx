@@ -194,7 +194,7 @@ export const Sizes: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('modal', 'default'),
+    codeVariants: getCodeVariants('modal', 'sizes'),
   },
 
 };

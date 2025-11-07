@@ -1046,8 +1046,1696 @@ function ModalExample({
     </div>
   );
 }`
+  },
+  'sizes': {
+    react: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ModalSizesExample() {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  const openModal = (size: string) => setActiveModal(size);
+  const closeModal = () => setActiveModal(null);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <div style={{display: 'flex', gap: '12px', flexWrap: 'wrap'}}>
+          <Button onClick={() => openModal('small')}>Small</Button>
+          <Button onClick={() => openModal('medium')}>Medium</Button>
+          <Button onClick={() => openModal('large')}>Large</Button>
+        </div>
+
+        <Modal
+          open={activeModal === 'small'}
+          onClose={closeModal}
+          title="Small Modal"
+          size="small"
+          primaryAction={{content: 'Close', onAction: closeModal}}
+        >
+          <Modal.Section>
+            <Text>A compact modal for simple interactions.</Text>
+          </Modal.Section>
+        </Modal>
+
+        <Modal
+          open={activeModal === 'medium'}
+          onClose={closeModal}
+          title="Medium Modal"
+          size="medium"
+          primaryAction={{content: 'Close', onAction: closeModal}}
+        >
+          <Modal.Section>
+            <Text>A medium-sized modal for moderate content.</Text>
+          </Modal.Section>
+        </Modal>
+
+        <Modal
+          open={activeModal === 'large'}
+          onClose={closeModal}
+          title="Large Modal"
+          size="large"
+          primaryAction={{content: 'Close', onAction: closeModal}}
+        >
+          <Modal.Section>
+            <Text>A large modal for complex content and forms.</Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `// Small modal window
+Ext.create('Ext.window.Window', {
+  title: 'Small Modal',
+  width: 400,
+  height: 150,
+  modal: true,
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    html: '<p>A compact modal for simple interactions.</p>'
+  }],
+  buttons: [{
+    text: 'Close',
+    handler: function() {
+      this.up('window').close();
+    }
+  }]
+});
+
+// Medium modal window (default size)
+Ext.create('Ext.window.Window', {
+  title: 'Medium Modal',
+  width: 600,
+  height: 200,
+  modal: true,
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    html: '<p>A medium-sized modal for moderate content.</p>'
+  }],
+  buttons: [{
+    text: 'Close',
+    handler: function() {
+      this.up('window').close();
+    }
+  }]
+});
+
+// Large modal window
+Ext.create('Ext.window.Window', {
+  title: 'Large Modal',
+  width: 900,
+  height: 600,
+  modal: true,
+  maximizable: true,
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    html: '<p>A large modal for complex content and forms.</p>'
+  }],
+  buttons: [{
+    text: 'Close',
+    handler: function() {
+      this.up('window').close();
+    }
+  }]
+});`,
+    vanilla: `<!-- HTML Structure -->
+<button id="small-btn" class="button">Small</button>
+<button id="medium-btn" class="button">Medium</button>
+<button id="large-btn" class="button">Large</button>
+
+<div class="polaris-modal-backdrop" id="modal-backdrop">
+  <div class="polaris-modal" id="modal-dialog" role="dialog" aria-modal="true">
+    <div class="polaris-modal__header">
+      <h2 id="modal-title" class="polaris-modal__title"></h2>
+      <button class="polaris-modal__close" aria-label="Close modal">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <p id="modal-content"></p>
+    </div>
+    <div class="polaris-modal__footer">
+      <button class="button button--primary" id="close-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modalBackdrop = document.getElementById('modal-backdrop');
+const modalDialog = document.getElementById('modal-dialog');
+const modalTitle = document.getElementById('modal-title');
+const modalContent = document.getElementById('modal-content');
+const closeBtn = document.getElementById('close-btn');
+
+const sizes = {
+  small: {width: '400px', title: 'Small Modal', content: 'A compact modal for simple interactions.'},
+  medium: {width: '600px', title: 'Medium Modal', content: 'A medium-sized modal for moderate content.'},
+  large: {width: '900px', title: 'Large Modal', content: 'A large modal for complex content and forms.'}
+};
+
+function openModal(size) {
+  const config = sizes[size];
+  modalDialog.style.width = config.width;
+  modalTitle.textContent = config.title;
+  modalContent.textContent = config.content;
+  modalBackdrop.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalBackdrop.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('small-btn').addEventListener('click', () => openModal('small'));
+document.getElementById('medium-btn').addEventListener('click', () => openModal('medium'));
+document.getElementById('large-btn').addEventListener('click', () => openModal('large'));
+closeBtn.addEventListener('click', closeModal);
+document.querySelector('.polaris-modal__close').addEventListener('click', closeModal);
+
+modalBackdrop.addEventListener('click', (e) => {
+  if (e.target === modalBackdrop) closeModal();
+});
+</script>`,
+    typescript: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+type ModalSize = 'small' | 'medium' | 'large' | null;
+
+interface ModalConfig {
+  title: string;
+  content: string;
+  size: 'small' | 'medium' | 'large';
+}
+
+const modalConfigs: Record<string, ModalConfig> = {
+  small: {
+    title: 'Small Modal',
+    content: 'A compact modal for simple interactions.',
+    size: 'small'
+  },
+  medium: {
+    title: 'Medium Modal',
+    content: 'A medium-sized modal for moderate content.',
+    size: 'medium'
+  },
+  large: {
+    title: 'Large Modal',
+    content: 'A large modal for complex content and forms.',
+    size: 'large'
   }
 };
+
+function ModalSizesExample(): JSX.Element {
+  const [activeModal, setActiveModal] = useState<ModalSize>(null);
+
+  const openModal = useCallback((size: ModalSize) => setActiveModal(size), []);
+  const closeModal = useCallback(() => setActiveModal(null), []);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <div style={{display: 'flex', gap: '12px', flexWrap: 'wrap'}}>
+          {Object.keys(modalConfigs).map(size => (
+            <Button key={size} onClick={() => openModal(size as ModalSize)}>
+              {size.charAt(0).toUpperCase() + size.slice(1)}
+            </Button>
+          ))}
+        </div>
+
+        {Object.entries(modalConfigs).map(([key, config]) => (
+          <Modal
+            key={key}
+            open={activeModal === key}
+            onClose={closeModal}
+            title={config.title}
+            size={config.size}
+            primaryAction={{content: 'Close', onAction: closeModal}}
+          >
+            <Modal.Section>
+              <Text>{config.content}</Text>
+            </Modal.Section>
+          </Modal>
+        ))}
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'form-modal': {
+    react: `import {Button, Frame, Modal, TextField, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function FormModalExample() {
+  const [active, setActive] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: ''
+  });
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  const handleFieldChange = useCallback((field: string, value: string) => {
+    setFormData(prev => ({...prev, [field]: value}));
+  }, []);
+
+  const handleSave = useCallback(() => {
+    console.log('Form submitted:', formData);
+    setActive(false);
+    // Reset form
+    setFormData({name: '', email: '', company: ''});
+  }, [formData]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Create Customer</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Create New Customer"
+          primaryAction={{
+            content: 'Create Customer',
+            onAction: handleSave
+          }}
+          secondaryActions={[{
+            content: 'Cancel',
+            onAction: handleChange
+          }]}
+        >
+          <Modal.Section>
+            <FormLayout>
+              <TextField
+                label="Customer Name"
+                value={formData.name}
+                onChange={(value) => handleFieldChange('name', value)}
+                placeholder="Enter customer name"
+                autoComplete="name"
+              />
+              <TextField
+                label="Email Address"
+                value={formData.email}
+                onChange={(value) => handleFieldChange('email', value)}
+                placeholder="customer@example.com"
+                type="email"
+                autoComplete="email"
+              />
+              <TextField
+                label="Company"
+                value={formData.company}
+                onChange={(value) => handleFieldChange('company', value)}
+                placeholder="Enter company name"
+                autoComplete="organization"
+              />
+            </FormLayout>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.define('CustomerFormWindow', {
+  extend: 'Ext.window.Window',
+  title: 'Create New Customer',
+  width: 500,
+  modal: true,
+  layout: 'fit',
+
+  items: [{
+    xtype: 'form',
+    bodyPadding: 20,
+    defaults: {
+      anchor: '100%',
+      labelWidth: 120
+    },
+    items: [{
+      xtype: 'textfield',
+      name: 'name',
+      fieldLabel: 'Customer Name',
+      emptyText: 'Enter customer name',
+      allowBlank: false
+    }, {
+      xtype: 'textfield',
+      name: 'email',
+      fieldLabel: 'Email Address',
+      vtype: 'email',
+      emptyText: 'customer@example.com',
+      allowBlank: false
+    }, {
+      xtype: 'textfield',
+      name: 'company',
+      fieldLabel: 'Company',
+      emptyText: 'Enter company name'
+    }]
+  }],
+
+  buttons: [{
+    text: 'Cancel',
+    handler: function() {
+      this.up('window').close();
+    }
+  }, {
+    text: 'Create Customer',
+    ui: 'primary',
+    formBind: true,
+    handler: function() {
+      const form = this.up('window').down('form').getForm();
+      if (form.isValid()) {
+        const values = form.getValues();
+        console.log('Form submitted:', values);
+        this.up('window').close();
+      }
+    }
+  }]
+});
+
+// Show the window
+Ext.create('CustomerFormWindow').show();`,
+    vanilla: `<!-- HTML Structure -->
+<button id="create-customer-btn" class="button">Create Customer</button>
+
+<div class="polaris-modal-backdrop" id="form-modal">
+  <div class="polaris-modal" role="dialog" aria-labelledby="form-modal-title">
+    <div class="polaris-modal__header">
+      <h2 id="form-modal-title" class="polaris-modal__title">Create New Customer</h2>
+      <button class="polaris-modal__close" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <form id="customer-form">
+        <div class="form-field">
+          <label for="customer-name">Customer Name</label>
+          <input type="text" id="customer-name" name="name" placeholder="Enter customer name" required>
+        </div>
+        <div class="form-field">
+          <label for="customer-email">Email Address</label>
+          <input type="email" id="customer-email" name="email" placeholder="customer@example.com" required>
+        </div>
+        <div class="form-field">
+          <label for="customer-company">Company</label>
+          <input type="text" id="customer-company" name="company" placeholder="Enter company name">
+        </div>
+      </form>
+    </div>
+    <div class="polaris-modal__footer">
+      <button type="button" class="button button--secondary" id="cancel-btn">Cancel</button>
+      <button type="submit" class="button button--primary" id="submit-btn">Create Customer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('form-modal');
+const form = document.getElementById('customer-form');
+const openBtn = document.getElementById('create-customer-btn');
+const closeBtn = modal.querySelector('.polaris-modal__close');
+const cancelBtn = document.getElementById('cancel-btn');
+const submitBtn = document.getElementById('submit-btn');
+
+function openModal() {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('customer-name').focus();
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  form.reset();
+}
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+cancelBtn.addEventListener('click', closeModal);
+
+submitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (form.checkValidity()) {
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    console.log('Form submitted:', data);
+    closeModal();
+  } else {
+    form.reportValidity();
+  }
+});
+</script>`,
+    typescript: `import {Button, Frame, Modal, TextField, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CustomerFormData {
+  name: string;
+  email: string;
+  company: string;
+}
+
+interface FormFieldConfig {
+  key: keyof CustomerFormData;
+  label: string;
+  placeholder: string;
+  type?: string;
+  autoComplete?: string;
+}
+
+const formFields: FormFieldConfig[] = [
+  {key: 'name', label: 'Customer Name', placeholder: 'Enter customer name', autoComplete: 'name'},
+  {key: 'email', label: 'Email Address', placeholder: 'customer@example.com', type: 'email', autoComplete: 'email'},
+  {key: 'company', label: 'Company', placeholder: 'Enter company name', autoComplete: 'organization'}
+];
+
+const initialFormData: CustomerFormData = {
+  name: '',
+  email: '',
+  company: ''
+};
+
+function FormModalExample(): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [formData, setFormData] = useState<CustomerFormData>(initialFormData);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  const handleFieldChange = useCallback((field: keyof CustomerFormData, value: string) => {
+    setFormData(prev => ({...prev, [field]: value}));
+  }, []);
+
+  const handleSave = useCallback(() => {
+    console.log('Form submitted:', formData);
+    setActive(false);
+    setFormData(initialFormData);
+  }, [formData]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Create Customer</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Create New Customer"
+          primaryAction={{content: 'Create Customer', onAction: handleSave}}
+          secondaryActions={[{content: 'Cancel', onAction: handleChange}]}
+        >
+          <Modal.Section>
+            <FormLayout>
+              {formFields.map(field => (
+                <TextField
+                  key={field.key}
+                  label={field.label}
+                  value={formData[field.key]}
+                  onChange={(value) => handleFieldChange(field.key, value)}
+                  placeholder={field.placeholder}
+                  type={field.type}
+                  autoComplete={field.autoComplete}
+                />
+              ))}
+            </FormLayout>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'without-actions': {
+    react: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ModalWithoutActionsExample() {
+  const [active, setActive] = useState(false);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Show Terms</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Terms and Conditions"
+          limitHeight
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>1. Acceptance of Terms</h4>
+              <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+              <h4>2. Use License</h4>
+              <p>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.</p>
+
+              <h4>3. Disclaimer</h4>
+              <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied.</p>
+
+              <h4>4. Limitations</h4>
+              <p>In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials.</p>
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'Terms and Conditions',
+  width: 600,
+  height: 400,
+  modal: true,
+  closable: true,
+  maximizable: true,
+  layout: 'fit',
+  autoScroll: true,
+
+  // No buttons - close button only
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    autoScroll: true,
+    html: \`
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+      <h3>2. Use License</h3>
+      <p>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.</p>
+
+      <h3>3. Disclaimer</h3>
+      <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied.</p>
+
+      <h3>4. Limitations</h3>
+      <p>In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials.</p>
+    \`
+  }],
+
+  listeners: {
+    close: function() {
+      console.log('Terms modal closed');
+    }
+  }
+}).show();`,
+    vanilla: `<!-- HTML Structure -->
+<button id="show-terms-btn" class="button">Show Terms</button>
+
+<div class="polaris-modal-backdrop" id="terms-modal">
+  <div class="polaris-modal polaris-modal--scrollable" role="dialog" aria-labelledby="terms-title">
+    <div class="polaris-modal__header">
+      <h2 id="terms-title" class="polaris-modal__title">Terms and Conditions</h2>
+      <button class="polaris-modal__close" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <div class="terms-content">
+        <h4>1. Acceptance of Terms</h4>
+        <p>By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.</p>
+
+        <h4>2. Use License</h4>
+        <p>Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.</p>
+
+        <h4>3. Disclaimer</h4>
+        <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied.</p>
+
+        <h4>4. Limitations</h4>
+        <p>In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('terms-modal');
+const openBtn = document.getElementById('show-terms-btn');
+const closeBtn = modal.querySelector('.polaris-modal__close');
+
+function openModal() {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+
+// Close on backdrop click
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) {
+    closeModal();
+  }
+});
+</script>`,
+    typescript: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TermsSection {
+  title: string;
+  content: string;
+}
+
+const termsContent: TermsSection[] = [
+  {
+    title: '1. Acceptance of Terms',
+    content: 'By accessing and using this service, you accept and agree to be bound by the terms and provision of this agreement.'
+  },
+  {
+    title: '2. Use License',
+    content: 'Permission is granted to temporarily download one copy of the materials on our website for personal, non-commercial transitory viewing only.'
+  },
+  {
+    title: '3. Disclaimer',
+    content: 'The materials on our website are provided on an \\'as is\\' basis. We make no warranties, expressed or implied.'
+  },
+  {
+    title: '4. Limitations',
+    content: 'In no event shall our company or its suppliers be liable for any damages arising out of the use or inability to use the materials.'
+  }
+];
+
+function ModalWithoutActionsExample(): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Show Terms</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Terms and Conditions"
+          limitHeight
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              {termsContent.map((section, index) => (
+                <div key={index}>
+                  <h4>{section.title}</h4>
+                  <p>{section.content}</p>
+                </div>
+              ))}
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'with-footer': {
+    react: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ModalWithFooterExample() {
+  const [active, setActive] = useState(false);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Show Details</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Order Details"
+          primaryAction={{
+            content: 'Process Order',
+            onAction: handleChange
+          }}
+          footer
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>Order Information</h4>
+              <p><strong>Order #:</strong> 1001</p>
+              <p><strong>Date:</strong> November 5, 2025</p>
+              <p><strong>Status:</strong> Pending</p>
+              <p><strong>Total:</strong> $299.99</p>
+            </Text>
+          </Modal.Section>
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>Customer Information</h4>
+              <p><strong>Name:</strong> John Doe</p>
+              <p><strong>Email:</strong> john.doe@example.com</p>
+              <p><strong>Phone:</strong> (555) 123-4567</p>
+            </Text>
+          </Modal.Section>
+          <Modal.Section title="Order Items">
+            <Text as="div" variant="bodyMd">
+              <p>• Premium Widget (x2) - $199.98</p>
+              <p>• Standard Widget (x1) - $99.99</p>
+              <p><strong>Subtotal:</strong> $299.97</p>
+              <p><strong>Tax:</strong> $0.02</p>
+              <p><strong>Total:</strong> $299.99</p>
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'Order Details',
+  width: 600,
+  height: 500,
+  modal: true,
+  layout: 'fit',
+  autoScroll: true,
+
+  items: [{
+    xtype: 'panel',
+    layout: {
+      type: 'vbox',
+      align: 'stretch'
+    },
+    bodyPadding: 20,
+    items: [{
+      xtype: 'panel',
+      title: 'Order Information',
+      bodyPadding: 10,
+      html: \`
+        <p><strong>Order #:</strong> 1001</p>
+        <p><strong>Date:</strong> November 5, 2025</p>
+        <p><strong>Status:</strong> Pending</p>
+        <p><strong>Total:</strong> $299.99</p>
+      \`
+    }, {
+      xtype: 'panel',
+      title: 'Customer Information',
+      bodyPadding: 10,
+      margin: '10 0 0 0',
+      html: \`
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Email:</strong> john.doe@example.com</p>
+        <p><strong>Phone:</strong> (555) 123-4567</p>
+      \`
+    }, {
+      xtype: 'panel',
+      title: 'Order Items',
+      bodyPadding: 10,
+      margin: '10 0 0 0',
+      html: \`
+        <p>• Premium Widget (x2) - $199.98</p>
+        <p>• Standard Widget (x1) - $99.99</p>
+        <p><strong>Subtotal:</strong> $299.97</p>
+        <p><strong>Tax:</strong> $0.02</p>
+        <p><strong>Total:</strong> $299.99</p>
+      \`
+    }]
+  }],
+
+  buttons: [{
+    text: 'Process Order',
+    ui: 'primary',
+    handler: function() {
+      console.log('Processing order...');
+      this.up('window').close();
+    }
+  }]
+}).show();`,
+    vanilla: `<!-- HTML Structure -->
+<button id="show-details-btn" class="button">Show Details</button>
+
+<div class="polaris-modal-backdrop" id="details-modal">
+  <div class="polaris-modal" role="dialog" aria-labelledby="details-title">
+    <div class="polaris-modal__header">
+      <h2 id="details-title" class="polaris-modal__title">Order Details</h2>
+      <button class="polaris-modal__close" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <div class="modal-section">
+        <h4>Order Information</h4>
+        <p><strong>Order #:</strong> 1001</p>
+        <p><strong>Date:</strong> November 5, 2025</p>
+        <p><strong>Status:</strong> Pending</p>
+        <p><strong>Total:</strong> $299.99</p>
+      </div>
+      <div class="modal-section">
+        <h4>Customer Information</h4>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Email:</strong> john.doe@example.com</p>
+        <p><strong>Phone:</strong> (555) 123-4567</p>
+      </div>
+      <div class="modal-section">
+        <h4>Order Items</h4>
+        <p>• Premium Widget (x2) - $199.98</p>
+        <p>• Standard Widget (x1) - $99.99</p>
+        <p><strong>Subtotal:</strong> $299.97</p>
+        <p><strong>Tax:</strong> $0.02</p>
+        <p><strong>Total:</strong> $299.99</p>
+      </div>
+    </div>
+    <div class="polaris-modal__footer">
+      <button class="button button--primary" id="process-btn">Process Order</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('details-modal');
+const openBtn = document.getElementById('show-details-btn');
+const closeBtn = modal.querySelector('.polaris-modal__close');
+const processBtn = document.getElementById('process-btn');
+
+function openModal() {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+processBtn.addEventListener('click', () => {
+  console.log('Processing order...');
+  closeModal();
+});
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
+});
+</script>`,
+    typescript: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface OrderDetails {
+  orderId: number;
+  date: string;
+  status: string;
+  total: string;
+}
+
+interface CustomerDetails {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+interface OrderItem {
+  description: string;
+  price: string;
+}
+
+interface OrderData {
+  order: OrderDetails;
+  customer: CustomerDetails;
+  items: OrderItem[];
+  subtotal: string;
+  tax: string;
+  total: string;
+}
+
+const orderData: OrderData = {
+  order: {orderId: 1001, date: 'November 5, 2025', status: 'Pending', total: '$299.99'},
+  customer: {name: 'John Doe', email: 'john.doe@example.com', phone: '(555) 123-4567'},
+  items: [
+    {description: 'Premium Widget (x2)', price: '$199.98'},
+    {description: 'Standard Widget (x1)', price: '$99.99'}
+  ],
+  subtotal: '$299.97',
+  tax: '$0.02',
+  total: '$299.99'
+};
+
+function ModalWithFooterExample(): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Show Details</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Order Details"
+          primaryAction={{content: 'Process Order', onAction: handleChange}}
+          footer
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>Order Information</h4>
+              <p><strong>Order #:</strong> {orderData.order.orderId}</p>
+              <p><strong>Date:</strong> {orderData.order.date}</p>
+              <p><strong>Status:</strong> {orderData.order.status}</p>
+              <p><strong>Total:</strong> {orderData.order.total}</p>
+            </Text>
+          </Modal.Section>
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>Customer Information</h4>
+              <p><strong>Name:</strong> {orderData.customer.name}</p>
+              <p><strong>Email:</strong> {orderData.customer.email}</p>
+              <p><strong>Phone:</strong> {orderData.customer.phone}</p>
+            </Text>
+          </Modal.Section>
+          <Modal.Section title="Order Items">
+            <Text as="div" variant="bodyMd">
+              {orderData.items.map((item, idx) => (
+                <p key={idx}>• {item.description} - {item.price}</p>
+              ))}
+              <p><strong>Subtotal:</strong> {orderData.subtotal}</p>
+              <p><strong>Tax:</strong> {orderData.tax}</p>
+              <p><strong>Total:</strong> {orderData.total}</p>
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'nested': {
+    react: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function NestedModalsExample() {
+  const [activePrimary, setActivePrimary] = useState(false);
+  const [activeSecondary, setActiveSecondary] = useState(false);
+
+  const handlePrimary = useCallback(() => setActivePrimary(!activePrimary), [activePrimary]);
+  const handleSecondary = useCallback(() => setActiveSecondary(!activeSecondary), [activeSecondary]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handlePrimary}>Open Primary Modal</Button>
+
+        <Modal
+          open={activePrimary}
+          onClose={handlePrimary}
+          title="Primary Modal"
+          primaryAction={{
+            content: 'Open Secondary',
+            onAction: handleSecondary
+          }}
+          secondaryActions={[{
+            content: 'Cancel',
+            onAction: handlePrimary
+          }]}
+        >
+          <Modal.Section>
+            <Text variant="bodyMd">
+              This is the primary modal. You can open a secondary modal from here to demonstrate layering.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        <Modal
+          open={activeSecondary}
+          onClose={handleSecondary}
+          title="Secondary Modal"
+          primaryAction={{
+            content: 'Confirm',
+            onAction: handleSecondary
+          }}
+          secondaryActions={[{
+            content: 'Cancel',
+            onAction: handleSecondary
+          }]}
+        >
+          <Modal.Section>
+            <Text variant="bodyMd">
+              This is a nested modal that appears on top of the primary modal.
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `// Primary modal window
+const primaryWindow = Ext.create('Ext.window.Window', {
+  title: 'Primary Modal',
+  width: 500,
+  height: 200,
+  modal: true,
+  layout: 'fit',
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    html: '<p>This is the primary modal. You can open a secondary modal from here to demonstrate layering.</p>'
+  }],
+  buttons: [{
+    text: 'Cancel',
+    handler: function() {
+      this.up('window').close();
+    }
+  }, {
+    text: 'Open Secondary',
+    ui: 'primary',
+    handler: function() {
+      // Create secondary modal
+      Ext.create('Ext.window.Window', {
+        title: 'Secondary Modal',
+        width: 400,
+        height: 150,
+        modal: true,
+        layout: 'fit',
+        items: [{
+          xtype: 'panel',
+          bodyPadding: 20,
+          html: '<p>This is a nested modal that appears on top of the primary modal.</p>'
+        }],
+        buttons: [{
+          text: 'Cancel',
+          handler: function() {
+            this.up('window').close();
+          }
+        }, {
+          text: 'Confirm',
+          ui: 'primary',
+          handler: function() {
+            console.log('Confirmed');
+            this.up('window').close();
+          }
+        }]
+      }).show();
+    }
+  }]
+});
+
+primaryWindow.show();`,
+    vanilla: `<!-- HTML Structure -->
+<button id="open-primary-btn" class="button">Open Primary Modal</button>
+
+<!-- Primary Modal -->
+<div class="polaris-modal-backdrop" id="primary-modal">
+  <div class="polaris-modal" role="dialog" aria-labelledby="primary-title">
+    <div class="polaris-modal__header">
+      <h2 id="primary-title" class="polaris-modal__title">Primary Modal</h2>
+      <button class="polaris-modal__close" data-modal="primary" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <p>This is the primary modal. You can open a secondary modal from here to demonstrate layering.</p>
+    </div>
+    <div class="polaris-modal__footer">
+      <button class="button button--secondary" data-action="cancel-primary">Cancel</button>
+      <button class="button button--primary" id="open-secondary-btn">Open Secondary</button>
+    </div>
+  </div>
+</div>
+
+<!-- Secondary Modal -->
+<div class="polaris-modal-backdrop" id="secondary-modal" style="z-index: 1001;">
+  <div class="polaris-modal" role="dialog" aria-labelledby="secondary-title">
+    <div class="polaris-modal__header">
+      <h2 id="secondary-title" class="polaris-modal__title">Secondary Modal</h2>
+      <button class="polaris-modal__close" data-modal="secondary" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body">
+      <p>This is a nested modal that appears on top of the primary modal.</p>
+    </div>
+    <div class="polaris-modal__footer">
+      <button class="button button--secondary" data-action="cancel-secondary">Cancel</button>
+      <button class="button button--primary" data-action="confirm-secondary">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const primaryModal = document.getElementById('primary-modal');
+const secondaryModal = document.getElementById('secondary-modal');
+
+function openModal(modal) {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modal) {
+  modal.classList.remove('active');
+  if (!primaryModal.classList.contains('active') && !secondaryModal.classList.contains('active')) {
+    document.body.style.overflow = '';
+  }
+}
+
+document.getElementById('open-primary-btn').addEventListener('click', () => openModal(primaryModal));
+document.getElementById('open-secondary-btn').addEventListener('click', () => openModal(secondaryModal));
+
+document.querySelectorAll('[data-modal]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const modal = e.target.dataset.modal === 'primary' ? primaryModal : secondaryModal;
+    closeModal(modal);
+  });
+});
+
+document.querySelectorAll('[data-action]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const action = e.target.dataset.action;
+    if (action.includes('primary')) closeModal(primaryModal);
+    if (action.includes('secondary')) {
+      if (action === 'confirm-secondary') console.log('Confirmed');
+      closeModal(secondaryModal);
+    }
+  });
+});
+</script>`,
+    typescript: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface ModalState {
+  primary: boolean;
+  secondary: boolean;
+}
+
+function NestedModalsExample(): JSX.Element {
+  const [modalState, setModalState] = useState<ModalState>({
+    primary: false,
+    secondary: false
+  });
+
+  const toggleModal = useCallback((modal: keyof ModalState) => {
+    setModalState(prev => ({...prev, [modal]: !prev[modal]}));
+  }, []);
+
+  const openSecondary = useCallback(() => {
+    setModalState(prev => ({...prev, secondary: true}));
+  }, []);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={() => toggleModal('primary')}>Open Primary Modal</Button>
+
+        <Modal
+          open={modalState.primary}
+          onClose={() => toggleModal('primary')}
+          title="Primary Modal"
+          primaryAction={{content: 'Open Secondary', onAction: openSecondary}}
+          secondaryActions={[{content: 'Cancel', onAction: () => toggleModal('primary')}]}
+        >
+          <Modal.Section>
+            <Text variant="bodyMd">
+              This is the primary modal. You can open a secondary modal from here to demonstrate layering.
+            </Text>
+          </Modal.Section>
+        </Modal>
+
+        <Modal
+          open={modalState.secondary}
+          onClose={() => toggleModal('secondary')}
+          title="Secondary Modal"
+          primaryAction={{content: 'Confirm', onAction: () => toggleModal('secondary')}}
+          secondaryActions={[{content: 'Cancel', onAction: () => toggleModal('secondary')}]}
+        >
+          <Modal.Section>
+            <Text variant="bodyMd">
+              This is a nested modal that appears on top of the primary modal.
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'iframe': {
+    react: `import {Button, Frame, Modal} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function IframeModalExample() {
+  const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = useCallback(() => {
+    setActive(!active);
+    if (!active) {
+      setLoading(true);
+    }
+  }, [active]);
+
+  const handleIframeLoad = useCallback(() => {
+    setLoading(false);
+  }, []);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Open External Content</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="External Content"
+          size="large"
+          loading={loading}
+          src="https://www.shopify.com"
+          iFrameName="external-content"
+          onIFrameLoad={handleIframeLoad}
+        />
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'External Content',
+  width: 900,
+  height: 600,
+  modal: true,
+  maximizable: true,
+  layout: 'fit',
+
+  items: [{
+    xtype: 'component',
+    autoEl: {
+      tag: 'iframe',
+      src: 'https://www.shopify.com',
+      name: 'external-content',
+      frameborder: 0,
+      style: 'width: 100%; height: 100%; border: none;'
+    },
+    listeners: {
+      afterrender: function(component) {
+        const iframe = component.el.dom;
+
+        // Show loading mask
+        const mask = new Ext.LoadMask({
+          msg: 'Loading...',
+          target: component.up('window')
+        });
+        mask.show();
+
+        // Hide loading mask when iframe loads
+        iframe.addEventListener('load', function() {
+          mask.hide();
+        });
+      }
+    }
+  }],
+
+  buttons: [{
+    text: 'Close',
+    handler: function() {
+      this.up('window').close();
+    }
+  }]
+}).show();`,
+    vanilla: `<!-- HTML Structure -->
+<button id="open-iframe-btn" class="button">Open External Content</button>
+
+<div class="polaris-modal-backdrop" id="iframe-modal">
+  <div class="polaris-modal polaris-modal--large" role="dialog" aria-labelledby="iframe-title">
+    <div class="polaris-modal__header">
+      <h2 id="iframe-title" class="polaris-modal__title">External Content</h2>
+      <button class="polaris-modal__close" aria-label="Close">×</button>
+    </div>
+    <div class="polaris-modal__body" style="padding: 0;">
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner">Loading...</div>
+      </div>
+      <iframe
+        id="external-iframe"
+        name="external-content"
+        src="https://www.shopify.com"
+        style="width: 100%; height: 500px; border: none; display: none;"
+        title="External Content">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('iframe-modal');
+const iframe = document.getElementById('external-iframe');
+const loading = document.getElementById('loading-overlay');
+const openBtn = document.getElementById('open-iframe-btn');
+const closeBtn = modal.querySelector('.polaris-modal__close');
+
+function openModal() {
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  loading.style.display = 'flex';
+  iframe.style.display = 'none';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+iframe.addEventListener('load', () => {
+  loading.style.display = 'none';
+  iframe.style.display = 'block';
+});
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
+});
+</script>
+
+<style>
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+}
+</style>`,
+    typescript: `import {Button, Frame, Modal} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface IframeModalProps {
+  src: string;
+  title: string;
+  iframeName?: string;
+  size?: 'small' | 'medium' | 'large' | 'fullScreen';
+}
+
+function IframeModalExample(): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const modalConfig: IframeModalProps = {
+    src: 'https://www.shopify.com',
+    title: 'External Content',
+    iframeName: 'external-content',
+    size: 'large'
+  };
+
+  const handleChange = useCallback(() => {
+    setActive(!active);
+    if (!active) {
+      setLoading(true);
+    }
+  }, [active]);
+
+  const handleIframeLoad = useCallback(() => {
+    setLoading(false);
+  }, []);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Open External Content</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title={modalConfig.title}
+          size={modalConfig.size}
+          loading={loading}
+          src={modalConfig.src}
+          iFrameName={modalConfig.iframeName}
+          onIFrameLoad={handleIframeLoad}
+        />
+      </Frame>
+    </div>
+  );
+}`
+  },
+  'accessibility': {
+    react: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function AccessibilityDemoExample() {
+  const [active, setActive] = useState(false);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange}>Accessible Modal</Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Accessibility Features"
+          primaryAction={{
+            content: 'Got it',
+            onAction: handleChange
+          }}
+          secondaryActions={[{
+            content: 'Skip',
+            onAction: handleChange
+          }]}
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              <h4>Screen Reader Support</h4>
+              <p>This modal is fully accessible with screen readers. It includes:</p>
+              <ul>
+                <li>Proper ARIA attributes</li>
+                <li>Focus management</li>
+                <li>Keyboard navigation</li>
+                <li>Role announcements</li>
+              </ul>
+
+              <h4>Keyboard Navigation</h4>
+              <p>• Press <kbd>Tab</kbd> to navigate between focusable elements</p>
+              <p>• Press <kbd>Shift + Tab</kbd> to navigate backwards</p>
+              <p>• Press <kbd>Escape</kbd> to close the modal</p>
+              <p>• Focus is trapped within the modal</p>
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`,
+    extjs: `Ext.create('Ext.window.Window', {
+  title: 'Accessibility Features',
+  width: 600,
+  height: 400,
+  modal: true,
+  layout: 'fit',
+
+  // Accessibility attributes
+  ariaRole: 'dialog',
+  ariaLabel: 'Accessibility Features Modal',
+
+  items: [{
+    xtype: 'panel',
+    bodyPadding: 20,
+    autoScroll: true,
+    html: \`
+      <h3>Screen Reader Support</h3>
+      <p>This modal is fully accessible with screen readers. It includes:</p>
+      <ul>
+        <li>Proper ARIA attributes</li>
+        <li>Focus management</li>
+        <li>Keyboard navigation</li>
+        <li>Role announcements</li>
+      </ul>
+
+      <h3>Keyboard Navigation</h3>
+      <p>• Press <kbd>Tab</kbd> to navigate between focusable elements</p>
+      <p>• Press <kbd>Shift + Tab</kbd> to navigate backwards</p>
+      <p>• Press <kbd>Escape</kbd> to close the modal</p>
+      <p>• Focus is trapped within the modal</p>
+    \`
+  }],
+
+  buttons: [{
+    text: 'Skip',
+    handler: function() {
+      this.up('window').close();
+    }
+  }, {
+    text: 'Got it',
+    ui: 'primary',
+    handler: function() {
+      this.up('window').close();
+    }
+  }],
+
+  listeners: {
+    show: function(win) {
+      // Ensure focus is on first button
+      const firstButton = win.down('button');
+      if (firstButton) {
+        firstButton.focus();
+      }
+    }
+  }
+}).show();`,
+    vanilla: `<!-- HTML Structure with full ARIA support -->
+<button id="accessible-modal-btn" class="button" aria-haspopup="dialog">
+  Accessible Modal
+</button>
+
+<div class="polaris-modal-backdrop" id="accessible-modal" role="dialog" aria-modal="true" aria-labelledby="accessible-title" aria-describedby="accessible-desc">
+  <div class="polaris-modal" tabindex="-1">
+    <div class="polaris-modal__header">
+      <h2 id="accessible-title" class="polaris-modal__title">Accessibility Features</h2>
+      <button class="polaris-modal__close" aria-label="Close modal" type="button">×</button>
+    </div>
+    <div class="polaris-modal__body" id="accessible-desc">
+      <h4>Screen Reader Support</h4>
+      <p>This modal is fully accessible with screen readers. It includes:</p>
+      <ul>
+        <li>Proper ARIA attributes</li>
+        <li>Focus management</li>
+        <li>Keyboard navigation</li>
+        <li>Role announcements</li>
+      </ul>
+
+      <h4>Keyboard Navigation</h4>
+      <p>• Press <kbd>Tab</kbd> to navigate between focusable elements</p>
+      <p>• Press <kbd>Shift + Tab</kbd> to navigate backwards</p>
+      <p>• Press <kbd>Escape</kbd> to close the modal</p>
+      <p>• Focus is trapped within the modal</p>
+    </div>
+    <div class="polaris-modal__footer">
+      <button class="button button--secondary" type="button">Skip</button>
+      <button class="button button--primary" type="button">Got it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal = document.getElementById('accessible-modal');
+const openBtn = document.getElementById('accessible-modal-btn');
+const closeBtn = modal.querySelector('.polaris-modal__close');
+const skipBtn = modal.querySelectorAll('button')[1];
+const gotItBtn = modal.querySelectorAll('button')[2];
+let lastFocusedElement = null;
+
+// Get all focusable elements within modal
+function getFocusableElements() {
+  return modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+}
+
+function openModal() {
+  lastFocusedElement = document.activeElement;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Focus first button
+  const focusable = getFocusableElements();
+  if (focusable.length) focusable[0].focus();
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+
+  // Return focus to trigger element
+  if (lastFocusedElement) lastFocusedElement.focus();
+}
+
+// Trap focus within modal
+modal.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    const focusable = Array.from(getFocusableElements());
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  } else if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+
+openBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+skipBtn.addEventListener('click', closeModal);
+gotItBtn.addEventListener('click', closeModal);
+</script>`,
+    typescript: `import {Button, Frame, Modal, Text} from '@shopify/polaris';
+import {useState, useCallback, useEffect, useRef} from 'react';
+
+interface AccessibilityFeature {
+  category: string;
+  items: string[];
+}
+
+const accessibilityFeatures: AccessibilityFeature[] = [
+  {
+    category: 'Screen Reader Support',
+    items: ['Proper ARIA attributes', 'Focus management', 'Keyboard navigation', 'Role announcements']
+  },
+  {
+    category: 'Keyboard Navigation',
+    items: [
+      'Press Tab to navigate between focusable elements',
+      'Press Shift + Tab to navigate backwards',
+      'Press Escape to close the modal',
+      'Focus is trapped within the modal'
+    ]
+  }
+];
+
+function AccessibilityDemoExample(): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const previouslyFocusedElement = useRef<HTMLElement | null>(null);
+
+  const handleChange = useCallback(() => setActive(!active), [active]);
+
+  useEffect(() => {
+    if (active) {
+      previouslyFocusedElement.current = document.activeElement as HTMLElement;
+    } else if (previouslyFocusedElement.current) {
+      previouslyFocusedElement.current.focus();
+    }
+  }, [active]);
+
+  return (
+    <div style={{height: '500px'}}>
+      <Frame>
+        <Button onClick={handleChange} ariaHasPopup="dialog">
+          Accessible Modal
+        </Button>
+        <Modal
+          open={active}
+          onClose={handleChange}
+          title="Accessibility Features"
+          primaryAction={{content: 'Got it', onAction: handleChange}}
+          secondaryActions={[{content: 'Skip', onAction: handleChange}]}
+        >
+          <Modal.Section>
+            <Text as="div" variant="bodyMd">
+              {accessibilityFeatures.map((feature, index) => (
+                <div key={index}>
+                  <h4>{feature.category}</h4>
+                  {feature.category === 'Screen Reader Support' ? (
+                    <ul>
+                      {feature.items.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    feature.items.map((item, idx) => (
+                      <p key={idx}>• {item}</p>
+                    ))
+                  )}
+                </div>
+              ))}
+            </Text>
+          </Modal.Section>
+        </Modal>
+      </Frame>
+    </div>
+  );
+}`
+  }};
 
 export const cardExamples = {
   default: {
