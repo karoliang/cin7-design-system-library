@@ -44,6 +44,10 @@ export const Default: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const PrimaryOnly: Story = {
@@ -53,6 +57,10 @@ export const PrimaryOnly: Story = {
       onAction: () => console.log('Create product clicked'),
     },
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const MultipleSecondary: Story = {
@@ -77,6 +85,10 @@ export const MultipleSecondary: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const DestructiveActions: Story = {
@@ -97,6 +109,10 @@ export const DestructiveActions: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const LoadingState: Story = {
@@ -114,6 +130,10 @@ export const LoadingState: Story = {
       },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const ProductFormActions: Story = {
@@ -216,6 +236,10 @@ export const ProductFormActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const OrderManagementActions: Story = {
@@ -371,6 +395,10 @@ export const OrderManagementActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const CustomerProfileActions: Story = {
@@ -534,6 +562,10 @@ export const CustomerProfileActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const SettingsPageActions: Story = {
@@ -653,6 +685,10 @@ export const SettingsPageActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
 
 export const BulkActions: Story = {
@@ -765,4 +801,8 @@ export const BulkActions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('pageactions', 'default'),
+  },
+
 };
