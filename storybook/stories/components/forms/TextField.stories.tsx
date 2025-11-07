@@ -79,6 +79,10 @@ export const WithValue: Story = {
     type: 'email',
     value: 'john.doe@example.com',
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -110,6 +114,10 @@ export const Required: Story = {
     placeholder: 'Enter company name',
     required: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -270,6 +278,10 @@ export const PasswordField: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const SearchField: Story = {
@@ -341,6 +353,10 @@ export const SearchField: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const UrlInput: Story = {
@@ -350,6 +366,10 @@ export const UrlInput: Story = {
     placeholder: 'https://example.com',
     helpText: 'Include https:// for valid URLs',
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const TelephoneInput: Story = {
@@ -392,6 +412,10 @@ export const TelephoneInput: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const CharacterCount: Story = {
@@ -507,6 +531,10 @@ export const AutoComplete: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };
 
 export const FormExample: Story = {
@@ -621,4 +649,8 @@ export const FormExample: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('textfield', 'default'),
+  },
+
 };

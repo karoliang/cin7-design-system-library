@@ -104,6 +104,10 @@ export const Required: Story = {
     label: 'I agree to the privacy policy',
     required: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -176,6 +180,10 @@ export const Interactive: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'default'),
+  },
+
 };
 
 export const FormValidation: Story = {
@@ -267,6 +275,10 @@ export const FormValidation: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'default'),
+  },
+
 };
 
 export const AccessibilityExamples: Story = {
@@ -300,5 +312,9 @@ export const AccessibilityExamples: Story = {
         </Text>
       </BlockStack>
     </BlockStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('checkbox', 'default'),
+  },
+
 };

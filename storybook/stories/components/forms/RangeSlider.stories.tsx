@@ -76,6 +76,10 @@ export const Default: Story = {
     output: true,
     prefix: '$',
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const WithoutOutput: Story = {
@@ -87,6 +91,10 @@ export const WithoutOutput: Story = {
     step: 1,
     output: false,
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const WithStep: Story = {
@@ -99,6 +107,10 @@ export const WithStep: Story = {
     output: true,
     suffix: ' items',
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const WithHelpText: Story = {
@@ -112,6 +124,10 @@ export const WithHelpText: Story = {
     prefix: '$',
     helpText: 'Set your monthly advertising budget range',
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -125,6 +141,10 @@ export const WithError: Story = {
     suffix: ' units',
     error: 'Minimum stock level must be at least 20 units',
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -138,6 +158,10 @@ export const Disabled: Story = {
     prefix: '$',
     disabled: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const PriceFilter: Story = {
@@ -208,6 +232,10 @@ export const PriceFilter: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const DateRangePicker: Story = {
@@ -297,6 +325,10 @@ export const DateRangePicker: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const ProductVariants: Story = {
@@ -396,6 +428,10 @@ export const ProductVariants: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const MultiRangeComparison: Story = {
@@ -499,6 +535,10 @@ export const MultiRangeComparison: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };
 
 export const AdvancedControls: Story = {
@@ -596,4 +636,8 @@ export const AdvancedControls: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('rangeslider', 'default'),
+  },
+
 };

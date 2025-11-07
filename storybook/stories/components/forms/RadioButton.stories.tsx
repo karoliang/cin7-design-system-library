@@ -116,6 +116,10 @@ export const Required: Story = {
     value: 'credit',
     required: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -174,6 +178,10 @@ export const ShippingOptions: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };
 
 export const PaymentMethods: Story = {
@@ -257,6 +265,10 @@ export const PaymentMethods: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };
 
 export const ProductVariants: Story = {
@@ -315,6 +327,10 @@ export const ProductVariants: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };
 
 export const SurveyQuestions: Story = {
@@ -406,6 +422,10 @@ export const SurveyQuestions: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };
 
 export const AccessibilityExamples: Story = {
@@ -444,5 +464,9 @@ export const AccessibilityExamples: Story = {
         </Text>
       </BlockStack>
     </BlockStack>
-  ),
+  ),,
+  parameters: {
+    codeVariants: getCodeVariants('radiobutton', 'default'),
+  },
+
 };

@@ -116,6 +116,10 @@ export const WithValue: Story = {
     options: countryOptions,
     value: 'us',
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const Disabled: Story = {
@@ -136,6 +140,10 @@ export const WithHelpText: Story = {
     options: groupedOptions,
     helpText: 'Select the primary category for your product',
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const Required: Story = {
@@ -150,6 +158,10 @@ export const Required: Story = {
     ],
     required: true,
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const WithError: Story = {
@@ -213,6 +225,10 @@ export const LanguageSelector: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const ProductConfiguration: Story = {
@@ -313,6 +329,10 @@ export const ProductConfiguration: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const AddressForm: Story = {
@@ -419,6 +439,10 @@ export const AddressForm: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };
 
 export const AdvancedFiltering: Story = {
@@ -550,4 +574,8 @@ export const AdvancedFiltering: Story = {
       </BlockStack>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('select', 'default'),
+  },
+
 };

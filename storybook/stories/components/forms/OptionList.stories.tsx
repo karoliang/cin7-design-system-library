@@ -69,6 +69,10 @@ export const Default: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const MultipleSelection: Story = {
@@ -94,6 +98,10 @@ export const MultipleSelection: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const WithIcons: Story = {
@@ -142,6 +150,10 @@ export const WithIcons: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const WithDescriptions: Story = {
@@ -185,6 +197,10 @@ export const WithDescriptions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const WithStatusBadges: Story = {
@@ -233,6 +249,10 @@ export const WithStatusBadges: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const WithDisabledOptions: Story = {
@@ -273,6 +293,10 @@ export const WithDisabledOptions: Story = {
       </div>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const UserRoleSelection: Story = {
@@ -334,6 +358,10 @@ export const UserRoleSelection: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const ProductCategories: Story = {
@@ -427,6 +455,10 @@ export const ProductCategories: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const NotificationSettings: Story = {
@@ -518,6 +550,10 @@ export const NotificationSettings: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const ThemeSelection: Story = {
@@ -584,6 +620,10 @@ export const ThemeSelection: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const ShippingOptions: Story = {
@@ -639,6 +679,10 @@ export const ShippingOptions: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const PermissionSettings: Story = {
@@ -750,6 +794,10 @@ export const PermissionSettings: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const LanguageSelection: Story = {
@@ -817,6 +865,10 @@ export const LanguageSelection: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
 
 export const InteractiveExample: Story = {
@@ -907,4 +959,8 @@ export const InteractiveExample: Story = {
       </Card>
     );
   },
+  parameters: {
+    codeVariants: getCodeVariants('optionlist', 'default'),
+  },
+
 };
