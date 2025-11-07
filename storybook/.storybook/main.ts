@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-docs",
+    "./addons/code-panels/register.tsx",
   ],
   framework: {
     name: "@storybook/react-vite",
