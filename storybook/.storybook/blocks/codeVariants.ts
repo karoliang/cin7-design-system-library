@@ -7095,7 +7095,7 @@ function BackdropExample({
 export default BackdropExample;`
   },
 
-  withclickhandler: {
+  'with-onclick': {
     react: `import {Backdrop, Button, Modal} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -7265,7 +7265,7 @@ function BackdropWithClickHandler({
 export default BackdropWithClickHandler;`
   },
 
-  transparentbackdrop: {
+  transparent: {
     react: `import {Backdrop} from '@shopify/polaris';
 import {useState} from 'react';
 
@@ -7443,7 +7443,7 @@ function TransparentBackdrop({
 export default TransparentBackdrop;`
   },
 
-  belownavigation: {
+  'below-navigation': {
     react: `import {Backdrop, TopBar, Frame} from '@shopify/polaris';
 import {useState} from 'react';
 
@@ -7637,7 +7637,7 @@ function BackdropBelowNavigation({
 export default BackdropBelowNavigation;`
   },
 
-  withloadingspinner: {
+  'with-loading': {
     react: `import {Backdrop, Spinner} from '@shopify/polaris';
 import {useState, useEffect} from 'react';
 
@@ -7900,7 +7900,7 @@ function BackdropWithLoadingSpinner({
 export default BackdropWithLoadingSpinner;`
   },
 
-  modalintegration: {
+  'modal-integration': {
     react: `import {Backdrop, Modal, Button, TextContainer} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8167,7 +8167,7 @@ function BackdropModalIntegration({
 export default BackdropModalIntegration;`
   },
 
-  multilayerbackdrops: {
+  'multi-layer': {
     react: `import {Backdrop, Modal, Button} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8458,7 +8458,7 @@ function MultiLayerBackdrops({
 export default MultiLayerBackdrops;`
   },
 
-  accessibilityfocus: {
+  accessibility: {
     react: `import {Backdrop, Modal, Button, TextField} from '@shopify/polaris';
 import {useState, useCallback, useRef, useEffect} from 'react';
 
