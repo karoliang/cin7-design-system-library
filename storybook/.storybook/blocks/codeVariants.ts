@@ -36129,52 +36129,260 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, BlockStack } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useCallback, useState, useEffect, useRef } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-interface ResponsiveTruncationProps {
-  text?: string;
-  mobileLines?: number;
-  tabletLines?: number;
-  desktopLines?: number;
+/**
+ * Breakpoint types for responsive truncation
+ * @type BreakpointName
+ */
+type BreakpointName = 'mobile' | 'tablet' | 'desktop' | 'wide';
+
+/**
+ * Line clamp values for different breakpoints
+ * @type LineClampValue
+ */
+type LineClampValue = 1 | 2 | 3 | 4 | 5 | number;
+
+/**
+ * Comprehensive breakpoint configuration
+ * @interface BreakpointConfig
+ */
+interface BreakpointConfig {
+  readonly name: BreakpointName;
+  readonly minWidth: number;
+  readonly maxWidth?: number;
+  readonly lineClamp: LineClampValue;
+  readonly description: string;
 }
 
-function ResponsiveTruncation({
-  text = 'This text truncates differently at various breakpoints: single line on mobile, two lines on tablet, three lines on desktop.',
-  mobileLines = 1,
-  tabletLines = 2,
-  desktopLines = 3
-}: ResponsiveTruncationProps): JSX.Element {
-  const styles = \`
+/**
+ * Responsive truncation settings
+ * @interface ResponsiveTruncationConfig
+ */
+interface ResponsiveTruncationConfig {
+  readonly text: string;
+  readonly breakpoints: ReadonlyArray<BreakpointConfig>;
+  readonly enableMediaQueries: boolean;
+  readonly showBreakpointInfo: boolean;
+}
+
+/**
+ * Current viewport state
+ * @interface ViewportState
+ */
+interface ViewportState {
+  readonly width: number;
+  readonly currentBreakpoint: BreakpointName;
+  readonly lineClamp: LineClampValue;
+}
+
+/**
+ * Props for ResponsiveTruncation component
+ * @interface ResponsiveTruncationProps
+ */
+interface ResponsiveTruncationProps {
+  /** Text content to truncate */
+  text?: string;
+  /** Number of lines on mobile devices */
+  mobileLines?: LineClampValue;
+  /** Number of lines on tablet devices */
+  tabletLines?: LineClampValue;
+  /** Number of lines on desktop devices */
+  desktopLines?: LineClampValue;
+  /** Number of lines on wide screens */
+  wideLines?: LineClampValue;
+  /** Show current breakpoint information */
+  showBreakpointInfo?: boolean;
+  /** Callback when breakpoint changes */
+  onBreakpointChange?: (breakpoint: BreakpointName, lineClamp: LineClampValue) => void;
+}
+
+/**
+ * Default breakpoint configurations
+ */
+const DEFAULT_BREAKPOINTS: ReadonlyArray<BreakpointConfig> = [
+  { name: 'mobile', minWidth: 0, maxWidth: 767, lineClamp: 1, description: 'Mobile devices' },
+  { name: 'tablet', minWidth: 768, maxWidth: 1023, lineClamp: 2, description: 'Tablet devices' },
+  { name: 'desktop', minWidth: 1024, maxWidth: 1439, lineClamp: 3, description: 'Desktop screens' },
+  { name: 'wide', minWidth: 1440, lineClamp: 4, description: 'Wide screens' }
+];
+
+/**
+ * Type guard to validate line clamp value
+ * @param value - The value to check
+ * @returns True if the value is a valid line clamp number
+ */
+const isValidLineClamp = (value: number): value is LineClampValue => {
+  return Number.isInteger(value) && value > 0 && value <= 10;
+};
+
+/**
+ * Creates responsive CSS media queries
+ * @param breakpoints - Breakpoint configurations
+ * @returns CSS string with media queries
+ */
+const createResponsiveStyles = (breakpoints: ReadonlyArray<BreakpointConfig>): string => {
+  const baseBreakpoint = breakpoints[0];
+  let css = \`
     .responsive-truncate {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      -webkit-line-clamp: \${mobileLines};
-    }
-    @media (min-width: 768px) {
-      .responsive-truncate {
-        -webkit-line-clamp: \${tabletLines};
-      }
-    }
-    @media (min-width: 1024px) {
-      .responsive-truncate {
-        -webkit-line-clamp: \${desktopLines};
-      }
+      -webkit-line-clamp: \${baseBreakpoint.lineClamp};
     }
   \`;
+
+  for (let i = 1; i < breakpoints.length; i++) {
+    const bp = breakpoints[i];
+    css += \`
+    @media (min-width: \${bp.minWidth}px) {
+      .responsive-truncate {
+        -webkit-line-clamp: \${bp.lineClamp};
+      }
+    }
+    \`;
+  }
+
+  return css;
+};
+
+/**
+ * Determines current breakpoint based on viewport width
+ * @param width - Current viewport width
+ * @param breakpoints - Breakpoint configurations
+ * @returns Current breakpoint configuration
+ */
+const getCurrentBreakpoint = (
+  width: number,
+  breakpoints: ReadonlyArray<BreakpointConfig>
+): BreakpointConfig => {
+  for (let i = breakpoints.length - 1; i >= 0; i--) {
+    const bp = breakpoints[i];
+    if (width >= bp.minWidth && (!bp.maxWidth || width <= bp.maxWidth)) {
+      return bp;
+    }
+  }
+  return breakpoints[0];
+};
+
+/**
+ * ResponsiveTruncation component with comprehensive breakpoint management
+ * Demonstrates responsive text truncation with viewport-aware line clamping
+ */
+const ResponsiveTruncation: React.FC<ResponsiveTruncationProps> = ({
+  text = 'This text truncates differently at various breakpoints: single line on mobile, two lines on tablet, three lines on desktop.',
+  mobileLines = 1,
+  tabletLines = 2,
+  desktopLines = 3,
+  wideLines = 4,
+  showBreakpointInfo = false,
+  onBreakpointChange
+}): JSX.Element => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [viewportState, setViewportState] = useState<ViewportState>({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1024,
+    currentBreakpoint: 'desktop',
+    lineClamp: desktopLines
+  });
+
+  /**
+   * Create breakpoint configurations with custom line clamp values
+   */
+  const breakpoints = useMemo<ReadonlyArray<BreakpointConfig>>(() => {
+    const validatedMobile = isValidLineClamp(mobileLines) ? mobileLines : 1;
+    const validatedTablet = isValidLineClamp(tabletLines) ? tabletLines : 2;
+    const validatedDesktop = isValidLineClamp(desktopLines) ? desktopLines : 3;
+    const validatedWide = isValidLineClamp(wideLines) ? wideLines : 4;
+
+    return [
+      { ...DEFAULT_BREAKPOINTS[0], lineClamp: validatedMobile },
+      { ...DEFAULT_BREAKPOINTS[1], lineClamp: validatedTablet },
+      { ...DEFAULT_BREAKPOINTS[2], lineClamp: validatedDesktop },
+      { ...DEFAULT_BREAKPOINTS[3], lineClamp: validatedWide }
+    ];
+  }, [mobileLines, tabletLines, desktopLines, wideLines]);
+
+  /**
+   * Memoized configuration object
+   */
+  const config = useMemo<ResponsiveTruncationConfig>(() => ({
+    text,
+    breakpoints,
+    enableMediaQueries: true,
+    showBreakpointInfo
+  }), [text, breakpoints, showBreakpointInfo]);
+
+  /**
+   * Generate responsive CSS styles
+   */
+  const responsiveStyles = useMemo<string>(() => {
+    return createResponsiveStyles(config.breakpoints);
+  }, [config.breakpoints]);
+
+  /**
+   * Handle viewport resize
+   */
+  const handleResize = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const width = window.innerWidth;
+    const currentBp = getCurrentBreakpoint(width, breakpoints);
+
+    setViewportState({
+      width,
+      currentBreakpoint: currentBp.name,
+      lineClamp: currentBp.lineClamp
+    });
+
+    if (onBreakpointChange) {
+      onBreakpointChange(currentBp.name, currentBp.lineClamp);
+    }
+  }, [breakpoints, onBreakpointChange]);
+
+  /**
+   * Set up resize listener
+   */
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    handleResize(); // Initial call
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
+
+  /**
+   * Render breakpoint information
+   */
+  const renderBreakpointInfo = useCallback((): ReactNode => {
+    if (!config.showBreakpointInfo) return null;
+
+    return (
+      <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f6f6f7', borderRadius: '8px' }}>
+        <Text variant="bodySm" as="p">
+          <strong>Current breakpoint:</strong> {viewportState.currentBreakpoint} ({viewportState.width}px)
+        </Text>
+        <Text variant="bodySm" as="p" tone="subdued">
+          <strong>Line clamp:</strong> {viewportState.lineClamp} lines
+        </Text>
+      </div>
+    );
+  }, [config.showBreakpointInfo, viewportState]);
 
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Responsive Truncation</Text>
-      <div className="responsive-truncate">
+      <div ref={containerRef} className="responsive-truncate">
         <Text variant="bodyMd">
-          {text}
+          {config.text}
         </Text>
       </div>
-      <style>{styles}</style>
+      {renderBreakpointInfo()}
+      <style>{responsiveStyles}</style>
     </BlockStack>
   );
-}
+};
 
 export default ResponsiveTruncation;`,
   },
@@ -36315,56 +36523,339 @@ Ext.create('Ext.panel.Panel', {
 });`,
 
     typescript: `import { Card, Text, BlockStack, InlineStack, Badge } from '@shopify/polaris';
-import React from 'react';
-import type { CSSProperties } from 'react';
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-interface Product {
-  title: string;
-  description: string;
-  price: string;
-  badge?: string;
+/**
+ * Badge tone types for product status
+ * @type BadgeTone
+ */
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical' | 'new';
+
+/**
+ * Product pricing information
+ * @interface PriceInfo
+ */
+interface PriceInfo {
+  readonly amount: string;
+  readonly currency: string;
+  readonly originalPrice?: string;
+  readonly discount?: number;
 }
 
+/**
+ * Comprehensive product entity
+ * @interface ProductEntity
+ */
+interface ProductEntity {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly price: string | PriceInfo;
+  readonly badge?: {
+    readonly text: string;
+    readonly tone?: BadgeTone;
+  };
+  readonly images?: ReadonlyArray<string>;
+  readonly category?: string;
+  readonly sku?: string;
+  readonly inStock?: boolean;
+}
+
+/**
+ * Truncation style configuration
+ * @interface TruncationStyleConfig
+ */
+interface TruncationStyleConfig {
+  readonly title: CSSProperties;
+  readonly description: CSSProperties;
+  readonly enableTitleTruncation: boolean;
+  readonly descriptionLines: number;
+}
+
+/**
+ * Product card display state
+ * @interface ProductCardState
+ */
+interface ProductCardState {
+  readonly isHovered: boolean;
+  readonly isTitleTruncated: boolean;
+  readonly isDescriptionTruncated: boolean;
+  readonly showFullDescription: boolean;
+}
+
+/**
+ * Props for ProductCardTruncation component
+ * @interface ProductCardTruncationProps
+ */
 interface ProductCardTruncationProps {
-  product?: Product;
+  /** Product data to display */
+  product?: ProductEntity;
+  /** Number of description lines before truncation */
   descriptionLines?: number;
+  /** Enable title truncation */
+  truncateTitle?: boolean;
+  /** Card width configuration */
+  cardWidth?: string | number;
+  /** Callback when product is clicked */
+  onProductClick?: (product: ProductEntity) => void;
+  /** Show expand/collapse for description */
+  allowDescriptionExpansion?: boolean;
 }
 
-function ProductCardTruncation({
-  product = {
-    title: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation',
-    description: 'Experience superior sound quality with our premium wireless headphones featuring advanced active noise cancellation technology, 30-hour battery life, and comfortable over-ear design perfect for all-day listening.',
-    price: '$299.99',
-    badge: 'New'
-  },
-  descriptionLines = 2
-}: ProductCardTruncationProps): JSX.Element {
-  const descriptionStyle: CSSProperties = {
+/**
+ * Type guard to validate product entity
+ * @param product - The product to validate
+ * @returns True if the product is valid
+ */
+const isValidProduct = (product: any): product is ProductEntity => {
+  return (
+    typeof product === 'object' &&
+    product !== null &&
+    typeof product.title === 'string' &&
+    typeof product.description === 'string' &&
+    (typeof product.price === 'string' || typeof product.price === 'object')
+  );
+};
+
+/**
+ * Formats price information for display
+ * @param price - Price data (string or PriceInfo)
+ * @returns Formatted price string
+ */
+const formatPrice = (price: string | PriceInfo): string => {
+  if (typeof price === 'string') {
+    return price;
+  }
+
+  const formatted = \`\${price.currency || '$'}\${price.amount}\`;
+  if (price.originalPrice) {
+    return \`\${formatted} (was \${price.currency || '$'}\${price.originalPrice})\`;
+  }
+  return formatted;
+};
+
+/**
+ * Creates truncation style configuration
+ * @param descriptionLines - Number of lines for description
+ * @param truncateTitle - Whether to truncate title
+ * @returns Style configuration object
+ */
+const createTruncationStyles = (
+  descriptionLines: number,
+  truncateTitle: boolean
+): TruncationStyleConfig => ({
+  title: truncateTitle ? {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '100%'
+  } : {},
+  description: {
     display: '-webkit-box',
     WebkitLineClamp: descriptionLines,
     WebkitBoxOrient: 'vertical',
     overflow: 'hidden'
-  };
+  },
+  enableTitleTruncation: truncateTitle,
+  descriptionLines
+});
+
+/**
+ * Default product data
+ */
+const DEFAULT_PRODUCT: ProductEntity = {
+  id: 'prod-001',
+  title: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation',
+  description: 'Experience superior sound quality with our premium wireless headphones featuring advanced active noise cancellation technology, 30-hour battery life, and comfortable over-ear design perfect for all-day listening.',
+  price: {
+    amount: '299.99',
+    currency: '$',
+    originalPrice: '349.99',
+    discount: 14
+  },
+  badge: {
+    text: 'New',
+    tone: 'info'
+  },
+  category: 'Electronics',
+  sku: 'HDN-WL-001',
+  inStock: true
+};
+
+/**
+ * ProductCardTruncation component with comprehensive product display
+ * Demonstrates truncation in product card layouts with pricing and badges
+ */
+const ProductCardTruncation: React.FC<ProductCardTruncationProps> = ({
+  product = DEFAULT_PRODUCT,
+  descriptionLines = 2,
+  truncateTitle = true,
+  cardWidth,
+  onProductClick,
+  allowDescriptionExpansion = false
+}): JSX.Element => {
+  const titleRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  const [state, setState] = useState<ProductCardState>({
+    isHovered: false,
+    isTitleTruncated: false,
+    isDescriptionTruncated: false,
+    showFullDescription: false
+  });
+
+  /**
+   * Validate product data
+   */
+  const validatedProduct = useMemo<ProductEntity>(() => {
+    return isValidProduct(product) ? product : DEFAULT_PRODUCT;
+  }, [product]);
+
+  /**
+   * Memoized style configuration
+   */
+  const styleConfig = useMemo<TruncationStyleConfig>(() => {
+    return createTruncationStyles(descriptionLines, truncateTitle);
+  }, [descriptionLines, truncateTitle]);
+
+  /**
+   * Card container style
+   */
+  const cardContainerStyle = useMemo<CSSProperties>(() => {
+    if (!cardWidth) return {};
+    return {
+      width: typeof cardWidth === 'number' ? \`\${cardWidth}px\` : cardWidth
+    };
+  }, [cardWidth]);
+
+  /**
+   * Description style with expansion support
+   */
+  const descriptionStyle = useMemo<CSSProperties>(() => {
+    if (state.showFullDescription) {
+      return {
+        overflow: 'visible'
+      };
+    }
+    return styleConfig.description;
+  }, [state.showFullDescription, styleConfig.description]);
+
+  /**
+   * Handle product card click
+   */
+  const handleCardClick = useCallback(() => {
+    if (onProductClick) {
+      onProductClick(validatedProduct);
+    }
+  }, [onProductClick, validatedProduct]);
+
+  /**
+   * Handle description expansion toggle
+   */
+  const handleDescriptionToggle = useCallback(() => {
+    if (allowDescriptionExpansion) {
+      setState(prev => ({
+        ...prev,
+        showFullDescription: !prev.showFullDescription
+      }));
+    }
+  }, [allowDescriptionExpansion]);
+
+  /**
+   * Detect truncation on mount
+   */
+  useEffect(() => {
+    if (titleRef.current && truncateTitle) {
+      const isTitleTruncated = titleRef.current.scrollWidth > titleRef.current.clientWidth;
+      setState(prev => ({ ...prev, isTitleTruncated }));
+    }
+
+    if (descriptionRef.current) {
+      const isDescTruncated = descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight;
+      setState(prev => ({ ...prev, isDescriptionTruncated: isDescTruncated }));
+    }
+  }, [validatedProduct.title, validatedProduct.description, truncateTitle]);
+
+  /**
+   * Render badge if present
+   */
+  const renderBadge = useCallback((): ReactNode => {
+    if (!validatedProduct.badge) return null;
+
+    return (
+      <Badge tone={validatedProduct.badge.tone as any}>
+        {validatedProduct.badge.text}
+      </Badge>
+    );
+  }, [validatedProduct.badge]);
+
+  /**
+   * Render expansion button if needed
+   */
+  const renderExpansionButton = useCallback((): ReactNode => {
+    if (!allowDescriptionExpansion || !state.isDescriptionTruncated) return null;
+
+    return (
+      <button
+        onClick={handleDescriptionToggle}
+        style={{
+          background: 'none',
+          border: 'none',
+          color: '#007ace',
+          cursor: 'pointer',
+          fontSize: '14px',
+          padding: '4px 0',
+          marginTop: '8px'
+        }}
+      >
+        {state.showFullDescription ? 'Show less' : 'Show more'}
+      </button>
+    );
+  }, [allowDescriptionExpansion, state.isDescriptionTruncated, state.showFullDescription, handleDescriptionToggle]);
 
   return (
-    <Card>
-      <BlockStack gap="400">
-        <InlineStack align="space-between" blockAlign="center">
-          <Text as="h3" variant="headingMd" truncate>
-            {product.title}
-          </Text>
-          {product.badge && <Badge>{product.badge}</Badge>}
-        </InlineStack>
-        <div style={descriptionStyle}>
-          <Text variant="bodyMd" tone="subdued">
-            {product.description}
-          </Text>
+    <div style={cardContainerStyle}>
+      <Card>
+        <div onClick={handleCardClick} style={{ cursor: onProductClick ? 'pointer' : 'default' }}>
+          <BlockStack gap="400">
+            <InlineStack align="space-between" blockAlign="center">
+              <div ref={titleRef} style={{ flex: 1, ...styleConfig.title }}>
+                <Text
+                  as="h3"
+                  variant="headingMd"
+                  truncate={styleConfig.enableTitleTruncation}
+                >
+                  {validatedProduct.title}
+                </Text>
+              </div>
+              {renderBadge()}
+            </InlineStack>
+
+            <div>
+              <div ref={descriptionRef} style={descriptionStyle}>
+                <Text variant="bodyMd" tone="subdued">
+                  {validatedProduct.description}
+                </Text>
+              </div>
+              {renderExpansionButton()}
+            </div>
+
+            <Text variant="headingLg" as="p">
+              {formatPrice(validatedProduct.price)}
+            </Text>
+
+            {validatedProduct.sku && (
+              <Text variant="bodySm" tone="subdued">
+                SKU: {validatedProduct.sku}
+              </Text>
+            )}
+          </BlockStack>
         </div>
-        <Text variant="headingLg" as="p">{product.price}</Text>
-      </BlockStack>
-    </Card>
+      </Card>
+    </div>
   );
-}
+};
 
 export default ProductCardTruncation;`,
   },
@@ -36488,37 +36979,351 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, BlockStack, InlineStack } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-interface VariableWidthContainersProps {
-  text?: string;
-  widths?: number[];
+/**
+ * Container width types
+ * @type ContainerWidth
+ */
+type ContainerWidth = number | string;
+
+/**
+ * Truncation measurement data
+ * @interface TruncationMeasurement
+ */
+interface TruncationMeasurement {
+  readonly containerWidth: number;
+  readonly textWidth: number;
+  readonly isTruncated: boolean;
+  readonly visibleCharacters: number;
+  readonly truncationPercentage: number;
 }
 
-function VariableWidthContainers({
+/**
+ * Container configuration
+ * @interface ContainerConfig
+ */
+interface ContainerConfig {
+  readonly width: ContainerWidth;
+  readonly id: string;
+  readonly label?: string;
+  readonly borderColor?: string;
+  readonly backgroundColor?: string;
+}
+
+/**
+ * Container display state
+ * @interface ContainerState
+ */
+interface ContainerState {
+  readonly measurements: Map<string, TruncationMeasurement>;
+  readonly hoveredContainer: string | null;
+  readonly selectedContainer: string | null;
+}
+
+/**
+ * Props for VariableWidthContainers component
+ * @interface VariableWidthContainersProps
+ */
+interface VariableWidthContainersProps {
+  /** Text content to display in containers */
+  text?: string;
+  /** Array of container widths (in pixels) */
+  widths?: ReadonlyArray<ContainerWidth>;
+  /** Container configurations (alternative to widths) */
+  containers?: ReadonlyArray<ContainerConfig>;
+  /** Show measurement data */
+  showMeasurements?: boolean;
+  /** Enable interactive hover states */
+  enableInteraction?: boolean;
+  /** Container padding */
+  containerPadding?: string;
+  /** Callback when container is clicked */
+  onContainerClick?: (containerId: string, measurement: TruncationMeasurement) => void;
+}
+
+/**
+ * Type guard to validate container width
+ * @param width - The width to validate
+ * @returns True if the width is valid
+ */
+const isValidWidth = (width: ContainerWidth): boolean => {
+  if (typeof width === 'number') {
+    return width > 0 && width <= 2000;
+  }
+  if (typeof width === 'string') {
+    return /^\d+(%|px|em|rem)$/.test(width);
+  }
+  return false;
+};
+
+/**
+ * Normalizes width value to pixel string
+ * @param width - Width value (number or string)
+ * @returns Normalized width string
+ */
+const normalizeWidth = (width: ContainerWidth): string => {
+  if (typeof width === 'number') {
+    return \`\${width}px\`;
+  }
+  return width;
+};
+
+/**
+ * Creates container configurations from widths array
+ * @param widths - Array of width values
+ * @returns Array of container configurations
+ */
+const createContainerConfigs = (widths: ReadonlyArray<ContainerWidth>): ReadonlyArray<ContainerConfig> => {
+  const colors = ['#e3f2fd', '#f3e5f5', '#e8f5e9', '#fff3e0', '#fce4ec'];
+
+  return widths
+    .filter(isValidWidth)
+    .map((width, index) => ({
+      width,
+      id: \`container-\${index}\`,
+      label: \`\${normalizeWidth(width)}\`,
+      borderColor: '#ccc',
+      backgroundColor: colors[index % colors.length]
+    }));
+};
+
+/**
+ * Calculates truncation measurement for a container
+ * @param element - Container element
+ * @param textElement - Text element
+ * @param containerWidth - Configured width
+ * @returns Truncation measurement data
+ */
+const measureTruncation = (
+  element: HTMLElement | null,
+  textElement: HTMLElement | null,
+  containerWidth: number
+): TruncationMeasurement | null => {
+  if (!element || !textElement) return null;
+
+  const actualWidth = element.clientWidth;
+  const textWidth = textElement.scrollWidth;
+  const isTruncated = textWidth > actualWidth;
+  const fullText = textElement.textContent || '';
+
+  let visibleCharacters = fullText.length;
+  if (isTruncated) {
+    // Estimate visible characters based on width ratio
+    visibleCharacters = Math.floor((actualWidth / textWidth) * fullText.length);
+  }
+
+  const truncationPercentage = isTruncated
+    ? Math.round(((textWidth - actualWidth) / textWidth) * 100)
+    : 0;
+
+  return {
+    containerWidth: actualWidth,
+    textWidth,
+    isTruncated,
+    visibleCharacters,
+    truncationPercentage
+  };
+};
+
+/**
+ * Default container widths
+ */
+const DEFAULT_WIDTHS: ReadonlyArray<number> = [100, 200, 300, 400];
+
+/**
+ * VariableWidthContainers component with comprehensive truncation measurement
+ * Demonstrates how text truncation behaves across containers of different sizes
+ */
+const VariableWidthContainers: React.FC<VariableWidthContainersProps> = ({
   text = 'This text demonstrates truncation behavior in containers of different widths',
-  widths = [100, 200, 300]
-}: VariableWidthContainersProps): JSX.Element {
+  widths,
+  containers,
+  showMeasurements = false,
+  enableInteraction = false,
+  containerPadding = '8px',
+  onContainerClick
+}): JSX.Element => {
+  const containerRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const textRefs = useRef<Map<string, HTMLSpanElement>>(new Map());
+
+  const [state, setState] = useState<ContainerState>({
+    measurements: new Map(),
+    hoveredContainer: null,
+    selectedContainer: null
+  });
+
+  /**
+   * Create or use provided container configurations
+   */
+  const containerConfigs = useMemo<ReadonlyArray<ContainerConfig>>(() => {
+    if (containers && containers.length > 0) {
+      return containers;
+    }
+    const widthsToUse = widths && widths.length > 0 ? widths : DEFAULT_WIDTHS;
+    return createContainerConfigs(widthsToUse);
+  }, [containers, widths]);
+
+  /**
+   * Measure all containers
+   */
+  const measureAllContainers = useCallback(() => {
+    const newMeasurements = new Map<string, TruncationMeasurement>();
+
+    containerConfigs.forEach(config => {
+      const containerEl = containerRefs.current.get(config.id);
+      const textEl = textRefs.current.get(config.id);
+
+      const widthValue = typeof config.width === 'number' ? config.width : 200;
+      const measurement = measureTruncation(containerEl, textEl, widthValue);
+
+      if (measurement) {
+        newMeasurements.set(config.id, measurement);
+      }
+    });
+
+    setState(prev => ({
+      ...prev,
+      measurements: newMeasurements
+    }));
+  }, [containerConfigs]);
+
+  /**
+   * Measure on mount and when text/widths change
+   */
+  useEffect(() => {
+    // Small delay to ensure DOM is fully rendered
+    const timer = setTimeout(measureAllContainers, 100);
+    return () => clearTimeout(timer);
+  }, [measureAllContainers, text]);
+
+  /**
+   * Handle container mouse enter
+   */
+  const handleMouseEnter = useCallback((containerId: string) => {
+    if (enableInteraction) {
+      setState(prev => ({ ...prev, hoveredContainer: containerId }));
+    }
+  }, [enableInteraction]);
+
+  /**
+   * Handle container mouse leave
+   */
+  const handleMouseLeave = useCallback(() => {
+    if (enableInteraction) {
+      setState(prev => ({ ...prev, hoveredContainer: null }));
+    }
+  }, [enableInteraction]);
+
+  /**
+   * Handle container click
+   */
+  const handleClick = useCallback((containerId: string) => {
+    setState(prev => ({ ...prev, selectedContainer: containerId }));
+
+    const measurement = state.measurements.get(containerId);
+    if (onContainerClick && measurement) {
+      onContainerClick(containerId, measurement);
+    }
+  }, [state.measurements, onContainerClick]);
+
+  /**
+   * Render container style
+   */
+  const getContainerStyle = useCallback((config: ContainerConfig, isHovered: boolean): CSSProperties => {
+    return {
+      width: normalizeWidth(config.width),
+      border: \`1px solid \${config.borderColor || '#ccc'}\`,
+      padding: containerPadding,
+      backgroundColor: config.backgroundColor || (isHovered ? '#f6f6f7' : 'transparent'),
+      transition: enableInteraction ? 'background-color 0.2s ease' : undefined,
+      cursor: enableInteraction ? 'pointer' : 'default',
+      borderRadius: '4px'
+    };
+  }, [containerPadding, enableInteraction]);
+
+  /**
+   * Render measurement info for a container
+   */
+  const renderMeasurementInfo = useCallback((containerId: string): ReactNode => {
+    if (!showMeasurements) return null;
+
+    const measurement = state.measurements.get(containerId);
+    if (!measurement) return null;
+
+    return (
+      <div style={{ marginTop: '8px', fontSize: '11px', color: '#6d7175' }}>
+        <div>Width: {measurement.containerWidth}px</div>
+        <div>Text: {measurement.textWidth}px</div>
+        {measurement.isTruncated && (
+          <>
+            <div style={{ color: '#c05717' }}>
+              Truncated: {measurement.truncationPercentage}%
+            </div>
+            <div>Visible: ~{measurement.visibleCharacters} chars</div>
+          </>
+        )}
+      </div>
+    );
+  }, [showMeasurements, state.measurements]);
+
+  /**
+   * Render individual container
+   */
+  const renderContainer = useCallback((config: ContainerConfig, index: number): ReactNode => {
+    const isHovered = state.hoveredContainer === config.id;
+    const isSelected = state.selectedContainer === config.id;
+
+    return (
+      <div
+        key={config.id}
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        {config.label && (
+          <Text variant="bodySm" as="p" tone="subdued" alignment="center">
+            {config.label}
+          </Text>
+        )}
+        <div
+          ref={el => {
+            if (el) containerRefs.current.set(config.id, el);
+          }}
+          style={getContainerStyle(config, isHovered)}
+          onMouseEnter={() => handleMouseEnter(config.id)}
+          onMouseLeave={handleMouseLeave}
+          onClick={() => handleClick(config.id)}
+        >
+          <span
+            ref={el => {
+              if (el) textRefs.current.set(config.id, el);
+            }}
+            style={{
+              display: 'block',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            <Text variant="bodySm" truncate>
+              {text}
+            </Text>
+          </span>
+        </div>
+        {renderMeasurementInfo(config.id)}
+      </div>
+    );
+  }, [state.hoveredContainer, state.selectedContainer, text, getContainerStyle, handleMouseEnter, handleMouseLeave, handleClick, renderMeasurementInfo]);
+
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Variable Width Truncation</Text>
-      <InlineStack gap="400" wrap={false}>
-        {widths.map((width, index) => (
-          <div
-            key={index}
-            style={{
-              width: \`\${width}px\`,
-              border: '1px solid #ccc',
-              padding: '8px'
-            }}
-          >
-            <Text variant="bodySm" truncate>{text}</Text>
-          </div>
-        ))}
+      <InlineStack gap="400" wrap={false} align="start">
+        {containerConfigs.map((config, index) => renderContainer(config, index))}
       </InlineStack>
     </BlockStack>
   );
-}
+};
 
 export default VariableWidthContainers;`,
   },
@@ -36634,51 +37439,426 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, BlockStack, Tooltip } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
+import type { CSSProperties, ReactNode, AriaAttributes } from 'react';
 
-interface AccessibilityExampleProps {
-  text?: string;
-  maxWidth?: string;
-  showTooltip?: boolean;
-  showNote?: boolean;
+/**
+ * ARIA role types for accessible elements
+ * @type AriaRole
+ */
+type AriaRole = 'text' | 'article' | 'region' | 'complementary' | 'note';
+
+/**
+ * Screen reader announcement priority
+ * @type AriaLive
+ */
+type AriaLive = 'off' | 'polite' | 'assertive';
+
+/**
+ * Comprehensive ARIA attributes configuration
+ * @interface AriaConfig
+ */
+interface AriaConfig {
+  readonly label: string;
+  readonly describedBy?: string;
+  readonly role?: AriaRole;
+  readonly live?: AriaLive;
+  readonly atomic?: boolean;
+  readonly relevant?: string;
 }
 
-function AccessibilityExample({
-  text = 'Important accessible content that should be available to screen readers even when visually truncated',
+/**
+ * Accessibility compliance level
+ * @interface A11yCompliance
+ */
+interface A11yCompliance {
+  readonly wcagLevel: 'A' | 'AA' | 'AAA';
+  readonly hasAriaLabel: boolean;
+  readonly hasTooltip: boolean;
+  readonly hasVisibleLabel: boolean;
+  readonly hasScreenReaderText: boolean;
+  readonly score: number;
+}
+
+/**
+ * Truncation accessibility state
+ * @interface TruncationA11yState
+ */
+interface TruncationA11yState {
+  readonly isTruncated: boolean;
+  readonly fullTextAvailable: boolean;
+  readonly tooltipVisible: boolean;
+  readonly screenReaderMode: boolean;
+}
+
+/**
+ * Props for AccessibilityExample component
+ * @interface AccessibilityExampleProps
+ */
+interface AccessibilityExampleProps {
+  /** Text content to display */
+  text?: string;
+  /** Maximum width of the container */
+  maxWidth?: string | number;
+  /** Show tooltip on hover */
+  showTooltip?: boolean;
+  /** Show accessibility note */
+  showNote?: boolean;
+  /** ARIA label (defaults to full text) */
+  ariaLabel?: string;
+  /** ARIA described by ID */
+  ariaDescribedBy?: string;
+  /** ARIA role */
+  ariaRole?: AriaRole;
+  /** Enable high contrast mode */
+  highContrastMode?: boolean;
+  /** Callback when screen reader accesses text */
+  onScreenReaderAccess?: (text: string) => void;
+}
+
+/**
+ * Type guard to validate ARIA label
+ * @param label - The label to validate
+ * @returns True if the label is valid
+ */
+const isValidAriaLabel = (label: string | undefined): label is string => {
+  return typeof label === 'string' && label.trim().length > 0;
+};
+
+/**
+ * Normalizes width value to CSS string
+ * @param width - Width value (string or number)
+ * @returns Normalized CSS width string
+ */
+const normalizeWidth = (width: string | number | undefined): string => {
+  if (width === undefined) return '200px';
+  return typeof width === 'number' ? \`\${width}px\` : width;
+};
+
+/**
+ * Creates ARIA configuration from props
+ * @param text - Full text content
+ * @param ariaLabel - Custom ARIA label
+ * @param ariaDescribedBy - ARIA described by ID
+ * @param ariaRole - ARIA role
+ * @returns ARIA configuration object
+ */
+const createAriaConfig = (
+  text: string,
+  ariaLabel?: string,
+  ariaDescribedBy?: string,
+  ariaRole?: AriaRole
+): AriaConfig => ({
+  label: isValidAriaLabel(ariaLabel) ? ariaLabel : text,
+  describedBy: ariaDescribedBy,
+  role: ariaRole,
+  live: 'polite',
+  atomic: true,
+  relevant: 'additions text'
+});
+
+/**
+ * Calculates accessibility compliance score
+ * @param config - ARIA configuration
+ * @param hasTooltip - Whether tooltip is enabled
+ * @param hasNote - Whether note is shown
+ * @returns Compliance information
+ */
+const calculateA11yCompliance = (
+  config: AriaConfig,
+  hasTooltip: boolean,
+  hasNote: boolean
+): A11yCompliance => {
+  const checks = {
+    hasAriaLabel: isValidAriaLabel(config.label),
+    hasTooltip,
+    hasVisibleLabel: true,
+    hasScreenReaderText: isValidAriaLabel(config.label),
+  };
+
+  const score = Object.values(checks).filter(Boolean).length / 4;
+  const wcagLevel: 'A' | 'AA' | 'AAA' = score >= 0.9 ? 'AAA' : score >= 0.7 ? 'AA' : 'A';
+
+  return {
+    wcagLevel,
+    ...checks,
+    score: Math.round(score * 100)
+  };
+};
+
+/**
+ * Creates ARIA attributes object
+ * @param config - ARIA configuration
+ * @returns ARIA attributes
+ */
+const createAriaAttributes = (config: AriaConfig): AriaAttributes => {
+  const attributes: AriaAttributes = {
+    'aria-label': config.label
+  };
+
+  if (config.describedBy) {
+    attributes['aria-describedby'] = config.describedBy;
+  }
+
+  if (config.role) {
+    attributes['role'] = config.role;
+  }
+
+  if (config.live) {
+    attributes['aria-live'] = config.live;
+  }
+
+  if (config.atomic !== undefined) {
+    attributes['aria-atomic'] = config.atomic;
+  }
+
+  return attributes;
+};
+
+/**
+ * Default accessible text
+ */
+const DEFAULT_TEXT = 'Important accessible content that should be available to screen readers even when visually truncated';
+
+/**
+ * AccessibilityExample component with comprehensive ARIA support
+ * Demonstrates proper accessibility implementation for truncated text
+ */
+const AccessibilityExample: React.FC<AccessibilityExampleProps> = ({
+  text = DEFAULT_TEXT,
   maxWidth = '200px',
   showTooltip = true,
-  showNote = true
-}: AccessibilityExampleProps): JSX.Element {
-  const truncatedText = (
-    <Text
-      variant="bodyMd"
-      truncate
-      accessibilityLabel={text}
-    >
-      {text}
-    </Text>
-  );
+  showNote = true,
+  ariaLabel,
+  ariaDescribedBy,
+  ariaRole,
+  highContrastMode = false,
+  onScreenReaderAccess
+}): JSX.Element => {
+  const textRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<TruncationA11yState>({
+    isTruncated: false,
+    fullTextAvailable: true,
+    tooltipVisible: false,
+    screenReaderMode: false
+  });
+
+  /**
+   * Create ARIA configuration
+   */
+  const ariaConfig = useMemo<AriaConfig>(() => {
+    return createAriaConfig(text, ariaLabel, ariaDescribedBy, ariaRole);
+  }, [text, ariaLabel, ariaDescribedBy, ariaRole]);
+
+  /**
+   * Calculate compliance information
+   */
+  const compliance = useMemo<A11yCompliance>(() => {
+    return calculateA11yCompliance(ariaConfig, showTooltip, showNote);
+  }, [ariaConfig, showTooltip, showNote]);
+
+  /**
+   * Container style with accessibility considerations
+   */
+  const containerStyle = useMemo<CSSProperties>(() => {
+    const baseStyle: CSSProperties = {
+      maxWidth: normalizeWidth(maxWidth)
+    };
+
+    if (highContrastMode) {
+      return {
+        ...baseStyle,
+        border: '2px solid currentColor',
+        padding: '4px'
+      };
+    }
+
+    return baseStyle;
+  }, [maxWidth, highContrastMode]);
+
+  /**
+   * Generate ARIA attributes
+   */
+  const ariaAttributes = useMemo<AriaAttributes>(() => {
+    return createAriaAttributes(ariaConfig);
+  }, [ariaConfig]);
+
+  /**
+   * Detect if text is truncated
+   */
+  useEffect(() => {
+    if (textRef.current) {
+      const element = textRef.current;
+      const isTruncated = element.scrollWidth > element.clientWidth;
+
+      setState(prev => ({
+        ...prev,
+        isTruncated
+      }));
+    }
+  }, [text, maxWidth]);
+
+  /**
+   * Handle focus for screen reader access
+   */
+  const handleFocus = useCallback(() => {
+    setState(prev => ({ ...prev, screenReaderMode: true }));
+
+    if (onScreenReaderAccess) {
+      onScreenReaderAccess(text);
+    }
+  }, [text, onScreenReaderAccess]);
+
+  /**
+   * Handle blur
+   */
+  const handleBlur = useCallback(() => {
+    setState(prev => ({ ...prev, screenReaderMode: false }));
+  }, []);
+
+  /**
+   * Handle tooltip visibility
+   */
+  const handleTooltipToggle = useCallback((visible: boolean) => {
+    setState(prev => ({ ...prev, tooltipVisible: visible }));
+  }, []);
+
+  /**
+   * Render truncated text element with full accessibility
+   */
+  const renderTruncatedText = useCallback((): ReactElement => {
+    return (
+      <div
+        ref={textRef}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        tabIndex={0}
+        {...ariaAttributes}
+        style={{ outline: state.screenReaderMode ? '2px solid #007ace' : undefined }}
+      >
+        <Text
+          variant="bodyMd"
+          truncate
+        >
+          {text}
+        </Text>
+      </div>
+    );
+  }, [text, ariaAttributes, state.screenReaderMode, handleFocus, handleBlur]);
+
+  /**
+   * Render compliance badge
+   */
+  const renderComplianceBadge = useCallback((): ReactNode => {
+    if (!showNote) return null;
+
+    const badgeColor = compliance.wcagLevel === 'AAA' ? '#008060' :
+                       compliance.wcagLevel === 'AA' ? '#006fbb' : '#916a00';
+
+    return (
+      <div style={{
+        display: 'inline-block',
+        padding: '4px 8px',
+        backgroundColor: badgeColor,
+        color: 'white',
+        borderRadius: '4px',
+        fontSize: '12px',
+        fontWeight: '600',
+        marginTop: '8px'
+      }}>
+        WCAG {compliance.wcagLevel} - {compliance.score}% Compliant
+      </div>
+    );
+  }, [showNote, compliance]);
+
+  /**
+   * Render accessibility features list
+   */
+  const renderA11yFeatures = useCallback((): ReactNode => {
+    if (!showNote) return null;
+
+    const features = [
+      { enabled: compliance.hasAriaLabel, text: 'ARIA label for screen readers' },
+      { enabled: compliance.hasTooltip, text: 'Tooltip for visual users' },
+      { enabled: compliance.hasScreenReaderText, text: 'Full text accessible' },
+      { enabled: state.isTruncated, text: 'Keyboard focusable' }
+    ];
+
+    return (
+      <div style={{ marginTop: '16px' }}>
+        <Text variant="bodySm" as="p" fontWeight="semibold">
+          Accessibility Features:
+        </Text>
+        <ul style={{ marginTop: '8px', paddingLeft: '20px' }}>
+          {features.map((feature, index) => (
+            <li key={index}>
+              <Text variant="bodySm" tone={feature.enabled ? 'success' : 'subdued'}>
+                {feature.enabled ? '✓' : '○'} {feature.text}
+              </Text>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }, [showNote, compliance, state.isTruncated]);
+
+  /**
+   * Render screen reader only text
+   */
+  const renderScreenReaderText = useCallback((): ReactNode => {
+    return (
+      <span
+        style={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
+          border: 0
+        }}
+        aria-live="polite"
+      >
+        {state.screenReaderMode && \`Full text: \${text}\`}
+      </span>
+    );
+  }, [state.screenReaderMode, text]);
 
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Accessible Truncation</Text>
-      <div style={{ maxWidth }}>
+
+      <div style={containerStyle}>
         {showTooltip ? (
-          <Tooltip content={text}>
-            {truncatedText}
+          <Tooltip
+            content={text}
+            preferredPosition="above"
+            dismissOnMouseOut
+          >
+            {renderTruncatedText()}
           </Tooltip>
         ) : (
-          truncatedText
+          renderTruncatedText()
         )}
       </div>
+
+      {renderScreenReaderText()}
+
       {showNote && (
-        <Text variant="bodySm" tone="subdued">
-          Screen readers will read the full text even though it's visually truncated
-        </Text>
+        <>
+          <Text variant="bodySm" tone="subdued">
+            Screen readers will read the full text even though it's visually truncated.
+            Press Tab to focus and hear the complete content.
+          </Text>
+          {renderComplianceBadge()}
+          {renderA11yFeatures()}
+        </>
       )}
     </BlockStack>
   );
-}
+};
 
 export default AccessibilityExample;`,
   },
@@ -47310,44 +48490,135 @@ Ext.create('Ext.chart.CartesianChart', {
 });`,
     typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
 import React from 'react';
+import type { SeriesAreaOptions, TooltipOptions } from 'highcharts';
+
+interface PercentageDataPoint {
+  year: string;
+  value: number;
+  rawUnits: number;
+}
 
 interface MarketShareData {
-  name: string;
-  data: number[];
+  product: string;
+  dataPoints: PercentageDataPoint[];
+  category: 'electronics' | 'clothing' | 'food' | 'other';
+}
+
+interface PercentageChartConfig {
+  enablePercentageDisplay: boolean;
+  showRawValues: boolean;
+  decimalPrecision: number;
+}
+
+interface MarketShareMetadata {
+  unit: 'K' | 'M' | 'B';
+  currency: string;
+  fiscalYear: string;
 }
 
 interface MarketShareChartProps {
-  products?: MarketShareData[];
+  rawData?: MarketShareData[];
   years?: string[];
+  config?: PercentageChartConfig;
+  metadata?: MarketShareMetadata;
   height?: number;
 }
 
 const MarketShareChart: React.FC<MarketShareChartProps> = ({
-  products = [
-    { name: 'Product A', data: [50, 55, 58, 60, 62, 65] },
-    { name: 'Product B', data: [30, 28, 27, 25, 24, 22] },
-    { name: 'Product C', data: [20, 17, 15, 15, 14, 13] },
-  ],
+  rawData,
   years = ['2020', '2021', '2022', '2023', '2024', '2025'],
+  config = {
+    enablePercentageDisplay: true,
+    showRawValues: true,
+    decimalPrecision: 1
+  },
+  metadata = { unit: 'K', currency: 'USD', fiscalYear: '2025' },
   height = 400
 }) => {
+  const defaultData: MarketShareData[] = [
+    {
+      product: 'Product A',
+      category: 'electronics',
+      dataPoints: years.map((year, i) => ({
+        year,
+        value: [50, 55, 58, 60, 62, 65][i],
+        rawUnits: [50000, 55000, 58000, 60000, 62000, 65000][i]
+      }))
+    },
+    {
+      product: 'Product B',
+      category: 'clothing',
+      dataPoints: years.map((year, i) => ({
+        year,
+        value: [30, 28, 27, 25, 24, 22][i],
+        rawUnits: [30000, 28000, 27000, 25000, 24000, 22000][i]
+      }))
+    },
+    {
+      product: 'Product C',
+      category: 'food',
+      dataPoints: years.map((year, i) => ({
+        year,
+        value: [20, 17, 15, 15, 14, 13][i],
+        rawUnits: [20000, 17000, 15000, 15000, 14000, 13000][i]
+      }))
+    }
+  ];
+
+  const data = rawData || defaultData;
+
+  const calculatePercentage = (
+    value: number,
+    total: number,
+    precision: number = config.decimalPrecision
+  ): number => {
+    return parseFloat(((value / total) * 100).toFixed(precision));
+  };
+
+  const transformToChartSeries = (marketData: MarketShareData[]): SeriesAreaOptions[] => {
+    return marketData.map(product => ({
+      name: product.product,
+      data: product.dataPoints.map(point => point.value),
+      type: 'area' as const,
+      tooltip: {
+        valueSuffix: metadata.unit
+      }
+    }));
+  };
+
+  const generateTooltipFormatter = (): TooltipOptions => ({
+    pointFormat: config.showRawValues
+      ? '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y}' + metadata.unit + ')<br/>'
+      : '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b><br/>',
+    shared: true
+  });
+
+  const series = transformToChartSeries(data);
+  const tooltipConfig = generateTooltipFormatter();
+
   return (
     <AreaChart
       title="Market Share Distribution"
-      subtitle="Year over Year"
+      subtitle={\`Year over Year - FY \${metadata.fiscalYear}\`}
       stacking="percent"
-      series={products}
-      xAxis={{
-        categories: years,
-      }}
-      yAxis={{
-        title: { text: 'Market Share (%)' },
-      }}
-      tooltip={{
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y}K)<br/>',
-        shared: true,
-      }}
+      series={series}
+      xAxis={{ categories: years }}
+      yAxis={{ title: { text: 'Market Share (%)' } }}
+      tooltip={tooltipConfig}
       height={height}
+      plotOptions={{
+        area: {
+          stacking: 'percent',
+          lineColor: '#666666',
+          lineWidth: 1,
+          marker: {
+            enabled: false,
+            states: {
+              hover: { enabled: true, radius: 5 }
+            }
+          }
+        }
+      }}
     />
   );
 };
@@ -47493,49 +48764,156 @@ Ext.create('Ext.chart.CartesianChart', {
 });`,
     typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
 import React from 'react';
+import type { SeriesAreasplineOptions, PlotAreasplineOptions } from 'highcharts';
 
-interface TrafficSeries {
+interface SplineDataPoint {
+  month: string;
+  value: number;
+  timestamp: Date;
+  growthRate?: number;
+}
+
+interface TrafficSeriesData {
   name: string;
-  data: number[];
+  category: 'organic' | 'paid' | 'social' | 'referral';
+  dataPoints: SplineDataPoint[];
+}
+
+interface GrowthRateCalculation {
+  current: number;
+  previous: number;
+  percentageChange: number;
+}
+
+interface SplineChartOptions {
+  smoothingFactor: number;
+  showMarkers: boolean;
+  fillOpacity: number;
+  enableGrowthCalculation: boolean;
 }
 
 interface TrafficAnalysisProps {
-  series?: TrafficSeries[];
+  rawData?: TrafficSeriesData[];
   categories?: string[];
-  fillOpacity?: number;
-  showMarkers?: boolean;
+  options?: SplineChartOptions;
   height?: number;
 }
 
 const TrafficAnalysis: React.FC<TrafficAnalysisProps> = ({
-  series = [
-    { name: 'Organic Traffic', data: [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000] },
-    { name: 'Paid Traffic', data: [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650] },
-  ],
+  rawData,
   categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  fillOpacity = 0.5,
-  showMarkers = true,
+  options = {
+    smoothingFactor: 0.3,
+    showMarkers: true,
+    fillOpacity: 0.5,
+    enableGrowthCalculation: true
+  },
   height = 400
 }) => {
+  const defaultData: TrafficSeriesData[] = [
+    {
+      name: 'Organic Traffic',
+      category: 'organic',
+      dataPoints: [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000].map((value, i) => ({
+        month: categories[i],
+        value,
+        timestamp: new Date(2025, i, 1),
+        growthRate: i > 0 ? ((value - [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000][i - 1]) / [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000][i - 1]) * 100 : 0
+      }))
+    },
+    {
+      name: 'Paid Traffic',
+      category: 'paid',
+      dataPoints: [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650].map((value, i) => ({
+        month: categories[i],
+        value,
+        timestamp: new Date(2025, i, 1),
+        growthRate: i > 0 ? ((value - [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650][i - 1]) / [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650][i - 1]) * 100 : 0
+      }))
+    }
+  ];
+
+  const data = rawData || defaultData;
+
+  const calculateGrowthRate = (current: number, previous: number): GrowthRateCalculation => {
+    const percentageChange = previous !== 0 ? ((current - previous) / previous) * 100 : 0;
+    return {
+      current,
+      previous,
+      percentageChange: parseFloat(percentageChange.toFixed(2))
+    };
+  };
+
+  const transformToChartSeries = (trafficData: TrafficSeriesData[]): SeriesAreasplineOptions[] => {
+    return trafficData.map(series => ({
+      name: series.name,
+      data: series.dataPoints.map(point => point.value),
+      type: 'areaspline' as const,
+      fillOpacity: options.fillOpacity,
+      marker: {
+        enabled: options.showMarkers,
+        radius: 4,
+        states: {
+          hover: {
+            enabled: true,
+            radius: 6
+          }
+        }
+      }
+    }));
+  };
+
+  const plotOptions: PlotAreasplineOptions = {
+    fillOpacity: options.fillOpacity,
+    lineWidth: 2,
+    marker: {
+      enabled: options.showMarkers,
+      radius: 4
+    }
+  };
+
+  const series = transformToChartSeries(data);
+
   return (
     <AreaChart
       title="Website Traffic Analysis"
-      subtitle="Smooth Area Chart"
+      subtitle="Smooth Area Chart with Growth Tracking"
       smooth={true}
-      markers={showMarkers}
-      fillOpacity={fillOpacity}
+      markers={options.showMarkers}
+      fillOpacity={options.fillOpacity}
       series={series}
       xAxis={{
         categories: categories,
+        title: { text: 'Month' }
       }}
       yAxis={{
         title: { text: 'Visitors' },
+        labels: {
+          formatter: function() {
+            return this.value >= 1000 ? (this.value / 1000) + 'k' : this.value.toString();
+          }
+        }
       }}
       tooltip={{
         shared: true,
         valueSuffix: ' visitors',
+        formatter: options.enableGrowthCalculation ? function() {
+          let tooltip = '<b>' + this.x + '</b><br/>';
+          this.points?.forEach((point, index) => {
+            const prevValue = index > 0 ? (point.series.data[point.point.index - 1] as any)?.y : 0;
+            const growth = prevValue ? calculateGrowthRate(point.y as number, prevValue) : null;
+            tooltip += '<span style="color:' + point.color + '">' + point.series.name + '</span>: <b>' + point.y + '</b> visitors';
+            if (growth && point.point.index > 0) {
+              tooltip += ' (' + (growth.percentageChange >= 0 ? '+' : '') + growth.percentageChange.toFixed(1) + '%)<br/>';
+            } else {
+              tooltip += '<br/>';
+            }
+          });
+          return tooltip;
+        } : undefined
       }}
       height={height}
+      plotOptions={{ areaspline: plotOptions }}
     />
   );
 };
@@ -51742,53 +53120,215 @@ on(input, 'blur', (e) => {
   }
 });`,
     typescript: `import {TextField, InlineError} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, ReactElement} from 'react';
 
+// Validation result with detailed feedback
+interface ValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+  severity: 'error' | 'warning' | 'info';
+}
+
+// Generic validator function type
+type ValidatorFn<T> = (value: T) => ValidationResult;
+
+// Field state tracking (value, interaction state, validation state)
+interface FieldState<T = string> {
+  value: T;
+  touched: boolean;
+  dirty: boolean;
+  validating: boolean;
+  validationResult?: ValidationResult;
+}
+
+// Email validation with comprehensive checks
+const validateEmail: ValidatorFn<string> = (email: string): ValidationResult => {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  if (!email || email.length === 0) {
+    return {
+      isValid: false,
+      errors: ['Email is required'],
+      warnings: [],
+      severity: 'error'
+    };
+  }
+
+  // Basic format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    errors.push('Please enter a valid email address');
+  }
+
+  // Check for common typos
+  const commonDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+  const domain = email.split('@')[1]?.toLowerCase();
+  if (domain && !commonDomains.includes(domain)) {
+    const similar = commonDomains.find(d =>
+      d.substring(0, 3) === domain.substring(0, 3)
+    );
+    if (similar) {
+      warnings.push(\`Did you mean @\${similar}?\`);
+    }
+  }
+
+  // Length validation
+  if (email.length > 254) {
+    errors.push('Email address is too long (max 254 characters)');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings,
+    severity: errors.length > 0 ? 'error' : warnings.length > 0 ? 'warning' : 'info'
+  };
+};
+
+// Phone number validation
+const validatePhone: ValidatorFn<string> = (phone: string): ValidationResult => {
+  const errors: string[] = [];
+  const cleaned = phone.replace(/[\s()-]/g, '');
+
+  if (!phone) {
+    errors.push('Phone number is required');
+  } else if (!/^\+?[1-9]\d{1,14}$/.test(cleaned)) {
+    errors.push('Invalid phone number format');
+  } else if (cleaned.length < 10) {
+    errors.push('Phone number must be at least 10 digits');
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings: [],
+    severity: 'error'
+  };
+};
+
+// URL validation
+const validateURL: ValidatorFn<string> = (url: string): ValidationResult => {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  if (!url) {
+    errors.push('URL is required');
+  } else {
+    try {
+      const urlObj = new URL(url);
+
+      if (urlObj.protocol !== 'https:') {
+        warnings.push('Consider using HTTPS for security');
+      }
+    } catch {
+      errors.push('Please enter a valid URL');
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings,
+    severity: errors.length > 0 ? 'error' : 'warning'
+  };
+};
+
+// Component props with field state management
 interface InlineErrorWithTextFieldProps {
   initialValue?: string;
-  onValidationChange?: (isValid: boolean) => void;
+  validator?: ValidatorFn<string>;
+  fieldType?: 'email' | 'phone' | 'url' | 'text';
+  onValidationChange?: (result: ValidationResult) => void;
+  onFieldStateChange?: (state: FieldState) => void;
 }
 
 function InlineErrorWithTextField({
   initialValue = '',
-  onValidationChange
-}: InlineErrorWithTextFieldProps): JSX.Element {
-  const [value, setValue] = useState<string>(initialValue);
-  const [error, setError] = useState<string>('');
+  validator,
+  fieldType = 'email',
+  onValidationChange,
+  onFieldStateChange
+}: InlineErrorWithTextFieldProps): ReactElement {
+  const [fieldState, setFieldState] = useState<FieldState>({
+    value: initialValue,
+    touched: false,
+    dirty: false,
+    validating: false,
+    validationResult: undefined
+  });
 
-  const validateEmail = useCallback((email: string): string => {
-    if (email.length === 0) {
-      return 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return 'Please enter a valid email';
+  // Select validator based on field type
+  const getValidator = useCallback((): ValidatorFn<string> => {
+    if (validator) return validator;
+
+    switch (fieldType) {
+      case 'email': return validateEmail;
+      case 'phone': return validatePhone;
+      case 'url': return validateURL;
+      default: return (value) => ({
+        isValid: value.length > 0,
+        errors: value.length === 0 ? ['This field is required'] : [],
+        warnings: [],
+        severity: 'error'
+      });
     }
-    return '';
-  }, []);
+  }, [validator, fieldType]);
 
   const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    const validationError = validateEmail(newValue);
-    setError(validationError);
-    onValidationChange?.(!validationError);
-  }, [validateEmail, onValidationChange]);
+    const validatorFn = getValidator();
+    const result = validatorFn(newValue);
+
+    const newState: FieldState = {
+      value: newValue,
+      touched: true,
+      dirty: newValue !== initialValue,
+      validating: false,
+      validationResult: result
+    };
+
+    setFieldState(newState);
+    onValidationChange?.(result);
+    onFieldStateChange?.(newState);
+  }, [getValidator, initialValue, onValidationChange, onFieldStateChange]);
+
+  const handleBlur = useCallback(() => {
+    setFieldState(prev => ({
+      ...prev,
+      touched: true
+    }));
+  }, []);
+
+  const primaryError = fieldState.validationResult?.errors[0];
+  const hasWarning = (fieldState.validationResult?.warnings.length ?? 0) > 0;
 
   return (
     <>
       <TextField
-        label="Email"
-        type="email"
-        value={value}
+        label={fieldType.charAt(0).toUpperCase() + fieldType.slice(1)}
+        type={fieldType === 'email' ? 'email' : fieldType === 'phone' ? 'tel' : fieldType === 'url' ? 'url' : 'text'}
+        value={fieldState.value}
         onChange={handleChange}
-        error={Boolean(error)}
-        id="email-field"
-        autoComplete="email"
+        onBlur={handleBlur}
+        error={Boolean(fieldState.touched && primaryError)}
+        id={\`\${fieldType}-field\`}
+        autoComplete={fieldType}
       />
-      {error && <InlineError message={error} fieldID="email-field" />}
+      {fieldState.touched && primaryError && (
+        <InlineError message={primaryError} fieldID={\`\${fieldType}-field\`} />
+      )}
+      {fieldState.touched && hasWarning && !primaryError && fieldState.validationResult && (
+        <div style={{ color: '#8A6116', marginTop: '4px', fontSize: '13px' }}>
+          ⚠️ {fieldState.validationResult.warnings[0]}
+        </div>
+      )}
     </>
   );
 }
 
-export default InlineErrorWithTextField;`
+export default InlineErrorWithTextField;
+export type { ValidationResult, ValidatorFn, FieldState };`
   },
 
   multiplefielderrors: {
@@ -51937,63 +53477,162 @@ on(emailField, 'blur', (e) => {
   renderTo: Ext.getBody()
 });`,
     typescript: `import {TextField, InlineError, FormLayout} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, ReactElement} from 'react';
 
-interface FormErrors {
-  name: string;
+// Union type for all form fields
+type FormField = 'email' | 'password' | 'name' | 'phone';
+
+// Error map type for tracking errors by field
+type ErrorMap = Record<FormField, string>;
+
+// Form data with all field values
+interface FormData {
   email: string;
+  password: string;
+  name: string;
+  phone: string;
 }
 
-interface FormData {
-  name: string;
-  email: string;
+// Form-level validation state
+interface FormValidationState {
+  errors: ErrorMap;
+  touched: Record<FormField, boolean>;
+  isValid: boolean;
+  isDirty: boolean;
+  fieldCount: number;
+  errorCount: number;
+}
+
+// Field-specific validation result
+interface FieldValidationResult {
+  field: FormField;
+  isValid: boolean;
+  error: string;
+}
+
+// Validator function type for a specific field
+type FieldValidator = (value: string, formData: FormData) => string;
+
+// Validation rules map
+type ValidationRules = Record<FormField, FieldValidator[]>;
+
+// Email validator
+const validateEmail: FieldValidator = (email: string): string => {
+  if (!email) return 'Email is required';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return 'Please enter a valid email address';
+  }
+  if (email.length > 254) return 'Email is too long';
+  return '';
+};
+
+// Name validator
+const validateName: FieldValidator = (name: string): string => {
+  if (!name) return 'Name is required';
+  if (name.length < 2) return 'Name must be at least 2 characters';
+  if (name.length > 100) return 'Name is too long';
+  if (!/^[a-zA-Z\s'-]+$/.test(name)) {
+    return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+  }
+  return '';
+};
+
+// Password validator with cross-field validation
+const validatePassword: FieldValidator = (password: string): string => {
+  if (!password) return 'Password is required';
+  if (password.length < 8) return 'Password must be at least 8 characters';
+  if (!/[A-Z]/.test(password)) return 'Password must contain an uppercase letter';
+  if (!/[a-z]/.test(password)) return 'Password must contain a lowercase letter';
+  if (!/\d/.test(password)) return 'Password must contain a number';
+  return '';
+};
+
+// Phone validator
+const validatePhone: FieldValidator = (phone: string): string => {
+  if (!phone) return 'Phone number is required';
+  const cleaned = phone.replace(/[\s()-]/g, '');
+  if (!/^\+?[1-9]\d{9,14}$/.test(cleaned)) {
+    return 'Please enter a valid phone number';
+  }
+  return '';
+};
+
+// Form-level validation (validates all fields and cross-field rules)
+function validateForm(data: FormData): FormValidationState {
+  const errors: ErrorMap = {
+    email: validateEmail(data.email, data),
+    password: validatePassword(data.password, data),
+    name: validateName(data.name, data),
+    phone: validatePhone(data.phone, data)
+  };
+
+  const errorCount = Object.values(errors).filter(e => e !== '').length;
+  const fieldCount = Object.keys(errors).length;
+
+  return {
+    errors,
+    touched: {
+      email: false,
+      password: false,
+      name: false,
+      phone: false
+    },
+    isValid: errorCount === 0,
+    isDirty: false,
+    fieldCount,
+    errorCount
+  };
 }
 
 interface MultipleFieldErrorsProps {
-  onFormValidate?: (isValid: boolean, data: FormData) => void;
+  initialData?: Partial<FormData>;
+  onFormValidate?: (state: FormValidationState) => void;
+  onFieldChange?: (field: FormField, value: string) => void;
+  validateOnChange?: boolean;
 }
 
 function MultipleFieldErrors({
-  onFormValidate
-}: MultipleFieldErrorsProps): JSX.Element {
+  initialData,
+  onFormValidate,
+  onFieldChange,
+  validateOnChange = true
+}: MultipleFieldErrorsProps): ReactElement {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: ''
-  });
-  const [errors, setErrors] = useState<FormErrors>({
-    name: '',
-    email: ''
+    email: initialData?.email || '',
+    password: initialData?.password || '',
+    name: initialData?.name || '',
+    phone: initialData?.phone || ''
   });
 
-  const validateName = useCallback((value: string): string => {
-    if (!value) return 'Name is required';
-    if (value.length < 2) return 'Name must be at least 2 characters';
-    return '';
+  const [validationState, setValidationState] = useState<FormValidationState>(
+    validateForm(formData)
+  );
+
+  // Update a single field and re-validate form
+  const handleFieldChange = useCallback((field: FormField, value: string) => {
+    const newFormData = { ...formData, [field]: value };
+    setFormData(newFormData);
+    onFieldChange?.(field, value);
+
+    if (validateOnChange) {
+      const newState = validateForm(newFormData);
+      newState.touched = { ...validationState.touched, [field]: true };
+      newState.isDirty = true;
+      setValidationState(newState);
+      onFormValidate?.(newState);
+    }
+  }, [formData, validationState.touched, validateOnChange, onFieldChange, onFormValidate]);
+
+  const handleBlur = useCallback((field: FormField) => {
+    setValidationState(prev => ({
+      ...prev,
+      touched: { ...prev.touched, [field]: true }
+    }));
   }, []);
 
-  const validateEmail = useCallback((value: string): string => {
-    if (!value) return 'Email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email format';
-    return '';
-  }, []);
-
-  const handleNameChange = useCallback((value: string) => {
-    const newFormData = {...formData, name: value};
-    setFormData(newFormData);
-    const nameError = validateName(value);
-    const newErrors = {...errors, name: nameError};
-    setErrors(newErrors);
-    onFormValidate?.(!nameError && !newErrors.email, newFormData);
-  }, [formData, errors, validateName, onFormValidate]);
-
-  const handleEmailChange = useCallback((value: string) => {
-    const newFormData = {...formData, email: value};
-    setFormData(newFormData);
-    const emailError = validateEmail(value);
-    const newErrors = {...errors, email: emailError};
-    setErrors(newErrors);
-    onFormValidate?.(!newErrors.name && !emailError, newFormData);
-  }, [formData, errors, validateEmail, onFormValidate]);
+  const shouldShowError = (field: FormField): boolean => {
+    return validationState.touched[field] && Boolean(validationState.errors[field]);
+  };
 
   return (
     <FormLayout>
@@ -52001,12 +53640,15 @@ function MultipleFieldErrors({
         <TextField
           label="Name"
           value={formData.name}
-          onChange={handleNameChange}
-          error={Boolean(errors.name)}
+          onChange={(v) => handleFieldChange('name', v)}
+          onBlur={() => handleBlur('name')}
+          error={shouldShowError('name')}
           id="name-field"
           autoComplete="name"
         />
-        {errors.name && <InlineError message={errors.name} fieldID="name-field" />}
+        {shouldShowError('name') && (
+          <InlineError message={validationState.errors.name} fieldID="name-field" />
+        )}
       </div>
 
       <div>
@@ -52014,18 +53656,54 @@ function MultipleFieldErrors({
           label="Email"
           type="email"
           value={formData.email}
-          onChange={handleEmailChange}
-          error={Boolean(errors.email)}
+          onChange={(v) => handleFieldChange('email', v)}
+          onBlur={() => handleBlur('email')}
+          error={shouldShowError('email')}
           id="email-field"
           autoComplete="email"
         />
-        {errors.email && <InlineError message={errors.email} fieldID="email-field" />}
+        {shouldShowError('email') && (
+          <InlineError message={validationState.errors.email} fieldID="email-field" />
+        )}
+      </div>
+
+      <div>
+        <TextField
+          label="Password"
+          type="password"
+          value={formData.password}
+          onChange={(v) => handleFieldChange('password', v)}
+          onBlur={() => handleBlur('password')}
+          error={shouldShowError('password')}
+          id="password-field"
+          autoComplete="new-password"
+        />
+        {shouldShowError('password') && (
+          <InlineError message={validationState.errors.password} fieldID="password-field" />
+        )}
+      </div>
+
+      <div>
+        <TextField
+          label="Phone"
+          type="tel"
+          value={formData.phone}
+          onChange={(v) => handleFieldChange('phone', v)}
+          onBlur={() => handleBlur('phone')}
+          error={shouldShowError('phone')}
+          id="phone-field"
+          autoComplete="tel"
+        />
+        {shouldShowError('phone') && (
+          <InlineError message={validationState.errors.phone} fieldID="phone-field" />
+        )}
       </div>
     </FormLayout>
   );
 }
 
-export default MultipleFieldErrors;`
+export default MultipleFieldErrors;
+export type { FormField, ErrorMap, FormData, FormValidationState, FieldValidator };`
   },
 
   passwordvalidation: {
@@ -52177,69 +53855,210 @@ on(confirmField, 'blur', (e) => {
   renderTo: Ext.getBody()
 });`,
     typescript: `import {TextField, InlineError} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, ReactElement} from 'react';
+
+// Password strength levels
+enum PasswordStrength {
+  VeryWeak = 0,
+  Weak = 1,
+  Fair = 2,
+  Strong = 3,
+  VeryStrong = 4
+}
+
+// Password validation requirements
+interface PasswordRequirements {
+  minLength: number;
+  requireUppercase: boolean;
+  requireLowercase: boolean;
+  requireNumber: boolean;
+  requireSpecialChar: boolean;
+  maxLength?: number;
+  disallowCommon?: boolean;
+}
+
+// Password strength analysis result
+interface PasswordStrengthAnalysis {
+  strength: PasswordStrength;
+  score: number;
+  feedback: string[];
+  meetsRequirements: boolean;
+  checks: {
+    hasMinLength: boolean;
+    hasUppercase: boolean;
+    hasLowercase: boolean;
+    hasNumber: boolean;
+    hasSpecialChar: boolean;
+    notCommon: boolean;
+  };
+}
+
+// Common weak passwords to block
+const COMMON_PASSWORDS = new Set([
+  'password', '123456', '12345678', 'qwerty', 'abc123',
+  'password123', 'admin', 'letmein', 'welcome', 'monkey'
+]);
+
+// Password strength calculation
+function analyzePasswordStrength(
+  password: string,
+  requirements: PasswordRequirements
+): PasswordStrengthAnalysis {
+  const checks = {
+    hasMinLength: password.length >= requirements.minLength,
+    hasUppercase: /[A-Z]/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasNumber: /\d/.test(password),
+    hasSpecialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+    notCommon: requirements.disallowCommon
+      ? !COMMON_PASSWORDS.has(password.toLowerCase())
+      : true
+  };
+
+  const feedback: string[] = [];
+  let score = 0;
+
+  // Check each requirement
+  if (!checks.hasMinLength) {
+    feedback.push(\`Must be at least \${requirements.minLength} characters\`);
+  } else {
+    score += 1;
+  }
+
+  if (requirements.requireUppercase && !checks.hasUppercase) {
+    feedback.push('Must contain an uppercase letter');
+  } else if (checks.hasUppercase) {
+    score += 1;
+  }
+
+  if (requirements.requireLowercase && !checks.hasLowercase) {
+    feedback.push('Must contain a lowercase letter');
+  } else if (checks.hasLowercase) {
+    score += 1;
+  }
+
+  if (requirements.requireNumber && !checks.hasNumber) {
+    feedback.push('Must contain a number');
+  } else if (checks.hasNumber) {
+    score += 1;
+  }
+
+  if (requirements.requireSpecialChar && !checks.hasSpecialChar) {
+    feedback.push('Must contain a special character');
+  } else if (checks.hasSpecialChar) {
+    score += 1;
+  }
+
+  if (!checks.notCommon) {
+    feedback.push('Password is too common');
+    score = 0;
+  }
+
+  // Additional length bonus
+  if (password.length >= requirements.minLength + 4) score += 1;
+  if (password.length >= requirements.minLength + 8) score += 1;
+
+  // Determine strength
+  let strength: PasswordStrength;
+  if (score === 0) strength = PasswordStrength.VeryWeak;
+  else if (score <= 2) strength = PasswordStrength.Weak;
+  else if (score <= 4) strength = PasswordStrength.Fair;
+  else if (score <= 6) strength = PasswordStrength.Strong;
+  else strength = PasswordStrength.VeryStrong;
+
+  const meetsRequirements =
+    checks.hasMinLength &&
+    (!requirements.requireUppercase || checks.hasUppercase) &&
+    (!requirements.requireLowercase || checks.hasLowercase) &&
+    (!requirements.requireNumber || checks.hasNumber) &&
+    (!requirements.requireSpecialChar || checks.hasSpecialChar) &&
+    checks.notCommon;
+
+  return { strength, score, feedback, meetsRequirements, checks };
+}
+
+// Password match validation
+interface PasswordMatchResult {
+  matches: boolean;
+  error?: string;
+}
+
+function validatePasswordMatch(
+  password: string,
+  confirmPassword: string
+): PasswordMatchResult {
+  if (!confirmPassword) {
+    return { matches: true };
+  }
+
+  if (password !== confirmPassword) {
+    return {
+      matches: false,
+      error: 'Passwords do not match'
+    };
+  }
+
+  return { matches: true };
+}
 
 interface PasswordValidationProps {
-  onPasswordsValidate?: (isValid: boolean, password: string) => void;
-  minLength?: number;
-  requireNumber?: boolean;
-  requireUppercase?: boolean;
+  requirements?: Partial<PasswordRequirements>;
+  onPasswordChange?: (password: string, analysis: PasswordStrengthAnalysis) => void;
+  onValidationComplete?: (isValid: boolean) => void;
+  showStrengthIndicator?: boolean;
 }
 
 function PasswordValidation({
-  onPasswordsValidate,
-  minLength = 8,
-  requireNumber = true,
-  requireUppercase = true
-}: PasswordValidationProps): JSX.Element {
+  requirements: customRequirements,
+  onPasswordChange,
+  onValidationComplete,
+  showStrengthIndicator = true
+}: PasswordValidationProps): ReactElement {
+  const requirements: PasswordRequirements = {
+    minLength: 8,
+    requireUppercase: true,
+    requireLowercase: true,
+    requireNumber: true,
+    requireSpecialChar: true,
+    disallowCommon: true,
+    ...customRequirements
+  };
+
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-  const [confirmError, setConfirmError] = useState<string>('');
-
-  const validatePassword = useCallback((value: string): string => {
-    if (value.length < minLength) {
-      return \`Password must be at least \${minLength} characters\`;
-    }
-    if (requireNumber && !/\d/.test(value)) {
-      return 'Password must contain a number';
-    }
-    if (requireUppercase && !/[A-Z]/.test(value)) {
-      return 'Password must contain an uppercase letter';
-    }
-    return '';
-  }, [minLength, requireNumber, requireUppercase]);
-
-  const validateConfirm = useCallback((value: string, currentPassword: string): string => {
-    if (value !== currentPassword) {
-      return 'Passwords do not match';
-    }
-    return '';
-  }, []);
+  const [passwordAnalysis, setPasswordAnalysis] = useState<PasswordStrengthAnalysis | null>(null);
+  const [matchResult, setMatchResult] = useState<PasswordMatchResult>({ matches: true });
 
   const handlePasswordChange = useCallback((value: string) => {
     setPassword(value);
-    const error = validatePassword(value);
-    setPasswordError(error);
+    const analysis = analyzePasswordStrength(value, requirements);
+    setPasswordAnalysis(analysis);
+    onPasswordChange?.(value, analysis);
 
-    // Re-validate confirm password if it has a value
+    // Re-validate match
     if (confirmPassword) {
-      const confirmErr = validateConfirm(confirmPassword, value);
-      setConfirmError(confirmErr);
+      const match = validatePasswordMatch(value, confirmPassword);
+      setMatchResult(match);
+      onValidationComplete?.(analysis.meetsRequirements && match.matches);
+    } else {
+      onValidationComplete?.(analysis.meetsRequirements);
     }
-
-    const isValid = !error && (!confirmPassword || !validateConfirm(confirmPassword, value));
-    onPasswordsValidate?.(isValid, value);
-  }, [confirmPassword, validatePassword, validateConfirm, onPasswordsValidate]);
+  }, [confirmPassword, requirements, onPasswordChange, onValidationComplete]);
 
   const handleConfirmChange = useCallback((value: string) => {
     setConfirmPassword(value);
-    const error = validateConfirm(value, password);
-    setConfirmError(error);
+    const match = validatePasswordMatch(password, value);
+    setMatchResult(match);
 
-    const isValid = !passwordError && !error;
-    onPasswordsValidate?.(isValid, password);
-  }, [password, passwordError, validateConfirm, onPasswordsValidate]);
+    if (passwordAnalysis) {
+      onValidationComplete?.(passwordAnalysis.meetsRequirements && match.matches);
+    }
+  }, [password, passwordAnalysis, onValidationComplete]);
+
+  const primaryError = passwordAnalysis?.feedback[0];
+  const strengthLabel = passwordAnalysis
+    ? ['Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong'][passwordAnalysis.strength]
+    : '';
 
   return (
     <>
@@ -52249,11 +54068,14 @@ function PasswordValidation({
           type="password"
           value={password}
           onChange={handlePasswordChange}
-          error={Boolean(passwordError)}
+          error={Boolean(password && primaryError)}
           id="password-field"
           autoComplete="new-password"
+          helpText={showStrengthIndicator && password ? \`Strength: \${strengthLabel}\` : undefined}
         />
-        {passwordError && <InlineError message={passwordError} fieldID="password-field" />}
+        {password && primaryError && (
+          <InlineError message={primaryError} fieldID="password-field" />
+        )}
       </div>
 
       <div>
@@ -52262,17 +54084,21 @@ function PasswordValidation({
           type="password"
           value={confirmPassword}
           onChange={handleConfirmChange}
-          error={Boolean(confirmError)}
+          error={Boolean(confirmPassword && matchResult.error)}
           id="confirm-field"
           autoComplete="new-password"
         />
-        {confirmError && <InlineError message={confirmError} fieldID="confirm-field" />}
+        {confirmPassword && matchResult.error && (
+          <InlineError message={matchResult.error} fieldID="confirm-field" />
+        )}
       </div>
     </>
   );
 }
 
-export default PasswordValidation;`
+export default PasswordValidation;
+export { PasswordStrength };
+export type { PasswordRequirements, PasswordStrengthAnalysis, PasswordMatchResult };`
   },
 
   formsubmissionerrors: {
