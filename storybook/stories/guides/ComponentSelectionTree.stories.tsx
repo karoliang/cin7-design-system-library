@@ -18,10 +18,10 @@ import {
   AlertCircleIcon,
   ChartVerticalIcon,
   MenuVerticalIcon,
-  FormIcon,
-  LayoutGridIcon,
-  NavigationIcon,
-  MessageIcon,
+  EditIcon,
+  ViewIcon,
+  ArrowRightIcon,
+  ChatIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -293,7 +293,7 @@ const grid = ExtDataGrid.create({
   'input-collection': {
     id: 'input-collection',
     question: 'What type of input do you need?',
-    icon: FormIcon,
+    icon: EditIcon,
     options: [
       {
         label: 'Simple Form (1-5 fields)',
@@ -391,7 +391,7 @@ const form = ExtFormPanel.create({
   'navigation': {
     id: 'navigation',
     question: 'What navigation scope do you need?',
-    icon: NavigationIcon,
+    icon: ArrowRightIcon,
     options: [
       {
         label: 'Within Current Page',
@@ -472,7 +472,7 @@ const form = ExtFormPanel.create({
   'layout': {
     id: 'layout',
     question: 'What layout complexity do you need?',
-    icon: LayoutGridIcon,
+    icon: ViewIcon,
     options: [
       {
         label: 'Simple Linear (Vertical/Horizontal)',
@@ -544,7 +544,7 @@ const form = ExtFormPanel.create({
   'feedback': {
     id: 'feedback',
     question: 'How urgent is the message?',
-    icon: MessageIcon,
+    icon: ChatIcon,
     options: [
       {
         label: 'Critical - User Must See',
@@ -916,7 +916,7 @@ export const QuickReference: Story = {
 
           <Card>
             <BlockStack gap="300">
-              <Icon source={FormIcon} />
+              <Icon source={EditIcon} />
               <Text variant="headingMd" as="h3">Forms & Input</Text>
               <List>
                 <List.Item>Simple forms → Polaris FormLayout</List.Item>
@@ -942,7 +942,7 @@ export const QuickReference: Story = {
 
           <Card>
             <BlockStack gap="300">
-              <Icon source={NavigationIcon} />
+              <Icon source={ArrowRightIcon} />
               <Text variant="headingMd" as="h3">Navigation</Text>
               <List>
                 <List.Item>Same page views → Tabs</List.Item>
@@ -955,7 +955,7 @@ export const QuickReference: Story = {
 
           <Card>
             <BlockStack gap="300">
-              <Icon source={LayoutGridIcon} />
+              <Icon source={ViewIcon} />
               <Text variant="headingMd" as="h3">Layout</Text>
               <List>
                 <List.Item>Single direction → BlockStack/InlineStack</List.Item>
@@ -968,7 +968,7 @@ export const QuickReference: Story = {
 
           <Card>
             <BlockStack gap="300">
-              <Icon source={MessageIcon} />
+              <Icon source={ChatIcon} />
               <Text variant="headingMd" as="h3">User Feedback</Text>
               <List>
                 <List.Item>Critical messages → Banner</List.Item>

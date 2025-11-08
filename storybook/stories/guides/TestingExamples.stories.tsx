@@ -20,7 +20,7 @@ import {
   AlertCircleIcon,
   PlayIcon,
   BugIcon,
-  TestIcon,
+  ClipboardCheckIcon,
 } from '@shopify/polaris-icons';
 import React, { useState } from 'react';
 
@@ -899,7 +899,7 @@ export const IntegrationTesting: Story = {
         <Card>
           <BlockStack gap="400">
             <InlineStack gap="200" align="start">
-              <Icon source={TestIcon} size="large" />
+              <Icon source={ClipboardCheckIcon} size="large" />
               <BlockStack gap="200">
                 <Text variant="headingXl" as="h2">EventBus Communication</Text>
                 <Text tone="subdued">Test how different layers communicate</Text>
