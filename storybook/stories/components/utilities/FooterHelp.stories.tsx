@@ -50,30 +50,18 @@ export const WithLearnMore: Story = {
       content: 'View optimization guide',
     },
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'withLearnMore'),
-  },
-
 };
 
 export const ShortText: Story = {
   args: {
     children: 'Press "?" for keyboard shortcuts.',
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'shortText'),
-  },
-
 };
 
 export const LongText: Story = {
   args: {
     children: 'This section allows you to configure your store\'s basic settings including name, currency, and timezone. These settings affect how your store displays prices and dates to customers. Make sure to review these settings carefully as they impact your entire store operation.',
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'longText'),
-  },
-
 };
 
 export const WithIcon: Story = {
@@ -95,10 +83,6 @@ export const WithIcon: Story = {
       </Card>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'withIcon'),
-  },
-
 };
 
 export const DocumentationLinks: Story = {
@@ -152,10 +136,6 @@ export const DocumentationLinks: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'documentationLinks'),
-  },
-
 };
 
 export const InteractiveHelp: Story = {
@@ -167,7 +147,7 @@ export const InteractiveHelp: Story = {
       general: {
         text: 'Get help with basic store setup and navigation.',
         link: 'Getting started guide',
-        icon: QuestionMarkIcon
+        icon: QuestionCircleIcon
       },
       billing: {
         text: 'Questions about your subscription, invoices, or payment methods?',
@@ -245,10 +225,6 @@ export const InteractiveHelp: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'interactiveHelp'),
-  },
-
 };
 
 export const FormContextHelp: Story = {
@@ -288,10 +264,6 @@ export const FormContextHelp: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'formContextHelp'),
-  },
-
 };
 
 export const SupportCenter: Story = {
@@ -383,10 +355,6 @@ export const SupportCenter: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'supportCenter'),
-  },
-
 };
 
 export const LearningResources: Story = {
@@ -456,10 +424,6 @@ export const LearningResources: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'learningResources'),
-  },
-
 };
 
 export const ContextualHelp: Story = {
@@ -550,10 +514,6 @@ export const ContextualHelp: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'contextualHelp'),
-  },
-
 };
 
 export const MobileOptimized: Story = {
@@ -595,8 +555,4 @@ export const MobileOptimized: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'mobileOptimized'),
-  },
-
 };

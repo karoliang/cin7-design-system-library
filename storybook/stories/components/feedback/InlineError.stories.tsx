@@ -74,9 +74,6 @@ export const WithTextField: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'with-textfield'),
-  },
 };
 
 export const MultipleFieldErrors: Story = {
@@ -207,9 +204,6 @@ export const MultipleFieldErrors: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'multiple-fields'),
-  },
 };
 
 export const PasswordValidation: Story = {
@@ -289,9 +283,6 @@ export const PasswordValidation: Story = {
         </LegacyCard>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'password-validation'),
   },
 };
 
@@ -438,9 +429,6 @@ export const FormSubmissionErrors: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'form-submission'),
-  },
 };
 
 export const RealTimeValidation: Story = {
@@ -519,9 +507,6 @@ export const RealTimeValidation: Story = {
         </LegacyCard>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'realtime-validation'),
   },
 };
 
@@ -609,9 +594,6 @@ export const CustomFieldValidation: Story = {
         </LegacyCard>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'custom-validation'),
   },
 };
 
@@ -701,8 +683,5 @@ export const ConditionalValidation: Story = {
         </LegacyCard>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('inlineerror', 'conditional-validation'),
   },
 };
