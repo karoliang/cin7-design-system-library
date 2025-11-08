@@ -106,10 +106,6 @@ export const WithIconButtonActivator: Story = {
       <Button size="slim" icon={MenuHorizontalIcon} />
     ),
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'withIconButtonActivator'),
-  },
-
 };
 
 export const GroupedActions: Story = {
@@ -149,10 +145,6 @@ export const GroupedActions: Story = {
       },
     ],
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'groupedActions'),
-  },
-
 };
 
 export const RollupVariations: Story = {
@@ -214,10 +206,6 @@ export const RollupVariations: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'rollupVariations'),
-  },
-
 };
 
 export const DisabledActions: Story = {
@@ -249,10 +237,6 @@ export const DisabledActions: Story = {
       },
     ],
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'disabledActions'),
-  },
-
 };
 
 export const ActionsWithBadges: Story = {
@@ -293,10 +277,6 @@ export const ActionsWithBadges: Story = {
       },
     ],
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'actionsWithBadges'),
-  },
-
 };
 
 export const LongActionList: Story = {
@@ -313,10 +293,6 @@ export const LongActionList: Story = {
       { content: 'Delete', icon: DeleteIcon, destructive: true, onAction: () => {} },
     ],
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'longActionList'),
-  },
-
 };
 
 export const InteractiveMenu: Story = {
@@ -365,10 +341,6 @@ export const InteractiveMenu: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'interactiveMenu'),
-  },
-
 };
 
 export const ContextualUsage: Story = {
@@ -482,10 +454,6 @@ export const ContextualUsage: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'contextualUsage'),
-  },
-
 };
 
 export const AccessibilityDemo: Story = {
@@ -518,10 +486,6 @@ export const AccessibilityDemo: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'accessibilityDemo'),
-  },
-
 };
 
 export const WithinPopover: Story = {
@@ -565,8 +529,4 @@ export const WithinPopover: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'withinPopover'),
-  },
-
 };

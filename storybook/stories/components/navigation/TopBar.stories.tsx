@@ -287,9 +287,6 @@ export const EcommerceHeader: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('topbar', 'ecommerceheader'),
-  },
 
 };
 
@@ -364,9 +361,6 @@ export const AdminDashboard: Story = {
         />
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('topbar', 'admindashboard'),
   },
 
 };
@@ -530,9 +524,6 @@ export const ProjectManagement: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('topbar', 'projectmanagement'),
-  },
 
 };
 
@@ -615,9 +606,6 @@ export const CustomerSupport: Story = {
         />
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('topbar', 'customersupport'),
   },
 
 };
@@ -717,9 +705,6 @@ export const EducationalPlatform: Story = {
         />
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('topbar', 'educationalplatform'),
   },
 
 };
