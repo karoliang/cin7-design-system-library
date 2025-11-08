@@ -4,7 +4,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Data Display/Avatar',
+  title: 'Components/Media/Avatar',
   component: Avatar,
   parameters: {
     layout: 'centered',

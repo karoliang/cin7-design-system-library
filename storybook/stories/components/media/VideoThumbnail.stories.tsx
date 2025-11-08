@@ -15,7 +15,7 @@ import React, { useState } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Data Display/VideoThumbnail',
+  title: 'Components/Media/VideoThumbnail',
   component: VideoThumbnail,
   parameters: {
     layout: 'centered',

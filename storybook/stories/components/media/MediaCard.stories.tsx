@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Data Display/MediaCard',
+  title: 'Components/Media/MediaCard',
   component: MediaCard,
   parameters: {
     layout: 'centered',

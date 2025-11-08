@@ -4,7 +4,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Typography/Truncate',
+  title: 'Components/Foundation/Truncate',
   component: Truncate,
   parameters: {
     layout: 'centered',

@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Data Display/Thumbnail',
+  title: 'Components/Media/Thumbnail',
   component: Thumbnail,
   parameters: {
     layout: 'centered',

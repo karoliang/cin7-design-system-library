@@ -4,7 +4,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Typography/KeyboardKey',
+  title: 'Components/Foundation/KeyboardKey',
   component: KeyboardKey,
   parameters: {
     layout: 'centered',

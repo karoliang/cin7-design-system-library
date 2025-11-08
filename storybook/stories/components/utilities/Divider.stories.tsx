@@ -5,7 +5,7 @@ import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 import React from 'react';
 
 const meta = {
-  title: 'Components/Layout/Divider',
+  title: 'Components/Foundation/Divider',
   component: Divider,
   parameters: {
     layout: 'centered',
