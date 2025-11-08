@@ -4,7 +4,7 @@ import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 import React from 'react';
 
 const meta = {
-  title: 'Components/Forms/ButtonGroup',
+  title: 'Components/Actions/ButtonGroup',
   component: ButtonGroup,
   parameters: {
     layout: 'centered',

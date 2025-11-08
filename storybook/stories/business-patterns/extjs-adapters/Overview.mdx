@@ -1,0 +1,396 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Business Patterns/ExtJS Adapters/Overview" />
+
+# ExtJS Adapters
+
+Enterprise-grade components for complex data grids, forms, and charts. The ExtJS adapters bridge modern Cin7 design tokens with powerful ExtJS functionality.
+
+## What are ExtJS Adapters?
+
+The `@cin7/extjs-adapters` package provides enhanced ExtJS components that integrate seamlessly with the Cin7 DSL framework. It brings the power of ExtJS enterprise components while maintaining visual consistency with the modern Polaris design system.
+
+## Key Features
+
+- **Design Token Integration** - Automatically applies Cin7 design tokens to ExtJS components
+- **Enhanced Grids** - Powerful data grids with modern styling and features
+- **Advanced Forms** - Complex form panels with validation and modern UX
+- **Chart Components** - Data visualization with Cin7 theming
+- **Consistent APIs** - Familiar ExtJS patterns with DSL enhancements
+- **Theme Synchronization** - Automatic theme updates across all components
+
+## When to Use ExtJS Adapters
+
+Use `@cin7/extjs-adapters` when you need:
+
+- **Large datasets** - Grids handling 10,000+ rows with virtual scrolling
+- **Complex forms** - Multi-section forms with advanced validation
+- **Enterprise features** - Grouping, filtering, sorting, exporting, pivoting
+- **Data-heavy UIs** - Applications focused on data management
+- **Legacy integration** - Working with existing ExtJS codebases
+
+**Don't use** when:
+
+- Building simple lists → Use Polaris DataTable or IndexTable
+- Creating basic forms → Use Polaris form components
+- Need mobile-first UI → Use React/Polaris components
+- Rapid prototyping → Start with simpler components
+
+## Core Components
+
+### Enhanced Data Grid
+
+Modern grid with Cin7 styling and powerful features:
+
+```javascript
+import { Cin7Grid } from '@cin7/extjs-adapters/grid';
+
+const grid = Cin7Grid.create({
+  title: 'Products',
+  store: productStore,
+  columns: [
+    { text: 'Product', dataIndex: 'name', flex: 1 },
+    { text: 'SKU', dataIndex: 'sku', width: 120 },
+    { text: 'Price', dataIndex: 'price', width: 100, xtype: 'cin7numbercolumn' },
+    { text: 'Stock', dataIndex: 'stock', width: 80 },
+    { text: 'Status', dataIndex: 'status', width: 120, xtype: 'cin7statuscolumn' }
+  ],
+  features: [{
+    ftype: 'cin7grouping',
+    groupHeaderTpl: '{name} ({rows.length} items)'
+  }, {
+    ftype: 'summary'
+  }],
+  tbar: {
+    xtype: 'cin7toolbar',
+    items: [
+      { xtype: 'cin7searchfield', emptyText: 'Search products...' },
+      '->',
+      { xtype: 'cin7button', text: 'Export', icon: 'download' },
+      { xtype: 'cin7button', text: 'Add Product', icon: 'plus', ui: 'primary' }
+    ]
+  },
+  pagination: {
+    pageSize: 50,
+    serverSide: true
+  }
+});
+```
+
+### Form Panels
+
+Enhanced forms with modern styling and validation:
+
+```javascript
+import { Cin7Form } from '@cin7/extjs-adapters/form';
+
+const form = Cin7Form.create({
+  title: 'Customer Details',
+  defaults: {
+    labelAlign: 'top',
+    anchor: '100%'
+  },
+  items: [{
+    xtype: 'fieldset',
+    title: 'Basic Information',
+    items: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Company Name',
+      name: 'companyName',
+      required: true,
+      allowBlank: false
+    }, {
+      xtype: 'cin7emailfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      required: true
+    }, {
+      xtype: 'cin7textfield',
+      fieldLabel: 'Phone',
+      name: 'phone',
+      maskRe: /[\d\-\(\)\+]/,
+      regex: /^\+?[\d\-\(\)\s]+$/
+    }]
+  }, {
+    xtype: 'fieldset',
+    title: 'Address',
+    items: [{
+      xtype: 'cin7textfield',
+      fieldLabel: 'Street Address',
+      name: 'street'
+    }, {
+      xtype: 'fieldcontainer',
+      layout: 'hbox',
+      items: [{
+        xtype: 'cin7textfield',
+        fieldLabel: 'City',
+        name: 'city',
+        flex: 1
+      }, {
+        xtype: 'cin7textfield',
+        fieldLabel: 'Postal Code',
+        name: 'postalCode',
+        width: 150,
+        margin: '0 0 0 10'
+      }]
+    }]
+  }],
+  buttons: [{
+    text: 'Cancel',
+    xtype: 'cin7button',
+    ui: 'secondary'
+  }, {
+    text: 'Save Customer',
+    xtype: 'cin7button',
+    ui: 'primary',
+    formBind: true
+  }]
+});
+```
+
+### Custom Column Types
+
+Specialized columns for common use cases:
+
+```javascript
+// Number column with formatting
+{
+  text: 'Price',
+  dataIndex: 'price',
+  xtype: 'cin7numbercolumn',
+  format: '0,0.00',
+  renderer: 'usMoney'
+}
+
+// Status column with badges
+{
+  text: 'Status',
+  dataIndex: 'status',
+  xtype: 'cin7statuscolumn',
+  statusMap: {
+    active: { text: 'Active', tone: 'success' },
+    inactive: { text: 'Inactive', tone: 'critical' },
+    pending: { text: 'Pending', tone: 'warning' }
+  }
+}
+
+// Action column with modern buttons
+{
+  xtype: 'cin7actioncolumn',
+  width: 80,
+  items: [{
+    iconCls: 'edit-icon',
+    tooltip: 'Edit',
+    handler: (grid, rowIndex, colIndex, item, e, record) => {
+      editProduct(record);
+    }
+  }, {
+    iconCls: 'delete-icon',
+    tooltip: 'Delete',
+    handler: (grid, rowIndex, colIndex, item, e, record) => {
+      deleteProduct(record);
+    }
+  }]
+}
+```
+
+## Theme Integration
+
+Automatic theme synchronization with Cin7 design tokens:
+
+```javascript
+import { applyTheme, watchTheme } from '@cin7/extjs-adapters';
+
+// Apply Cin7 theme to all ExtJS components
+applyTheme();
+
+// Watch for theme changes (light/dark mode)
+const unwatch = watchTheme((theme) => {
+  console.log('Theme changed to:', theme);
+  // ExtJS components automatically update
+});
+
+// Custom theme overrides
+applyTheme({
+  overrides: {
+    grid: {
+      headerHeight: 48,
+      rowHeight: 42,
+      stripeRows: true
+    },
+    form: {
+      fieldHeight: 38,
+      labelWidth: 120
+    }
+  }
+});
+```
+
+## Integration with Polaris
+
+ExtJS and Polaris components can coexist in the same application:
+
+```tsx
+import { Page, Card } from '@cin7/polaris-adapter';
+import { Cin7Grid } from '@cin7/extjs-adapters/grid';
+
+function ProductPage() {
+  return (
+    <Page title="Product Management">
+      {/* Polaris Card wrapper */}
+      <Card>
+        <div id="product-grid"></div>
+      </Card>
+    </Page>
+  );
+}
+
+// Mount ExtJS grid inside Polaris layout
+useEffect(() => {
+  const grid = Cin7Grid.create({
+    renderTo: 'product-grid',
+    store: productStore,
+    columns: [/* ... */]
+  });
+}, []);
+```
+
+## EventBus Communication
+
+ExtJS adapters integrate with the Cin7 EventBus:
+
+```javascript
+import { EventBus } from '@cin7/core';
+
+// Emit events from ExtJS grid
+grid.on('cin7:rowclick', (grid, record) => {
+  EventBus.emit('product:selected', record.getData());
+});
+
+// Listen to events from other layers
+EventBus.on('product:updated', (product) => {
+  grid.getStore().reload();
+});
+```
+
+## Advanced Features
+
+### Server-Side Operations
+
+```javascript
+const grid = Cin7Grid.create({
+  store: {
+    type: 'store',
+    proxy: {
+      type: 'ajax',
+      url: '/api/products',
+      reader: {
+        type: 'json',
+        rootProperty: 'data',
+        totalProperty: 'total'
+      }
+    },
+    autoLoad: true,
+    pageSize: 50
+  },
+  columns: [/* ... */],
+  features: [{
+    ftype: 'cin7grouping',
+    remoteSort: true,
+    enableGroupingMenu: true
+  }]
+});
+```
+
+### Export Functionality
+
+```javascript
+// Built-in export support
+{
+  xtype: 'cin7button',
+  text: 'Export',
+  handler: function() {
+    grid.saveDocumentAs({
+      type: 'xlsx',
+      title: 'Product Export',
+      fileName: 'products.xlsx'
+    });
+  }
+}
+```
+
+### Form Validation
+
+```javascript
+import { Cin7Validators } from '@cin7/extjs-adapters/form';
+
+{
+  xtype: 'cin7textfield',
+  fieldLabel: 'SKU',
+  name: 'sku',
+  validator: Cin7Validators.pattern(
+    /^[A-Z]{3}-\d{4}$/,
+    'SKU must be format ABC-1234'
+  )
+}
+
+{
+  xtype: 'cin7textfield',
+  fieldLabel: 'Password',
+  name: 'password',
+  inputType: 'password',
+  validator: Cin7Validators.minLength(8, 'Password must be at least 8 characters')
+}
+```
+
+## Interactive Examples
+
+Explore ExtJS adapters in action:
+
+- **[Form Panel](?path=/story/cin7-dsl-extjs-adapters-form-panel--basic-form)** - Enhanced form examples
+- **[Data Grid Examples](https://cin7-dsl.netlify.app/examples/extjs-grids)** - Enterprise grid patterns
+
+## Installation
+
+```bash
+pnpm add @cin7/extjs-adapters
+
+# Also requires ExtJS (licensed separately)
+```
+
+## Learn More
+
+- **[Package Documentation](https://cin7-dsl.netlify.app/packages/extjs-adapters)** - Complete API reference
+- **[Migration Guide](https://cin7-dsl.netlify.app/guides/extjs-migration)** - Migrating from standard ExtJS
+- **[Best Practices](https://cin7-dsl.netlify.app/best-practices/extjs)** - Recommended patterns
+
+## Architecture Context
+
+ExtJS Adapters live in the **Component Layer** alongside React/Polaris components, providing enterprise-grade data components.
+
+```
+Application Layer (TypeScript SDK)
+         ↓
+Component Layer (ExtJS Adapters) ← You are here
+         ↓
+UI Interaction Layer (Vanilla JS)
+         ↓
+Design System Layer (Tokens)
+```
+
+## Benefits
+
+### Enterprise Power
+Handle massive datasets with virtual scrolling, grouping, and advanced features.
+
+### Modern Design
+Cin7 design tokens ensure visual consistency with Polaris components.
+
+### Proven Reliability
+ExtJS has been battle-tested in enterprise environments for over a decade.
+
+### Gradual Migration
+Mix ExtJS and modern components in the same application.
+
+### Performance
+Optimized for large-scale data operations and complex UIs.

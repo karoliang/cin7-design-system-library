@@ -1,0 +1,309 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Business Patterns/TypeScript SDK/Overview" />
+
+# TypeScript SDK
+
+Type-safe business logic patterns for building robust, maintainable applications. This SDK provides the foundation for the Application Layer in Cin7 DSL.
+
+## What is the TypeScript SDK?
+
+The `@cin7/typescript-sdk` package provides proven patterns and utilities for implementing business logic that's completely separated from UI concerns. It enables clean architecture with type safety throughout.
+
+## Key Features
+
+- **Repository Pattern** - Consistent data access layer with CRUD operations
+- **Use Case Pattern** - Encapsulated business operations with validation
+- **Specification Pattern** - Reusable business rules and filtering
+- **Mapper Pattern** - Transform data between layers (DTOs ↔ Domain Models)
+- **API Client** - Type-safe HTTP client with interceptors
+- **State Management** - Framework-agnostic state patterns
+- **Validation** - Schema validation with Zod integration
+
+## When to Use the TypeScript SDK
+
+Use the TypeScript SDK when you need:
+
+- **Business logic separation** - Keep business rules independent of UI
+- **Complex operations** - Multi-step workflows with validation
+- **API integration** - Type-safe API communication
+- **Domain modeling** - Rich domain models with business rules
+- **State management** - Application-wide state coordination
+- **Testability** - Easily testable business logic
+
+**Don't use** when:
+
+- Building simple CRUD forms → Use Polaris components directly
+- Creating UI-only features → Use React or Vanilla JS
+- Prototyping simple concepts → Keep it simple initially
+
+## Core Patterns
+
+### Repository Pattern
+
+Abstracts data access logic with a clean, consistent interface:
+
+```typescript
+import { BaseRepository } from '@cin7/typescript-sdk/patterns';
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  sku: string;
+}
+
+class ProductRepository extends BaseRepository<Product> {
+  constructor() {
+    super('/api/products');
+  }
+
+  async findByCategory(category: string): Promise<Product[]> {
+    return this.client.get(`${this.endpoint}/category/${category}`);
+  }
+
+  async updateStock(id: string, quantity: number): Promise<Product> {
+    return this.client.patch(`${this.endpoint}/${id}/stock`, { quantity });
+  }
+}
+
+// Usage
+const productRepo = new ProductRepository();
+const products = await productRepo.findAll();
+const electronics = await productRepo.findByCategory('electronics');
+```
+
+### Use Case Pattern
+
+Encapsulates business operations with validation:
+
+```typescript
+import { ValidatedUseCase } from '@cin7/typescript-sdk/patterns';
+import { z } from 'zod';
+
+const CreateProductSchema = z.object({
+  name: z.string().min(2),
+  price: z.number().positive(),
+  sku: z.string().regex(/^[A-Z]{3}-\d{4}$/),
+});
+
+class CreateProductUseCase extends ValidatedUseCase<
+  z.infer<typeof CreateProductSchema>,
+  Product
+> {
+  constructor(
+    private productRepo: ProductRepository,
+    private inventoryService: InventoryService
+  ) {
+    super();
+  }
+
+  async validate(input: z.infer<typeof CreateProductSchema>) {
+    CreateProductSchema.parse(input);
+
+    // Business validation
+    const existing = await this.productRepo.findBySku(input.sku);
+    if (existing) {
+      throw new ValidationError('SKU already exists');
+    }
+  }
+
+  async performOperation(input: z.infer<typeof CreateProductSchema>) {
+    // Create product
+    const product = await this.productRepo.create(input);
+
+    // Initialize inventory
+    await this.inventoryService.initializeStock(product.id);
+
+    return product;
+  }
+}
+```
+
+### Specification Pattern
+
+Express business rules as reusable specifications:
+
+```typescript
+import { Specification } from '@cin7/typescript-sdk/patterns';
+
+class ActiveProductSpec extends Specification<Product> {
+  isSatisfiedBy(product: Product): boolean {
+    return product.status === 'active' && product.stock > 0;
+  }
+}
+
+class PremiumProductSpec extends Specification<Product> {
+  isSatisfiedBy(product: Product): boolean {
+    return product.price > 100;
+  }
+}
+
+// Combine specifications
+const featuredSpec = new ActiveProductSpec()
+  .and(new PremiumProductSpec());
+
+// Use in business logic
+const products = await productRepo.findAll();
+const featured = products.filter(p => featuredSpec.isSatisfiedBy(p));
+```
+
+### API Client
+
+Type-safe HTTP communication:
+
+```typescript
+import { createApiClient } from '@cin7/typescript-sdk/services';
+
+const api = createApiClient({
+  baseUrl: process.env.API_URL,
+  headers: {
+    'X-API-Key': process.env.API_KEY,
+  },
+  interceptors: {
+    request: async (config) => {
+      const token = await getAuthToken();
+      config.headers['Authorization'] = `Bearer ${token}`;
+      return config;
+    },
+    error: async (error) => {
+      if (error.status === 401) {
+        await refreshAuthToken();
+      }
+    },
+  },
+});
+
+// Type-safe API calls
+const products = await api.getPaginated<Product>('/products', {
+  page: 1,
+  pageSize: 20,
+  filters: [{ field: 'status', operator: 'eq', value: 'active' }],
+});
+```
+
+## EventBus Communication
+
+The TypeScript SDK integrates with the EventBus for cross-layer communication:
+
+```typescript
+import { EventBus } from '@cin7/core';
+
+class ProductService {
+  async createProduct(data: CreateProductInput): Promise<Product> {
+    const product = await this.productRepo.create(data);
+
+    // Notify other layers
+    EventBus.emit('product:created', product);
+
+    return product;
+  }
+}
+
+// In UI components
+EventBus.on('product:created', (product) => {
+  showSuccessToast(`Product ${product.name} created!`);
+  refreshProductList();
+});
+```
+
+## State Management
+
+Framework-agnostic state patterns:
+
+```typescript
+import { createStore, createAsyncState } from '@cin7/typescript-sdk/state';
+
+interface ProductState {
+  products: AsyncState<Product[]>;
+  selectedProduct: Product | null;
+  loadProducts: () => Promise<void>;
+  selectProduct: (id: string) => void;
+}
+
+const useProductStore = createStore<ProductState>({
+  name: 'products',
+  persist: true,
+  initialState: {
+    products: createAsyncState<Product[]>([]),
+    selectedProduct: null,
+  },
+}, (set, get) => ({
+  async loadProducts() {
+    set((state) => {
+      state.products.loading = true;
+    });
+
+    try {
+      const products = await productRepo.findAll();
+      set((state) => {
+        state.products.data = products;
+        state.products.loading = false;
+      });
+    } catch (error) {
+      set((state) => {
+        state.products.error = error;
+        state.products.loading = false;
+      });
+    }
+  },
+
+  selectProduct(id: string) {
+    const product = get().products.data.find(p => p.id === id);
+    set((state) => {
+      state.selectedProduct = product || null;
+    });
+  },
+}));
+```
+
+## Interactive Examples
+
+Explore the TypeScript SDK patterns in action:
+
+- **[Repository Pattern](?path=/story/cin7-dsl-typescript-sdk-repository-pattern--basic-repository)** - Data access patterns
+- **[Use Case Pattern](?path=/story/cin7-dsl-typescript-sdk-use-case-pattern--basic-use-case)** - Business operation examples
+- **[Async Operations](?path=/story/cin7-dsl-typescript-sdk-repository-pattern--async-repository)** - Async data loading
+
+## Installation
+
+```bash
+pnpm add @cin7/typescript-sdk
+```
+
+## Learn More
+
+- **[Package Documentation](https://cin7-dsl.netlify.app/packages/typescript-sdk)** - Complete API reference
+- **[Patterns Guide](https://cin7-dsl.netlify.app/patterns/typescript-sdk)** - In-depth pattern explanations
+- **[Best Practices](https://cin7-dsl.netlify.app/best-practices/business-logic)** - Recommended approaches
+
+## Architecture Context
+
+The TypeScript SDK powers the **Application Layer** of Cin7 DSL, where all business logic lives independently of UI concerns.
+
+```
+Application Layer (TypeScript SDK) ← You are here
+         ↓
+Component Layer (React/ExtJS)
+         ↓
+UI Interaction Layer (Vanilla JS)
+         ↓
+Design System Layer (Tokens)
+```
+
+## Benefits
+
+### Type Safety
+100% TypeScript coverage ensures compile-time safety for business logic.
+
+### Testability
+Pure functions and dependency injection make unit testing straightforward.
+
+### Maintainability
+Clear patterns make code predictable and easy to understand.
+
+### Scalability
+Modular design supports growing applications without architectural changes.
+
+### Framework Independence
+Business logic doesn't depend on React, ExtJS, or any UI framework.

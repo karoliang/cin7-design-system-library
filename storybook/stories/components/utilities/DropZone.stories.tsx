@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Forms/DropZone',
+  title: 'Components/Utilities/DropZone',
   component: DropZone,
   parameters: {
     layout: 'centered',

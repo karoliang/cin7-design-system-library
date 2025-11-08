@@ -29,7 +29,7 @@ import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Layout/Frame',
+  title: 'Components/Navigation/Frame',
   component: Frame,
   parameters: {
     layout: 'fullscreen',

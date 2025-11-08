@@ -1,0 +1,191 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Business Patterns/Vanilla JS/Overview" />
+
+# Vanilla JavaScript Utilities
+
+Lightweight, performant utilities for DOM manipulation, event handling, and UI interactions. Pure vanilla JavaScript with zero framework dependencies.
+
+## What is Vanilla JS?
+
+The `@cin7/vanilla-js` package provides a collection of modern JavaScript utilities that make DOM manipulation and UI interactions simple and performant. Think of it as a modern, lightweight alternative to jQuery, optimized for the Cin7 DSL framework.
+
+## Key Features
+
+- **DOM Utilities** - jQuery-like helpers for element selection and manipulation
+- **Event System** - Simplified event handling, delegation, and keyboard shortcuts
+- **Animation Helpers** - Smooth transitions and effects without heavy libraries
+- **Component Classes** - Reusable UI components with consistent APIs
+- **Zero Dependencies** - Pure JavaScript with no external requirements
+- **TypeScript Support** - Full type definitions included
+
+## When to Use Vanilla JS
+
+Use `@cin7/vanilla-js` when you need:
+
+- **Lightweight interactions** - Simple UI behaviors without framework overhead
+- **Performance-critical operations** - Fine-grained control over DOM manipulation
+- **Progressive enhancement** - Enhancing server-rendered HTML
+- **Simple event handling** - Click handlers, form interactions, animations
+
+**Don't use** when:
+
+- Building complex, stateful UIs → Use React components instead
+- Managing application state → Use TypeScript SDK state management
+- Working with large datasets → Use ExtJS grids
+
+## Quick Examples
+
+### DOM Manipulation
+
+```javascript
+import { $, addClass, removeClass, on } from '@cin7/vanilla-js';
+
+// Select and manipulate elements
+const button = $('#submit-button');
+addClass(button, 'loading');
+
+// Event handling
+on(button, 'click', () => {
+  console.log('Button clicked!');
+});
+
+// Toggle visibility
+const modal = $('#modal');
+addClass(modal, 'active');
+```
+
+### Event Delegation
+
+```javascript
+import { delegate } from '@cin7/vanilla-js';
+
+// Handle clicks on dynamically added elements
+delegate(document.body, '.delete-btn', 'click', (event, target) => {
+  const itemId = target.dataset.id;
+  deleteItem(itemId);
+});
+```
+
+### Animations
+
+```javascript
+import { fadeIn, fadeOut, slideDown } from '@cin7/vanilla-js';
+
+// Smooth animations
+await fadeIn('#notification', 300);
+await slideDown('#dropdown', 200);
+await fadeOut('#modal', 300);
+```
+
+### Component Example
+
+```javascript
+import { ButtonComponent, TextFieldComponent } from '@cin7/vanilla-js';
+
+// Create reusable components
+const emailField = new TextFieldComponent({
+  label: 'Email',
+  type: 'email',
+  required: true,
+  placeholder: 'you@example.com',
+  onChange: (value) => validateEmail(value)
+});
+
+const submitButton = new ButtonComponent({
+  label: 'Submit',
+  variant: 'primary',
+  onClick: async () => {
+    submitButton.setLoading(true);
+    await handleSubmit();
+    submitButton.setLoading(false);
+  }
+});
+
+// Mount to DOM
+emailField.mount('#email-container');
+submitButton.mount('#submit-container');
+```
+
+## Available Utilities
+
+### DOM Selection & Manipulation
+
+- `$(selector)` - Query single element
+- `$$(selector)` - Query multiple elements
+- `addClass()`, `removeClass()`, `toggleClass()` - Class manipulation
+- `show()`, `hide()` - Visibility control
+
+### Event Handling
+
+- `on()` - Add event listener with cleanup
+- `delegate()` - Event delegation for dynamic content
+- `onKey()` - Keyboard shortcuts
+- `onClickOutside()` - Click outside detection
+
+### Animations
+
+- `fadeIn()`, `fadeOut()` - Fade effects
+- `slideDown()`, `slideUp()` - Slide effects
+- `animate()` - Custom animations
+
+### Components
+
+- `CheckboxComponent` - Checkbox with label
+- `RadioGroupComponent` - Radio button groups
+- `TextFieldComponent` - Text inputs with validation
+- `SelectComponent` - Dropdown selection
+- `ButtonComponent` - Versatile buttons
+- `ButtonGroupComponent` - Button groups
+
+## Interactive Examples
+
+Explore the interactive demos to see Vanilla JS utilities in action:
+
+### DOM Utilities
+- **[Element Selection](?path=/story/cin7-dsl-business-patterns-vanilla-js-dom-utilities--element-selection)** - querySelector and querySelectorAll
+- **[Class Management](?path=/story/cin7-dsl-business-patterns-vanilla-js-dom-utilities--class-management)** - Add, remove, and toggle classes
+- **[Attribute Manipulation](?path=/story/cin7-dsl-business-patterns-vanilla-js-dom-utilities--attribute-manipulation)** - Get, set, and remove attributes
+- **[Content Manipulation](?path=/story/cin7-dsl-business-patterns-vanilla-js-dom-utilities--content-manipulation)** - innerHTML, textContent, and DOM methods
+
+### Event Handling
+- **[Basic Events](?path=/story/cin7-dsl-business-patterns-vanilla-js-event-handling--basic-events)** - Click, input, and submit events
+- **[Event Delegation](?path=/story/cin7-dsl-business-patterns-vanilla-js-event-handling--event-delegation)** - Efficient event handling for dynamic content
+- **[Custom Events](?path=/story/cin7-dsl-business-patterns-vanilla-js-event-handling--custom-events)** - Create and dispatch custom events
+- **[EventBus](?path=/story/cin7-dsl-business-patterns-vanilla-js-event-handling--event-bus)** - Cross-layer communication
+
+### Animations
+- **[Fade Effects](?path=/story/cin7-dsl-business-patterns-vanilla-js-animations--fade-effects)** - Fade in, fade out, and fade toggle
+- **[Slide Effects](?path=/story/cin7-dsl-business-patterns-vanilla-js-animations--slide-effects)** - Slide down and slide up
+- **[Custom Animations](?path=/story/cin7-dsl-business-patterns-vanilla-js-animations--custom-animations)** - Animate any CSS property
+
+### Form Utilities
+- **[Form Validation](?path=/story/cin7-dsl-business-patterns-vanilla-js-form-utilities--form-validation)** - Client-side validation
+- **[Form Serialization](?path=/story/cin7-dsl-business-patterns-vanilla-js-form-utilities--form-serialization)** - Collect and serialize form data
+- **[Dynamic Fields](?path=/story/cin7-dsl-business-patterns-vanilla-js-form-utilities--dynamic-fields)** - Add and remove fields dynamically
+
+## Installation
+
+```bash
+pnpm add @cin7/vanilla-js
+```
+
+## Learn More
+
+- **[Package Documentation](https://cin7-dsl.netlify.app/packages/vanilla-js)** - Complete API reference
+- **[Getting Started](https://cin7-dsl.netlify.app/getting-started/vanilla-js)** - Setup guide
+- **[Examples](https://cin7-dsl.netlify.app/examples/vanilla-js)** - Real-world patterns
+
+## Architecture Context
+
+Vanilla JS sits in the **UI Interaction Layer** of the Cin7 DSL architecture, providing lightweight DOM manipulation between the Component Layer (React/ExtJS) and the Design System Layer (tokens).
+
+```
+Application Layer (TypeScript SDK)
+         ↓
+Component Layer (React/ExtJS)
+         ↓
+UI Interaction Layer (Vanilla JS) ← You are here
+         ↓
+Design System Layer (Tokens)
+```

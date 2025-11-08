@@ -1,0 +1,382 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Foundation/Overview" />
+
+# Foundation
+
+Core utilities, design tokens, and architectural fundamentals that power the entire Cin7 DSL framework.
+
+## What is the Foundation?
+
+The Foundation layer provides the essential building blocks that all other layers depend on. It consists of two key packages that establish consistency, type safety, and shared functionality across the entire framework.
+
+## Key Packages
+
+### @cin7/core
+
+Core utilities and types that every package depends on:
+
+- **Event Bus** - Cross-layer communication system
+- **Type Definitions** - Shared TypeScript interfaces
+- **Utility Functions** - Common helpers (clsx, validators, etc.)
+- **Base Classes** - Foundation classes for other packages
+
+### @cin7/design-tokens
+
+Extended design token system built on Shopify Polaris:
+
+- **Color System** - Extended palette with semantic naming
+- **Typography** - Consistent text styles and scales
+- **Spacing** - Predictable layout spacing
+- **Theming** - Light/dark mode support
+- **CSS Custom Properties** - Runtime theme switching
+
+## Architecture Overview
+
+Cin7 DSL is built on a 4-layer architecture where each layer has a specific responsibility:
+
+```
+┌─────────────────────────────────────────────┐
+│   Application Layer (TypeScript SDK)       │
+│   Business logic, repositories, use cases  │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│   Component Layer (React/ExtJS)            │
+│   UI components, forms, grids, charts      │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│   UI Interaction Layer (Vanilla JS)        │
+│   DOM manipulation, events, animations     │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│   Design System Layer (Design Tokens)      │
+│   Colors, typography, spacing, themes      │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│   Core Layer (Core Utilities)              │ ← Foundation
+│   Event bus, types, helpers                │
+└─────────────────────────────────────────────┘
+```
+
+## Core Utilities
+
+### Event Bus
+
+Enable cross-layer communication without tight coupling:
+
+```typescript
+import { EventBus } from '@cin7/core';
+
+// Publish events from any layer
+EventBus.emit('product:created', { id: '123', name: 'Widget' });
+
+// Subscribe from any layer
+EventBus.on('product:created', (product) => {
+  console.log('New product:', product.name);
+  refreshProductList();
+});
+
+// Pattern-based subscriptions
+EventBus.on('product:*', (event, data) => {
+  logAnalytics(event, data);
+});
+
+// Cleanup
+const unsubscribe = EventBus.on('user:logout', handleLogout);
+unsubscribe(); // Remove listener
+```
+
+### Utility Functions
+
+Common helpers used throughout the framework:
+
+```typescript
+import { clsx, debounce, throttle, deepMerge } from '@cin7/core';
+
+// Class name utilities
+const className = clsx('button', {
+  'button--primary': isPrimary,
+  'button--disabled': isDisabled
+});
+
+// Performance utilities
+const handleSearch = debounce((query) => {
+  searchProducts(query);
+}, 300);
+
+const handleScroll = throttle(() => {
+  checkScrollPosition();
+}, 100);
+
+// Object utilities
+const config = deepMerge(defaultConfig, userConfig);
+```
+
+### Type Definitions
+
+Shared TypeScript types ensure consistency:
+
+```typescript
+import type {
+  BaseEntity,
+  ApiResponse,
+  PaginatedResponse,
+  ValidationError,
+  QueryParams
+} from '@cin7/core/types';
+
+interface Product extends BaseEntity {
+  name: string;
+  price: number;
+  sku: string;
+}
+
+const response: ApiResponse<Product[]> = await fetchProducts();
+const paginated: PaginatedResponse<Product> = await getPage(1);
+```
+
+## Design Tokens
+
+### Color System
+
+Extended color palette with semantic naming:
+
+```css
+/* CSS Custom Properties */
+:root {
+  /* Primary colors */
+  --color-primary-50: #f0f9ff;
+  --color-primary-500: #0369a1;
+  --color-primary-900: #0c4a6e;
+
+  /* Semantic colors */
+  --color-success-500: #10b981;
+  --color-warning-500: #f59e0b;
+  --color-critical-500: #ef4444;
+
+  /* Surface colors */
+  --color-surface: #ffffff;
+  --color-surface-subdued: #f9fafb;
+  --color-border: #e5e7eb;
+}
+```
+
+```typescript
+// JavaScript tokens
+import { tokens } from '@cin7/design-tokens';
+
+const primaryColor = tokens.color.primary[500];
+const spacing = tokens.space[4]; // 16px
+const fontFamily = tokens.font.family.sans;
+```
+
+### Typography
+
+Consistent text styles:
+
+```css
+/* Heading styles */
+--font-size-heading-xl: 2rem;
+--font-size-heading-lg: 1.5rem;
+--font-size-heading-md: 1.25rem;
+
+/* Body text */
+--font-size-body-lg: 1rem;
+--font-size-body-md: 0.875rem;
+--font-size-body-sm: 0.75rem;
+
+/* Font weights */
+--font-weight-regular: 400;
+--font-weight-medium: 500;
+--font-weight-semibold: 600;
+--font-weight-bold: 700;
+```
+
+### Spacing System
+
+Predictable layout spacing based on 4px scale:
+
+```css
+--space-1: 0.25rem;  /* 4px */
+--space-2: 0.5rem;   /* 8px */
+--space-3: 0.75rem;  /* 12px */
+--space-4: 1rem;     /* 16px */
+--space-5: 1.25rem;  /* 20px */
+--space-6: 1.5rem;   /* 24px */
+--space-8: 2rem;     /* 32px */
+--space-10: 2.5rem;  /* 40px */
+--space-12: 3rem;    /* 48px */
+```
+
+### Theme Support
+
+Automatic light/dark mode with CSS custom properties:
+
+```css
+/* Light theme (default) */
+:root {
+  --color-text: #1f2937;
+  --color-text-subdued: #6b7280;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --color-text: #f9fafb;
+  --color-text-subdued: #d1d5db;
+  --color-surface: #1f2937;
+  --color-border: #374151;
+}
+```
+
+```typescript
+import { setTheme, getTheme, watchTheme } from '@cin7/design-tokens';
+
+// Set theme
+setTheme('dark');
+
+// Get current theme
+const currentTheme = getTheme(); // 'light' | 'dark'
+
+// Watch theme changes
+const unwatch = watchTheme((theme) => {
+  console.log('Theme changed to:', theme);
+});
+```
+
+## Package Dependencies
+
+Understanding how packages depend on each other:
+
+```
+@cin7/core (no dependencies)
+    ↑
+    ├── @cin7/design-tokens
+    ├── @cin7/vanilla-js
+    ├── @cin7/typescript-sdk
+    ├── @cin7/polaris-adapter
+    ├── @cin7/extjs-adapters
+    └── @cin7/highcharts-adapter
+
+@cin7/design-tokens
+    ↑
+    ├── @cin7/polaris-adapter
+    ├── @cin7/extjs-adapters
+    └── @cin7/highcharts-adapter
+```
+
+## Usage Examples
+
+### Basic Setup
+
+```typescript
+// 1. Import core utilities
+import { EventBus, clsx } from '@cin7/core';
+
+// 2. Import design tokens
+import '@cin7/design-tokens/css';
+import { tokens } from '@cin7/design-tokens';
+
+// 3. Use throughout your application
+const handleClick = () => {
+  EventBus.emit('button:clicked', { timestamp: Date.now() });
+};
+
+const className = clsx(
+  'button',
+  'button--primary',
+  { 'button--loading': isLoading }
+);
+```
+
+### Cross-Layer Communication
+
+```typescript
+// TypeScript SDK layer emits event
+class ProductService {
+  async createProduct(data: ProductInput) {
+    const product = await this.repo.create(data);
+    EventBus.emit('product:created', product);
+    return product;
+  }
+}
+
+// Vanilla JS layer handles DOM update
+EventBus.on('product:created', (product) => {
+  showNotification(`Product ${product.name} created!`);
+});
+
+// React component updates UI
+EventBus.on('product:created', (product) => {
+  setProducts(prev => [...prev, product]);
+});
+
+// ExtJS grid refreshes
+EventBus.on('product:created', () => {
+  grid.getStore().reload();
+});
+```
+
+## Interactive Examples
+
+Explore the foundation components:
+
+- **[Core Utilities](?path=/story/cin7-dsl-foundation-core-utilities--dom-utilities)** - Event bus, utilities, types
+- **[Design Tokens](?path=/story/cin7-dsl-foundation-components-design-tokens--color-palette)** - Colors, typography, spacing
+
+## Installation
+
+```bash
+# Core utilities
+pnpm add @cin7/core
+
+# Design tokens
+pnpm add @cin7/design-tokens
+```
+
+## Learn More
+
+- **[Architecture Guide](https://cin7-dsl.netlify.app/getting-started/architecture)** - Complete architecture explanation
+- **[Core Package Docs](https://cin7-dsl.netlify.app/packages/core)** - Core utilities reference
+- **[Design Tokens Docs](https://cin7-dsl.netlify.app/packages/design-tokens)** - Token system guide
+
+## Design Principles
+
+### 1. Separation of Concerns
+Each layer has a clear responsibility and well-defined boundaries.
+
+### 2. Event-Driven Architecture
+Loose coupling through EventBus enables independent development.
+
+### 3. Type Safety
+TypeScript throughout ensures compile-time error detection.
+
+### 4. Consistency
+Design tokens ensure visual consistency across all components.
+
+### 5. Flexibility
+Choose the right tool for each task (React, ExtJS, or Vanilla JS).
+
+### 6. Progressive Enhancement
+Build features incrementally, starting simple and adding complexity.
+
+## Why This Architecture?
+
+The 4-layer architecture provides several key benefits:
+
+**Technology Optimization** - Use ExtJS for grids, React for modern UI, Vanilla JS for performance-critical operations
+
+**Maintainability** - Clear boundaries make code easier to understand and modify
+
+**Scalability** - Independent packages can be developed and deployed separately
+
+**Testability** - Pure business logic in TypeScript SDK is easily testable
+
+**Flexibility** - Mix and match components from different layers as needed
+
+**Performance** - Minimal dependencies and tree-shakeable packages optimize bundle size

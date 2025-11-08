@@ -1,0 +1,375 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Charts/Overview" />
+
+# Charts & Visualizations
+
+Powerful, flexible chart components built on Highcharts with seamless integration into the Cin7 DSL framework.
+
+## What are Cin7 Charts?
+
+The `@cin7/highcharts-adapter` package provides React, ExtJS, and Vanilla JavaScript chart components that integrate Highcharts with Cin7 design tokens. Create beautiful, interactive visualizations that match your design system.
+
+## Key Features
+
+- **Multiple Chart Types** - Line, Bar, Pie, Area, Scatter, and Waterfall charts
+- **Framework Support** - React components, ExtJS panels, and Vanilla JS functions
+- **Design Token Integration** - Automatic theming with Cin7 design tokens
+- **Responsive** - Charts adapt to container size automatically
+- **Interactive** - Tooltips, legends, zooming, and export functionality
+- **Type Safe** - Full TypeScript support with comprehensive types
+- **Customizable** - Extensive configuration options for all chart types
+
+## Available Chart Types
+
+### Line Chart
+
+Perfect for showing trends over time:
+
+- **Sales trends** - Monthly/quarterly revenue
+- **Performance metrics** - Server response times, load times
+- **Stock prices** - Financial data over time
+- **User growth** - Signups, active users, retention
+
+### Bar Chart
+
+Compare values across categories:
+
+- **Regional sales** - Revenue by region or territory
+- **Product comparison** - Sales by product category
+- **Survey results** - Responses by question
+- **Performance rankings** - Team or individual metrics
+
+### Pie Chart
+
+Show proportions and composition:
+
+- **Market share** - Distribution by competitor
+- **Budget allocation** - Spending by category
+- **Traffic sources** - Visitors by channel
+- **Product mix** - Revenue by product line
+
+### Area Chart
+
+Emphasize volume and cumulative totals:
+
+- **Stacked metrics** - Multiple data series combined
+- **Volume over time** - Order volume, inventory levels
+- **Resource usage** - CPU, memory, bandwidth
+- **Cumulative data** - Total sales, running totals
+
+### Scatter Chart
+
+Reveal correlations and outliers:
+
+- **Price vs. demand** - Correlation analysis
+- **Performance analysis** - Comparing two metrics
+- **Quality control** - Detecting outliers
+- **A/B testing** - Comparing variants
+
+### Waterfall Chart
+
+Track incremental changes:
+
+- **Revenue analysis** - Starting balance, additions, subtractions
+- **Budget tracking** - Income and expenses
+- **Profit breakdown** - Costs and margins
+- **Process flow** - Step-by-step changes
+
+## When to Use Each Chart Type
+
+### Use Line Charts when:
+- Showing trends over continuous time periods
+- Comparing multiple data series over time
+- Displaying smooth, connected data points
+- Emphasizing change rates and patterns
+
+### Use Bar Charts when:
+- Comparing discrete categories
+- Showing rankings or performance
+- Data doesn't have a time relationship
+- You need easy value comparison
+
+### Use Pie Charts when:
+- Showing parts of a whole (percentages)
+- You have 2-6 categories (avoid too many slices)
+- Proportions are the main message
+- Need a donut chart for emphasis
+
+### Use Area Charts when:
+- Emphasizing volume or magnitude
+- Showing cumulative totals
+- Stacking multiple data series
+- Highlighting trends with filled areas
+
+### Use Scatter Charts when:
+- Showing correlation between two variables
+- Identifying outliers or clusters
+- Data points are independent
+- You need to spot patterns or trends
+
+### Use Waterfall Charts when:
+- Showing incremental changes
+- Breaking down totals into components
+- Tracking positive and negative contributions
+- Analyzing financial statements
+
+## Quick Examples
+
+### React Line Chart
+
+```tsx
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+function SalesChart() {
+  return (
+    <LineChart
+      data={[10, 20, 15, 25, 22, 30]}
+      categories={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
+      title="Monthly Sales"
+      yAxisTitle="Revenue ($K)"
+      height={300}
+    />
+  );
+}
+```
+
+### React Bar Chart
+
+```tsx
+import { BarChart } from '@cin7/highcharts-adapter/react';
+
+function RegionalSales() {
+  return (
+    <BarChart
+      series={[
+        { name: 'Q1', data: [50, 70, 90] },
+        { name: 'Q2', data: [60, 80, 95] }
+      ]}
+      categories={['North', 'South', 'East']}
+      title="Regional Performance"
+      stacked={false}
+    />
+  );
+}
+```
+
+### React Pie Chart
+
+```tsx
+import { PieChart } from '@cin7/highcharts-adapter/react';
+
+function MarketShare() {
+  return (
+    <PieChart
+      data={[
+        { name: 'Product A', y: 45 },
+        { name: 'Product B', y: 30 },
+        { name: 'Product C', y: 25 }
+      ]}
+      title="Market Share"
+      donut={true}
+      showLegend={true}
+    />
+  );
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { createChart } from '@cin7/highcharts-adapter/vanilla';
+
+const chart = createChart('#chart-container', {
+  type: 'line',
+  data: [10, 20, 15, 25, 22, 30],
+  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  title: 'Monthly Sales'
+});
+```
+
+### ExtJS Integration
+
+```javascript
+import { HighchartsPanel } from '@cin7/highcharts-adapter/extjs';
+
+const chartPanel = Ext.create('Ext.panel.Panel', {
+  title: 'Sales Dashboard',
+  items: [{
+    xtype: 'highchartspanel',
+    chartConfig: {
+      type: 'line',
+      data: salesData,
+      categories: months,
+      title: 'Revenue Trend'
+    }
+  }]
+});
+```
+
+## Design Token Integration
+
+Charts automatically use Cin7 design tokens for consistent theming:
+
+```typescript
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+// Colors automatically use design tokens
+<LineChart
+  data={data}
+  categories={categories}
+  // Primary color from design tokens
+  color="primary"
+/>
+
+// Custom colors still work
+<LineChart
+  data={data}
+  categories={categories}
+  color="#ff6384"
+/>
+```
+
+## Responsive Behavior
+
+Charts automatically adapt to container size:
+
+```tsx
+// Chart fills container and resizes responsively
+<div style={{ width: '100%', height: '400px' }}>
+  <LineChart
+    data={data}
+    categories={categories}
+    title="Responsive Chart"
+  />
+</div>
+```
+
+## Customization Options
+
+All charts support extensive customization:
+
+```tsx
+<LineChart
+  // Data
+  data={[10, 20, 15, 25]}
+  categories={['Q1', 'Q2', 'Q3', 'Q4']}
+
+  // Titles
+  title="Quarterly Revenue"
+  subtitle="2024 Performance"
+  xAxisTitle="Quarter"
+  yAxisTitle="Revenue (USD)"
+
+  // Styling
+  height={400}
+  color="#0369a1"
+  showLegend={true}
+  showGrid={true}
+
+  // Interaction
+  enableZoom={true}
+  enableExport={true}
+  tooltipFormat="{series.name}: ${point.y}K"
+
+  // Events
+  onPointClick={(point) => console.log('Clicked:', point)}
+  onSeriesClick={(series) => console.log('Series:', series)}
+/>
+```
+
+## Multiple Series
+
+All chart types support multiple data series:
+
+```tsx
+<LineChart
+  series={[
+    { name: 'Revenue', data: [10, 20, 15, 25] },
+    { name: 'Profit', data: [5, 12, 8, 15] },
+    { name: 'Expenses', data: [5, 8, 7, 10] }
+  ]}
+  categories={['Q1', 'Q2', 'Q3', 'Q4']}
+  title="Financial Overview"
+/>
+```
+
+## Interactive Examples
+
+Explore all chart types with interactive demos:
+
+- **[Line Chart](?path=/story/components-charts-linechart--basic)** - Trends and time series
+- **[Bar Chart](?path=/story/components-charts-barchart--basic)** - Category comparisons
+- **[Pie Chart](?path=/story/components-charts-piechart--basic)** - Proportions and composition
+- **[Area Chart](?path=/story/components-charts-areachart--basic)** - Volume emphasis
+- **[Scatter Chart](?path=/story/components-charts-scatterchart--basic)** - Correlation analysis
+- **[Waterfall Chart](?path=/story/components-charts-waterfallchart--basic)** - Incremental changes
+
+## Installation
+
+```bash
+pnpm add @cin7/highcharts-adapter
+
+# Peer dependencies
+pnpm add highcharts
+```
+
+## Learn More
+
+- **[Package Documentation](https://cin7-dsl.netlify.app/packages/highcharts-adapter)** - Complete API reference
+- **[Chart Examples](https://cin7-dsl.netlify.app/examples/charts)** - Real-world examples
+- **[Highcharts Docs](https://www.highcharts.com/docs)** - Advanced configuration
+
+## Best Practices
+
+### 1. Choose the Right Chart Type
+Match the chart type to your data and message. Don't force data into the wrong visualization.
+
+### 2. Keep It Simple
+Avoid cluttering charts with too many series, labels, or decorations. Focus on the key message.
+
+### 3. Use Consistent Colors
+Leverage design tokens for consistency. Use semantic colors (success, warning, critical) appropriately.
+
+### 4. Provide Context
+Include titles, axis labels, and tooltips. Help users understand what they're looking at.
+
+### 5. Consider Accessibility
+Ensure charts work with screen readers. Provide alternative text descriptions.
+
+### 6. Test Responsiveness
+Verify charts work on different screen sizes. Test on mobile devices.
+
+### 7. Optimize Performance
+Limit data points for large datasets. Use data aggregation or sampling when needed.
+
+## Architecture Context
+
+The Highcharts adapter integrates at the **Component Layer**, providing visualizations for React, ExtJS, and Vanilla JS applications.
+
+```
+Application Layer (TypeScript SDK)
+         ↓
+Component Layer (Charts) ← You are here
+         ↓
+UI Interaction Layer (Vanilla JS)
+         ↓
+Design System Layer (Tokens)
+```
+
+## Common Use Cases
+
+### Dashboard Widgets
+Embed charts in dashboard layouts using Polaris Page and Layout components.
+
+### Report Generation
+Create printable reports with multiple chart types showing comprehensive data.
+
+### Real-Time Monitoring
+Update chart data dynamically for live metrics and monitoring.
+
+### Data Analysis
+Interactive charts for exploring data, finding trends, and making decisions.
+
+### Presentation
+Export charts as images for presentations and documents.
