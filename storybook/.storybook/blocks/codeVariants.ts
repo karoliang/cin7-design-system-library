@@ -8936,7 +8936,7 @@ function BannersWithIconsExample(): JSX.Element {
       {iconBanners.map((banner) => (
         <Banner
           key={banner.id}
-          title={\`\${banner.icon} \${banner.title}\`}
+          title={\`\\\${banner.icon} \\\${banner.title}\`}
           status={banner.status}
           action={banner.action}
           dismissible={banner.dismissible}
@@ -16369,7 +16369,7 @@ const StatusIndicator: React.FC<{ status: UserStatus }> = ({ status }) => (
       bottom: '0',
       right: '0',
     }}
-    aria-label={\`Status: \${status}\`}
+    aria-label={\`Status: \\\${status}\`}
   />
 );
 
