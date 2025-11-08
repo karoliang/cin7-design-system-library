@@ -7095,7 +7095,7 @@ function BackdropExample({
 export default BackdropExample;`
   },
 
-  withclickhandler: {
+  'with-onclick': {
     react: `import {Backdrop, Button, Modal} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -7265,7 +7265,7 @@ function BackdropWithClickHandler({
 export default BackdropWithClickHandler;`
   },
 
-  transparentbackdrop: {
+  transparent: {
     react: `import {Backdrop} from '@shopify/polaris';
 import {useState} from 'react';
 
@@ -7443,7 +7443,7 @@ function TransparentBackdrop({
 export default TransparentBackdrop;`
   },
 
-  belownavigation: {
+  'below-navigation': {
     react: `import {Backdrop, TopBar, Frame} from '@shopify/polaris';
 import {useState} from 'react';
 
@@ -7637,7 +7637,7 @@ function BackdropBelowNavigation({
 export default BackdropBelowNavigation;`
   },
 
-  withloadingspinner: {
+  'with-loading': {
     react: `import {Backdrop, Spinner} from '@shopify/polaris';
 import {useState, useEffect} from 'react';
 
@@ -7900,7 +7900,7 @@ function BackdropWithLoadingSpinner({
 export default BackdropWithLoadingSpinner;`
   },
 
-  modalintegration: {
+  'modal-integration': {
     react: `import {Backdrop, Modal, Button, TextContainer} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8167,7 +8167,7 @@ function BackdropModalIntegration({
 export default BackdropModalIntegration;`
   },
 
-  multilayerbackdrops: {
+  'multi-layer': {
     react: `import {Backdrop, Modal, Button} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
@@ -8458,7 +8458,7 @@ function MultiLayerBackdrops({
 export default MultiLayerBackdrops;`
   },
 
-  accessibilityfocus: {
+  accessibility: {
     react: `import {Backdrop, Modal, Button, TextField} from '@shopify/polaris';
 import {useState, useCallback, useRef, useEffect} from 'react';
 
@@ -34944,7 +34944,7 @@ const TruncateDefault: React.FC<TruncateDefaultProps> = ({
 export default TruncateDefault;`,
   },
 
-  intablecell: {
+  inTableCell: {
     react: `import { DataTable, Card } from '@shopify/polaris';
 import React from 'react';
 
@@ -35160,7 +35160,7 @@ const TruncateInTableCell: React.FC<TruncateInTableCellProps> = ({
 export default TruncateInTableCell;`,
   },
 
-  inlistitem: {
+  inListItem: {
     react: `import { List, Card, BlockStack } from '@shopify/polaris';
 import React from 'react';
 
@@ -35410,7 +35410,7 @@ const TruncateInListItem: React.FC<TruncateInListItemProps> = ({
 export default TruncateInListItem;`,
   },
 
-  withtooltip: {
+  withTooltip: {
     react: `import { Text, Tooltip, BlockStack } from '@shopify/polaris';
 import React from 'react';
 
@@ -35683,7 +35683,7 @@ const TruncateWithTooltip: React.FC<TruncateWithTooltipProps> = ({
 export default TruncateWithTooltip;`,
   },
 
-  multilinetruncation: {
+  multiline: {
     react: `import { Text, BlockStack } from '@shopify/polaris';
 import React from 'react';
 
@@ -35992,7 +35992,7 @@ const MultiLineTruncation: React.FC<MultiLineTruncationProps> = ({
 export default MultiLineTruncation;`,
   },
 
-  responsivetruncation: {
+  responsive: {
     react: `import { Text, BlockStack } from '@shopify/polaris';
 import React from 'react';
 
@@ -36387,7 +36387,7 @@ const ResponsiveTruncation: React.FC<ResponsiveTruncationProps> = ({
 export default ResponsiveTruncation;`,
   },
 
-  productcardtruncation: {
+  productCard: {
     react: `import { Card, Text, BlockStack, InlineStack, Badge } from '@shopify/polaris';
 import React from 'react';
 
@@ -36860,7 +36860,7 @@ const ProductCardTruncation: React.FC<ProductCardTruncationProps> = ({
 export default ProductCardTruncation;`,
   },
 
-  variablewidthcontainers: {
+  variableWidth: {
     react: `import { Text, BlockStack, InlineStack } from '@shopify/polaris';
 import React from 'react';
 
@@ -37328,7 +37328,7 @@ const VariableWidthContainers: React.FC<VariableWidthContainersProps> = ({
 export default VariableWidthContainers;`,
   },
 
-  accessibilityexample: {
+  accessibility: {
     react: `import { Text, BlockStack, Tooltip } from '@shopify/polaris';
 import React from 'react';
 
@@ -37863,7 +37863,7 @@ const AccessibilityExample: React.FC<AccessibilityExampleProps> = ({
 export default AccessibilityExample;`,
   },
 
-  datatableexample: {
+  dataTable: {
     react: `import { DataTable, Card, Text } from '@shopify/polaris';
 import React from 'react';
 
@@ -38068,7 +38068,7 @@ function DataTableExample({
 export default DataTableExample;`,
   },
 
-  emailsubjects: {
+  emailSubjects: {
     react: `import { Card, Text, BlockStack, InlineStack, Badge, Checkbox } from '@shopify/polaris';
 import React, { useState } from 'react';
 
@@ -47962,11 +47962,135 @@ function LineChart() {
   series: [{ data: [1, 2, 3, 4, 5] }]
 });`,
     typescript: `import Highcharts from 'highcharts';
-const options: Highcharts.Options = {
-  title: { text: 'Sales Trend' },
-  series: [{ type: 'line', data: [1, 2, 3, 4, 5] }]
+import type { SeriesLineOptions, PointOptionsObject } from 'highcharts';
+
+interface TimeSeriesPoint {
+  timestamp: Date;
+  value: number;
+  annotation?: string;
+}
+
+interface TrendData {
+  points: TimeSeriesPoint[];
+  metric: string;
+  unit: string;
+}
+
+interface LineChartConfig {
+  showMarkers: boolean;
+  enableArea: boolean;
+  smooth: boolean;
+  dashStyle?: 'Solid' | 'Dash' | 'Dot' | 'DashDot';
+}
+
+interface TrendAnalysis {
+  average: number;
+  min: number;
+  max: number;
+  trend: 'up' | 'down' | 'stable';
+}
+
+type LineSeries = SeriesLineOptions[];
+
+class LineChartBuilder {
+  private data: TrendData;
+  private config: LineChartConfig;
+
+  constructor(data: TrendData, config: LineChartConfig) {
+    this.data = data;
+    this.config = config;
+  }
+
+  private analyzeTrend(): TrendAnalysis {
+    const values = this.data.points.map(p => p.value);
+    const sum = values.reduce((a, b) => a + b, 0);
+    const avg = sum / values.length;
+
+    return {
+      average: parseFloat(avg.toFixed(2)),
+      min: Math.min(...values),
+      max: Math.max(...values),
+      trend: values[values.length - 1] > values[0] ? 'up' :
+             values[values.length - 1] < values[0] ? 'down' : 'stable'
+    };
+  }
+
+  private transformToHighchartsData(): PointOptionsObject[] {
+    return this.data.points.map(point => ({
+      x: point.timestamp.getTime(),
+      y: point.value,
+      name: point.annotation
+    }));
+  }
+
+  private buildSeries(): LineSeries {
+    return [{
+      type: this.config.smooth ? 'spline' : 'line',
+      name: this.data.metric,
+      data: this.transformToHighchartsData(),
+      marker: {
+        enabled: this.config.showMarkers
+      },
+      dashStyle: this.config.dashStyle || 'Solid',
+      fillOpacity: this.config.enableArea ? 0.3 : 0
+    }];
+  }
+
+  build(): Highcharts.Options {
+    const analysis = this.analyzeTrend();
+
+    return {
+      chart: { type: 'line' },
+      title: {
+        text: \`\${this.data.metric} Trend\`
+      },
+      subtitle: {
+        text: \`Trend: \${analysis.trend.toUpperCase()} | Avg: \${analysis.average}\${this.data.unit}\`
+      },
+      xAxis: {
+        type: 'datetime',
+        title: { text: 'Time' }
+      },
+      yAxis: {
+        title: { text: \`\${this.data.metric} (\${this.data.unit})\` },
+        plotLines: [{
+          value: analysis.average,
+          color: 'red',
+          dashStyle: 'Dash',
+          width: 2,
+          label: {
+            text: \`Average: \${analysis.average}\${this.data.unit}\`
+          }
+        }]
+      },
+      series: this.buildSeries()
+    };
+  }
+
+  render(containerId: string): Highcharts.Chart {
+    return Highcharts.chart(containerId, this.build());
+  }
+}
+
+// Usage Example
+const trendData: TrendData = {
+  points: [
+    { timestamp: new Date('2025-01-01'), value: 29.9 },
+    { timestamp: new Date('2025-02-01'), value: 71.5 },
+    { timestamp: new Date('2025-03-01'), value: 106.4 }
+  ],
+  metric: 'Sales',
+  unit: 'K'
 };
-Highcharts.chart('container', options);`
+
+const lineConfig: LineChartConfig = {
+  showMarkers: true,
+  enableArea: false,
+  smooth: true
+};
+
+const chart = new LineChartBuilder(trendData, lineConfig)
+  .render('line-chart-container');`
   }
 };
 
@@ -47993,11 +48117,129 @@ function BarChart() {
   series: [{ data: [10, 20, 30] }]
 });`,
     typescript: `import Highcharts from 'highcharts';
-const options: Highcharts.Options = {
-  chart: { type: 'column' },
-  series: [{ type: 'column', data: [10, 20, 30] }]
+import type { SeriesColumnOptions, XAxisOptions, YAxisOptions } from 'highcharts';
+
+interface CategoryData {
+  category: string;
+  value: number;
+  color?: string;
+}
+
+interface BarChartData {
+  categories: CategoryData[];
+  seriesName: string;
+  unit: string;
+}
+
+interface BarChartConfig {
+  orientation: 'vertical' | 'horizontal';
+  stacking?: 'normal' | 'percent';
+  showDataLabels: boolean;
+  colorByPoint: boolean;
+}
+
+interface ChartMetadata {
+  title: string;
+  subtitle?: string;
+  yAxisTitle: string;
+  source?: string;
+}
+
+type BarSeries = SeriesColumnOptions[];
+
+class BarChartBuilder {
+  private data: BarChartData;
+  private config: BarChartConfig;
+  private metadata: ChartMetadata;
+
+  constructor(data: BarChartData, config: BarChartConfig, metadata: ChartMetadata) {
+    this.data = data;
+    this.config = config;
+    this.metadata = metadata;
+  }
+
+  private transformToSeries(): BarSeries {
+    return [{
+      type: 'column',
+      name: this.data.seriesName,
+      data: this.data.categories.map(cat => ({
+        name: cat.category,
+        y: cat.value,
+        color: cat.color
+      })),
+      dataLabels: {
+        enabled: this.config.showDataLabels,
+        format: \`{point.y} \${this.data.unit}\`
+      },
+      colorByPoint: this.config.colorByPoint
+    }];
+  }
+
+  private buildXAxis(): XAxisOptions {
+    return {
+      categories: this.data.categories.map(cat => cat.category),
+      title: { text: 'Categories' }
+    };
+  }
+
+  private buildYAxis(): YAxisOptions {
+    return {
+      title: { text: this.metadata.yAxisTitle },
+      labels: {
+        format: \`{value} \${this.data.unit}\`
+      }
+    };
+  }
+
+  build(): Highcharts.Options {
+    return {
+      chart: {
+        type: 'column',
+        inverted: this.config.orientation === 'horizontal'
+      },
+      title: { text: this.metadata.title },
+      subtitle: { text: this.metadata.subtitle },
+      xAxis: this.buildXAxis(),
+      yAxis: this.buildYAxis(),
+      series: this.transformToSeries(),
+      plotOptions: {
+        column: {
+          stacking: this.config.stacking
+        }
+      }
+    };
+  }
+
+  render(containerId: string): Highcharts.Chart {
+    return Highcharts.chart(containerId, this.build());
+  }
+}
+
+// Usage Example
+const chartData: BarChartData = {
+  categories: [
+    { category: 'Jan', value: 29.9, color: '#5C6AC4' },
+    { category: 'Feb', value: 71.5, color: '#006FBB' },
+    { category: 'Mar', value: 106.4, color: '#47C1BF' }
+  ],
+  seriesName: 'Revenue',
+  unit: 'K'
 };
-Highcharts.chart('container', options);`
+
+const chartConfig: BarChartConfig = {
+  orientation: 'vertical',
+  showDataLabels: true,
+  colorByPoint: true
+};
+
+const metadata: ChartMetadata = {
+  title: 'Monthly Revenue',
+  subtitle: 'Q1 2025',
+  yAxisTitle: 'Revenue ($K)'
+};
+
+const chart = new BarChartBuilder(chartData, chartConfig, metadata)
+  .render('bar-chart-container');`
   }
 };
 
