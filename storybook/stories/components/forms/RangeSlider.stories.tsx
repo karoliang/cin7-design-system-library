@@ -91,10 +91,6 @@ export const WithoutOutput: Story = {
     step: 1,
     output: false,
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'withoutOutput'),
-  },
-
 };
 
 export const WithStep: Story = {
@@ -107,10 +103,6 @@ export const WithStep: Story = {
     output: true,
     suffix: ' items',
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'withStep'),
-  },
-
 };
 
 export const WithHelpText: Story = {
@@ -124,10 +116,6 @@ export const WithHelpText: Story = {
     prefix: '$',
     helpText: 'Set your monthly advertising budget range',
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'withHelpText'),
-  },
-
 };
 
 export const WithError: Story = {
@@ -141,10 +129,6 @@ export const WithError: Story = {
     suffix: ' units',
     error: 'Minimum stock level must be at least 20 units',
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'withError'),
-  },
-
 };
 
 export const Disabled: Story = {
@@ -158,10 +142,6 @@ export const Disabled: Story = {
     prefix: '$',
     disabled: true,
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'disabled'),
-  },
-
 };
 
 export const PriceFilter: Story = {
@@ -232,10 +212,6 @@ export const PriceFilter: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'priceFilter'),
-  },
-
 };
 
 export const DateRangePicker: Story = {
@@ -325,10 +301,6 @@ export const DateRangePicker: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('rangeslider', 'dateRangePicker'),
-  },
-
 };
 
 export const ProductVariants: Story = {

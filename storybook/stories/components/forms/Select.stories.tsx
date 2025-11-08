@@ -139,9 +139,6 @@ export const WithHelpText: Story = {
     options: groupedOptions,
     helpText: 'Select the primary category for your product',
   },
-  parameters: {
-    codeVariants: getCodeVariants('select', 'with-subtitle'),
-  },
 };
 
 export const Required: Story = {
@@ -221,9 +218,6 @@ export const LanguageSelector: Story = {
         </Text>
       </BlockStack>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('select', 'with-subtitle'),
   },
 };
 
@@ -324,9 +318,6 @@ export const ProductConfiguration: Story = {
         </div>
       </BlockStack>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('select', 'with-separate-validation-error'),
   },
 };
 
@@ -567,8 +558,5 @@ export const AdvancedFiltering: Story = {
         )}
       </BlockStack>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('select', 'with-inline-label'),
   },
 };

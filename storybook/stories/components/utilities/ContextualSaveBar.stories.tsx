@@ -228,9 +228,6 @@ export const WithCustomMessage: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'withCustomMessage'),
-  },
 
 };
 
@@ -345,9 +342,6 @@ export const WithValidation: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'withValidation'),
-  },
 
 };
 
@@ -394,9 +388,6 @@ export const FullWidthLayout: Story = {
         )}
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'fullWidth'),
   },
 
 };
@@ -502,9 +493,6 @@ export const AutoSaveExample: Story = {
         )}
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'autoSave'),
   },
 
 };
@@ -615,9 +603,6 @@ export const MultiFormExample: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'multiForm'),
-  },
 
 };
 
@@ -686,9 +671,6 @@ export const WithContextControl: Story = {
         )}
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'withContextControl'),
   },
 
 };

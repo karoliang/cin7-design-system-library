@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Autocomplete, TextField, Label, Icon, Popover, Card, InlineStack, BlockStack } from '@shopify/polaris';
+import { Autocomplete, Combobox, Listbox, TextField, Label, Icon, Popover, Card, InlineStack, BlockStack } from '@shopify/polaris';
 import { SearchIcon, CalendarIcon, PersonIcon, ProductIcon, OrderIcon } from '@shopify/polaris-icons';
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
@@ -216,10 +216,6 @@ export const SingleSelection: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'singleSelection'),
-  },
-
 };
 
 export const WithAsyncSearch: Story = {
@@ -333,10 +329,6 @@ export const WithAsyncSearch: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'withAsyncSearch'),
-  },
-
 };
 
 export const WithCategories: Story = {
@@ -430,10 +422,6 @@ export const WithCategories: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'withCategories'),
-  },
-
 };
 
 export const CustomerLookup: Story = {
@@ -548,10 +536,6 @@ export const CustomerLookup: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'customerLookup'),
-  },
-
 };
 
 export const OrderLookup: Story = {
@@ -690,10 +674,6 @@ export const OrderLookup: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'orderLookup'),
-  },
-
 };
 
 export const WithLoadMore: Story = {
@@ -793,10 +773,6 @@ export const WithLoadMore: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'withLoadMore'),
-  },
-
 };
 
 export const DatePickerIntegration: Story = {
@@ -874,17 +850,35 @@ export const DatePickerIntegration: Story = {
           onClose={() => setPopoverActive(false)}
         >
           <div style={{ padding: 'var(--spacing-4)', minWidth: '280px' }}>
-            <Autocomplete
-              options={options}
-              selected={selectedDate ? [selectedDate] : []}
-              onSelect={(selected) => {
-                setSelectedDate(selected[0] || '');
-                setInputValue(selected[0] || '');
+            <Combobox
+              activator={
+                <Combobox.TextField
+                  onChange={updateText}
+                  label=""
+                  value={inputValue}
+                  placeholder="Select a date..."
+                  autoComplete="off"
+                />
+              }
+            >
+              <Listbox onSelect={(selected) => {
+                setSelectedDate(selected);
+                setInputValue(selected);
                 setPopoverActive(false);
-              }}
-              textField={undefined}
-              listTitle="Quick Dates"
-            />
+              }}>
+                {options.length > 0 ? (
+                  options.map((option) => (
+                    <Listbox.Option key={option} value={option}>
+                      {option}
+                    </Listbox.Option>
+                  ))
+                ) : (
+                  <Listbox.Option value="" disabled>
+                    No dates found
+                  </Listbox.Option>
+                )}
+              </Listbox>
+            </Combobox>
 
             <div style={{ marginTop: 'var(--spacing-4)', textAlign: 'center' }}>
               <button
@@ -926,10 +920,6 @@ export const DatePickerIntegration: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'datePickerIntegration'),
-  },
-
 };
 
 export const FormIntegration: Story = {
@@ -1099,8 +1089,4 @@ export const FormIntegration: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('autocomplete', 'formIntegration'),
-  },
-
 };

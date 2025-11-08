@@ -145,9 +145,6 @@ export const MultipleFiles: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('dropzone', 'multipleFiles'),
-  },
 
 };
 
@@ -187,9 +184,6 @@ export const ImageUpload: Story = {
         </DropZone>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('dropzone', 'imageUpload'),
   },
 
 };
@@ -313,9 +307,6 @@ export const WithPreview: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('dropzone', 'withPreview'),
-  },
 
 };
 
@@ -331,9 +322,6 @@ export const Disabled: Story = {
       </DropZone>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('dropzone', 'disabled'),
-  },
 
 };
 

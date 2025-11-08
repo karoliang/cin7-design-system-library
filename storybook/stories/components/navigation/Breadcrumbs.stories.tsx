@@ -24,6 +24,7 @@ const meta = {
     backAction: {
       control: false,
       table: { disable: true },
+      description: 'Internal Polaris prop - disabled',
     },
   },
 } satisfies Meta<typeof Breadcrumbs>;
