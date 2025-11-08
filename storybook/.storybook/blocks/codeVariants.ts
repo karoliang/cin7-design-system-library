@@ -45789,22 +45789,15 @@ export const areaChartExamples: Record<string, CodeVariant> = {
     react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
 
 function MonthlyRevenue() {
+  const data = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
+
   return (
     <AreaChart
       title="Monthly Revenue Trend"
       subtitle="2025"
-      series={[
-        {
-          name: 'Revenue',
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-        },
-      ]}
-      xAxis={{
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      }}
-      yAxis={{
-        title: { text: 'Revenue ($K)' },
-      }}
+      series={[{ name: 'Revenue', data }]}
+      xAxis={{ categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] }}
+      yAxis={{ title: { text: 'Revenue ($K)' } }}
       height={400}
     />
   );
@@ -45880,42 +45873,73 @@ Ext.create('Ext.chart.CartesianChart', {
 });`,
     typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
 import React from 'react';
+import type { SeriesAreaOptions } from 'highcharts';
 
-interface RevenueData {
-  month: string;
+interface ChartDataPoint {
   value: number;
+  timestamp: Date;
+}
+
+interface MonthlyRevenueData {
+  monthly: ChartDataPoint[];
+  metadata: { year: string; currency: string; unit: string };
 }
 
 interface MonthlyRevenueProps {
-  data?: number[];
-  year?: string;
+  rawData?: MonthlyRevenueData;
   height?: number;
+  enableAnimation?: boolean;
 }
 
+type ChartSeries = SeriesAreaOptions[];
+
 const MonthlyRevenue: React.FC<MonthlyRevenueProps> = ({
-  data = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-  year = '2025',
-  height = 400
+  rawData,
+  height = 400,
+  enableAnimation = true
 }) => {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const defaultData: MonthlyRevenueData = {
+    monthly: [
+      { value: 29.9, timestamp: new Date('2025-01-01') },
+      { value: 71.5, timestamp: new Date('2025-02-01') },
+      { value: 106.4, timestamp: new Date('2025-03-01') },
+      { value: 129.2, timestamp: new Date('2025-04-01') },
+      { value: 144.0, timestamp: new Date('2025-05-01') },
+      { value: 176.0, timestamp: new Date('2025-06-01') },
+      { value: 135.6, timestamp: new Date('2025-07-01') },
+      { value: 148.5, timestamp: new Date('2025-08-01') },
+      { value: 216.4, timestamp: new Date('2025-09-01') },
+      { value: 194.1, timestamp: new Date('2025-10-01') },
+      { value: 95.6, timestamp: new Date('2025-11-01') },
+      { value: 54.4, timestamp: new Date('2025-12-01') }
+    ],
+    metadata: { year: '2025', currency: 'USD', unit: 'K' }
+  };
+
+  const data = rawData || defaultData;
+
+  const transformToChartData = (points: ChartDataPoint[]): number[] =>
+    points.map(point => point.value);
+
+  const generateCategories = (points: ChartDataPoint[]): string[] =>
+    points.map(point => point.timestamp.toLocaleDateString('en-US', { month: 'short' }));
+
+  const series: ChartSeries = [{
+    name: 'Revenue',
+    data: transformToChartData(data.monthly),
+    type: 'area',
+    tooltip: { valueSuffix: \` \${data.metadata.currency}\` }
+  }];
 
   return (
     <AreaChart
       title="Monthly Revenue Trend"
-      subtitle={year}
-      series={[
-        {
-          name: 'Revenue',
-          data: data,
-        },
-      ]}
-      xAxis={{
-        categories: months,
-      }}
-      yAxis={{
-        title: { text: 'Revenue ($K)' },
-      }}
+      subtitle={data.metadata.year}
+      series={series}
+      xAxis={{ categories: generateCategories(data.monthly) }}
+      yAxis={{ title: { text: \`Revenue (\${data.metadata.currency} \${data.metadata.unit})\` } }}
       height={height}
+      plotOptions={{ area: { animation: enableAnimation, fillOpacity: 0.5 } }}
     />
   );
 };
@@ -45926,35 +45950,21 @@ export default MonthlyRevenue;`,
     react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
 
 function StackedSales() {
+  const series = [
+    { name: 'Electronics', data: [50, 60, 70, 80, 90, 100, 110, 120] },
+    { name: 'Clothing', data: [40, 50, 55, 65, 70, 75, 85, 90] },
+    { name: 'Food & Beverage', data: [30, 35, 40, 45, 50, 55, 60, 65] },
+    { name: 'Home & Garden', data: [20, 25, 30, 35, 40, 45, 50, 55] }
+  ];
+
   return (
     <AreaChart
       title="Sales by Product Line"
       subtitle="Cumulative Revenue"
       stacking="normal"
-      series={[
-        {
-          name: 'Electronics',
-          data: [50, 60, 70, 80, 90, 100, 110, 120],
-        },
-        {
-          name: 'Clothing',
-          data: [40, 50, 55, 65, 70, 75, 85, 90],
-        },
-        {
-          name: 'Food & Beverage',
-          data: [30, 35, 40, 45, 50, 55, 60, 65],
-        },
-        {
-          name: 'Home & Garden',
-          data: [20, 25, 30, 35, 40, 45, 50, 55],
-        },
-      ]}
-      xAxis={{
-        categories: ['Q1 Week 1', 'Q1 Week 2', 'Q2 Week 1', 'Q2 Week 2', 'Q3 Week 1', 'Q3 Week 2', 'Q4 Week 1', 'Q4 Week 2'],
-      }}
-      yAxis={{
-        title: { text: 'Total Revenue ($K)' },
-      }}
+      series={series}
+      xAxis={{ categories: ['Q1 W1', 'Q1 W2', 'Q2 W1', 'Q2 W2', 'Q3 W1', 'Q3 W2', 'Q4 W1', 'Q4 W2'] }}
+      yAxis={{ title: { text: 'Total Revenue ($K)' } }}
       height={400}
     />
   );
@@ -49634,32 +49644,96 @@ on(input, 'input', (e) => {
   renderTo: Ext.getBody()
 });`,
     typescript: `import {Labelled, TextField} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useMemo} from 'react';
 
 interface HiddenLabelExampleProps {
   placeholder?: string;
-  onSearch?: (query: string) => void;
+  onSearch?: SearchHandler;
+  debounceMs?: number;
+  minSearchLength?: number;
 }
+
+interface SearchState {
+  query: string;
+  resultCount: number;
+  isSearching: boolean;
+}
+
+interface SearchResult {
+  query: string;
+  timestamp: number;
+  resultCount?: number;
+}
+
+type SearchHandler = (result: SearchResult) => void;
 
 function HiddenLabelExample({
   placeholder = 'Search products...',
-  onSearch
+  onSearch,
+  debounceMs = 300,
+  minSearchLength = 2
 }: HiddenLabelExampleProps): JSX.Element {
-  const [value, setValue] = useState<string>('');
+  const [state, setState] = useState<SearchState>({
+    query: '',
+    resultCount: 0,
+    isSearching: false
+  });
 
-  const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    onSearch?.(newValue);
+  const [debounceTimer, setDebounceTimer] = useState<NodeType | null>(null);
+
+  const performSearch = useCallback((query: string): void => {
+    const searchResult: SearchResult = {
+      query,
+      timestamp: Date.now(),
+      resultCount: Math.floor(Math.random() * 100) // Mock result count
+    };
+
+    setState(prev => ({
+      ...prev,
+      resultCount: searchResult.resultCount || 0,
+      isSearching: false
+    }));
+
+    onSearch?.(searchResult);
   }, [onSearch]);
+
+  const handleChange = useCallback((newValue: string): void => {
+    setState(prev => ({
+      ...prev,
+      query: newValue,
+      isSearching: newValue.length >= minSearchLength
+    }));
+
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+
+    if (newValue.length >= minSearchLength) {
+      const timer = setTimeout(() => {
+        performSearch(newValue);
+      }, debounceMs);
+      setDebounceTimer(timer as any);
+    }
+  }, [debounceTimer, debounceMs, minSearchLength, performSearch]);
+
+  const helperText = useMemo((): string | undefined => {
+    if (state.isSearching) return 'Searching...';
+    if (state.query && state.query.length < minSearchLength) {
+      return \`Type at least \${minSearchLength} characters to search\`;
+    }
+    if (state.resultCount > 0) return \`Found \${state.resultCount} results\`;
+    return undefined;
+  }, [state.isSearching, state.query, state.resultCount, minSearchLength]);
 
   return (
     <Labelled
       id="hidden-label-field"
       label="Search"
       labelHidden
+      helpText={helperText}
     >
       <TextField
-        value={value}
+        value={state.query}
         onChange={handleChange}
         placeholder={placeholder}
         autoComplete="off"
@@ -49761,44 +49835,119 @@ on(countryField, 'change', (e) => console.log('Country:', e.target.value));
 import {useState, useCallback} from 'react';
 
 interface MultipleFieldTypesProps {
-  onFormChange?: (data: {name: string; country: string}) => void;
+  onFormChange?: FormChangeHandler;
+  validateOnChange?: boolean;
+}
+
+interface FormData {
+  name: string;
+  country: string;
+}
+
+interface FormValidation {
+  isValid: boolean;
+  errors: FormErrors;
+}
+
+interface FormErrors {
+  name?: string;
+  country?: string;
 }
 
 interface CountryOption {
   label: string;
   value: string;
+  code: string;
 }
 
+type FormChangeHandler = (data: FormData, validation: FormValidation) => void;
+type FormValidator = (data: FormData) => FormValidation;
+
+const COUNTRY_OPTIONS: readonly CountryOption[] = [
+  {label: 'United States', value: 'US', code: '+1'},
+  {label: 'Canada', value: 'CA', code: '+1'},
+  {label: 'United Kingdom', value: 'UK', code: '+44'},
+] as const;
+
 function MultipleFieldTypes({
-  onFormChange
+  onFormChange,
+  validateOnChange = true
 }: MultipleFieldTypesProps): JSX.Element {
-  const [name, setName] = useState<string>('');
-  const [country, setCountry] = useState<string>('US');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    country: 'US'
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const countryOptions: CountryOption[] = [
-    {label: 'United States', value: 'US'},
-    {label: 'Canada', value: 'CA'},
-    {label: 'United Kingdom', value: 'UK'},
-  ];
+  const validateForm: FormValidator = useCallback((data: FormData): FormValidation => {
+    const formErrors: FormErrors = {};
 
-  const handleNameChange = useCallback((newName: string) => {
-    setName(newName);
-    onFormChange?.({name: newName, country});
-  }, [country, onFormChange]);
+    if (!data.name || data.name.trim().length < 2) {
+      formErrors.name = 'Name must be at least 2 characters';
+    }
 
-  const handleCountryChange = useCallback((newCountry: string) => {
-    setCountry(newCountry);
-    onFormChange?.({name, country: newCountry});
-  }, [name, onFormChange]);
+    if (!data.country) {
+      formErrors.country = 'Please select a country';
+    }
+
+    return {
+      isValid: Object.keys(formErrors).length === 0,
+      errors: formErrors
+    };
+  }, []);
+
+  const handleNameChange = useCallback((newName: string): void => {
+    const newFormData: FormData = { ...formData, name: newName };
+    setFormData(newFormData);
+
+    if (validateOnChange) {
+      const validation = validateForm(newFormData);
+      setErrors(validation.errors);
+      onFormChange?.(newFormData, validation);
+    } else {
+      onFormChange?.(newFormData, { isValid: true, errors: {} });
+    }
+  }, [formData, validateOnChange, validateForm, onFormChange]);
+
+  const handleCountryChange = useCallback((newCountry: string): void => {
+    const newFormData: FormData = { ...formData, country: newCountry };
+    setFormData(newFormData);
+
+    if (validateOnChange) {
+      const validation = validateForm(newFormData);
+      setErrors(validation.errors);
+      onFormChange?.(newFormData, validation);
+    } else {
+      onFormChange?.(newFormData, { isValid: true, errors: {} });
+    }
+  }, [formData, validateOnChange, validateForm, onFormChange]);
 
   return (
     <>
-      <Labelled id="name-field" label="Full name">
-        <TextField value={name} onChange={handleNameChange} autoComplete="name" />
+      <Labelled
+        id="name-field"
+        label="Full name"
+        error={errors.name}
+        requiredIndicator
+      >
+        <TextField
+          value={formData.name}
+          onChange={handleNameChange}
+          autoComplete="name"
+          error={Boolean(errors.name)}
+        />
       </Labelled>
 
-      <Labelled id="country-field" label="Country">
-        <Select options={countryOptions} value={country} onChange={handleCountryChange} />
+      <Labelled
+        id="country-field"
+        label="Country"
+        error={errors.country}
+      >
+        <Select
+          options={COUNTRY_OPTIONS}
+          value={formData.country}
+          onChange={handleCountryChange}
+        />
       </Labelled>
     </>
   );
