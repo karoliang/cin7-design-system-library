@@ -102,6 +102,9 @@ export const Stacked: Story = {
     },
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('areachart', 'stacked'),
+  },
 };
 
 export const Percentage: Story = {
@@ -135,6 +138,9 @@ export const Percentage: Story = {
     },
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('areachart', 'percentage'),
+  },
 };
 
 export const SplineArea: Story = {
@@ -165,5 +171,8 @@ export const SplineArea: Story = {
       valueSuffix: ' visitors',
     },
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('areachart', 'splinearea'),
   },
 };

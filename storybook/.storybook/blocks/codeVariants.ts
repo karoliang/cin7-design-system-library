@@ -6955,6 +6955,934 @@ function CardWithSubsection({
   }
 };
 
+// Backdrop Component Examples - Overlays
+export const backdropExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import {Backdrop} from '@shopify/polaris';
+import {useState} from 'react';
+
+function BackdropExample() {
+  const [active, setActive] = useState(true);
+
+  return (
+    <>
+      <Backdrop onClick={() => setActive(false)} />
+      {active && <div>Content behind backdrop</div>}
+    </>
+  );
+}
+
+export default BackdropExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-backdrop" id="backdrop"></div>
+<div class="content">Content behind backdrop</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const backdrop = $('#backdrop');
+const content = $('.content');
+
+on(backdrop, 'click', () => {
+  backdrop.style.display = 'none';
+  content.style.display = 'none';
+});
+</script>`,
+    extjs: `// ExtJS Backdrop using mask
+Ext.getBody().mask('', 'polaris-backdrop');
+
+// Remove backdrop on click
+Ext.getBody().on('click', function() {
+  Ext.getBody().unmask();
+});`,
+    typescript: `import {Backdrop} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BackdropExampleProps {
+  initialActive?: boolean;
+  onBackdropClick?: () => void;
+}
+
+function BackdropExample({
+  initialActive = true,
+  onBackdropClick
+}: BackdropExampleProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(initialActive);
+
+  const handleBackdropClick = useCallback(() => {
+    setActive(false);
+    onBackdropClick?.();
+  }, [onBackdropClick]);
+
+  return (
+    <>
+      <Backdrop onClick={handleBackdropClick} />
+      {active && <div>Content behind backdrop</div>}
+    </>
+  );
+}
+
+export default BackdropExample;`
+  },
+
+  withclickhandler: {
+    react: `import {Backdrop, Button, Modal} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function BackdropWithClickHandler() {
+  const [showBackdrop, setShowBackdrop] = useState(false);
+
+  const handleBackdropClick = useCallback(() => {
+    console.log('Backdrop clicked');
+    setShowBackdrop(false);
+  }, []);
+
+  return (
+    <>
+      <Button onClick={() => setShowBackdrop(true)}>Show Backdrop</Button>
+      {showBackdrop && <Backdrop onClick={handleBackdropClick} />}
+    </>
+  );
+}
+
+export default BackdropWithClickHandler;`,
+    vanilla: `<!-- HTML Structure -->
+<button id="show-backdrop">Show Backdrop</button>
+<div class="polaris-backdrop" id="backdrop" style="display: none;"></div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const button = $('#show-backdrop');
+const backdrop = $('#backdrop');
+
+on(button, 'click', () => {
+  backdrop.style.display = 'block';
+});
+
+on(backdrop, 'click', () => {
+  console.log('Backdrop clicked');
+  backdrop.style.display = 'none';
+});
+</script>`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Show Backdrop',
+  handler: function() {
+    Ext.getBody().mask('', 'polaris-backdrop');
+
+    Ext.getBody().on('click', function handler() {
+      console.log('Backdrop clicked');
+      Ext.getBody().unmask();
+      Ext.getBody().un('click', handler);
+    }, null, {single: true});
+  },
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Backdrop, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BackdropClickHandlerProps {
+  onBackdropClick?: () => void;
+}
+
+function BackdropWithClickHandler({
+  onBackdropClick
+}: BackdropClickHandlerProps): JSX.Element {
+  const [showBackdrop, setShowBackdrop] = useState<boolean>(false);
+
+  const handleBackdropClick = useCallback(() => {
+    console.log('Backdrop clicked');
+    setShowBackdrop(false);
+    onBackdropClick?.();
+  }, [onBackdropClick]);
+
+  return (
+    <>
+      <Button onClick={() => setShowBackdrop(true)}>Show Backdrop</Button>
+      {showBackdrop && <Backdrop onClick={handleBackdropClick} />}
+    </>
+  );
+}
+
+export default BackdropWithClickHandler;`
+  },
+
+  transparentbackdrop: {
+    react: `import {Backdrop} from '@shopify/polaris';
+import {useState} from 'react';
+
+function TransparentBackdrop() {
+  const [active, setActive] = useState(true);
+
+  return (
+    <>
+      <Backdrop
+        transparent
+        onClick={() => setActive(false)}
+      />
+      <div>Content visible through transparent backdrop</div>
+    </>
+  );
+}
+
+export default TransparentBackdrop;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-backdrop polaris-backdrop--transparent" id="backdrop"></div>
+<div class="content">Content visible through transparent backdrop</div>
+
+<style>
+.polaris-backdrop--transparent {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const backdrop = $('#backdrop');
+on(backdrop, 'click', () => {
+  backdrop.style.display = 'none';
+});
+</script>`,
+    extjs: `// ExtJS transparent backdrop
+Ext.getBody().mask('', 'polaris-backdrop-transparent');
+
+// Custom CSS for transparency
+Ext.util.CSS.createStyleSheet(
+  '.polaris-backdrop-transparent { background-color: rgba(0, 0, 0, 0.2) !important; }',
+  'backdrop-transparency'
+);
+
+Ext.getBody().on('click', function() {
+  Ext.getBody().unmask();
+});`,
+    typescript: `import {Backdrop} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface TransparentBackdropProps {
+  onDismiss?: () => void;
+  opacity?: number;
+}
+
+function TransparentBackdrop({
+  onDismiss,
+  opacity = 0.2
+}: TransparentBackdropProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(true);
+
+  const handleBackdropClick = useCallback(() => {
+    setActive(false);
+    onDismiss?.();
+  }, [onDismiss]);
+
+  return (
+    <>
+      <Backdrop
+        transparent
+        onClick={handleBackdropClick}
+      />
+      <div style={{opacity: active ? 1 : 0}}>
+        Content visible through transparent backdrop
+      </div>
+    </>
+  );
+}
+
+export default TransparentBackdrop;`
+  },
+
+  belownavigation: {
+    react: `import {Backdrop, TopBar, Frame} from '@shopify/polaris';
+import {useState} from 'react';
+
+function BackdropBelowNavigation() {
+  const [showBackdrop, setShowBackdrop] = useState(true);
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      userMenu={<div>User Menu</div>}
+    />
+  );
+
+  return (
+    <Frame topBar={topBarMarkup}>
+      {showBackdrop && (
+        <Backdrop
+          belowNavigation
+          onClick={() => setShowBackdrop(false)}
+        />
+      )}
+      <div>Main content area</div>
+    </Frame>
+  );
+}
+
+export default BackdropBelowNavigation;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-frame">
+  <div class="polaris-top-bar" style="z-index: 100;">
+    <div class="polaris-top-bar__navigation">Navigation</div>
+  </div>
+  <div class="polaris-backdrop polaris-backdrop--below-navigation"
+       id="backdrop"
+       style="z-index: 50;"></div>
+  <div class="polaris-frame__content">Main content area</div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const backdrop = $('#backdrop');
+on(backdrop, 'click', () => {
+  backdrop.style.display = 'none';
+});
+</script>`,
+    extjs: `// ExtJS backdrop with custom z-index
+const viewport = Ext.create('Ext.container.Viewport', {
+  layout: 'border',
+  items: [{
+    region: 'north',
+    xtype: 'toolbar',
+    height: 50,
+    items: [{text: 'Navigation'}]
+  }, {
+    region: 'center',
+    html: 'Main content area'
+  }]
+});
+
+// Add backdrop below navigation
+Ext.getBody().mask('', 'polaris-backdrop-below-nav');
+Ext.query('.x-mask')[0].style.zIndex = '50';
+
+Ext.getBody().on('click', function() {
+  Ext.getBody().unmask();
+});`,
+    typescript: `import {Backdrop, TopBar, Frame} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BackdropBelowNavigationProps {
+  navigationContent?: React.ReactNode;
+  onBackdropClick?: () => void;
+}
+
+function BackdropBelowNavigation({
+  navigationContent,
+  onBackdropClick
+}: BackdropBelowNavigationProps): JSX.Element {
+  const [showBackdrop, setShowBackdrop] = useState<boolean>(true);
+
+  const handleBackdropClick = useCallback(() => {
+    setShowBackdrop(false);
+    onBackdropClick?.();
+  }, [onBackdropClick]);
+
+  const topBarMarkup = (
+    <TopBar
+      showNavigationToggle
+      userMenu={navigationContent || <div>User Menu</div>}
+    />
+  );
+
+  return (
+    <Frame topBar={topBarMarkup}>
+      {showBackdrop && (
+        <Backdrop
+          belowNavigation
+          onClick={handleBackdropClick}
+        />
+      )}
+      <div>Main content area</div>
+    </Frame>
+  );
+}
+
+export default BackdropBelowNavigation;`
+  },
+
+  withloadingspinner: {
+    react: `import {Backdrop, Spinner} from '@shopify/polaris';
+import {useState, useEffect} from 'react';
+
+function BackdropWithLoadingSpinner() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      {loading && (
+        <>
+          <Backdrop />
+          <div style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1000
+          }}>
+            <Spinner size="large" />
+          </div>
+        </>
+      )}
+      <div>Content loads after 3 seconds</div>
+    </>
+  );
+}
+
+export default BackdropWithLoadingSpinner;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-backdrop" id="backdrop"></div>
+<div class="loading-spinner" id="spinner">
+  <div class="polaris-spinner polaris-spinner--large"></div>
+</div>
+<div class="content">Content loads after 3 seconds</div>
+
+<style>
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+</style>
+
+<script>
+import { $, fadeOut } from '@cin7/vanilla-js';
+
+const backdrop = $('#backdrop');
+const spinner = $('#spinner');
+
+setTimeout(() => {
+  fadeOut(backdrop);
+  fadeOut(spinner);
+}, 3000);
+</script>`,
+    extjs: `// ExtJS loading mask with spinner
+Ext.getBody().mask('Loading...', 'polaris-backdrop-loading');
+
+// Remove after 3 seconds
+setTimeout(function() {
+  Ext.getBody().unmask();
+}, 3000);`,
+    typescript: `import {Backdrop, Spinner} from '@shopify/polaris';
+import {useState, useEffect} from 'react';
+
+interface BackdropWithLoadingSpinnerProps {
+  loadingTime?: number;
+  onLoadComplete?: () => void;
+  spinnerSize?: 'small' | 'large';
+}
+
+function BackdropWithLoadingSpinner({
+  loadingTime = 3000,
+  onLoadComplete,
+  spinnerSize = 'large'
+}: BackdropWithLoadingSpinnerProps): JSX.Element {
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      onLoadComplete?.();
+    }, loadingTime);
+    return () => clearTimeout(timer);
+  }, [loadingTime, onLoadComplete]);
+
+  return (
+    <>
+      {loading && (
+        <>
+          <Backdrop />
+          <div style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1000
+          }}>
+            <Spinner size={spinnerSize} />
+          </div>
+        </>
+      )}
+      <div>Content loads after {loadingTime / 1000} seconds</div>
+    </>
+  );
+}
+
+export default BackdropWithLoadingSpinner;`
+  },
+
+  modalintegration: {
+    react: `import {Backdrop, Modal, Button, TextContainer} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function BackdropModalIntegration() {
+  const [modalActive, setModalActive] = useState(false);
+
+  const handleModalChange = useCallback(
+    () => setModalActive(!modalActive),
+    [modalActive]
+  );
+
+  return (
+    <>
+      <Button onClick={handleModalChange}>Open Modal</Button>
+      <Modal
+        open={modalActive}
+        onClose={handleModalChange}
+        title="Modal with Backdrop"
+      >
+        <Modal.Section>
+          <TextContainer>
+            <p>This modal uses a backdrop automatically.</p>
+          </TextContainer>
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default BackdropModalIntegration;`,
+    vanilla: `<!-- HTML Structure -->
+<button id="open-modal">Open Modal</button>
+
+<div class="polaris-backdrop" id="backdrop" style="display: none;"></div>
+<div class="polaris-modal" id="modal" style="display: none;">
+  <div class="polaris-modal__header">
+    <h2>Modal with Backdrop</h2>
+    <button id="close-modal">×</button>
+  </div>
+  <div class="polaris-modal__content">
+    <p>This modal uses a backdrop automatically.</p>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const openBtn = $('#open-modal');
+const closeBtn = $('#close-modal');
+const backdrop = $('#backdrop');
+const modal = $('#modal');
+
+function showModal() {
+  backdrop.style.display = 'block';
+  modal.style.display = 'block';
+}
+
+function hideModal() {
+  backdrop.style.display = 'none';
+  modal.style.display = 'none';
+}
+
+on(openBtn, 'click', showModal);
+on(closeBtn, 'click', hideModal);
+on(backdrop, 'click', hideModal);
+</script>`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Open Modal',
+  handler: function() {
+    Ext.create('Ext.window.Window', {
+      title: 'Modal with Backdrop',
+      modal: true,
+      width: 400,
+      height: 200,
+      layout: 'fit',
+      items: [{
+        xtype: 'container',
+        html: '<p>This modal uses a backdrop automatically.</p>'
+      }]
+    }).show();
+  },
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Backdrop, Modal, Button, TextContainer} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BackdropModalIntegrationProps {
+  modalTitle?: string;
+  modalContent?: React.ReactNode;
+  onModalClose?: () => void;
+}
+
+function BackdropModalIntegration({
+  modalTitle = 'Modal with Backdrop',
+  modalContent,
+  onModalClose
+}: BackdropModalIntegrationProps): JSX.Element {
+  const [modalActive, setModalActive] = useState<boolean>(false);
+
+  const handleModalChange = useCallback(() => {
+    const newState = !modalActive;
+    setModalActive(newState);
+    if (!newState) {
+      onModalClose?.();
+    }
+  }, [modalActive, onModalClose]);
+
+  return (
+    <>
+      <Button onClick={handleModalChange}>Open Modal</Button>
+      <Modal
+        open={modalActive}
+        onClose={handleModalChange}
+        title={modalTitle}
+      >
+        <Modal.Section>
+          <TextContainer>
+            {modalContent || <p>This modal uses a backdrop automatically.</p>}
+          </TextContainer>
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default BackdropModalIntegration;`
+  },
+
+  multilayerbackdrops: {
+    react: `import {Backdrop, Modal, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function MultiLayerBackdrops() {
+  const [firstModal, setFirstModal] = useState(false);
+  const [secondModal, setSecondModal] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setFirstModal(true)}>Open First Modal</Button>
+
+      <Modal
+        open={firstModal}
+        onClose={() => setFirstModal(false)}
+        title="First Modal"
+      >
+        <Modal.Section>
+          <Button onClick={() => setSecondModal(true)}>Open Second Modal</Button>
+        </Modal.Section>
+      </Modal>
+
+      <Modal
+        open={secondModal}
+        onClose={() => setSecondModal(false)}
+        title="Second Modal"
+      >
+        <Modal.Section>
+          <p>This is a nested modal with multiple backdrops.</p>
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default MultiLayerBackdrops;`,
+    vanilla: `<!-- HTML Structure -->
+<button id="open-first">Open First Modal</button>
+
+<div class="polaris-backdrop backdrop-1" id="backdrop-1" style="display: none; z-index: 100;"></div>
+<div class="polaris-modal modal-1" id="modal-1" style="display: none; z-index: 101;">
+  <div class="polaris-modal__content">
+    <h2>First Modal</h2>
+    <button id="open-second">Open Second Modal</button>
+  </div>
+</div>
+
+<div class="polaris-backdrop backdrop-2" id="backdrop-2" style="display: none; z-index: 200;"></div>
+<div class="polaris-modal modal-2" id="modal-2" style="display: none; z-index: 201;">
+  <div class="polaris-modal__content">
+    <h2>Second Modal</h2>
+    <p>This is a nested modal with multiple backdrops.</p>
+    <button id="close-second">Close</button>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const openFirst = $('#open-first');
+const openSecond = $('#open-second');
+const closeSecond = $('#close-second');
+
+on(openFirst, 'click', () => {
+  $('#backdrop-1').style.display = 'block';
+  $('#modal-1').style.display = 'block';
+});
+
+on(openSecond, 'click', () => {
+  $('#backdrop-2').style.display = 'block';
+  $('#modal-2').style.display = 'block';
+});
+
+on(closeSecond, 'click', () => {
+  $('#backdrop-2').style.display = 'none';
+  $('#modal-2').style.display = 'none';
+});
+</script>`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Open First Modal',
+  handler: function() {
+    const firstWindow = Ext.create('Ext.window.Window', {
+      title: 'First Modal',
+      modal: true,
+      width: 400,
+      height: 200,
+      items: [{
+        xtype: 'button',
+        text: 'Open Second Modal',
+        handler: function() {
+          Ext.create('Ext.window.Window', {
+            title: 'Second Modal',
+            modal: true,
+            width: 350,
+            height: 150,
+            html: '<p>This is a nested modal with multiple backdrops.</p>'
+          }).show();
+        }
+      }]
+    });
+    firstWindow.show();
+  },
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Backdrop, Modal, Button} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface MultiLayerBackdropsProps {
+  firstModalTitle?: string;
+  secondModalTitle?: string;
+}
+
+function MultiLayerBackdrops({
+  firstModalTitle = 'First Modal',
+  secondModalTitle = 'Second Modal'
+}: MultiLayerBackdropsProps): JSX.Element {
+  const [firstModal, setFirstModal] = useState<boolean>(false);
+  const [secondModal, setSecondModal] = useState<boolean>(false);
+
+  const handleFirstModalClose = useCallback(() => {
+    setFirstModal(false);
+    setSecondModal(false);
+  }, []);
+
+  const handleSecondModalClose = useCallback(() => {
+    setSecondModal(false);
+  }, []);
+
+  return (
+    <>
+      <Button onClick={() => setFirstModal(true)}>Open First Modal</Button>
+
+      <Modal
+        open={firstModal}
+        onClose={handleFirstModalClose}
+        title={firstModalTitle}
+      >
+        <Modal.Section>
+          <Button onClick={() => setSecondModal(true)}>Open Second Modal</Button>
+        </Modal.Section>
+      </Modal>
+
+      <Modal
+        open={secondModal}
+        onClose={handleSecondModalClose}
+        title={secondModalTitle}
+      >
+        <Modal.Section>
+          <p>This is a nested modal with multiple backdrops.</p>
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default MultiLayerBackdrops;`
+  },
+
+  accessibilityfocus: {
+    react: `import {Backdrop, Modal, Button, TextField} from '@shopify/polaris';
+import {useState, useCallback, useRef, useEffect} from 'react';
+
+function BackdropAccessibilityFocus() {
+  const [active, setActive] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (active && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [active]);
+
+  const handleToggle = useCallback(() => setActive(!active), [active]);
+
+  return (
+    <>
+      <Button onClick={handleToggle}>Open Accessible Modal</Button>
+      <Modal
+        open={active}
+        onClose={handleToggle}
+        title="Accessible Modal"
+      >
+        <Modal.Section>
+          <TextField
+            label="Name"
+            value=""
+            onChange={() => {}}
+            autoFocus
+          />
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default BackdropAccessibilityFocus;`,
+    vanilla: `<!-- HTML Structure -->
+<button id="open-modal">Open Accessible Modal</button>
+
+<div class="polaris-backdrop" id="backdrop" style="display: none;" aria-hidden="true"></div>
+<div class="polaris-modal" id="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="polaris-modal__header">
+    <h2 id="modal-title">Accessible Modal</h2>
+  </div>
+  <div class="polaris-modal__content">
+    <label for="name-input">Name</label>
+    <input type="text" id="name-input" class="polaris-text-field__input" />
+  </div>
+  <button id="close-modal" aria-label="Close modal">×</button>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const openBtn = $('#open-modal');
+const closeBtn = $('#close-modal');
+const backdrop = $('#backdrop');
+const modal = $('#modal');
+const nameInput = $('#name-input');
+
+function showModal() {
+  backdrop.style.display = 'block';
+  backdrop.setAttribute('aria-hidden', 'false');
+  modal.style.display = 'block';
+  nameInput.focus();
+  document.body.style.overflow = 'hidden';
+}
+
+function hideModal() {
+  backdrop.style.display = 'none';
+  backdrop.setAttribute('aria-hidden', 'true');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+  openBtn.focus();
+}
+
+on(openBtn, 'click', showModal);
+on(closeBtn, 'click', hideModal);
+on(backdrop, 'click', hideModal);
+</script>`,
+    extjs: `Ext.create('Ext.button.Button', {
+  text: 'Open Accessible Modal',
+  handler: function() {
+    const win = Ext.create('Ext.window.Window', {
+      title: 'Accessible Modal',
+      modal: true,
+      width: 400,
+      height: 200,
+      layout: 'fit',
+      items: [{
+        xtype: 'form',
+        bodyPadding: 10,
+        items: [{
+          xtype: 'textfield',
+          fieldLabel: 'Name',
+          name: 'name',
+          listeners: {
+            afterrender: function(field) {
+              field.focus();
+            }
+          }
+        }]
+      }],
+      listeners: {
+        close: function() {
+          // Return focus to trigger button
+          Ext.getCmp('open-btn').focus();
+        }
+      }
+    });
+    win.show();
+  },
+  id: 'open-btn',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Backdrop, Modal, Button, TextField} from '@shopify/polaris';
+import {useState, useCallback, useRef, useEffect} from 'react';
+
+interface BackdropAccessibilityFocusProps {
+  modalTitle?: string;
+  autoFocusField?: boolean;
+  onModalClose?: () => void;
+}
+
+function BackdropAccessibilityFocus({
+  modalTitle = 'Accessible Modal',
+  autoFocusField = true,
+  onModalClose
+}: BackdropAccessibilityFocusProps): JSX.Element {
+  const [active, setActive] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>('');
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!active && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [active]);
+
+  const handleToggle = useCallback(() => {
+    const newState = !active;
+    setActive(newState);
+    if (!newState) {
+      onModalClose?.();
+    }
+  }, [active, onModalClose]);
+
+  return (
+    <>
+      <Button onClick={handleToggle} ref={buttonRef}>
+        Open Accessible Modal
+      </Button>
+      <Modal
+        open={active}
+        onClose={handleToggle}
+        title={modalTitle}
+      >
+        <Modal.Section>
+          <TextField
+            label="Name"
+            value={inputValue}
+            onChange={setInputValue}
+            autoFocus={autoFocusField}
+            autoComplete="off"
+          />
+        </Modal.Section>
+      </Modal>
+    </>
+  );
+}
+
+export default BackdropAccessibilityFocus;`
+  }
+};
+
+
 // Placeholder for other components (to be added)
 // Banner Component Examples
 export const bannerExamples: Record<string, CodeVariant> = {
@@ -32946,6 +33874,1836 @@ export default SpecializedTextExample;`,
   }
 };
 
+// Truncate Component Examples
+export const truncateExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function TruncateDefault() {
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Basic Truncation</Text>
+      <div style={{ maxWidth: '200px' }}>
+        <Text variant="bodyMd" truncate>
+          This is a very long text that will be truncated with an ellipsis when it exceeds the container width
+        </Text>
+      </div>
+    </BlockStack>
+  );
+}
+
+export default TruncateDefault;`,
+
+    vanilla: `<!-- Truncate using @cin7/vanilla-js -->
+<div id="truncate-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#truncate-container');
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Basic Truncation'
+});
+
+const textContainer = createElement('div', {
+  style: 'max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'
+});
+
+const text = createElement('p', {
+  className: 'polaris-text polaris-text--body-md',
+  textContent: 'This is a very long text that will be truncated with an ellipsis when it exceeds the container width'
+});
+
+textContainer.appendChild(text);
+container.appendChild(heading);
+container.appendChild(textContainer);
+</script>
+
+<style>
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>`,
+
+    extjs: `// ExtJS Truncate using @cin7/extjs-adapters
+import { PolarisText } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Basic Truncation</h3>'
+    },
+    {
+      xtype: 'container',
+      width: 200,
+      layout: 'fit',
+      items: [
+        {
+          xtype: 'component',
+          html: '<p class="polaris-text polaris-text--body-md" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">This is a very long text that will be truncated with an ellipsis when it exceeds the container width</p>'
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface TruncateDefaultProps {
+  maxWidth?: string;
+  text?: string;
+}
+
+function TruncateDefault({
+  maxWidth = '200px',
+  text = 'This is a very long text that will be truncated with an ellipsis when it exceeds the container width'
+}: TruncateDefaultProps): JSX.Element {
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Basic Truncation</Text>
+      <div style={{ maxWidth }}>
+        <Text variant="bodyMd" truncate>
+          {text}
+        </Text>
+      </div>
+    </BlockStack>
+  );
+}
+
+export default TruncateDefault;`,
+  },
+
+  intablecell: {
+    react: `import { DataTable, Card } from '@shopify/polaris';
+import React from 'react';
+
+function TruncateInTableCell() {
+  const rows = [
+    ['Product A', 'This is a very long product description that will be truncated in the table cell to maintain layout consistency'],
+    ['Product B', 'Another lengthy description that demonstrates how truncation works within DataTable cells'],
+    ['Product C', 'Short description']
+  ];
+
+  return (
+    <Card>
+      <DataTable
+        columnContentTypes={['text', 'text']}
+        headings={['Product', 'Description']}
+        rows={rows}
+        truncate
+      />
+    </Card>
+  );
+}
+
+export default TruncateInTableCell;`,
+
+    vanilla: `<!-- Truncate in Table Cell using @cin7/vanilla-js -->
+<div id="truncate-table-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#truncate-table-container');
+
+const card = createElement('div', {
+  className: 'polaris-card'
+});
+
+const table = createElement('table', {
+  className: 'polaris-data-table'
+});
+
+const thead = createElement('thead');
+const headerRow = createElement('tr');
+['Product', 'Description'].forEach(heading => {
+  const th = createElement('th', {
+    className: 'polaris-data-table__cell',
+    textContent: heading
+  });
+  headerRow.appendChild(th);
+});
+thead.appendChild(headerRow);
+table.appendChild(thead);
+
+const tbody = createElement('tbody');
+const data = [
+  ['Product A', 'This is a very long product description that will be truncated in the table cell to maintain layout consistency'],
+  ['Product B', 'Another lengthy description that demonstrates how truncation works within DataTable cells'],
+  ['Product C', 'Short description']
+];
+
+data.forEach(row => {
+  const tr = createElement('tr');
+  row.forEach(cell => {
+    const td = createElement('td', {
+      className: 'polaris-data-table__cell',
+      style: 'max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+      textContent: cell
+    });
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+});
+table.appendChild(tbody);
+card.appendChild(table);
+container.appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Truncate in Grid Cell using @cin7/extjs-adapters
+import { PolarisDataGrid } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.grid.Panel', {
+  title: 'Products with Truncated Descriptions',
+  store: {
+    fields: ['product', 'description'],
+    data: [
+      { product: 'Product A', description: 'This is a very long product description that will be truncated in the table cell to maintain layout consistency' },
+      { product: 'Product B', description: 'Another lengthy description that demonstrates how truncation works within DataTable cells' },
+      { product: 'Product C', description: 'Short description' }
+    ]
+  },
+  columns: [
+    { text: 'Product', dataIndex: 'product', width: 150 },
+    {
+      text: 'Description',
+      dataIndex: 'description',
+      flex: 1,
+      renderer: function(value) {
+        return '<div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + value + '</div>';
+      }
+    }
+  ],
+  width: 600,
+  height: 300,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { DataTable, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface Product {
+  name: string;
+  description: string;
+}
+
+interface TruncateInTableCellProps {
+  products?: Product[];
+}
+
+function TruncateInTableCell({
+  products = [
+    { name: 'Product A', description: 'This is a very long product description that will be truncated in the table cell to maintain layout consistency' },
+    { name: 'Product B', description: 'Another lengthy description that demonstrates how truncation works within DataTable cells' },
+    { name: 'Product C', description: 'Short description' }
+  ]
+}: TruncateInTableCellProps): JSX.Element {
+  const rows = products.map(product => [product.name, product.description]);
+
+  return (
+    <Card>
+      <DataTable
+        columnContentTypes={['text', 'text']}
+        headings={['Product', 'Description']}
+        rows={rows}
+        truncate
+      />
+    </Card>
+  );
+}
+
+export default TruncateInTableCell;`,
+  },
+
+  inlistitem: {
+    react: `import { List, Card, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function TruncateInListItem() {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <List type="bullet">
+          <List.Item>
+            <div style={{ maxWidth: '300px' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
+                This is a very long list item that will be truncated to maintain consistent layout
+              </span>
+            </div>
+          </List.Item>
+          <List.Item>
+            <div style={{ maxWidth: '300px' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
+                Another lengthy item demonstrating truncation in list contexts
+              </span>
+            </div>
+          </List.Item>
+          <List.Item>Short item</List.Item>
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default TruncateInListItem;`,
+
+    vanilla: `<!-- Truncate in List Item using @cin7/vanilla-js -->
+<div id="truncate-list-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#truncate-list-container');
+
+const card = createElement('div', {
+  className: 'polaris-card'
+});
+
+const list = createElement('ul', {
+  className: 'polaris-list'
+});
+
+const items = [
+  'This is a very long list item that will be truncated to maintain consistent layout',
+  'Another lengthy item demonstrating truncation in list contexts',
+  'Short item'
+];
+
+items.forEach(itemText => {
+  const li = createElement('li', {
+    className: 'polaris-list__item'
+  });
+
+  const wrapper = createElement('div', {
+    style: 'max-width: 300px;'
+  });
+
+  const span = createElement('span', {
+    style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;',
+    textContent: itemText
+  });
+
+  wrapper.appendChild(span);
+  li.appendChild(wrapper);
+  list.appendChild(li);
+});
+
+card.appendChild(list);
+container.appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Truncate in List using @cin7/extjs-adapters
+import { PolarisList } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.panel.Panel', {
+  title: 'List with Truncated Items',
+  width: 400,
+  bodyPadding: 10,
+  items: [
+    {
+      xtype: 'component',
+      html: '<ul class="polaris-list">' +
+        '<li class="polaris-list__item"><div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">This is a very long list item that will be truncated to maintain consistent layout</div></li>' +
+        '<li class="polaris-list__item"><div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Another lengthy item demonstrating truncation in list contexts</div></li>' +
+        '<li class="polaris-list__item">Short item</li>' +
+        '</ul>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { List, Card, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface ListItemData {
+  text: string;
+  truncate?: boolean;
+}
+
+interface TruncateInListItemProps {
+  items?: ListItemData[];
+  maxWidth?: string;
+}
+
+function TruncateInListItem({
+  items = [
+    { text: 'This is a very long list item that will be truncated to maintain consistent layout', truncate: true },
+    { text: 'Another lengthy item demonstrating truncation in list contexts', truncate: true },
+    { text: 'Short item', truncate: false }
+  ],
+  maxWidth = '300px'
+}: TruncateInListItemProps): JSX.Element {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <List type="bullet">
+          {items.map((item, index) => (
+            <List.Item key={index}>
+              {item.truncate ? (
+                <div style={{ maxWidth }}>
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
+                    {item.text}
+                  </span>
+                </div>
+              ) : (
+                item.text
+              )}
+            </List.Item>
+          ))}
+        </List>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default TruncateInListItem;`,
+  },
+
+  withtooltip: {
+    react: `import { Text, Tooltip, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function TruncateWithTooltip() {
+  const longText = 'This is a very long text that will be truncated with an ellipsis. Hover to see the full content in a tooltip.';
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Truncate with Tooltip</Text>
+      <div style={{ maxWidth: '200px' }}>
+        <Tooltip content={longText}>
+          <Text variant="bodyMd" truncate>
+            {longText}
+          </Text>
+        </Tooltip>
+      </div>
+    </BlockStack>
+  );
+}
+
+export default TruncateWithTooltip;`,
+
+    vanilla: `<!-- Truncate with Tooltip using @cin7/vanilla-js -->
+<div id="truncate-tooltip-container"></div>
+
+<script>
+import { $, createElement, on } from '@cin7/vanilla-js';
+
+const container = $('#truncate-tooltip-container');
+const longText = 'This is a very long text that will be truncated with an ellipsis. Hover to see the full content in a tooltip.';
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Truncate with Tooltip'
+});
+
+const textContainer = createElement('div', {
+  style: 'max-width: 200px; position: relative;'
+});
+
+const text = createElement('p', {
+  className: 'polaris-text polaris-text--body-md',
+  style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;',
+  textContent: longText,
+  title: longText
+});
+
+const tooltip = createElement('div', {
+  className: 'polaris-tooltip',
+  style: 'display: none; position: absolute; background: #000; color: #fff; padding: 8px; border-radius: 4px; max-width: 300px; z-index: 1000;',
+  textContent: longText
+});
+
+on(text, 'mouseenter', () => {
+  tooltip.style.display = 'block';
+});
+
+on(text, 'mouseleave', () => {
+  tooltip.style.display = 'none';
+});
+
+textContainer.appendChild(text);
+textContainer.appendChild(tooltip);
+container.appendChild(heading);
+container.appendChild(textContainer);
+</script>`,
+
+    extjs: `// ExtJS Truncate with Tooltip using @cin7/extjs-adapters
+import { PolarisTooltip } from '@cin7/extjs-adapters';
+
+const longText = 'This is a very long text that will be truncated with an ellipsis. Hover to see the full content in a tooltip.';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Truncate with Tooltip</h3>'
+    },
+    {
+      xtype: 'container',
+      width: 200,
+      items: [
+        {
+          xtype: 'component',
+          html: '<p class="polaris-text polaris-text--body-md" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + longText + '</p>',
+          listeners: {
+            afterrender: function(component) {
+              Ext.tip.QuickTipManager.init();
+              component.getEl().set({
+                'data-qtip': longText
+              });
+            }
+          }
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, Tooltip, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface TruncateWithTooltipProps {
+  text?: string;
+  maxWidth?: string;
+  showTooltip?: boolean;
+}
+
+function TruncateWithTooltip({
+  text = 'This is a very long text that will be truncated with an ellipsis. Hover to see the full content in a tooltip.',
+  maxWidth = '200px',
+  showTooltip = true
+}: TruncateWithTooltipProps): JSX.Element {
+  const truncatedText = (
+    <Text variant="bodyMd" truncate>
+      {text}
+    </Text>
+  );
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Truncate with Tooltip</Text>
+      <div style={{ maxWidth }}>
+        {showTooltip ? (
+          <Tooltip content={text}>
+            {truncatedText}
+          </Tooltip>
+        ) : (
+          truncatedText
+        )}
+      </div>
+    </BlockStack>
+  );
+}
+
+export default TruncateWithTooltip;`,
+  },
+
+  multilinetruncation: {
+    react: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function MultiLineTruncation() {
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Multi-line Truncation</Text>
+      <div style={{
+        maxWidth: '300px',
+        display: '-webkit-box',
+        WebkitLineClamp: 3,
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden'
+      }}>
+        <Text variant="bodyMd">
+          This is a longer text that will be truncated after three lines.
+          The text continues beyond the visible area. Lorem ipsum dolor sit amet,
+          consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
+          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </Text>
+      </div>
+    </BlockStack>
+  );
+}
+
+export default MultiLineTruncation;`,
+
+    vanilla: `<!-- Multi-line Truncation using @cin7/vanilla-js -->
+<div id="multiline-truncate-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#multiline-truncate-container');
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Multi-line Truncation'
+});
+
+const textContainer = createElement('div', {
+  style: 'max-width: 300px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;'
+});
+
+const text = createElement('p', {
+  className: 'polaris-text polaris-text--body-md',
+  textContent: 'This is a longer text that will be truncated after three lines. The text continues beyond the visible area. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+});
+
+textContainer.appendChild(text);
+container.appendChild(heading);
+container.appendChild(textContainer);
+</script>
+
+<style>
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>`,
+
+    extjs: `// ExtJS Multi-line Truncation using @cin7/extjs-adapters
+import { PolarisText } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Multi-line Truncation</h3>'
+    },
+    {
+      xtype: 'component',
+      width: 300,
+      html: '<div style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">' +
+        '<p class="polaris-text polaris-text--body-md">' +
+        'This is a longer text that will be truncated after three lines. The text continues beyond the visible area. ' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' +
+        '</p>' +
+        '</div>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+import type { CSSProperties } from 'react';
+
+interface MultiLineTruncationProps {
+  text?: string;
+  maxWidth?: string;
+  lineClamp?: number;
+}
+
+function MultiLineTruncation({
+  text = 'This is a longer text that will be truncated after three lines. The text continues beyond the visible area. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  maxWidth = '300px',
+  lineClamp = 3
+}: MultiLineTruncationProps): JSX.Element {
+  const truncateStyle: CSSProperties = {
+    maxWidth,
+    display: '-webkit-box',
+    WebkitLineClamp: lineClamp,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden'
+  };
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Multi-line Truncation</Text>
+      <div style={truncateStyle}>
+        <Text variant="bodyMd">
+          {text}
+        </Text>
+      </div>
+    </BlockStack>
+  );
+}
+
+export default MultiLineTruncation;`,
+  },
+
+  responsivetruncation: {
+    react: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function ResponsiveTruncation() {
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Responsive Truncation</Text>
+      <div className="responsive-truncate">
+        <Text variant="bodyMd">
+          This text truncates differently at various breakpoints:
+          single line on mobile, two lines on tablet, three lines on desktop.
+        </Text>
+      </div>
+      <style>
+        {\`
+          .responsive-truncate {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+          }
+          @media (min-width: 768px) {
+            .responsive-truncate {
+              -webkit-line-clamp: 2;
+            }
+          }
+          @media (min-width: 1024px) {
+            .responsive-truncate {
+              -webkit-line-clamp: 3;
+            }
+          }
+        \`}
+      </style>
+    </BlockStack>
+  );
+}
+
+export default ResponsiveTruncation;`,
+
+    vanilla: `<!-- Responsive Truncation using @cin7/vanilla-js -->
+<div id="responsive-truncate-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#responsive-truncate-container');
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Responsive Truncation'
+});
+
+const textContainer = createElement('div', {
+  className: 'responsive-truncate'
+});
+
+const text = createElement('p', {
+  className: 'polaris-text polaris-text--body-md',
+  textContent: 'This text truncates differently at various breakpoints: single line on mobile, two lines on tablet, three lines on desktop.'
+});
+
+textContainer.appendChild(text);
+container.appendChild(heading);
+container.appendChild(textContainer);
+</script>
+
+<style>
+.responsive-truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+}
+
+@media (min-width: 768px) {
+  .responsive-truncate {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-truncate {
+    -webkit-line-clamp: 3;
+  }
+}
+</style>`,
+
+    extjs: `// ExtJS Responsive Truncation using @cin7/extjs-adapters
+import { PolarisText } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Responsive Truncation</h3>'
+    },
+    {
+      xtype: 'component',
+      cls: 'responsive-truncate',
+      html: '<p class="polaris-text polaris-text--body-md">' +
+        'This text truncates differently at various breakpoints: single line on mobile, two lines on tablet, three lines on desktop.' +
+        '</p>',
+      listeners: {
+        afterrender: function() {
+          const style = document.createElement('style');
+          style.textContent = \`
+            .responsive-truncate {
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              -webkit-line-clamp: 1;
+            }
+            @media (min-width: 768px) {
+              .responsive-truncate {
+                -webkit-line-clamp: 2;
+              }
+            }
+            @media (min-width: 1024px) {
+              .responsive-truncate {
+                -webkit-line-clamp: 3;
+              }
+            }
+          \`;
+          document.head.appendChild(style);
+        }
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface ResponsiveTruncationProps {
+  text?: string;
+  mobileLines?: number;
+  tabletLines?: number;
+  desktopLines?: number;
+}
+
+function ResponsiveTruncation({
+  text = 'This text truncates differently at various breakpoints: single line on mobile, two lines on tablet, three lines on desktop.',
+  mobileLines = 1,
+  tabletLines = 2,
+  desktopLines = 3
+}: ResponsiveTruncationProps): JSX.Element {
+  const styles = \`
+    .responsive-truncate {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: \${mobileLines};
+    }
+    @media (min-width: 768px) {
+      .responsive-truncate {
+        -webkit-line-clamp: \${tabletLines};
+      }
+    }
+    @media (min-width: 1024px) {
+      .responsive-truncate {
+        -webkit-line-clamp: \${desktopLines};
+      }
+    }
+  \`;
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Responsive Truncation</Text>
+      <div className="responsive-truncate">
+        <Text variant="bodyMd">
+          {text}
+        </Text>
+      </div>
+      <style>{styles}</style>
+    </BlockStack>
+  );
+}
+
+export default ResponsiveTruncation;`,
+  },
+
+  productcardtruncation: {
+    react: `import { Card, Text, BlockStack, InlineStack, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function ProductCardTruncation() {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <InlineStack align="space-between" blockAlign="center">
+          <Text as="h3" variant="headingMd" truncate>
+            Premium Wireless Bluetooth Headphones with Active Noise Cancellation
+          </Text>
+          <Badge>New</Badge>
+        </InlineStack>
+        <div style={{
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden'
+        }}>
+          <Text variant="bodyMd" tone="subdued">
+            Experience superior sound quality with our premium wireless headphones
+            featuring advanced active noise cancellation technology, 30-hour battery
+            life, and comfortable over-ear design perfect for all-day listening.
+          </Text>
+        </div>
+        <Text variant="headingLg" as="p">$299.99</Text>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ProductCardTruncation;`,
+
+    vanilla: `<!-- Product Card Truncation using @cin7/vanilla-js -->
+<div id="product-card-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#product-card-container');
+
+const card = createElement('div', {
+  className: 'polaris-card',
+  style: 'padding: 16px;'
+});
+
+const header = createElement('div', {
+  style: 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;'
+});
+
+const title = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;',
+  textContent: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation'
+});
+
+const badge = createElement('span', {
+  className: 'polaris-badge',
+  textContent: 'New'
+});
+
+header.appendChild(title);
+header.appendChild(badge);
+
+const description = createElement('div', {
+  style: 'display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;'
+});
+
+const descriptionText = createElement('p', {
+  className: 'polaris-text polaris-text--body-md polaris-text--subdued',
+  textContent: 'Experience superior sound quality with our premium wireless headphones featuring advanced active noise cancellation technology, 30-hour battery life, and comfortable over-ear design perfect for all-day listening.'
+});
+
+description.appendChild(descriptionText);
+
+const price = createElement('p', {
+  className: 'polaris-text polaris-text--heading-lg',
+  textContent: '$299.99'
+});
+
+card.appendChild(header);
+card.appendChild(description);
+card.appendChild(price);
+container.appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Product Card with Truncation using @cin7/extjs-adapters
+import { PolarisCard } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.panel.Panel', {
+  cls: 'polaris-card',
+  width: 400,
+  bodyPadding: 16,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'middle'
+      },
+      items: [
+        {
+          xtype: 'component',
+          flex: 1,
+          html: '<h3 class="polaris-text polaris-text--heading-md" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Premium Wireless Bluetooth Headphones with Active Noise Cancellation</h3>'
+        },
+        {
+          xtype: 'component',
+          html: '<span class="polaris-badge">New</span>'
+        }
+      ]
+    },
+    {
+      xtype: 'component',
+      margin: '16 0',
+      html: '<div style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">' +
+        '<p class="polaris-text polaris-text--body-md polaris-text--subdued">' +
+        'Experience superior sound quality with our premium wireless headphones featuring advanced active noise cancellation technology, ' +
+        '30-hour battery life, and comfortable over-ear design perfect for all-day listening.' +
+        '</p>' +
+        '</div>'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--heading-lg">$299.99</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Card, Text, BlockStack, InlineStack, Badge } from '@shopify/polaris';
+import React from 'react';
+import type { CSSProperties } from 'react';
+
+interface Product {
+  title: string;
+  description: string;
+  price: string;
+  badge?: string;
+}
+
+interface ProductCardTruncationProps {
+  product?: Product;
+  descriptionLines?: number;
+}
+
+function ProductCardTruncation({
+  product = {
+    title: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation',
+    description: 'Experience superior sound quality with our premium wireless headphones featuring advanced active noise cancellation technology, 30-hour battery life, and comfortable over-ear design perfect for all-day listening.',
+    price: '$299.99',
+    badge: 'New'
+  },
+  descriptionLines = 2
+}: ProductCardTruncationProps): JSX.Element {
+  const descriptionStyle: CSSProperties = {
+    display: '-webkit-box',
+    WebkitLineClamp: descriptionLines,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden'
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <InlineStack align="space-between" blockAlign="center">
+          <Text as="h3" variant="headingMd" truncate>
+            {product.title}
+          </Text>
+          {product.badge && <Badge>{product.badge}</Badge>}
+        </InlineStack>
+        <div style={descriptionStyle}>
+          <Text variant="bodyMd" tone="subdued">
+            {product.description}
+          </Text>
+        </div>
+        <Text variant="headingLg" as="p">{product.price}</Text>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default ProductCardTruncation;`,
+  },
+
+  variablewidthcontainers: {
+    react: `import { Text, BlockStack, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+function VariableWidthContainers() {
+  const sampleText = 'This text demonstrates truncation behavior in containers of different widths';
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Variable Width Truncation</Text>
+      <InlineStack gap="400" wrap={false}>
+        <div style={{ width: '100px', border: '1px solid #ccc', padding: '8px' }}>
+          <Text variant="bodySm" truncate>{sampleText}</Text>
+        </div>
+        <div style={{ width: '200px', border: '1px solid #ccc', padding: '8px' }}>
+          <Text variant="bodySm" truncate>{sampleText}</Text>
+        </div>
+        <div style={{ width: '300px', border: '1px solid #ccc', padding: '8px' }}>
+          <Text variant="bodySm" truncate>{sampleText}</Text>
+        </div>
+      </InlineStack>
+    </BlockStack>
+  );
+}
+
+export default VariableWidthContainers;`,
+
+    vanilla: `<!-- Variable Width Truncation using @cin7/vanilla-js -->
+<div id="variable-width-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#variable-width-container');
+const sampleText = 'This text demonstrates truncation behavior in containers of different widths';
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Variable Width Truncation',
+  style: 'margin-bottom: 16px;'
+});
+
+const flexContainer = createElement('div', {
+  style: 'display: flex; gap: 16px;'
+});
+
+[100, 200, 300].forEach(width => {
+  const box = createElement('div', {
+    style: \`width: \${width}px; border: 1px solid #ccc; padding: 8px;\`
+  });
+
+  const text = createElement('p', {
+    className: 'polaris-text polaris-text--body-sm',
+    style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+    textContent: sampleText
+  });
+
+  box.appendChild(text);
+  flexContainer.appendChild(box);
+});
+
+container.appendChild(heading);
+container.appendChild(flexContainer);
+</script>`,
+
+    extjs: `// ExtJS Variable Width Truncation using @cin7/extjs-adapters
+import { PolarisText } from '@cin7/extjs-adapters';
+
+const sampleText = 'This text demonstrates truncation behavior in containers of different widths';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Variable Width Truncation</h3>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'stretch'
+      },
+      defaults: {
+        border: 1,
+        style: {
+          borderColor: '#ccc',
+          borderStyle: 'solid'
+        },
+        bodyPadding: 8,
+        margin: '0 16 0 0'
+      },
+      items: [
+        {
+          xtype: 'component',
+          width: 100,
+          html: '<p class="polaris-text polaris-text--body-sm" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + sampleText + '</p>'
+        },
+        {
+          xtype: 'component',
+          width: 200,
+          html: '<p class="polaris-text polaris-text--body-sm" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + sampleText + '</p>'
+        },
+        {
+          xtype: 'component',
+          width: 300,
+          html: '<p class="polaris-text polaris-text--body-sm" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + sampleText + '</p>'
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, BlockStack, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+interface VariableWidthContainersProps {
+  text?: string;
+  widths?: number[];
+}
+
+function VariableWidthContainers({
+  text = 'This text demonstrates truncation behavior in containers of different widths',
+  widths = [100, 200, 300]
+}: VariableWidthContainersProps): JSX.Element {
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Variable Width Truncation</Text>
+      <InlineStack gap="400" wrap={false}>
+        {widths.map((width, index) => (
+          <div
+            key={index}
+            style={{
+              width: \`\${width}px\`,
+              border: '1px solid #ccc',
+              padding: '8px'
+            }}
+          >
+            <Text variant="bodySm" truncate>{text}</Text>
+          </div>
+        ))}
+      </InlineStack>
+    </BlockStack>
+  );
+}
+
+export default VariableWidthContainers;`,
+  },
+
+  accessibilityexample: {
+    react: `import { Text, BlockStack, Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+function AccessibilityExample() {
+  const longText = 'Important accessible content that should be available to screen readers even when visually truncated';
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Accessible Truncation</Text>
+      <div style={{ maxWidth: '200px' }}>
+        <Tooltip content={longText}>
+          <Text
+            variant="bodyMd"
+            truncate
+            accessibilityLabel={longText}
+          >
+            {longText}
+          </Text>
+        </Tooltip>
+      </div>
+      <Text variant="bodySm" tone="subdued">
+        Screen readers will read the full text even though it's visually truncated
+      </Text>
+    </BlockStack>
+  );
+}
+
+export default AccessibilityExample;`,
+
+    vanilla: `<!-- Accessible Truncation using @cin7/vanilla-js -->
+<div id="accessible-truncate-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#accessible-truncate-container');
+const longText = 'Important accessible content that should be available to screen readers even when visually truncated';
+
+const heading = createElement('h3', {
+  className: 'polaris-text polaris-text--heading-md',
+  textContent: 'Accessible Truncation'
+});
+
+const textContainer = createElement('div', {
+  style: 'max-width: 200px; margin: 16px 0;'
+});
+
+const text = createElement('p', {
+  className: 'polaris-text polaris-text--body-md',
+  style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+  textContent: longText,
+  title: longText
+});
+
+// Add aria-label for screen readers
+text.setAttribute('aria-label', longText);
+
+const note = createElement('p', {
+  className: 'polaris-text polaris-text--body-sm polaris-text--subdued',
+  textContent: 'Screen readers will read the full text even though it\\'s visually truncated'
+});
+
+textContainer.appendChild(text);
+container.appendChild(heading);
+container.appendChild(textContainer);
+container.appendChild(note);
+</script>`,
+
+    extjs: `// ExtJS Accessible Truncation using @cin7/extjs-adapters
+import { PolarisText } from '@cin7/extjs-adapters';
+
+const longText = 'Important accessible content that should be available to screen readers even when visually truncated';
+
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Accessible Truncation</h3>'
+    },
+    {
+      xtype: 'container',
+      width: 200,
+      margin: '16 0',
+      items: [
+        {
+          xtype: 'component',
+          html: '<p class="polaris-text polaris-text--body-md" ' +
+            'style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" ' +
+            'aria-label="' + longText + '" ' +
+            'title="' + longText + '">' +
+            longText +
+            '</p>'
+        }
+      ]
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-sm polaris-text--subdued">' +
+        'Screen readers will read the full text even though it\\'s visually truncated' +
+        '</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text, BlockStack, Tooltip } from '@shopify/polaris';
+import React from 'react';
+
+interface AccessibilityExampleProps {
+  text?: string;
+  maxWidth?: string;
+  showTooltip?: boolean;
+  showNote?: boolean;
+}
+
+function AccessibilityExample({
+  text = 'Important accessible content that should be available to screen readers even when visually truncated',
+  maxWidth = '200px',
+  showTooltip = true,
+  showNote = true
+}: AccessibilityExampleProps): JSX.Element {
+  const truncatedText = (
+    <Text
+      variant="bodyMd"
+      truncate
+      accessibilityLabel={text}
+    >
+      {text}
+    </Text>
+  );
+
+  return (
+    <BlockStack gap="400">
+      <Text as="h3" variant="headingMd">Accessible Truncation</Text>
+      <div style={{ maxWidth }}>
+        {showTooltip ? (
+          <Tooltip content={text}>
+            {truncatedText}
+          </Tooltip>
+        ) : (
+          truncatedText
+        )}
+      </div>
+      {showNote && (
+        <Text variant="bodySm" tone="subdued">
+          Screen readers will read the full text even though it's visually truncated
+        </Text>
+      )}
+    </BlockStack>
+  );
+}
+
+export default AccessibilityExample;`,
+  },
+
+  datatableexample: {
+    react: `import { DataTable, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function DataTableExample() {
+  const rows = [
+    [
+      'INV-001',
+      'John Smith from New York City, United States',
+      'Premium Wireless Bluetooth Headphones with Active Noise Cancellation and 30-hour Battery Life',
+      '$299.99'
+    ],
+    [
+      'INV-002',
+      'Sarah Johnson from Los Angeles, California',
+      'Professional Grade Camera Lens Kit with Multiple Focal Lengths',
+      '$1,249.00'
+    ],
+    [
+      'INV-003',
+      'Michael Chen from San Francisco Bay Area',
+      'Ergonomic Office Chair with Lumbar Support and Adjustable Height',
+      '$549.99'
+    ]
+  ];
+
+  return (
+    <Card>
+      <DataTable
+        columnContentTypes={['text', 'text', 'text', 'numeric']}
+        headings={['Invoice', 'Customer', 'Product', 'Amount']}
+        rows={rows}
+        truncate
+      />
+    </Card>
+  );
+}
+
+export default DataTableExample;`,
+
+    vanilla: `<!-- DataTable with Truncation using @cin7/vanilla-js -->
+<div id="datatable-truncate-container"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const container = $('#datatable-truncate-container');
+
+const card = createElement('div', {
+  className: 'polaris-card'
+});
+
+const table = createElement('table', {
+  className: 'polaris-data-table'
+});
+
+const thead = createElement('thead');
+const headerRow = createElement('tr');
+['Invoice', 'Customer', 'Product', 'Amount'].forEach(heading => {
+  const th = createElement('th', {
+    className: 'polaris-data-table__cell',
+    textContent: heading
+  });
+  headerRow.appendChild(th);
+});
+thead.appendChild(headerRow);
+table.appendChild(thead);
+
+const tbody = createElement('tbody');
+const data = [
+  ['INV-001', 'John Smith from New York City, United States', 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation and 30-hour Battery Life', '$299.99'],
+  ['INV-002', 'Sarah Johnson from Los Angeles, California', 'Professional Grade Camera Lens Kit with Multiple Focal Lengths', '$1,249.00'],
+  ['INV-003', 'Michael Chen from San Francisco Bay Area', 'Ergonomic Office Chair with Lumbar Support and Adjustable Height', '$549.99']
+];
+
+data.forEach(row => {
+  const tr = createElement('tr');
+  row.forEach((cell, index) => {
+    const td = createElement('td', {
+      className: 'polaris-data-table__cell',
+      style: index < 3 ? 'max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' : 'text-align: right;',
+      textContent: cell
+    });
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+});
+table.appendChild(tbody);
+card.appendChild(table);
+container.appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS DataTable with Truncation using @cin7/extjs-adapters
+import { PolarisDataGrid } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.grid.Panel', {
+  title: 'Invoices',
+  store: {
+    fields: ['invoice', 'customer', 'product', 'amount'],
+    data: [
+      {
+        invoice: 'INV-001',
+        customer: 'John Smith from New York City, United States',
+        product: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation and 30-hour Battery Life',
+        amount: '$299.99'
+      },
+      {
+        invoice: 'INV-002',
+        customer: 'Sarah Johnson from Los Angeles, California',
+        product: 'Professional Grade Camera Lens Kit with Multiple Focal Lengths',
+        amount: '$1,249.00'
+      },
+      {
+        invoice: 'INV-003',
+        customer: 'Michael Chen from San Francisco Bay Area',
+        product: 'Ergonomic Office Chair with Lumbar Support and Adjustable Height',
+        amount: '$549.99'
+      }
+    ]
+  },
+  columns: [
+    { text: 'Invoice', dataIndex: 'invoice', width: 100 },
+    {
+      text: 'Customer',
+      dataIndex: 'customer',
+      width: 200,
+      renderer: function(value) {
+        return '<div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + value + '">' + value + '</div>';
+      }
+    },
+    {
+      text: 'Product',
+      dataIndex: 'product',
+      flex: 1,
+      renderer: function(value) {
+        return '<div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + value + '">' + value + '</div>';
+      }
+    },
+    { text: 'Amount', dataIndex: 'amount', width: 100, align: 'right' }
+  ],
+  width: 800,
+  height: 300,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { DataTable, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface Invoice {
+  id: string;
+  customer: string;
+  product: string;
+  amount: string;
+}
+
+interface DataTableExampleProps {
+  invoices?: Invoice[];
+  truncate?: boolean;
+}
+
+function DataTableExample({
+  invoices = [
+    {
+      id: 'INV-001',
+      customer: 'John Smith from New York City, United States',
+      product: 'Premium Wireless Bluetooth Headphones with Active Noise Cancellation and 30-hour Battery Life',
+      amount: '$299.99'
+    },
+    {
+      id: 'INV-002',
+      customer: 'Sarah Johnson from Los Angeles, California',
+      product: 'Professional Grade Camera Lens Kit with Multiple Focal Lengths',
+      amount: '$1,249.00'
+    },
+    {
+      id: 'INV-003',
+      customer: 'Michael Chen from San Francisco Bay Area',
+      product: 'Ergonomic Office Chair with Lumbar Support and Adjustable Height',
+      amount: '$549.99'
+    }
+  ],
+  truncate = true
+}: DataTableExampleProps): JSX.Element {
+  const rows = invoices.map(invoice => [
+    invoice.id,
+    invoice.customer,
+    invoice.product,
+    invoice.amount
+  ]);
+
+  return (
+    <Card>
+      <DataTable
+        columnContentTypes={['text', 'text', 'text', 'numeric']}
+        headings={['Invoice', 'Customer', 'Product', 'Amount']}
+        rows={rows}
+        truncate={truncate}
+      />
+    </Card>
+  );
+}
+
+export default DataTableExample;`,
+  },
+
+  emailsubjects: {
+    react: `import { Card, Text, BlockStack, InlineStack, Badge, Checkbox } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function EmailSubjects() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const emails = [
+    { id: '1', from: 'Sarah Johnson', subject: 'Quarterly Performance Review and Team Goals Discussion for Q4 2024', unread: true },
+    { id: '2', from: 'Marketing Team', subject: 'New Campaign Launch Strategy - Please Review by End of Week', unread: true },
+    { id: '3', from: 'John Smith', subject: 'Re: Budget Approval for the New Project Initiative', unread: false }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="0">
+        {emails.map(email => (
+          <div
+            key={email.id}
+            style={{
+              padding: '12px 16px',
+              borderBottom: '1px solid #e1e3e5',
+              cursor: 'pointer'
+            }}
+          >
+            <InlineStack gap="300" blockAlign="start">
+              <Checkbox
+                label=""
+                checked={selected.includes(email.id)}
+                onChange={() => {
+                  setSelected(prev =>
+                    prev.includes(email.id)
+                      ? prev.filter(id => id !== email.id)
+                      : [...prev, email.id]
+                  );
+                }}
+              />
+              <BlockStack gap="100">
+                <InlineStack gap="200" blockAlign="center">
+                  <Text variant="bodyMd" fontWeight={email.unread ? 'semibold' : 'regular'}>
+                    {email.from}
+                  </Text>
+                  {email.unread && <Badge tone="info">New</Badge>}
+                </InlineStack>
+                <div style={{ maxWidth: '500px' }}>
+                  <Text
+                    variant="bodySm"
+                    tone="subdued"
+                    truncate
+                  >
+                    {email.subject}
+                  </Text>
+                </div>
+              </BlockStack>
+            </InlineStack>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default EmailSubjects;`,
+
+    vanilla: `<!-- Email Subjects with Truncation using @cin7/vanilla-js -->
+<div id="email-subjects-container"></div>
+
+<script>
+import { $, createElement, on } from '@cin7/vanilla-js';
+
+const container = $('#email-subjects-container');
+
+const card = createElement('div', {
+  className: 'polaris-card'
+});
+
+const emails = [
+  { id: '1', from: 'Sarah Johnson', subject: 'Quarterly Performance Review and Team Goals Discussion for Q4 2024', unread: true },
+  { id: '2', from: 'Marketing Team', subject: 'New Campaign Launch Strategy - Please Review by End of Week', unread: true },
+  { id: '3', from: 'John Smith', subject: 'Re: Budget Approval for the New Project Initiative', unread: false }
+];
+
+emails.forEach((email, index) => {
+  const emailRow = createElement('div', {
+    style: 'padding: 12px 16px; border-bottom: 1px solid #e1e3e5; cursor: pointer; display: flex; gap: 12px; align-items: start;'
+  });
+
+  const checkbox = createElement('input', {
+    type: 'checkbox',
+    id: \`email-\${email.id}\`,
+    className: 'polaris-checkbox__input'
+  });
+
+  const contentContainer = createElement('div', {
+    style: 'flex: 1;'
+  });
+
+  const headerRow = createElement('div', {
+    style: 'display: flex; gap: 8px; align-items: center; margin-bottom: 4px;'
+  });
+
+  const fromText = createElement('span', {
+    className: \`polaris-text polaris-text--body-md\${email.unread ? ' polaris-text--semibold' : ''}\`,
+    textContent: email.from
+  });
+
+  headerRow.appendChild(fromText);
+
+  if (email.unread) {
+    const badge = createElement('span', {
+      className: 'polaris-badge polaris-badge--tone-info',
+      textContent: 'New'
+    });
+    headerRow.appendChild(badge);
+  }
+
+  const subjectContainer = createElement('div', {
+    style: 'max-width: 500px;'
+  });
+
+  const subjectText = createElement('p', {
+    className: 'polaris-text polaris-text--body-sm polaris-text--subdued',
+    style: 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+    textContent: email.subject
+  });
+
+  subjectContainer.appendChild(subjectText);
+  contentContainer.appendChild(headerRow);
+  contentContainer.appendChild(subjectContainer);
+
+  emailRow.appendChild(checkbox);
+  emailRow.appendChild(contentContainer);
+  card.appendChild(emailRow);
+});
+
+container.appendChild(card);
+</script>`,
+
+    extjs: `// ExtJS Email Subjects with Truncation using @cin7/extjs-adapters
+import { PolarisCard } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.grid.Panel', {
+  title: 'Email Inbox',
+  store: {
+    fields: ['id', 'from', 'subject', 'unread'],
+    data: [
+      { id: '1', from: 'Sarah Johnson', subject: 'Quarterly Performance Review and Team Goals Discussion for Q4 2024', unread: true },
+      { id: '2', from: 'Marketing Team', subject: 'New Campaign Launch Strategy - Please Review by End of Week', unread: true },
+      { id: '3', from: 'John Smith', subject: 'Re: Budget Approval for the New Project Initiative', unread: false }
+    ]
+  },
+  selModel: {
+    type: 'checkboxmodel'
+  },
+  columns: [
+    {
+      text: 'From',
+      dataIndex: 'from',
+      width: 200,
+      renderer: function(value, metaData, record) {
+        const fontWeight = record.get('unread') ? 'font-weight: 600;' : '';
+        return '<span style="' + fontWeight + '">' + value + '</span>';
+      }
+    },
+    {
+      text: 'Subject',
+      dataIndex: 'subject',
+      flex: 1,
+      renderer: function(value, metaData, record) {
+        const badge = record.get('unread') ? ' <span class="polaris-badge polaris-badge--tone-info">New</span>' : '';
+        return '<div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="' + value + '">' +
+          value + badge +
+          '</div>';
+      }
+    }
+  ],
+  width: 700,
+  height: 300,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Card, Text, BlockStack, InlineStack, Badge, Checkbox } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface Email {
+  id: string;
+  from: string;
+  subject: string;
+  unread: boolean;
+}
+
+interface EmailSubjectsProps {
+  emails?: Email[];
+  onSelect?: (selectedIds: string[]) => void;
+}
+
+function EmailSubjects({
+  emails = [
+    { id: '1', from: 'Sarah Johnson', subject: 'Quarterly Performance Review and Team Goals Discussion for Q4 2024', unread: true },
+    { id: '2', from: 'Marketing Team', subject: 'New Campaign Launch Strategy - Please Review by End of Week', unread: true },
+    { id: '3', from: 'John Smith', subject: 'Re: Budget Approval for the New Project Initiative', unread: false }
+  ],
+  onSelect
+}: EmailSubjectsProps): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleCheckboxChange = (emailId: string) => {
+    const newSelected = selected.includes(emailId)
+      ? selected.filter(id => id !== emailId)
+      : [...selected, emailId];
+
+    setSelected(newSelected);
+    onSelect?.(newSelected);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="0">
+        {emails.map(email => (
+          <div
+            key={email.id}
+            style={{
+              padding: '12px 16px',
+              borderBottom: '1px solid #e1e3e5',
+              cursor: 'pointer'
+            }}
+          >
+            <InlineStack gap="300" blockAlign="start">
+              <Checkbox
+                label=""
+                checked={selected.includes(email.id)}
+                onChange={() => handleCheckboxChange(email.id)}
+              />
+              <BlockStack gap="100">
+                <InlineStack gap="200" blockAlign="center">
+                  <Text variant="bodyMd" fontWeight={email.unread ? 'semibold' : 'regular'}>
+                    {email.from}
+                  </Text>
+                  {email.unread && <Badge tone="info">New</Badge>}
+                </InlineStack>
+                <div style={{ maxWidth: '500px' }}>
+                  <Text
+                    variant="bodySm"
+                    tone="subdued"
+                    truncate
+                  >
+                    {email.subject}
+                  </Text>
+                </div>
+              </BlockStack>
+            </InlineStack>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default EmailSubjects;`,
+  }
+};
+
 // AlphaStack Component Examples
 export const alphastackExamples: Record<string, CodeVariant> = {
   default: {
@@ -42648,6 +45406,1880 @@ Highcharts.chart('container', options);`
   }
 };
 
+// AreaChart Component Examples
+export const areaChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+
+function MonthlyRevenue() {
+  return (
+    <AreaChart
+      title="Monthly Revenue Trend"
+      subtitle="2025"
+      series={[
+        {
+          name: 'Revenue',
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+        },
+      ]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' },
+      }}
+      height={400}
+    />
+  );
+}
+
+export default MonthlyRevenue;`,
+    vanilla: `// Vanilla JS with Highcharts
+Highcharts.chart('container', {
+  chart: {
+    type: 'area',
+    height: 400
+  },
+  title: {
+    text: 'Monthly Revenue Trend'
+  },
+  subtitle: {
+    text: '2025'
+  },
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  },
+  yAxis: {
+    title: {
+      text: 'Revenue ($K)'
+    }
+  },
+  series: [{
+    name: 'Revenue',
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+  }]
+});`,
+    extjs: `// ExtJS Area Chart
+Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 600,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['month', 'revenue'],
+    data: [
+      { month: 'Jan', revenue: 29.9 },
+      { month: 'Feb', revenue: 71.5 },
+      { month: 'Mar', revenue: 106.4 },
+      { month: 'Apr', revenue: 129.2 },
+      { month: 'May', revenue: 144.0 },
+      { month: 'Jun', revenue: 176.0 },
+      { month: 'Jul', revenue: 135.6 },
+      { month: 'Aug', revenue: 148.5 },
+      { month: 'Sep', revenue: 216.4 },
+      { month: 'Oct', revenue: 194.1 },
+      { month: 'Nov', revenue: 95.6 },
+      { month: 'Dec', revenue: 54.4 }
+    ]
+  }),
+  axes: [{
+    type: 'numeric',
+    position: 'left',
+    title: {
+      text: 'Revenue ($K)'
+    }
+  }, {
+    type: 'category',
+    position: 'bottom',
+    fields: ['month']
+  }],
+  series: [{
+    type: 'area',
+    xField: 'month',
+    yField: 'revenue',
+    style: {
+      opacity: 0.7
+    }
+  }]
+});`,
+    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+import React from 'react';
+
+interface RevenueData {
+  month: string;
+  value: number;
+}
+
+interface MonthlyRevenueProps {
+  data?: number[];
+  year?: string;
+  height?: number;
+}
+
+const MonthlyRevenue: React.FC<MonthlyRevenueProps> = ({
+  data = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+  year = '2025',
+  height = 400
+}) => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  return (
+    <AreaChart
+      title="Monthly Revenue Trend"
+      subtitle={year}
+      series={[
+        {
+          name: 'Revenue',
+          data: data,
+        },
+      ]}
+      xAxis={{
+        categories: months,
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' },
+      }}
+      height={height}
+    />
+  );
+};
+
+export default MonthlyRevenue;`,
+  },
+  stacked: {
+    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+
+function StackedSales() {
+  return (
+    <AreaChart
+      title="Sales by Product Line"
+      subtitle="Cumulative Revenue"
+      stacking="normal"
+      series={[
+        {
+          name: 'Electronics',
+          data: [50, 60, 70, 80, 90, 100, 110, 120],
+        },
+        {
+          name: 'Clothing',
+          data: [40, 50, 55, 65, 70, 75, 85, 90],
+        },
+        {
+          name: 'Food & Beverage',
+          data: [30, 35, 40, 45, 50, 55, 60, 65],
+        },
+        {
+          name: 'Home & Garden',
+          data: [20, 25, 30, 35, 40, 45, 50, 55],
+        },
+      ]}
+      xAxis={{
+        categories: ['Q1 Week 1', 'Q1 Week 2', 'Q2 Week 1', 'Q2 Week 2', 'Q3 Week 1', 'Q3 Week 2', 'Q4 Week 1', 'Q4 Week 2'],
+      }}
+      yAxis={{
+        title: { text: 'Total Revenue ($K)' },
+      }}
+      height={400}
+    />
+  );
+}
+
+export default StackedSales;`,
+    vanilla: `// Vanilla JS Stacked Area Chart
+Highcharts.chart('container', {
+  chart: {
+    type: 'area',
+    height: 400
+  },
+  title: {
+    text: 'Sales by Product Line'
+  },
+  subtitle: {
+    text: 'Cumulative Revenue'
+  },
+  xAxis: {
+    categories: ['Q1 Week 1', 'Q1 Week 2', 'Q2 Week 1', 'Q2 Week 2', 'Q3 Week 1', 'Q3 Week 2', 'Q4 Week 1', 'Q4 Week 2']
+  },
+  yAxis: {
+    title: {
+      text: 'Total Revenue ($K)'
+    }
+  },
+  plotOptions: {
+    area: {
+      stacking: 'normal'
+    }
+  },
+  series: [{
+    name: 'Electronics',
+    data: [50, 60, 70, 80, 90, 100, 110, 120]
+  }, {
+    name: 'Clothing',
+    data: [40, 50, 55, 65, 70, 75, 85, 90]
+  }, {
+    name: 'Food & Beverage',
+    data: [30, 35, 40, 45, 50, 55, 60, 65]
+  }, {
+    name: 'Home & Garden',
+    data: [20, 25, 30, 35, 40, 45, 50, 55]
+  }]
+});`,
+    extjs: `// ExtJS Stacked Area Chart
+Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 600,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['quarter', 'electronics', 'clothing', 'food', 'home'],
+    data: [
+      { quarter: 'Q1 Week 1', electronics: 50, clothing: 40, food: 30, home: 20 },
+      { quarter: 'Q1 Week 2', electronics: 60, clothing: 50, food: 35, home: 25 },
+      { quarter: 'Q2 Week 1', electronics: 70, clothing: 55, food: 40, home: 30 },
+      { quarter: 'Q2 Week 2', electronics: 80, clothing: 65, food: 45, home: 35 },
+      { quarter: 'Q3 Week 1', electronics: 90, clothing: 70, food: 50, home: 40 },
+      { quarter: 'Q3 Week 2', electronics: 100, clothing: 75, food: 55, home: 45 },
+      { quarter: 'Q4 Week 1', electronics: 110, clothing: 85, food: 60, home: 50 },
+      { quarter: 'Q4 Week 2', electronics: 120, clothing: 90, food: 65, home: 55 }
+    ]
+  }),
+  axes: [{
+    type: 'numeric',
+    position: 'left',
+    title: {
+      text: 'Total Revenue ($K)'
+    }
+  }, {
+    type: 'category',
+    position: 'bottom',
+    fields: ['quarter']
+  }],
+  series: [{
+    type: 'area',
+    xField: 'quarter',
+    yField: 'electronics',
+    title: 'Electronics',
+    stacked: true
+  }, {
+    type: 'area',
+    xField: 'quarter',
+    yField: 'clothing',
+    title: 'Clothing',
+    stacked: true
+  }, {
+    type: 'area',
+    xField: 'quarter',
+    yField: 'food',
+    title: 'Food & Beverage',
+    stacked: true
+  }, {
+    type: 'area',
+    xField: 'quarter',
+    yField: 'home',
+    title: 'Home & Garden',
+    stacked: true
+  }]
+});`,
+    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+import React from 'react';
+
+interface ProductLineSeries {
+  name: string;
+  data: number[];
+}
+
+interface StackedSalesProps {
+  series?: ProductLineSeries[];
+  categories?: string[];
+  height?: number;
+}
+
+const StackedSales: React.FC<StackedSalesProps> = ({
+  series = [
+    { name: 'Electronics', data: [50, 60, 70, 80, 90, 100, 110, 120] },
+    { name: 'Clothing', data: [40, 50, 55, 65, 70, 75, 85, 90] },
+    { name: 'Food & Beverage', data: [30, 35, 40, 45, 50, 55, 60, 65] },
+    { name: 'Home & Garden', data: [20, 25, 30, 35, 40, 45, 50, 55] },
+  ],
+  categories = ['Q1 Week 1', 'Q1 Week 2', 'Q2 Week 1', 'Q2 Week 2', 'Q3 Week 1', 'Q3 Week 2', 'Q4 Week 1', 'Q4 Week 2'],
+  height = 400
+}) => {
+  return (
+    <AreaChart
+      title="Sales by Product Line"
+      subtitle="Cumulative Revenue"
+      stacking="normal"
+      series={series}
+      xAxis={{
+        categories: categories,
+      }}
+      yAxis={{
+        title: { text: 'Total Revenue ($K)' },
+      }}
+      height={height}
+    />
+  );
+};
+
+export default StackedSales;`,
+  },
+  percentage: {
+    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+
+function MarketShareChart() {
+  return (
+    <AreaChart
+      title="Market Share Distribution"
+      subtitle="Year over Year"
+      stacking="percent"
+      series={[
+        {
+          name: 'Product A',
+          data: [50, 55, 58, 60, 62, 65],
+        },
+        {
+          name: 'Product B',
+          data: [30, 28, 27, 25, 24, 22],
+        },
+        {
+          name: 'Product C',
+          data: [20, 17, 15, 15, 14, 13],
+        },
+      ]}
+      xAxis={{
+        categories: ['2020', '2021', '2022', '2023', '2024', '2025'],
+      }}
+      yAxis={{
+        title: { text: 'Market Share (%)' },
+      }}
+      tooltip={{
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y}K)<br/>',
+        shared: true,
+      }}
+      height={400}
+    />
+  );
+}
+
+export default MarketShareChart;`,
+    vanilla: `// Vanilla JS Percentage Area Chart
+Highcharts.chart('container', {
+  chart: {
+    type: 'area',
+    height: 400
+  },
+  title: {
+    text: 'Market Share Distribution'
+  },
+  subtitle: {
+    text: 'Year over Year'
+  },
+  xAxis: {
+    categories: ['2020', '2021', '2022', '2023', '2024', '2025']
+  },
+  yAxis: {
+    title: {
+      text: 'Market Share (%)'
+    }
+  },
+  tooltip: {
+    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y}K)<br/>',
+    shared: true
+  },
+  plotOptions: {
+    area: {
+      stacking: 'percent'
+    }
+  },
+  series: [{
+    name: 'Product A',
+    data: [50, 55, 58, 60, 62, 65]
+  }, {
+    name: 'Product B',
+    data: [30, 28, 27, 25, 24, 22]
+  }, {
+    name: 'Product C',
+    data: [20, 17, 15, 15, 14, 13]
+  }]
+});`,
+    extjs: `// ExtJS Percentage Area Chart
+Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 600,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['year', 'productA', 'productB', 'productC'],
+    data: [
+      { year: '2020', productA: 50, productB: 30, productC: 20 },
+      { year: '2021', productA: 55, productB: 28, productC: 17 },
+      { year: '2022', productA: 58, productB: 27, productC: 15 },
+      { year: '2023', productA: 60, productB: 25, productC: 15 },
+      { year: '2024', productA: 62, productB: 24, productC: 14 },
+      { year: '2025', productA: 65, productB: 22, productC: 13 }
+    ]
+  }),
+  axes: [{
+    type: 'numeric',
+    position: 'left',
+    title: {
+      text: 'Market Share (%)'
+    },
+    minimum: 0,
+    maximum: 100
+  }, {
+    type: 'category',
+    position: 'bottom',
+    fields: ['year']
+  }],
+  series: [{
+    type: 'area',
+    xField: 'year',
+    yField: 'productA',
+    title: 'Product A',
+    stacked: true,
+    fullStack: true
+  }, {
+    type: 'area',
+    xField: 'year',
+    yField: 'productB',
+    title: 'Product B',
+    stacked: true,
+    fullStack: true
+  }, {
+    type: 'area',
+    xField: 'year',
+    yField: 'productC',
+    title: 'Product C',
+    stacked: true,
+    fullStack: true
+  }]
+});`,
+    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+import React from 'react';
+
+interface MarketShareData {
+  name: string;
+  data: number[];
+}
+
+interface MarketShareChartProps {
+  products?: MarketShareData[];
+  years?: string[];
+  height?: number;
+}
+
+const MarketShareChart: React.FC<MarketShareChartProps> = ({
+  products = [
+    { name: 'Product A', data: [50, 55, 58, 60, 62, 65] },
+    { name: 'Product B', data: [30, 28, 27, 25, 24, 22] },
+    { name: 'Product C', data: [20, 17, 15, 15, 14, 13] },
+  ],
+  years = ['2020', '2021', '2022', '2023', '2024', '2025'],
+  height = 400
+}) => {
+  return (
+    <AreaChart
+      title="Market Share Distribution"
+      subtitle="Year over Year"
+      stacking="percent"
+      series={products}
+      xAxis={{
+        categories: years,
+      }}
+      yAxis={{
+        title: { text: 'Market Share (%)' },
+      }}
+      tooltip={{
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y}K)<br/>',
+        shared: true,
+      }}
+      height={height}
+    />
+  );
+};
+
+export default MarketShareChart;`,
+  },
+  splinearea: {
+    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+
+function TrafficAnalysis() {
+  return (
+    <AreaChart
+      title="Website Traffic Analysis"
+      subtitle="Smooth Area Chart"
+      smooth={true}
+      markers={true}
+      fillOpacity={0.5}
+      series={[
+        {
+          name: 'Organic Traffic',
+          data: [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000],
+        },
+        {
+          name: 'Paid Traffic',
+          data: [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650],
+        },
+      ]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      }}
+      yAxis={{
+        title: { text: 'Visitors' },
+      }}
+      tooltip={{
+        shared: true,
+        valueSuffix: ' visitors',
+      }}
+      height={400}
+    />
+  );
+}
+
+export default TrafficAnalysis;`,
+    vanilla: `// Vanilla JS Spline Area Chart
+Highcharts.chart('container', {
+  chart: {
+    type: 'areaspline',
+    height: 400
+  },
+  title: {
+    text: 'Website Traffic Analysis'
+  },
+  subtitle: {
+    text: 'Smooth Area Chart'
+  },
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  },
+  yAxis: {
+    title: {
+      text: 'Visitors'
+    }
+  },
+  tooltip: {
+    shared: true,
+    valueSuffix: ' visitors'
+  },
+  plotOptions: {
+    areaspline: {
+      fillOpacity: 0.5,
+      marker: {
+        enabled: true,
+        radius: 4
+      }
+    }
+  },
+  series: [{
+    name: 'Organic Traffic',
+    data: [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000]
+  }, {
+    name: 'Paid Traffic',
+    data: [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650]
+  }]
+});`,
+    extjs: `// ExtJS Spline Area Chart
+Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 600,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['month', 'organic', 'paid'],
+    data: [
+      { month: 'Jan', organic: 1200, paid: 800 },
+      { month: 'Feb', organic: 1350, paid: 850 },
+      { month: 'Mar', organic: 1500, paid: 920 },
+      { month: 'Apr', organic: 1680, paid: 1000 },
+      { month: 'May', organic: 1850, paid: 1100 },
+      { month: 'Jun', organic: 2100, paid: 1200 },
+      { month: 'Jul', organic: 2250, paid: 1280 },
+      { month: 'Aug', organic: 2400, paid: 1350 },
+      { month: 'Sep', organic: 2550, paid: 1420 },
+      { month: 'Oct', organic: 2700, paid: 1500 },
+      { month: 'Nov', organic: 2850, paid: 1580 },
+      { month: 'Dec', organic: 3000, paid: 1650 }
+    ]
+  }),
+  axes: [{
+    type: 'numeric',
+    position: 'left',
+    title: {
+      text: 'Visitors'
+    }
+  }, {
+    type: 'category',
+    position: 'bottom',
+    fields: ['month']
+  }],
+  series: [{
+    type: 'area',
+    xField: 'month',
+    yField: 'organic',
+    title: 'Organic Traffic',
+    smooth: true,
+    marker: {
+      radius: 4
+    },
+    style: {
+      opacity: 0.5
+    }
+  }, {
+    type: 'area',
+    xField: 'month',
+    yField: 'paid',
+    title: 'Paid Traffic',
+    smooth: true,
+    marker: {
+      radius: 4
+    },
+    style: {
+      opacity: 0.5
+    }
+  }]
+});`,
+    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+import React from 'react';
+
+interface TrafficSeries {
+  name: string;
+  data: number[];
+}
+
+interface TrafficAnalysisProps {
+  series?: TrafficSeries[];
+  categories?: string[];
+  fillOpacity?: number;
+  showMarkers?: boolean;
+  height?: number;
+}
+
+const TrafficAnalysis: React.FC<TrafficAnalysisProps> = ({
+  series = [
+    { name: 'Organic Traffic', data: [1200, 1350, 1500, 1680, 1850, 2100, 2250, 2400, 2550, 2700, 2850, 3000] },
+    { name: 'Paid Traffic', data: [800, 850, 920, 1000, 1100, 1200, 1280, 1350, 1420, 1500, 1580, 1650] },
+  ],
+  categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  fillOpacity = 0.5,
+  showMarkers = true,
+  height = 400
+}) => {
+  return (
+    <AreaChart
+      title="Website Traffic Analysis"
+      subtitle="Smooth Area Chart"
+      smooth={true}
+      markers={showMarkers}
+      fillOpacity={fillOpacity}
+      series={series}
+      xAxis={{
+        categories: categories,
+      }}
+      yAxis={{
+        title: { text: 'Visitors' },
+      }}
+      tooltip={{
+        shared: true,
+        valueSuffix: ' visitors',
+      }}
+      height={height}
+    />
+  );
+};
+
+export default TrafficAnalysis;`,
+  },
+};
+
+// ScatterChart Component Examples
+export const scatterChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function ScatterChart() {
+  const options = {
+    chart: { type: 'scatter' },
+    title: { text: 'Height vs Weight' },
+    xAxis: { title: { text: 'Height (cm)' } },
+    yAxis: { title: { text: 'Weight (kg)' } },
+    series: [{
+      name: 'Observations',
+      data: [[160, 65], [170, 70], [180, 85], [165, 68], [175, 78]]
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: {
+    data: [
+      { height: 160, weight: 65 },
+      { height: 170, weight: 70 },
+      { height: 180, weight: 85 }
+    ]
+  },
+  axes: [
+    { type: 'numeric', position: 'bottom', title: 'Height (cm)' },
+    { type: 'numeric', position: 'left', title: 'Weight (kg)' }
+  ],
+  series: [{
+    type: 'scatter',
+    xField: 'height',
+    yField: 'weight'
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'scatter' },
+  title: { text: 'Height vs Weight' },
+  xAxis: { title: { text: 'Height (cm)' } },
+  yAxis: { title: { text: 'Weight (kg)' } },
+  series: [{
+    name: 'Observations',
+    data: [[160, 65], [170, 70], [180, 85]]
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+
+interface DataPoint {
+  height: number;
+  weight: number;
+}
+
+const data: DataPoint[] = [
+  { height: 160, weight: 65 },
+  { height: 170, weight: 70 },
+  { height: 180, weight: 85 }
+];
+
+const options: Highcharts.Options = {
+  chart: { type: 'scatter' },
+  title: { text: 'Height vs Weight' },
+  xAxis: { title: { text: 'Height (cm)' } },
+  yAxis: { title: { text: 'Weight (kg)' } },
+  series: [{
+    type: 'scatter',
+    name: 'Observations',
+    data: data.map(d => [d.height, d.weight])
+  }]
+};
+
+Highcharts.chart('container', options);`
+  },
+  bubble: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+function BubbleChart() {
+  const options = {
+    chart: { type: 'bubble' },
+    title: { text: 'Product Performance' },
+    xAxis: { title: { text: 'Sales Volume' } },
+    yAxis: { title: { text: 'Profit Margin (%)' } },
+    series: [{
+      name: 'Products',
+      data: [
+        { x: 1000, y: 25, z: 50 },
+        { x: 1500, y: 30, z: 75 },
+        { x: 800, y: 20, z: 40 }
+      ]
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: {
+    data: [
+      { sales: 1000, margin: 25, size: 50 },
+      { sales: 1500, margin: 30, size: 75 },
+      { sales: 800, margin: 20, size: 40 }
+    ]
+  },
+  axes: [
+    { type: 'numeric', position: 'bottom', title: 'Sales Volume' },
+    { type: 'numeric', position: 'left', title: 'Profit Margin (%)' }
+  ],
+  series: [{
+    type: 'scatter',
+    xField: 'sales',
+    yField: 'margin',
+    marker: {
+      radius: function(sprite, config, data, index) {
+        return data.size / 2;
+      }
+    }
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'bubble' },
+  title: { text: 'Product Performance' },
+  xAxis: { title: { text: 'Sales Volume' } },
+  yAxis: { title: { text: 'Profit Margin (%)' } },
+  series: [{
+    name: 'Products',
+    data: [
+      { x: 1000, y: 25, z: 50 },
+      { x: 1500, y: 30, z: 75 },
+      { x: 800, y: 20, z: 40 }
+    ]
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+interface BubbleDataPoint {
+  x: number;
+  y: number;
+  z: number;
+  name?: string;
+}
+
+const bubbleData: BubbleDataPoint[] = [
+  { x: 1000, y: 25, z: 50, name: 'Product A' },
+  { x: 1500, y: 30, z: 75, name: 'Product B' },
+  { x: 800, y: 20, z: 40, name: 'Product C' }
+];
+
+const options: Highcharts.Options = {
+  chart: { type: 'bubble' },
+  title: { text: 'Product Performance' },
+  xAxis: { title: { text: 'Sales Volume' } },
+  yAxis: { title: { text: 'Profit Margin (%)' } },
+  series: [{
+    type: 'bubble',
+    name: 'Products',
+    data: bubbleData
+  }]
+};
+
+Highcharts.chart('container', options);`
+  },
+  regression: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function RegressionChart() {
+  const scatterData = [[5, 2], [10, 8], [15, 16], [20, 23], [25, 32]];
+
+  // Calculate linear regression
+  const regression = calculateRegression(scatterData);
+  const regressionLine = scatterData.map(point => [point[0], regression.slope * point[0] + regression.intercept]);
+
+  const options = {
+    chart: { type: 'scatter' },
+    title: { text: 'Sales Trend with Regression' },
+    xAxis: { title: { text: 'Month' } },
+    yAxis: { title: { text: 'Sales ($1000)' } },
+    series: [
+      {
+        type: 'scatter',
+        name: 'Actual Sales',
+        data: scatterData,
+        marker: { radius: 4 }
+      },
+      {
+        type: 'line',
+        name: 'Trend Line',
+        data: regressionLine,
+        marker: { enabled: false },
+        enableMouseTracking: false
+      }
+    ]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}
+
+function calculateRegression(data) {
+  const n = data.length;
+  const sumX = data.reduce((sum, p) => sum + p[0], 0);
+  const sumY = data.reduce((sum, p) => sum + p[1], 0);
+  const sumXY = data.reduce((sum, p) => sum + p[0] * p[1], 0);
+  const sumX2 = data.reduce((sum, p) => sum + p[0] * p[0], 0);
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  return { slope, intercept };
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: {
+    data: [
+      { month: 5, sales: 2 },
+      { month: 10, sales: 8 },
+      { month: 15, sales: 16 },
+      { month: 20, sales: 23 },
+      { month: 25, sales: 32 }
+    ]
+  },
+  axes: [
+    { type: 'numeric', position: 'bottom', title: 'Month' },
+    { type: 'numeric', position: 'left', title: 'Sales ($1000)' }
+  ],
+  series: [
+    {
+      type: 'scatter',
+      xField: 'month',
+      yField: 'sales',
+      marker: { type: 'circle', radius: 4 }
+    },
+    {
+      type: 'line',
+      xField: 'month',
+      yField: 'sales',
+      smooth: true,
+      style: { lineWidth: 2, stroke: '#ff0000' }
+    }
+  ]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'scatter' },
+  title: { text: 'Sales Trend with Regression' },
+  xAxis: { title: { text: 'Month' } },
+  yAxis: { title: { text: 'Sales ($1000)' } },
+  series: [
+    {
+      type: 'scatter',
+      name: 'Actual Sales',
+      data: [[5, 2], [10, 8], [15, 16], [20, 23], [25, 32]],
+      marker: { radius: 4 }
+    },
+    {
+      type: 'line',
+      name: 'Trend Line',
+      data: [[5, 3.2], [10, 9.4], [15, 15.6], [20, 21.8], [25, 28]],
+      marker: { enabled: false },
+      enableMouseTracking: false
+    }
+  ]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+
+interface Point {
+  x: number;
+  y: number;
+}
+
+interface RegressionResult {
+  slope: number;
+  intercept: number;
+  rSquared: number;
+}
+
+function calculateLinearRegression(points: Point[]): RegressionResult {
+  const n = points.length;
+  const sumX = points.reduce((sum, p) => sum + p.x, 0);
+  const sumY = points.reduce((sum, p) => sum + p.y, 0);
+  const sumXY = points.reduce((sum, p) => sum + p.x * p.y, 0);
+  const sumX2 = points.reduce((sum, p) => sum + p.x * p.x, 0);
+  const sumY2 = points.reduce((sum, p) => sum + p.y * p.y, 0);
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  const yMean = sumY / n;
+  const ssTotal = points.reduce((sum, p) => sum + Math.pow(p.y - yMean, 2), 0);
+  const ssResidual = points.reduce((sum, p) => sum + Math.pow(p.y - (slope * p.x + intercept), 2), 0);
+  const rSquared = 1 - (ssResidual / ssTotal);
+
+  return { slope, intercept, rSquared };
+}
+
+const scatterData: Point[] = [
+  { x: 5, y: 2 },
+  { x: 10, y: 8 },
+  { x: 15, y: 16 },
+  { x: 20, y: 23 },
+  { x: 25, y: 32 }
+];
+
+const regression = calculateLinearRegression(scatterData);
+const regressionLine = scatterData.map(p => ({
+  x: p.x,
+  y: regression.slope * p.x + regression.intercept
+}));
+
+const options: Highcharts.Options = {
+  chart: { type: 'scatter' },
+  title: { text: \`Sales Trend (R² = \${regression.rSquared.toFixed(3)})\` },
+  xAxis: { title: { text: 'Month' } },
+  yAxis: { title: { text: 'Sales ($1000)' } },
+  series: [
+    {
+      type: 'scatter',
+      name: 'Actual Sales',
+      data: scatterData.map(p => [p.x, p.y]),
+      marker: { radius: 4 }
+    },
+    {
+      type: 'line',
+      name: 'Trend Line',
+      data: regressionLine.map(p => [p.x, p.y]),
+      marker: { enabled: false },
+      enableMouseTracking: false
+    }
+  ]
+};
+
+Highcharts.chart('container', options);`
+  },
+  multiple: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+function MultipleSeriesScatter() {
+  const options = {
+    chart: { type: 'scatter' },
+    title: { text: 'Customer Segments' },
+    xAxis: { title: { text: 'Purchase Frequency' } },
+    yAxis: { title: { text: 'Average Order Value ($)' } },
+    series: [
+      {
+        name: 'Premium',
+        color: '#7CB5EC',
+        data: [[12, 250], [15, 300], [18, 275], [20, 320]]
+      },
+      {
+        name: 'Standard',
+        color: '#90ED7D',
+        data: [[8, 150], [10, 180], [12, 160], [14, 190]]
+      },
+      {
+        name: 'Budget',
+        color: '#F7A35C',
+        data: [[4, 80], [6, 100], [5, 90], [7, 110]]
+      }
+    ]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: {
+    data: [
+      { segment: 'Premium', frequency: 12, value: 250 },
+      { segment: 'Premium', frequency: 15, value: 300 },
+      { segment: 'Standard', frequency: 8, value: 150 },
+      { segment: 'Standard', frequency: 10, value: 180 },
+      { segment: 'Budget', frequency: 4, value: 80 },
+      { segment: 'Budget', frequency: 6, value: 100 }
+    ]
+  },
+  axes: [
+    { type: 'numeric', position: 'bottom', title: 'Purchase Frequency' },
+    { type: 'numeric', position: 'left', title: 'Average Order Value ($)' }
+  ],
+  series: [
+    {
+      type: 'scatter',
+      xField: 'frequency',
+      yField: 'value',
+      title: 'Premium',
+      store: { filters: [{ property: 'segment', value: 'Premium' }] },
+      marker: { fill: '#7CB5EC' }
+    },
+    {
+      type: 'scatter',
+      xField: 'frequency',
+      yField: 'value',
+      title: 'Standard',
+      store: { filters: [{ property: 'segment', value: 'Standard' }] },
+      marker: { fill: '#90ED7D' }
+    },
+    {
+      type: 'scatter',
+      xField: 'frequency',
+      yField: 'value',
+      title: 'Budget',
+      store: { filters: [{ property: 'segment', value: 'Budget' }] },
+      marker: { fill: '#F7A35C' }
+    }
+  ]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'scatter' },
+  title: { text: 'Customer Segments' },
+  xAxis: { title: { text: 'Purchase Frequency' } },
+  yAxis: { title: { text: 'Average Order Value ($)' } },
+  series: [
+    {
+      name: 'Premium',
+      color: '#7CB5EC',
+      data: [[12, 250], [15, 300], [18, 275], [20, 320]]
+    },
+    {
+      name: 'Standard',
+      color: '#90ED7D',
+      data: [[8, 150], [10, 180], [12, 160], [14, 190]]
+    },
+    {
+      name: 'Budget',
+      color: '#F7A35C',
+      data: [[4, 80], [6, 100], [5, 90], [7, 110]]
+    }
+  ]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+
+type CustomerSegment = 'Premium' | 'Standard' | 'Budget';
+
+interface CustomerData {
+  segment: CustomerSegment;
+  frequency: number;
+  orderValue: number;
+}
+
+interface SeriesData {
+  name: CustomerSegment;
+  color: string;
+  data: [number, number][];
+}
+
+const customerData: CustomerData[] = [
+  { segment: 'Premium', frequency: 12, orderValue: 250 },
+  { segment: 'Premium', frequency: 15, orderValue: 300 },
+  { segment: 'Premium', frequency: 18, orderValue: 275 },
+  { segment: 'Premium', frequency: 20, orderValue: 320 },
+  { segment: 'Standard', frequency: 8, orderValue: 150 },
+  { segment: 'Standard', frequency: 10, orderValue: 180 },
+  { segment: 'Standard', frequency: 12, orderValue: 160 },
+  { segment: 'Standard', frequency: 14, orderValue: 190 },
+  { segment: 'Budget', frequency: 4, orderValue: 80 },
+  { segment: 'Budget', frequency: 6, orderValue: 100 },
+  { segment: 'Budget', frequency: 5, orderValue: 90 },
+  { segment: 'Budget', frequency: 7, orderValue: 110 }
+];
+
+const segmentColors: Record<CustomerSegment, string> = {
+  Premium: '#7CB5EC',
+  Standard: '#90ED7D',
+  Budget: '#F7A35C'
+};
+
+const series: SeriesData[] = ['Premium', 'Standard', 'Budget'].map(segment => ({
+  name: segment as CustomerSegment,
+  color: segmentColors[segment as CustomerSegment],
+  data: customerData
+    .filter(d => d.segment === segment)
+    .map(d => [d.frequency, d.orderValue] as [number, number])
+}));
+
+const options: Highcharts.Options = {
+  chart: { type: 'scatter' },
+  title: { text: 'Customer Segments' },
+  xAxis: { title: { text: 'Purchase Frequency' } },
+  yAxis: { title: { text: 'Average Order Value ($)' } },
+  series: series.map(s => ({
+    type: 'scatter',
+    name: s.name,
+    color: s.color,
+    data: s.data
+  }))
+};
+
+Highcharts.chart('container', options);`
+  }
+};
+
+// WaterfallChart Component Examples
+export const waterfallChartExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsReact from 'highcharts-react-official';
+
+// Initialize waterfall module
+HighchartsMore(Highcharts);
+
+function WaterfallChart() {
+  const options = {
+    chart: { type: 'waterfall' },
+    title: { text: 'Financial Analysis' },
+    xAxis: {
+      type: 'category',
+      categories: ['Start', 'Revenue', 'Costs', 'Net']
+    },
+    yAxis: { title: { text: 'Amount ($)' } },
+    series: [{
+      type: 'waterfall',
+      name: 'Cash Flow',
+      data: [
+        { y: 120000, color: '#008FFB' },
+        { y: 50000, color: '#00E396' },
+        { y: -30000, color: '#FF4560' },
+        { y: 140000, isSum: true, color: '#775DD0' }
+      ]
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['category', 'value', 'isSum'],
+    data: [
+      { category: 'Start', value: 120000, isSum: false },
+      { category: 'Revenue', value: 50000, isSum: false },
+      { category: 'Costs', value: -30000, isSum: false },
+      { category: 'Net', value: 140000, isSum: true }
+    ]
+  }),
+  axes: [
+    { type: 'category', position: 'bottom', fields: ['category'] },
+    { type: 'numeric', position: 'left', fields: ['value'], title: { text: 'Amount ($)' } }
+  ],
+  series: [{
+    type: 'bar',
+    xField: 'category',
+    yField: 'value',
+    renderer: function(sprite, config, rendererData, index) {
+      var store = rendererData.store;
+      var record = store.getAt(index);
+      var isSum = record.get('isSum');
+      var value = record.get('value');
+
+      return {
+        fillStyle: isSum ? '#775DD0' : (value >= 0 ? '#00E396' : '#FF4560')
+      };
+    }
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'waterfall' },
+  title: { text: 'Financial Analysis' },
+  xAxis: {
+    type: 'category',
+    categories: ['Start', 'Revenue', 'Costs', 'Net']
+  },
+  yAxis: { title: { text: 'Amount ($)' } },
+  series: [{
+    type: 'waterfall',
+    name: 'Cash Flow',
+    data: [
+      { y: 120000, color: '#008FFB' },
+      { y: 50000, color: '#00E396' },
+      { y: -30000, color: '#FF4560' },
+      { y: 140000, isSum: true, color: '#775DD0' }
+    ]
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+interface WaterfallDataPoint {
+  y: number;
+  color?: string;
+  isSum?: boolean;
+  isIntermediateSum?: boolean;
+}
+
+const options: Highcharts.Options = {
+  chart: { type: 'waterfall' },
+  title: { text: 'Financial Analysis' },
+  xAxis: {
+    type: 'category',
+    categories: ['Start', 'Revenue', 'Costs', 'Net']
+  },
+  yAxis: { title: { text: 'Amount ($)' } },
+  series: [{
+    type: 'waterfall',
+    name: 'Cash Flow',
+    data: [
+      { y: 120000, color: '#008FFB' } as WaterfallDataPoint,
+      { y: 50000, color: '#00E396' } as WaterfallDataPoint,
+      { y: -30000, color: '#FF4560' } as WaterfallDataPoint,
+      { y: 140000, isSum: true, color: '#775DD0' } as WaterfallDataPoint
+    ]
+  }]
+};
+
+Highcharts.chart('container', options);`
+  },
+  profitloss: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsReact from 'highcharts-react-official';
+
+HighchartsMore(Highcharts);
+
+function ProfitLossWaterfall() {
+  const options = {
+    chart: { type: 'waterfall' },
+    title: { text: 'Quarterly Profit & Loss Statement' },
+    xAxis: {
+      type: 'category'
+    },
+    yAxis: {
+      title: { text: 'USD ($)' }
+    },
+    legend: { enabled: false },
+    tooltip: {
+      pointFormat: '<b>\${point.y:,.0f}</b> USD'
+    },
+    series: [{
+      type: 'waterfall',
+      upColor: '#00E396',
+      color: '#FF4560',
+      data: [
+        { name: 'Start', y: 0, color: '#008FFB' },
+        { name: 'Product Revenue', y: 1200000 },
+        { name: 'Service Revenue', y: 400000 },
+        { name: 'Total Revenue', isIntermediateSum: true, color: '#775DD0' },
+        { name: 'Fixed Costs', y: -400000 },
+        { name: 'Variable Costs', y: -500000 },
+        { name: 'Total Costs', isIntermediateSum: true, color: '#FEB019' },
+        { name: 'Operating Income', isSum: true, color: '#00D9E9' }
+      ],
+      dataLabels: {
+        enabled: true,
+        formatter: function() {
+          return Highcharts.numberFormat(this.y / 1000, 0, ',') + 'k';
+        }
+      }
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 800,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['name', 'value', 'isSum', 'isIntermediate'],
+    data: [
+      { name: 'Start', value: 0, isSum: false, isIntermediate: false },
+      { name: 'Product Revenue', value: 1200000, isSum: false, isIntermediate: false },
+      { name: 'Service Revenue', value: 400000, isSum: false, isIntermediate: false },
+      { name: 'Total Revenue', value: 1600000, isSum: false, isIntermediate: true },
+      { name: 'Fixed Costs', value: -400000, isSum: false, isIntermediate: false },
+      { name: 'Variable Costs', value: -500000, isSum: false, isIntermediate: false },
+      { name: 'Total Costs', value: -900000, isSum: false, isIntermediate: true },
+      { name: 'Operating Income', value: 700000, isSum: true, isIntermediate: false }
+    ]
+  }),
+  axes: [
+    { type: 'category', position: 'bottom', fields: ['name'], label: { rotate: { degrees: -45 } } },
+    { type: 'numeric', position: 'left', fields: ['value'], title: { text: 'USD ($)' } }
+  ],
+  series: [{
+    type: 'bar',
+    xField: 'name',
+    yField: 'value',
+    label: {
+      field: 'value',
+      display: 'insideEnd',
+      renderer: function(value) {
+        return Ext.util.Format.number(value / 1000, '0,0') + 'k';
+      }
+    },
+    renderer: function(sprite, config, rendererData, index) {
+      var store = rendererData.store;
+      var record = store.getAt(index);
+      var isSum = record.get('isSum');
+      var isIntermediate = record.get('isIntermediate');
+      var value = record.get('value');
+
+      var color;
+      if (isSum) color = '#00D9E9';
+      else if (isIntermediate) color = value >= 0 ? '#775DD0' : '#FEB019';
+      else color = value >= 0 ? '#00E396' : '#FF4560';
+
+      return { fillStyle: color };
+    }
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'waterfall' },
+  title: { text: 'Quarterly Profit & Loss Statement' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'USD ($)' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>\${point.y:,.0f}</b> USD'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: [
+      { name: 'Start', y: 0, color: '#008FFB' },
+      { name: 'Product Revenue', y: 1200000 },
+      { name: 'Service Revenue', y: 400000 },
+      { name: 'Total Revenue', isIntermediateSum: true, color: '#775DD0' },
+      { name: 'Fixed Costs', y: -400000 },
+      { name: 'Variable Costs', y: -500000 },
+      { name: 'Total Costs', isIntermediateSum: true, color: '#FEB019' },
+      { name: 'Operating Income', isSum: true, color: '#00D9E9' }
+    ],
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        return Highcharts.numberFormat(this.y / 1000, 0, ',') + 'k';
+      }
+    }
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+interface PLDataPoint extends Highcharts.PointOptionsObject {
+  name: string;
+  y?: number;
+  color?: string;
+  isSum?: boolean;
+  isIntermediateSum?: boolean;
+}
+
+const plData: PLDataPoint[] = [
+  { name: 'Start', y: 0, color: '#008FFB' },
+  { name: 'Product Revenue', y: 1200000 },
+  { name: 'Service Revenue', y: 400000 },
+  { name: 'Total Revenue', isIntermediateSum: true, color: '#775DD0' },
+  { name: 'Fixed Costs', y: -400000 },
+  { name: 'Variable Costs', y: -500000 },
+  { name: 'Total Costs', isIntermediateSum: true, color: '#FEB019' },
+  { name: 'Operating Income', isSum: true, color: '#00D9E9' }
+];
+
+const options: Highcharts.Options = {
+  chart: { type: 'waterfall' },
+  title: { text: 'Quarterly Profit & Loss Statement' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'USD ($)' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>\${point.y:,.0f}</b> USD'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: plData,
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        return Highcharts.numberFormat(this.y as number / 1000, 0, ',') + 'k';
+      }
+    }
+  }]
+};
+
+Highcharts.chart('container', options);`
+  },
+  cashflow: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsReact from 'highcharts-react-official';
+
+HighchartsMore(Highcharts);
+
+function CashFlowWaterfall() {
+  const options = {
+    chart: { type: 'waterfall' },
+    title: { text: 'Monthly Cash Flow Analysis' },
+    xAxis: {
+      type: 'category'
+    },
+    yAxis: {
+      title: { text: 'Cash ($)' }
+    },
+    legend: { enabled: false },
+    tooltip: {
+      pointFormat: '<b>\${point.y:,.2f}</b>'
+    },
+    series: [{
+      type: 'waterfall',
+      upColor: '#00E396',
+      color: '#FF4560',
+      data: [
+        { name: 'Beginning Cash', y: 50000, color: '#008FFB' },
+        { name: 'Sales Collection', y: 120000 },
+        { name: 'Supplier Payments', y: -45000 },
+        { name: 'Salary Payments', y: -35000 },
+        { name: 'Operating Cash', isIntermediateSum: true, color: '#775DD0' },
+        { name: 'Equipment Purchase', y: -25000 },
+        { name: 'Loan Received', y: 40000 },
+        { name: 'Tax Payment', y: -15000 },
+        { name: 'Ending Cash', isSum: true, color: '#00D9E9' }
+      ],
+      dataLabels: {
+        enabled: true,
+        formatter: function() {
+          return '$' + Highcharts.numberFormat(Math.abs(this.y) / 1000, 0) + 'k';
+        },
+        style: {
+          fontWeight: 'bold'
+        }
+      },
+      pointPadding: 0
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 900,
+  height: 450,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['activity', 'amount', 'type'],
+    data: [
+      { activity: 'Beginning Cash', amount: 50000, type: 'start' },
+      { activity: 'Sales Collection', amount: 120000, type: 'inflow' },
+      { activity: 'Supplier Payments', amount: -45000, type: 'outflow' },
+      { activity: 'Salary Payments', amount: -35000, type: 'outflow' },
+      { activity: 'Operating Cash', amount: 90000, type: 'intermediate' },
+      { activity: 'Equipment Purchase', amount: -25000, type: 'outflow' },
+      { activity: 'Loan Received', amount: 40000, type: 'inflow' },
+      { activity: 'Tax Payment', amount: -15000, type: 'outflow' },
+      { activity: 'Ending Cash', amount: 90000, type: 'total' }
+    ]
+  }),
+  axes: [
+    {
+      type: 'category',
+      position: 'bottom',
+      fields: ['activity'],
+      label: { rotate: { degrees: -45 } }
+    },
+    {
+      type: 'numeric',
+      position: 'left',
+      fields: ['amount'],
+      title: { text: 'Cash ($)' },
+      label: {
+        renderer: function(value) {
+          return '$' + Ext.util.Format.number(value / 1000, '0') + 'k';
+        }
+      }
+    }
+  ],
+  series: [{
+    type: 'bar',
+    xField: 'activity',
+    yField: 'amount',
+    label: {
+      field: 'amount',
+      display: 'insideEnd',
+      renderer: function(value) {
+        return '$' + Ext.util.Format.number(Math.abs(value) / 1000, '0') + 'k';
+      }
+    },
+    renderer: function(sprite, config, rendererData, index) {
+      var store = rendererData.store;
+      var record = store.getAt(index);
+      var type = record.get('type');
+      var amount = record.get('amount');
+
+      var colorMap = {
+        start: '#008FFB',
+        inflow: '#00E396',
+        outflow: '#FF4560',
+        intermediate: '#775DD0',
+        total: '#00D9E9'
+      };
+
+      return { fillStyle: colorMap[type] || '#999' };
+    }
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'waterfall' },
+  title: { text: 'Monthly Cash Flow Analysis' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'Cash ($)' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>\${point.y:,.2f}</b>'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: [
+      { name: 'Beginning Cash', y: 50000, color: '#008FFB' },
+      { name: 'Sales Collection', y: 120000 },
+      { name: 'Supplier Payments', y: -45000 },
+      { name: 'Salary Payments', y: -35000 },
+      { name: 'Operating Cash', isIntermediateSum: true, color: '#775DD0' },
+      { name: 'Equipment Purchase', y: -25000 },
+      { name: 'Loan Received', y: 40000 },
+      { name: 'Tax Payment', y: -15000 },
+      { name: 'Ending Cash', isSum: true, color: '#00D9E9' }
+    ],
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        return '$' + Highcharts.numberFormat(Math.abs(this.y) / 1000, 0) + 'k';
+      },
+      style: { fontWeight: 'bold' }
+    },
+    pointPadding: 0
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+interface CashFlowPoint extends Highcharts.PointOptionsObject {
+  name: string;
+  y?: number;
+  color?: string;
+  isSum?: boolean;
+  isIntermediateSum?: boolean;
+}
+
+const cashFlowData: CashFlowPoint[] = [
+  { name: 'Beginning Cash', y: 50000, color: '#008FFB' },
+  { name: 'Sales Collection', y: 120000 },
+  { name: 'Supplier Payments', y: -45000 },
+  { name: 'Salary Payments', y: -35000 },
+  { name: 'Operating Cash', isIntermediateSum: true, color: '#775DD0' },
+  { name: 'Equipment Purchase', y: -25000 },
+  { name: 'Loan Received', y: 40000 },
+  { name: 'Tax Payment', y: -15000 },
+  { name: 'Ending Cash', isSum: true, color: '#00D9E9' }
+];
+
+const options: Highcharts.Options = {
+  chart: { type: 'waterfall' },
+  title: { text: 'Monthly Cash Flow Analysis' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'Cash ($)' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>\${point.y:,.2f}</b>'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: cashFlowData,
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        return '$' + Highcharts.numberFormat(Math.abs(this.y as number) / 1000, 0) + 'k';
+      },
+      style: { fontWeight: 'bold' }
+    },
+    pointPadding: 0
+  }]
+};
+
+Highcharts.chart('container', options);`
+  },
+  productcomparison: {
+    react: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsReact from 'highcharts-react-official';
+
+HighchartsMore(Highcharts);
+
+function ProductComparisonWaterfall() {
+  const options = {
+    chart: { type: 'waterfall' },
+    title: { text: 'Product Feature Value Comparison' },
+    xAxis: {
+      type: 'category'
+    },
+    yAxis: {
+      title: { text: 'Value Score' }
+    },
+    legend: { enabled: false },
+    tooltip: {
+      pointFormat: '<b>{point.y}</b> points'
+    },
+    series: [{
+      type: 'waterfall',
+      upColor: '#00E396',
+      color: '#FF4560',
+      data: [
+        { name: 'Base Product', y: 100, color: '#008FFB' },
+        { name: 'Premium Materials', y: 25 },
+        { name: 'Advanced Features', y: 40 },
+        { name: 'Enhanced Version', isIntermediateSum: true, color: '#775DD0' },
+        { name: 'Extended Warranty', y: 15 },
+        { name: 'Priority Support', y: 20 },
+        { name: 'Complexity Penalty', y: -10 },
+        { name: 'Training Required', y: -5 },
+        { name: 'Final Product Value', isSum: true, color: '#00D9E9' }
+      ],
+      dataLabels: {
+        enabled: true,
+        formatter: function() {
+          const prefix = this.y > 0 ? '+' : '';
+          return prefix + this.y;
+        },
+        style: {
+          color: '#000',
+          fontWeight: 'bold',
+          textOutline: '1px contrast'
+        }
+      }
+    }]
+  };
+  return <HighchartsReact highcharts={Highcharts} options={options} />;
+}`,
+    extjs: `Ext.create('Ext.chart.CartesianChart', {
+  renderTo: Ext.getBody(),
+  width: 900,
+  height: 400,
+  store: Ext.create('Ext.data.Store', {
+    fields: ['feature', 'score', 'cumulative', 'type'],
+    data: [
+      { feature: 'Base Product', score: 100, cumulative: 100, type: 'base' },
+      { feature: 'Premium Materials', score: 25, cumulative: 125, type: 'positive' },
+      { feature: 'Advanced Features', score: 40, cumulative: 165, type: 'positive' },
+      { feature: 'Enhanced Version', score: 165, cumulative: 165, type: 'intermediate' },
+      { feature: 'Extended Warranty', score: 15, cumulative: 180, type: 'positive' },
+      { feature: 'Priority Support', score: 20, cumulative: 200, type: 'positive' },
+      { feature: 'Complexity Penalty', score: -10, cumulative: 190, type: 'negative' },
+      { feature: 'Training Required', score: -5, cumulative: 185, type: 'negative' },
+      { feature: 'Final Product Value', score: 185, cumulative: 185, type: 'total' }
+    ]
+  }),
+  axes: [
+    {
+      type: 'category',
+      position: 'bottom',
+      fields: ['feature'],
+      label: { rotate: { degrees: -45 } }
+    },
+    {
+      type: 'numeric',
+      position: 'left',
+      fields: ['score'],
+      title: { text: 'Value Score' }
+    }
+  ],
+  series: [{
+    type: 'bar',
+    xField: 'feature',
+    yField: 'score',
+    label: {
+      field: 'score',
+      display: 'insideEnd',
+      renderer: function(value) {
+        var prefix = value > 0 ? '+' : '';
+        return prefix + value;
+      }
+    },
+    renderer: function(sprite, config, rendererData, index) {
+      var store = rendererData.store;
+      var record = store.getAt(index);
+      var type = record.get('type');
+
+      var colorMap = {
+        base: '#008FFB',
+        positive: '#00E396',
+        negative: '#FF4560',
+        intermediate: '#775DD0',
+        total: '#00D9E9'
+      };
+
+      return { fillStyle: colorMap[type] || '#999' };
+    }
+  }]
+});`,
+    vanilla: `Highcharts.chart('container', {
+  chart: { type: 'waterfall' },
+  title: { text: 'Product Feature Value Comparison' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'Value Score' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>{point.y}</b> points'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: [
+      { name: 'Base Product', y: 100, color: '#008FFB' },
+      { name: 'Premium Materials', y: 25 },
+      { name: 'Advanced Features', y: 40 },
+      { name: 'Enhanced Version', isIntermediateSum: true, color: '#775DD0' },
+      { name: 'Extended Warranty', y: 15 },
+      { name: 'Priority Support', y: 20 },
+      { name: 'Complexity Penalty', y: -10 },
+      { name: 'Training Required', y: -5 },
+      { name: 'Final Product Value', isSum: true, color: '#00D9E9' }
+    ],
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        const prefix = this.y > 0 ? '+' : '';
+        return prefix + this.y;
+      },
+      style: {
+        color: '#000',
+        fontWeight: 'bold',
+        textOutline: '1px contrast'
+      }
+    }
+  }]
+});`,
+    typescript: `import Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+
+HighchartsMore(Highcharts);
+
+interface ProductValuePoint extends Highcharts.PointOptionsObject {
+  name: string;
+  y?: number;
+  color?: string;
+  isSum?: boolean;
+  isIntermediateSum?: boolean;
+}
+
+const productData: ProductValuePoint[] = [
+  { name: 'Base Product', y: 100, color: '#008FFB' },
+  { name: 'Premium Materials', y: 25 },
+  { name: 'Advanced Features', y: 40 },
+  { name: 'Enhanced Version', isIntermediateSum: true, color: '#775DD0' },
+  { name: 'Extended Warranty', y: 15 },
+  { name: 'Priority Support', y: 20 },
+  { name: 'Complexity Penalty', y: -10 },
+  { name: 'Training Required', y: -5 },
+  { name: 'Final Product Value', isSum: true, color: '#00D9E9' }
+];
+
+const options: Highcharts.Options = {
+  chart: { type: 'waterfall' },
+  title: { text: 'Product Feature Value Comparison' },
+  xAxis: { type: 'category' },
+  yAxis: { title: { text: 'Value Score' } },
+  legend: { enabled: false },
+  tooltip: {
+    pointFormat: '<b>{point.y}</b> points'
+  },
+  series: [{
+    type: 'waterfall',
+    upColor: '#00E396',
+    color: '#FF4560',
+    data: productData,
+    dataLabels: {
+      enabled: true,
+      formatter: function() {
+        const value = this.y as number;
+        const prefix = value > 0 ? '+' : '';
+        return prefix + value;
+      },
+      style: {
+        color: '#000',
+        fontWeight: 'bold',
+        textOutline: '1px contrast'
+      }
+    }
+  }]
+};
+
+Highcharts.chart('container', options);`
+  }
+};
+
 // FormPanel Component Examples
 export const formPanelExamples: Record<string, CodeVariant> = {
   default: {
@@ -43787,6 +48419,2673 @@ function FormLayoutExample({ onFormChange }: FormLayoutExampleProps): JSX.Elemen
 export default FormLayoutExample;`,
   }
 };
+
+// Labelled Component Examples - Forms
+export const labelledExamples: Record<string, CodeVariant> = {
+  basiclabel: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function BasicLabelExample() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Labelled id="basic-field" label="Store name">
+      <TextField
+        value={value}
+        onChange={setValue}
+        autoComplete="off"
+      />
+    </Labelled>
+  );
+}
+
+export default BasicLabelExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="basic-field" class="polaris-label">Store name</label>
+  <div class="polaris-labelled__field">
+    <input
+      type="text"
+      id="basic-field"
+      class="polaris-text-field__input"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#basic-field');
+on(input, 'input', (e) => {
+  console.log('Value:', e.target.value);
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  name: 'storeName',
+  labelWidth: 100,
+  width: 320,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface BasicLabelExampleProps {
+  initialValue?: string;
+  label?: string;
+  onValueChange?: (value: string) => void;
+}
+
+function BasicLabelExample({
+  initialValue = '',
+  label = 'Store name',
+  onValueChange
+}: BasicLabelExampleProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    onValueChange?.(newValue);
+  }, [onValueChange]);
+
+  return (
+    <Labelled id="basic-field" label={label}>
+      <TextField
+        value={value}
+        onChange={handleChange}
+        autoComplete="off"
+      />
+    </Labelled>
+  );
+}
+
+export default BasicLabelExample;`
+  },
+
+  requiredfield: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function RequiredFieldExample() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Labelled
+      id="required-field"
+      label="Email address"
+      requiredIndicator
+    >
+      <TextField
+        type="email"
+        value={value}
+        onChange={setValue}
+        autoComplete="email"
+      />
+    </Labelled>
+  );
+}
+
+export default RequiredFieldExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="required-field" class="polaris-label">
+    Email address
+    <span class="polaris-label__required" aria-label="required">*</span>
+  </label>
+  <div class="polaris-labelled__field">
+    <input
+      type="email"
+      id="required-field"
+      class="polaris-text-field__input"
+      autocomplete="email"
+      required
+    />
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#required-field');
+on(input, 'blur', (e) => {
+  if (!e.target.value) {
+    e.target.classList.add('polaris-text-field__input--error');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Email address',
+  name: 'email',
+  vtype: 'email',
+  allowBlank: false,
+  blankText: 'Email address is required',
+  labelWidth: 120,
+  width: 320,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface RequiredFieldExampleProps {
+  initialValue?: string;
+  onValueChange?: (value: string) => void;
+  validateEmail?: boolean;
+}
+
+function RequiredFieldExample({
+  initialValue = '',
+  onValueChange,
+  validateEmail = true
+}: RequiredFieldExampleProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+  const [error, setError] = useState<string>('');
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    if (validateEmail && newValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newValue)) {
+      setError('Please enter a valid email address');
+    } else {
+      setError('');
+    }
+    onValueChange?.(newValue);
+  }, [onValueChange, validateEmail]);
+
+  return (
+    <Labelled
+      id="required-field"
+      label="Email address"
+      requiredIndicator
+      error={error}
+    >
+      <TextField
+        type="email"
+        value={value}
+        onChange={handleChange}
+        autoComplete="email"
+        error={Boolean(error)}
+      />
+    </Labelled>
+  );
+}
+
+export default RequiredFieldExample;`
+  },
+
+  withhelptext: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LabelWithHelpText() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Labelled
+      id="help-text-field"
+      label="Password"
+      helpText="Must be at least 8 characters"
+    >
+      <TextField
+        type="password"
+        value={value}
+        onChange={setValue}
+        autoComplete="new-password"
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithHelpText;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="help-text-field" class="polaris-label">Password</label>
+  <div class="polaris-labelled__help-text">
+    Must be at least 8 characters
+  </div>
+  <div class="polaris-labelled__field">
+    <input
+      type="password"
+      id="help-text-field"
+      class="polaris-text-field__input"
+      autocomplete="new-password"
+    />
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#help-text-field');
+on(input, 'blur', (e) => {
+  if (e.target.value.length < 8) {
+    console.log('Password too short');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Password',
+  name: 'password',
+  inputType: 'password',
+  minLength: 8,
+  minLengthText: 'Must be at least 8 characters',
+  labelWidth: 100,
+  width: 320,
+  afterBodyEl: '<div class="polaris-help-text">Must be at least 8 characters</div>',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface LabelWithHelpTextProps {
+  minLength?: number;
+  onPasswordChange?: (value: string, isValid: boolean) => void;
+}
+
+function LabelWithHelpText({
+  minLength = 8,
+  onPasswordChange
+}: LabelWithHelpTextProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    const isValid = newValue.length >= minLength;
+    if (!isValid && newValue.length > 0) {
+      setError(\`Must be at least \${minLength} characters\`);
+    } else {
+      setError('');
+    }
+    onPasswordChange?.(newValue, isValid);
+  }, [minLength, onPasswordChange]);
+
+  return (
+    <Labelled
+      id="help-text-field"
+      label="Password"
+      helpText={\`Must be at least \${minLength} characters\`}
+      error={error}
+    >
+      <TextField
+        type="password"
+        value={value}
+        onChange={handleChange}
+        autoComplete="new-password"
+        error={Boolean(error)}
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithHelpText;`
+  },
+
+  witherror: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LabelWithError() {
+  const [value, setValue] = useState('invalid@');
+  const error = 'Email is not valid';
+
+  return (
+    <Labelled
+      id="error-field"
+      label="Email"
+      error={error}
+    >
+      <TextField
+        type="email"
+        value={value}
+        onChange={setValue}
+        error={error}
+        autoComplete="email"
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithError;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="error-field" class="polaris-label">Email</label>
+  <div class="polaris-labelled__error">
+    <span class="polaris-error-text">Email is not valid</span>
+  </div>
+  <div class="polaris-labelled__field">
+    <input
+      type="email"
+      id="error-field"
+      class="polaris-text-field__input polaris-text-field__input--error"
+      value="invalid@"
+      autocomplete="email"
+      aria-invalid="true"
+      aria-describedby="error-field-error"
+    />
+  </div>
+  <div id="error-field-error" class="polaris-inline-error">
+    Email is not valid
+  </div>
+</div>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+const input = $('#error-field');
+// Error state is already displayed
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Email',
+  name: 'email',
+  vtype: 'email',
+  value: 'invalid@',
+  allowBlank: false,
+  markInvalid: true,
+  activeError: 'Email is not valid',
+  labelWidth: 100,
+  width: 320,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface LabelWithErrorProps {
+  initialValue?: string;
+  validateEmail?: (email: string) => string | undefined;
+}
+
+function LabelWithError({
+  initialValue = 'invalid@',
+  validateEmail
+}: LabelWithErrorProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+  const [error, setError] = useState<string>('Email is not valid');
+
+  const defaultValidateEmail = useCallback((email: string): string | undefined => {
+    if (!email) return 'Email is required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Email is not valid';
+    }
+    return undefined;
+  }, []);
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    const validationError = validateEmail
+      ? validateEmail(newValue)
+      : defaultValidateEmail(newValue);
+    setError(validationError || '');
+  }, [validateEmail, defaultValidateEmail]);
+
+  return (
+    <Labelled
+      id="error-field"
+      label="Email"
+      error={error}
+    >
+      <TextField
+        type="email"
+        value={value}
+        onChange={handleChange}
+        error={error}
+        autoComplete="email"
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithError;`
+  },
+
+  withaction: {
+    react: `import {Labelled, TextField, Link} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function LabelWithAction() {
+  const [value, setValue] = useState('');
+
+  const handleAction = useCallback(() => {
+    alert('Action clicked');
+  }, []);
+
+  return (
+    <Labelled
+      id="action-field"
+      label="API Key"
+      action={{
+        content: 'Generate new key',
+        onAction: handleAction
+      }}
+    >
+      <TextField
+        value={value}
+        onChange={setValue}
+        autoComplete="off"
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithAction;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <div class="polaris-labelled__label-wrapper">
+    <label for="action-field" class="polaris-label">API Key</label>
+    <button
+      class="polaris-button polaris-button--plain polaris-button--size-slim"
+      id="generate-key"
+      type="button"
+    >
+      Generate new key
+    </button>
+  </div>
+  <div class="polaris-labelled__field">
+    <input
+      type="text"
+      id="action-field"
+      class="polaris-text-field__input"
+      autocomplete="off"
+    />
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const generateBtn = $('#generate-key');
+const input = $('#action-field');
+
+on(generateBtn, 'click', () => {
+  const newKey = 'key_' + Math.random().toString(36).substring(7);
+  input.value = newKey;
+  alert('New key generated');
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'API Key',
+  name: 'apiKey',
+  labelWidth: 100,
+  width: 320,
+  afterLabelTextTpl: [
+    '<button class="polaris-button polaris-button--plain" ',
+    'onclick="generateNewKey()">Generate new key</button>'
+  ],
+  renderTo: Ext.getBody()
+});
+
+function generateNewKey() {
+  const field = Ext.ComponentQuery.query('[name=apiKey]')[0];
+  const newKey = 'key_' + Math.random().toString(36).substring(7);
+  field.setValue(newKey);
+  Ext.Msg.alert('Success', 'New key generated');
+}`,
+    typescript: `import {Labelled, TextField, Link} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface LabelWithActionProps {
+  onGenerateKey?: (key: string) => void;
+  actionLabel?: string;
+}
+
+function LabelWithAction({
+  onGenerateKey,
+  actionLabel = 'Generate new key'
+}: LabelWithActionProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+
+  const handleAction = useCallback(() => {
+    const newKey = 'key_' + Math.random().toString(36).substring(7);
+    setValue(newKey);
+    onGenerateKey?.(newKey);
+  }, [onGenerateKey]);
+
+  return (
+    <Labelled
+      id="action-field"
+      label="API Key"
+      action={{
+        content: actionLabel,
+        onAction: handleAction
+      }}
+    >
+      <TextField
+        value={value}
+        onChange={setValue}
+        autoComplete="off"
+        readOnly
+      />
+    </Labelled>
+  );
+}
+
+export default LabelWithAction;`
+  },
+
+  hiddenlabel: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function HiddenLabelExample() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Labelled
+      id="hidden-label-field"
+      label="Search"
+      labelHidden
+    >
+      <TextField
+        value={value}
+        onChange={setValue}
+        placeholder="Search products..."
+        autoComplete="off"
+      />
+    </Labelled>
+  );
+}
+
+export default HiddenLabelExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="hidden-label-field" class="polaris-label polaris-label--hidden">
+    Search
+  </label>
+  <div class="polaris-labelled__field">
+    <input
+      type="text"
+      id="hidden-label-field"
+      class="polaris-text-field__input"
+      placeholder="Search products..."
+      autocomplete="off"
+      aria-label="Search"
+    />
+  </div>
+</div>
+
+<style>
+.polaris-label--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+</style>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#hidden-label-field');
+on(input, 'input', (e) => {
+  console.log('Search:', e.target.value);
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  hideLabel: true,
+  name: 'search',
+  emptyText: 'Search products...',
+  width: 320,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface HiddenLabelExampleProps {
+  placeholder?: string;
+  onSearch?: (query: string) => void;
+}
+
+function HiddenLabelExample({
+  placeholder = 'Search products...',
+  onSearch
+}: HiddenLabelExampleProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    onSearch?.(newValue);
+  }, [onSearch]);
+
+  return (
+    <Labelled
+      id="hidden-label-field"
+      label="Search"
+      labelHidden
+    >
+      <TextField
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        autoComplete="off"
+      />
+    </Labelled>
+  );
+}
+
+export default HiddenLabelExample;`
+  },
+
+  multiplefieldtypes: {
+    react: `import {Labelled, TextField, Select} from '@shopify/polaris';
+import {useState} from 'react';
+
+function MultipleFieldTypes() {
+  const [name, setName] = useState('');
+  const [country, setCountry] = useState('US');
+
+  const countryOptions = [
+    {label: 'United States', value: 'US'},
+    {label: 'Canada', value: 'CA'},
+    {label: 'United Kingdom', value: 'UK'},
+  ];
+
+  return (
+    <>
+      <Labelled id="name-field" label="Full name">
+        <TextField value={name} onChange={setName} autoComplete="name" />
+      </Labelled>
+
+      <Labelled id="country-field" label="Country">
+        <Select options={countryOptions} value={country} onChange={setCountry} />
+      </Labelled>
+    </>
+  );
+}
+
+export default MultipleFieldTypes;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="name-field" class="polaris-label">Full name</label>
+  <div class="polaris-labelled__field">
+    <input
+      type="text"
+      id="name-field"
+      class="polaris-text-field__input"
+      autocomplete="name"
+    />
+  </div>
+</div>
+
+<div class="polaris-labelled">
+  <label for="country-field" class="polaris-label">Country</label>
+  <div class="polaris-labelled__field">
+    <select id="country-field" class="polaris-select__input">
+      <option value="US">United States</option>
+      <option value="CA">Canada</option>
+      <option value="UK">United Kingdom</option>
+    </select>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const nameField = $('#name-field');
+const countryField = $('#country-field');
+
+on(nameField, 'input', (e) => console.log('Name:', e.target.value));
+on(countryField, 'change', (e) => console.log('Country:', e.target.value));
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 320,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Full name',
+      name: 'name',
+      allowBlank: false
+    },
+    {
+      xtype: 'combobox',
+      fieldLabel: 'Country',
+      name: 'country',
+      store: [
+        ['US', 'United States'],
+        ['CA', 'Canada'],
+        ['UK', 'United Kingdom']
+      ],
+      value: 'US',
+      editable: false
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField, Select} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface MultipleFieldTypesProps {
+  onFormChange?: (data: {name: string; country: string}) => void;
+}
+
+interface CountryOption {
+  label: string;
+  value: string;
+}
+
+function MultipleFieldTypes({
+  onFormChange
+}: MultipleFieldTypesProps): JSX.Element {
+  const [name, setName] = useState<string>('');
+  const [country, setCountry] = useState<string>('US');
+
+  const countryOptions: CountryOption[] = [
+    {label: 'United States', value: 'US'},
+    {label: 'Canada', value: 'CA'},
+    {label: 'United Kingdom', value: 'UK'},
+  ];
+
+  const handleNameChange = useCallback((newName: string) => {
+    setName(newName);
+    onFormChange?.({name: newName, country});
+  }, [country, onFormChange]);
+
+  const handleCountryChange = useCallback((newCountry: string) => {
+    setCountry(newCountry);
+    onFormChange?.({name, country: newCountry});
+  }, [name, onFormChange]);
+
+  return (
+    <>
+      <Labelled id="name-field" label="Full name">
+        <TextField value={name} onChange={handleNameChange} autoComplete="name" />
+      </Labelled>
+
+      <Labelled id="country-field" label="Country">
+        <Select options={countryOptions} value={country} onChange={handleCountryChange} />
+      </Labelled>
+    </>
+  );
+}
+
+export default MultipleFieldTypes;`
+  },
+
+  accessibilitydemo: {
+    react: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState} from 'react';
+
+function AccessibilityDemo() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Labelled
+      id="accessible-field"
+      label="Phone number"
+      helpText="Include country code"
+      requiredIndicator
+    >
+      <TextField
+        type="tel"
+        value={value}
+        onChange={setValue}
+        autoComplete="tel"
+        placeholder="+1 (555) 123-4567"
+      />
+    </Labelled>
+  );
+}
+
+export default AccessibilityDemo;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-labelled">
+  <label for="accessible-field" class="polaris-label">
+    Phone number
+    <span class="polaris-label__required" aria-label="required">*</span>
+  </label>
+  <div class="polaris-labelled__help-text" id="accessible-field-help">
+    Include country code
+  </div>
+  <div class="polaris-labelled__field">
+    <input
+      type="tel"
+      id="accessible-field"
+      class="polaris-text-field__input"
+      autocomplete="tel"
+      placeholder="+1 (555) 123-4567"
+      aria-describedby="accessible-field-help"
+      required
+      aria-required="true"
+    />
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#accessible-field');
+on(input, 'blur', (e) => {
+  if (!e.target.value) {
+    e.target.setAttribute('aria-invalid', 'true');
+  } else {
+    e.target.setAttribute('aria-invalid', 'false');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Phone number <span style="color:red;">*</span>',
+  name: 'phone',
+  vtype: 'alpha',
+  allowBlank: false,
+  emptyText: '+1 (555) 123-4567',
+  labelWidth: 120,
+  width: 320,
+  afterBodyEl: '<div class="polaris-help-text">Include country code</div>',
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface AccessibilityDemoProps {
+  onPhoneChange?: (phone: string, isValid: boolean) => void;
+  validatePhone?: (phone: string) => boolean;
+}
+
+function AccessibilityDemo({
+  onPhoneChange,
+  validatePhone
+}: AccessibilityDemoProps): JSX.Element {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const defaultValidatePhone = useCallback((phone: string): boolean => {
+    return /^\+?[1-9]\d{1,14}$/.test(phone.replace(/[\s()-]/g, ''));
+  }, []);
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    const isValid = validatePhone
+      ? validatePhone(newValue)
+      : defaultValidatePhone(newValue);
+
+    if (!isValid && newValue.length > 0) {
+      setError('Please enter a valid phone number');
+    } else {
+      setError('');
+    }
+
+    onPhoneChange?.(newValue, isValid);
+  }, [validatePhone, defaultValidatePhone, onPhoneChange]);
+
+  return (
+    <Labelled
+      id="accessible-field"
+      label="Phone number"
+      helpText="Include country code"
+      requiredIndicator
+      error={error}
+    >
+      <TextField
+        type="tel"
+        value={value}
+        onChange={handleChange}
+        autoComplete="tel"
+        placeholder="+1 (555) 123-4567"
+        error={Boolean(error)}
+      />
+    </Labelled>
+  );
+}
+
+export default AccessibilityDemo;`
+  },
+
+  labelbestpractices: {
+    react: `import {Labelled, TextField, FormLayout} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LabelBestPractices() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <FormLayout>
+      <Labelled
+        id="email-field"
+        label="Email address"
+        helpText="We'll never share your email"
+        requiredIndicator
+      >
+        <TextField
+          type="email"
+          value={email}
+          onChange={setEmail}
+          autoComplete="email"
+        />
+      </Labelled>
+
+      <Labelled
+        id="password-field"
+        label="Password"
+        helpText="At least 8 characters with numbers and symbols"
+        requiredIndicator
+      >
+        <TextField
+          type="password"
+          value={password}
+          onChange={setPassword}
+          autoComplete="new-password"
+        />
+      </Labelled>
+    </FormLayout>
+  );
+}
+
+export default LabelBestPractices;`,
+    vanilla: `<!-- HTML Structure -->
+<form class="polaris-form-layout">
+  <div class="polaris-labelled">
+    <label for="email-field" class="polaris-label">
+      Email address
+      <span class="polaris-label__required">*</span>
+    </label>
+    <div class="polaris-labelled__help-text">We'll never share your email</div>
+    <div class="polaris-labelled__field">
+      <input
+        type="email"
+        id="email-field"
+        class="polaris-text-field__input"
+        autocomplete="email"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="polaris-labelled">
+    <label for="password-field" class="polaris-label">
+      Password
+      <span class="polaris-label__required">*</span>
+    </label>
+    <div class="polaris-labelled__help-text">
+      At least 8 characters with numbers and symbols
+    </div>
+    <div class="polaris-labelled__field">
+      <input
+        type="password"
+        id="password-field"
+        class="polaris-text-field__input"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+  </div>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const emailField = $('#email-field');
+const passwordField = $('#password-field');
+
+on(emailField, 'blur', validateEmail);
+on(passwordField, 'blur', validatePassword);
+
+function validateEmail(e) {
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+  e.target.setAttribute('aria-invalid', !isValid);
+}
+
+function validatePassword(e) {
+  const isValid = e.target.value.length >= 8 &&
+                  /\d/.test(e.target.value) &&
+                  /[!@#$%^&*]/.test(e.target.value);
+  e.target.setAttribute('aria-invalid', !isValid);
+}
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 400,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Email address <span style="color:red;">*</span>',
+      name: 'email',
+      vtype: 'email',
+      allowBlank: false,
+      afterBodyEl: '<div class="help-text">We\\'ll never share your email</div>',
+      labelWidth: 120
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Password <span style="color:red;">*</span>',
+      name: 'password',
+      inputType: 'password',
+      allowBlank: false,
+      minLength: 8,
+      afterBodyEl: '<div class="help-text">At least 8 characters with numbers and symbols</div>',
+      labelWidth: 120,
+      validator: function(value) {
+        if (!/\d/.test(value) || !/[!@#$%^&*]/.test(value)) {
+          return 'Password must contain numbers and symbols';
+        }
+        return true;
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {Labelled, TextField, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+interface ValidationErrors {
+  email?: string;
+  password?: string;
+}
+
+interface LabelBestPracticesProps {
+  onSubmit?: (data: FormData) => void;
+  validateOnChange?: boolean;
+}
+
+function LabelBestPractices({
+  onSubmit,
+  validateOnChange = true
+}: LabelBestPracticesProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    email: '',
+    password: ''
+  });
+  const [errors, setErrors] = useState<ValidationErrors>({});
+
+  const validateEmail = useCallback((email: string): string | undefined => {
+    if (!email) return 'Email is required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Please enter a valid email address';
+    }
+    return undefined;
+  }, []);
+
+  const validatePassword = useCallback((password: string): string | undefined => {
+    if (!password) return 'Password is required';
+    if (password.length < 8) return 'Password must be at least 8 characters';
+    if (!/\d/.test(password)) return 'Password must contain a number';
+    if (!/[!@#$%^&*]/.test(password)) return 'Password must contain a symbol';
+    return undefined;
+  }, []);
+
+  const handleEmailChange = useCallback((newEmail: string) => {
+    setFormData(prev => ({...prev, email: newEmail}));
+    if (validateOnChange) {
+      setErrors(prev => ({...prev, email: validateEmail(newEmail)}));
+    }
+  }, [validateOnChange, validateEmail]);
+
+  const handlePasswordChange = useCallback((newPassword: string) => {
+    setFormData(prev => ({...prev, password: newPassword}));
+    if (validateOnChange) {
+      setErrors(prev => ({...prev, password: validatePassword(newPassword)}));
+    }
+  }, [validateOnChange, validatePassword]);
+
+  return (
+    <FormLayout>
+      <Labelled
+        id="email-field"
+        label="Email address"
+        helpText="We'll never share your email"
+        requiredIndicator
+        error={errors.email}
+      >
+        <TextField
+          type="email"
+          value={formData.email}
+          onChange={handleEmailChange}
+          autoComplete="email"
+          error={Boolean(errors.email)}
+        />
+      </Labelled>
+
+      <Labelled
+        id="password-field"
+        label="Password"
+        helpText="At least 8 characters with numbers and symbols"
+        requiredIndicator
+        error={errors.password}
+      >
+        <TextField
+          type="password"
+          value={formData.password}
+          onChange={handlePasswordChange}
+          autoComplete="new-password"
+          error={Boolean(errors.password)}
+        />
+      </Labelled>
+    </FormLayout>
+  );
+}
+
+export default LabelBestPractices;`
+  }
+};
+
+
+// InlineError Component Examples - Forms
+export const inlineErrorExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import {InlineError} from '@shopify/polaris';
+
+function InlineErrorExample() {
+  return (
+    <InlineError
+      message="Store name is required"
+      fieldID="store-name"
+    />
+  );
+}
+
+export default InlineErrorExample;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-inline-error" id="store-name-error">
+  <svg class="polaris-icon" viewBox="0 0 20 20">
+    <path d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
+  </svg>
+  <span class="polaris-inline-error__text">Store name is required</span>
+</div>
+
+<script>
+// Error is displayed inline with the field
+const errorElement = document.getElementById('store-name-error');
+console.log('Error displayed:', errorElement.textContent);
+</script>`,
+    extjs: `// ExtJS displays inline errors automatically with field validation
+Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Store name',
+  name: 'storeName',
+  allowBlank: false,
+  blankText: 'Store name is required',
+  renderTo: Ext.getBody(),
+  listeners: {
+    validitychange: function(field, isValid) {
+      if (!isValid) {
+        field.markInvalid('Store name is required');
+      }
+    }
+  }
+});`,
+    typescript: `import {InlineError} from '@shopify/polaris';
+
+interface InlineErrorExampleProps {
+  message?: string;
+  fieldID: string;
+}
+
+function InlineErrorExample({
+  message = 'Store name is required',
+  fieldID
+}: InlineErrorExampleProps): JSX.Element {
+  return (
+    <InlineError
+      message={message}
+      fieldID={fieldID}
+    />
+  );
+}
+
+export default InlineErrorExample;`
+  },
+
+  withtextfield: {
+    react: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function InlineErrorWithTextField() {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    if (newValue.length === 0) {
+      setError('Email is required');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newValue)) {
+      setError('Please enter a valid email');
+    } else {
+      setError('');
+    }
+  }, []);
+
+  return (
+    <>
+      <TextField
+        label="Email"
+        type="email"
+        value={value}
+        onChange={handleChange}
+        error={Boolean(error)}
+        id="email-field"
+      />
+      {error && <InlineError message={error} fieldID="email-field" />}
+    </>
+  );
+}
+
+export default InlineErrorWithTextField;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field-wrapper">
+  <label for="email-field" class="polaris-label">Email</label>
+  <input
+    type="email"
+    id="email-field"
+    class="polaris-text-field__input"
+    aria-describedby="email-field-error"
+  />
+  <div class="polaris-inline-error" id="email-field-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const input = $('#email-field');
+const errorElement = $('#email-field-error');
+const errorText = errorElement.querySelector('.polaris-inline-error__text');
+
+on(input, 'blur', (e) => {
+  const value = e.target.value;
+  let error = '';
+
+  if (value.length === 0) {
+    error = 'Email is required';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    error = 'Please enter a valid email';
+  }
+
+  if (error) {
+    errorText.textContent = error;
+    errorElement.style.display = 'block';
+    input.setAttribute('aria-invalid', 'true');
+    input.classList.add('polaris-text-field__input--error');
+  } else {
+    errorElement.style.display = 'none';
+    input.setAttribute('aria-invalid', 'false');
+    input.classList.remove('polaris-text-field__input--error');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Email',
+  name: 'email',
+  vtype: 'email',
+  allowBlank: false,
+  msgTarget: 'under',
+  invalidText: 'Please enter a valid email',
+  blankText: 'Email is required',
+  renderTo: Ext.getBody(),
+  listeners: {
+    blur: function(field) {
+      field.validate();
+    }
+  }
+});`,
+    typescript: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface InlineErrorWithTextFieldProps {
+  initialValue?: string;
+  onValidationChange?: (isValid: boolean) => void;
+}
+
+function InlineErrorWithTextField({
+  initialValue = '',
+  onValidationChange
+}: InlineErrorWithTextFieldProps): JSX.Element {
+  const [value, setValue] = useState<string>(initialValue);
+  const [error, setError] = useState<string>('');
+
+  const validateEmail = useCallback((email: string): string => {
+    if (email.length === 0) {
+      return 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Please enter a valid email';
+    }
+    return '';
+  }, []);
+
+  const handleChange = useCallback((newValue: string) => {
+    setValue(newValue);
+    const validationError = validateEmail(newValue);
+    setError(validationError);
+    onValidationChange?.(!validationError);
+  }, [validateEmail, onValidationChange]);
+
+  return (
+    <>
+      <TextField
+        label="Email"
+        type="email"
+        value={value}
+        onChange={handleChange}
+        error={Boolean(error)}
+        id="email-field"
+        autoComplete="email"
+      />
+      {error && <InlineError message={error} fieldID="email-field" />}
+    </>
+  );
+}
+
+export default InlineErrorWithTextField;`
+  },
+
+  multiplefielderrors: {
+    react: `import {TextField, InlineError, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function MultipleFieldErrors() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const validateName = useCallback((value: string) => {
+    if (!value) {
+      setNameError('Name is required');
+    } else if (value.length < 2) {
+      setNameError('Name must be at least 2 characters');
+    } else {
+      setNameError('');
+    }
+  }, []);
+
+  const validateEmail = useCallback((value: string) => {
+    if (!value) {
+      setEmailError('Email is required');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  }, []);
+
+  return (
+    <FormLayout>
+      <div>
+        <TextField
+          label="Name"
+          value={name}
+          onChange={(v) => { setName(v); validateName(v); }}
+          error={Boolean(nameError)}
+          id="name-field"
+        />
+        {nameError && <InlineError message={nameError} fieldID="name-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(v) => { setEmail(v); validateEmail(v); }}
+          error={Boolean(emailError)}
+          id="email-field"
+        />
+        {emailError && <InlineError message={emailError} fieldID="email-field" />}
+      </div>
+    </FormLayout>
+  );
+}
+
+export default MultipleFieldErrors;`,
+    vanilla: `<!-- HTML Structure -->
+<form class="polaris-form-layout">
+  <div class="polaris-form-group">
+    <label for="name-field" class="polaris-label">Name</label>
+    <input type="text" id="name-field" class="polaris-text-field__input" />
+    <div class="polaris-inline-error" id="name-error" style="display: none;">
+      <span class="polaris-inline-error__text"></span>
+    </div>
+  </div>
+
+  <div class="polaris-form-group">
+    <label for="email-field" class="polaris-label">Email</label>
+    <input type="email" id="email-field" class="polaris-text-field__input" />
+    <div class="polaris-inline-error" id="email-error" style="display: none;">
+      <span class="polaris-inline-error__text"></span>
+    </div>
+  </div>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+function showError(fieldId, message) {
+  const errorDiv = $(\`#\${fieldId}-error\`);
+  const errorText = errorDiv.querySelector('.polaris-inline-error__text');
+  errorText.textContent = message;
+  errorDiv.style.display = 'block';
+}
+
+function hideError(fieldId) {
+  const errorDiv = $(\`#\${fieldId}-error\`);
+  errorDiv.style.display = 'none';
+}
+
+const nameField = $('#name-field');
+const emailField = $('#email-field');
+
+on(nameField, 'blur', (e) => {
+  const value = e.target.value;
+  if (!value) {
+    showError('name', 'Name is required');
+  } else if (value.length < 2) {
+    showError('name', 'Name must be at least 2 characters');
+  } else {
+    hideError('name');
+  }
+});
+
+on(emailField, 'blur', (e) => {
+  const value = e.target.value;
+  if (!value) {
+    showError('email', 'Email is required');
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    showError('email', 'Invalid email format');
+  } else {
+    hideError('email');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 400,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Name',
+      name: 'name',
+      allowBlank: false,
+      minLength: 2,
+      blankText: 'Name is required',
+      minLengthText: 'Name must be at least 2 characters',
+      msgTarget: 'under'
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      vtype: 'email',
+      allowBlank: false,
+      blankText: 'Email is required',
+      invalidText: 'Invalid email format',
+      msgTarget: 'under'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface FormErrors {
+  name: string;
+  email: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+}
+
+interface MultipleFieldErrorsProps {
+  onFormValidate?: (isValid: boolean, data: FormData) => void;
+}
+
+function MultipleFieldErrors({
+  onFormValidate
+}: MultipleFieldErrorsProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: ''
+  });
+  const [errors, setErrors] = useState<FormErrors>({
+    name: '',
+    email: ''
+  });
+
+  const validateName = useCallback((value: string): string => {
+    if (!value) return 'Name is required';
+    if (value.length < 2) return 'Name must be at least 2 characters';
+    return '';
+  }, []);
+
+  const validateEmail = useCallback((value: string): string => {
+    if (!value) return 'Email is required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email format';
+    return '';
+  }, []);
+
+  const handleNameChange = useCallback((value: string) => {
+    const newFormData = {...formData, name: value};
+    setFormData(newFormData);
+    const nameError = validateName(value);
+    const newErrors = {...errors, name: nameError};
+    setErrors(newErrors);
+    onFormValidate?.(!nameError && !newErrors.email, newFormData);
+  }, [formData, errors, validateName, onFormValidate]);
+
+  const handleEmailChange = useCallback((value: string) => {
+    const newFormData = {...formData, email: value};
+    setFormData(newFormData);
+    const emailError = validateEmail(value);
+    const newErrors = {...errors, email: emailError};
+    setErrors(newErrors);
+    onFormValidate?.(!newErrors.name && !emailError, newFormData);
+  }, [formData, errors, validateEmail, onFormValidate]);
+
+  return (
+    <FormLayout>
+      <div>
+        <TextField
+          label="Name"
+          value={formData.name}
+          onChange={handleNameChange}
+          error={Boolean(errors.name)}
+          id="name-field"
+          autoComplete="name"
+        />
+        {errors.name && <InlineError message={errors.name} fieldID="name-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={handleEmailChange}
+          error={Boolean(errors.email)}
+          id="email-field"
+          autoComplete="email"
+        />
+        {errors.email && <InlineError message={errors.email} fieldID="email-field" />}
+      </div>
+    </FormLayout>
+  );
+}
+
+export default MultipleFieldErrors;`
+  },
+
+  passwordvalidation: {
+    react: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function PasswordValidation() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmError, setConfirmError] = useState('');
+
+  const validatePassword = useCallback((value: string) => {
+    if (value.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+    } else if (!/\d/.test(value)) {
+      setPasswordError('Password must contain a number');
+    } else if (!/[A-Z]/.test(value)) {
+      setPasswordError('Password must contain an uppercase letter');
+    } else {
+      setPasswordError('');
+    }
+  }, []);
+
+  const validateConfirm = useCallback((value: string) => {
+    if (value !== password) {
+      setConfirmError('Passwords do not match');
+    } else {
+      setConfirmError('');
+    }
+  }, [password]);
+
+  return (
+    <>
+      <div>
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(v) => { setPassword(v); validatePassword(v); }}
+          error={Boolean(passwordError)}
+          id="password-field"
+        />
+        {passwordError && <InlineError message={passwordError} fieldID="password-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Confirm password"
+          type="password"
+          value={confirmPassword}
+          onChange={(v) => { setConfirmPassword(v); validateConfirm(v); }}
+          error={Boolean(confirmError)}
+          id="confirm-field"
+        />
+        {confirmError && <InlineError message={confirmError} fieldID="confirm-field" />}
+      </div>
+    </>
+  );
+}
+
+export default PasswordValidation;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-group">
+  <label for="password-field" class="polaris-label">Password</label>
+  <input type="password" id="password-field" class="polaris-text-field__input" />
+  <div class="polaris-inline-error" id="password-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<div class="polaris-form-group">
+  <label for="confirm-field" class="polaris-label">Confirm password</label>
+  <input type="password" id="confirm-field" class="polaris-text-field__input" />
+  <div class="polaris-inline-error" id="confirm-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const passwordField = $('#password-field');
+const confirmField = $('#confirm-field');
+
+function showError(fieldId, message) {
+  const errorDiv = $(\`#\${fieldId}-error\`);
+  errorDiv.querySelector('.polaris-inline-error__text').textContent = message;
+  errorDiv.style.display = 'block';
+}
+
+function hideError(fieldId) {
+  $(\`#\${fieldId}-error\`).style.display = 'none';
+}
+
+on(passwordField, 'blur', (e) => {
+  const value = e.target.value;
+  if (value.length < 8) {
+    showError('password', 'Password must be at least 8 characters');
+  } else if (!/\d/.test(value)) {
+    showError('password', 'Password must contain a number');
+  } else if (!/[A-Z]/.test(value)) {
+    showError('password', 'Password must contain an uppercase letter');
+  } else {
+    hideError('password');
+  }
+});
+
+on(confirmField, 'blur', (e) => {
+  if (e.target.value !== passwordField.value) {
+    showError('confirm', 'Passwords do not match');
+  } else {
+    hideError('confirm');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 400,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Password',
+      name: 'password',
+      inputType: 'password',
+      id: 'password-field',
+      allowBlank: false,
+      minLength: 8,
+      msgTarget: 'under',
+      validator: function(value) {
+        if (!/\d/.test(value)) return 'Password must contain a number';
+        if (!/[A-Z]/.test(value)) return 'Password must contain an uppercase letter';
+        return true;
+      }
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Confirm password',
+      name: 'confirmPassword',
+      inputType: 'password',
+      msgTarget: 'under',
+      validator: function(value) {
+        const password = Ext.getCmp('password-field').getValue();
+        if (value !== password) return 'Passwords do not match';
+        return true;
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface PasswordValidationProps {
+  onPasswordsValidate?: (isValid: boolean, password: string) => void;
+  minLength?: number;
+  requireNumber?: boolean;
+  requireUppercase?: boolean;
+}
+
+function PasswordValidation({
+  onPasswordsValidate,
+  minLength = 8,
+  requireNumber = true,
+  requireUppercase = true
+}: PasswordValidationProps): JSX.Element {
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
+  const [confirmError, setConfirmError] = useState<string>('');
+
+  const validatePassword = useCallback((value: string): string => {
+    if (value.length < minLength) {
+      return \`Password must be at least \${minLength} characters\`;
+    }
+    if (requireNumber && !/\d/.test(value)) {
+      return 'Password must contain a number';
+    }
+    if (requireUppercase && !/[A-Z]/.test(value)) {
+      return 'Password must contain an uppercase letter';
+    }
+    return '';
+  }, [minLength, requireNumber, requireUppercase]);
+
+  const validateConfirm = useCallback((value: string, currentPassword: string): string => {
+    if (value !== currentPassword) {
+      return 'Passwords do not match';
+    }
+    return '';
+  }, []);
+
+  const handlePasswordChange = useCallback((value: string) => {
+    setPassword(value);
+    const error = validatePassword(value);
+    setPasswordError(error);
+
+    // Re-validate confirm password if it has a value
+    if (confirmPassword) {
+      const confirmErr = validateConfirm(confirmPassword, value);
+      setConfirmError(confirmErr);
+    }
+
+    const isValid = !error && (!confirmPassword || !validateConfirm(confirmPassword, value));
+    onPasswordsValidate?.(isValid, value);
+  }, [confirmPassword, validatePassword, validateConfirm, onPasswordsValidate]);
+
+  const handleConfirmChange = useCallback((value: string) => {
+    setConfirmPassword(value);
+    const error = validateConfirm(value, password);
+    setConfirmError(error);
+
+    const isValid = !passwordError && !error;
+    onPasswordsValidate?.(isValid, password);
+  }, [password, passwordError, validateConfirm, onPasswordsValidate]);
+
+  return (
+    <>
+      <div>
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          error={Boolean(passwordError)}
+          id="password-field"
+          autoComplete="new-password"
+        />
+        {passwordError && <InlineError message={passwordError} fieldID="password-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Confirm password"
+          type="password"
+          value={confirmPassword}
+          onChange={handleConfirmChange}
+          error={Boolean(confirmError)}
+          id="confirm-field"
+          autoComplete="new-password"
+        />
+        {confirmError && <InlineError message={confirmError} fieldID="confirm-field" />}
+      </div>
+    </>
+  );
+}
+
+export default PasswordValidation;`
+  },
+
+  formsubmissionerrors: {
+    react: `import {TextField, InlineError, Button, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function FormSubmissionErrors() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({username: '', email: ''});
+
+  const handleSubmit = useCallback(() => {
+    const newErrors = {username: '', email: ''};
+
+    if (!username) newErrors.username = 'Username is required';
+    if (!email) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    setErrors(newErrors);
+
+    if (!newErrors.username && !newErrors.email) {
+      alert('Form submitted successfully!');
+    }
+  }, [username, email]);
+
+  return (
+    <FormLayout>
+      <div>
+        <TextField
+          label="Username"
+          value={username}
+          onChange={setUsername}
+          error={Boolean(errors.username)}
+          id="username-field"
+        />
+        {errors.username && <InlineError message={errors.username} fieldID="username-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          error={Boolean(errors.email)}
+          id="email-field"
+        />
+        {errors.email && <InlineError message={errors.email} fieldID="email-field" />}
+      </div>
+
+      <Button onClick={handleSubmit} variant="primary">Submit</Button>
+    </FormLayout>
+  );
+}
+
+export default FormSubmissionErrors;`,
+    vanilla: `<!-- HTML Structure -->
+<form class="polaris-form-layout" id="submit-form">
+  <div class="polaris-form-group">
+    <label for="username-field" class="polaris-label">Username</label>
+    <input type="text" id="username-field" class="polaris-text-field__input" />
+    <div class="polaris-inline-error" id="username-error" style="display: none;">
+      <span class="polaris-inline-error__text"></span>
+    </div>
+  </div>
+
+  <div class="polaris-form-group">
+    <label for="email-field" class="polaris-label">Email</label>
+    <input type="email" id="email-field" class="polaris-text-field__input" />
+    <div class="polaris-inline-error" id="email-error" style="display: none;">
+      <span class="polaris-inline-error__text"></span>
+    </div>
+  </div>
+
+  <button type="submit" class="polaris-button polaris-button--primary">Submit</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const form = $('#submit-form');
+const usernameField = $('#username-field');
+const emailField = $('#email-field');
+
+function showError(fieldId, message) {
+  const errorDiv = $(\`#\${fieldId}-error\`);
+  errorDiv.querySelector('.polaris-inline-error__text').textContent = message;
+  errorDiv.style.display = 'block';
+}
+
+function hideError(fieldId) {
+  $(\`#\${fieldId}-error\`).style.display = 'none';
+}
+
+on(form, 'submit', (e) => {
+  e.preventDefault();
+
+  hideError('username');
+  hideError('email');
+
+  let hasError = false;
+
+  if (!usernameField.value) {
+    showError('username', 'Username is required');
+    hasError = true;
+  }
+
+  if (!emailField.value) {
+    showError('email', 'Email is required');
+    hasError = true;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailField.value)) {
+    showError('email', 'Invalid email format');
+    hasError = true;
+  }
+
+  if (!hasError) {
+    alert('Form submitted successfully!');
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 400,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Username',
+      name: 'username',
+      allowBlank: false,
+      blankText: 'Username is required',
+      msgTarget: 'under'
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      vtype: 'email',
+      allowBlank: false,
+      blankText: 'Email is required',
+      invalidText: 'Invalid email format',
+      msgTarget: 'under'
+    }
+  ],
+  buttons: [{
+    text: 'Submit',
+    formBind: true,
+    handler: function() {
+      const form = this.up('form').getForm();
+      if (form.isValid()) {
+        Ext.Msg.alert('Success', 'Form submitted successfully!');
+      }
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError, Button, FormLayout} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface FormData {
+  username: string;
+  email: string;
+}
+
+interface FormErrors {
+  username: string;
+  email: string;
+}
+
+interface FormSubmissionErrorsProps {
+  onSubmit?: (data: FormData) => Promise<void> | void;
+  validateOnSubmit?: boolean;
+}
+
+function FormSubmissionErrors({
+  onSubmit,
+  validateOnSubmit = true
+}: FormSubmissionErrorsProps): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    email: ''
+  });
+  const [errors, setErrors] = useState<FormErrors>({
+    username: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const validateForm = useCallback((): boolean => {
+    const newErrors: FormErrors = {username: '', email: ''};
+
+    if (!formData.username) newErrors.username = 'Username is required';
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    setErrors(newErrors);
+    return !newErrors.username && !newErrors.email;
+  }, [formData]);
+
+  const handleSubmit = useCallback(async () => {
+    if (validateOnSubmit && !validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onSubmit?.(formData);
+      alert('Form submitted successfully!');
+    } catch (error) {
+      console.error('Submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData, validateOnSubmit, validateForm, onSubmit]);
+
+  return (
+    <FormLayout>
+      <div>
+        <TextField
+          label="Username"
+          value={formData.username}
+          onChange={(value) => setFormData(prev => ({...prev, username: value}))}
+          error={Boolean(errors.username)}
+          id="username-field"
+          autoComplete="username"
+        />
+        {errors.username && <InlineError message={errors.username} fieldID="username-field" />}
+      </div>
+
+      <div>
+        <TextField
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={(value) => setFormData(prev => ({...prev, email: value}))}
+          error={Boolean(errors.email)}
+          id="email-field"
+          autoComplete="email"
+        />
+        {errors.email && <InlineError message={errors.email} fieldID="email-field" />}
+      </div>
+
+      <Button onClick={handleSubmit} variant="primary" loading={isSubmitting}>
+        Submit
+      </Button>
+    </FormLayout>
+  );
+}
+
+export default FormSubmissionErrors;`
+  },
+
+  realtimevalidation: {
+    react: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback, useEffect} from 'react';
+
+function RealtimeValidation() {
+  const [username, setUsername] = useState('');
+  const [error, setError] = useState('');
+  const [isChecking, setIsChecking] = useState(false);
+
+  useEffect(() => {
+    if (!username) {
+      setError('');
+      return;
+    }
+
+    setIsChecking(true);
+    const timer = setTimeout(() => {
+      // Simulate API check
+      if (username.length < 3) {
+        setError('Username must be at least 3 characters');
+      } else if (username === 'admin') {
+        setError('Username is already taken');
+      } else {
+        setError('');
+      }
+      setIsChecking(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [username]);
+
+  return (
+    <div>
+      <TextField
+        label="Username"
+        value={username}
+        onChange={setUsername}
+        error={Boolean(error)}
+        id="username-field"
+        suffix={isChecking ? 'Checking...' : ''}
+      />
+      {error && <InlineError message={error} fieldID="username-field" />}
+    </div>
+  );
+}
+
+export default RealtimeValidation;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-group">
+  <label for="username-field" class="polaris-label">Username</label>
+  <div class="polaris-text-field__wrapper">
+    <input type="text" id="username-field" class="polaris-text-field__input" />
+    <span class="polaris-text-field__suffix" id="checking-indicator" style="display: none;">
+      Checking...
+    </span>
+  </div>
+  <div class="polaris-inline-error" id="username-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const usernameField = $('#username-field');
+const checkingIndicator = $('#checking-indicator');
+const errorDiv = $('#username-error');
+let validationTimer;
+
+on(usernameField, 'input', (e) => {
+  const value = e.target.value;
+
+  clearTimeout(validationTimer);
+  errorDiv.style.display = 'none';
+
+  if (!value) return;
+
+  checkingIndicator.style.display = 'block';
+
+  validationTimer = setTimeout(() => {
+    checkingIndicator.style.display = 'none';
+
+    let error = '';
+    if (value.length < 3) {
+      error = 'Username must be at least 3 characters';
+    } else if (value === 'admin') {
+      error = 'Username is already taken';
+    }
+
+    if (error) {
+      errorDiv.querySelector('.polaris-inline-error__text').textContent = error;
+      errorDiv.style.display = 'block';
+    }
+  }, 500);
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Username',
+  name: 'username',
+  minLength: 3,
+  msgTarget: 'under',
+  validator: function(value) {
+    if (!value) return true;
+    if (value.length < 3) return 'Username must be at least 3 characters';
+    if (value === 'admin') return 'Username is already taken';
+    return true;
+  },
+  validateOnChange: true,
+  validationDelay: 500,
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback, useEffect} from 'react';
+
+interface RealtimeValidationProps {
+  checkAvailability?: (username: string) => Promise<boolean>;
+  minLength?: number;
+  validationDelay?: number;
+}
+
+function RealtimeValidation({
+  checkAvailability,
+  minLength = 3,
+  validationDelay = 500
+}: RealtimeValidationProps): JSX.Element {
+  const [username, setUsername] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [isChecking, setIsChecking] = useState<boolean>(false);
+
+  const defaultCheckAvailability = useCallback(async (username: string): Promise<boolean> => {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 200));
+    return username !== 'admin';
+  }, []);
+
+  useEffect(() => {
+    if (!username) {
+      setError('');
+      return;
+    }
+
+    setIsChecking(true);
+    const timer = setTimeout(async () => {
+      if (username.length < minLength) {
+        setError(\`Username must be at least \${minLength} characters\`);
+        setIsChecking(false);
+        return;
+      }
+
+      const checkFn = checkAvailability || defaultCheckAvailability;
+      const isAvailable = await checkFn(username);
+
+      if (!isAvailable) {
+        setError('Username is already taken');
+      } else {
+        setError('');
+      }
+      setIsChecking(false);
+    }, validationDelay);
+
+    return () => {
+      clearTimeout(timer);
+      setIsChecking(false);
+    };
+  }, [username, minLength, validationDelay, checkAvailability, defaultCheckAvailability]);
+
+  return (
+    <div>
+      <TextField
+        label="Username"
+        value={username}
+        onChange={setUsername}
+        error={Boolean(error)}
+        id="username-field"
+        suffix={isChecking ? 'Checking...' : ''}
+        autoComplete="off"
+      />
+      {error && <InlineError message={error} fieldID="username-field" />}
+    </div>
+  );
+}
+
+export default RealtimeValidation;`
+  },
+
+  customfieldvalidation: {
+    react: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function CustomFieldValidation() {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState('');
+
+  const validatePhoneNumber = useCallback((value: string) => {
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const cleaned = value.replace(/[\s()-]/g, '');
+
+    if (!value) {
+      setError('Phone number is required');
+    } else if (!phoneRegex.test(cleaned)) {
+      setError('Please enter a valid phone number');
+    } else if (cleaned.length < 10) {
+      setError('Phone number must be at least 10 digits');
+    } else {
+      setError('');
+    }
+  }, []);
+
+  const handleChange = useCallback((value: string) => {
+    setPhoneNumber(value);
+    validatePhoneNumber(value);
+  }, [validatePhoneNumber]);
+
+  return (
+    <div>
+      <TextField
+        label="Phone number"
+        type="tel"
+        value={phoneNumber}
+        onChange={handleChange}
+        error={Boolean(error)}
+        id="phone-field"
+        placeholder="+1 (555) 123-4567"
+      />
+      {error && <InlineError message={error} fieldID="phone-field" />}
+    </div>
+  );
+}
+
+export default CustomFieldValidation;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-group">
+  <label for="phone-field" class="polaris-label">Phone number</label>
+  <input
+    type="tel"
+    id="phone-field"
+    class="polaris-text-field__input"
+    placeholder="+1 (555) 123-4567"
+  />
+  <div class="polaris-inline-error" id="phone-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const phoneField = $('#phone-field');
+const errorDiv = $('#phone-error');
+
+function validatePhoneNumber(value) {
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  const cleaned = value.replace(/[\s()-]/g, '');
+
+  if (!value) return 'Phone number is required';
+  if (!phoneRegex.test(cleaned)) return 'Please enter a valid phone number';
+  if (cleaned.length < 10) return 'Phone number must be at least 10 digits';
+  return '';
+}
+
+on(phoneField, 'blur', (e) => {
+  const error = validatePhoneNumber(e.target.value);
+
+  if (error) {
+    errorDiv.querySelector('.polaris-inline-error__text').textContent = error;
+    errorDiv.style.display = 'block';
+  } else {
+    errorDiv.style.display = 'none';
+  }
+});
+</script>`,
+    extjs: `Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Phone number',
+  name: 'phone',
+  allowBlank: false,
+  blankText: 'Phone number is required',
+  emptyText: '+1 (555) 123-4567',
+  msgTarget: 'under',
+  validator: function(value) {
+    if (!value) return 'Phone number is required';
+
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const cleaned = value.replace(/[\s()-]/g, '');
+
+    if (!phoneRegex.test(cleaned)) return 'Please enter a valid phone number';
+    if (cleaned.length < 10) return 'Phone number must be at least 10 digits';
+
+    return true;
+  },
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+interface CustomFieldValidationProps {
+  customValidator?: (value: string) => string;
+  onValidationChange?: (isValid: boolean, value: string) => void;
+}
+
+function CustomFieldValidation({
+  customValidator,
+  onValidationChange
+}: CustomFieldValidationProps): JSX.Element {
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const defaultValidator = useCallback((value: string): string => {
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const cleaned = value.replace(/[\s()-]/g, '');
+
+    if (!value) return 'Phone number is required';
+    if (!phoneRegex.test(cleaned)) return 'Please enter a valid phone number';
+    if (cleaned.length < 10) return 'Phone number must be at least 10 digits';
+    return '';
+  }, []);
+
+  const validatePhoneNumber = useCallback((value: string): string => {
+    return customValidator ? customValidator(value) : defaultValidator(value);
+  }, [customValidator, defaultValidator]);
+
+  const handleChange = useCallback((value: string) => {
+    setPhoneNumber(value);
+    const validationError = validatePhoneNumber(value);
+    setError(validationError);
+    onValidationChange?.(!validationError, value);
+  }, [validatePhoneNumber, onValidationChange]);
+
+  return (
+    <div>
+      <TextField
+        label="Phone number"
+        type="tel"
+        value={phoneNumber}
+        onChange={handleChange}
+        error={Boolean(error)}
+        id="phone-field"
+        placeholder="+1 (555) 123-4567"
+        autoComplete="tel"
+      />
+      {error && <InlineError message={error} fieldID="phone-field" />}
+    </div>
+  );
+}
+
+export default CustomFieldValidation;`
+  },
+
+  conditionalvalidation: {
+    react: `import {TextField, InlineError, Checkbox} from '@shopify/polaris';
+import {useState, useCallback} from 'react';
+
+function ConditionalValidation() {
+  const [requiresShipping, setRequiresShipping] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState('');
+  const [error, setError] = useState('');
+
+  const validateShipping = useCallback((value: string) => {
+    if (requiresShipping && !value) {
+      setError('Shipping address is required');
+    } else if (requiresShipping && value.length < 10) {
+      setError('Please enter a complete address');
+    } else {
+      setError('');
+    }
+  }, [requiresShipping]);
+
+  const handleAddressChange = useCallback((value: string) => {
+    setShippingAddress(value);
+    validateShipping(value);
+  }, [validateShipping]);
+
+  const handleCheckboxChange = useCallback((checked: boolean) => {
+    setRequiresShipping(checked);
+    if (checked) {
+      validateShipping(shippingAddress);
+    } else {
+      setError('');
+    }
+  }, [shippingAddress, validateShipping]);
+
+  return (
+    <>
+      <Checkbox
+        label="Requires shipping"
+        checked={requiresShipping}
+        onChange={handleCheckboxChange}
+      />
+
+      {requiresShipping && (
+        <div>
+          <TextField
+            label="Shipping address"
+            value={shippingAddress}
+            onChange={handleAddressChange}
+            error={Boolean(error)}
+            id="shipping-field"
+            multiline={3}
+          />
+          {error && <InlineError message={error} fieldID="shipping-field" />}
+        </div>
+      )}
+    </>
+  );
+}
+
+export default ConditionalValidation;`,
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-form-group">
+  <label class="polaris-checkbox">
+    <input type="checkbox" id="requires-shipping" />
+    <span>Requires shipping</span>
+  </label>
+</div>
+
+<div class="polaris-form-group" id="shipping-group" style="display: none;">
+  <label for="shipping-field" class="polaris-label">Shipping address</label>
+  <textarea
+    id="shipping-field"
+    class="polaris-text-field__input"
+    rows="3"
+  ></textarea>
+  <div class="polaris-inline-error" id="shipping-error" style="display: none;">
+    <span class="polaris-inline-error__text"></span>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const checkbox = $('#requires-shipping');
+const shippingGroup = $('#shipping-group');
+const shippingField = $('#shipping-field');
+const errorDiv = $('#shipping-error');
+
+on(checkbox, 'change', (e) => {
+  if (e.target.checked) {
+    shippingGroup.style.display = 'block';
+    validateShipping();
+  } else {
+    shippingGroup.style.display = 'none';
+    errorDiv.style.display = 'none';
+  }
+});
+
+function validateShipping() {
+  const value = shippingField.value;
+  let error = '';
+
+  if (checkbox.checked && !value) {
+    error = 'Shipping address is required';
+  } else if (checkbox.checked && value.length < 10) {
+    error = 'Please enter a complete address';
+  }
+
+  if (error) {
+    errorDiv.querySelector('.polaris-inline-error__text').textContent = error;
+    errorDiv.style.display = 'block';
+  } else {
+    errorDiv.style.display = 'none';
+  }
+}
+
+on(shippingField, 'blur', validateShipping);
+</script>`,
+    extjs: `Ext.create('Ext.form.Panel', {
+  bodyPadding: 10,
+  width: 400,
+  items: [
+    {
+      xtype: 'checkbox',
+      boxLabel: 'Requires shipping',
+      name: 'requiresShipping',
+      listeners: {
+        change: function(checkbox, checked) {
+          const addressField = checkbox.up('form').down('[name=shippingAddress]');
+          addressField.setVisible(checked);
+          addressField.setDisabled(!checked);
+          if (checked) {
+            addressField.validate();
+          }
+        }
+      }
+    },
+    {
+      xtype: 'textareafield',
+      fieldLabel: 'Shipping address',
+      name: 'shippingAddress',
+      hidden: true,
+      disabled: true,
+      allowBlank: false,
+      minLength: 10,
+      blankText: 'Shipping address is required',
+      minLengthText: 'Please enter a complete address',
+      msgTarget: 'under'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    typescript: `import {TextField, InlineError, Checkbox} from '@shopify/polaris';
+import {useState, useCallback, useEffect} from 'react';
+
+interface ConditionalValidationProps {
+  initialRequiresShipping?: boolean;
+  onValidationChange?: (isValid: boolean, data: {requiresShipping: boolean; shippingAddress: string}) => void;
+}
+
+function ConditionalValidation({
+  initialRequiresShipping = false,
+  onValidationChange
+}: ConditionalValidationProps): JSX.Element {
+  const [requiresShipping, setRequiresShipping] = useState<boolean>(initialRequiresShipping);
+  const [shippingAddress, setShippingAddress] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const validateShipping = useCallback((value: string, shouldRequire: boolean): string => {
+    if (shouldRequire && !value) {
+      return 'Shipping address is required';
+    }
+    if (shouldRequire && value.length < 10) {
+      return 'Please enter a complete address';
+    }
+    return '';
+  }, []);
+
+  useEffect(() => {
+    const validationError = validateShipping(shippingAddress, requiresShipping);
+    setError(validationError);
+    const isValid = !requiresShipping || !validationError;
+    onValidationChange?.(isValid, {requiresShipping, shippingAddress});
+  }, [requiresShipping, shippingAddress, validateShipping, onValidationChange]);
+
+  const handleAddressChange = useCallback((value: string) => {
+    setShippingAddress(value);
+  }, []);
+
+  const handleCheckboxChange = useCallback((checked: boolean) => {
+    setRequiresShipping(checked);
+    if (!checked) {
+      setShippingAddress('');
+    }
+  }, []);
+
+  return (
+    <>
+      <Checkbox
+        label="Requires shipping"
+        checked={requiresShipping}
+        onChange={handleCheckboxChange}
+      />
+
+      {requiresShipping && (
+        <div>
+          <TextField
+            label="Shipping address"
+            value={shippingAddress}
+            onChange={handleAddressChange}
+            error={Boolean(error)}
+            id="shipping-field"
+            multiline={3}
+            autoComplete="off"
+          />
+          {error && <InlineError message={error} fieldID="shipping-field" />}
+        </div>
+      )}
+    </>
+  );
+}
+
+export default ConditionalValidation;`
+  }
+};
+
 
 // RangeSlider Component Examples - Forms
 export const rangeSliderExamples: Record<string, CodeVariant> = {
@@ -59220,6 +66519,7 @@ export function getCodeVariants(
     card: cardExamples,
     textfield: textFieldExamples,
     modal: modalExamples,
+    backdrop: backdropExamples,
     banner: bannerExamples,
     actionlist: actionList,
     basiccomponents: basicComponentsExamples,
@@ -59248,6 +66548,8 @@ export function getCodeVariants(
     datepicker: datePickerExamples,
     form: formExamples,
     formlayout: formLayoutExamples,
+    labelled: labelledExamples,
+    inlineerror: inlineErrorExamples,
     rangeslider: rangeSliderExamples,
     avatar: avatarExamples,
     icon: iconExamples,
@@ -59297,6 +66599,9 @@ export function getCodeVariants(
     linechart: lineChartExamples,
     barchart: barChartExamples,
     piechart: pieChartExamples,
+    areachart: areaChartExamples,
+    scatterchart: scatterChartExamples,
+    waterfallchart: waterfallChartExamples,
     formpanel: formPanelExamples,
     coreutilities: coreUtilitiesExamples,
     ecommercecomponents: ecommerceComponentsExamples,
