@@ -6996,27 +6996,97 @@ Ext.getBody().on('click', function() {
   Ext.getBody().unmask();
 });`,
     typescript: `import {Backdrop} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 
+// Backdrop visibility states
+enum BackdropState {
+  Visible = 'visible',
+  Hidden = 'hidden',
+  Animating = 'animating'
+}
+
+// Click handler type for backdrop interactions
+type BackdropClickHandler = (event?: React.MouseEvent) => void;
+
+// Backdrop configuration interface
+interface BackdropConfig {
+  initialState?: BackdropState;
+  closeOnClick?: boolean;
+  preventBodyScroll?: boolean;
+  animationDuration?: number;
+}
+
+// Main backdrop component props
 interface BackdropExampleProps {
   initialActive?: boolean;
-  onBackdropClick?: () => void;
+  config?: BackdropConfig;
+  onBackdropClick?: BackdropClickHandler;
+  onStateChange?: (state: BackdropState) => void;
+}
+
+// Backdrop state management
+interface BackdropStateManager {
+  current: BackdropState;
+  previous: BackdropState | null;
+  transitionTime: number;
 }
 
 function BackdropExample({
   initialActive = true,
-  onBackdropClick
+  config = {
+    closeOnClick: true,
+    preventBodyScroll: true,
+    animationDuration: 200
+  },
+  onBackdropClick,
+  onStateChange
 }: BackdropExampleProps): JSX.Element {
   const [active, setActive] = useState<boolean>(initialActive);
+  const [stateManager, setStateManager] = useState<BackdropStateManager>({
+    current: initialActive ? BackdropState.Visible : BackdropState.Hidden,
+    previous: null,
+    transitionTime: Date.now()
+  });
 
-  const handleBackdropClick = useCallback(() => {
-    setActive(false);
-    onBackdropClick?.();
-  }, [onBackdropClick]);
+  // Update state manager when visibility changes
+  useEffect(() => {
+    const newState = active ? BackdropState.Visible : BackdropState.Hidden;
+    setStateManager(prev => ({
+      current: newState,
+      previous: prev.current,
+      transitionTime: Date.now()
+    }));
+    onStateChange?.(newState);
+  }, [active, onStateChange]);
+
+  // Handle body scroll lock
+  useEffect(() => {
+    if (config.preventBodyScroll && active) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [active, config.preventBodyScroll]);
+
+  const handleBackdropClick = useCallback<BackdropClickHandler>((event) => {
+    if (config.closeOnClick) {
+      setStateManager(prev => ({
+        current: BackdropState.Animating,
+        previous: prev.current,
+        transitionTime: Date.now()
+      }));
+
+      setTimeout(() => {
+        setActive(false);
+      }, config.animationDuration || 0);
+    }
+    onBackdropClick?.(event);
+  }, [config.closeOnClick, config.animationDuration, onBackdropClick]);
 
   return (
     <>
-      <Backdrop onClick={handleBackdropClick} />
+      {active && <Backdrop onClick={handleBackdropClick} />}
       {active && <div>Content behind backdrop</div>}
     </>
   );
@@ -7079,26 +7149,114 @@ on(backdrop, 'click', () => {
   renderTo: Ext.getBody()
 });`,
     typescript: `import {Backdrop, Button} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useRef, useEffect} from 'react';
 
+// Click event tracking
+interface ClickEvent {
+  timestamp: number;
+  target: EventTarget | null;
+  propagated: boolean;
+}
+
+// Click handler with event metadata
+type ClickHandlerWithMetadata = (
+  event: React.MouseEvent,
+  metadata: ClickEvent
+) => void;
+
+// Click tracking configuration
+interface ClickTrackingConfig {
+  logClicks?: boolean;
+  preventPropagation?: boolean;
+  trackClickHistory?: boolean;
+  maxHistorySize?: number;
+}
+
+// Main component props
 interface BackdropClickHandlerProps {
-  onBackdropClick?: () => void;
+  config?: ClickTrackingConfig;
+  onBackdropClick?: ClickHandlerWithMetadata;
+  onBackdropShow?: () => void;
+  onBackdropHide?: () => void;
+}
+
+// Click history entry
+interface ClickHistoryEntry {
+  id: string;
+  event: ClickEvent;
+  action: 'show' | 'hide' | 'click';
 }
 
 function BackdropWithClickHandler({
-  onBackdropClick
+  config = {
+    logClicks: true,
+    preventPropagation: false,
+    trackClickHistory: true,
+    maxHistorySize: 10
+  },
+  onBackdropClick,
+  onBackdropShow,
+  onBackdropHide
 }: BackdropClickHandlerProps): JSX.Element {
   const [showBackdrop, setShowBackdrop] = useState<boolean>(false);
+  const [clickHistory, setClickHistory] = useState<ClickHistoryEntry[]>([]);
+  const clickCountRef = useRef<number>(0);
 
-  const handleBackdropClick = useCallback(() => {
-    console.log('Backdrop clicked');
+  // Track click history
+  const addToHistory = useCallback((
+    event: ClickEvent,
+    action: 'show' | 'hide' | 'click'
+  ) => {
+    if (config.trackClickHistory) {
+      setClickHistory(prev => {
+        const entry: ClickHistoryEntry = {
+          id: \`click-\${Date.now()}-\${clickCountRef.current++}\`,
+          event,
+          action
+        };
+        const newHistory = [entry, ...prev];
+        return newHistory.slice(0, config.maxHistorySize || 10);
+      });
+    }
+  }, [config.trackClickHistory, config.maxHistorySize]);
+
+  // Show backdrop handler
+  const handleShowBackdrop = useCallback(() => {
+    setShowBackdrop(true);
+    const event: ClickEvent = {
+      timestamp: Date.now(),
+      target: null,
+      propagated: false
+    };
+    addToHistory(event, 'show');
+    onBackdropShow?.();
+  }, [addToHistory, onBackdropShow]);
+
+  // Backdrop click handler
+  const handleBackdropClick = useCallback((e: React.MouseEvent) => {
+    const clickEvent: ClickEvent = {
+      timestamp: Date.now(),
+      target: e.target,
+      propagated: !config.preventPropagation
+    };
+
+    if (config.preventPropagation) {
+      e.stopPropagation();
+    }
+
+    if (config.logClicks) {
+      console.log('Backdrop clicked at:', new Date(clickEvent.timestamp).toISOString());
+    }
+
+    addToHistory(clickEvent, 'click');
     setShowBackdrop(false);
-    onBackdropClick?.();
-  }, [onBackdropClick]);
+    onBackdropClick?.(e, clickEvent);
+    onBackdropHide?.();
+  }, [config, addToHistory, onBackdropClick, onBackdropHide]);
 
   return (
     <>
-      <Button onClick={() => setShowBackdrop(true)}>Show Backdrop</Button>
+      <Button onClick={handleShowBackdrop}>Show Backdrop</Button>
       {showBackdrop && <Backdrop onClick={handleBackdropClick} />}
     </>
   );
@@ -7157,34 +7315,128 @@ Ext.getBody().on('click', function() {
   Ext.getBody().unmask();
 });`,
     typescript: `import {Backdrop} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useMemo, CSSProperties} from 'react';
 
+// Opacity levels type
+type OpacityLevel = number;
+
+// Transparency configuration
+interface TransparencyConfig {
+  minOpacity: OpacityLevel;
+  maxOpacity: OpacityLevel;
+  defaultOpacity: OpacityLevel;
+  animateTransparency?: boolean;
+  transitionDuration?: number;
+}
+
+// Animation states for transparent backdrops
+enum TransparencyState {
+  Solid = 'solid',
+  Transparent = 'transparent',
+  Transitioning = 'transitioning'
+}
+
+// Style overrides for transparency
+interface TransparentBackdropStyles {
+  backdrop?: CSSProperties;
+  content?: CSSProperties;
+  container?: CSSProperties;
+}
+
+// Main component props
 interface TransparentBackdropProps {
+  config?: TransparencyConfig;
+  styles?: TransparentBackdropStyles;
   onDismiss?: () => void;
-  opacity?: number;
+  onOpacityChange?: (opacity: OpacityLevel) => void;
+  onTransparencyStateChange?: (state: TransparencyState) => void;
+}
+
+// Transparency state manager
+interface TransparencyStateManager {
+  currentState: TransparencyState;
+  currentOpacity: OpacityLevel;
+  targetOpacity: OpacityLevel;
+  isAnimating: boolean;
 }
 
 function TransparentBackdrop({
+  config = {
+    minOpacity: 0,
+    maxOpacity: 1,
+    defaultOpacity: 0.2,
+    animateTransparency: true,
+    transitionDuration: 300
+  },
+  styles = {},
   onDismiss,
-  opacity = 0.2
+  onOpacityChange,
+  onTransparencyStateChange
 }: TransparentBackdropProps): JSX.Element {
   const [active, setActive] = useState<boolean>(true);
+  const [transparencyState, setTransparencyState] = useState<TransparencyStateManager>({
+    currentState: TransparencyState.Transparent,
+    currentOpacity: config.defaultOpacity,
+    targetOpacity: config.defaultOpacity,
+    isAnimating: false
+  });
 
+  // Calculate backdrop opacity
+  const backdropOpacity = useMemo<OpacityLevel>(() => {
+    return Math.min(
+      Math.max(transparencyState.currentOpacity, config.minOpacity),
+      config.maxOpacity
+    );
+  }, [transparencyState.currentOpacity, config.minOpacity, config.maxOpacity]);
+
+  // Handle backdrop dismissal with animation
   const handleBackdropClick = useCallback(() => {
-    setActive(false);
-    onDismiss?.();
-  }, [onDismiss]);
+    if (config.animateTransparency) {
+      setTransparencyState(prev => ({
+        ...prev,
+        currentState: TransparencyState.Transitioning,
+        targetOpacity: 0,
+        isAnimating: true
+      }));
+      onTransparencyStateChange?.(TransparencyState.Transitioning);
+
+      setTimeout(() => {
+        setActive(false);
+        onDismiss?.();
+      }, config.transitionDuration || 300);
+    } else {
+      setActive(false);
+      onDismiss?.();
+    }
+  }, [config.animateTransparency, config.transitionDuration, onDismiss, onTransparencyStateChange]);
+
+  // Compute dynamic styles
+  const computedBackdropStyle = useMemo<CSSProperties>(() => ({
+    opacity: backdropOpacity,
+    transition: config.animateTransparency
+      ? \`opacity \${config.transitionDuration}ms ease-in-out\`
+      : 'none',
+    ...styles.backdrop
+  }), [backdropOpacity, config.animateTransparency, config.transitionDuration, styles.backdrop]);
+
+  const computedContentStyle = useMemo<CSSProperties>(() => ({
+    opacity: active ? 1 : 0,
+    transition: \`opacity \${config.transitionDuration}ms ease-in-out\`,
+    ...styles.content
+  }), [active, config.transitionDuration, styles.content]);
 
   return (
-    <>
-      <Backdrop
-        transparent
-        onClick={handleBackdropClick}
-      />
-      <div style={{opacity: active ? 1 : 0}}>
-        Content visible through transparent backdrop
+    <div style={styles.container}>
+      {active && (
+        <Backdrop
+          transparent
+          onClick={handleBackdropClick}
+        />
+      )}
+      <div style={computedContentStyle}>
+        Content visible through transparent backdrop (opacity: {backdropOpacity.toFixed(2)})
       </div>
-    </>
+    </div>
   );
 }
 
@@ -7260,27 +7512,109 @@ Ext.getBody().on('click', function() {
   Ext.getBody().unmask();
 });`,
     typescript: `import {Backdrop, TopBar, Frame} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useMemo} from 'react';
 
+// Z-index layers for stacking contexts
+enum ZIndexLayer {
+  Backdrop = 100,
+  Navigation = 200,
+  Modal = 300,
+  Tooltip = 400,
+  Overlay = 500
+}
+
+// Z-index management
+interface ZIndexManager {
+  current: ZIndexLayer;
+  layers: Map<string, ZIndexLayer>;
+  getNextLayer: () => ZIndexLayer;
+}
+
+// Navigation configuration
+interface NavigationConfig {
+  showToggle?: boolean;
+  zIndex?: ZIndexLayer;
+  fixed?: boolean;
+  transparent?: boolean;
+}
+
+// Backdrop positioning relative to navigation
+interface BackdropPositioning {
+  belowNavigation: boolean;
+  zIndex: ZIndexLayer;
+  respectNavigationHeight?: boolean;
+  offset?: number;
+}
+
+// Main component props
 interface BackdropBelowNavigationProps {
+  navigationConfig?: NavigationConfig;
+  backdropPositioning?: BackdropPositioning;
   navigationContent?: React.ReactNode;
   onBackdropClick?: () => void;
+  onNavigationInteraction?: (action: string) => void;
+}
+
+// Stacking context manager
+interface StackingContext {
+  navigationLayer: ZIndexLayer;
+  backdropLayer: ZIndexLayer;
+  contentLayer: ZIndexLayer;
 }
 
 function BackdropBelowNavigation({
+  navigationConfig = {
+    showToggle: true,
+    zIndex: ZIndexLayer.Navigation,
+    fixed: true,
+    transparent: false
+  },
+  backdropPositioning = {
+    belowNavigation: true,
+    zIndex: ZIndexLayer.Backdrop,
+    respectNavigationHeight: true,
+    offset: 0
+  },
   navigationContent,
-  onBackdropClick
+  onBackdropClick,
+  onNavigationInteraction
 }: BackdropBelowNavigationProps): JSX.Element {
   const [showBackdrop, setShowBackdrop] = useState<boolean>(true);
 
+  // Calculate stacking context
+  const stackingContext = useMemo<StackingContext>(() => ({
+    navigationLayer: navigationConfig.zIndex || ZIndexLayer.Navigation,
+    backdropLayer: backdropPositioning.belowNavigation
+      ? ZIndexLayer.Backdrop
+      : ZIndexLayer.Modal,
+    contentLayer: 1
+  }), [navigationConfig.zIndex, backdropPositioning.belowNavigation]);
+
+  // Handle backdrop click with z-index awareness
   const handleBackdropClick = useCallback(() => {
-    setShowBackdrop(false);
-    onBackdropClick?.();
-  }, [onBackdropClick]);
+    // Ensure backdrop is still below navigation
+    if (stackingContext.backdropLayer < stackingContext.navigationLayer) {
+      setShowBackdrop(false);
+      onBackdropClick?.();
+    }
+  }, [stackingContext.backdropLayer, stackingContext.navigationLayer, onBackdropClick]);
+
+  // Handle navigation interactions
+  const handleNavigationToggle = useCallback(() => {
+    onNavigationInteraction?.('toggle');
+  }, [onNavigationInteraction]);
+
+  // Computed navigation styles
+  const navigationStyles = useMemo(() => ({
+    zIndex: stackingContext.navigationLayer,
+    position: navigationConfig.fixed ? 'fixed' as const : 'relative' as const,
+    opacity: navigationConfig.transparent ? 0.9 : 1
+  }), [stackingContext.navigationLayer, navigationConfig.fixed, navigationConfig.transparent]);
 
   const topBarMarkup = (
     <TopBar
-      showNavigationToggle
+      showNavigationToggle={navigationConfig.showToggle}
+      onNavigationToggle={handleNavigationToggle}
       userMenu={navigationContent || <div>User Menu</div>}
     />
   );
@@ -7289,11 +7623,13 @@ function BackdropBelowNavigation({
     <Frame topBar={topBarMarkup}>
       {showBackdrop && (
         <Backdrop
-          belowNavigation
+          belowNavigation={backdropPositioning.belowNavigation}
           onClick={handleBackdropClick}
         />
       )}
-      <div>Main content area</div>
+      <div style={{zIndex: stackingContext.contentLayer}}>
+        Main content area (Navigation z-index: {stackingContext.navigationLayer}, Backdrop z-index: {stackingContext.backdropLayer})
+      </div>
     </Frame>
   );
 }
@@ -7371,46 +7707,192 @@ setTimeout(function() {
   Ext.getBody().unmask();
 }, 3000);`,
     typescript: `import {Backdrop, Spinner} from '@shopify/polaris';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback, useRef} from 'react';
 
+// Loading states for spinner backdrop
+enum LoadingState {
+  Idle = 'idle',
+  Loading = 'loading',
+  Complete = 'complete',
+  Error = 'error',
+  Cancelled = 'cancelled'
+}
+
+// Spinner configuration
+interface SpinnerConfig {
+  size?: 'small' | 'large';
+  color?: 'teal' | 'inkLightest';
+  accessibilityLabel?: string;
+}
+
+// Loading progress tracking
+interface LoadingProgress {
+  state: LoadingState;
+  startTime: number;
+  endTime: number | null;
+  duration: number;
+  percentage: number;
+}
+
+// Loading callbacks
+interface LoadingCallbacks {
+  onStart?: () => void;
+  onProgress?: (progress: LoadingProgress) => void;
+  onComplete?: () => void;
+  onError?: (error: Error) => void;
+  onCancel?: () => void;
+}
+
+// Main component props
 interface BackdropWithLoadingSpinnerProps {
   loadingTime?: number;
-  onLoadComplete?: () => void;
-  spinnerSize?: 'small' | 'large';
+  spinnerConfig?: SpinnerConfig;
+  callbacks?: LoadingCallbacks;
+  allowCancel?: boolean;
+  showProgress?: boolean;
+}
+
+// Loading state manager
+interface LoadingStateManager {
+  currentState: LoadingState;
+  progress: LoadingProgress;
+  timerId: NodeJS.Timeout | null;
 }
 
 function BackdropWithLoadingSpinner({
   loadingTime = 3000,
-  onLoadComplete,
-  spinnerSize = 'large'
+  spinnerConfig = {
+    size: 'large',
+    color: 'teal',
+    accessibilityLabel: 'Loading content'
+  },
+  callbacks = {},
+  allowCancel = false,
+  showProgress = false
 }: BackdropWithLoadingSpinnerProps): JSX.Element {
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingState, setLoadingState] = useState<LoadingStateManager>({
+    currentState: LoadingState.Loading,
+    progress: {
+      state: LoadingState.Loading,
+      startTime: Date.now(),
+      endTime: null,
+      duration: 0,
+      percentage: 0
+    },
+    timerId: null
+  });
 
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Update loading progress
+  const updateProgress = useCallback(() => {
+    setLoadingState(prev => {
+      const elapsed = Date.now() - prev.progress.startTime;
+      const percentage = Math.min((elapsed / loadingTime) * 100, 100);
+
+      const updatedProgress: LoadingProgress = {
+        ...prev.progress,
+        duration: elapsed,
+        percentage
+      };
+
+      callbacks.onProgress?.(updatedProgress);
+
+      return {
+        ...prev,
+        progress: updatedProgress
+      };
+    });
+  }, [loadingTime, callbacks]);
+
+  // Initialize loading
   useEffect(() => {
+    callbacks.onStart?.();
+
+    // Track progress if enabled
+    if (showProgress) {
+      progressIntervalRef.current = setInterval(updateProgress, 100);
+    }
+
+    // Set completion timer
     const timer = setTimeout(() => {
+      setLoadingState(prev => ({
+        ...prev,
+        currentState: LoadingState.Complete,
+        progress: {
+          ...prev.progress,
+          state: LoadingState.Complete,
+          endTime: Date.now(),
+          percentage: 100
+        }
+      }));
+
       setLoading(false);
-      onLoadComplete?.();
+      callbacks.onComplete?.();
     }, loadingTime);
-    return () => clearTimeout(timer);
-  }, [loadingTime, onLoadComplete]);
+
+    return () => {
+      clearTimeout(timer);
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+    };
+  }, [loadingTime, showProgress, updateProgress, callbacks]);
+
+  // Handle cancel
+  const handleCancel = useCallback(() => {
+    if (allowCancel) {
+      setLoadingState(prev => ({
+        ...prev,
+        currentState: LoadingState.Cancelled,
+        progress: {
+          ...prev.progress,
+          state: LoadingState.Cancelled,
+          endTime: Date.now()
+        }
+      }));
+
+      setLoading(false);
+      callbacks.onCancel?.();
+    }
+  }, [allowCancel, callbacks]);
 
   return (
     <>
       {loading && (
         <>
-          <Backdrop />
+          <Backdrop onClick={allowCancel ? handleCancel : undefined} />
           <div style={{
             position: 'fixed',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: 1000
+            zIndex: 1000,
+            textAlign: 'center'
           }}>
-            <Spinner size={spinnerSize} />
+            <Spinner
+              size={spinnerConfig.size}
+              accessibilityLabel={spinnerConfig.accessibilityLabel}
+            />
+            {showProgress && (
+              <div style={{marginTop: '16px', color: '#fff'}}>
+                Loading: {loadingState.progress.percentage.toFixed(0)}%
+              </div>
+            )}
+            {allowCancel && (
+              <div style={{marginTop: '8px'}}>
+                <button onClick={handleCancel}>Cancel</button>
+              </div>
+            )}
           </div>
         </>
       )}
-      <div>Content loads after {loadingTime / 1000} seconds</div>
+      <div>
+        Content loads after {loadingTime / 1000} seconds
+        {loadingState.currentState === LoadingState.Complete && ' - Loaded!'}
+        {loadingState.currentState === LoadingState.Cancelled && ' - Cancelled'}
+      </div>
     </>
   );
 }
@@ -7503,40 +7985,178 @@ on(backdrop, 'click', hideModal);
   renderTo: Ext.getBody()
 });`,
     typescript: `import {Backdrop, Modal, Button, TextContainer} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useRef, useEffect} from 'react';
 
+// Modal states
+enum ModalState {
+  Closed = 'closed',
+  Opening = 'opening',
+  Open = 'open',
+  Closing = 'closing'
+}
+
+// Portal configuration for modals
+interface PortalConfig {
+  containerId?: string;
+  createContainer?: boolean;
+  zIndex?: number;
+}
+
+// Modal backdrop integration settings
+interface ModalBackdropIntegration {
+  autoBackdrop?: boolean;
+  backdropClickToClose?: boolean;
+  lockBodyScroll?: boolean;
+  animateBackdrop?: boolean;
+}
+
+// Modal state tracker
+interface ModalStateTracker {
+  current: ModalState;
+  previous: ModalState | null;
+  openedAt: number | null;
+  closedAt: number | null;
+  duration: number;
+}
+
+// Main component props
 interface BackdropModalIntegrationProps {
   modalTitle?: string;
   modalContent?: React.ReactNode;
+  portalConfig?: PortalConfig;
+  backdropIntegration?: ModalBackdropIntegration;
+  onModalOpen?: () => void;
   onModalClose?: () => void;
+  onBackdropClick?: () => void;
+  onStateChange?: (state: ModalState) => void;
 }
 
 function BackdropModalIntegration({
   modalTitle = 'Modal with Backdrop',
   modalContent,
-  onModalClose
+  portalConfig = {
+    containerId: 'modal-portal',
+    createContainer: true,
+    zIndex: 1000
+  },
+  backdropIntegration = {
+    autoBackdrop: true,
+    backdropClickToClose: true,
+    lockBodyScroll: true,
+    animateBackdrop: true
+  },
+  onModalOpen,
+  onModalClose,
+  onBackdropClick,
+  onStateChange
 }: BackdropModalIntegrationProps): JSX.Element {
   const [modalActive, setModalActive] = useState<boolean>(false);
+  const [stateTracker, setStateTracker] = useState<ModalStateTracker>({
+    current: ModalState.Closed,
+    previous: null,
+    openedAt: null,
+    closedAt: null,
+    duration: 0
+  });
 
-  const handleModalChange = useCallback(() => {
-    const newState = !modalActive;
-    setModalActive(newState);
-    if (!newState) {
-      onModalClose?.();
+  const portalRef = useRef<HTMLDivElement | null>(null);
+
+  // Create portal container if needed
+  useEffect(() => {
+    if (portalConfig.createContainer && portalConfig.containerId) {
+      const existing = document.getElementById(portalConfig.containerId);
+      if (!existing) {
+        const container = document.createElement('div');
+        container.id = portalConfig.containerId;
+        container.style.zIndex = portalConfig.zIndex?.toString() || '1000';
+        document.body.appendChild(container);
+        portalRef.current = container;
+
+        return () => {
+          document.body.removeChild(container);
+        };
+      } else {
+        portalRef.current = existing as HTMLDivElement;
+      }
     }
-  }, [modalActive, onModalClose]);
+  }, [portalConfig]);
+
+  // Handle modal state transitions
+  const transitionToState = useCallback((newState: ModalState) => {
+    setStateTracker(prev => {
+      const now = Date.now();
+      const duration = prev.openedAt ? now - prev.openedAt : 0;
+
+      return {
+        current: newState,
+        previous: prev.current,
+        openedAt: newState === ModalState.Open ? now : prev.openedAt,
+        closedAt: newState === ModalState.Closed ? now : prev.closedAt,
+        duration: newState === ModalState.Closed ? duration : prev.duration
+      };
+    });
+    onStateChange?.(newState);
+  }, [onStateChange]);
+
+  // Handle modal opening
+  const handleModalOpen = useCallback(() => {
+    transitionToState(ModalState.Opening);
+
+    setTimeout(() => {
+      setModalActive(true);
+      transitionToState(ModalState.Open);
+      onModalOpen?.();
+    }, backdropIntegration.animateBackdrop ? 150 : 0);
+  }, [transitionToState, onModalOpen, backdropIntegration.animateBackdrop]);
+
+  // Handle modal closing
+  const handleModalClose = useCallback(() => {
+    transitionToState(ModalState.Closing);
+
+    setTimeout(() => {
+      setModalActive(false);
+      transitionToState(ModalState.Closed);
+      onModalClose?.();
+    }, backdropIntegration.animateBackdrop ? 150 : 0);
+  }, [transitionToState, onModalClose, backdropIntegration.animateBackdrop]);
+
+  // Handle backdrop click
+  const handleBackdropInteraction = useCallback(() => {
+    onBackdropClick?.();
+    if (backdropIntegration.backdropClickToClose) {
+      handleModalClose();
+    }
+  }, [onBackdropClick, backdropIntegration.backdropClickToClose, handleModalClose]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (backdropIntegration.lockBodyScroll && modalActive) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [modalActive, backdropIntegration.lockBodyScroll]);
 
   return (
     <>
-      <Button onClick={handleModalChange}>Open Modal</Button>
+      <Button onClick={handleModalOpen}>Open Modal</Button>
       <Modal
         open={modalActive}
-        onClose={handleModalChange}
+        onClose={handleModalClose}
         title={modalTitle}
       >
         <Modal.Section>
           <TextContainer>
-            {modalContent || <p>This modal uses a backdrop automatically.</p>}
+            {modalContent || (
+              <p>
+                This modal uses a backdrop automatically.
+                State: {stateTracker.current}
+                {stateTracker.duration > 0 && \` (was open for \${stateTracker.duration}ms)\`}
+              </p>
+            )}
           </TextContainer>
         </Modal.Section>
       </Modal>
@@ -7652,50 +8272,183 @@ on(closeSecond, 'click', () => {
   renderTo: Ext.getBody()
 });`,
     typescript: `import {Backdrop, Modal, Button} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useMemo} from 'react';
 
+// Modal layer identifier
+type ModalLayerId = string;
+
+// Z-index stack for multiple backdrops
+interface ZIndexStack {
+  base: number;
+  increment: number;
+  layers: Map<ModalLayerId, number>;
+}
+
+// Modal layer state
+interface ModalLayerState {
+  id: ModalLayerId;
+  isOpen: boolean;
+  zIndex: number;
+  parent: ModalLayerId | null;
+  children: ModalLayerId[];
+  openedAt: number | null;
+}
+
+// Stack manager for multi-layer backdrops
+interface BackdropStackManager {
+  layers: Map<ModalLayerId, ModalLayerState>;
+  activeCount: number;
+  maxDepth: number;
+  currentDepth: number;
+}
+
+// Main component props
 interface MultiLayerBackdropsProps {
   firstModalTitle?: string;
   secondModalTitle?: string;
+  maxStackDepth?: number;
+  zIndexConfig?: ZIndexStack;
+  onStackChange?: (manager: BackdropStackManager) => void;
 }
 
 function MultiLayerBackdrops({
   firstModalTitle = 'First Modal',
-  secondModalTitle = 'Second Modal'
+  secondModalTitle = 'Second Modal',
+  maxStackDepth = 5,
+  zIndexConfig = {
+    base: 1000,
+    increment: 100,
+    layers: new Map()
+  },
+  onStackChange
 }: MultiLayerBackdropsProps): JSX.Element {
   const [firstModal, setFirstModal] = useState<boolean>(false);
   const [secondModal, setSecondModal] = useState<boolean>(false);
 
+  // Track backdrop stack state
+  const [stackManager, setStackManager] = useState<BackdropStackManager>({
+    layers: new Map(),
+    activeCount: 0,
+    maxDepth: maxStackDepth,
+    currentDepth: 0
+  });
+
+  // Calculate z-index for each modal layer
+  const firstModalZIndex = useMemo(() =>
+    zIndexConfig.base + (zIndexConfig.increment * 1),
+    [zIndexConfig]
+  );
+
+  const secondModalZIndex = useMemo(() =>
+    zIndexConfig.base + (zIndexConfig.increment * 2),
+    [zIndexConfig]
+  );
+
+  // Update stack when modals open/close
+  const updateStack = useCallback((
+    modalId: ModalLayerId,
+    isOpen: boolean,
+    parent: ModalLayerId | null = null
+  ) => {
+    setStackManager(prev => {
+      const newLayers = new Map(prev.layers);
+
+      if (isOpen) {
+        const zIndex = zIndexConfig.base + (zIndexConfig.increment * (prev.currentDepth + 1));
+        newLayers.set(modalId, {
+          id: modalId,
+          isOpen: true,
+          zIndex,
+          parent,
+          children: [],
+          openedAt: Date.now()
+        });
+
+        // Update parent's children
+        if (parent && newLayers.has(parent)) {
+          const parentLayer = newLayers.get(parent)!;
+          newLayers.set(parent, {
+            ...parentLayer,
+            children: [...parentLayer.children, modalId]
+          });
+        }
+      } else {
+        // Close this layer and all children
+        const closeLayer = (layerId: ModalLayerId) => {
+          const layer = newLayers.get(layerId);
+          if (layer) {
+            layer.children.forEach(closeLayer);
+            newLayers.delete(layerId);
+          }
+        };
+        closeLayer(modalId);
+      }
+
+      const newManager: BackdropStackManager = {
+        layers: newLayers,
+        activeCount: newLayers.size,
+        maxDepth: prev.maxDepth,
+        currentDepth: newLayers.size
+      };
+
+      onStackChange?.(newManager);
+      return newManager;
+    });
+  }, [zIndexConfig, onStackChange]);
+
+  // Handle first modal
+  const handleFirstModalOpen = useCallback(() => {
+    setFirstModal(true);
+    updateStack('first-modal', true);
+  }, [updateStack]);
+
   const handleFirstModalClose = useCallback(() => {
     setFirstModal(false);
-    setSecondModal(false);
-  }, []);
+    setSecondModal(false); // Close children
+    updateStack('first-modal', false);
+  }, [updateStack]);
+
+  // Handle second modal
+  const handleSecondModalOpen = useCallback(() => {
+    if (stackManager.currentDepth < stackManager.maxDepth) {
+      setSecondModal(true);
+      updateStack('second-modal', true, 'first-modal');
+    }
+  }, [stackManager.currentDepth, stackManager.maxDepth, updateStack]);
 
   const handleSecondModalClose = useCallback(() => {
     setSecondModal(false);
-  }, []);
+    updateStack('second-modal', false);
+  }, [updateStack]);
 
   return (
     <>
-      <Button onClick={() => setFirstModal(true)}>Open First Modal</Button>
+      <Button onClick={handleFirstModalOpen}>Open First Modal</Button>
 
       <Modal
         open={firstModal}
         onClose={handleFirstModalClose}
-        title={firstModalTitle}
+        title={\`\${firstModalTitle} (Layer 1, z-index: \${firstModalZIndex})\`}
       >
         <Modal.Section>
-          <Button onClick={() => setSecondModal(true)}>Open Second Modal</Button>
+          <p>Active layers: {stackManager.activeCount} / {stackManager.maxDepth}</p>
+          <Button
+            onClick={handleSecondModalOpen}
+            disabled={stackManager.currentDepth >= stackManager.maxDepth}
+          >
+            Open Second Modal
+          </Button>
         </Modal.Section>
       </Modal>
 
       <Modal
         open={secondModal}
         onClose={handleSecondModalClose}
-        title={secondModalTitle}
+        title={\`\${secondModalTitle} (Layer 2, z-index: \${secondModalZIndex})\`}
       >
         <Modal.Section>
           <p>This is a nested modal with multiple backdrops.</p>
+          <p>Current stack depth: {stackManager.currentDepth}</p>
         </Modal.Section>
       </Modal>
     </>
@@ -7825,38 +8578,167 @@ on(backdrop, 'click', hideModal);
     typescript: `import {Backdrop, Modal, Button, TextField} from '@shopify/polaris';
 import {useState, useCallback, useRef, useEffect} from 'react';
 
+// Focus management types
+type FocusableElement = HTMLElement | null;
+
+// Focus trap configuration
+interface FocusTrapConfig {
+  enabled?: boolean;
+  returnFocus?: boolean;
+  initialFocus?: 'first' | 'last' | 'none';
+  escapeDeactivates?: boolean;
+}
+
+// Accessibility metadata
+interface AccessibilityMetadata {
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
+  ariaLabelledBy?: string;
+  role?: string;
+  tabIndex?: number;
+}
+
+// Focus history for tracking
+interface FocusHistoryEntry {
+  element: FocusableElement;
+  timestamp: number;
+  trigger: 'open' | 'close' | 'user';
+}
+
+// Focus state manager
+interface FocusStateManager {
+  currentFocus: FocusableElement;
+  previousFocus: FocusableElement;
+  history: FocusHistoryEntry[];
+  trapActive: boolean;
+}
+
+// Main component props
 interface BackdropAccessibilityFocusProps {
   modalTitle?: string;
+  focusTrapConfig?: FocusTrapConfig;
+  accessibility?: AccessibilityMetadata;
   autoFocusField?: boolean;
   onModalClose?: () => void;
+  onFocusChange?: (element: FocusableElement) => void;
 }
 
 function BackdropAccessibilityFocus({
   modalTitle = 'Accessible Modal',
+  focusTrapConfig = {
+    enabled: true,
+    returnFocus: true,
+    initialFocus: 'first',
+    escapeDeactivates: true
+  },
+  accessibility = {
+    role: 'dialog',
+    ariaLabel: 'Accessible modal dialog',
+    tabIndex: -1
+  },
   autoFocusField = true,
-  onModalClose
+  onModalClose,
+  onFocusChange
 }: BackdropAccessibilityFocusProps): JSX.Element {
   const [active, setActive] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
+  const [focusState, setFocusState] = useState<FocusStateManager>({
+    currentFocus: null,
+    previousFocus: null,
+    history: [],
+    trapActive: false
+  });
+
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLInputElement>(null);
 
+  // Track focus changes
+  const trackFocus = useCallback((
+    element: FocusableElement,
+    trigger: 'open' | 'close' | 'user'
+  ) => {
+    setFocusState(prev => {
+      const entry: FocusHistoryEntry = {
+        element,
+        timestamp: Date.now(),
+        trigger
+      };
+
+      return {
+        currentFocus: element,
+        previousFocus: prev.currentFocus,
+        history: [...prev.history.slice(-9), entry], // Keep last 10
+        trapActive: prev.trapActive
+      };
+    });
+
+    onFocusChange?.(element);
+  }, [onFocusChange]);
+
+  // Activate focus trap when modal opens
   useEffect(() => {
-    if (!active && buttonRef.current) {
-      buttonRef.current.focus();
-    }
-  }, [active]);
+    if (active && focusTrapConfig.enabled) {
+      setFocusState(prev => ({ ...prev, trapActive: true }));
 
+      // Set initial focus
+      if (focusTrapConfig.initialFocus === 'first' && firstFocusableRef.current) {
+        firstFocusableRef.current.focus();
+        trackFocus(firstFocusableRef.current, 'open');
+      }
+
+      // Handle escape key
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && focusTrapConfig.escapeDeactivates) {
+          handleToggle();
+        }
+      };
+
+      document.addEventListener('keydown', handleEscape);
+
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        setFocusState(prev => ({ ...prev, trapActive: false }));
+      };
+    }
+  }, [active, focusTrapConfig, trackFocus]);
+
+  // Return focus when modal closes
+  useEffect(() => {
+    if (!active && focusTrapConfig.returnFocus && buttonRef.current) {
+      // Small delay to ensure modal is fully closed
+      setTimeout(() => {
+        buttonRef.current?.focus();
+        trackFocus(buttonRef.current, 'close');
+      }, 100);
+    }
+  }, [active, focusTrapConfig.returnFocus, trackFocus]);
+
+  // Handle modal toggle
   const handleToggle = useCallback(() => {
     const newState = !active;
     setActive(newState);
+
     if (!newState) {
       onModalClose?.();
     }
   }, [active, onModalClose]);
 
+  // Handle input changes with focus tracking
+  const handleInputChange = useCallback((value: string) => {
+    setInputValue(value);
+    if (firstFocusableRef.current) {
+      trackFocus(firstFocusableRef.current, 'user');
+    }
+  }, [trackFocus]);
+
   return (
     <>
-      <Button onClick={handleToggle} ref={buttonRef}>
+      <Button
+        onClick={handleToggle}
+        ref={buttonRef}
+        ariaLabel="Open accessible modal with focus management"
+      >
         Open Accessible Modal
       </Button>
       <Modal
@@ -7865,13 +8747,22 @@ function BackdropAccessibilityFocus({
         title={modalTitle}
       >
         <Modal.Section>
-          <TextField
-            label="Name"
-            value={inputValue}
-            onChange={setInputValue}
-            autoFocus={autoFocusField}
-            autoComplete="off"
-          />
+          <div
+            ref={modalRef}
+            role={accessibility.role}
+            aria-label={accessibility.ariaLabel}
+            tabIndex={accessibility.tabIndex}
+          >
+            <TextField
+              label="Name"
+              value={inputValue}
+              onChange={handleInputChange}
+              autoFocus={autoFocusField}
+              autoComplete="off"
+              ref={firstFocusableRef}
+              helpText={\`Focus trap: \${focusState.trapActive ? 'Active' : 'Inactive'} | Focus history: \${focusState.history.length} entries\`}
+            />
+          </div>
         </Modal.Section>
       </Modal>
     </>
@@ -34886,39 +35777,217 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, BlockStack } from '@shopify/polaris';
-import React from 'react';
-import type { CSSProperties } from 'react';
+import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-interface MultiLineTruncationProps {
-  text?: string;
-  maxWidth?: string;
-  lineClamp?: number;
+/**
+ * Line clamp configuration range
+ * @type LineClampValue
+ */
+type LineClampValue = 1 | 2 | 3 | 4 | 5 | 6 | number;
+
+/**
+ * Truncation detection result
+ * @interface TruncationDetection
+ */
+interface TruncationDetection {
+  readonly isTruncated: boolean;
+  readonly visibleLines: number;
+  readonly totalHeight: number;
+  readonly lineHeight: number;
 }
 
-function MultiLineTruncation({
+/**
+ * Multi-line truncation configuration
+ * @interface MultiLineTruncationConfig
+ */
+interface MultiLineTruncationConfig {
+  readonly maxWidth: string;
+  readonly lineClamp: LineClampValue;
+  readonly enableDetection: boolean;
+  readonly animateExpansion: boolean;
+}
+
+/**
+ * Props for MultiLineTruncation component
+ * @interface MultiLineTruncationProps
+ */
+interface MultiLineTruncationProps {
+  /** Text content to display and potentially truncate */
+  text?: string;
+  /** Maximum width of the container */
+  maxWidth?: string | number;
+  /** Number of lines before truncation */
+  lineClamp?: LineClampValue;
+  /** Enable truncation detection */
+  detectTruncation?: boolean;
+  /** Callback when truncation state changes */
+  onTruncationChange?: (detection: TruncationDetection) => void;
+  /** Show expand/collapse toggle */
+  showToggle?: boolean;
+}
+
+/**
+ * Type guard to validate line clamp value
+ * @param value - The value to check
+ * @returns True if the value is a valid line clamp number
+ */
+const isValidLineClamp = (value: number): value is LineClampValue => {
+  return Number.isInteger(value) && value > 0 && value <= 10;
+};
+
+/**
+ * Normalizes width value to CSS string
+ * @param width - Width value (string or number)
+ * @returns Normalized CSS width string
+ */
+const normalizeWidth = (width: string | number | undefined): string => {
+  if (width === undefined) return '300px';
+  return typeof width === 'number' ? \`\${width}px\` : width;
+};
+
+/**
+ * Creates truncation style configuration
+ * @param config - Truncation configuration
+ * @returns CSS properties for multi-line truncation
+ */
+const createTruncationStyle = (config: MultiLineTruncationConfig): CSSProperties => ({
+  maxWidth: config.maxWidth,
+  display: '-webkit-box',
+  WebkitLineClamp: config.lineClamp,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  transition: config.animateExpansion ? 'max-height 0.3s ease-in-out' : undefined
+});
+
+/**
+ * MultiLineTruncation component with comprehensive truncation detection
+ * Demonstrates multi-line text truncation with optional expand/collapse functionality
+ */
+const MultiLineTruncation: React.FC<MultiLineTruncationProps> = ({
   text = 'This is a longer text that will be truncated after three lines. The text continues beyond the visible area. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   maxWidth = '300px',
-  lineClamp = 3
-}: MultiLineTruncationProps): JSX.Element {
-  const truncateStyle: CSSProperties = {
-    maxWidth,
-    display: '-webkit-box',
-    WebkitLineClamp: lineClamp,
-    WebkitBoxOrient: 'vertical',
-    overflow: 'hidden'
+  lineClamp = 3,
+  detectTruncation = false,
+  onTruncationChange,
+  showToggle = false
+}): JSX.Element => {
+  const textRef = useRef<HTMLDivElement>(null);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [detection, setDetection] = useState<TruncationDetection | null>(null);
+
+  /**
+   * Validated and normalized configuration
+   */
+  const config = useMemo<MultiLineTruncationConfig>(() => {
+    const validLineClamp = isValidLineClamp(lineClamp) ? lineClamp : 3;
+
+    return {
+      maxWidth: normalizeWidth(maxWidth),
+      lineClamp: validLineClamp,
+      enableDetection: detectTruncation,
+      animateExpansion: showToggle
+    };
+  }, [maxWidth, lineClamp, detectTruncation, showToggle]);
+
+  /**
+   * Truncation style with expansion support
+   */
+  const truncateStyle = useMemo<CSSProperties>(() => {
+    const baseStyle = createTruncationStyle(config);
+
+    if (isExpanded) {
+      return {
+        ...baseStyle,
+        WebkitLineClamp: 'unset' as any,
+        maxHeight: 'none'
+      };
+    }
+
+    return baseStyle;
+  }, [config, isExpanded]);
+
+  /**
+   * Detect if text is actually truncated
+   */
+  const detectTextTruncation = useCallback((): TruncationDetection | null => {
+    if (!textRef.current) return null;
+
+    const element = textRef.current;
+    const computedStyle = window.getComputedStyle(element);
+    const lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+    const totalHeight = element.scrollHeight;
+    const visibleHeight = element.clientHeight;
+    const visibleLines = Math.floor(visibleHeight / lineHeight);
+
+    return {
+      isTruncated: totalHeight > visibleHeight,
+      visibleLines,
+      totalHeight,
+      lineHeight
+    };
+  }, []);
+
+  /**
+   * Effect to detect truncation on mount and text changes
+   */
+  useEffect(() => {
+    if (config.enableDetection && textRef.current) {
+      const result = detectTextTruncation();
+      if (result) {
+        setDetection(result);
+        if (onTruncationChange) {
+          onTruncationChange(result);
+        }
+      }
+    }
+  }, [config.enableDetection, text, detectTextTruncation, onTruncationChange]);
+
+  /**
+   * Handle toggle expansion
+   */
+  const handleToggle = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
+  /**
+   * Render toggle button if needed
+   */
+  const renderToggleButton = (): ReactNode => {
+    if (!showToggle || !detection?.isTruncated) return null;
+
+    return (
+      <button
+        onClick={handleToggle}
+        style={{
+          marginTop: '8px',
+          background: 'none',
+          border: 'none',
+          color: '#007ace',
+          cursor: 'pointer',
+          fontSize: '14px',
+          padding: '4px 0'
+        }}
+      >
+        {isExpanded ? 'Show less' : 'Show more'}
+      </button>
+    );
   };
 
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Multi-line Truncation</Text>
-      <div style={truncateStyle}>
-        <Text variant="bodyMd">
-          {text}
-        </Text>
+      <div>
+        <div ref={textRef} style={truncateStyle}>
+          <Text variant="bodyMd">
+            {text}
+          </Text>
+        </div>
+        {renderToggleButton()}
       </div>
     </BlockStack>
   );
-}
+};
 
 export default MultiLineTruncation;`,
   },
@@ -50032,35 +51101,103 @@ on(input, 'blur', (e) => {
 import {useState, useCallback} from 'react';
 
 interface AccessibilityDemoProps {
-  onPhoneChange?: (phone: string, isValid: boolean) => void;
-  validatePhone?: (phone: string) => boolean;
+  onPhoneChange?: PhoneChangeHandler;
+  customValidator?: PhoneValidator;
+  countryCode?: string;
 }
+
+interface PhoneValidation {
+  isValid: boolean;
+  errorCode?: PhoneErrorCode;
+  formattedNumber?: string;
+}
+
+interface PhoneState {
+  raw: string;
+  formatted: string;
+  error: string;
+  touched: boolean;
+}
+
+enum PhoneErrorCode {
+  Required = 'REQUIRED',
+  InvalidFormat = 'INVALID_FORMAT',
+  TooShort = 'TOO_SHORT'
+}
+
+type PhoneChangeHandler = (phone: string, validation: PhoneValidation) => void;
+type PhoneValidator = (phone: string) => PhoneValidation;
+type PhoneFormatter = (phone: string) => string;
+
+const PHONE_REGEX = /^\+?[1-9]\d{1,14}$/;
+
+const formatPhoneNumber: PhoneFormatter = (phone: string): string => {
+  const cleaned = phone.replace(/[\s()-]/g, '');
+  if (cleaned.startsWith('+1') && cleaned.length === 12) {
+    return \`+1 (\${cleaned.slice(2, 5)}) \${cleaned.slice(5, 8)}-\${cleaned.slice(8)}\`;
+  }
+  return phone;
+};
 
 function AccessibilityDemo({
   onPhoneChange,
-  validatePhone
+  customValidator,
+  countryCode = '+1'
 }: AccessibilityDemoProps): JSX.Element {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [state, setState] = useState<PhoneState>({
+    raw: '',
+    formatted: '',
+    error: '',
+    touched: false
+  });
 
-  const defaultValidatePhone = useCallback((phone: string): boolean => {
-    return /^\+?[1-9]\d{1,14}$/.test(phone.replace(/[\s()-]/g, ''));
-  }, []);
-
-  const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    const isValid = validatePhone
-      ? validatePhone(newValue)
-      : defaultValidatePhone(newValue);
-
-    if (!isValid && newValue.length > 0) {
-      setError('Please enter a valid phone number');
-    } else {
-      setError('');
+  const validatePhone: PhoneValidator = useCallback((phone: string): PhoneValidation => {
+    if (customValidator) {
+      return customValidator(phone);
     }
 
-    onPhoneChange?.(newValue, isValid);
-  }, [validatePhone, defaultValidatePhone, onPhoneChange]);
+    const cleaned = phone.replace(/[\s()-]/g, '');
+
+    if (!cleaned) {
+      return { isValid: false, errorCode: PhoneErrorCode.Required };
+    }
+
+    if (cleaned.length < 10) {
+      return { isValid: false, errorCode: PhoneErrorCode.TooShort };
+    }
+
+    if (!PHONE_REGEX.test(cleaned)) {
+      return { isValid: false, errorCode: PhoneErrorCode.InvalidFormat };
+    }
+
+    return { isValid: true, formattedNumber: formatPhoneNumber(cleaned) };
+  }, [customValidator]);
+
+  const getErrorMessage = (errorCode?: PhoneErrorCode): string => {
+    switch (errorCode) {
+      case PhoneErrorCode.Required:
+        return 'Phone number is required';
+      case PhoneErrorCode.TooShort:
+        return 'Phone number is too short';
+      case PhoneErrorCode.InvalidFormat:
+        return 'Please enter a valid phone number';
+      default:
+        return '';
+    }
+  };
+
+  const handleChange = useCallback((newValue: string): void => {
+    const validation = validatePhone(newValue);
+
+    setState({
+      raw: newValue,
+      formatted: validation.formattedNumber || newValue,
+      error: getErrorMessage(validation.errorCode),
+      touched: true
+    });
+
+    onPhoneChange?.(newValue, validation);
+  }, [validatePhone, onPhoneChange]);
 
   return (
     <Labelled
@@ -50068,15 +51205,15 @@ function AccessibilityDemo({
       label="Phone number"
       helpText="Include country code"
       requiredIndicator
-      error={error}
+      error={state.touched ? state.error : undefined}
     >
       <TextField
         type="tel"
-        value={value}
+        value={state.raw}
         onChange={handleChange}
         autoComplete="tel"
         placeholder="+1 (555) 123-4567"
-        error={Boolean(error)}
+        error={Boolean(state.touched && state.error)}
       />
     </Labelled>
   );
@@ -50222,9 +51359,22 @@ function validatePassword(e) {
     typescript: `import {Labelled, TextField, FormLayout} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
+interface LabelBestPracticesProps {
+  onSubmit?: FormSubmitHandler;
+  validateOnChange?: boolean;
+  customValidators?: CustomValidators;
+}
+
 interface FormData {
   email: string;
   password: string;
+}
+
+interface FormState {
+  data: FormData;
+  errors: ValidationErrors;
+  touched: TouchedFields;
+  isValid: boolean;
 }
 
 interface ValidationErrors {
@@ -50232,50 +51382,115 @@ interface ValidationErrors {
   password?: string;
 }
 
-interface LabelBestPracticesProps {
-  onSubmit?: (data: FormData) => void;
-  validateOnChange?: boolean;
+interface TouchedFields {
+  email: boolean;
+  password: boolean;
 }
+
+interface FieldValidationResult {
+  isValid: boolean;
+  errorMessage?: string;
+}
+
+interface CustomValidators {
+  email?: FieldValidator;
+  password?: FieldValidator;
+}
+
+type FieldValidator = (value: string) => FieldValidationResult;
+type FormSubmitHandler = (data: FormData, isValid: boolean) => void;
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LabelBestPractices({
   onSubmit,
-  validateOnChange = true
+  validateOnChange = true,
+  customValidators
 }: LabelBestPracticesProps): JSX.Element {
-  const [formData, setFormData] = useState<FormData>({
-    email: '',
-    password: ''
+  const [state, setState] = useState<FormState>({
+    data: { email: '', password: '' },
+    errors: {},
+    touched: { email: false, password: false },
+    isValid: false
   });
-  const [errors, setErrors] = useState<ValidationErrors>({});
 
-  const validateEmail = useCallback((email: string): string | undefined => {
-    if (!email) return 'Email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return 'Please enter a valid email address';
+  const validateEmail: FieldValidator = useCallback((email: string): FieldValidationResult => {
+    if (customValidators?.email) {
+      return customValidators.email(email);
     }
-    return undefined;
-  }, []);
 
-  const validatePassword = useCallback((password: string): string | undefined => {
-    if (!password) return 'Password is required';
-    if (password.length < 8) return 'Password must be at least 8 characters';
-    if (!/\d/.test(password)) return 'Password must contain a number';
-    if (!/[!@#$%^&*]/.test(password)) return 'Password must contain a symbol';
-    return undefined;
-  }, []);
-
-  const handleEmailChange = useCallback((newEmail: string) => {
-    setFormData(prev => ({...prev, email: newEmail}));
-    if (validateOnChange) {
-      setErrors(prev => ({...prev, email: validateEmail(newEmail)}));
+    if (!email) {
+      return { isValid: false, errorMessage: 'Email is required' };
     }
-  }, [validateOnChange, validateEmail]);
 
-  const handlePasswordChange = useCallback((newPassword: string) => {
-    setFormData(prev => ({...prev, password: newPassword}));
-    if (validateOnChange) {
-      setErrors(prev => ({...prev, password: validatePassword(newPassword)}));
+    if (!EMAIL_REGEX.test(email)) {
+      return { isValid: false, errorMessage: 'Please enter a valid email address' };
     }
-  }, [validateOnChange, validatePassword]);
+
+    return { isValid: true };
+  }, [customValidators]);
+
+  const validatePassword: FieldValidator = useCallback((password: string): FieldValidationResult => {
+    if (customValidators?.password) {
+      return customValidators.password(password);
+    }
+
+    if (!password) {
+      return { isValid: false, errorMessage: 'Password is required' };
+    }
+
+    if (password.length < 8) {
+      return { isValid: false, errorMessage: 'Password must be at least 8 characters' };
+    }
+
+    if (!/\d/.test(password)) {
+      return { isValid: false, errorMessage: 'Password must contain a number' };
+    }
+
+    if (!/[!@#$%^&*]/.test(password)) {
+      return { isValid: false, errorMessage: 'Password must contain a symbol' };
+    }
+
+    return { isValid: true };
+  }, [customValidators]);
+
+  const validateForm = useCallback((data: FormData): boolean => {
+    const emailValidation = validateEmail(data.email);
+    const passwordValidation = validatePassword(data.password);
+    return emailValidation.isValid && passwordValidation.isValid;
+  }, [validateEmail, validatePassword]);
+
+  const handleEmailChange = useCallback((newEmail: string): void => {
+    const emailValidation = validateEmail(newEmail);
+    const newData: FormData = { ...state.data, email: newEmail };
+
+    setState(prev => ({
+      data: newData,
+      errors: validateOnChange
+        ? { ...prev.errors, email: emailValidation.errorMessage }
+        : prev.errors,
+      touched: { ...prev.touched, email: true },
+      isValid: validateForm(newData)
+    }));
+  }, [state.data, validateOnChange, validateEmail, validateForm]);
+
+  const handlePasswordChange = useCallback((newPassword: string): void => {
+    const passwordValidation = validatePassword(newPassword);
+    const newData: FormData = { ...state.data, password: newPassword };
+
+    setState(prev => ({
+      data: newData,
+      errors: validateOnChange
+        ? { ...prev.errors, password: passwordValidation.errorMessage }
+        : prev.errors,
+      touched: { ...prev.touched, password: true },
+      isValid: validateForm(newData)
+    }));
+
+    if (state.isValid && onSubmit) {
+      onSubmit(newData, state.isValid);
+    }
+  }, [state.data, state.isValid, validateOnChange, validatePassword, validateForm, onSubmit]);
 
   return (
     <FormLayout>
@@ -50284,14 +51499,14 @@ function LabelBestPractices({
         label="Email address"
         helpText="We'll never share your email"
         requiredIndicator
-        error={errors.email}
+        error={state.touched.email ? state.errors.email : undefined}
       >
         <TextField
           type="email"
-          value={formData.email}
+          value={state.data.email}
           onChange={handleEmailChange}
           autoComplete="email"
-          error={Boolean(errors.email)}
+          error={Boolean(state.touched.email && state.errors.email)}
         />
       </Labelled>
 
@@ -50300,14 +51515,14 @@ function LabelBestPractices({
         label="Password"
         helpText="At least 8 characters with numbers and symbols"
         requiredIndicator
-        error={errors.password}
+        error={state.touched.password ? state.errors.password : undefined}
       >
         <TextField
           type="password"
-          value={formData.password}
+          value={state.data.password}
           onChange={handlePasswordChange}
           autoComplete="new-password"
-          error={Boolean(errors.password)}
+          error={Boolean(state.touched.password && state.errors.password)}
         />
       </Labelled>
     </FormLayout>
@@ -50363,25 +51578,74 @@ Ext.create('Ext.form.field.Text', {
   }
 });`,
     typescript: `import {InlineError} from '@shopify/polaris';
+import {ReactElement} from 'react';
 
-interface InlineErrorExampleProps {
-  message?: string;
+// Error severity levels
+type ErrorSeverity = 'error' | 'warning' | 'info';
+
+// Error state interface
+interface FieldError {
+  message: string;
+  severity: ErrorSeverity;
+  fieldID: string;
+  timestamp?: Date;
+}
+
+// Error tracking for analytics
+interface ErrorMetrics {
+  errorCount: number;
+  firstOccurred: Date;
+  lastOccurred: Date;
   fieldID: string;
 }
 
+// Props with comprehensive error configuration
+interface InlineErrorExampleProps {
+  error: FieldError;
+  onErrorDisplay?: (error: FieldError) => void;
+  trackMetrics?: boolean;
+  ariaLive?: 'polite' | 'assertive';
+}
+
+// Error display component with full typing
 function InlineErrorExample({
-  message = 'Store name is required',
-  fieldID
-}: InlineErrorExampleProps): JSX.Element {
+  error,
+  onErrorDisplay,
+  trackMetrics = false,
+  ariaLive = 'polite'
+}: InlineErrorExampleProps): ReactElement {
+  const metrics: ErrorMetrics = {
+    errorCount: 1,
+    firstOccurred: error.timestamp || new Date(),
+    lastOccurred: error.timestamp || new Date(),
+    fieldID: error.fieldID
+  };
+
+  // Track error display
+  if (trackMetrics && onErrorDisplay) {
+    onErrorDisplay(error);
+  }
+
   return (
-    <InlineError
-      message={message}
-      fieldID={fieldID}
-    />
+    <div role="alert" aria-live={ariaLive}>
+      <InlineError
+        message={error.message}
+        fieldID={error.fieldID}
+      />
+    </div>
   );
 }
 
-export default InlineErrorExample;`
+// Example usage with typed error
+const exampleError: FieldError = {
+  message: 'Store name is required',
+  severity: 'error',
+  fieldID: 'store-name',
+  timestamp: new Date()
+};
+
+export default InlineErrorExample;
+export type { FieldError, ErrorSeverity, ErrorMetrics };`
   },
 
   withtextfield: {
