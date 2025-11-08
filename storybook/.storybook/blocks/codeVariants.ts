@@ -57873,6 +57873,1342 @@ export default TextFieldExamples;`
   }
 };
 
+// Form Component Examples
+export const formExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Form, FormLayout, TextField, Checkbox, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function FormExample() {
+  const [email, setEmail] = useState('');
+  const [newsletter, setNewsletter] = useState(false);
+
+  const handleSubmit = useCallback(() => {
+    console.log('Form submitted:', { email, newsletter });
+    alert(\`Submitted! Email: \${email}\`);
+  }, [email, newsletter]);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Email address"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          autoComplete="email"
+          required
+        />
+        <Checkbox
+          label="Subscribe to newsletter"
+          checked={newsletter}
+          onChange={setNewsletter}
+        />
+        <Button submit>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}
+
+export default FormExample;`,
+
+    vanilla: `<!-- HTML Form Structure -->
+<form id="contact-form" class="polaris-form">
+  <div class="form-field">
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+
+  <div class="form-field">
+    <label>
+      <input type="checkbox" id="newsletter" name="newsletter">
+      Subscribe to newsletter
+    </label>
+  </div>
+
+  <button type="submit" class="polaris-button polaris-button--primary">
+    Submit
+  </button>
+</form>
+
+<script>
+import { $, on, EventBus } from '@cin7/vanilla-js';
+
+const form = $('#contact-form');
+
+on(form, 'submit', (e) => {
+  e.preventDefault();
+
+  const formData = {
+    email: $('#email').value,
+    newsletter: $('#newsletter').checked
+  };
+
+  // Emit form submission event
+  EventBus.emit('form:submit', formData);
+
+  console.log('Form submitted:', formData);
+  alert(\`Submitted! Email: \${formData.email}\`);
+});
+</script>`,
+
+    extjs: `// ExtJS Form Panel with validation
+Ext.create('Ext.form.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Contact Form',
+  width: 400,
+  bodyPadding: 10,
+
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Email address',
+      name: 'email',
+      vtype: 'email',
+      allowBlank: false
+    },
+    {
+      xtype: 'checkboxfield',
+      fieldLabel: 'Newsletter',
+      name: 'newsletter',
+      inputValue: 'yes'
+    }
+  ],
+
+  buttons: [
+    {
+      text: 'Submit',
+      formBind: true,
+      handler: function() {
+        const form = this.up('form').getForm();
+        if (form.isValid()) {
+          const values = form.getValues();
+          console.log('Form submitted:', values);
+          Ext.Msg.alert('Success', 'Form submitted: ' + values.email);
+        }
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Checkbox, Button, FormProps } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface FormData {
+  email: string;
+  newsletter: boolean;
+}
+
+interface FormExampleProps {
+  onSubmit?: (data: FormData) => void;
+  initialData?: Partial<FormData>;
+}
+
+function FormExample({ onSubmit, initialData = {} }: FormExampleProps): JSX.Element {
+  const [email, setEmail] = useState<string>(initialData.email || '');
+  const [newsletter, setNewsletter] = useState<boolean>(initialData.newsletter || false);
+
+  const handleSubmit = useCallback<FormProps['onSubmit']>(() => {
+    const formData: FormData = { email, newsletter };
+    console.log('Form submitted:', formData);
+    onSubmit?.(formData);
+  }, [email, newsletter, onSubmit]);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Email address"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          autoComplete="email"
+          required
+        />
+        <Checkbox
+          label="Subscribe to newsletter"
+          checked={newsletter}
+          onChange={setNewsletter}
+        />
+        <Button submit>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}
+
+export default FormExample;`,
+  },
+
+  'with-validation': {
+    react: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function FormWithValidation() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const validateEmail = (value) => {
+    if (!value) return 'Email is required';
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)) {
+      return 'Please enter a valid email';
+    }
+    return '';
+  };
+
+  const validatePassword = (value) => {
+    if (!value) return 'Password is required';
+    if (value.length < 8) return 'Password must be at least 8 characters';
+    return '';
+  };
+
+  const handleSubmit = useCallback(() => {
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+
+    if (emailError || passwordError) {
+      setErrors({ email: emailError, password: passwordError });
+      return;
+    }
+
+    alert('Form validated and submitted!');
+    setErrors({});
+  }, [email, password]);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          error={errors.email}
+          required
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          error={errors.password}
+          required
+        />
+        <Button submit primary>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+
+    vanilla: `<form id="validated-form">
+  <div class="form-field">
+    <label for="email">Email</label>
+    <input type="email" id="email" required>
+    <span class="error" id="email-error"></span>
+  </div>
+
+  <div class="form-field">
+    <label for="password">Password</label>
+    <input type="password" id="password" required>
+    <span class="error" id="password-error"></span>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const form = $('#validated-form');
+
+function validateEmail(value) {
+  if (!value) return 'Email is required';
+  if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)) {
+    return 'Please enter a valid email';
+  }
+  return '';
+}
+
+function validatePassword(value) {
+  if (!value) return 'Password is required';
+  if (value.length < 8) return 'Password must be at least 8 characters';
+  return '';
+}
+
+on(form, 'submit', (e) => {
+  e.preventDefault();
+
+  const email = $('#email').value;
+  const password = $('#password').value;
+
+  const emailError = validateEmail(email);
+  const passwordError = validatePassword(password);
+
+  $('#email-error').textContent = emailError;
+  $('#password-error').textContent = passwordError;
+
+  if (!emailError && !passwordError) {
+    alert('Form validated and submitted!');
+  }
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Email',
+      name: 'email',
+      vtype: 'email',
+      allowBlank: false,
+      msgTarget: 'under'
+    },
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Password',
+      inputType: 'password',
+      name: 'password',
+      allowBlank: false,
+      minLength: 8,
+      minLengthText: 'Password must be at least 8 characters',
+      msgTarget: 'under'
+    }
+  ],
+  buttons: [{
+    text: 'Submit',
+    formBind: true,
+    handler: function() {
+      const form = this.up('form').getForm();
+      if (form.isValid()) {
+        Ext.Msg.alert('Success', 'Form validated!');
+      }
+    }
+  }]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface ValidationErrors {
+  email?: string;
+  password?: string;
+}
+
+function FormWithValidation(): JSX.Element {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errors, setErrors] = useState<ValidationErrors>({});
+
+  const validateEmail = (value: string): string => {
+    if (!value) return 'Email is required';
+    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)) {
+      return 'Please enter a valid email';
+    }
+    return '';
+  };
+
+  const validatePassword = (value: string): string => {
+    if (!value) return 'Password is required';
+    if (value.length < 8) return 'Password must be at least 8 characters';
+    return '';
+  };
+
+  const handleSubmit = useCallback(() => {
+    const newErrors: ValidationErrors = {};
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+
+    if (emailError) newErrors.email = emailError;
+    if (passwordError) newErrors.password = passwordError;
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      alert('Form validated and submitted!');
+    }
+  }, [email, password]);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          error={errors.email}
+          required
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          error={errors.password}
+          required
+        />
+        <Button submit primary>Submit</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+  },
+
+  'server-validation': {
+    react: `import { Form, FormLayout, TextField, Button, Banner } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function ServerValidationForm() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState('');
+
+  const handleSubmit = useCallback(async () => {
+    setIsSubmitting(true);
+    setErrors({});
+    setServerError('');
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrors(data.errors || {});
+        setServerError('Please fix the errors and try again');
+      } else {
+        alert('Registration successful!');
+      }
+    } catch (error) {
+      setServerError('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [username, email]);
+
+  return (
+    <>
+      {serverError && (
+        <Banner tone="critical" onDismiss={() => setServerError('')}>
+          {serverError}
+        </Banner>
+      )}
+
+      <Form onSubmit={handleSubmit}>
+        <FormLayout>
+          <TextField
+            label="Username"
+            value={username}
+            onChange={setUsername}
+            error={errors.username}
+            disabled={isSubmitting}
+          />
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={setEmail}
+            error={errors.email}
+            disabled={isSubmitting}
+          />
+          <Button submit primary loading={isSubmitting}>
+            Register
+          </Button>
+        </FormLayout>
+      </Form>
+    </>
+  );
+}`,
+
+    vanilla: `<div id="banner-container"></div>
+<form id="server-form">
+  <input type="text" id="username" placeholder="Username">
+  <span id="username-error"></span>
+
+  <input type="email" id="email" placeholder="Email">
+  <span id="email-error"></span>
+
+  <button type="submit" id="submit-btn">Register</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const form = $('#server-form');
+const submitBtn = $('#submit-btn');
+
+on(form, 'submit', async (e) => {
+  e.preventDefault();
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: $('#username').value,
+        email: $('#email').value
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      $('#username-error').textContent = data.errors?.username || '';
+      $('#email-error').textContent = data.errors?.email || '';
+    } else {
+      alert('Registration successful!');
+    }
+  } catch (error) {
+    alert('An error occurred');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Register';
+  }
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  items: [
+    { xtype: 'textfield', fieldLabel: 'Username', name: 'username' },
+    { xtype: 'textfield', fieldLabel: 'Email', name: 'email', vtype: 'email' }
+  ],
+  buttons: [{
+    text: 'Register',
+    handler: function() {
+      const form = this.up('form').getForm();
+      if (form.isValid()) {
+        form.submit({
+          url: '/api/register',
+          waitMsg: 'Submitting...',
+          success: function() {
+            Ext.Msg.alert('Success', 'Registration successful!');
+          },
+          failure: function(form, action) {
+            const errors = action.result?.errors || {};
+            form.getFields().each(field => {
+              if (errors[field.name]) {
+                field.markInvalid(errors[field.name]);
+              }
+            });
+          }
+        });
+      }
+    }
+  }]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Button, Banner } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface ServerErrors {
+  [key: string]: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  errors?: ServerErrors;
+}
+
+function ServerValidationForm(): JSX.Element {
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [errors, setErrors] = useState<ServerErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string>('');
+
+  const handleSubmit = useCallback(async () => {
+    setIsSubmitting(true);
+    setErrors({});
+    setServerError('');
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email })
+      });
+
+      const data: ApiResponse = await response.json();
+
+      if (!response.ok) {
+        setErrors(data.errors || {});
+        setServerError('Please fix the errors and try again');
+      } else {
+        alert('Registration successful!');
+      }
+    } catch (error) {
+      setServerError('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [username, email]);
+
+  return (
+    <>
+      {serverError && (
+        <Banner tone="critical" onDismiss={() => setServerError('')}>
+          {serverError}
+        </Banner>
+      )}
+
+      <Form onSubmit={handleSubmit}>
+        <FormLayout>
+          <TextField
+            label="Username"
+            value={username}
+            onChange={setUsername}
+            error={errors.username}
+            disabled={isSubmitting}
+          />
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            onChange={setEmail}
+            error={errors.email}
+            disabled={isSubmitting}
+          />
+          <Button submit primary loading={isSubmitting}>
+            Register
+          </Button>
+        </FormLayout>
+      </Form>
+    </>
+  );
+}`,
+  },
+
+  'implicit-submit': {
+    react: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function ImplicitSubmitForm() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState([]);
+
+  const handleSubmit = useCallback(async () => {
+    console.log('Searching for:', searchQuery);
+    // Simulate search
+    setResults(['Result 1', 'Result 2', 'Result 3']);
+  }, [searchQuery]);
+
+  return (
+    <Form onSubmit={handleSubmit} implicitSubmit>
+      <FormLayout>
+        <TextField
+          label="Search"
+          labelHidden
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Press Enter to search..."
+          type="search"
+          autoComplete="off"
+        />
+        <Button submit primary>Search</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+
+    vanilla: `<form id="search-form">
+  <input
+    type="search"
+    id="search-input"
+    placeholder="Press Enter to search..."
+    autocomplete="off"
+  >
+  <button type="submit">Search</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const form = $('#search-form');
+
+on(form, 'submit', (e) => {
+  e.preventDefault();
+  const query = $('#search-input').value;
+  console.log('Searching for:', query);
+  // Perform search
+});
+
+// Also trigger on Enter key
+on($('#search-input'), 'keypress', (e) => {
+  if (e.key === 'Enter') {
+    form.dispatchEvent(new Event('submit'));
+  }
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  items: [{
+    xtype: 'textfield',
+    fieldLabel: 'Search',
+    name: 'query',
+    emptyText: 'Press Enter to search...',
+    enableKeyEvents: true,
+    listeners: {
+      specialkey: function(field, e) {
+        if (e.getKey() === e.ENTER) {
+          this.up('form').submit();
+        }
+      }
+    }
+  }],
+  buttons: [{
+    text: 'Search',
+    handler: function() {
+      this.up('form').submit();
+    }
+  }],
+  listeners: {
+    submit: function() {
+      console.log('Searching...');
+    }
+  }
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface SearchResult {
+  id: string;
+  title: string;
+}
+
+function ImplicitSubmitForm(): JSX.Element {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [results, setResults] = useState<SearchResult[]>([]);
+
+  const handleSubmit = useCallback(async () => {
+    console.log('Searching for:', searchQuery);
+    // Simulate search
+    const mockResults: SearchResult[] = [
+      { id: '1', title: 'Result 1' },
+      { id: '2', title: 'Result 2' },
+    ];
+    setResults(mockResults);
+  }, [searchQuery]);
+
+  return (
+    <Form onSubmit={handleSubmit} implicitSubmit>
+      <FormLayout>
+        <TextField
+          label="Search"
+          labelHidden
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Press Enter to search..."
+          type="search"
+          autoComplete="off"
+        />
+        <Button submit primary>Search</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+  },
+
+  'multi-step': {
+    react: `import { Form, FormLayout, TextField, Button, ProgressBar, Badge } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function MultiStepForm() {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    name: '', email: '', phone: '', address: '', city: ''
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateStep = (currentStep) => {
+    const newErrors = {};
+    if (currentStep === 1) {
+      if (!formData.name) newErrors.name = 'Name is required';
+      if (!formData.email) newErrors.email = 'Email is required';
+    } else if (currentStep === 2) {
+      if (!formData.address) newErrors.address = 'Address is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = useCallback(() => {
+    if (validateStep(step)) setStep(step + 1);
+  }, [step, formData]);
+
+  const handleSubmit = useCallback(() => {
+    if (validateStep(step)) {
+      alert('Form completed!');
+      setStep(1);
+    }
+  }, [step, formData]);
+
+  return (
+    <>
+      <ProgressBar progress={(step / 2) * 100} size="small" />
+      <Form onSubmit={step === 2 ? handleSubmit : handleNext}>
+        <FormLayout>
+          {step === 1 && (
+            <>
+              <TextField label="Name" value={formData.name}
+                onChange={(v) => setFormData({...formData, name: v})}
+                error={errors.name} />
+              <TextField label="Email" value={formData.email}
+                onChange={(v) => setFormData({...formData, email: v})}
+                error={errors.email} />
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <TextField label="Address" value={formData.address}
+                onChange={(v) => setFormData({...formData, address: v})}
+                error={errors.address} />
+              <TextField label="City" value={formData.city}
+                onChange={(v) => setFormData({...formData, city: v})} />
+            </>
+          )}
+          <Button submit primary>{step === 2 ? 'Submit' : 'Next'}</Button>
+        </FormLayout>
+      </Form>
+    </>
+  );
+}`,
+
+    vanilla: `<div id="progress"></div>
+<form id="multi-step-form">
+  <div id="step-1" class="step">
+    <input type="text" id="name" placeholder="Name">
+    <input type="email" id="email" placeholder="Email">
+  </div>
+  <div id="step-2" class="step" style="display: none;">
+    <input type="text" id="address" placeholder="Address">
+    <input type="text" id="city" placeholder="City">
+  </div>
+  <button type="button" id="next-btn">Next</button>
+  <button type="submit" id="submit-btn" style="display: none;">Submit</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+let currentStep = 1;
+
+on($('#next-btn'), 'click', () => {
+  $('#step-1').style.display = 'none';
+  $('#step-2').style.display = 'block';
+  $('#next-btn').style.display = 'none';
+  $('#submit-btn').style.display = 'block';
+  currentStep = 2;
+});
+
+on($('#multi-step-form'), 'submit', (e) => {
+  e.preventDefault();
+  alert('Form completed!');
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  layout: 'card',
+  activeItem: 0,
+  items: [
+    {
+      title: 'Step 1',
+      items: [
+        { xtype: 'textfield', fieldLabel: 'Name', name: 'name' },
+        { xtype: 'textfield', fieldLabel: 'Email', name: 'email' }
+      ]
+    },
+    {
+      title: 'Step 2',
+      items: [
+        { xtype: 'textfield', fieldLabel: 'Address', name: 'address' },
+        { xtype: 'textfield', fieldLabel: 'City', name: 'city' }
+      ]
+    }
+  ],
+  buttons: [
+    {
+      text: 'Previous',
+      handler: function() {
+        const layout = this.up('form').getLayout();
+        layout.prev();
+      }
+    },
+    {
+      text: 'Next',
+      handler: function() {
+        const panel = this.up('form');
+        const layout = panel.getLayout();
+        const activeItem = layout.getActiveItem();
+
+        if (activeItem.isLast) {
+          panel.submit();
+        } else {
+          layout.next();
+        }
+      }
+    }
+  ]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Button, ProgressBar } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface FormData {
+  name: string;
+  email: string;
+  address: string;
+  city: string;
+}
+
+type StepErrors = Partial<Record<keyof FormData, string>>;
+
+function MultiStepForm(): JSX.Element {
+  const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState<FormData>({
+    name: '', email: '', phone: '', address: '', city: ''
+  });
+  const [errors, setErrors] = useState<StepErrors>({});
+
+  const validateStep = (currentStep: number): boolean => {
+    const newErrors: StepErrors = {};
+    if (currentStep === 1) {
+      if (!formData.name) newErrors.name = 'Name is required';
+      if (!formData.email) newErrors.email = 'Email is required';
+    } else if (currentStep === 2) {
+      if (!formData.address) newErrors.address = 'Address is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = useCallback(() => {
+    if (validateStep(step)) setStep(step + 1);
+  }, [step, formData]);
+
+  const handleSubmit = useCallback(() => {
+    if (validateStep(step)) {
+      alert('Form completed!');
+      setStep(1);
+    }
+  }, [step, formData]);
+
+  return (
+    <>
+      <ProgressBar progress={(step / 2) * 100} size="small" />
+      <Form onSubmit={step === 2 ? handleSubmit : handleNext}>
+        <FormLayout>
+          {step === 1 && (
+            <>
+              <TextField
+                label="Name"
+                value={formData.name}
+                onChange={(v) => setFormData({...formData, name: v})}
+                error={errors.name}
+              />
+              <TextField
+                label="Email"
+                value={formData.email}
+                onChange={(v) => setFormData({...formData, email: v})}
+                error={errors.email}
+              />
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <TextField
+                label="Address"
+                value={formData.address}
+                onChange={(v) => setFormData({...formData, address: v})}
+                error={errors.address}
+              />
+              <TextField
+                label="City"
+                value={formData.city}
+                onChange={(v) => setFormData({...formData, city: v})}
+              />
+            </>
+          )}
+          <Button submit primary>{step === 2 ? 'Submit' : 'Next'}</Button>
+        </FormLayout>
+      </Form>
+    </>
+  );
+}`,
+  },
+
+  'with-layout': {
+    react: `import { Form, FormLayout, TextField, Select, Button } from '@shopify/polaris';
+import { useState } from 'react';
+
+function FormWithLayout() {
+  const [formData, setFormData] = useState({
+    name: '', sku: '', price: '', category: '', description: ''
+  });
+
+  const handleSubmit = () => {
+    console.log('Product saved:', formData);
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Product name"
+          value={formData.name}
+          onChange={(v) => setFormData({...formData, name: v})}
+        />
+
+        <FormLayout.Group>
+          <TextField
+            label="SKU"
+            value={formData.sku}
+            onChange={(v) => setFormData({...formData, sku: v})}
+          />
+          <Select
+            label="Category"
+            options={[
+              {label: 'Electronics', value: 'electronics'},
+              {label: 'Clothing', value: 'clothing'}
+            ]}
+            value={formData.category}
+            onChange={(v) => setFormData({...formData, category: v})}
+          />
+        </FormLayout.Group>
+
+        <TextField
+          label="Price"
+          type="number"
+          value={formData.price}
+          onChange={(v) => setFormData({...formData, price: v})}
+          prefix="$"
+        />
+
+        <TextField
+          label="Description"
+          multiline={4}
+          value={formData.description}
+          onChange={(v) => setFormData({...formData, description: v})}
+        />
+
+        <Button submit primary>Save Product</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+
+    vanilla: `<form id="product-form">
+  <input type="text" id="name" placeholder="Product name">
+
+  <div class="form-group">
+    <input type="text" id="sku" placeholder="SKU">
+    <select id="category">
+      <option value="electronics">Electronics</option>
+      <option value="clothing">Clothing</option>
+    </select>
+  </div>
+
+  <input type="number" id="price" placeholder="Price" step="0.01">
+
+  <textarea id="description" rows="4" placeholder="Description"></textarea>
+
+  <button type="submit">Save Product</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+on($('#product-form'), 'submit', (e) => {
+  e.preventDefault();
+  const formData = {
+    name: $('#name').value,
+    sku: $('#sku').value,
+    category: $('#category').value,
+    price: $('#price').value,
+    description: $('#description').value
+  };
+  console.log('Product saved:', formData);
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  title: 'Product Details',
+  bodyPadding: 10,
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Product name',
+      name: 'name',
+      anchor: '100%'
+    },
+    {
+      xtype: 'fieldcontainer',
+      layout: 'hbox',
+      items: [
+        {
+          xtype: 'textfield',
+          fieldLabel: 'SKU',
+          name: 'sku',
+          flex: 1
+        },
+        {
+          xtype: 'combo',
+          fieldLabel: 'Category',
+          name: 'category',
+          store: ['Electronics', 'Clothing'],
+          flex: 1
+        }
+      ]
+    },
+    {
+      xtype: 'numberfield',
+      fieldLabel: 'Price',
+      name: 'price',
+      decimalPrecision: 2
+    },
+    {
+      xtype: 'textareafield',
+      fieldLabel: 'Description',
+      name: 'description',
+      rows: 4
+    }
+  ],
+  buttons: [{
+    text: 'Save Product',
+    handler: function() {
+      const values = this.up('form').getValues();
+      console.log('Product saved:', values);
+    }
+  }]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Select, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+interface ProductData {
+  name: string;
+  sku: string;
+  price: string;
+  category: string;
+  description: string;
+}
+
+function FormWithLayout(): JSX.Element {
+  const [formData, setFormData] = useState<ProductData>({
+    name: '', sku: '', price: '', category: '', description: ''
+  });
+
+  const handleSubmit = useCallback(() => {
+    console.log('Product saved:', formData);
+  }, [formData]);
+
+  const updateField = <K extends keyof ProductData>(field: K, value: ProductData[K]) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Product name"
+          value={formData.name}
+          onChange={(v) => updateField('name', v)}
+        />
+
+        <FormLayout.Group>
+          <TextField
+            label="SKU"
+            value={formData.sku}
+            onChange={(v) => updateField('sku', v)}
+          />
+          <Select
+            label="Category"
+            options={[
+              {label: 'Electronics', value: 'electronics'},
+              {label: 'Clothing', value: 'clothing'}
+            ]}
+            value={formData.category}
+            onChange={(v) => updateField('category', v)}
+          />
+        </FormLayout.Group>
+
+        <TextField
+          label="Price"
+          type="number"
+          value={formData.price}
+          onChange={(v) => updateField('price', v)}
+          prefix="$"
+        />
+
+        <TextField
+          label="Description"
+          multiline={4}
+          value={formData.description}
+          onChange={(v) => updateField('description', v)}
+        />
+
+        <Button submit primary>Save Product</Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+  },
+
+  'disabled': {
+    react: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState } from 'react';
+
+function DisabledForm() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    alert('Published!');
+    setIsLoading(false);
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Title"
+          value={title}
+          onChange={setTitle}
+          disabled={isLoading}
+          required
+        />
+        <TextField
+          label="Content"
+          multiline={8}
+          value={content}
+          onChange={setContent}
+          disabled={isLoading}
+          required
+        />
+        <Button submit primary loading={isLoading} disabled={isLoading}>
+          {isLoading ? 'Publishing...' : 'Publish'}
+        </Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+
+    vanilla: `<form id="publish-form">
+  <input type="text" id="title" placeholder="Title" required>
+  <textarea id="content" rows="8" placeholder="Content" required></textarea>
+  <button type="submit" id="publish-btn">Publish</button>
+</form>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const form = $('#publish-form');
+const btn = $('#publish-btn');
+const inputs = form.querySelectorAll('input, textarea');
+
+on(form, 'submit', async (e) => {
+  e.preventDefault();
+
+  btn.disabled = true;
+  btn.textContent = 'Publishing...';
+  inputs.forEach(input => input.disabled = true);
+
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  alert('Published!');
+  btn.disabled = false;
+  btn.textContent = 'Publish';
+  inputs.forEach(input => input.disabled = false);
+});
+</script>`,
+
+    extjs: `Ext.create('Ext.form.Panel', {
+  items: [
+    { xtype: 'textfield', fieldLabel: 'Title', name: 'title' },
+    { xtype: 'textareafield', fieldLabel: 'Content', name: 'content', rows: 8 }
+  ],
+  buttons: [{
+    text: 'Publish',
+    handler: function() {
+      const form = this.up('form');
+      const btn = this;
+
+      // Disable form
+      form.setLoading('Publishing...');
+      btn.disable();
+
+      // Simulate API call
+      setTimeout(() => {
+        Ext.Msg.alert('Success', 'Published!');
+        form.setLoading(false);
+        btn.enable();
+      }, 2000);
+    }
+  }]
+});`,
+
+    typescript: `import { Form, FormLayout, TextField, Button } from '@shopify/polaris';
+import { useState, useCallback } from 'react';
+
+function DisabledForm(): JSX.Element {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+
+  const handleSubmit = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      alert('Published!');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <FormLayout>
+        <TextField
+          label="Title"
+          value={title}
+          onChange={setTitle}
+          disabled={isLoading}
+          required
+        />
+        <TextField
+          label="Content"
+          multiline={8}
+          value={content}
+          onChange={setContent}
+          disabled={isLoading}
+          required
+        />
+        <Button submit primary loading={isLoading} disabled={isLoading}>
+          {isLoading ? 'Publishing...' : 'Publish'}
+        </Button>
+      </FormLayout>
+    </Form>
+  );
+}`,
+  },
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -57910,6 +59246,7 @@ export function getCodeVariants(
     colorpicker: colorPickerExamples,
     combobox: comboboxExamples,
     datepicker: datePickerExamples,
+    form: formExamples,
     formlayout: formLayoutExamples,
     rangeslider: rangeSliderExamples,
     avatar: avatarExamples,
