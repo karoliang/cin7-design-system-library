@@ -19584,11 +19584,11 @@ function TwoColumnsExample({
   const items = [
     { term: 'Product Name', description: data.productName },
     { term: 'SKU', description: data.sku },
-    { term: 'Price', description: \`$\${data.price.toFixed(2)}\` },
-    { term: 'Compare at Price', description: \`$\${data.compareAtPrice.toFixed(2)}\` },
-    { term: 'Cost per Item', description: \`$\${data.costPerItem.toFixed(2)}\` },
-    { term: 'Profit', description: \`$\${profit.toFixed(2)}\` },
-    { term: 'Margin', description: \`\${margin}%\` },
+    { term: 'Price', description: \\\`$\\\${data.price.toFixed(2)}\\\` },
+    { term: 'Compare at Price', description: \\\`$\\\${data.compareAtPrice.toFixed(2)}\\\` },
+    { term: 'Cost per Item', description: \\\`$\\\${data.costPerItem.toFixed(2)}\\\` },
+    { term: 'Profit', description: \\\`$\\\${profit.toFixed(2)}\\\` },
+    { term: 'Margin', description: \\\`\\\${margin}%\\\` },
     { term: 'Weight', description: data.weight },
   ];
 
