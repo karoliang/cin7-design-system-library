@@ -3,7 +3,7 @@ import { BarChart } from '@cin7/highcharts-adapter/react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Charts/BarChart',
+  title: 'Cin7 DSL/08 Data Visualization/Bar Chart',
   component: BarChart,
   parameters: {
     layout: 'padded',

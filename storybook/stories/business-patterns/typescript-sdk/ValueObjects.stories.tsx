@@ -156,7 +156,7 @@ class PhoneNumber {
 }
 
 const meta = {
-  title: 'Cin7 DSL/TypeScript SDK/Value Objects',
+  title: 'Cin7 DSL/04 Business Logic/TypeScript SDK - Value Objects',
   component: Card,
   parameters: {
     layout: 'centered',

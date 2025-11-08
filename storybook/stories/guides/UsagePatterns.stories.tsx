@@ -37,7 +37,7 @@ import {
 import React, { useState, useCallback } from 'react';
 
 const meta = {
-  title: 'Cin7 DSL/Guides/Usage Patterns',
+  title: 'Cin7 DSL/03 UI Patterns/Usage Patterns',
   component: Card,
   parameters: {
     layout: 'centered',

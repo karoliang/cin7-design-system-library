@@ -132,7 +132,7 @@ const ExtJSTreePanel: React.FC<{
 };
 
 const meta = {
-  title: 'Cin7 DSL/ExtJS Adapters/TreePanel',
+  title: 'Cin7 DSL/06 Enterprise Components/ExtJS - Tree Panel',
   component: ExtJSTreePanel,
   parameters: {
     layout: 'padded',

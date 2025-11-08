@@ -76,7 +76,7 @@ class OrderItem {
 }
 
 const meta = {
-  title: 'Cin7 DSL/TypeScript SDK/Domain Models',
+  title: 'Cin7 DSL/04 Business Logic/TypeScript SDK - Domain Models',
   component: Card,
   parameters: {
     layout: 'centered',

@@ -35,7 +35,7 @@ import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Cin7 DSL/Guides/Integration Examples',
+  title: 'Cin7 DSL/03 UI Patterns/Integration Examples',
   component: Page,
   parameters: {
     layout: 'fullscreen',

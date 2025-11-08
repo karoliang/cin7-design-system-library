@@ -3,7 +3,7 @@ import { LineChart } from '@cin7/highcharts-adapter/react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Charts/LineChart',
+  title: 'Cin7 DSL/08 Data Visualization/Line Chart',
   component: LineChart,
   parameters: {
     layout: 'padded',

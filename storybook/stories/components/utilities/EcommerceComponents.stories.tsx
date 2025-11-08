@@ -43,7 +43,7 @@ import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Cin7 DSL/Business Patterns/E-commerce',
+  title: 'Cin7 DSL/07 Real-World Applications/E-commerce Patterns',
   component: Card,
   parameters: {
     layout: 'centered',

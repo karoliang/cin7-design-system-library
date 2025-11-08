@@ -403,7 +403,7 @@ const InteractiveCharts: React.FC = () => {
 };
 
 const meta = {
-  title: 'Cin7 DSL/ExtJS Adapters/Chart Integration',
+  title: 'Cin7 DSL/06 Enterprise Components/ExtJS - Chart Integration',
   parameters: {
     layout: 'padded',
     codeVariants: getCodeVariants('chartintegration', 'default'),
