@@ -14,6 +14,7 @@ import {
   BlockStack,
   InlineStack,
   ResourceList,
+  ResourceItem,
   Avatar,
 } from '@shopify/polaris';
 import { SearchIcon, FilterIcon, SortAscendingIcon } from '@shopify/polaris-icons';
@@ -24,8 +25,7 @@ const meta = {
   title: 'Components/Tables/IndexFilters',
   component: IndexFilters,
   parameters: {
-    layout: 'full',
-    codeVariants: getCodeVariants('indexfilters', 'default'),
+    layout: 'fullscreen',
     docs: {
       description: {
         component: 'IndexFilters provides comprehensive filtering, sorting, and search functionality for data tables and resource lists. It combines search, filters, and view controls into a unified interface.',
@@ -336,22 +336,32 @@ const ProductsListWithFilters = () => {
     const statusBadge = {
       Active: <Badge status="success">Active</Badge>,
       Draft: <Badge status="attention">Draft</Badge>,
-      Archived: <Badge>TBD</Badge>,
+      Archived: <Badge>Archived</Badge>,
     };
 
-    return {
-      id,
-      url: `/products/${id}`,
-      media,
-      attribute: statusBadge[status as keyof typeof statusBadge],
-      title: name,
-      description: (
-        <BlockStack gap="2">
-          <Text as="span">{type} • {vendor}</Text>
-          <Text as="span" variant="bodySm" color="subdued">{price} • {inventory} in stock</Text>
+    return (
+      <ResourceItem
+        id={id}
+        url={`/products/${id}`}
+        media={media}
+        accessibilityLabel={`View details for ${name}`}
+      >
+        <BlockStack gap="200">
+          <InlineStack align="space-between">
+            <Text as="h3" variant="bodyMd" fontWeight="bold">
+              {name}
+            </Text>
+            {statusBadge[status as keyof typeof statusBadge]}
+          </InlineStack>
+          <Text as="p" variant="bodySm" color="subdued">
+            {type} • {vendor}
+          </Text>
+          <Text as="p" variant="bodySm" color="subdued">
+            {price} • {inventory} in stock
+          </Text>
         </BlockStack>
-      ),
-    };
+      </ResourceItem>
+    );
   };
 
   const filteredProducts = sampleProducts.filter(product => {
@@ -435,9 +445,6 @@ export const Default: Story = {
 };
 
 export const WithSearchAndFilters: Story = {
-  parameters: {
-    codeVariants: getCodeVariants('indexfilters', 'withSearchAndFilters'),
-  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [queryValue, setQueryValue] = React.useState('');
@@ -520,9 +527,6 @@ export const WithSearchAndFilters: Story = {
 };
 
 export const WithTabs: Story = {
-  parameters: {
-    codeVariants: getCodeVariants('indexfilters', 'withTabs'),
-  },
   render: () => {
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [queryValue, setQueryValue] = React.useState('');
@@ -564,9 +568,6 @@ export const WithTabs: Story = {
 };
 
 export const WithSorting: Story = {
-  parameters: {
-    codeVariants: getCodeVariants('indexfilters', 'withSorting'),
-  },
   render: () => {
     const [sortSelected, setSortSelected] = React.useState(['name_asc']);
     const [queryValue, setQueryValue] = React.useState('');
@@ -606,9 +607,6 @@ export const WithSorting: Story = {
 };
 
 export const WithSelectionMode: Story = {
-  parameters: {
-    codeVariants: getCodeVariants('indexfilters', 'withSelectionMode'),
-  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [mode, setMode] = React.useState<'default' | 'selecting'>('default');
@@ -670,9 +668,6 @@ export const WithSelectionMode: Story = {
 };
 
 export const ComplexFiltersExample: Story = {
-  parameters: {
-    codeVariants: getCodeVariants('indexfilters', 'complexFilters'),
-  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [queryValue, setQueryValue] = React.useState('');
