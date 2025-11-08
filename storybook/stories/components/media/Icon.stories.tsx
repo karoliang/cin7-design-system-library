@@ -13,8 +13,8 @@ import {
   HomeIcon,
   ProductIcon,
   OrderIcon,
-  CustomerIcon,
-  AnalyticsIcon,
+  PersonIcon,
+  ChartVerticalIcon,
   DiscountIcon,
   CalendarIcon,
   EmailIcon,
@@ -197,11 +197,11 @@ export const CommonIcons: Story = {
             <Text variant="bodySm" alignment="center">Orders</Text>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <Icon source={CustomerIcon} />
+            <Icon source={PersonIcon} />
             <Text variant="bodySm" alignment="center">Customers</Text>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <Icon source={AnalyticsIcon} />
+            <Icon source={ChartVerticalIcon} />
             <Text variant="bodySm" alignment="center">Analytics</Text>
           </div>
         </InlineStack>

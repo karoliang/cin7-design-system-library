@@ -77,7 +77,7 @@ function ButtonExample({
   );
 }
 
-export default ButtonExample;`
+export default ButtonExample;`,
   },
 
   primary: {
@@ -828,6 +828,517 @@ function CriticalButton({
     </Button>
   );
 }`
+  },
+
+  variants: {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonVariants() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <Button>Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="tertiary">Tertiary</Button>
+      </div>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <Button variant="plain">Plain</Button>
+        <Button variant="plainMono">Plain Mono</Button>
+        <Button variant="critical">Critical</Button>
+      </div>
+    </div>
+  );
+}`,
+    extjs: `// ExtJS Button Variants using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'vbox',
+    align: 'start'
+  },
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      defaults: { margin: '0 8 0 0' },
+      items: [
+        {
+          xtype: 'button',
+          text: 'Primary',
+          ui: 'primary',
+          handler: function() {
+            console.log('Primary clicked');
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Secondary',
+          ui: 'secondary',
+          handler: function() {
+            console.log('Secondary clicked');
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Tertiary',
+          ui: 'tertiary',
+          handler: function() {
+            console.log('Tertiary clicked');
+          }
+        }
+      ]
+    },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      margin: '12 0 0 0',
+      defaults: { margin: '0 8 0 0' },
+      items: [
+        {
+          xtype: 'button',
+          text: 'Plain',
+          ui: 'plain',
+          handler: function() {
+            console.log('Plain clicked');
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Plain Mono',
+          ui: 'plain-mono',
+          handler: function() {
+            console.log('Plain Mono clicked');
+          }
+        },
+        {
+          xtype: 'button',
+          text: 'Critical',
+          ui: 'danger',
+          handler: function() {
+            console.log('Critical clicked');
+          }
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- Button Variants using @cin7/vanilla-js -->
+<div class="button-variants">
+  <div class="button-group">
+    <button class="polaris-button polaris-button--primary" data-variant="primary">Primary</button>
+    <button class="polaris-button polaris-button--secondary" data-variant="secondary">Secondary</button>
+    <button class="polaris-button polaris-button--tertiary" data-variant="tertiary">Tertiary</button>
+  </div>
+  <div class="button-group">
+    <button class="polaris-button polaris-button--plain" data-variant="plain">Plain</button>
+    <button class="polaris-button polaris-button--plain-mono" data-variant="plain-mono">Plain Mono</button>
+    <button class="polaris-button polaris-button--critical" data-variant="critical">Critical</button>
+  </div>
+</div>
+
+<style>
+  .button-variants { display: flex; flex-direction: column; gap: 12px; }
+  .button-group { display: flex; gap: 8px; }
+  .polaris-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .polaris-button--primary { background: #006fbb; color: white; border: 1px solid #006fbb; }
+  .polaris-button--secondary { background: #ffffff; color: #202223; border: 1px solid #c9cccf; }
+  .polaris-button--tertiary { background: transparent; color: #202223; border: 1px solid transparent; }
+  .polaris-button--plain { background: transparent; color: #005bd3; border: none; }
+  .polaris-button--plain-mono { background: transparent; color: #202223; border: none; }
+  .polaris-button--critical { background: #d82c0d; color: white; border: 1px solid #d82c0d; }
+</style>
+
+<script>
+import { on } from '@cin7/vanilla-js';
+
+// Add click handlers to all buttons
+document.querySelectorAll('.polaris-button').forEach(button => {
+  on(button, 'click', () => {
+    const variant = button.getAttribute('data-variant');
+    console.log(\`\${variant} button clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Button, ButtonProps} from '@shopify/polaris';
+import React from 'react';
+
+interface ButtonVariantsProps {
+  onVariantClick?: (variant: ButtonProps['variant']) => void;
+}
+
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'plain' | 'plainMono' | 'critical';
+
+function ButtonVariants({
+  onVariantClick
+}: ButtonVariantsProps): JSX.Element {
+  const handleClick = (variant: ButtonVariant) => {
+    console.log(\`\${variant} button clicked\`);
+    onVariantClick?.(variant);
+  };
+
+  const primaryVariants: ButtonVariant[] = ['primary', 'secondary', 'tertiary'];
+  const secondaryVariants: ButtonVariant[] = ['plain', 'plainMono', 'critical'];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        {primaryVariants.map((variant) => (
+          <Button
+            key={variant}
+            variant={variant}
+            onClick={() => handleClick(variant)}
+          >
+            {variant.charAt(0).toUpperCase() + variant.slice(1)}
+          </Button>
+        ))}
+      </div>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        {secondaryVariants.map((variant) => (
+          <Button
+            key={variant}
+            variant={variant}
+            onClick={() => handleClick(variant)}
+          >
+            {variant === 'plainMono' ? 'Plain Mono' : variant.charAt(0).toUpperCase() + variant.slice(1)}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default ButtonVariants;`
+  },
+
+  sizes: {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonSizes() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <Button size="micro">Micro</Button>
+      <Button size="slim">Slim</Button>
+      <Button size="medium">Medium</Button>
+      <Button size="large">Large</Button>
+    </div>
+  );
+}`,
+    extjs: `// ExtJS Button Sizes using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: { margin: '0 12 0 0' },
+  items: [
+    {
+      xtype: 'button',
+      text: 'Micro',
+      scale: 'micro',
+      height: 24,
+      padding: '2 8',
+      handler: function() {
+        console.log('Micro button clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Slim',
+      scale: 'small',
+      height: 28,
+      padding: '4 12',
+      handler: function() {
+        console.log('Slim button clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Medium',
+      scale: 'medium',
+      height: 36,
+      padding: '8 16',
+      handler: function() {
+        console.log('Medium button clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Large',
+      scale: 'large',
+      height: 48,
+      padding: '12 24',
+      handler: function() {
+        console.log('Large button clicked');
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- Button Sizes using @cin7/vanilla-js -->
+<div class="button-sizes" style="display: flex; align-items: center; gap: 12px;">
+  <button class="polaris-button polaris-button--micro" data-size="micro">Micro</button>
+  <button class="polaris-button polaris-button--slim" data-size="slim">Slim</button>
+  <button class="polaris-button polaris-button--medium" data-size="medium">Medium</button>
+  <button class="polaris-button polaris-button--large" data-size="large">Large</button>
+</div>
+
+<style>
+  .polaris-button {
+    background: #006fbb;
+    color: white;
+    border: 1px solid #006fbb;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .polaris-button--micro { padding: 2px 8px; font-size: 12px; }
+  .polaris-button--slim { padding: 4px 12px; font-size: 13px; }
+  .polaris-button--medium { padding: 8px 16px; font-size: 14px; }
+  .polaris-button--large { padding: 12px 24px; font-size: 16px; }
+  .polaris-button:hover { background: #005094; }
+</style>
+
+<script>
+import { on } from '@cin7/vanilla-js';
+
+// Add click handlers for each size
+document.querySelectorAll('.button-sizes .polaris-button').forEach(button => {
+  on(button, 'click', () => {
+    const size = button.getAttribute('data-size');
+    console.log(\`\${size} button clicked\`);
+  });
+});
+</script>`,
+    typescript: `import {Button, ButtonProps} from '@shopify/polaris';
+import React from 'react';
+
+interface ButtonSizesProps {
+  onSizeClick?: (size: ButtonProps['size']) => void;
+  variant?: ButtonProps['variant'];
+}
+
+type ButtonSize = 'micro' | 'slim' | 'medium' | 'large';
+
+const buttonSizes: ButtonSize[] = ['micro', 'slim', 'medium', 'large'];
+
+function ButtonSizes({
+  onSizeClick,
+  variant = 'primary'
+}: ButtonSizesProps): JSX.Element {
+  const handleClick = (size: ButtonSize) => {
+    console.log(\`\${size} button clicked\`);
+    onSizeClick?.(size);
+  };
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      {buttonSizes.map((size) => (
+        <Button
+          key={size}
+          size={size}
+          variant={variant}
+          onClick={() => handleClick(size)}
+        >
+          {size.charAt(0).toUpperCase() + size.slice(1)}
+        </Button>
+      ))}
+    </div>
+  );
+}
+
+export default ButtonSizes;`
+  },
+
+  states: {
+    react: `import {Button} from '@shopify/polaris';
+import React from 'react';
+
+function ButtonStates() {
+  return (
+    <div style={{ display: 'flex', gap: '12px' }}>
+      <Button>Normal</Button>
+      <Button disabled>Disabled</Button>
+      <Button loading>Loading</Button>
+    </div>
+  );
+}`,
+    extjs: `// ExtJS Button States using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  layout: 'hbox',
+  defaults: { margin: '0 12 0 0' },
+  items: [
+    {
+      xtype: 'button',
+      text: 'Normal',
+      handler: function() {
+        console.log('Normal button clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Disabled',
+      disabled: true,
+      handler: function() {
+        // This won't fire when disabled
+        console.log('Disabled button clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Saving...',
+      iconCls: 'loading-spinner',
+      disabled: true,
+      listeners: {
+        afterrender: function(btn) {
+          // Simulate loading state with spinner
+          var loadingMask = new Ext.LoadMask({
+            target: btn.el,
+            msg: 'Loading...'
+          });
+          loadingMask.show();
+
+          // Simulate async operation
+          setTimeout(function() {
+            loadingMask.hide();
+            btn.setText('Saved!');
+            btn.setDisabled(false);
+          }, 3000);
+        }
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+    vanilla: `<!-- Button States using @cin7/vanilla-js -->
+<div class="button-states" style="display: flex; gap: 12px;">
+  <button class="polaris-button polaris-button--normal" data-state="normal">Normal</button>
+  <button class="polaris-button polaris-button--disabled" data-state="disabled" disabled>Disabled</button>
+  <button class="polaris-button polaris-button--loading" data-state="loading" disabled>
+    <span class="spinner"></span>
+    <span>Loading</span>
+  </button>
+</div>
+
+<style>
+  .polaris-button {
+    background: #006fbb;
+    color: white;
+    border: 1px solid #006fbb;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .polaris-button--normal:hover { background: #005094; }
+  .polaris-button--disabled,
+  .polaris-button--loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+import { on } from '@cin7/vanilla-js';
+
+// Normal button click handler
+const normalButton = document.querySelector('[data-state="normal"]');
+on(normalButton, 'click', () => {
+  console.log('Normal button clicked');
+});
+
+// Disabled button (no handler needed, won't fire)
+// Loading button (no handler needed, disabled during loading)
+</script>`,
+    typescript: `import {Button} from '@shopify/polaris';
+import React, {useState, useCallback} from 'react';
+
+interface ButtonStatesProps {
+  normalLabel?: string;
+  disabledLabel?: string;
+  loadingLabel?: string;
+  onNormalClick?: () => void;
+  variant?: 'primary' | 'secondary' | 'tertiary';
+}
+
+function ButtonStates({
+  normalLabel = 'Normal',
+  disabledLabel = 'Disabled',
+  loadingLabel = 'Loading',
+  onNormalClick,
+  variant = 'primary'
+}: ButtonStatesProps): JSX.Element {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleNormalClick = useCallback(() => {
+    console.log('Normal button clicked');
+    onNormalClick?.();
+  }, [onNormalClick]);
+
+  const handleLoadingDemo = useCallback(() => {
+    setIsProcessing(true);
+    console.log('Loading state started');
+
+    // Simulate async operation
+    setTimeout(() => {
+      setIsProcessing(false);
+      console.log('Loading state completed');
+    }, 2000);
+  }, []);
+
+  return (
+    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Button
+        variant={variant}
+        onClick={handleNormalClick}
+      >
+        {normalLabel}
+      </Button>
+
+      <Button
+        variant={variant}
+        disabled
+      >
+        {disabledLabel}
+      </Button>
+
+      <Button
+        variant={variant}
+        loading={isProcessing}
+        onClick={handleLoadingDemo}
+      >
+        {isProcessing ? 'Processing...' : loadingLabel}
+      </Button>
+    </div>
+  );
+}
+
+export default ButtonStates;`
   }
 };
 
@@ -2837,7 +3348,7 @@ function CardExample({
   );
 }
 
-export default CardExample;`
+export default CardExample;`,
   },
   'with-subdued-background': {
     react: `import {BlockStack, Card, List, Text} from '@shopify/polaris';
@@ -6553,7 +7064,7 @@ function BannerExample({
   );
 }
 
-export default BannerExample;`
+export default BannerExample;`,
   },
 
   critical: {
@@ -7579,7 +8090,7 @@ function StatusVariantsExample(): JSX.Element {
   );
 }
 
-export default StatusVariantsExample;`
+export default StatusVariantsExample;`,
   },
 
   minimal: {
@@ -7695,7 +8206,7 @@ function MinimalBannersExample(): JSX.Element {
   );
 }
 
-export default MinimalBannersExample;`
+export default MinimalBannersExample;`,
   },
 
   interactive: {
@@ -7957,7 +8468,7 @@ function InteractiveBannerExample(): JSX.Element {
   );
 }
 
-export default InteractiveBannerExample;`
+export default InteractiveBannerExample;`,
   },
 
   'real-world': {
@@ -8235,7 +8746,7 @@ function RealWorldScenariosExample(): JSX.Element {
   );
 }
 
-export default RealWorldScenariosExample;`
+export default RealWorldScenariosExample;`,
   },
 
   'with-icons': {
@@ -8437,7 +8948,7 @@ function BannersWithIconsExample(): JSX.Element {
   );
 }
 
-export default BannersWithIconsExample;`
+export default BannersWithIconsExample;`,
   }
 };
 export const textFieldExamples: Record<string, CodeVariant> = {
@@ -9379,7 +9890,7 @@ function TopBarExample(): JSX.Element {
   );
 }
 
-export default TopBarExample;`
+export default TopBarExample;`,
   },
 
   withusermenu: {
@@ -9536,7 +10047,7 @@ function WithUserMenuExample(): JSX.Element {
   );
 }
 
-export default WithUserMenuExample;`
+export default WithUserMenuExample;`,
   }
 };
 
@@ -9575,7 +10086,7 @@ function BadgeExample(): JSX.Element {
   return <Badge>New</Badge>;
 }
 
-export default BadgeExample;`
+export default BadgeExample;`,
   },
 
   tones: {
@@ -9667,7 +10178,7 @@ function TonesExample(): JSX.Element {
   );
 }
 
-export default TonesExample;`
+export default TonesExample;`,
   },
 
   progress: {
@@ -9747,7 +10258,7 @@ function ProgressExample(): JSX.Element {
   );
 }
 
-export default ProgressExample;`
+export default ProgressExample;`,
   },
 
   sizes: {
@@ -9828,7 +10339,7 @@ function SizesExample(): JSX.Element {
   );
 }
 
-export default SizesExample;`
+export default SizesExample;`,
   },
 
   withNumbers: {
@@ -9917,7 +10428,7 @@ function WithNumbersExample(): JSX.Element {
   );
 }
 
-export default WithNumbersExample;`
+export default WithNumbersExample;`,
   },
 
   statusExamples: {
@@ -10123,7 +10634,7 @@ function StatusExamplesExample(): JSX.Element {
   );
 }
 
-export default StatusExamplesExample;`
+export default StatusExamplesExample;`,
   }
 ,
 
@@ -10349,7 +10860,7 @@ function InteractiveBadgesExample(): JSX.Element {
   );
 }
 
-export default InteractiveBadgesExample;`
+export default InteractiveBadgesExample;`,
   },
 
   marketingBadges: {
@@ -10488,7 +10999,7 @@ function MarketingBadgesExample(): JSX.Element {
   );
 }
 
-export default MarketingBadgesExample;`
+export default MarketingBadgesExample;`,
   },
 
   productTags: {
@@ -10617,7 +11128,7 @@ function ProductTagsExample(): JSX.Element {
   );
 }
 
-export default ProductTagsExample;`
+export default ProductTagsExample;`,
   },
 
   campaignBadges: {
@@ -10722,7 +11233,7 @@ function CampaignBadgesExample(): JSX.Element {
   );
 }
 
-export default CampaignBadgesExample;`
+export default CampaignBadgesExample;`,
   },
 
   loyaltyBadges: {
@@ -10840,7 +11351,7 @@ function LoyaltyBadgesExample(): JSX.Element {
   );
 }
 
-export default LoyaltyBadgesExample;`
+export default LoyaltyBadgesExample;`,
   }
 };
 
@@ -10879,7 +11390,7 @@ function TagExample(): JSX.Element {
   return <Tag>Sample Tag</Tag>;
 }
 
-export default TagExample;`
+export default TagExample;`,
   },
 
   basictags: {
@@ -10977,7 +11488,7 @@ function BasicTagsExample(): JSX.Element {
   );
 }
 
-export default BasicTagsExample;`
+export default BasicTagsExample;`,
   },
 
   removabletags: {
@@ -11121,7 +11632,7 @@ function RemovableTagsExample(): JSX.Element {
   );
 }
 
-export default RemovableTagsExample;`
+export default RemovableTagsExample;`,
   },
 
   clickabletags: {
@@ -11283,8 +11794,677 @@ function ClickableTagsExample(): JSX.Element {
   );
 }
 
-export default ClickableTagsExample;`
-  }
+export default ClickableTagsExample;`,
+  },
+
+  tagsizes: {
+    react: `import { Tag, InlineStack, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function TagSizesExample() {
+  const sizes = [
+    { size: 'small' as const, label: 'Small' },
+    { size: 'medium' as const, label: 'Medium' },
+    { size: 'large' as const, label: 'Large' },
+  ];
+
+  return (
+    <BlockStack gap="400">
+      {sizes.map(({ size, label}) => (
+        <div key={size}>
+          <h4>{label} Tags</h4>
+          <InlineStack gap="300">
+            <Tag size={size}>Default</Tag>
+            <Tag size={size} tone="success">Success</Tag>
+            <Tag size={size} tone="warning" removable onRemove={() => console.log('removed')}>
+              Warning
+            </Tag>
+            <Tag size={size} tone="critical" clickable onClick={() => console.log('clicked')}>
+              Critical
+            </Tag>
+          </InlineStack>
+        </div>
+      ))}
+    </BlockStack>
+  );
+}
+
+export default TagSizesExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+// Create container
+const container = document.createElement('div');
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.gap = '24px';
+
+// Sizes to demonstrate
+const sizes = [
+  { size: 'small', label: 'Small' },
+  { size: 'medium', label: 'Medium' },
+  { size: 'large', label: 'Large' }
+];
+
+sizes.forEach(({ size, label }) => {
+  const section = document.createElement('div');
+  const heading = document.createElement('h4');
+  heading.textContent = label + ' Tags';
+  section.appendChild(heading);
+
+  const tagContainer = document.createElement('div');
+  tagContainer.style.display = 'flex';
+  tagContainer.style.gap = '12px';
+  tagContainer.style.marginTop = '8px';
+
+  // Create tags in different tones
+  ['Default', 'Success', 'Warning', 'Critical'].forEach((text, idx) => {
+    const tones = ['base', 'success', 'warning', 'critical'];
+    const tag = createTag({
+      text,
+      size,
+      tone: tones[idx],
+      removable: idx === 2,
+      clickable: idx === 3,
+      onRemove: idx === 2 ? () => console.log('removed') : undefined,
+      onClick: idx === 3 ? () => console.log('clicked') : undefined
+    });
+    tagContainer.appendChild(tag);
+  });
+
+  section.appendChild(tagContainer);
+  container.appendChild(section);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+// Create main container
+const mainPanel = Ext.create('Ext.panel.Panel', {
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  renderTo: Ext.getBody()
+});
+
+// Sizes to demonstrate
+const sizes = ['small', 'medium', 'large'];
+const tones = ['base', 'success', 'warning', 'critical'];
+const labels = ['Default', 'Success', 'Warning', 'Critical'];
+
+sizes.forEach(size => {
+  const sizePanel = Ext.create('Ext.panel.Panel', {
+    title: size.charAt(0).toUpperCase() + size.slice(1) + ' Tags',
+    layout: {
+      type: 'hbox',
+      align: 'middle',
+      gap: 12
+    },
+    margin: '0 0 16 0',
+    bodyPadding: 10
+  });
+
+  labels.forEach((label, idx) => {
+    sizePanel.add({
+      xtype: 'polaristag',
+      text: label,
+      size: size,
+      tone: tones[idx],
+      removable: idx === 2,
+      clickable: idx === 3,
+      listeners: {
+        remove: () => console.log('removed'),
+        click: () => console.log('clicked')
+      }
+    });
+  });
+
+  mainPanel.add(sizePanel);
+});`,
+
+    typescript: `import { Tag, InlineStack, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+type TagSize = 'small' | 'medium' | 'large';
+
+interface SizeConfig {
+  size: TagSize;
+  label: string;
+}
+
+function TagSizesExample(): JSX.Element {
+  const sizes: SizeConfig[] = [
+    { size: 'small', label: 'Small' },
+    { size: 'medium', label: 'Medium' },
+    { size: 'large', label: 'Large' },
+  ];
+
+  return (
+    <BlockStack gap="400">
+      {sizes.map(({ size, label }) => (
+        <div key={size}>
+          <h4>{label} Tags</h4>
+          <InlineStack gap="300">
+            <Tag size={size}>Default</Tag>
+            <Tag size={size} tone="success">Success</Tag>
+            <Tag size={size} tone="warning" removable onRemove={() => console.log('removed')}>
+              Warning
+            </Tag>
+            <Tag size={size} tone="critical" clickable onClick={() => console.log('clicked')}>
+              Critical
+            </Tag>
+          </InlineStack>
+        </div>
+      ))}
+    </BlockStack>
+  );
+}
+
+export default TagSizesExample;`,
+  },
+
+  statustags: {
+    react: `import { Tag, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function StatusTagsExample() {
+  const orderStatuses = [
+    { status: 'pending', label: 'Pending', tone: 'warning' as const },
+    { status: 'processing', label: 'Processing', tone: 'info' as const },
+    { status: 'shipped', label: 'Shipped', tone: 'success' as const },
+    { status: 'delivered', label: 'Delivered', tone: 'base' as const },
+    { status: 'cancelled', label: 'Cancelled', tone: 'critical' as const },
+    { status: 'refunded', label: 'Refunded', tone: 'highlight' as const },
+  ];
+
+  return (
+    <BlockStack gap="200">
+      {orderStatuses.map(({ status, label, tone }) => (
+        <div key={status} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '120px' }}>
+            <p>{status}</p>
+          </div>
+          <Tag tone={tone}>{label}</Tag>
+          <Tag tone={tone} removable onRemove={() => console.log(\`Removed \${status}\`)}>
+            {label} (removable)
+          </Tag>
+        </div>
+      ))}
+    </BlockStack>
+  );
+}
+
+export default StatusTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+const orderStatuses = [
+  { status: 'pending', label: 'Pending', tone: 'warning' },
+  { status: 'processing', label: 'Processing', tone: 'info' },
+  { status: 'shipped', label: 'Shipped', tone: 'success' },
+  { status: 'delivered', label: 'Delivered', tone: 'base' },
+  { status: 'cancelled', label: 'Cancelled', tone: 'critical' },
+  { status: 'refunded', label: 'Refunded', tone: 'highlight' }
+];
+
+const container = document.createElement('div');
+container.style.cssText = 'display: flex; flex-direction: column; gap: 8px;';
+
+orderStatuses.forEach(({ status, label, tone }) => {
+  const row = document.createElement('div');
+  row.style.cssText = 'display: flex; align-items: center; gap: 12px;';
+
+  const statusLabel = document.createElement('div');
+  statusLabel.style.width = '120px';
+  statusLabel.textContent = status;
+  row.appendChild(statusLabel);
+
+  row.appendChild(createTag({ text: label, tone }));
+  row.appendChild(createTag({
+    text: label + ' (removable)',
+    tone,
+    removable: true,
+    onRemove: () => console.log(\`Removed \${status}\`)
+  }));
+
+  container.appendChild(row);
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const orderStatuses = [
+  { status: 'pending', label: 'Pending', tone: 'warning' },
+  { status: 'processing', label: 'Processing', tone: 'info' },
+  { status: 'shipped', label: 'Shipped', tone: 'success' },
+  { status: 'delivered', label: 'Delivered', tone: 'base' },
+  { status: 'cancelled', label: 'Cancelled', tone: 'critical' },
+  { status: 'refunded', label: 'Refunded', tone: 'highlight' }
+];
+
+const container = Ext.create('Ext.panel.Panel', {
+  layout: { type: 'vbox', align: 'stretch' },
+  bodyPadding: 10,
+  renderTo: Ext.getBody()
+});
+
+orderStatuses.forEach(({ status, label, tone }) => {
+  container.add(Ext.create('Ext.panel.Panel', {
+    layout: { type: 'hbox', align: 'middle', gap: 12 },
+    border: false,
+    items: [
+      { xtype: 'component', html: status, width: 120 },
+      { xtype: 'polaristag', text: label, tone },
+      { xtype: 'polaristag', text: label + ' (removable)', tone, removable: true }
+    ]
+  }));
+});`,
+
+    typescript: `import { Tag, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+type TagTone = 'base' | 'success' | 'warning' | 'critical' | 'info' | 'highlight';
+
+interface OrderStatus {
+  status: string;
+  label: string;
+  tone: TagTone;
+}
+
+function StatusTagsExample(): JSX.Element {
+  const orderStatuses: OrderStatus[] = [
+    { status: 'pending', label: 'Pending', tone: 'warning' },
+    { status: 'processing', label: 'Processing', tone: 'info' },
+    { status: 'shipped', label: 'Shipped', tone: 'success' },
+    { status: 'delivered', label: 'Delivered', tone: 'base' },
+    { status: 'cancelled', label: 'Cancelled', tone: 'critical' },
+    { status: 'refunded', label: 'Refunded', tone: 'highlight' },
+  ];
+
+  return (
+    <BlockStack gap="200">
+      {orderStatuses.map(({ status, label, tone }) => (
+        <div key={status} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '120px' }}>
+            <p>{status}</p>
+          </div>
+          <Tag tone={tone}>{label}</Tag>
+          <Tag tone={tone} removable onRemove={() => console.log(\`Removed \${status}\`)}>
+            {label} (removable)
+          </Tag>
+        </div>
+      ))}
+    </BlockStack>
+  );
+}
+
+export default StatusTagsExample;`,
+  },
+
+  taginputsystem: {
+    react: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function TagInputSystemExample() {
+  const [tags, setTags] = useState(['React', 'TypeScript']);
+  return (
+    <div>
+      {tags.map(tag => (
+        <Tag key={tag} removable tone="info" onRemove={() => setTags(tags.filter(t => t !== tag))}>
+          {tag}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default TagInputSystemExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+let tags = ['React', 'TypeScript'];
+const container = document.createElement('div');
+
+function render() {
+  container.innerHTML = '';
+  tags.forEach(tag => {
+    container.appendChild(createTag({
+      text: tag,
+      tone: 'info',
+      removable: true,
+      onRemove: () => {
+        tags = tags.filter(t => t !== tag);
+        render();
+      }
+    }));
+  });
+}
+
+render();
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  renderTo: Ext.getBody()
+});
+
+['React', 'TypeScript'].forEach(tag => {
+  panel.add({
+    xtype: 'polaristag',
+    text: tag,
+    tone: 'info',
+    removable: true
+  });
+});`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function TagInputSystemExample(): JSX.Element {
+  const [tags, setTags] = useState<string[]>(['React', 'TypeScript']);
+
+  return (
+    <div>
+      {tags.map(tag => (
+        <Tag key={tag} removable tone="info" onRemove={() => setTags(tags.filter(t => t !== tag))}>
+          {tag}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default TagInputSystemExample;`,
+  },
+
+  filtertags: {
+    react: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function FilterTagsExample() {
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const filters = ['Electronics', 'Clothing', 'Home'];
+
+  return (
+    <div>
+      {filters.map(filter => (
+        <Tag
+          key={filter}
+          clickable
+          tone={activeFilters.includes(filter) ? 'highlight' : 'base'}
+          onClick={() => setActiveFilters(prev =>
+            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+          )}
+        >
+          {filter}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default FilterTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+let activeFilters = [];
+const filters = ['Electronics', 'Clothing', 'Home'];
+const container = document.createElement('div');
+
+filters.forEach(filter => {
+  container.appendChild(createTag({
+    text: filter,
+    clickable: true,
+    tone: 'base',
+    onClick: () => console.log(filter)
+  }));
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  renderTo: Ext.getBody()
+});
+
+['Electronics', 'Clothing', 'Home'].forEach(filter => {
+  panel.add({
+    xtype: 'polaristag',
+    text: filter,
+    clickable: true
+  });
+});`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function FilterTagsExample(): JSX.Element {
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const filters: string[] = ['Electronics', 'Clothing', 'Home'];
+
+  return (
+    <div>
+      {filters.map(filter => (
+        <Tag
+          key={filter}
+          clickable
+          tone={activeFilters.includes(filter) ? 'highlight' : 'base'}
+          onClick={() => setActiveFilters(prev =>
+            prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+          )}
+        >
+          {filter}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default FilterTagsExample;`,
+  },
+
+  interactivetagcloud: {
+    react: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractiveTagCloudExample() {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const tags = ['Design', 'Development', 'Marketing'];
+
+  return (
+    <div>
+      {tags.map(tag => (
+        <Tag
+          key={tag}
+          clickable
+          tone={selectedTags.includes(tag) ? 'highlight' : 'base'}
+          onClick={() => setSelectedTags(prev =>
+            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+          )}
+        >
+          {tag}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default InteractiveTagCloudExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+const tags = ['Design', 'Development', 'Marketing'];
+const container = document.createElement('div');
+
+tags.forEach(tag => {
+  container.appendChild(createTag({
+    text: tag,
+    clickable: true
+  }));
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  renderTo: Ext.getBody()
+});
+
+['Design', 'Development', 'Marketing'].forEach(tag => {
+  panel.add({
+    xtype: 'polaristag',
+    text: tag,
+    clickable: true
+  });
+});`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractiveTagCloudExample(): JSX.Element {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const tags: string[] = ['Design', 'Development', 'Marketing'];
+
+  return (
+    <div>
+      {tags.map(tag => (
+        <Tag
+          key={tag}
+          clickable
+          tone={selectedTags.includes(tag) ? 'highlight' : 'base'}
+          onClick={() => setSelectedTags(prev =>
+            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+          )}
+        >
+          {tag}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+
+export default InteractiveTagCloudExample;`,
+  },
+
+  taggroups: {
+    react: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function TagGroupsExample() {
+  return (
+    <div>
+      <h3>Priority</h3>
+      <Tag tone="critical">Urgent</Tag>
+      <Tag tone="warning">High</Tag>
+      <Tag tone="info">Medium</Tag>
+    </div>
+  );
+}
+
+export default TagGroupsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+const container = document.createElement('div');
+['Urgent', 'High', 'Medium'].forEach((text, i) => {
+  const tones = ['critical', 'warning', 'info'];
+  container.appendChild(createTag({ text, tone: tones[i] }));
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  renderTo: Ext.getBody()
+});
+
+[['Urgent', 'critical'], ['High', 'warning'], ['Medium', 'info']].forEach(([text, tone]) => {
+  panel.add({ xtype: 'polaristag', text, tone });
+});`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function TagGroupsExample(): JSX.Element {
+  return (
+    <div>
+      <h3>Priority</h3>
+      <Tag tone="critical">Urgent</Tag>
+      <Tag tone="warning">High</Tag>
+      <Tag tone="info">Medium</Tag>
+    </div>
+  );
+}
+
+export default TagGroupsExample;`,
+  },
+
+  disabledtags: {
+    react: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function DisabledTagsExample() {
+  return (
+    <div>
+      <Tag disabled>Disabled Tag</Tag>
+      <Tag disabled tone="success">Disabled Success</Tag>
+      <Tag disabled clickable>Disabled Clickable</Tag>
+    </div>
+  );
+}
+
+export default DisabledTagsExample;`,
+
+    vanilla: `import { createTag } from '@cin7/vanilla-js';
+
+const container = document.createElement('div');
+['Disabled Tag', 'Disabled Success', 'Disabled Clickable'].forEach((text, i) => {
+  container.appendChild(createTag({
+    text,
+    disabled: true,
+    tone: i === 1 ? 'success' : 'base',
+    clickable: i === 2
+  }));
+});
+
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisTag } from '@cin7/extjs-adapters';
+
+const panel = Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  renderTo: Ext.getBody()
+});
+
+panel.add({ xtype: 'polaristag', text: 'Disabled Tag', disabled: true });
+panel.add({ xtype: 'polaristag', text: 'Disabled Success', tone: 'success', disabled: true });`,
+
+    typescript: `import { Tag } from '@shopify/polaris';
+import React from 'react';
+
+function DisabledTagsExample(): JSX.Element {
+  return (
+    <div>
+      <Tag disabled>Disabled Tag</Tag>
+      <Tag disabled tone="success">Disabled Success</Tag>
+      <Tag disabled clickable>Disabled Clickable</Tag>
+    </div>
+  );
+}
+
+export default DisabledTagsExample;`,
+  },
 };
 
 
@@ -11413,7 +12593,7 @@ function SelectExample({
   );
 }
 
-export default SelectExample;`
+export default SelectExample;`,
   },
 
   disabled: {
@@ -11501,7 +12681,7 @@ function DisabledSelectExample({
   );
 }
 
-export default DisabledSelectExample;`
+export default DisabledSelectExample;`,
   },
 
   'with-validation-error': {
@@ -11635,7 +12815,7 @@ function SelectWithErrorExample(): JSX.Element {
   );
 }
 
-export default SelectWithErrorExample;`
+export default SelectWithErrorExample;`,
   },
 
   groups: {
@@ -11825,7 +13005,7 @@ function SelectWithGroupsExample({
   );
 }
 
-export default SelectWithGroupsExample;`
+export default SelectWithGroupsExample;`,
   }
 };
 
@@ -11918,7 +13098,7 @@ function CheckboxExample({
   );
 }
 
-export default CheckboxExample;`
+export default CheckboxExample;`,
   },
 
   checked: {
@@ -11997,7 +13177,7 @@ function CheckedCheckboxExample(): JSX.Element {
   );
 }
 
-export default CheckedCheckboxExample;`
+export default CheckedCheckboxExample;`,
   },
 
   disabled: {
@@ -12069,7 +13249,7 @@ function DisabledCheckboxExample(): JSX.Element {
   );
 }
 
-export default DisabledCheckboxExample;`
+export default DisabledCheckboxExample;`,
   },
 
   'with-help-text': {
@@ -12167,7 +13347,7 @@ function CheckboxWithHelpTextExample({
   );
 }
 
-export default CheckboxWithHelpTextExample;`
+export default CheckboxWithHelpTextExample;`,
   },
 
   error: {
@@ -12264,7 +13444,7 @@ function CheckboxWithErrorExample({
   );
 }
 
-export default CheckboxWithErrorExample;`
+export default CheckboxWithErrorExample;`,
   },
 
   required: {
@@ -12383,7 +13563,7 @@ function RequiredCheckboxExample({
   );
 }
 
-export default RequiredCheckboxExample;`
+export default RequiredCheckboxExample;`,
   },
 
   interactive: {
@@ -12746,7 +13926,7 @@ function InteractiveCheckboxExample({
   );
 }
 
-export default InteractiveCheckboxExample;`
+export default InteractiveCheckboxExample;`,
   },
 
   'form-validation': {
@@ -13157,7 +14337,7 @@ function FormValidationExample({
   );
 }
 
-export default FormValidationExample;`
+export default FormValidationExample;`,
   },
 
   accessibility: {
@@ -13427,7 +14607,7 @@ function AccessibilityExample({
   );
 }
 
-export default AccessibilityExample;`
+export default AccessibilityExample;`,
   }
 };
 
@@ -13553,7 +14733,7 @@ function RadioButtonExample({
   );
 }
 
-export default RadioButtonExample;`
+export default RadioButtonExample;`,
   },
 
   checked: {
@@ -13640,7 +14820,7 @@ function CheckedRadioButtonExample(): JSX.Element {
   );
 }
 
-export default CheckedRadioButtonExample;`
+export default CheckedRadioButtonExample;`,
   },
 
   disabled: {
@@ -13731,7 +14911,7 @@ function DisabledRadioButtonExample(): JSX.Element {
   );
 }
 
-export default DisabledRadioButtonExample;`
+export default DisabledRadioButtonExample;`,
   },
 
   'with-help-text': {
@@ -13852,7 +15032,7 @@ function RadioButtonWithHelpTextExample({
   );
 }
 
-export default RadioButtonWithHelpTextExample;`
+export default RadioButtonWithHelpTextExample;`,
   },
 
   error: {
@@ -13960,7 +15140,7 @@ function RadioButtonWithErrorExample({
   );
 }
 
-export default RadioButtonWithErrorExample;`
+export default RadioButtonWithErrorExample;`,
   }
 };
 
@@ -14043,7 +15223,7 @@ function AvatarExample({
   );
 }
 
-export default AvatarExample;`
+export default AvatarExample;`,
   },
 
   sizes: {
@@ -14212,7 +15392,7 @@ function AvatarSizesExample(): JSX.Element {
   );
 }
 
-export default AvatarSizesExample;`
+export default AvatarSizesExample;`,
   },
 
   withImages: {
@@ -14873,7 +16053,7 @@ function AvatarInitialsExample({
   );
 }
 
-export default AvatarInitialsExample;`
+export default AvatarInitialsExample;`,
   },
 
   userStatus: {
@@ -15307,7 +16487,7 @@ function IconExample({
   );
 }
 
-export default IconExample;`
+export default IconExample;`,
   }
 };
 
@@ -15402,7 +16582,7 @@ const MediaCardExample: React.FC<MediaCardExampleProps> = ({
   );
 };
 
-export default MediaCardExample;`
+export default MediaCardExample;`,
   },
 
   product: {
@@ -15514,7 +16694,7 @@ const ProductCardExample: React.FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCardExample;`
+export default ProductCardExample;`,
   },
 
   video: {
@@ -15644,7 +16824,7 @@ const VideoCardExample: React.FC<VideoCardProps> = ({
   );
 };
 
-export default VideoCardExample;`
+export default VideoCardExample;`,
   },
 
   article: {
@@ -15796,7 +16976,7 @@ const ArticleCardExample: React.FC<ArticleCardProps> = ({
   );
 };
 
-export default ArticleCardExample;`
+export default ArticleCardExample;`,
   },
 
   testimonial: {
@@ -15908,7 +17088,7 @@ const TestimonialCardExample: React.FC<TestimonialCardProps> = ({
   );
 };
 
-export default TestimonialCardExample;`
+export default TestimonialCardExample;`,
   },
 
   sizeVariations: {
@@ -16157,7 +17337,7 @@ const SizeVariationsExample: React.FC = () => {
   );
 };
 
-export default SizeVariationsExample;`
+export default SizeVariationsExample;`,
   }
 };
 
@@ -16250,7 +17430,7 @@ function ThumbnailExample({
   );
 }
 
-export default ThumbnailExample;`
+export default ThumbnailExample;`,
   }
 };
 
@@ -16372,7 +17552,1100 @@ function VideoThumbnailExample({
   );
 }
 
-export default VideoThumbnailExample;`
+export default VideoThumbnailExample;`,
+  },
+
+  withplaybutton: {
+    react: `import { VideoThumbnail } from '@shopify/polaris';
+import React from 'react';
+
+function WithPlayButtonExample() {
+  return (
+    <div style={{ width: '400px' }}>
+      <VideoThumbnail
+        thumbnailUrl="https://picsum.photos/seed/playbutton/640/360.jpg"
+        videoLength={180}
+        thumbnailAlt="Product demonstration video"
+        onPlaybackStart={() => console.log('Video playback started')}
+      />
+    </div>
+  );
+}
+
+export default WithPlayButtonExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="video-container" style="width: 400px;">
+  <div class="polaris-video-thumbnail">
+    <img
+      src="https://picsum.photos/seed/playbutton/640/360.jpg"
+      alt="Product demonstration video"
+      class="polaris-video-thumbnail__image"
+    />
+    <div class="polaris-video-thumbnail__play-button">
+      <svg viewBox="0 0 20 20" class="polaris-icon">
+        <path d="M6 4l10 6-10 6V4z" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="polaris-video-thumbnail__duration">3:00</div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { $, on } from '@cin7/vanilla-js';
+
+const videoThumbnail = $('.polaris-video-thumbnail');
+on(videoThumbnail, 'click', () => {
+  console.log('Video playback started');
+  // Trigger video playback
+});
+</script>`,
+
+    extjs: `// ExtJS VideoThumbnail with play button
+import { PolarisVideoThumbnail } from '@cin7/extjs-adapters';
+
+Ext.create('Ext.container.Container', {
+  width: 400,
+  items: [{
+    xtype: 'polaris-video-thumbnail',
+    thumbnailUrl: 'https://picsum.photos/seed/playbutton/640/360.jpg',
+    videoLength: 180,
+    alt: 'Product demonstration video',
+    showPlayButton: true,
+    listeners: {
+      playbackstart: function() {
+        console.log('Video playback started');
+      }
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail } from '@shopify/polaris';
+import React, { useCallback } from 'react';
+
+interface VideoWithPlayButtonProps {
+  thumbnailUrl?: string;
+  videoLength?: number;
+  onPlaybackStart?: () => void;
+}
+
+const WithPlayButtonExample: React.FC<VideoWithPlayButtonProps> = ({
+  thumbnailUrl = 'https://picsum.photos/seed/playbutton/640/360.jpg',
+  videoLength = 180,
+  onPlaybackStart
+}) => {
+  const handlePlaybackStart = useCallback(() => {
+    console.log('Video playback started');
+    onPlaybackStart?.();
+  }, [onPlaybackStart]);
+
+  return (
+    <div style={{ width: '400px' }}>
+      <VideoThumbnail
+        thumbnailUrl={thumbnailUrl}
+        videoLength={videoLength}
+        thumbnailAlt="Product demonstration video"
+        onPlaybackStart={handlePlaybackStart}
+      />
+    </div>
+  );
+};
+
+export default WithPlayButtonExample;`,
+  },
+
+  videolengthdisplay: {
+    react: `import { VideoThumbnail, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+function VideoLengthDisplayExample() {
+  const videos = [
+    { length: 30, title: 'Quick Tip' },
+    { length: 120, title: 'Tutorial' },
+    { length: 450, title: 'Full Course' },
+    { length: 1800, title: 'Webinar Recording' },
+  ];
+
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    if (hours > 0) {
+      return \`\${hours}:\${minutes.toString().padStart(2, '0')}:\${secs.toString().padStart(2, '0')}\`;
+    }
+    return \`\${minutes}:\${secs.toString().padStart(2, '0')}\`;
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Text variant="headingMd" as="h3">Video Length Variations</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+        {videos.map((video, index) => (
+          <Card key={index} padding="300">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <VideoThumbnail
+                thumbnailUrl={\`https://picsum.photos/seed/video\${index}/320/180.jpg\`}
+                videoLength={video.length}
+                thumbnailAlt={\`\${video.title} video thumbnail\`}
+              />
+              <div>
+                <Text variant="bodyMd" fontWeight="medium">{video.title}</Text>
+                <Text color="subdued" variant="bodySm">
+                  Duration: {formatTime(video.length)}
+                </Text>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default VideoLengthDisplayExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="video-length-display">
+  <h3>Video Length Variations</h3>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="polaris-video-thumbnail">
+        <img src="https://picsum.photos/seed/video0/320/180.jpg" alt="Quick Tip">
+        <div class="polaris-video-thumbnail__duration">0:30</div>
+      </div>
+      <div class="video-info">
+        <strong>Quick Tip</strong>
+        <span class="subdued">Duration: 0:30</span>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="polaris-video-thumbnail">
+        <img src="https://picsum.photos/seed/video1/320/180.jpg" alt="Tutorial">
+        <div class="polaris-video-thumbnail__duration">2:00</div>
+      </div>
+      <div class="video-info">
+        <strong>Tutorial</strong>
+        <span class="subdued">Duration: 2:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { formatDuration } from '@cin7/vanilla-js';
+
+const videos = [
+  { length: 30, title: 'Quick Tip' },
+  { length: 120, title: 'Tutorial' },
+  { length: 450, title: 'Full Course' },
+  { length: 1800, title: 'Webinar Recording' }
+];
+
+videos.forEach((video, index) => {
+  const formattedTime = formatDuration(video.length);
+  console.log(\`\${video.title}: \${formattedTime}\`);
+});
+</script>`,
+
+    extjs: `// ExtJS Video Length Display Grid
+Ext.create('Ext.panel.Panel', {
+  title: 'Video Length Variations',
+  layout: {
+    type: 'grid',
+    columns: 2
+  },
+  items: [
+    { length: 30, title: 'Quick Tip' },
+    { length: 120, title: 'Tutorial' },
+    { length: 450, title: 'Full Course' },
+    { length: 1800, title: 'Webinar Recording' }
+  ].map(function(video, index) {
+    return {
+      xtype: 'panel',
+      padding: 10,
+      items: [{
+        xtype: 'image',
+        src: 'https://picsum.photos/seed/video' + index + '/320/180.jpg',
+        alt: video.title
+      }, {
+        xtype: 'container',
+        html: '<strong>' + video.title + '</strong><br>' +
+              '<span style="color: #637381">Duration: ' +
+              formatTime(video.length) + '</span>'
+      }]
+    };
+  }),
+  renderTo: Ext.getBody()
+});
+
+function formatTime(seconds) {
+  var hours = Math.floor(seconds / 3600);
+  var minutes = Math.floor((seconds % 3600) / 60);
+  var secs = seconds % 60;
+  if (hours > 0) {
+    return hours + ':' + pad(minutes) + ':' + pad(secs);
+  }
+  return minutes + ':' + pad(secs);
+}
+
+function pad(num) {
+  return num.toString().padStart(2, '0');
+}`,
+
+    typescript: `import { VideoThumbnail, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface Video {
+  length: number;
+  title: string;
+}
+
+const VideoLengthDisplayExample: React.FC = () => {
+  const videos: Video[] = [
+    { length: 30, title: 'Quick Tip' },
+    { length: 120, title: 'Tutorial' },
+    { length: 450, title: 'Full Course' },
+    { length: 1800, title: 'Webinar Recording' },
+  ];
+
+  const formatTime = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    if (hours > 0) {
+      return \`\${hours}:\${minutes.toString().padStart(2, '0')}:\${secs.toString().padStart(2, '0')}\`;
+    }
+    return \`\${minutes}:\${secs.toString().padStart(2, '0')}\`;
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Text variant="headingMd" as="h3">Video Length Variations</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+        {videos.map((video, index) => (
+          <Card key={index} padding="300">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <VideoThumbnail
+                thumbnailUrl={\`https://picsum.photos/seed/video\${index}/320/180.jpg\`}
+                videoLength={video.length}
+                thumbnailAlt={\`\${video.title} video thumbnail\`}
+              />
+              <div>
+                <Text variant="bodyMd" fontWeight="medium">{video.title}</Text>
+                <Text color="subdued" variant="bodySm">
+                  Duration: {formatTime(video.length)}
+                </Text>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default VideoLengthDisplayExample;`,
+  },
+
+  videogallery: {
+    react: `import { VideoThumbnail, Text, InlineStack, Icon } from '@shopify/polaris';
+import { ViewIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+function VideoGalleryExample() {
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const videos = [
+    { title: 'Product Introduction', length: 90, views: 1250 },
+    { title: 'Features Overview', length: 180, views: 890 },
+    { title: 'How to Use', length: 240, views: 2100 },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Text variant="headingMd" as="h3">Video Gallery</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+        {videos.map((video, index) => (
+          <div key={index} onClick={() => setSelectedVideo(index)}>
+            <VideoThumbnail
+              thumbnailUrl={\`https://picsum.photos/seed/gallery\${index}/320/180.jpg\`}
+              videoLength={video.length}
+              thumbnailAlt={\`\${video.title} video thumbnail\`}
+            />
+            <Text variant="bodySm" fontWeight="medium">{video.title}</Text>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default VideoGalleryExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="video-gallery">
+  <h3>Video Gallery</h3>
+  <div class="video-grid"></div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const videos = [
+  { title: 'Product Introduction', length: 90, views: 1250 },
+  { title: 'Features Overview', length: 180, views: 890 }
+];
+
+const grid = $('.video-grid');
+videos.forEach((video, index) => {
+  const item = document.createElement('div');
+  item.innerHTML = \`<img src="https://picsum.photos/seed/gallery\${index}/320/180.jpg"><p>\${video.title}</p>\`;
+  on(item, 'click', () => console.log('Selected:', video.title));
+  grid.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS Video Gallery
+Ext.create('Ext.dataview.DataView', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['title', 'length', 'views'],
+    data: [
+      { title: 'Product Introduction', length: 90, views: 1250 },
+      { title: 'Features Overview', length: 180, views: 890 }
+    ]
+  }),
+  tpl: '<tpl for="."><div class="video-item"><img src="https://picsum.photos/seed/gallery{#}/320/180.jpg"><p>{title}</p></div></tpl>',
+  itemSelector: 'div.video-item',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Text } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface Video { title: string; length: number; views: number; }
+
+const VideoGalleryExample: React.FC = () => {
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const videos: Video[] = [
+    { title: 'Product Introduction', length: 90, views: 1250 },
+    { title: 'Features Overview', length: 180, views: 890 }
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+      {videos.map((video, index) => (
+        <div key={index} onClick={() => setSelectedVideo(index)}>
+          <VideoThumbnail
+            thumbnailUrl={\`https://picsum.photos/seed/gallery\${index}/320/180.jpg\`}
+            videoLength={video.length}
+            thumbnailAlt={video.title}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default VideoGalleryExample;`,
+  },
+
+  coursecontent: {
+    react: `import { VideoThumbnail, Text, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function CourseContentExample() {
+  const [watchedVideos, setWatchedVideos] = useState<Set<number>>(new Set([0, 1]));
+  const courseVideos = [
+    { title: 'Chapter 1: Introduction', length: 480 },
+    { title: 'Chapter 2: Getting Started', length: 600 },
+    { title: 'Chapter 3: Basic Concepts', length: 720 },
+  ];
+
+  const toggleWatched = (index: number) => {
+    setWatchedVideos(prev => {
+      const newSet = new Set(prev);
+      newSet.has(index) ? newSet.delete(index) : newSet.add(index);
+      return newSet;
+    });
+  };
+
+  return (
+    <div style={{ width: '600px' }}>
+      {courseVideos.map((video, index) => (
+        <div key={index} style={{ display: 'flex', gap: '16px', padding: '16px' }}>
+          <VideoThumbnail
+            thumbnailUrl={\`https://picsum.photos/seed/course\${index}/160/90.jpg\`}
+            videoLength={video.length}
+            thumbnailAlt={video.title}
+          />
+          <div>
+            <Text variant="bodyMd" fontWeight="medium">{video.title}</Text>
+            <Button size="small" onClick={() => toggleWatched(index)}>
+              {watchedVideos.has(index) ? 'Watched' : 'Mark as watched'}
+            </Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default CourseContentExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="course-content"></div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const watched = new Set([0, 1]);
+const courses = [
+  { title: 'Chapter 1: Introduction', length: 480 },
+  { title: 'Chapter 2: Getting Started', length: 600 }
+];
+
+const container = $('.course-content');
+courses.forEach((course, i) => {
+  const item = document.createElement('div');
+  item.innerHTML = \`<img src="https://picsum.photos/seed/course\${i}/160/90.jpg"><p>\${course.title}</p><button>Mark as watched</button>\`;
+  on(item.querySelector('button'), 'click', () => watched.has(i) ? watched.delete(i) : watched.add(i));
+  container.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS Course Content
+Ext.create('Ext.panel.Panel', {
+  title: 'Course Content',
+  items: [{
+    xtype: 'dataview',
+    store: Ext.create('Ext.data.Store', {
+      fields: ['title', 'length'],
+      data: [
+        { title: 'Chapter 1: Introduction', length: 480 },
+        { title: 'Chapter 2: Getting Started', length: 600 }
+      ]
+    }),
+    tpl: '<tpl for="."><div><img src="https://picsum.photos/seed/course{#}/160/90.jpg"><p>{title}</p></div></tpl>',
+    itemSelector: 'div'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Text, Button } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface CourseVideo { title: string; length: number; }
+
+const CourseContentExample: React.FC = () => {
+  const [watchedVideos, setWatchedVideos] = useState<Set<number>>(new Set([0, 1]));
+  const courseVideos: CourseVideo[] = [
+    { title: 'Chapter 1: Introduction', length: 480 },
+    { title: 'Chapter 2: Getting Started', length: 600 }
+  ];
+
+  const toggleWatched = useCallback((index: number) => {
+    setWatchedVideos(prev => {
+      const newSet = new Set(prev);
+      newSet.has(index) ? newSet.delete(index) : newSet.add(index);
+      return newSet;
+    });
+  }, []);
+
+  return (
+    <div>
+      {courseVideos.map((video, index) => (
+        <div key={index}>
+          <VideoThumbnail
+            thumbnailUrl={\`https://picsum.photos/seed/course\${index}/160/90.jpg\`}
+            videoLength={video.length}
+            thumbnailAlt={video.title}
+          />
+          <Button onClick={() => toggleWatched(index)}>
+            {watchedVideos.has(index) ? 'Watched' : 'Mark as watched'}
+          </Button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default CourseContentExample;`,
+  },
+
+  interactivepreview: {
+    react: `import { VideoThumbnail, Card, Text, Icon } from '@shopify/polaris';
+import { PlayIcon, PauseCircleIcon, ClockIcon } from '@shopify/polaris-icons';
+import React, { useState, useEffect } from 'react';
+
+function InteractivePreviewExample() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPlaying && progress < 100) {
+      interval = setInterval(() => setProgress(prev => Math.min(prev + 1, 100)), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, progress]);
+
+  return (
+    <Card padding="0">
+      <VideoThumbnail
+        thumbnailUrl="https://picsum.photos/seed/interactive/500/281.jpg"
+        videoLength={120}
+        thumbnailAlt="Interactive video preview"
+        showProgress={isPlaying}
+      />
+      <div style={{ padding: '16px' }}>
+        <Text variant="headingMd">Interactive Product Demo</Text>
+        <button onClick={() => setIsPlaying(!isPlaying)}>
+          <Icon source={isPlaying ? PauseCircleIcon : PlayIcon} />
+          {isPlaying ? 'Pause' : 'Play'}
+        </button>
+      </div>
+    </Card>
+  );
+}
+
+export default InteractivePreviewExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="interactive-video">
+  <img src="https://picsum.photos/seed/interactive/500/281.jpg">
+  <button id="playBtn">Play</button>
+  <div class="progress-bar" style="width: 0%;"></div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+let isPlaying = false;
+let progress = 0;
+
+on($('#playBtn'), 'click', () => {
+  isPlaying = !isPlaying;
+  $('#playBtn').textContent = isPlaying ? 'Pause' : 'Play';
+  if (isPlaying) {
+    setInterval(() => {
+      progress = Math.min(progress + 1, 100);
+      $('.progress-bar').style.width = \`\${progress}%\`;
+    }, 1000);
+  }
+});
+</script>`,
+
+    extjs: `// ExtJS Interactive Video Preview
+Ext.create('Ext.panel.Panel', {
+  title: 'Interactive Product Demo',
+  items: [{
+    xtype: 'image',
+    src: 'https://picsum.photos/seed/interactive/500/281.jpg'
+  }],
+  buttons: [{
+    text: 'Play',
+    handler: function(btn) {
+      btn.setText(btn.getText() === 'Play' ? 'Pause' : 'Play');
+    }
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Card, Text, Icon } from '@shopify/polaris';
+import { PlayIcon, PauseCircleIcon } from '@shopify/polaris-icons';
+import React, { useState, useEffect, useCallback } from 'react';
+
+const InteractivePreviewExample: React.FC = () => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isPlaying && progress < 100) {
+      interval = setInterval(() => setProgress(prev => Math.min(prev + 1, 100)), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, progress]);
+
+  const togglePlayback = useCallback(() => setIsPlaying(prev => !prev), []);
+
+  return (
+    <Card padding="0">
+      <VideoThumbnail
+        thumbnailUrl="https://picsum.photos/seed/interactive/500/281.jpg"
+        videoLength={120}
+        thumbnailAlt="Interactive video preview"
+        showProgress={isPlaying}
+      />
+      <div style={{ padding: '16px' }}>
+        <button onClick={togglePlayback}>
+          <Icon source={isPlaying ? PauseCircleIcon : PlayIcon} />
+          {isPlaying ? 'Pause' : 'Play'}
+        </button>
+      </div>
+    </Card>
+  );
+};
+
+export default InteractivePreviewExample;`,
+  },
+
+  withmetadata: {
+    react: `import { VideoThumbnail, Text, Card, Badge, Icon } from '@shopify/polaris';
+import { ClockIcon, ViewIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+function WithMetadataExample() {
+  const videos = [
+    { title: 'Product Launch Event', description: 'Live recording of our annual product launch.', length: 3600, views: 15420, category: 'Events' },
+    { title: 'Customer Success Story', description: 'How Company X transformed their business.', length: 900, views: 8930, category: 'Testimonials' },
+  ];
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+      {videos.map((video, index) => (
+        <Card key={index} padding="400">
+          <VideoThumbnail
+            thumbnailUrl={\`https://picsum.photos/seed/metadata\${index}/400/225.jpg\`}
+            videoLength={video.length}
+            thumbnailAlt={video.title}
+          />
+          <Text variant="headingMd">{video.title}</Text>
+          <Text color="subdued">{video.description}</Text>
+          <Badge>{video.category}</Badge>
+          <Icon source={ViewIcon} />
+          <Text variant="bodySm">{video.views.toLocaleString()} views</Text>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default WithMetadataExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="video-metadata-grid"></div>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+const videos = [
+  { title: 'Product Launch Event', length: 3600, views: 15420, category: 'Events' },
+  { title: 'Customer Success Story', length: 900, views: 8930, category: 'Testimonials' }
+];
+
+const grid = $('.video-metadata-grid');
+videos.forEach((video, i) => {
+  const card = document.createElement('div');
+  card.innerHTML = \`<img src="https://picsum.photos/seed/metadata\${i}/400/225.jpg"><h3>\${video.title}</h3><span class="badge">\${video.category}</span><p>\${video.views} views</p>\`;
+  grid.appendChild(card);
+});
+</script>`,
+
+    extjs: `// ExtJS Video with Metadata
+Ext.create('Ext.dataview.DataView', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['title', 'description', 'length', 'views', 'category'],
+    data: [
+      { title: 'Product Launch Event', description: 'Live recording', length: 3600, views: 15420, category: 'Events' }
+    ]
+  }),
+  tpl: '<tpl for="."><div><img src="https://picsum.photos/seed/metadata{#}/400/225.jpg"><h3>{title}</h3><p>{description}</p><span>{views} views</span></div></tpl>',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Text, Card, Badge } from '@shopify/polaris';
+import React from 'react';
+
+interface VideoMetadata { title: string; description: string; length: number; views: number; category: string; }
+
+const WithMetadataExample: React.FC = () => {
+  const videos: VideoMetadata[] = [
+    { title: 'Product Launch Event', description: 'Live recording of annual launch', length: 3600, views: 15420, category: 'Events' }
+  ];
+
+  return (
+    <div>
+      {videos.map((video, index) => (
+        <Card key={index} padding="400">
+          <VideoThumbnail
+            thumbnailUrl={\`https://picsum.photos/seed/metadata\${index}/400/225.jpg\`}
+            videoLength={video.length}
+            thumbnailAlt={video.title}
+          />
+          <Text variant="headingMd">{video.title}</Text>
+          <Badge>{video.category}</Badge>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+export default WithMetadataExample;`,
+  },
+
+  loadingstate: {
+    react: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+function LoadingStateExample() {
+  return (
+    <div style={{ width: '400px', border: '1px solid #e1e1e1', borderRadius: '8px' }}>
+      <div style={{ backgroundColor: '#f3f4f6', height: '225px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '40px', height: '40px', border: '4px solid #e1e1e1', borderTop: '4px solid #007ace', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+          <Text color="subdued">Loading video...</Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LoadingStateExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="video-loading">
+  <div class="loading-spinner"></div>
+  <p>Loading video...</p>
+</div>
+
+<style>
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e1e1e1;
+  border-top: 4px solid #007ace;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>`,
+
+    extjs: `// ExtJS Loading State
+Ext.create('Ext.container.Container', {
+  html: '<div class="loading-container"><div class="spinner"></div><p>Loading video...</p></div>',
+  cls: 'video-loading-state',
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+const LoadingStateExample: React.FC = () => {
+  return (
+    <div style={{ width: '400px', borderRadius: '8px', overflow: 'hidden' }}>
+      <div style={{ backgroundColor: '#f3f4f6', height: '225px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '40px', height: '40px', border: '4px solid #e1e1e1', borderTop: '4px solid #007ace', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+          <Text color="subdued">Loading video...</Text>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoadingStateExample;`,
+  },
+
+  accessibility: {
+    react: `import { VideoThumbnail, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+function AccessibilityExample() {
+  return (
+    <Card padding="400">
+      <Text variant="bodyMd" fontWeight="medium">Screen Reader Friendly Video Thumbnails</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/a11y1/300/169.jpg"
+          videoLength={180}
+          thumbnailAlt="Product demonstration video showing main features and benefits"
+          accessibilityLabel="Play product demonstration video, 3 minutes long"
+        />
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/a11y2/300/169.jpg"
+          videoLength={300}
+          thumbnailAlt="Tutorial video with step-by-step instructions"
+          accessibilityLabel="Play tutorial video, 5 minutes long, includes closed captions"
+        />
+      </div>
+    </Card>
+  );
+}
+
+export default AccessibilityExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="accessible-videos">
+  <h3>Screen Reader Friendly Videos</h3>
+  <div class="video-thumbnails">
+    <div class="polaris-video-thumbnail" role="button" aria-label="Play product demonstration video, 3 minutes long" tabindex="0">
+      <img src="https://picsum.photos/seed/a11y1/300/169.jpg" alt="Product demonstration video showing main features">
+    </div>
+    <div class="polaris-video-thumbnail" role="button" aria-label="Play tutorial video, 5 minutes long, includes closed captions" tabindex="0">
+      <img src="https://picsum.photos/seed/a11y2/300/169.jpg" alt="Tutorial video with step-by-step instructions">
+    </div>
+  </div>
+</div>`,
+
+    extjs: `// ExtJS Accessible Video Thumbnails
+Ext.create('Ext.panel.Panel', {
+  title: 'Accessibility Features',
+  items: [{
+    xtype: 'container',
+    layout: 'hbox',
+    items: [{
+      xtype: 'image',
+      src: 'https://picsum.photos/seed/a11y1/300/169.jpg',
+      alt: 'Product demonstration video showing main features',
+      listeners: {
+        render: function(img) {
+          img.getEl().set({ 'aria-label': 'Play product demonstration video, 3 minutes long', tabindex: 0 });
+        }
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+const AccessibilityExample: React.FC = () => {
+  return (
+    <Card padding="400">
+      <Text variant="bodyMd" fontWeight="medium">Screen Reader Friendly Video Thumbnails</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/a11y1/300/169.jpg"
+          videoLength={180}
+          thumbnailAlt="Product demonstration video showing main features and benefits"
+          accessibilityLabel="Play product demonstration video, 3 minutes long"
+        />
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/a11y2/300/169.jpg"
+          videoLength={300}
+          thumbnailAlt="Tutorial video with step-by-step instructions"
+          accessibilityLabel="Play tutorial video, 5 minutes long, includes closed captions"
+        />
+      </div>
+    </Card>
+  );
+};
+
+export default AccessibilityExample;`,
+  },
+
+  responsivedesign: {
+    react: `import { VideoThumbnail, Text, Button, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ResponsiveDesignExample() {
+  const [containerSize, setContainerSize] = useState<'small' | 'medium' | 'large'>('medium');
+
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+        <Text variant="headingMd">Responsive Video Thumbnails</Text>
+        <InlineStack gap="200">
+          <Button size="small" variant={containerSize === 'small' ? 'primary' : 'plain'} onClick={() => setContainerSize('small')}>Small</Button>
+          <Button size="small" variant={containerSize === 'medium' ? 'primary' : 'plain'} onClick={() => setContainerSize('medium')}>Medium</Button>
+          <Button size="small" variant={containerSize === 'large' ? 'primary' : 'plain'} onClick={() => setContainerSize('large')}>Large</Button>
+        </InlineStack>
+      </div>
+      <div style={{ width: containerSize === 'small' ? '300px' : containerSize === 'medium' ? '500px' : '700px' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/responsive/700/394.jpg"
+          videoLength={180}
+          thumbnailAlt="Responsive video thumbnail"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default ResponsiveDesignExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="responsive-video-container">
+  <div class="size-controls">
+    <button data-size="small">Small</button>
+    <button data-size="medium">Medium</button>
+    <button data-size="large">Large</button>
+  </div>
+  <div class="video-wrapper" style="width: 500px;">
+    <img src="https://picsum.photos/seed/responsive/700/394.jpg" alt="Responsive video">
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+on('[data-size]', 'click', (e) => {
+  const size = e.target.dataset.size;
+  const widths = { small: '300px', medium: '500px', large: '700px' };
+  $('.video-wrapper').style.width = widths[size];
+});
+</script>`,
+
+    extjs: `// ExtJS Responsive Video
+Ext.create('Ext.panel.Panel', {
+  title: 'Responsive Design',
+  tbar: [{
+    text: 'Small',
+    handler: function() { this.up('panel').setWidth(300); }
+  }, {
+    text: 'Medium',
+    handler: function() { this.up('panel').setWidth(500); }
+  }, {
+    text: 'Large',
+    handler: function() { this.up('panel').setWidth(700); }
+  }],
+  items: [{
+    xtype: 'image',
+    src: 'https://picsum.photos/seed/responsive/700/394.jpg'
+  }],
+  width: 500,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Text, Button, InlineStack } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+type ContainerSize = 'small' | 'medium' | 'large';
+
+const ResponsiveDesignExample: React.FC = () => {
+  const [containerSize, setContainerSize] = useState<ContainerSize>('medium');
+
+  const handleSizeChange = useCallback((size: ContainerSize) => {
+    setContainerSize(size);
+  }, []);
+
+  const getWidth = (): string => {
+    const sizes = { small: '300px', medium: '500px', large: '700px' };
+    return sizes[containerSize];
+  };
+
+  return (
+    <div>
+      <InlineStack gap="200">
+        <Button size="small" variant={containerSize === 'small' ? 'primary' : 'plain'} onClick={() => handleSizeChange('small')}>Small</Button>
+        <Button size="small" variant={containerSize === 'medium' ? 'primary' : 'plain'} onClick={() => handleSizeChange('medium')}>Medium</Button>
+        <Button size="small" variant={containerSize === 'large' ? 'primary' : 'plain'} onClick={() => handleSizeChange('large')}>Large</Button>
+      </InlineStack>
+      <div style={{ width: getWidth() }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/responsive/700/394.jpg"
+          videoLength={180}
+          thumbnailAlt="Responsive video thumbnail"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ResponsiveDesignExample;`,
+  },
+
+  customstyling: {
+    react: `import { VideoThumbnail, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function CustomStylingExample() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+      <div style={{ position: 'relative' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/custom1/400/225.jpg"
+          videoLength={120}
+          thumbnailAlt="Styled video thumbnail with badge"
+        />
+        <div style={{ position: 'absolute', top: '8px', left: '8px' }}>
+          <Badge status="new">NEW</Badge>
+        </div>
+      </div>
+      <div style={{ position: 'relative' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/custom2/400/225.jpg"
+          videoLength={240}
+          thumbnailAlt="Styled video thumbnail with live indicator"
+        />
+        <div style={{ position: 'absolute', top: '8px', right: '8px', backgroundColor: '#d72c0d', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: '600' }}>
+          LIVE
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default CustomStylingExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="custom-styled-videos">
+  <div class="video-item">
+    <img src="https://picsum.photos/seed/custom1/400/225.jpg" alt="Video with badge">
+    <span class="badge-new">NEW</span>
+  </div>
+  <div class="video-item">
+    <img src="https://picsum.photos/seed/custom2/400/225.jpg" alt="Live video">
+    <span class="badge-live">LIVE</span>
+  </div>
+</div>
+
+<style>
+.badge-new { position: absolute; top: 8px; left: 8px; background: #007ace; color: white; padding: 4px 8px; border-radius: 4px; }
+.badge-live { position: absolute; top: 8px; right: 8px; background: #d72c0d; color: white; padding: 4px 8px; border-radius: 4px; }
+</style>`,
+
+    extjs: `// ExtJS Custom Styled Video Thumbnails
+Ext.create('Ext.container.Container', {
+  layout: 'hbox',
+  items: [{
+    xtype: 'container',
+    html: '<div style="position:relative"><img src="https://picsum.photos/seed/custom1/400/225.jpg"><span style="position:absolute;top:8px;left:8px;background:#007ace;color:white;padding:4px 8px;border-radius:4px">NEW</span></div>'
+  }, {
+    xtype: 'container',
+    html: '<div style="position:relative"><img src="https://picsum.photos/seed/custom2/400/225.jpg"><span style="position:absolute;top:8px;right:8px;background:#d72c0d;color:white;padding:4px 8px;border-radius:4px">LIVE</span></div>'
+  }],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { VideoThumbnail, Badge } from '@shopify/polaris';
+import React from 'react';
+
+const CustomStylingExample: React.FC = () => {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+      <div style={{ position: 'relative' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/custom1/400/225.jpg"
+          videoLength={120}
+          thumbnailAlt="Styled video thumbnail with badge"
+        />
+        <div style={{ position: 'absolute', top: '8px', left: '8px' }}>
+          <Badge status="new">NEW</Badge>
+        </div>
+      </div>
+      <div style={{ position: 'relative' }}>
+        <VideoThumbnail
+          thumbnailUrl="https://picsum.photos/seed/custom2/400/225.jpg"
+          videoLength={240}
+          thumbnailAlt="Styled video thumbnail with live indicator"
+        />
+        <div style={{ position: 'absolute', top: '8px', right: '8px', backgroundColor: '#d72c0d', color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: '600' }}>
+          LIVE
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CustomStylingExample;`,
   }
 };
 
@@ -16492,7 +18765,7 @@ function DataTableExample({ orders }: DataTableExampleProps): JSX.Element {
   );
 }
 
-export default DataTableExample;`
+export default DataTableExample;`,
   }
 };
 
@@ -16577,9 +18850,874 @@ function DescriptionListExample({
   );
 }
 
-export default DescriptionListExample;`
+export default DescriptionListExample;`,
   }
+,
+
+  productDetails: {
+    react: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+function ProductDetailsExample() {
+  const items = [
+    { term: 'SKU', description: 'TSHIRT-BLUE-M' },
+    { term: 'Product Type', description: 'Apparel' },
+    { term: 'Vendor', description: 'Fashion Brand Co.' },
+    { term: 'Collection', description: 'Summer Collection 2023' },
+    { term: 'Weight', description: '0.25 kg' },
+    { term: 'Dimensions', description: '30cm × 20cm × 2cm' },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default ProductDetailsExample;`,
+
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+// Create description list element
+const dl = document.createElement('dl');
+dl.className = 'polaris-description-list';
+
+// Product details data
+const items = [
+  { term: 'SKU', description: 'TSHIRT-BLUE-M' },
+  { term: 'Product Type', description: 'Apparel' },
+  { term: 'Vendor', description: 'Fashion Brand Co.' },
+  { term: 'Collection', description: 'Summer Collection 2023' },
+  { term: 'Weight', description: '0.25 kg' },
+  { term: 'Dimensions', description: '30cm × 20cm × 2cm' },
+];
+
+// Build DOM structure
+items.forEach(item => {
+  const dt = document.createElement('dt');
+  dt.className = 'polaris-description-list__term';
+  dt.textContent = item.term;
+
+  const dd = document.createElement('dd');
+  dd.className = 'polaris-description-list__description';
+  dd.textContent = item.description;
+
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+});
+
+$('#app').appendChild(dl);`,
+
+    extjs: `import { PolarisDescriptionList } from '@cin7/extjs-adapters';
+
+// Product details configuration
+const productData = {
+  sku: 'TSHIRT-BLUE-M',
+  type: 'Apparel',
+  vendor: 'Fashion Brand Co.',
+  collection: 'Summer Collection 2023',
+  weight: '0.25 kg',
+  dimensions: '30cm × 20cm × 2cm'
 };
+
+// Create product details panel
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Product Details',
+  width: 400,
+  bodyPadding: 10,
+  items: [{
+    xtype: 'component',
+    html: \`
+      <dl class="product-details">
+        <dt>SKU</dt><dd>\${productData.sku}</dd>
+        <dt>Product Type</dt><dd>\${productData.type}</dd>
+        <dt>Vendor</dt><dd>\${productData.vendor}</dd>
+        <dt>Collection</dt><dd>\${productData.collection}</dd>
+        <dt>Weight</dt><dd>\${productData.weight}</dd>
+        <dt>Dimensions</dt><dd>\${productData.dimensions}</dd>
+      </dl>
+    \`
+  }]
+});`,
+
+    typescript: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface ProductDetails {
+  sku: string;
+  productType: string;
+  vendor: string;
+  collection: string;
+  weight: string;
+  dimensions: string;
+}
+
+interface ProductDetailsProps {
+  product?: ProductDetails;
+}
+
+function ProductDetailsExample({ product }: ProductDetailsProps): JSX.Element {
+  const defaultProduct: ProductDetails = {
+    sku: 'TSHIRT-BLUE-M',
+    productType: 'Apparel',
+    vendor: 'Fashion Brand Co.',
+    collection: 'Summer Collection 2023',
+    weight: '0.25 kg',
+    dimensions: '30cm × 20cm × 2cm',
+  };
+
+  const productData = product || defaultProduct;
+
+  const items = [
+    { term: 'SKU', description: productData.sku },
+    { term: 'Product Type', description: productData.productType },
+    { term: 'Vendor', description: productData.vendor },
+    { term: 'Collection', description: productData.collection },
+    { term: 'Weight', description: productData.weight },
+    { term: 'Dimensions', description: productData.dimensions },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default ProductDetailsExample;`,
+  },
+
+  customerInformation: {
+    react: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+function CustomerInformationExample() {
+  const items = [
+    { term: 'Customer ID', description: 'CUST-2023-001' },
+    { term: 'Email', description: 'john.smith@example.com' },
+    { term: 'Phone', description: '+1 (555) 123-4567' },
+    { term: 'Location', description: 'New York, NY, USA' },
+    { term: 'Total Orders', description: '12' },
+    { term: 'Lifetime Value', description: '$2,847.50' },
+    { term: 'Customer Since', description: 'January 15, 2022' },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default CustomerInformationExample;`,
+
+    vanilla: `import { $, createDescriptionList } from '@cin7/vanilla-js';
+
+// Customer data
+const customerData = {
+  customerId: 'CUST-2023-001',
+  email: 'john.smith@example.com',
+  phone: '+1 (555) 123-4567',
+  location: 'New York, NY, USA',
+  totalOrders: '12',
+  lifetimeValue: '$2,847.50',
+  customerSince: 'January 15, 2022'
+};
+
+// Create description list
+const items = [
+  { term: 'Customer ID', description: customerData.customerId },
+  { term: 'Email', description: customerData.email },
+  { term: 'Phone', description: customerData.phone },
+  { term: 'Location', description: customerData.location },
+  { term: 'Total Orders', description: customerData.totalOrders },
+  { term: 'Lifetime Value', description: customerData.lifetimeValue },
+  { term: 'Customer Since', description: customerData.customerSince },
+];
+
+const descriptionList = createDescriptionList({ items });
+$('#app').appendChild(descriptionList);`,
+
+    extjs: `import { PolarisDescriptionList } from '@cin7/extjs-adapters';
+
+// Customer information panel
+Ext.define('CustomerInfoPanel', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'customerinfopanel',
+
+  title: 'Customer Information',
+  width: 500,
+  bodyPadding: 15,
+
+  initComponent: function() {
+    this.items = [{
+      xtype: 'polaris-descriptionlist',
+      items: [
+        { term: 'Customer ID', description: 'CUST-2023-001' },
+        { term: 'Email', description: 'john.smith@example.com' },
+        { term: 'Phone', description: '+1 (555) 123-4567' },
+        { term: 'Location', description: 'New York, NY, USA' },
+        { term: 'Total Orders', description: '12' },
+        { term: 'Lifetime Value', description: '$2,847.50' },
+        { term: 'Customer Since', description: 'January 15, 2022' },
+      ]
+    }];
+
+    this.callParent(arguments);
+  }
+});
+
+Ext.create('CustomerInfoPanel', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface Customer {
+  customerId: string;
+  email: string;
+  phone: string;
+  location: string;
+  totalOrders: number;
+  lifetimeValue: number;
+  customerSince: Date;
+}
+
+interface CustomerInformationProps {
+  customer?: Customer;
+}
+
+function CustomerInformationExample({
+  customer
+}: CustomerInformationProps): JSX.Element {
+  const defaultCustomer: Customer = {
+    customerId: 'CUST-2023-001',
+    email: 'john.smith@example.com',
+    phone: '+1 (555) 123-4567',
+    location: 'New York, NY, USA',
+    totalOrders: 12,
+    lifetimeValue: 2847.50,
+    customerSince: new Date('2022-01-15'),
+  };
+
+  const customerData = customer || defaultCustomer;
+
+  const items = [
+    { term: 'Customer ID', description: customerData.customerId },
+    { term: 'Email', description: customerData.email },
+    { term: 'Phone', description: customerData.phone },
+    { term: 'Location', description: customerData.location },
+    { term: 'Total Orders', description: customerData.totalOrders.toString() },
+    {
+      term: 'Lifetime Value',
+      description: \`$\${customerData.lifetimeValue.toFixed(2)}\`
+    },
+    {
+      term: 'Customer Since',
+      description: customerData.customerSince.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default CustomerInformationExample;`,
+  },
+
+  withBadges: {
+    react: `import { DescriptionList, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function WithBadgesExample() {
+  const items = [
+    {
+      term: 'Status',
+      description: <Badge tone="success">Active</Badge>,
+    },
+    {
+      term: 'Priority',
+      description: <Badge tone="attention">High</Badge>,
+    },
+    {
+      term: 'Verification',
+      description: <Badge tone="info">Pending</Badge>,
+    },
+    {
+      term: 'Risk Level',
+      description: <Badge tone="critical">Low</Badge>,
+    },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default WithBadgesExample;`,
+
+    vanilla: `import { $, createBadge } from '@cin7/vanilla-js';
+
+// Create description list with badges
+const dl = document.createElement('dl');
+dl.className = 'polaris-description-list';
+
+// Status items with badge styling
+const statusData = [
+  { term: 'Status', status: 'Active', tone: 'success' },
+  { term: 'Priority', status: 'High', tone: 'attention' },
+  { term: 'Verification', status: 'Pending', tone: 'info' },
+  { term: 'Risk Level', status: 'Low', tone: 'critical' },
+];
+
+statusData.forEach(item => {
+  const dt = document.createElement('dt');
+  dt.className = 'polaris-description-list__term';
+  dt.textContent = item.term;
+
+  const dd = document.createElement('dd');
+  dd.className = 'polaris-description-list__description';
+
+  // Create badge element
+  const badge = createBadge({
+    text: item.status,
+    tone: item.tone
+  });
+
+  dd.appendChild(badge);
+
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+});
+
+$('#app').appendChild(dl);`,
+
+    extjs: `import { PolarisBadge } from '@cin7/extjs-adapters';
+
+// Status display with badges
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Status Information',
+  width: 400,
+  bodyPadding: 10,
+  layout: {
+    type: 'table',
+    columns: 2
+  },
+  defaults: {
+    padding: 5
+  },
+  items: [
+    { html: '<strong>Status</strong>' },
+    {
+      xtype: 'polaris-badge',
+      text: 'Active',
+      tone: 'success'
+    },
+    { html: '<strong>Priority</strong>' },
+    {
+      xtype: 'polaris-badge',
+      text: 'High',
+      tone: 'attention'
+    },
+    { html: '<strong>Verification</strong>' },
+    {
+      xtype: 'polaris-badge',
+      text: 'Pending',
+      tone: 'info'
+    },
+    { html: '<strong>Risk Level</strong>' },
+    {
+      xtype: 'polaris-badge',
+      text: 'Low',
+      tone: 'critical'
+    }
+  ]
+});`,
+
+    typescript: `import { DescriptionList, Badge } from '@shopify/polaris';
+import React from 'react';
+
+type BadgeTone = 'success' | 'info' | 'attention' | 'warning' | 'critical';
+
+interface StatusItem {
+  term: string;
+  status: string;
+  tone: BadgeTone;
+}
+
+interface WithBadgesProps {
+  statusItems?: StatusItem[];
+}
+
+function WithBadgesExample({ statusItems }: WithBadgesProps): JSX.Element {
+  const defaultItems: StatusItem[] = [
+    { term: 'Status', status: 'Active', tone: 'success' },
+    { term: 'Priority', status: 'High', tone: 'attention' },
+    { term: 'Verification', status: 'Pending', tone: 'info' },
+    { term: 'Risk Level', status: 'Low', tone: 'critical' },
+  ];
+
+  const items = (statusItems || defaultItems).map(item => ({
+    term: item.term,
+    description: <Badge tone={item.tone}>{item.status}</Badge>,
+  }));
+
+  return <DescriptionList items={items} />;
+}
+
+export default WithBadgesExample;`,
+  },
+
+  withIcons: {
+    react: `import { DescriptionList, InlineStack, Icon } from '@shopify/polaris';
+import { EmailIcon, PhoneIcon, LocationIcon, ClockIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+function WithIconsExample() {
+  const items = [
+    {
+      term: (
+        <InlineStack gap="200">
+          <Icon source={EmailIcon} />
+          Email
+        </InlineStack>
+      ),
+      description: 'contact@company.com',
+    },
+    {
+      term: (
+        <InlineStack gap="200">
+          <Icon source={PhoneIcon} />
+          Phone
+        </InlineStack>
+      ),
+      description: '+1 (555) 987-6543',
+    },
+    {
+      term: (
+        <InlineStack gap="200">
+          <Icon source={LocationIcon} />
+          Address
+        </InlineStack>
+      ),
+      description: '123 Business St, Suite 100',
+    },
+    {
+      term: (
+        <InlineStack gap="200">
+          <Icon source={ClockIcon} />
+          Business Hours
+        </InlineStack>
+      ),
+      description: 'Mon-Fri: 9AM-6PM EST',
+    },
+  ];
+
+  return <DescriptionList items={items} />;
+}
+
+export default WithIconsExample;`,
+
+    vanilla: `import { $, createIcon } from '@cin7/vanilla-js';
+
+// Create description list with icons
+const dl = document.createElement('dl');
+dl.className = 'polaris-description-list';
+
+// Contact data with icons
+const contactData = [
+  { icon: 'email', label: 'Email', value: 'contact@company.com' },
+  { icon: 'phone', label: 'Phone', value: '+1 (555) 987-6543' },
+  { icon: 'location', label: 'Address', value: '123 Business St, Suite 100' },
+  { icon: 'clock', label: 'Business Hours', value: 'Mon-Fri: 9AM-6PM EST' },
+];
+
+contactData.forEach(item => {
+  const dt = document.createElement('dt');
+  dt.className = 'polaris-description-list__term';
+
+  // Create term with icon
+  const termWrapper = document.createElement('div');
+  termWrapper.style.display = 'flex';
+  termWrapper.style.alignItems = 'center';
+  termWrapper.style.gap = '8px';
+
+  const icon = createIcon({ name: item.icon });
+  termWrapper.appendChild(icon);
+
+  const label = document.createTextNode(item.label);
+  termWrapper.appendChild(label);
+
+  dt.appendChild(termWrapper);
+
+  const dd = document.createElement('dd');
+  dd.className = 'polaris-description-list__description';
+  dd.textContent = item.value;
+
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+});
+
+$('#app').appendChild(dl);`,
+
+    extjs: `import { PolarisIcon } from '@cin7/extjs-adapters';
+
+// Contact information panel with icons
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Contact Information',
+  width: 500,
+  bodyPadding: 10,
+  layout: {
+    type: 'table',
+    columns: 2
+  },
+  defaults: {
+    padding: 5
+  },
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polaris-icon', iconName: 'EmailIcon', margin: '0 5 0 0' },
+        { xtype: 'component', html: '<strong>Email</strong>' }
+      ]
+    },
+    { html: 'contact@company.com' },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polaris-icon', iconName: 'PhoneIcon', margin: '0 5 0 0' },
+        { xtype: 'component', html: '<strong>Phone</strong>' }
+      ]
+    },
+    { html: '+1 (555) 987-6543' },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polaris-icon', iconName: 'LocationIcon', margin: '0 5 0 0' },
+        { xtype: 'component', html: '<strong>Address</strong>' }
+      ]
+    },
+    { html: '123 Business St, Suite 100' },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: [
+        { xtype: 'polaris-icon', iconName: 'ClockIcon', margin: '0 5 0 0' },
+        { xtype: 'component', html: '<strong>Business Hours</strong>' }
+      ]
+    },
+    { html: 'Mon-Fri: 9AM-6PM EST' }
+  ]
+});`,
+
+    typescript: `import { DescriptionList, InlineStack, Icon } from '@shopify/polaris';
+import {
+  EmailIcon,
+  PhoneIcon,
+  LocationIcon,
+  ClockIcon
+} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface ContactItem {
+  icon: React.ComponentType;
+  label: string;
+  value: string;
+}
+
+interface WithIconsProps {
+  contactItems?: ContactItem[];
+}
+
+function WithIconsExample({ contactItems }: WithIconsProps): JSX.Element {
+  const defaultItems: ContactItem[] = [
+    { icon: EmailIcon, label: 'Email', value: 'contact@company.com' },
+    { icon: PhoneIcon, label: 'Phone', value: '+1 (555) 987-6543' },
+    { icon: LocationIcon, label: 'Address', value: '123 Business St, Suite 100' },
+    { icon: ClockIcon, label: 'Business Hours', value: 'Mon-Fri: 9AM-6PM EST' },
+  ];
+
+  const items = (contactItems || defaultItems).map(item => ({
+    term: (
+      <InlineStack gap="200">
+        <Icon source={item.icon} />
+        {item.label}
+      </InlineStack>
+    ),
+    description: item.value,
+  }));
+
+  return <DescriptionList items={items} />;
+}
+
+export default WithIconsExample;`,
+  },
+
+  twoColumns: {
+    react: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+function TwoColumnsExample() {
+  const items = [
+    { term: 'Product Name', description: 'Premium Cotton T-Shirt' },
+    { term: 'SKU', description: 'TSHIRT-PREMIUM-001' },
+    { term: 'Price', description: '$29.99' },
+    { term: 'Compare at Price', description: '$39.99' },
+    { term: 'Cost per Item', description: '$12.50' },
+    { term: 'Profit', description: '$17.49' },
+    { term: 'Margin', description: '58.3%' },
+    { term: 'Weight', description: '0.2 kg' },
+  ];
+
+  return <DescriptionList items={items} columns={2} />;
+}
+
+export default TwoColumnsExample;`,
+
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+// Create two-column description list
+const dl = document.createElement('dl');
+dl.className = 'polaris-description-list polaris-description-list--columns-2';
+dl.style.display = 'grid';
+dl.style.gridTemplateColumns = 'repeat(2, 1fr)';
+dl.style.gap = '16px';
+
+const items = [
+  { term: 'Product Name', description: 'Premium Cotton T-Shirt' },
+  { term: 'SKU', description: 'TSHIRT-PREMIUM-001' },
+  { term: 'Price', description: '$29.99' },
+  { term: 'Compare at Price', description: '$39.99' },
+  { term: 'Cost per Item', description: '$12.50' },
+  { term: 'Profit', description: '$17.49' },
+  { term: 'Margin', description: '58.3%' },
+  { term: 'Weight', description: '0.2 kg' },
+];
+
+items.forEach(item => {
+  const wrapper = document.createElement('div');
+
+  const dt = document.createElement('dt');
+  dt.className = 'polaris-description-list__term';
+  dt.textContent = item.term;
+
+  const dd = document.createElement('dd');
+  dd.className = 'polaris-description-list__description';
+  dd.textContent = item.description;
+
+  wrapper.appendChild(dt);
+  wrapper.appendChild(dd);
+  dl.appendChild(wrapper);
+});
+
+$('#app').appendChild(dl);`,
+
+    extjs: `import { PolarisDescriptionList } from '@cin7/extjs-adapters';
+
+// Two-column product pricing grid
+Ext.create('Ext.grid.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Product Pricing',
+  width: 600,
+  height: 300,
+  columns: [
+    {
+      text: 'Attribute',
+      dataIndex: 'term',
+      flex: 1,
+      renderer: function(value) {
+        return '<strong>' + value + '</strong>';
+      }
+    },
+    {
+      text: 'Value',
+      dataIndex: 'description',
+      flex: 1
+    }
+  ],
+  store: {
+    data: [
+      { term: 'Product Name', description: 'Premium Cotton T-Shirt' },
+      { term: 'SKU', description: 'TSHIRT-PREMIUM-001' },
+      { term: 'Price', description: '$29.99' },
+      { term: 'Compare at Price', description: '$39.99' },
+      { term: 'Cost per Item', description: '$12.50' },
+      { term: 'Profit', description: '$17.49' },
+      { term: 'Margin', description: '58.3%' },
+      { term: 'Weight', description: '0.2 kg' },
+    ]
+  }
+});`,
+
+    typescript: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface PricingInfo {
+  productName: string;
+  sku: string;
+  price: number;
+  compareAtPrice: number;
+  costPerItem: number;
+  weight: string;
+}
+
+interface TwoColumnsProps {
+  pricingData?: PricingInfo;
+  columns?: number;
+}
+
+function TwoColumnsExample({
+  pricingData,
+  columns = 2
+}: TwoColumnsProps): JSX.Element {
+  const defaultData: PricingInfo = {
+    productName: 'Premium Cotton T-Shirt',
+    sku: 'TSHIRT-PREMIUM-001',
+    price: 29.99,
+    compareAtPrice: 39.99,
+    costPerItem: 12.50,
+    weight: '0.2 kg',
+  };
+
+  const data = pricingData || defaultData;
+  const profit = data.price - data.costPerItem;
+  const margin = ((profit / data.price) * 100).toFixed(1);
+
+  const items = [
+    { term: 'Product Name', description: data.productName },
+    { term: 'SKU', description: data.sku },
+    { term: 'Price', description: \`$\${data.price.toFixed(2)}\` },
+    { term: 'Compare at Price', description: \`$\${data.compareAtPrice.toFixed(2)}\` },
+    { term: 'Cost per Item', description: \`$\${data.costPerItem.toFixed(2)}\` },
+    { term: 'Profit', description: \`$\${profit.toFixed(2)}\` },
+    { term: 'Margin', description: \`\${margin}%\` },
+    { term: 'Weight', description: data.weight },
+  ];
+
+  return <DescriptionList items={items} columns={columns} />;
+}
+
+export default TwoColumnsExample;`,
+  },
+
+  tightSpacing: {
+    react: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+function TightSpacingExample() {
+  const items = [
+    { term: 'Width', description: '50cm' },
+    { term: 'Height', description: '70cm' },
+    { term: 'Depth', description: '30cm' },
+    { term: 'Weight', description: '1.5kg' },
+    { term: 'Material', description: '100% Cotton' },
+    { term: 'Care Instructions', description: 'Machine wash cold' },
+  ];
+
+  return <DescriptionList items={items} spacing="tight" />;
+}
+
+export default TightSpacingExample;`,
+
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+// Create description list with tight spacing
+const dl = document.createElement('dl');
+dl.className = 'polaris-description-list polaris-description-list--spacing-tight';
+dl.style.gap = '8px';
+
+const items = [
+  { term: 'Width', description: '50cm' },
+  { term: 'Height', description: '70cm' },
+  { term: 'Depth', description: '30cm' },
+  { term: 'Weight', description: '1.5kg' },
+  { term: 'Material', description: '100% Cotton' },
+  { term: 'Care Instructions', description: 'Machine wash cold' },
+];
+
+items.forEach(item => {
+  const dt = document.createElement('dt');
+  dt.className = 'polaris-description-list__term';
+  dt.textContent = item.term;
+
+  const dd = document.createElement('dd');
+  dd.className = 'polaris-description-list__description';
+  dd.textContent = item.description;
+
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+});
+
+$('#app').appendChild(dl);`,
+
+    extjs: `import { PolarisDescriptionList } from '@cin7/extjs-adapters';
+
+// Compact product specifications
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Product Specifications',
+  width: 350,
+  bodyPadding: 10,
+  items: [{
+    xtype: 'polaris-descriptionlist',
+    spacing: 'tight',
+    items: [
+      { term: 'Width', description: '50cm' },
+      { term: 'Height', description: '70cm' },
+      { term: 'Depth', description: '30cm' },
+      { term: 'Weight', description: '1.5kg' },
+      { term: 'Material', description: '100% Cotton' },
+      { term: 'Care Instructions', description: 'Machine wash cold' },
+    ]
+  }]
+});`,
+
+    typescript: `import { DescriptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface ProductSpecs {
+  width: string;
+  height: string;
+  depth: string;
+  weight: string;
+  material: string;
+  careInstructions: string;
+}
+
+interface TightSpacingProps {
+  specs?: ProductSpecs;
+  spacing?: 'tight' | 'loose';
+}
+
+function TightSpacingExample({
+  specs,
+  spacing = 'tight'
+}: TightSpacingProps): JSX.Element {
+  const defaultSpecs: ProductSpecs = {
+    width: '50cm',
+    height: '70cm',
+    depth: '30cm',
+    weight: '1.5kg',
+    material: '100% Cotton',
+    careInstructions: 'Machine wash cold',
+  };
+
+  const specData = specs || defaultSpecs;
+
+  const items = [
+    { term: 'Width', description: specData.width },
+    { term: 'Height', description: specData.height },
+    { term: 'Depth', description: specData.depth },
+    { term: 'Weight', description: specData.weight },
+    { term: 'Material', description: specData.material },
+    { term: 'Care Instructions', description: specData.careInstructions },
+  ];
+
+  return <DescriptionList items={items} spacing={spacing} />;
+}
+
+export default TightSpacingExample;`,
+  }
+
+  };
 
 // ExceptionList Component Examples
 export const exceptionListExamples: Record<string, CodeVariant> = {
@@ -16697,7 +19835,1904 @@ function ExceptionListExample({
   return <ExceptionList items={items || defaultItems} />;
 }
 
-export default ExceptionListExample;`
+export default ExceptionListExample;`,
+  },
+
+  errorlist: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function OrderProcessingErrors() {
+  const errors = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Invalid shipping address',
+      description: 'The address provided is incomplete. Please add apartment/suite number.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method required',
+      description: 'Please add a valid payment method to complete this order.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Item out of stock',
+      description: 'Premium Widget is currently out of stock and has been removed from your cart.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Order Processing Errors</Text>
+        <Text as="p" variant="bodySm">
+          The following issues need to be resolved before processing your order:
+        </Text>
+      </div>
+      <ExceptionList items={errors} />
+    </Card>
+  );
+}
+
+export default OrderProcessingErrors;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create card container
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Order Processing Errors</h3>',
+    '<p class="polaris-text--body-sm">The following issues need to be resolved before processing your order:</p>',
+    '</div>',
+  ]
+});
+
+// Define critical errors
+const errors = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Invalid shipping address',
+    description: 'The address provided is incomplete. Please add apartment/suite number.',
+  },
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Payment method required',
+    description: 'Please add a valid payment method to complete this order.',
+  },
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Item out of stock',
+    description: 'Premium Widget is currently out of stock and has been removed from your cart.',
+  },
+];
+
+// Create exception list and append to card
+const exceptionList = createExceptionList({ items: errors });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create card with exception list for order errors
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Order Processing Errors</h3>' +
+            '<p class="polaris-text--body-sm">The following issues need to be resolved before processing your order:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Invalid shipping address',
+          description: 'The address provided is incomplete. Please add apartment/suite number.',
+        },
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Payment method required',
+          description: 'Please add a valid payment method to complete this order.',
+        },
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Item out of stock',
+          description: 'Premium Widget is currently out of stock and has been removed from your cart.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface OrderError {
+  status: 'critical';
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface OrderProcessingErrorsProps {
+  errors?: OrderError[];
+  onErrorResolved?: (errorTitle: string) => void;
+}
+
+function OrderProcessingErrors({
+  errors,
+  onErrorResolved
+}: OrderProcessingErrorsProps): JSX.Element {
+  const defaultErrors: OrderError[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Invalid shipping address',
+      description: 'The address provided is incomplete. Please add apartment/suite number.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method required',
+      description: 'Please add a valid payment method to complete this order.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Item out of stock',
+      description: 'Premium Widget is currently out of stock and has been removed from your cart.',
+    },
+  ];
+
+  const errorItems = errors || defaultErrors;
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Order Processing Errors</Text>
+        <Text as="p" variant="bodySm">
+          The following issues need to be resolved before processing your order:
+        </Text>
+      </div>
+      <ExceptionList items={errorItems} />
+    </Card>
+  );
+}
+
+export default OrderProcessingErrors;`
+  },
+
+  warninglist: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function StoreHealthWarnings() {
+  const warnings = [
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Missing product descriptions',
+      description: '12 products are missing descriptions. Add them to improve SEO.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Low product images quality',
+      description: '8 products have low-quality images that may affect customer trust.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Slow page load times',
+      description: 'Your homepage loads in 4.2 seconds. Optimize images and apps to improve speed.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Store Health Warnings</Text>
+        <Text as="p" variant="bodySm">
+          Consider addressing these issues to improve your store performance:
+        </Text>
+      </div>
+      <ExceptionList items={warnings} />
+    </Card>
+  );
+}
+
+export default StoreHealthWarnings;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create warning card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Store Health Warnings</h3>',
+    '<p class="polaris-text--body-sm">Consider addressing these issues to improve your store performance:</p>',
+    '</div>',
+  ]
+});
+
+// Define warnings
+const warnings = [
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Missing product descriptions',
+    description: '12 products are missing descriptions. Add them to improve SEO.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Low product images quality',
+    description: '8 products have low-quality images that may affect customer trust.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Slow page load times',
+    description: 'Your homepage loads in 4.2 seconds. Optimize images and apps to improve speed.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: warnings });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create warning panel for store health
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Store Health Warnings</h3>' +
+            '<p class="polaris-text--body-sm">Consider addressing these issues to improve your store performance:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Missing product descriptions',
+          description: '12 products are missing descriptions. Add them to improve SEO.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Low product images quality',
+          description: '8 products have low-quality images that may affect customer trust.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Slow page load times',
+          description: 'Your homepage loads in 4.2 seconds. Optimize images and apps to improve speed.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface StoreWarning {
+  status: 'warning';
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface StoreHealthWarningsProps {
+  warnings?: StoreWarning[];
+  showRecommendations?: boolean;
+}
+
+function StoreHealthWarnings({
+  warnings,
+  showRecommendations = true
+}: StoreHealthWarningsProps): JSX.Element {
+  const defaultWarnings: StoreWarning[] = [
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Missing product descriptions',
+      description: '12 products are missing descriptions. Add them to improve SEO.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Low product images quality',
+      description: '8 products have low-quality images that may affect customer trust.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Slow page load times',
+      description: 'Your homepage loads in 4.2 seconds. Optimize images and apps to improve speed.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Store Health Warnings</Text>
+        <Text as="p" variant="bodySm">
+          {showRecommendations
+            ? 'Consider addressing these issues to improve your store performance:'
+            : 'Current store health issues:'}
+        </Text>
+      </div>
+      <ExceptionList items={warnings || defaultWarnings} />
+    </Card>
+  );
+}
+
+export default StoreHealthWarnings;`
+  },
+
+  mixedstatuses: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function DataImportResults() {
+  const results = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Duplicate SKUs found',
+      description: '3 products have duplicate SKUs. These were not imported.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Missing required fields',
+      description: '5 products were missing prices and were set to $0.00 by default.',
+    },
+    {
+      status: 'success',
+      icon: 'CheckCircleIcon',
+      title: 'Successfully imported',
+      description: '245 products were successfully imported to your catalog.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Image processing errors',
+      description: '7 product images failed to process and were skipped.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Data Import Results</Text>
+        <Text as="p" variant="bodySm">
+          Review the following messages from your recent data import:
+        </Text>
+      </div>
+      <ExceptionList items={results} />
+    </Card>
+  );
+}
+
+export default DataImportResults;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create import results card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Data Import Results</h3>',
+    '<p class="polaris-text--body-sm">Review the following messages from your recent data import:</p>',
+    '</div>',
+  ]
+});
+
+// Define mixed status results
+const results = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Duplicate SKUs found',
+    description: '3 products have duplicate SKUs. These were not imported.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Missing required fields',
+    description: '5 products were missing prices and were set to $0.00 by default.',
+  },
+  {
+    status: 'success',
+    icon: 'check-circle',
+    title: 'Successfully imported',
+    description: '245 products were successfully imported to your catalog.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Image processing errors',
+    description: '7 product images failed to process and were skipped.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: results });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create import results panel with mixed statuses
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Data Import Results</h3>' +
+            '<p class="polaris-text--body-sm">Review the following messages from your recent data import:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Duplicate SKUs found',
+          description: '3 products have duplicate SKUs. These were not imported.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Missing required fields',
+          description: '5 products were missing prices and were set to $0.00 by default.',
+        },
+        {
+          status: 'success',
+          icon: 'CheckCircleIcon',
+          title: 'Successfully imported',
+          description: '245 products were successfully imported to your catalog.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Image processing errors',
+          description: '7 product images failed to process and were skipped.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface ImportResult {
+  status: 'critical' | 'warning' | 'success';
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface DataImportResultsProps {
+  results?: ImportResult[];
+  importTimestamp?: Date;
+  totalProcessed?: number;
+}
+
+function DataImportResults({
+  results,
+  importTimestamp,
+  totalProcessed
+}: DataImportResultsProps): JSX.Element {
+  const defaultResults: ImportResult[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Duplicate SKUs found',
+      description: '3 products have duplicate SKUs. These were not imported.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Missing required fields',
+      description: '5 products were missing prices and were set to $0.00 by default.',
+    },
+    {
+      status: 'success',
+      icon: 'CheckCircleIcon',
+      title: 'Successfully imported',
+      description: '245 products were successfully imported to your catalog.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Image processing errors',
+      description: '7 product images failed to process and were skipped.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Data Import Results</Text>
+        <Text as="p" variant="bodySm">
+          Review the following messages from your recent data import:
+        </Text>
+      </div>
+      <ExceptionList items={results || defaultResults} />
+    </Card>
+  );
+}
+
+export default DataImportResults;`
+  },
+
+  validationerrors: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function ProductValidationErrors() {
+  const validationErrors = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Title is required',
+      description: 'Every product must have a title before it can be published.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Price must be greater than 0',
+      description: 'Product price cannot be negative or zero.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'At least one image required',
+      description: 'Add at least one product image to help customers visualize your product.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No product description',
+      description: 'Adding a description can help with SEO and customer understanding.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No product tags',
+      description: 'Tags help customers find your products through search and filtering.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Product Validation Errors</Text>
+        <Text as="p" variant="bodySm">
+          Please fix these issues before publishing your product:
+        </Text>
+      </div>
+      <ExceptionList items={validationErrors} />
+    </Card>
+  );
+}
+
+export default ProductValidationErrors;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create validation errors card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Product Validation Errors</h3>',
+    '<p class="polaris-text--body-sm">Please fix these issues before publishing your product:</p>',
+    '</div>',
+  ]
+});
+
+// Define validation errors
+const validationErrors = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Title is required',
+    description: 'Every product must have a title before it can be published.',
+  },
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Price must be greater than 0',
+    description: 'Product price cannot be negative or zero.',
+  },
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'At least one image required',
+    description: 'Add at least one product image to help customers visualize your product.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'No product description',
+    description: 'Adding a description can help with SEO and customer understanding.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'No product tags',
+    description: 'Tags help customers find your products through search and filtering.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: validationErrors });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create validation errors panel
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Product Validation Errors</h3>' +
+            '<p class="polaris-text--body-sm">Please fix these issues before publishing your product:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Title is required',
+          description: 'Every product must have a title before it can be published.',
+        },
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Price must be greater than 0',
+          description: 'Product price cannot be negative or zero.',
+        },
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'At least one image required',
+          description: 'Add at least one product image to help customers visualize your product.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'No product description',
+          description: 'Adding a description can help with SEO and customer understanding.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'No product tags',
+          description: 'Tags help customers find your products through search and filtering.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface ValidationError {
+  status: 'critical' | 'warning';
+  icon: string;
+  title: string;
+  description: string;
+  field?: string;
+}
+
+interface ProductValidationErrorsProps {
+  errors?: ValidationError[];
+  onFixError?: (field: string) => void;
+}
+
+function ProductValidationErrors({
+  errors,
+  onFixError
+}: ProductValidationErrorsProps): JSX.Element {
+  const defaultErrors: ValidationError[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Title is required',
+      description: 'Every product must have a title before it can be published.',
+      field: 'title',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Price must be greater than 0',
+      description: 'Product price cannot be negative or zero.',
+      field: 'price',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'At least one image required',
+      description: 'Add at least one product image to help customers visualize your product.',
+      field: 'images',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No product description',
+      description: 'Adding a description can help with SEO and customer understanding.',
+      field: 'description',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No product tags',
+      description: 'Tags help customers find your products through search and filtering.',
+      field: 'tags',
+    },
+  ];
+
+  const criticalCount = (errors || defaultErrors).filter(e => e.status === 'critical').length;
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Product Validation Errors</Text>
+        <Text as="p" variant="bodySm">
+          Please fix these {criticalCount} critical issue(s) before publishing your product:
+        </Text>
+      </div>
+      <ExceptionList items={errors || defaultErrors} />
+    </Card>
+  );
+}
+
+export default ProductValidationErrors;`
+  },
+
+  shippingissues: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function ShippingConfigurationIssues() {
+  const shippingIssues = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'No shipping zones configured',
+      description: 'You must set up at least one shipping zone to sell products.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'High shipping rates',
+      description: 'Your shipping rates may be too high for some regions. Consider free shipping thresholds.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No express shipping available',
+      description: 'Customers may prefer faster shipping options for urgent orders.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Shipping Configuration Issues</Text>
+        <Text as="p" variant="bodySm">
+          The following shipping settings need attention:
+        </Text>
+      </div>
+      <ExceptionList items={shippingIssues} />
+    </Card>
+  );
+}
+
+export default ShippingConfigurationIssues;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create shipping issues card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Shipping Configuration Issues</h3>',
+    '<p class="polaris-text--body-sm">The following shipping settings need attention:</p>',
+    '</div>',
+  ]
+});
+
+// Define shipping issues
+const shippingIssues = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'No shipping zones configured',
+    description: 'You must set up at least one shipping zone to sell products.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'High shipping rates',
+    description: 'Your shipping rates may be too high for some regions. Consider free shipping thresholds.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'No express shipping available',
+    description: 'Customers may prefer faster shipping options for urgent orders.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: shippingIssues });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create shipping configuration panel
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Shipping Configuration Issues</h3>' +
+            '<p class="polaris-text--body-sm">The following shipping settings need attention:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'No shipping zones configured',
+          description: 'You must set up at least one shipping zone to sell products.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'High shipping rates',
+          description: 'Your shipping rates may be too high for some regions. Consider free shipping thresholds.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'No express shipping available',
+          description: 'Customers may prefer faster shipping options for urgent orders.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface ShippingIssue {
+  status: 'critical' | 'warning';
+  icon: string;
+  title: string;
+  description: string;
+  zone?: string;
+}
+
+interface ShippingConfigurationIssuesProps {
+  issues?: ShippingIssue[];
+  onConfigureShipping?: () => void;
+}
+
+function ShippingConfigurationIssues({
+  issues,
+  onConfigureShipping
+}: ShippingConfigurationIssuesProps): JSX.Element {
+  const defaultIssues: ShippingIssue[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'No shipping zones configured',
+      description: 'You must set up at least one shipping zone to sell products.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'High shipping rates',
+      description: 'Your shipping rates may be too high for some regions. Consider free shipping thresholds.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'No express shipping available',
+      description: 'Customers may prefer faster shipping options for urgent orders.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Shipping Configuration Issues</Text>
+        <Text as="p" variant="bodySm">
+          The following shipping settings need attention:
+        </Text>
+      </div>
+      <ExceptionList items={issues || defaultIssues} />
+    </Card>
+  );
+}
+
+export default ShippingConfigurationIssues;`
+  },
+
+  interactive: {
+    react: `import { ExceptionList, Card, Text, Button } from '@shopify/polaris';
+import React, { useState, useEffect } from 'react';
+
+interface Issue {
+  id: number;
+  status: 'critical' | 'warning';
+  icon: string;
+  title: string;
+  description: string;
+}
+
+function InteractiveExceptionList() {
+  const [resolvedIssues, setResolvedIssues] = useState<number[]>([]);
+  const [allResolved, setAllResolved] = useState(false);
+
+  const issues: Issue[] = [
+    {
+      id: 1,
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method expired',
+      description: 'Your payment method expires next week. Update your billing information.',
+    },
+    {
+      id: 2,
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Storage almost full',
+      description: "You're using 85% of your storage capacity.",
+    },
+    {
+      id: 3,
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'App updates available',
+      description: '3 installed apps have updates available.',
+    },
+  ];
+
+  const handleResolve = (issueId: number) => {
+    setResolvedIssues(prev => [...prev, issueId]);
+  };
+
+  useEffect(() => {
+    if (resolvedIssues.length === issues.length) {
+      setAllResolved(true);
+    }
+  }, [resolvedIssues, issues.length]);
+
+  if (allResolved) {
+    return (
+      <Card sectioned>
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <Text as="h3" variant="headingMd">✅ All issues resolved!</Text>
+          <Text as="p" variant="bodyMd">
+            Your store is in good health. Great job!
+          </Text>
+          <Button onClick={() => {
+            setResolvedIssues([]);
+            setAllResolved(false);
+          }}>
+            Reset issues
+          </Button>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Store Issues</Text>
+        <Text as="p" variant="bodySm">
+          {issues.length - resolvedIssues.length} issue(s) need your attention
+        </Text>
+      </div>
+      <ExceptionList
+        items={issues
+          .filter(issue => !resolvedIssues.includes(issue.id))
+          .map(issue => ({
+            ...issue,
+            action: {
+              content: 'Fix issue',
+              onAction: () => handleResolve(issue.id),
+            },
+          }))}
+      />
+    </Card>
+  );
+}
+
+export default InteractiveExceptionList;`,
+
+    vanilla: `import { createCard, createExceptionList, EventBus } from '@cin7/vanilla-js';
+
+// Track resolved issues
+let resolvedIssues = [];
+const issues = [
+  {
+    id: 1,
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Payment method expired',
+    description: 'Your payment method expires next week. Update your billing information.',
+  },
+  {
+    id: 2,
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Storage almost full',
+    description: "You're using 85% of your storage capacity.",
+  },
+  {
+    id: 3,
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'App updates available',
+    description: '3 installed apps have updates available.',
+  },
+];
+
+// Create container
+const container = document.getElementById('app');
+
+function renderIssues() {
+  container.innerHTML = '';
+
+  if (resolvedIssues.length === issues.length) {
+    // All resolved
+    const successCard = createCard({
+      sectioned: true,
+      children: [
+        '<div style="text-align: center; padding: 20px;">',
+        '<h3 class="polaris-text--heading-md">✅ All issues resolved!</h3>',
+        '<p class="polaris-text--body-md">Your store is in good health. Great job!</p>',
+        '<button class="polaris-button polaris-button--primary" onclick="resetIssues()">Reset issues</button>',
+        '</div>',
+      ]
+    });
+    container.appendChild(successCard);
+  } else {
+    // Show remaining issues
+    const card = createCard({
+      sectioned: true,
+      children: [
+        '<div style="margin-bottom: 16px;">',
+        \`<h3 class="polaris-text--heading-md">Store Issues</h3>\`,
+        \`<p class="polaris-text--body-sm">\${issues.length - resolvedIssues.length} issue(s) need your attention</p>\`,
+        '</div>',
+      ]
+    });
+
+    const activeIssues = issues
+      .filter(issue => !resolvedIssues.includes(issue.id))
+      .map(issue => ({
+        ...issue,
+        action: {
+          content: 'Fix issue',
+          onClick: () => handleResolve(issue.id),
+        },
+      }));
+
+    const exceptionList = createExceptionList({ items: activeIssues });
+    card.appendChild(exceptionList);
+    container.appendChild(card);
+  }
+}
+
+function handleResolve(issueId) {
+  resolvedIssues.push(issueId);
+  renderIssues();
+}
+
+window.resetIssues = function() {
+  resolvedIssues = [];
+  renderIssues();
+};
+
+// Initial render
+renderIssues();`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Interactive exception list with state management
+Ext.define('Cin7.view.InteractiveExceptionList', {
+  extend: 'Ext.panel.Panel',
+
+  initComponent: function() {
+    this.resolvedIssues = [];
+    this.issues = [
+      {
+        id: 1,
+        status: 'critical',
+        icon: 'AlertCircleIcon',
+        title: 'Payment method expired',
+        description: 'Your payment method expires next week. Update your billing information.',
+      },
+      {
+        id: 2,
+        status: 'warning',
+        icon: 'AlertCircleIcon',
+        title: 'Storage almost full',
+        description: "You're using 85% of your storage capacity.",
+      },
+      {
+        id: 3,
+        status: 'warning',
+        icon: 'AlertCircleIcon',
+        title: 'App updates available',
+        description: '3 installed apps have updates available.',
+      },
+    ];
+
+    this.items = this.buildItems();
+    this.callParent(arguments);
+  },
+
+  buildItems: function() {
+    const activeIssues = this.issues
+      .filter(issue => !this.resolvedIssues.includes(issue.id));
+
+    if (activeIssues.length === 0) {
+      return [
+        {
+          xtype: 'container',
+          html: '<div style="text-align: center; padding: 20px;">' +
+                '<h3>✅ All issues resolved!</h3>' +
+                '<p>Your store is in good health. Great job!</p>' +
+                '</div>',
+        },
+        {
+          xtype: 'button',
+          text: 'Reset issues',
+          handler: function() {
+            this.resolvedIssues = [];
+            this.removeAll();
+            this.add(this.buildItems());
+          },
+          scope: this
+        }
+      ];
+    }
+
+    return [
+      {
+        xtype: 'container',
+        html: '<div style="margin-bottom: 16px;">' +
+              '<h3>Store Issues</h3>' +
+              '<p>' + activeIssues.length + ' issue(s) need your attention</p>' +
+              '</div>',
+      },
+      {
+        xtype: 'cin7-exceptionlist',
+        items: activeIssues.map(issue => ({
+          ...issue,
+          action: {
+            content: 'Fix issue',
+            onAction: () => {
+              this.resolvedIssues.push(issue.id);
+              this.removeAll();
+              this.add(this.buildItems());
+            }
+          }
+        }))
+      }
+    ];
+  }
+});
+
+// Create instance
+Ext.create('Cin7.view.InteractiveExceptionList', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { ExceptionList, Card, Text, Button } from '@shopify/polaris';
+import React, { useState, useEffect, useCallback } from 'react';
+
+interface Issue {
+  id: number;
+  status: 'critical' | 'warning';
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface InteractiveExceptionListProps {
+  initialIssues?: Issue[];
+  onAllResolved?: () => void;
+}
+
+function InteractiveExceptionList({
+  initialIssues,
+  onAllResolved
+}: InteractiveExceptionListProps): JSX.Element {
+  const [resolvedIssues, setResolvedIssues] = useState<number[]>([]);
+  const [allResolved, setAllResolved] = useState(false);
+
+  const issues: Issue[] = initialIssues || [
+    {
+      id: 1,
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Payment method expired',
+      description: 'Your payment method expires next week. Update your billing information.',
+    },
+    {
+      id: 2,
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Storage almost full',
+      description: "You're using 85% of your storage capacity.",
+    },
+    {
+      id: 3,
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'App updates available',
+      description: '3 installed apps have updates available.',
+    },
+  ];
+
+  const handleResolve = useCallback((issueId: number) => {
+    setResolvedIssues(prev => [...prev, issueId]);
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setResolvedIssues([]);
+    setAllResolved(false);
+  }, []);
+
+  useEffect(() => {
+    if (resolvedIssues.length === issues.length) {
+      setAllResolved(true);
+      onAllResolved?.();
+    }
+  }, [resolvedIssues, issues.length, onAllResolved]);
+
+  if (allResolved) {
+    return (
+      <Card sectioned>
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <Text as="h3" variant="headingMd">✅ All issues resolved!</Text>
+          <Text as="p" variant="bodyMd">
+            Your store is in good health. Great job!
+          </Text>
+          <Button onClick={handleReset}>
+            Reset issues
+          </Button>
+        </div>
+      </Card>
+    );
+  }
+
+  const activeIssues = issues
+    .filter(issue => !resolvedIssues.includes(issue.id))
+    .map(issue => ({
+      ...issue,
+      action: {
+        content: 'Fix issue',
+        onAction: () => handleResolve(issue.id),
+      },
+    }));
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Store Issues</Text>
+        <Text as="p" variant="bodySm">
+          {activeIssues.length} issue(s) need your attention
+        </Text>
+      </div>
+      <ExceptionList items={activeIssues} />
+    </Card>
+  );
+}
+
+export default InteractiveExceptionList;`
+  },
+
+  systemalerts: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function SystemAlerts() {
+  const alerts = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Database connection failed',
+      description: 'Unable to connect to the database. Please check your connection settings.',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'SSL certificate expires in 7 days',
+      description: 'Your SSL certificate will expire soon. Renew it to maintain secure connections.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'High memory usage',
+      description: 'Memory usage is at 78%. Consider optimizing your applications.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Backup failed',
+      description: 'Last backup failed 2 hours ago. Check your backup configuration.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">System Alerts</Text>
+        <Text as="p" variant="bodySm">
+          Monitor these system notifications for optimal performance:
+        </Text>
+      </div>
+      <ExceptionList items={alerts} />
+    </Card>
+  );
+}
+
+export default SystemAlerts;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create system alerts card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">System Alerts</h3>',
+    '<p class="polaris-text--body-sm">Monitor these system notifications for optimal performance:</p>',
+    '</div>',
+  ]
+});
+
+// Define system alerts
+const alerts = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Database connection failed',
+    description: 'Unable to connect to the database. Please check your connection settings.',
+  },
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'SSL certificate expires in 7 days',
+    description: 'Your SSL certificate will expire soon. Renew it to maintain secure connections.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'High memory usage',
+    description: 'Memory usage is at 78%. Consider optimizing your applications.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Backup failed',
+    description: 'Last backup failed 2 hours ago. Check your backup configuration.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: alerts });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create system alerts monitoring panel
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">System Alerts</h3>' +
+            '<p class="polaris-text--body-sm">Monitor these system notifications for optimal performance:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Database connection failed',
+          description: 'Unable to connect to the database. Please check your connection settings.',
+        },
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'SSL certificate expires in 7 days',
+          description: 'Your SSL certificate will expire soon. Renew it to maintain secure connections.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'High memory usage',
+          description: 'Memory usage is at 78%. Consider optimizing your applications.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Backup failed',
+          description: 'Last backup failed 2 hours ago. Check your backup configuration.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface SystemAlert {
+  status: 'critical' | 'warning';
+  icon: string;
+  title: string;
+  description: string;
+  severity?: 'high' | 'medium' | 'low';
+  timestamp?: Date;
+}
+
+interface SystemAlertsProps {
+  alerts?: SystemAlert[];
+  autoRefresh?: boolean;
+  refreshInterval?: number;
+}
+
+function SystemAlerts({
+  alerts,
+  autoRefresh = false,
+  refreshInterval = 30000
+}: SystemAlertsProps): JSX.Element {
+  const defaultAlerts: SystemAlert[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Database connection failed',
+      description: 'Unable to connect to the database. Please check your connection settings.',
+      severity: 'high',
+    },
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'SSL certificate expires in 7 days',
+      description: 'Your SSL certificate will expire soon. Renew it to maintain secure connections.',
+      severity: 'high',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'High memory usage',
+      description: 'Memory usage is at 78%. Consider optimizing your applications.',
+      severity: 'medium',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Backup failed',
+      description: 'Last backup failed 2 hours ago. Check your backup configuration.',
+      severity: 'medium',
+    },
+  ];
+
+  const systemAlerts = alerts || defaultAlerts;
+  const criticalCount = systemAlerts.filter(a => a.status === 'critical').length;
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">System Alerts</Text>
+        <Text as="p" variant="bodySm">
+          {criticalCount > 0
+            ? \`\${criticalCount} critical alert(s) require immediate attention\`
+            : 'Monitor these system notifications for optimal performance:'}
+        </Text>
+      </div>
+      <ExceptionList items={systemAlerts} />
+    </Card>
+  );
+}
+
+export default SystemAlerts;`
+  },
+
+  customerfeedback: {
+    react: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function CustomerFeedback() {
+  const feedback = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Delivery delay reported',
+      description: 'Customer #12345 reports order #1001 is 3 days late. Check tracking information.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Wrong item received',
+      description: 'Customer #67890 received wrong product. Arrange exchange or refund.',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Product damaged in transit',
+      description: 'Customer #54321 reports damaged packaging. File insurance claim.',
+    },
+    {
+      status: 'success',
+      icon: 'CheckCircleIcon',
+      title: 'Issue resolved',
+      description: 'Customer #98765 is satisfied with resolution. Close ticket.',
+    },
+  ];
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Recent Customer Feedback</Text>
+        <Text as="p" variant="bodySm">
+          Review and respond to customer issues:
+        </Text>
+      </div>
+      <ExceptionList items={feedback} />
+    </Card>
+  );
+}
+
+export default CustomerFeedback;`,
+
+    vanilla: `import { createCard, createExceptionList } from '@cin7/vanilla-js';
+
+// Create customer feedback card
+const card = createCard({
+  sectioned: true,
+  children: [
+    '<div style="margin-bottom: 16px;">',
+    '<h3 class="polaris-text--heading-md">Recent Customer Feedback</h3>',
+    '<p class="polaris-text--body-sm">Review and respond to customer issues:</p>',
+    '</div>',
+  ]
+});
+
+// Define customer feedback items
+const feedback = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Delivery delay reported',
+    description: 'Customer #12345 reports order #1001 is 3 days late. Check tracking information.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Wrong item received',
+    description: 'Customer #67890 received wrong product. Arrange exchange or refund.',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Product damaged in transit',
+    description: 'Customer #54321 reports damaged packaging. File insurance claim.',
+  },
+  {
+    status: 'success',
+    icon: 'check-circle',
+    title: 'Issue resolved',
+    description: 'Customer #98765 is satisfied with resolution. Close ticket.',
+  },
+];
+
+const exceptionList = createExceptionList({ items: feedback });
+card.appendChild(exceptionList);
+document.getElementById('app').appendChild(card);`,
+
+    extjs: `import { PolarisCard, PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create customer feedback tracking panel
+Ext.create('Cin7.component.PolarisCard', {
+  renderTo: Ext.getBody(),
+  sectioned: true,
+  items: [
+    {
+      xtype: 'container',
+      html: '<div style="margin-bottom: 16px;">' +
+            '<h3 class="polaris-text--heading-md">Recent Customer Feedback</h3>' +
+            '<p class="polaris-text--body-sm">Review and respond to customer issues:</p>' +
+            '</div>',
+    },
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Delivery delay reported',
+          description: 'Customer #12345 reports order #1001 is 3 days late. Check tracking information.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Wrong item received',
+          description: 'Customer #67890 received wrong product. Arrange exchange or refund.',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Product damaged in transit',
+          description: 'Customer #54321 reports damaged packaging. File insurance claim.',
+        },
+        {
+          status: 'success',
+          icon: 'CheckCircleIcon',
+          title: 'Issue resolved',
+          description: 'Customer #98765 is satisfied with resolution. Close ticket.',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface CustomerFeedbackItem {
+  status: 'critical' | 'warning' | 'success';
+  icon: string;
+  title: string;
+  description: string;
+  customerId?: string;
+  orderId?: string;
+  timestamp?: Date;
+}
+
+interface CustomerFeedbackProps {
+  feedback?: CustomerFeedbackItem[];
+  onResolve?: (customerId: string) => void;
+  showResolved?: boolean;
+}
+
+function CustomerFeedback({
+  feedback,
+  onResolve,
+  showResolved = true
+}: CustomerFeedbackProps): JSX.Element {
+  const defaultFeedback: CustomerFeedbackItem[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Delivery delay reported',
+      description: 'Customer #12345 reports order #1001 is 3 days late. Check tracking information.',
+      customerId: '12345',
+      orderId: '1001',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Wrong item received',
+      description: 'Customer #67890 received wrong product. Arrange exchange or refund.',
+      customerId: '67890',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Product damaged in transit',
+      description: 'Customer #54321 reports damaged packaging. File insurance claim.',
+      customerId: '54321',
+    },
+    {
+      status: 'success',
+      icon: 'CheckCircleIcon',
+      title: 'Issue resolved',
+      description: 'Customer #98765 is satisfied with resolution. Close ticket.',
+      customerId: '98765',
+    },
+  ];
+
+  const feedbackItems = feedback || defaultFeedback;
+  const filteredFeedback = showResolved
+    ? feedbackItems
+    : feedbackItems.filter(item => item.status !== 'success');
+
+  const unresolved = filteredFeedback.filter(item => item.status !== 'success').length;
+
+  return (
+    <Card sectioned>
+      <div style={{ marginBottom: '16px' }}>
+        <Text as="h3" variant="headingMd">Recent Customer Feedback</Text>
+        <Text as="p" variant="bodySm">
+          {unresolved > 0
+            ? \`\${unresolved} customer issue(s) need your attention\`
+            : 'Review and respond to customer issues:'}
+        </Text>
+      </div>
+      <ExceptionList items={filteredFeedback} />
+    </Card>
+  );
+}
+
+export default CustomerFeedback;`
+  },
+
+  minimal: {
+    react: `import { ExceptionList } from '@shopify/polaris';
+import React from 'react';
+
+function MinimalExceptionList() {
+  const items = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Action required',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Review recommended',
+    },
+  ];
+
+  return (
+    <div style={{ maxWidth: '400px' }}>
+      <ExceptionList items={items} />
+    </div>
+  );
+}
+
+export default MinimalExceptionList;`,
+
+    vanilla: `import { createExceptionList } from '@cin7/vanilla-js';
+
+// Create minimal exception list without descriptions
+const items = [
+  {
+    status: 'critical',
+    icon: 'alert-circle',
+    title: 'Action required',
+  },
+  {
+    status: 'warning',
+    icon: 'alert-circle',
+    title: 'Review recommended',
+  },
+];
+
+// Create and render minimal list
+const container = document.createElement('div');
+container.style.maxWidth = '400px';
+
+const exceptionList = createExceptionList({ items });
+container.appendChild(exceptionList);
+document.getElementById('app').appendChild(container);`,
+
+    extjs: `import { PolarisExceptionList } from '@cin7/extjs-adapters';
+
+// Create minimal exception list with titles only
+Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  width: 400,
+  items: [
+    {
+      xtype: 'cin7-exceptionlist',
+      items: [
+        {
+          status: 'critical',
+          icon: 'AlertCircleIcon',
+          title: 'Action required',
+        },
+        {
+          status: 'warning',
+          icon: 'AlertCircleIcon',
+          title: 'Review recommended',
+        },
+      ]
+    }
+  ]
+});`,
+
+    typescript: `import { ExceptionList } from '@shopify/polaris';
+import React from 'react';
+
+interface MinimalExceptionItem {
+  status: 'critical' | 'warning' | 'success' | 'info';
+  icon: string;
+  title: string;
+}
+
+interface MinimalExceptionListProps {
+  items?: MinimalExceptionItem[];
+  maxWidth?: number;
+}
+
+function MinimalExceptionList({
+  items,
+  maxWidth = 400
+}: MinimalExceptionListProps): JSX.Element {
+  const defaultItems: MinimalExceptionItem[] = [
+    {
+      status: 'critical',
+      icon: 'AlertCircleIcon',
+      title: 'Action required',
+    },
+    {
+      status: 'warning',
+      icon: 'AlertCircleIcon',
+      title: 'Review recommended',
+    },
+  ];
+
+  return (
+    <div style={{ maxWidth: \`\${maxWidth}px\` }}>
+      <ExceptionList items={items || defaultItems} />
+    </div>
+  );
+}
+
+export default MinimalExceptionList;`
   }
 };
 
@@ -16891,17 +21926,17 @@ function IndexTableExample({
   );
 }
 
-export default IndexTableExample;`
+export default IndexTableExample;`,
   }
 };
 
 // List Component Examples
 export const listExamples: Record<string, CodeVariant> = {
-  bulleted: {
+  default: {
     react: `import { List } from '@shopify/polaris';
 import React from 'react';
 
-function ListExample() {
+function DefaultListExample() {
   return (
     <List>
       <List.Item>First item in the list</List.Item>
@@ -16911,28 +21946,30 @@ function ListExample() {
   );
 }
 
-export default ListExample;`,
+export default DefaultListExample;`,
 
-    vanilla: `import { createList } from '@cin7/vanilla-js';
+    vanilla: `import { $ } from '@cin7/vanilla-js';
 
-// Define list items
+// Create unordered list element
+const list = document.createElement('ul');
+list.className = 'polaris-list';
+
 const items = [
   'First item in the list',
   'Second item in the list',
   'Third item in the list'
 ];
 
-// Create and render list
-const list = createList({
-  items,
-  type: 'bullet'
+items.forEach(itemText => {
+  const li = document.createElement('li');
+  li.className = 'polaris-list-item';
+  li.textContent = itemText;
+  list.appendChild(li);
 });
 
 document.getElementById('app').appendChild(list);`,
 
-    extjs: `import { PolarisList } from '@cin7/extjs-adapters';
-
-// Create List using ExtJS panel
+    extjs: `// ExtJS Panel with HTML list
 Ext.create('Ext.panel.Panel', {
   renderTo: Ext.getBody(),
   bodyPadding: 10,
@@ -16943,59 +21980,432 @@ Ext.create('Ext.panel.Panel', {
       <li class="polaris-list-item">Third item in the list</li>
     </ul>
   \`
-});
-
-// Or using custom component
-Ext.create('Cin7.component.PolarisList', {
-  renderTo: Ext.getBody(),
-  listType: 'bullet',
-  items: [
-    { text: 'First item in the list' },
-    { text: 'Second item in the list' },
-    { text: 'Third item in the list' }
-  ]
 });`,
 
     typescript: `import { List } from '@shopify/polaris';
 import React from 'react';
 
 interface ListItem {
-  id?: string;
-  content: string | React.ReactNode;
-  icon?: React.ComponentType;
+  id: string;
+  content: string;
 }
 
-interface ListExampleProps {
-  items?: ListItem[];
-  type?: 'bullet' | 'number';
-  gap?: 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
-}
-
-function ListExample({
-  items,
-  type = 'bullet',
-  gap
-}: ListExampleProps): JSX.Element {
-  const defaultItems: ListItem[] = [
+function DefaultListExample(): JSX.Element {
+  const items: ListItem[] = [
     { id: '1', content: 'First item in the list' },
     { id: '2', content: 'Second item in the list' },
     { id: '3', content: 'Third item in the list' }
   ];
 
-  const data = items || defaultItems;
+  return (
+    <List>
+      {items.map((item) => (
+        <List.Item key={item.id}>{item.content}</List.Item>
+      ))}
+    </List>
+  );
+}
+
+export default DefaultListExample;`,
+  },
+
+  bulleted: {
+    react: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+function BulletedListExample() {
+  return (
+    <List type="bullet">
+      <List.Item>Product information and specifications</List.Item>
+      <List.Item>Customer reviews and ratings</List.Item>
+      <List.Item>Shipping and delivery details</List.Item>
+      <List.Item>Return policy and warranty information</List.Item>
+    </List>
+  );
+}
+
+export default BulletedListExample;`,
+
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+// Create bulleted list
+const list = document.createElement('ul');
+list.className = 'polaris-list polaris-list--type-bullet';
+
+const items = [
+  'Product information and specifications',
+  'Customer reviews and ratings',
+  'Shipping and delivery details',
+  'Return policy and warranty information'
+];
+
+items.forEach(itemText => {
+  const li = document.createElement('li');
+  li.className = 'polaris-list-item';
+  li.textContent = itemText;
+  list.appendChild(li);
+});
+
+document.getElementById('app').appendChild(list);`,
+
+    extjs: `// ExtJS Panel with bulleted list
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 10,
+  html: \`
+    <ul class="polaris-list polaris-list--type-bullet">
+      <li class="polaris-list-item">Product information and specifications</li>
+      <li class="polaris-list-item">Customer reviews and ratings</li>
+      <li class="polaris-list-item">Shipping and delivery details</li>
+      <li class="polaris-list-item">Return policy and warranty information</li>
+    </ul>
+  \`
+});`,
+
+    typescript: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+interface ProductInfo {
+  id: string;
+  text: string;
+}
+
+function BulletedListExample(): JSX.Element {
+  const productInfo: ProductInfo[] = [
+    { id: '1', text: 'Product information and specifications' },
+    { id: '2', text: 'Customer reviews and ratings' },
+    { id: '3', text: 'Shipping and delivery details' },
+    { id: '4', text: 'Return policy and warranty information' }
+  ];
 
   return (
-    <List type={type} gap={gap}>
-      {data.map((item, index) => (
-        <List.Item key={item.id || index} icon={item.icon}>
-          {item.content}
+    <List type="bullet">
+      {productInfo.map((info) => (
+        <List.Item key={info.id}>{info.text}</List.Item>
+      ))}
+    </List>
+  );
+}
+
+export default BulletedListExample;`,
+  },
+
+  numbered: {
+    react: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+function NumberedListExample() {
+  return (
+    <List type="number">
+      <List.Item>Set up your store preferences</List.Item>
+      <List.Item>Add your first product</List.Item>
+      <List.Item>Configure payment settings</List.Item>
+      <List.Item>Launch your store</List.Item>
+    </List>
+  );
+}
+
+export default NumberedListExample;`,
+
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+// Create numbered list
+const list = document.createElement('ol');
+list.className = 'polaris-list polaris-list--type-number';
+
+const steps = [
+  'Set up your store preferences',
+  'Add your first product',
+  'Configure payment settings',
+  'Launch your store'
+];
+
+steps.forEach(stepText => {
+  const li = document.createElement('li');
+  li.className = 'polaris-list-item';
+  li.textContent = stepText;
+  list.appendChild(li);
+});
+
+document.getElementById('app').appendChild(list);`,
+
+    extjs: `// ExtJS Panel with numbered list
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 10,
+  html: \`
+    <ol class="polaris-list polaris-list--type-number">
+      <li class="polaris-list-item">Set up your store preferences</li>
+      <li class="polaris-list-item">Add your first product</li>
+      <li class="polaris-list-item">Configure payment settings</li>
+      <li class="polaris-list-item">Launch your store</li>
+    </ol>
+  \`
+});`,
+
+    typescript: `import { List } from '@shopify/polaris';
+import React from 'react';
+
+interface SetupStep {
+  id: string;
+  step: string;
+  order: number;
+}
+
+function NumberedListExample(): JSX.Element {
+  const setupSteps: SetupStep[] = [
+    { id: '1', step: 'Set up your store preferences', order: 1 },
+    { id: '2', step: 'Add your first product', order: 2 },
+    { id: '3', step: 'Configure payment settings', order: 3 },
+    { id: '4', step: 'Launch your store', order: 4 }
+  ];
+
+  return (
+    <List type="number">
+      {setupSteps.map((stepItem) => (
+        <List.Item key={stepItem.id}>{stepItem.step}</List.Item>
+      ))}
+    </List>
+  );
+}
+
+export default NumberedListExample;`,
+  },
+
+  withIcons: {
+    react: `import { List } from '@shopify/polaris';
+import {
+  CheckCircleIcon,
+  AlertCircleIcon,
+  InfoIcon,
+  ExternalIcon
+} from '@shopify/polaris-icons';
+import React from 'react';
+
+function WithIconsListExample() {
+  return (
+    <List>
+      <List.Item icon={CheckCircleIcon}>Task completed successfully</List.Item>
+      <List.Item icon={AlertCircleIcon}>Warning: Review this item</List.Item>
+      <List.Item icon={InfoIcon}>Additional information available</List.Item>
+      <List.Item icon={ExternalIcon}>External link to resource</List.Item>
+    </List>
+  );
+}
+
+export default WithIconsListExample;`,
+
+    vanilla: `import { $, createElement } from '@cin7/vanilla-js';
+
+// Create list with icon elements
+const list = document.createElement('ul');
+list.className = 'polaris-list';
+
+const items = [
+  { icon: '✓', text: 'Task completed successfully', iconColor: '#2a6f3a' },
+  { icon: '⚠', text: 'Warning: Review this item', iconColor: '#f59e0b' },
+  { icon: 'ℹ', text: 'Additional information available', iconColor: '#3b82f6' },
+  { icon: '↗', text: 'External link to resource', iconColor: '#6b7280' }
+];
+
+items.forEach(item => {
+  const li = document.createElement('li');
+  li.className = 'polaris-list-item';
+
+  const iconSpan = document.createElement('span');
+  iconSpan.style.color = item.iconColor;
+  iconSpan.style.marginRight = '8px';
+  iconSpan.textContent = item.icon;
+
+  li.appendChild(iconSpan);
+  li.appendChild(document.createTextNode(item.text));
+  list.appendChild(li);
+});
+
+document.getElementById('app').appendChild(list);`,
+
+    extjs: `// ExtJS Panel with icon list
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 10,
+  html: \`
+    <ul class="polaris-list">
+      <li class="polaris-list-item">
+        <span class="polaris-icon" style="color: #2a6f3a;">✓</span>
+        Task completed successfully
+      </li>
+      <li class="polaris-list-item">
+        <span class="polaris-icon" style="color: #f59e0b;">⚠</span>
+        Warning: Review this item
+      </li>
+      <li class="polaris-list-item">
+        <span class="polaris-icon" style="color: #3b82f6;">ℹ</span>
+        Additional information available
+      </li>
+      <li class="polaris-list-item">
+        <span class="polaris-icon" style="color: #6b7280;">↗</span>
+        External link to resource
+      </li>
+    </ul>
+  \`
+});`,
+
+    typescript: `import { List } from '@shopify/polaris';
+import {
+  CheckCircleIcon,
+  AlertCircleIcon,
+  InfoIcon,
+  ExternalIcon
+} from '@shopify/polaris-icons';
+import React from 'react';
+
+interface IconListItem {
+  id: string;
+  icon: React.ComponentType;
+  text: string;
+  status: 'success' | 'warning' | 'info' | 'default';
+}
+
+function WithIconsListExample(): JSX.Element {
+  const items: IconListItem[] = [
+    { id: '1', icon: CheckCircleIcon, text: 'Task completed successfully', status: 'success' },
+    { id: '2', icon: AlertCircleIcon, text: 'Warning: Review this item', status: 'warning' },
+    { id: '3', icon: InfoIcon, text: 'Additional information available', status: 'info' },
+    { id: '4', icon: ExternalIcon, text: 'External link to resource', status: 'default' }
+  ];
+
+  return (
+    <List>
+      {items.map((item) => (
+        <List.Item key={item.id} icon={item.icon}>
+          {item.text}
         </List.Item>
       ))}
     </List>
   );
 }
 
-export default ListExample;`
+export default WithIconsListExample;`,
+  },
+
+  withBadges: {
+    react: `import { List, Badge, InlineStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+function WithBadgesListExample() {
+  return (
+    <List>
+      <List.Item>
+        <InlineStack gap="200">
+          <Text>Order #1020</Text>
+          <Badge status="success">Fulfilled</Badge>
+        </InlineStack>
+      </List.Item>
+      <List.Item>
+        <InlineStack gap="200">
+          <Text>Order #1019</Text>
+          <Badge status="attention">Processing</Badge>
+        </InlineStack>
+      </List.Item>
+      <List.Item>
+        <InlineStack gap="200">
+          <Text>Order #1018</Text>
+          <Badge status="critical">Issue detected</Badge>
+        </InlineStack>
+      </List.Item>
+    </List>
+  );
+}
+
+export default WithBadgesListExample;`,
+
+    vanilla: `import { $, createElement } from '@cin7/vanilla-js';
+
+// Create list with badge elements
+const list = document.createElement('ul');
+list.className = 'polaris-list';
+
+const orders = [
+  { order: '#1020', status: 'Fulfilled', statusClass: 'success' },
+  { order: '#1019', status: 'Processing', statusClass: 'attention' },
+  { order: '#1018', status: 'Issue detected', statusClass: 'critical' }
+];
+
+orders.forEach(item => {
+  const li = document.createElement('li');
+  li.className = 'polaris-list-item';
+  li.style.display = 'flex';
+  li.style.alignItems = 'center';
+  li.style.gap = '12px';
+
+  const text = document.createElement('span');
+  text.textContent = \`Order \${item.order}\`;
+
+  const badge = document.createElement('span');
+  badge.className = \`polaris-badge polaris-badge--\${item.statusClass}\`;
+  badge.textContent = item.status;
+
+  li.appendChild(text);
+  li.appendChild(badge);
+  list.appendChild(li);
+});
+
+document.getElementById('app').appendChild(list);`,
+
+    extjs: `// ExtJS Panel with badge list
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  bodyPadding: 10,
+  html: \`
+    <ul class="polaris-list">
+      <li class="polaris-list-item" style="display: flex; gap: 12px;">
+        <span>Order #1020</span>
+        <span class="polaris-badge polaris-badge--success">Fulfilled</span>
+      </li>
+      <li class="polaris-list-item" style="display: flex; gap: 12px;">
+        <span>Order #1019</span>
+        <span class="polaris-badge polaris-badge--attention">Processing</span>
+      </li>
+      <li class="polaris-list-item" style="display: flex; gap: 12px;">
+        <span>Order #1018</span>
+        <span class="polaris-badge polaris-badge--critical">Issue detected</span>
+      </li>
+    </ul>
+  \`
+});`,
+
+    typescript: `import { List, Badge, InlineStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface OrderItem {
+  id: string;
+  orderNumber: string;
+  status: 'success' | 'attention' | 'critical';
+  statusLabel: string;
+}
+
+function WithBadgesListExample(): JSX.Element {
+  const orders: OrderItem[] = [
+    { id: '1', orderNumber: '#1020', status: 'success', statusLabel: 'Fulfilled' },
+    { id: '2', orderNumber: '#1019', status: 'attention', statusLabel: 'Processing' },
+    { id: '3', orderNumber: '#1018', status: 'critical', statusLabel: 'Issue detected' }
+  ];
+
+  return (
+    <List>
+      {orders.map((order) => (
+        <List.Item key={order.id}>
+          <InlineStack gap="200">
+            <Text as="span">Order {order.orderNumber}</Text>
+            <Badge status={order.status}>{order.statusLabel}</Badge>
+          </InlineStack>
+        </List.Item>
+      ))}
+    </List>
+  );
+}
+
+export default WithBadgesListExample;`,
   }
 };
 
@@ -17183,7 +22593,7 @@ function ResourceItemExample({
   );
 }
 
-export default ResourceItemExample;`
+export default ResourceItemExample;`,
   }
 };
 
@@ -17488,7 +22898,7 @@ function ResourceListExample({
   );
 }
 
-export default ResourceListExample;`
+export default ResourceListExample;`,
   }
 };
 
@@ -17643,7 +23053,7 @@ function CalloutCardExample({
   );
 }
 
-export default CalloutCardExample;`
+export default CalloutCardExample;`,
   },
 
   default: {
@@ -17857,7 +23267,7 @@ function EmptyStateExample({ heading, image, onAction }: EmptyStateProps): JSX.E
   );
 }
 
-export default EmptyStateExample;`
+export default EmptyStateExample;`,
   },
 
   withDescription: {
@@ -18816,7 +24226,2070 @@ function LoadingExample({
   );
 }
 
-export default LoadingExample;`
+export default LoadingExample;`,
+  },
+
+  sizeVariants: {
+    react: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function SizeVariantsExample() {
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <div style={{ textAlign: 'center' }}>
+          <Text variant="headingSm" as="h3">Small</Text>
+          <Loading size="small" accessibilityLabel="Small spinner" />
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <Text variant="headingSm" as="h3">Medium</Text>
+          <Loading size="medium" accessibilityLabel="Medium spinner" />
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <Text variant="headingSm" as="h3">Large</Text>
+          <Loading size="large" accessibilityLabel="Large spinner" />
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default SizeVariantsExample;`,
+
+    vanilla: `<!-- HTML Structure for Size Variants -->
+<div class="loading-sizes-container">
+  <div class="size-demo">
+    <h3>Small</h3>
+    <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Small spinner">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="size-demo">
+    <h3>Medium</h3>
+    <div class="polaris-spinner polaris-spinner--size-medium" role="status" aria-label="Medium spinner">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="size-demo">
+    <h3>Large</h3>
+    <div class="polaris-spinner polaris-spinner--size-large" role="status" aria-label="Large spinner">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+.loading-sizes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+.size-demo {
+  text-align: center;
+}
+
+.polaris-spinner--size-small svg { width: 20px; height: 20px; }
+.polaris-spinner--size-medium svg { width: 40px; height: 40px; }
+.polaris-spinner--size-large svg { width: 60px; height: 60px; }
+</style>
+
+<script>
+import { createSpinner } from '@cin7/vanilla-js';
+
+const sizes = ['small', 'medium', 'large'];
+const container = document.getElementById('app');
+
+sizes.forEach(size => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'size-demo';
+  wrapper.innerHTML = \`<h3>\${size.charAt(0).toUpperCase() + size.slice(1)}</h3>\`;
+
+  const spinner = createSpinner({
+    size: size,
+    accessibilityLabel: \`\${size} spinner\`
+  });
+
+  wrapper.appendChild(spinner);
+  container.appendChild(wrapper);
+});
+</script>`,
+
+    extjs: `// ExtJS Loading Sizes Example
+Ext.create('Ext.panel.Panel', {
+  title: 'Loading Size Variants',
+  width: 400,
+  height: 400,
+  layout: {
+    type: 'vbox',
+    align: 'center',
+    pack: 'center'
+  },
+  bodyPadding: 20,
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      html: '<h3>Small</h3>',
+      margin: '0 0 10 0'
+    },
+    {
+      xtype: 'component',
+      cls: 'polaris-spinner polaris-spinner--size-small',
+      html: '<div class="spinner-animation" role="status"></div>',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      html: '<h3>Medium</h3>',
+      margin: '0 0 10 0'
+    },
+    {
+      xtype: 'component',
+      cls: 'polaris-spinner polaris-spinner--size-medium',
+      html: '<div class="spinner-animation" role="status"></div>',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      html: '<h3>Large</h3>',
+      margin: '0 0 10 0'
+    },
+    {
+      xtype: 'component',
+      cls: 'polaris-spinner polaris-spinner--size-large',
+      html: '<div class="spinner-animation" role="status"></div>'
+    }
+  ]
+});`,
+
+    typescript: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+type LoadingSize = 'small' | 'medium' | 'large';
+
+interface SizeVariantProps {
+  size: LoadingSize;
+  label: string;
+}
+
+const SizeVariant: React.FC<SizeVariantProps> = ({ size, label }) => (
+  <div style={{ textAlign: 'center' }}>
+    <Text variant="headingSm" as="h3">{label}</Text>
+    <Loading size={size} accessibilityLabel={\`\${label} spinner\`} />
+  </div>
+);
+
+function SizeVariantsExample(): JSX.Element {
+  const sizes: Array<{ size: LoadingSize; label: string }> = [
+    { size: 'small', label: 'Small' },
+    { size: 'medium', label: 'Medium' },
+    { size: 'large', label: 'Large' }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        {sizes.map(({ size, label }) => (
+          <SizeVariant key={size} size={size} label={label} />
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default SizeVariantsExample;`,
+  },
+
+  withBackgrounds: {
+    react: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function WithBackgroundsExample() {
+  const backgrounds = [
+    { color: 'white', label: 'White', border: '1px solid #e1e3e5', textColor: 'black' },
+    { color: '#f8f9fa', label: 'Light Gray', textColor: 'black' },
+    { color: '#1a1a1a', label: 'Dark', textColor: 'white' },
+    { color: '#5c6ac4', label: 'Primary', textColor: 'white' }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Loading with Different Backgrounds</Text>
+
+        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          {backgrounds.map(({ color, label, border, textColor }) => (
+            <div
+              key={label}
+              style={{
+                padding: '20px',
+                backgroundColor: color,
+                border: border || 'none',
+                borderRadius: '4px',
+                textAlign: 'center',
+                minWidth: '120px'
+              }}
+            >
+              <Text variant="bodySm" style={{ color: textColor }}>{label}</Text>
+              <div style={{ marginTop: '8px' }}>
+                <Loading size="small" accessibilityLabel={\`Loading on \${label.toLowerCase()}\`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default WithBackgroundsExample;`,
+
+    vanilla: `<!-- HTML Structure for Background Variants -->
+<div class="backgrounds-container">
+  <h2>Loading with Different Backgrounds</h2>
+
+  <div class="backgrounds-grid">
+    <div class="bg-demo bg-white">
+      <p>White</p>
+      <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading on white">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="bg-demo bg-light-gray">
+      <p>Light Gray</p>
+      <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading on light gray">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="bg-demo bg-dark">
+      <p class="text-white">Dark</p>
+      <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading on dark">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="white" stroke-width="2" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="bg-demo bg-primary">
+      <p class="text-white">Primary</p>
+      <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading on primary">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="white" stroke-width="2" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.backgrounds-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.bg-demo {
+  padding: 20px;
+  border-radius: 4px;
+  text-align: center;
+  min-width: 120px;
+}
+
+.bg-white { background-color: white; border: 1px solid #e1e3e5; }
+.bg-light-gray { background-color: #f8f9fa; }
+.bg-dark { background-color: #1a1a1a; }
+.bg-primary { background-color: #5c6ac4; }
+.text-white { color: white; }
+</style>`,
+
+    extjs: `// ExtJS Loading on Different Backgrounds
+Ext.create('Ext.panel.Panel', {
+  title: 'Loading with Different Backgrounds',
+  width: 600,
+  height: 300,
+  layout: {
+    type: 'hbox',
+    align: 'stretch',
+    pack: 'center'
+  },
+  bodyPadding: 20,
+  renderTo: Ext.getBody(),
+  items: [
+    {
+      xtype: 'container',
+      flex: 1,
+      style: 'background-color: white; border: 1px solid #e1e3e5; text-align: center;',
+      padding: 20,
+      margin: '0 10 0 0',
+      html: '<p>White</p><div class="polaris-spinner polaris-spinner--size-small"></div>'
+    },
+    {
+      xtype: 'container',
+      flex: 1,
+      style: 'background-color: #f8f9fa; text-align: center;',
+      padding: 20,
+      margin: '0 10 0 0',
+      html: '<p>Light Gray</p><div class="polaris-spinner polaris-spinner--size-small"></div>'
+    },
+    {
+      xtype: 'container',
+      flex: 1,
+      style: 'background-color: #1a1a1a; color: white; text-align: center;',
+      padding: 20,
+      margin: '0 10 0 0',
+      html: '<p>Dark</p><div class="polaris-spinner polaris-spinner--size-small" style="color: white;"></div>'
+    },
+    {
+      xtype: 'container',
+      flex: 1,
+      style: 'background-color: #5c6ac4; color: white; text-align: center;',
+      padding: 20,
+      html: '<p>Primary</p><div class="polaris-spinner polaris-spinner--size-small" style="color: white;"></div>'
+    }
+  ]
+});`,
+
+    typescript: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface BackgroundVariant {
+  color: string;
+  label: string;
+  border?: string;
+  textColor: string;
+}
+
+function WithBackgroundsExample(): JSX.Element {
+  const backgrounds: BackgroundVariant[] = [
+    { color: 'white', label: 'White', border: '1px solid #e1e3e5', textColor: 'black' },
+    { color: '#f8f9fa', label: 'Light Gray', textColor: 'black' },
+    { color: '#1a1a1a', label: 'Dark', textColor: 'white' },
+    { color: '#5c6ac4', label: 'Primary', textColor: 'white' }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Loading with Different Backgrounds</Text>
+
+        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          {backgrounds.map(({ color, label, border, textColor }: BackgroundVariant) => (
+            <div
+              key={label}
+              style={{
+                padding: '20px',
+                backgroundColor: color,
+                border: border || 'none',
+                borderRadius: '4px',
+                textAlign: 'center',
+                minWidth: '120px'
+              }}
+            >
+              <Text variant="bodySm" style={{ color: textColor }}>{label}</Text>
+              <div style={{ marginTop: '8px' }}>
+                <Loading size="small" accessibilityLabel={\`Loading on \${label.toLowerCase()}\`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default WithBackgroundsExample;`,
+  },
+
+  interactiveLoading: {
+    react: `import { Loading, Button, Card, Text, BlockStack, InlineStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function InteractiveLoadingExample() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingSize, setLoadingSize] = useState<'small' | 'medium' | 'large'>('medium');
+
+  const startLoading = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 3000);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Interactive Loading Demo</Text>
+
+        <div style={{ textAlign: 'center', padding: '40px' }}>
+          {isLoading ? (
+            <div>
+              <Loading size={loadingSize} accessibilityLabel="Processing request" />
+              <div style={{ marginTop: '16px' }}>
+                <Text variant="bodySm" tone="subdued">
+                  Processing your request...
+                </Text>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Text variant="bodySm" tone="subdued">
+                Click the button to see loading state
+              </Text>
+              <div style={{ marginTop: '16px' }}>
+                <Button onClick={startLoading}>Start Loading</Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+          <Text variant="bodySm">Size:</Text>
+          <InlineStack gap="200">
+            <Button size="small" pressed={loadingSize === 'small'} onClick={() => setLoadingSize('small')}>
+              Small
+            </Button>
+            <Button size="small" pressed={loadingSize === 'medium'} onClick={() => setLoadingSize('medium')}>
+              Medium
+            </Button>
+            <Button size="small" pressed={loadingSize === 'large'} onClick={() => setLoadingSize('large')}>
+              Large
+            </Button>
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default InteractiveLoadingExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="interactive-loading-container">
+  <div class="card">
+    <h2>Interactive Loading Demo</h2>
+
+    <div id="loading-display" class="loading-display">
+      <p class="instruction">Click the button to see loading state</p>
+      <button id="start-loading-btn" class="button-primary">Start Loading</button>
+    </div>
+
+    <div class="size-controls">
+      <p>Size:</p>
+      <div class="button-group">
+        <button class="size-btn active" data-size="small">Small</button>
+        <button class="size-btn" data-size="medium">Medium</button>
+        <button class="size-btn" data-size="large">Large</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { createSpinner, on, fadeIn, fadeOut } from '@cin7/vanilla-js';
+
+let isLoading = false;
+let currentSize = 'medium';
+
+const displayArea = document.getElementById('loading-display');
+const startBtn = document.getElementById('start-loading-btn');
+
+on('#start-loading-btn', 'click', () => {
+  if (isLoading) return;
+
+  isLoading = true;
+  displayArea.innerHTML = '';
+
+  const spinner = createSpinner({
+    size: currentSize,
+    accessibilityLabel: 'Processing request'
+  });
+
+  const message = document.createElement('p');
+  message.textContent = 'Processing your request...';
+  message.style.marginTop = '16px';
+
+  displayArea.appendChild(spinner);
+  displayArea.appendChild(message);
+
+  setTimeout(() => {
+    isLoading = false;
+    displayArea.innerHTML = \`
+      <p class="instruction">Click the button to see loading state</p>
+      <button id="start-loading-btn" class="button-primary">Start Loading</button>
+    \`;
+  }, 3000);
+});
+
+document.querySelectorAll('.size-btn').forEach(btn => {
+  on(btn, 'click', (e) => {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentSize = e.target.dataset.size;
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Interactive Loading Example
+Ext.define('InteractiveLoadingPanel', {
+  extend: 'Ext.panel.Panel',
+  title: 'Interactive Loading Demo',
+  width: 500,
+  height: 400,
+  bodyPadding: 20,
+
+  initComponent: function() {
+    var me = this;
+
+    me.loadingSize = 'medium';
+    me.isLoading = false;
+
+    me.items = [
+      {
+        xtype: 'container',
+        itemId: 'displayArea',
+        style: 'text-align: center; padding: 40px;',
+        html: '<p>Click the button to see loading state</p>'
+      },
+      {
+        xtype: 'button',
+        itemId: 'startBtn',
+        text: 'Start Loading',
+        handler: me.startLoading,
+        scope: me
+      },
+      {
+        xtype: 'container',
+        margin: '20 0 0 0',
+        layout: 'hbox',
+        items: [
+          { xtype: 'label', text: 'Size: ', margin: '0 10 0 0' },
+          {
+            xtype: 'segmentedbutton',
+            items: [
+              { text: 'Small', pressed: false, handler: function() { me.setLoadingSize('small'); } },
+              { text: 'Medium', pressed: true, handler: function() { me.setLoadingSize('medium'); } },
+              { text: 'Large', pressed: false, handler: function() { me.setLoadingSize('large'); } }
+            ]
+          }
+        ]
+      }
+    ];
+
+    me.callParent(arguments);
+  },
+
+  startLoading: function() {
+    var me = this,
+        displayArea = me.down('#displayArea'),
+        startBtn = me.down('#startBtn');
+
+    if (me.isLoading) return;
+
+    me.isLoading = true;
+    startBtn.disable();
+
+    displayArea.update('<div class="polaris-spinner polaris-spinner--size-' + me.loadingSize + '"></div><p>Processing your request...</p>');
+
+    setTimeout(function() {
+      me.isLoading = false;
+      startBtn.enable();
+      displayArea.update('<p>Click the button to see loading state</p>');
+    }, 3000);
+  },
+
+  setLoadingSize: function(size) {
+    this.loadingSize = size;
+  }
+});
+
+Ext.create('InteractiveLoadingPanel', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Loading, Button, Card, Text, BlockStack, InlineStack } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+type LoadingSize = 'small' | 'medium' | 'large';
+
+interface LoadingState {
+  isActive: boolean;
+  size: LoadingSize;
+}
+
+function InteractiveLoadingExample(): JSX.Element {
+  const [loadingState, setLoadingState] = useState<LoadingState>({
+    isActive: false,
+    size: 'medium'
+  });
+
+  const startLoading = useCallback(() => {
+    setLoadingState(prev => ({ ...prev, isActive: true }));
+    setTimeout(() => {
+      setLoadingState(prev => ({ ...prev, isActive: false }));
+    }, 3000);
+  }, []);
+
+  const updateSize = useCallback((size: LoadingSize) => {
+    setLoadingState(prev => ({ ...prev, size }));
+  }, []);
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Interactive Loading Demo</Text>
+
+        <div style={{ textAlign: 'center', padding: '40px' }}>
+          {loadingState.isActive ? (
+            <div>
+              <Loading size={loadingState.size} accessibilityLabel="Processing request" />
+              <div style={{ marginTop: '16px' }}>
+                <Text variant="bodySm" tone="subdued">
+                  Processing your request...
+                </Text>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Text variant="bodySm" tone="subdued">
+                Click the button to see loading state
+              </Text>
+              <div style={{ marginTop: '16px' }}>
+                <Button onClick={startLoading}>Start Loading</Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+          <Text variant="bodySm">Size:</Text>
+          <InlineStack gap="200">
+            {(['small', 'medium', 'large'] as LoadingSize[]).map(size => (
+              <Button
+                key={size}
+                size="small"
+                pressed={loadingState.size === size}
+                onClick={() => updateSize(size)}
+              >
+                {size.charAt(0).toUpperCase() + size.slice(1)}
+              </Button>
+            ))}
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default InteractiveLoadingExample;`,
+  },
+
+  inlineLoading: {
+    react: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function InlineLoadingExample() {
+  const loadingStates = [
+    { message: 'Saving changes...', bgColor: '#f8f9fa' },
+    { message: 'Uploading file...', bgColor: '#f0f9ff' },
+    { message: 'Processing payment...', bgColor: '#fef3c7' },
+    { message: 'Syncing data...', bgColor: '#f0fdf4' }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd" as="h2">Inline Loading States</Text>
+
+        {loadingStates.map(({ message, bgColor }, index) => (
+          <div
+            key={index}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px',
+              backgroundColor: bgColor,
+              borderRadius: '4px'
+            }}
+          >
+            <Loading size="small" accessibilityLabel={message} />
+            <Text style={{ marginLeft: '12px' }}>{message}</Text>
+          </div>
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default InlineLoadingExample;`,
+
+    vanilla: `<!-- HTML Structure for Inline Loading -->
+<div class="inline-loading-container">
+  <h2>Inline Loading States</h2>
+
+  <div class="loading-item" style="background-color: #f8f9fa;">
+    <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Saving">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+    <span class="loading-text">Saving changes...</span>
+  </div>
+
+  <div class="loading-item" style="background-color: #f0f9ff;">
+    <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Uploading">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+    <span class="loading-text">Uploading file...</span>
+  </div>
+
+  <div class="loading-item" style="background-color: #fef3c7;">
+    <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Processing">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+    <span class="loading-text">Processing payment...</span>
+  </div>
+
+  <div class="loading-item" style="background-color: #f0fdf4;">
+    <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Syncing">
+      <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+    <span class="loading-text">Syncing data...</span>
+  </div>
+</div>
+
+<style>
+.inline-loading-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.loading-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.loading-text {
+  margin-left: 12px;
+}
+
+.polaris-spinner--size-small svg {
+  width: 20px;
+  height: 20px;
+}
+</style>
+
+<script>
+import { createSpinner } from '@cin7/vanilla-js';
+
+const loadingStates = [
+  { message: 'Saving changes...', bgColor: '#f8f9fa' },
+  { message: 'Uploading file...', bgColor: '#f0f9ff' },
+  { message: 'Processing payment...', bgColor: '#fef3c7' },
+  { message: 'Syncing data...', bgColor: '#f0fdf4' }
+];
+
+const container = document.getElementById('app');
+
+loadingStates.forEach(({ message, bgColor }) => {
+  const item = document.createElement('div');
+  item.className = 'loading-item';
+  item.style.backgroundColor = bgColor;
+
+  const spinner = createSpinner({
+    size: 'small',
+    accessibilityLabel: message
+  });
+
+  const text = document.createElement('span');
+  text.className = 'loading-text';
+  text.textContent = message;
+
+  item.appendChild(spinner);
+  item.appendChild(text);
+  container.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS Inline Loading States
+Ext.create('Ext.panel.Panel', {
+  title: 'Inline Loading States',
+  width: 500,
+  height: 300,
+  bodyPadding: 20,
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      style: 'background-color: #f8f9fa; padding: 12px; border-radius: 4px;',
+      margin: '0 0 8 0',
+      html: '<div style="display: flex; align-items: center;"><div class="polaris-spinner polaris-spinner--size-small"></div><span style="margin-left: 12px;">Saving changes...</span></div>'
+    },
+    {
+      xtype: 'container',
+      style: 'background-color: #f0f9ff; padding: 12px; border-radius: 4px;',
+      margin: '0 0 8 0',
+      html: '<div style="display: flex; align-items: center;"><div class="polaris-spinner polaris-spinner--size-small"></div><span style="margin-left: 12px;">Uploading file...</span></div>'
+    },
+    {
+      xtype: 'container',
+      style: 'background-color: #fef3c7; padding: 12px; border-radius: 4px;',
+      margin: '0 0 8 0',
+      html: '<div style="display: flex; align-items: center;"><div class="polaris-spinner polaris-spinner--size-small"></div><span style="margin-left: 12px;">Processing payment...</span></div>'
+    },
+    {
+      xtype: 'container',
+      style: 'background-color: #f0fdf4; padding: 12px; border-radius: 4px;',
+      html: '<div style="display: flex; align-items: center;"><div class="polaris-spinner polaris-spinner--size-small"></div><span style="margin-left: 12px;">Syncing data...</span></div>'
+    }
+  ]
+});`,
+
+    typescript: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface LoadingStateItem {
+  message: string;
+  bgColor: string;
+}
+
+const InlineLoadingItem: React.FC<LoadingStateItem> = ({ message, bgColor }) => (
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      padding: '12px',
+      backgroundColor: bgColor,
+      borderRadius: '4px'
+    }}
+  >
+    <Loading size="small" accessibilityLabel={message} />
+    <Text style={{ marginLeft: '12px' }}>{message}</Text>
+  </div>
+);
+
+function InlineLoadingExample(): JSX.Element {
+  const loadingStates: LoadingStateItem[] = [
+    { message: 'Saving changes...', bgColor: '#f8f9fa' },
+    { message: 'Uploading file...', bgColor: '#f0f9ff' },
+    { message: 'Processing payment...', bgColor: '#fef3c7' },
+    { message: 'Syncing data...', bgColor: '#f0fdf4' }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd" as="h2">Inline Loading States</Text>
+
+        {loadingStates.map((state, index) => (
+          <InlineLoadingItem key={index} {...state} />
+        ))}
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default InlineLoadingExample;`,
+  },
+
+  loadingInForms: {
+    react: `import { Loading, Button, Card, Text, BlockStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function LoadingInFormsExample() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+    setTimeout(() => setIsSubmitting(false), 2000);
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd" as="h2">Form with Loading State</Text>
+
+        <div
+          style={{
+            padding: '16px',
+            border: '1px solid #e1e3e5',
+            borderRadius: '4px',
+            backgroundColor: isSubmitting ? '#f8f9fa' : 'white'
+          }}
+        >
+          <BlockStack gap="300">
+            <div>
+              <Text variant="bodySm" fontWeight="bold">Product Name</Text>
+              <div
+                style={{
+                  marginTop: '4px',
+                  padding: '8px 12px',
+                  border: '1px solid #e1e3e5',
+                  borderRadius: '4px',
+                  backgroundColor: 'white'
+                }}
+              >
+                Sample Product
+              </div>
+            </div>
+
+            <div>
+              <Text variant="bodySm" fontWeight="bold">Description</Text>
+              <div
+                style={{
+                  marginTop: '4px',
+                  padding: '8px 12px',
+                  border: '1px solid #e1e3e5',
+                  borderRadius: '4px',
+                  backgroundColor: 'white',
+                  minHeight: '80px'
+                }}
+              >
+                Product description goes here
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              {isSubmitting ? (
+                <div>
+                  <Loading size="medium" accessibilityLabel="Submitting form" />
+                  <div style={{ marginTop: '12px' }}>
+                    <Text variant="bodySm" tone="subdued">
+                      Submitting form...
+                    </Text>
+                  </div>
+                </div>
+              ) : (
+                <Button onClick={handleSubmit} variant="primary">
+                  Submit Form
+                </Button>
+              )}
+            </div>
+          </BlockStack>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default LoadingInFormsExample;`,
+
+    vanilla: `<!-- HTML Structure for Form with Loading -->
+<div class="form-loading-container">
+  <h2>Form with Loading State</h2>
+
+  <form id="product-form" class="form-container">
+    <div class="form-field">
+      <label>Product Name</label>
+      <input type="text" value="Sample Product" disabled />
+    </div>
+
+    <div class="form-field">
+      <label>Description</label>
+      <textarea disabled>Product description goes here</textarea>
+    </div>
+
+    <div id="submit-area" class="submit-area">
+      <button type="button" id="submit-btn" class="button-primary">Submit Form</button>
+    </div>
+  </form>
+</div>
+
+<style>
+.form-container {
+  padding: 16px;
+  border: 1px solid #e1e3e5;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.form-container.submitting {
+  background-color: #f8f9fa;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 12px;
+  border: 1px solid #e1e3e5;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.submit-area {
+  text-align: center;
+  padding: 20px;
+}
+</style>
+
+<script>
+import { createSpinner, on } from '@cin7/vanilla-js';
+
+const form = document.getElementById('product-form');
+const submitArea = document.getElementById('submit-area');
+const submitBtn = document.getElementById('submit-btn');
+
+on('#submit-btn', 'click', () => {
+  form.classList.add('submitting');
+
+  submitArea.innerHTML = '';
+
+  const spinner = createSpinner({
+    size: 'medium',
+    accessibilityLabel: 'Submitting form'
+  });
+
+  const message = document.createElement('p');
+  message.textContent = 'Submitting form...';
+  message.style.marginTop = '12px';
+  message.style.color = '#6b7280';
+
+  submitArea.appendChild(spinner);
+  submitArea.appendChild(message);
+
+  setTimeout(() => {
+    form.classList.remove('submitting');
+    submitArea.innerHTML = '<button type="button" id="submit-btn" class="button-primary">Submit Form</button>';
+  }, 2000);
+});
+</script>`,
+
+    extjs: `// ExtJS Form with Loading State
+Ext.define('LoadingFormPanel', {
+  extend: 'Ext.form.Panel',
+  title: 'Form with Loading State',
+  width: 500,
+  bodyPadding: 20,
+
+  items: [
+    {
+      xtype: 'textfield',
+      fieldLabel: 'Product Name',
+      name: 'productName',
+      value: 'Sample Product',
+      anchor: '100%'
+    },
+    {
+      xtype: 'textareafield',
+      fieldLabel: 'Description',
+      name: 'description',
+      value: 'Product description goes here',
+      anchor: '100%',
+      height: 80
+    }
+  ],
+
+  buttons: [
+    {
+      text: 'Submit Form',
+      formBind: true,
+      handler: function(btn) {
+        var form = btn.up('form');
+
+        // Show loading mask
+        form.setLoading({
+          msg: 'Submitting form...',
+          useMsg: true
+        });
+
+        // Simulate form submission
+        setTimeout(function() {
+          form.setLoading(false);
+          Ext.Msg.alert('Success', 'Form submitted successfully!');
+        }, 2000);
+      }
+    }
+  ]
+});
+
+Ext.create('LoadingFormPanel', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Loading, Button, Card, Text, BlockStack } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface FormData {
+  productName: string;
+  description: string;
+}
+
+interface FormState {
+  isSubmitting: boolean;
+  data: FormData;
+}
+
+function LoadingInFormsExample(): JSX.Element {
+  const [formState, setFormState] = useState<FormState>({
+    isSubmitting: false,
+    data: {
+      productName: 'Sample Product',
+      description: 'Product description goes here'
+    }
+  });
+
+  const handleSubmit = useCallback(() => {
+    setFormState(prev => ({ ...prev, isSubmitting: true }));
+
+    // Simulate API call
+    setTimeout(() => {
+      setFormState(prev => ({ ...prev, isSubmitting: false }));
+    }, 2000);
+  }, []);
+
+  return (
+    <Card>
+      <BlockStack gap="300">
+        <Text variant="headingMd" as="h2">Form with Loading State</Text>
+
+        <div
+          style={{
+            padding: '16px',
+            border: '1px solid #e1e3e5',
+            borderRadius: '4px',
+            backgroundColor: formState.isSubmitting ? '#f8f9fa' : 'white'
+          }}
+        >
+          <BlockStack gap="300">
+            <div>
+              <Text variant="bodySm" fontWeight="bold">Product Name</Text>
+              <div
+                style={{
+                  marginTop: '4px',
+                  padding: '8px 12px',
+                  border: '1px solid #e1e3e5',
+                  borderRadius: '4px',
+                  backgroundColor: 'white'
+                }}
+              >
+                {formState.data.productName}
+              </div>
+            </div>
+
+            <div>
+              <Text variant="bodySm" fontWeight="bold">Description</Text>
+              <div
+                style={{
+                  marginTop: '4px',
+                  padding: '8px 12px',
+                  border: '1px solid #e1e3e5',
+                  borderRadius: '4px',
+                  backgroundColor: 'white',
+                  minHeight: '80px'
+                }}
+              >
+                {formState.data.description}
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              {formState.isSubmitting ? (
+                <div>
+                  <Loading size="medium" accessibilityLabel="Submitting form" />
+                  <div style={{ marginTop: '12px' }}>
+                    <Text variant="bodySm" tone="subdued">
+                      Submitting form...
+                    </Text>
+                  </div>
+                </div>
+              ) : (
+                <Button onClick={handleSubmit} variant="primary">
+                  Submit Form
+                </Button>
+              )}
+            </div>
+          </BlockStack>
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default LoadingInFormsExample;`,
+  },
+
+  loadingSteps: {
+    react: `import { Loading, Button, Card, Text, BlockStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function LoadingStepsExample() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const steps = [
+    'Validating data',
+    'Processing payment',
+    'Updating inventory',
+    'Sending confirmation',
+    'Complete!'
+  ];
+
+  const startProcess = () => {
+    setIsLoading(true);
+    setCurrentStep(0);
+
+    steps.forEach((_, index) => {
+      setTimeout(() => {
+        setCurrentStep(index);
+        if (index === steps.length - 1) {
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
+        }
+      }, (index + 1) * 1000);
+    });
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Multi-Step Loading Process</Text>
+
+        <div style={{ textAlign: 'center' }}>
+          {!isLoading ? (
+            <Button onClick={startProcess} variant="primary">
+              Start Process
+            </Button>
+          ) : (
+            <div style={{ padding: '20px' }}>
+              <Loading size="large" accessibilityLabel="Processing order" />
+              <div style={{ marginTop: '16px' }}>
+                <Text variant="bodySm" tone="subdued">
+                  {steps[currentStep]}
+                </Text>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div>
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                backgroundColor: index < currentStep ? '#f0fdf4' :
+                                index === currentStep ? '#eff6ff' : '#f8f9fa',
+                marginBottom: '4px'
+              }}
+            >
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  backgroundColor: index < currentStep ? '#16a34a' :
+                                    index === currentStep ? '#2563eb' : '#e5e7eb',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: '12px'
+                }}
+              >
+                {index < currentStep ? (
+                  <span style={{ color: 'white', fontSize: '12px' }}>✓</span>
+                ) : (
+                  <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                    {index + 1}
+                  </span>
+                )}
+              </div>
+              <Text variant="bodySm">{step}</Text>
+              {index === currentStep && isLoading && (
+                <Loading size="small" accessibilityLabel="Current step" />
+              )}
+            </div>
+          ))}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default LoadingStepsExample;`,
+
+    vanilla: `<!-- HTML Structure for Multi-Step Loading -->
+<div class="loading-steps-container">
+  <h2>Multi-Step Loading Process</h2>
+
+  <div id="control-area" class="control-area">
+    <button id="start-process-btn" class="button-primary">Start Process</button>
+  </div>
+
+  <div id="steps-container" class="steps-list"></div>
+</div>
+
+<style>
+.loading-steps-container {
+  padding: 24px;
+}
+
+.control-area {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.steps-list {
+  margin-top: 20px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.step-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 12px;
+}
+
+.step-completed { background-color: #f0fdf4; }
+.step-active { background-color: #eff6ff; }
+.step-pending { background-color: #f8f9fa; }
+
+.indicator-completed { background-color: #16a34a; color: white; }
+.indicator-active { background-color: #2563eb; color: white; }
+.indicator-pending { background-color: #e5e7eb; color: #6b7280; }
+</style>
+
+<script>
+import { createSpinner } from '@cin7/vanilla-js';
+
+const steps = [
+  'Validating data',
+  'Processing payment',
+  'Updating inventory',
+  'Sending confirmation',
+  'Complete!'
+];
+
+let currentStep = 0;
+let isLoading = false;
+
+const controlArea = document.getElementById('control-area');
+const stepsContainer = document.getElementById('steps-container');
+
+function renderSteps() {
+  stepsContainer.innerHTML = '';
+
+  steps.forEach((step, index) => {
+    const item = document.createElement('div');
+    item.className = 'step-item';
+
+    if (index < currentStep) {
+      item.classList.add('step-completed');
+    } else if (index === currentStep) {
+      item.classList.add('step-active');
+    } else {
+      item.classList.add('step-pending');
+    }
+
+    const indicator = document.createElement('div');
+    indicator.className = 'step-indicator';
+
+    if (index < currentStep) {
+      indicator.classList.add('indicator-completed');
+      indicator.textContent = '✓';
+    } else if (index === currentStep) {
+      indicator.classList.add('indicator-active');
+      indicator.textContent = index + 1;
+    } else {
+      indicator.classList.add('indicator-pending');
+      indicator.textContent = index + 1;
+    }
+
+    const text = document.createElement('span');
+    text.textContent = step;
+
+    item.appendChild(indicator);
+    item.appendChild(text);
+
+    if (index === currentStep && isLoading) {
+      const spinner = createSpinner({
+        size: 'small',
+        accessibilityLabel: 'Current step'
+      });
+      item.appendChild(spinner);
+    }
+
+    stepsContainer.appendChild(item);
+  });
+}
+
+document.getElementById('start-process-btn').addEventListener('click', () => {
+  if (isLoading) return;
+
+  isLoading = true;
+  currentStep = 0;
+
+  controlArea.innerHTML = '<div class="polaris-spinner polaris-spinner--size-large"></div><p>Processing order...</p>';
+
+  steps.forEach((_, index) => {
+    setTimeout(() => {
+      currentStep = index;
+      renderSteps();
+
+      if (index === steps.length - 1) {
+        setTimeout(() => {
+          isLoading = false;
+          controlArea.innerHTML = '<button id="start-process-btn" class="button-primary">Start Process</button>';
+        }, 1000);
+      }
+    }, (index + 1) * 1000);
+  });
+
+  renderSteps();
+});
+
+renderSteps();
+</script>`,
+
+    extjs: `// ExtJS Multi-Step Loading Process
+Ext.define('LoadingStepsPanel', {
+  extend: 'Ext.panel.Panel',
+  title: 'Multi-Step Loading Process',
+  width: 500,
+  height: 500,
+  bodyPadding: 20,
+
+  initComponent: function() {
+    var me = this;
+
+    me.steps = [
+      'Validating data',
+      'Processing payment',
+      'Updating inventory',
+      'Sending confirmation',
+      'Complete!'
+    ];
+
+    me.currentStep = 0;
+    me.isLoading = false;
+
+    me.items = [
+      {
+        xtype: 'container',
+        itemId: 'controlArea',
+        style: 'text-align: center; margin: 20px 0;',
+        items: [
+          {
+            xtype: 'button',
+            text: 'Start Process',
+            cls: 'button-primary',
+            handler: me.startProcess,
+            scope: me
+          }
+        ]
+      },
+      {
+        xtype: 'container',
+        itemId: 'stepsContainer',
+        margin: '20 0 0 0'
+      }
+    ];
+
+    me.callParent(arguments);
+    me.on('afterrender', me.renderSteps, me);
+  },
+
+  startProcess: function() {
+    var me = this;
+
+    if (me.isLoading) return;
+
+    me.isLoading = true;
+    me.currentStep = 0;
+
+    var controlArea = me.down('#controlArea');
+    controlArea.removeAll();
+    controlArea.add({
+      xtype: 'component',
+      html: '<div class="polaris-spinner polaris-spinner--size-large"></div><p>Processing order...</p>'
+    });
+
+    me.steps.forEach(function(step, index) {
+      setTimeout(function() {
+        me.currentStep = index;
+        me.renderSteps();
+
+        if (index === me.steps.length - 1) {
+          setTimeout(function() {
+            me.isLoading = false;
+            controlArea.removeAll();
+            controlArea.add({
+              xtype: 'button',
+              text: 'Start Process',
+              handler: me.startProcess,
+              scope: me
+            });
+          }, 1000);
+        }
+      }, (index + 1) * 1000);
+    });
+
+    me.renderSteps();
+  },
+
+  renderSteps: function() {
+    var me = this,
+        stepsContainer = me.down('#stepsContainer');
+
+    stepsContainer.removeAll();
+
+    me.steps.forEach(function(step, index) {
+      var bgColor = index < me.currentStep ? '#f0fdf4' :
+                    index === me.currentStep ? '#eff6ff' : '#f8f9fa';
+
+      var indicatorColor = index < me.currentStep ? '#16a34a' :
+                           index === me.currentStep ? '#2563eb' : '#e5e7eb';
+
+      var indicatorText = index < me.currentStep ? '✓' : (index + 1);
+
+      var html = '<div style="display: flex; align-items: center;">' +
+                 '<div style="width: 20px; height: 20px; border-radius: 50%; background-color: ' + indicatorColor + '; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: white; font-size: 12px;">' +
+                 indicatorText +
+                 '</div>' +
+                 '<span>' + step + '</span>';
+
+      if (index === me.currentStep && me.isLoading) {
+        html += '<div class="polaris-spinner polaris-spinner--size-small" style="margin-left: 12px;"></div>';
+      }
+
+      html += '</div>';
+
+      stepsContainer.add({
+        xtype: 'container',
+        style: 'background-color: ' + bgColor + '; padding: 8px 12px; border-radius: 4px; margin-bottom: 4px;',
+        html: html
+      });
+    });
+  }
+});
+
+Ext.create('LoadingStepsPanel', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Loading, Button, Card, Text, BlockStack } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface ProcessStep {
+  label: string;
+  status: 'pending' | 'active' | 'completed';
+}
+
+interface ProcessState {
+  currentStep: number;
+  isLoading: boolean;
+}
+
+function LoadingStepsExample(): JSX.Element {
+  const [processState, setProcessState] = useState<ProcessState>({
+    currentStep: 0,
+    isLoading: false
+  });
+
+  const stepLabels: string[] = [
+    'Validating data',
+    'Processing payment',
+    'Updating inventory',
+    'Sending confirmation',
+    'Complete!'
+  ];
+
+  const getStepStatus = useCallback((index: number): 'pending' | 'active' | 'completed' => {
+    if (index < processState.currentStep) return 'completed';
+    if (index === processState.currentStep) return 'active';
+    return 'pending';
+  }, [processState.currentStep]);
+
+  const startProcess = useCallback(() => {
+    setProcessState({ currentStep: 0, isLoading: true });
+
+    stepLabels.forEach((_, index) => {
+      setTimeout(() => {
+        setProcessState(prev => ({ ...prev, currentStep: index }));
+
+        if (index === stepLabels.length - 1) {
+          setTimeout(() => {
+            setProcessState(prev => ({ ...prev, isLoading: false }));
+          }, 1000);
+        }
+      }, (index + 1) * 1000);
+    });
+  }, [stepLabels]);
+
+  const getBackgroundColor = (status: string): string => {
+    switch (status) {
+      case 'completed': return '#f0fdf4';
+      case 'active': return '#eff6ff';
+      default: return '#f8f9fa';
+    }
+  };
+
+  const getIndicatorColor = (status: string): string => {
+    switch (status) {
+      case 'completed': return '#16a34a';
+      case 'active': return '#2563eb';
+      default: return '#e5e7eb';
+    }
+  };
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Multi-Step Loading Process</Text>
+
+        <div style={{ textAlign: 'center' }}>
+          {!processState.isLoading ? (
+            <Button onClick={startProcess} variant="primary">
+              Start Process
+            </Button>
+          ) : (
+            <div style={{ padding: '20px' }}>
+              <Loading size="large" accessibilityLabel="Processing order" />
+              <div style={{ marginTop: '16px' }}>
+                <Text variant="bodySm" tone="subdued">
+                  {stepLabels[processState.currentStep]}
+                </Text>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div>
+          {stepLabels.map((step: string, index: number) => {
+            const status = getStepStatus(index);
+
+            return (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '8px 12px',
+                  borderRadius: '4px',
+                  backgroundColor: getBackgroundColor(status),
+                  marginBottom: '4px'
+                }}
+              >
+                <div
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                    backgroundColor: getIndicatorColor(status),
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: '12px'
+                  }}
+                >
+                  {status === 'completed' ? (
+                    <span style={{ color: 'white', fontSize: '12px' }}>✓</span>
+                  ) : (
+                    <span style={{ color: '#6b7280', fontSize: '12px' }}>
+                      {index + 1}
+                    </span>
+                  )}
+                </div>
+                <Text variant="bodySm">{step}</Text>
+                {status === 'active' && processState.isLoading && (
+                  <Loading size="small" accessibilityLabel="Current step" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default LoadingStepsExample;`,
+  },
+
+  accessibilityDemo: {
+    react: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function AccessibilityDemoExample() {
+  const accessibilityExamples = [
+    {
+      size: 'small' as const,
+      label: 'Loading small items',
+      description: 'With aria-label'
+    },
+    {
+      size: 'medium' as const,
+      label: 'Processing your request, please wait',
+      description: 'Descriptive label'
+    },
+    {
+      size: 'large' as const,
+      label: 'System initializing, this may take a moment',
+      description: 'Detailed context'
+    }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Accessibility Features</Text>
+
+        <div
+          style={{
+            padding: '16px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '4px'
+          }}
+        >
+          <Text variant="bodySm">
+            The Loading component includes proper accessibility features:
+          </Text>
+          <ul style={{ marginTop: '12px', marginLeft: '20px' }}>
+            <li>Screen reader announcements via aria-label</li>
+            <li>Proper focus management</li>
+            <li>High contrast visibility</li>
+            <li>Reduced motion support</li>
+          </ul>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            textAlign: 'center'
+          }}
+        >
+          {accessibilityExamples.map(({ size, label, description }) => (
+            <div key={size}>
+              <Loading size={size} accessibilityLabel={label} />
+              <div style={{ marginTop: '8px' }}>
+                <Text variant="bodySm">{description}</Text>
+              </div>
+            </div>
+          ))}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default AccessibilityDemoExample;`,
+
+    vanilla: `<!-- HTML Structure for Accessibility Demo -->
+<div class="accessibility-demo-container">
+  <h2>Accessibility Features</h2>
+
+  <div class="info-box">
+    <p>The Loading component includes proper accessibility features:</p>
+    <ul>
+      <li>Screen reader announcements via aria-label</li>
+      <li>Proper focus management</li>
+      <li>High contrast visibility</li>
+      <li>Reduced motion support</li>
+    </ul>
+  </div>
+
+  <div class="examples-grid">
+    <div class="example-item">
+      <div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading small items">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
+      <p>With aria-label</p>
+    </div>
+
+    <div class="example-item">
+      <div class="polaris-spinner polaris-spinner--size-medium" role="status" aria-label="Processing your request, please wait">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
+      <p>Descriptive label</p>
+    </div>
+
+    <div class="example-item">
+      <div class="polaris-spinner polaris-spinner--size-large" role="status" aria-label="System initializing, this may take a moment">
+        <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </div>
+      <p>Detailed context</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.accessibility-demo-container {
+  padding: 24px;
+}
+
+.info-box {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.info-box ul {
+  margin-top: 12px;
+  margin-left: 20px;
+}
+
+.examples-grid {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.example-item p {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .polaris-spinner {
+    animation: none;
+  }
+
+  .polaris-spinner circle {
+    animation: polaris-spinner-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes polaris-spinner-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+</style>
+
+<script>
+import { createSpinner } from '@cin7/vanilla-js';
+
+const examples = [
+  { size: 'small', label: 'Loading small items', description: 'With aria-label' },
+  { size: 'medium', label: 'Processing your request, please wait', description: 'Descriptive label' },
+  { size: 'large', label: 'System initializing, this may take a moment', description: 'Detailed context' }
+];
+
+const container = document.querySelector('.examples-grid');
+
+examples.forEach(({ size, label, description }) => {
+  const item = document.createElement('div');
+  item.className = 'example-item';
+
+  const spinner = createSpinner({
+    size: size,
+    accessibilityLabel: label
+  });
+
+  const text = document.createElement('p');
+  text.textContent = description;
+
+  item.appendChild(spinner);
+  item.appendChild(text);
+  container.appendChild(item);
+});
+</script>`,
+
+    extjs: `// ExtJS Accessibility Demo
+Ext.create('Ext.panel.Panel', {
+  title: 'Accessibility Features',
+  width: 700,
+  height: 400,
+  bodyPadding: 20,
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      style: 'padding: 16px; background-color: #f8f9fa; border-radius: 4px;',
+      margin: '0 0 20 0',
+      html: '<p style="margin-bottom: 12px;">The Loading component includes proper accessibility features:</p>' +
+            '<ul style="margin-left: 20px;">' +
+            '<li>Screen reader announcements via aria-label</li>' +
+            '<li>Proper focus management</li>' +
+            '<li>High contrast visibility</li>' +
+            '<li>Reduced motion support</li>' +
+            '</ul>'
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        align: 'middle',
+        pack: 'space-around'
+      },
+      items: [
+        {
+          xtype: 'container',
+          style: 'text-align: center;',
+          html: '<div class="polaris-spinner polaris-spinner--size-small" role="status" aria-label="Loading small items"></div>' +
+                '<p style="margin-top: 8px;">With aria-label</p>'
+        },
+        {
+          xtype: 'container',
+          style: 'text-align: center;',
+          html: '<div class="polaris-spinner polaris-spinner--size-medium" role="status" aria-label="Processing your request, please wait"></div>' +
+                '<p style="margin-top: 8px;">Descriptive label</p>'
+        },
+        {
+          xtype: 'container',
+          style: 'text-align: center;',
+          html: '<div class="polaris-spinner polaris-spinner--size-large" role="status" aria-label="System initializing, this may take a moment"></div>' +
+                '<p style="margin-top: 8px;">Detailed context</p>'
+        }
+      ]
+    }
+  ]
+});
+
+// Add CSS for reduced motion support
+Ext.util.CSS.createStyleSheet(
+  '@media (prefers-reduced-motion: reduce) {' +
+  '  .polaris-spinner { animation: none; }' +
+  '  .polaris-spinner circle { animation: polaris-spinner-pulse 1.5s ease-in-out infinite; }' +
+  '}' +
+  '@keyframes polaris-spinner-pulse {' +
+  '  0%, 100% { opacity: 1; }' +
+  '  50% { opacity: 0.5; }' +
+  '}'
+);`,
+
+    typescript: `import { Loading, Card, Text, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+type LoadingSize = 'small' | 'medium' | 'large';
+
+interface AccessibilityExample {
+  size: LoadingSize;
+  label: string;
+  description: string;
+}
+
+function AccessibilityDemoExample(): JSX.Element {
+  const accessibilityExamples: AccessibilityExample[] = [
+    {
+      size: 'small',
+      label: 'Loading small items',
+      description: 'With aria-label'
+    },
+    {
+      size: 'medium',
+      label: 'Processing your request, please wait',
+      description: 'Descriptive label'
+    },
+    {
+      size: 'large',
+      label: 'System initializing, this may take a moment',
+      description: 'Detailed context'
+    }
+  ];
+
+  return (
+    <Card>
+      <BlockStack gap="400">
+        <Text variant="headingMd" as="h2">Accessibility Features</Text>
+
+        <div
+          style={{
+            padding: '16px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '4px'
+          }}
+        >
+          <Text variant="bodySm">
+            The Loading component includes proper accessibility features:
+          </Text>
+          <ul style={{ marginTop: '12px', marginLeft: '20px' }}>
+            <li>Screen reader announcements via aria-label</li>
+            <li>Proper focus management</li>
+            <li>High contrast visibility</li>
+            <li>Reduced motion support</li>
+          </ul>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            textAlign: 'center'
+          }}
+        >
+          {accessibilityExamples.map(({ size, label, description }: AccessibilityExample) => (
+            <div key={size}>
+              <Loading size={size} accessibilityLabel={label} />
+              <div style={{ marginTop: '8px' }}>
+                <Text variant="bodySm">{description}</Text>
+              </div>
+            </div>
+          ))}
+        </div>
+      </BlockStack>
+    </Card>
+  );
+}
+
+export default AccessibilityDemoExample;`,
   }
 };
 
@@ -19005,7 +26478,7 @@ function SkeletonPageExample({
   );
 }
 
-export default SkeletonPageExample;`
+export default SkeletonPageExample;`,
   },
 
   withprimaryaction: {
@@ -20532,7 +28005,7 @@ function FullscreenBarExample({
   );
 }
 
-export default FullscreenBarExample;`
+export default FullscreenBarExample;`,
   }
 };
 
@@ -20727,7 +28200,7 @@ function ContextualSaveBarExample({
   );
 }
 
-export default ContextualSaveBarExample;`
+export default ContextualSaveBarExample;`,
   }
 };
 
@@ -20823,7 +28296,7 @@ function DividerExample({
   );
 }
 
-export default DividerExample;`
+export default DividerExample;`,
   }
 };
 
@@ -21018,7 +28491,7 @@ function DropZoneExample({
   );
 }
 
-export default DropZoneExample;`
+export default DropZoneExample;`,
   }
 };
 
@@ -21101,9 +28574,3551 @@ function KeyboardKeyExample({
   );
 }
 
-export default KeyboardKeyExample;`
+export default KeyboardKeyExample;`,
+  },
+
+  singlekeys: {
+    react: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+
+function SingleKeysExample() {
+  const modifierKeys = ['Enter', 'Esc', 'Space', 'Tab', 'Shift', 'Ctrl', 'Alt', 'Meta', 'Cmd', 'Fn'];
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="300" wrap>
+        {modifierKeys.map((key) => (
+          <KeyboardKey key={key}>{key}</KeyboardKey>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default SingleKeysExample;`,
+
+    vanilla: `<!-- Single Modifier Keys -->
+<div class="keys-container" style="padding: 24px; display: flex; flex-wrap: wrap; gap: 12px;">
+  <kbd class="polaris-keyboard-key">Enter</kbd>
+  <kbd class="polaris-keyboard-key">Esc</kbd>
+  <kbd class="polaris-keyboard-key">Space</kbd>
+  <kbd class="polaris-keyboard-key">Tab</kbd>
+  <kbd class="polaris-keyboard-key">Shift</kbd>
+  <kbd class="polaris-keyboard-key">Ctrl</kbd>
+  <kbd class="polaris-keyboard-key">Alt</kbd>
+  <kbd class="polaris-keyboard-key">Meta</kbd>
+  <kbd class="polaris-keyboard-key">Cmd</kbd>
+  <kbd class="polaris-keyboard-key">Fn</kbd>
+</div>
+
+<script>
+import { createKeyboardDisplay } from '@cin7/vanilla-js';
+
+// Create dynamic keyboard key display
+const keys = ['Enter', 'Esc', 'Space', 'Tab', 'Shift', 'Ctrl', 'Alt', 'Meta', 'Cmd', 'Fn'];
+const container = document.querySelector('.keys-container');
+
+keys.forEach(key => {
+  const kbd = createKeyboardDisplay({ key });
+  container.appendChild(kbd);
+});
+</script>
+
+<style>
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Single Keys Display
+Ext.create('Ext.panel.Panel', {
+  title: 'Modifier Keys',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    wrap: true,
+    gap: 12
+  },
+  items: [
+    'Enter', 'Esc', 'Space', 'Tab', 'Shift',
+    'Ctrl', 'Alt', 'Meta', 'Cmd', 'Fn'
+  ].map(key => ({
+    xtype: 'component',
+    html: \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`,
+    margin: '0 12 12 0'
+  })),
+  renderTo: Ext.getBody()
+});
+
+// Reusable component for keyboard keys
+Ext.define('PolarisKeyboardKey', {
+  extend: 'Ext.Component',
+  alias: 'widget.keyboardkey',
+
+  config: {
+    keyText: ''
+  },
+
+  renderTpl: '<kbd class="polaris-keyboard-key">{keyText}</kbd>',
+
+  initComponent: function() {
+    this.renderData = {
+      keyText: this.getKeyText()
+    };
+    this.callParent(arguments);
+  }
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+interface ModifierKey {
+  key: string;
+  description?: string;
+}
+
+const MODIFIER_KEYS: ModifierKey[] = [
+  { key: 'Enter', description: 'Execute command' },
+  { key: 'Esc', description: 'Cancel operation' },
+  { key: 'Space', description: 'Select item' },
+  { key: 'Tab', description: 'Navigate forward' },
+  { key: 'Shift', description: 'Modifier key' },
+  { key: 'Ctrl', description: 'Control key' },
+  { key: 'Alt', description: 'Alternate key' },
+  { key: 'Meta', description: 'Command key' },
+  { key: 'Cmd', description: 'Mac command' },
+  { key: 'Fn', description: 'Function key' },
+];
+
+function SingleKeysExample(): JSX.Element {
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="300" wrap>
+        {MODIFIER_KEYS.map(({ key }) => (
+          <KeyboardKey key={key}>{key}</KeyboardKey>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default SingleKeysExample;`,
+  },
+
+  letterkeys: {
+    react: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+
+function LetterKeysExample() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="200" wrap>
+        {letters.map((letter) => (
+          <KeyboardKey key={letter}>{letter}</KeyboardKey>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default LetterKeysExample;`,
+
+    vanilla: `<!-- Alphabet Keys -->
+<div id="letter-keys" style="padding: 24px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+// Generate alphabet keys
+const container = $('#letter-keys');
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+letters.forEach(letter => {
+  const kbd = document.createElement('kbd');
+  kbd.className = 'polaris-keyboard-key';
+  kbd.textContent = letter;
+  container.appendChild(kbd);
+});
+</script>
+
+<style>
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  min-width: 32px;
+  text-align: center;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Alphabet Keys Display
+Ext.create('Ext.panel.Panel', {
+  title: 'Letter Keys',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    wrap: true,
+    gap: 8
+  },
+  items: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => ({
+    xtype: 'component',
+    html: \`<kbd class="polaris-keyboard-key">\${letter}</kbd>\`,
+    margin: '0 8 8 0'
+  })),
+  renderTo: Ext.getBody()
+});
+
+// Virtual keyboard panel
+Ext.define('VirtualKeyboard', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.virtualkeyboard',
+
+  title: 'Virtual Keyboard',
+  bodyPadding: 16,
+
+  initComponent: function() {
+    this.items = this.createKeyboardKeys();
+    this.callParent(arguments);
+  },
+
+  createKeyboardKeys: function() {
+    const rows = [
+      'QWERTYUIOP'.split(''),
+      'ASDFGHJKL'.split(''),
+      'ZXCVBNM'.split('')
+    ];
+
+    return rows.map(row => ({
+      xtype: 'container',
+      layout: 'hbox',
+      items: row.map(key => ({
+        xtype: 'button',
+        text: key,
+        width: 40,
+        height: 40,
+        margin: 2,
+        handler: function() {
+          console.log('Key pressed:', key);
+        }
+      }))
+    }));
+  }
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+interface LetterKeysExampleProps {
+  onKeyClick?: (letter: string) => void;
+}
+
+function LetterKeysExample({ onKeyClick }: LetterKeysExampleProps): JSX.Element {
+  const letters: string[] = React.useMemo(
+    () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+    []
+  );
+
+  const handleKeyClick = React.useCallback((letter: string) => {
+    onKeyClick?.(letter);
+  }, [onKeyClick]);
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="200" wrap>
+        {letters.map((letter) => (
+          <span
+            key={letter}
+            onClick={() => handleKeyClick(letter)}
+            style={{ cursor: onKeyClick ? 'pointer' : 'default' }}
+          >
+            <KeyboardKey>{letter}</KeyboardKey>
+          </span>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default LetterKeysExample;`,
+  },
+
+  numberkeys: {
+    react: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+
+function NumberKeysExample() {
+  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="200" wrap>
+        {numbers.map((number) => (
+          <KeyboardKey key={number}>{number}</KeyboardKey>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default NumberKeysExample;`,
+
+    vanilla: `<!-- Number Keys -->
+<div class="number-keys" style="padding: 24px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+
+<script>
+import { createKeyRow } from '@cin7/vanilla-js';
+
+// Generate number keys
+const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const container = document.querySelector('.number-keys');
+
+numbers.forEach(num => {
+  const kbd = document.createElement('kbd');
+  kbd.className = 'polaris-keyboard-key polaris-keyboard-key--number';
+  kbd.textContent = num;
+  kbd.addEventListener('click', () => {
+    console.log('Number key clicked:', num);
+  });
+  container.appendChild(kbd);
+});
+</script>
+
+<style>
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 6px 10px;
+  min-width: 36px;
+  text-align: center;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.polaris-keyboard-key--number {
+  font-weight: 600;
+}
+</style>`,
+
+    extjs: `// ExtJS Number Keys with Numpad
+Ext.create('Ext.panel.Panel', {
+  title: 'Number Keys',
+  bodyPadding: 16,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map(num => ({
+        xtype: 'component',
+        html: \`<kbd class="polaris-keyboard-key">\${num}</kbd>\`,
+        margin: '0 8 0 0'
+      }))
+    },
+    {
+      xtype: 'container',
+      margin: '16 0 0 0',
+      html: '<h4>Numpad Layout</h4>'
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'table',
+        columns: 3
+      },
+      items: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0'].map(num => ({
+        xtype: 'button',
+        text: num,
+        width: 50,
+        height: 50,
+        margin: 2,
+        handler: function() {
+          console.log('Numpad key:', num);
+        }
+      }))
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+import React from 'react';
+
+interface NumberKeysExampleProps {
+  onNumberSelect?: (number: string) => void;
+  highlightedNumbers?: string[];
+}
+
+function NumberKeysExample({
+  onNumberSelect,
+  highlightedNumbers = []
+}: NumberKeysExampleProps): JSX.Element {
+  const numbers: string[] = React.useMemo(
+    () => ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    []
+  );
+
+  const handleNumberClick = React.useCallback((number: string) => {
+    onNumberSelect?.(number);
+  }, [onNumberSelect]);
+
+  const isHighlighted = React.useCallback((number: string): boolean => {
+    return highlightedNumbers.includes(number);
+  }, [highlightedNumbers]);
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="200" wrap>
+        {numbers.map((number) => (
+          <span
+            key={number}
+            onClick={() => handleNumberClick(number)}
+            style={{
+              cursor: onNumberSelect ? 'pointer' : 'default',
+              opacity: isHighlighted(number) ? 1 : 0.6
+            }}
+          >
+            <KeyboardKey>{number}</KeyboardKey>
+          </span>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default NumberKeysExample;`,
+  },
+
+  symbolkeys: {
+    react: `import { KeyboardKey, InlineStack } from '@shopify/polaris';
+
+function SymbolKeysExample() {
+  const symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=',
+                   '[', ']', ';', "'", ',', '.', '/', '\\', '\`', '~'];
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <InlineStack gap="200" wrap>
+        {symbols.map((symbol, index) => (
+          <KeyboardKey key={index}>{symbol}</KeyboardKey>
+        ))}
+      </InlineStack>
+    </div>
+  );
+}
+
+export default SymbolKeysExample;`,
+
+    vanilla: `<!-- Symbol Keys -->
+<div id="symbol-keys" style="padding: 24px; display: flex; flex-wrap: wrap; gap: 8px;"></div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+// Generate symbol keys
+const symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+', '=',
+                 '[', ']', ';', "'", ',', '.', '/', '\\\\', '\`', '~'];
+const container = $('#symbol-keys');
+
+symbols.forEach(symbol => {
+  const kbd = createElement('kbd', {
+    className: 'polaris-keyboard-key polaris-keyboard-key--symbol',
+    textContent: symbol,
+    onclick: () => console.log('Symbol:', symbol)
+  });
+  container.appendChild(kbd);
+});
+</script>
+
+<style>
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  min-width: 32px;
+  text-align: center;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.polaris-keyboard-key--symbol {
+  font-size: 14px;
+  font-weight: 600;
+}
+</style>`,
+
+    extjs: `// ExtJS Symbol Keys Display
+Ext.create('Ext.panel.Panel', {
+  title: 'Symbol Keys',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    wrap: true,
+    gap: 8
+  },
+  items: [
+    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+    '-', '+', '=', '[', ']', ';', "'", ',', '.', '/',
+    '\\\\', '\`', '~'
+  ].map((symbol, index) => ({
+    xtype: 'component',
+    html: \`<kbd class="polaris-keyboard-key">\${Ext.String.htmlEncode(symbol)}</kbd>\`,
+    margin: '0 8 8 0'
+  })),
+  renderTo: Ext.getBody()
+});
+
+// Symbol key categories
+Ext.create('Ext.panel.Panel', {
+  title: 'Symbol Categories',
+  bodyPadding: 16,
+  items: [
+    {
+      xtype: 'fieldset',
+      title: 'Math Symbols',
+      items: [{
+        xtype: 'component',
+        html: ['+', '-', '*', '/', '=', '%'].map(s =>
+          \`<kbd class="polaris-keyboard-key">\${s}</kbd>\`
+        ).join(' ')
+      }]
+    },
+    {
+      xtype: 'fieldset',
+      title: 'Brackets',
+      items: [{
+        xtype: 'component',
+        html: ['(', ')', '[', ']', '{', '}'].map(s =>
+          \`<kbd class="polaris-keyboard-key">\${s}</kbd>\`
+        ).join(' ')
+      }]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface SymbolCategory {
+  name: string;
+  symbols: string[];
+}
+
+const SYMBOL_CATEGORIES: SymbolCategory[] = [
+  { name: 'Math', symbols: ['+', '-', '*', '/', '=', '%'] },
+  { name: 'Brackets', symbols: ['(', ')', '[', ']'] },
+  { name: 'Punctuation', symbols: [';', "'", ',', '.', '?', '!'] },
+  { name: 'Special', symbols: ['@', '#', '$', '^', '&', '~', '\`'] },
+];
+
+function SymbolKeysExample(): JSX.Element {
+  return (
+    <div style={{ padding: '24px' }}>
+      <BlockStack gap="400">
+        {SYMBOL_CATEGORIES.map((category) => (
+          <div key={category.name}>
+            <Text as="h4" variant="headingSm">{category.name} Symbols:</Text>
+            <InlineStack gap="200" wrap>
+              {category.symbols.map((symbol, index) => (
+                <KeyboardKey key={index}>{symbol}</KeyboardKey>
+              ))}
+            </InlineStack>
+          </div>
+        ))}
+      </BlockStack>
+    </div>
+  );
+}
+
+export default SymbolKeysExample;`,
+  },
+
+  arrowkeys: {
+    react: `import { KeyboardKey, InlineStack, BlockStack, Text } from '@shopify/polaris';
+
+function ArrowKeysExample() {
+  const functionKeys = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6',
+                        'F7', 'F8', 'F9', 'F10', 'F11', 'F12'];
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <BlockStack gap="300">
+        <div>
+          <Text as="p">Navigation Keys:</Text>
+          <InlineStack gap="200">
+            <KeyboardKey>↑</KeyboardKey>
+            <KeyboardKey>↓</KeyboardKey>
+            <KeyboardKey>←</KeyboardKey>
+            <KeyboardKey>→</KeyboardKey>
+          </InlineStack>
+        </div>
+
+        <div>
+          <Text as="p">Function Keys:</Text>
+          <InlineStack gap="200" wrap>
+            {functionKeys.map((key) => (
+              <KeyboardKey key={key}>{key}</KeyboardKey>
+            ))}
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </div>
+  );
+}
+
+export default ArrowKeysExample;`,
+
+    vanilla: `<!-- Arrow and Function Keys -->
+<div style="padding: 24px;">
+  <div class="key-section">
+    <p>Navigation Keys:</p>
+    <div class="arrow-keys">
+      <kbd class="polaris-keyboard-key">↑</kbd>
+      <kbd class="polaris-keyboard-key">↓</kbd>
+      <kbd class="polaris-keyboard-key">←</kbd>
+      <kbd class="polaris-keyboard-key">→</kbd>
+    </div>
+  </div>
+
+  <div class="key-section" style="margin-top: 16px;">
+    <p>Function Keys:</p>
+    <div id="function-keys" class="function-keys"></div>
+  </div>
+</div>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+// Generate function keys
+const functionKeys = Array.from({ length: 12 }, (_, i) => \`F\${i + 1}\`);
+const container = $('#function-keys');
+
+functionKeys.forEach(key => {
+  const kbd = document.createElement('kbd');
+  kbd.className = 'polaris-keyboard-key';
+  kbd.textContent = key;
+  container.appendChild(kbd);
+});
+</script>
+
+<style>
+.arrow-keys, .function-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  min-width: 36px;
+  text-align: center;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Navigation and Function Keys
+Ext.create('Ext.panel.Panel', {
+  title: 'Navigation & Function Keys',
+  bodyPadding: 16,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      html: '<h4>Navigation Keys</h4>',
+      margin: '0 0 8 0'
+    },
+    {
+      xtype: 'container',
+      layout: 'hbox',
+      items: ['↑', '↓', '←', '→'].map(arrow => ({
+        xtype: 'component',
+        html: \`<kbd class="polaris-keyboard-key">\${arrow}</kbd>\`,
+        margin: '0 8 0 0'
+      }))
+    },
+    {
+      xtype: 'container',
+      html: '<h4>Function Keys</h4>',
+      margin: '16 0 8 0'
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'hbox',
+        wrap: true
+      },
+      items: Array.from({ length: 12 }, (_, i) => \`F\${i + 1}\`).map(key => ({
+        xtype: 'component',
+        html: \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`,
+        margin: '0 8 8 0'
+      }))
+    },
+    {
+      xtype: 'container',
+      html: '<h4>Arrow Key Grid</h4>',
+      margin: '16 0 8 0'
+    },
+    {
+      xtype: 'container',
+      layout: {
+        type: 'table',
+        columns: 3
+      },
+      items: [
+        { xtype: 'component', html: '' },
+        { xtype: 'button', text: '↑', width: 40, height: 40 },
+        { xtype: 'component', html: '' },
+        { xtype: 'button', text: '←', width: 40, height: 40 },
+        { xtype: 'button', text: '↓', width: 40, height: 40 },
+        { xtype: 'button', text: '→', width: 40, height: 40 }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface NavigationKey {
+  symbol: string;
+  name: string;
+  description: string;
+}
+
+const NAVIGATION_KEYS: NavigationKey[] = [
+  { symbol: '↑', name: 'Up', description: 'Move up' },
+  { symbol: '↓', name: 'Down', description: 'Move down' },
+  { symbol: '←', name: 'Left', description: 'Move left' },
+  { symbol: '→', name: 'Right', description: 'Move right' },
+];
+
+function ArrowKeysExample(): JSX.Element {
+  const functionKeys: string[] = React.useMemo(
+    () => Array.from({ length: 12 }, (_, i) => \`F\${i + 1}\`),
+    []
+  );
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <BlockStack gap="300">
+        <div>
+          <Text as="p" fontWeight="semibold">Navigation Keys:</Text>
+          <InlineStack gap="200">
+            {NAVIGATION_KEYS.map(({ symbol, name }) => (
+              <span key={name} title={name}>
+                <KeyboardKey>{symbol}</KeyboardKey>
+              </span>
+            ))}
+          </InlineStack>
+        </div>
+
+        <div>
+          <Text as="p" fontWeight="semibold">Function Keys:</Text>
+          <InlineStack gap="200" wrap>
+            {functionKeys.map((key) => (
+              <KeyboardKey key={key}>{key}</KeyboardKey>
+            ))}
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </div>
+  );
+}
+
+export default ArrowKeysExample;`,
+  },
+
+  keycombinations: {
+    react: `import { KeyboardKey, InlineStack, BlockStack, Text } from '@shopify/polaris';
+
+function KeyCombinationsExample() {
+  return (
+    <div style={{ padding: '24px' }}>
+      <BlockStack gap="400">
+        <div>
+          <Text as="p">Common Combinations:</Text>
+          <InlineStack gap="300" wrap>
+            <InlineStack gap="100">
+              <KeyboardKey>Ctrl</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>C</KeyboardKey>
+            </InlineStack>
+            <InlineStack gap="100">
+              <KeyboardKey>Ctrl</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>V</KeyboardKey>
+            </InlineStack>
+            <InlineStack gap="100">
+              <KeyboardKey>Ctrl</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>Z</KeyboardKey>
+            </InlineStack>
+          </InlineStack>
+        </div>
+
+        <div>
+          <Text as="p">Mac Combinations:</Text>
+          <InlineStack gap="300" wrap>
+            <InlineStack gap="100">
+              <KeyboardKey>⌘</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>C</KeyboardKey>
+            </InlineStack>
+            <InlineStack gap="100">
+              <KeyboardKey>⌘</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>⌥</KeyboardKey>
+              <Text>+</Text>
+              <KeyboardKey>Esc</KeyboardKey>
+            </InlineStack>
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </div>
+  );
+}
+
+export default KeyCombinationsExample;`,
+
+    vanilla: `<!-- Keyboard Combinations -->
+<div style="padding: 24px;">
+  <div class="combo-section">
+    <p><strong>Common Combinations:</strong></p>
+    <div class="combinations">
+      <div class="combo">
+        <kbd class="polaris-keyboard-key">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">C</kbd>
+        <span class="combo-desc">Copy</span>
+      </div>
+      <div class="combo">
+        <kbd class="polaris-keyboard-key">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">V</kbd>
+        <span class="combo-desc">Paste</span>
+      </div>
+      <div class="combo">
+        <kbd class="polaris-keyboard-key">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">Z</kbd>
+        <span class="combo-desc">Undo</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="combo-section">
+    <p><strong>Mac Combinations:</strong></p>
+    <div class="combinations">
+      <div class="combo">
+        <kbd class="polaris-keyboard-key">⌘</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">C</kbd>
+      </div>
+      <div class="combo">
+        <kbd class="polaris-keyboard-key">⌘</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">⌥</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">Esc</kbd>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { EventBus } from '@cin7/vanilla-js';
+
+// Listen for keyboard combinations
+document.addEventListener('keydown', (e) => {
+  const combo = [];
+  if (e.ctrlKey) combo.push('Ctrl');
+  if (e.shiftKey) combo.push('Shift');
+  if (e.altKey) combo.push('Alt');
+  if (e.metaKey) combo.push('⌘');
+  if (e.key.length === 1) combo.push(e.key.toUpperCase());
+
+  if (combo.length > 1) {
+    EventBus.emit('keyboard:combo', combo.join('+'));
+  }
+});
+</script>
+
+<style>
+.combo-section {
+  margin-bottom: 24px;
+}
+
+.combinations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.combo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.combo-desc {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #fff;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Keyboard Combinations Display
+Ext.create('Ext.panel.Panel', {
+  title: 'Keyboard Combinations',
+  bodyPadding: 16,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'fieldset',
+      title: 'Common Combinations',
+      items: [
+        {
+          xtype: 'container',
+          layout: 'hbox',
+          defaults: { margin: '0 16 0 0' },
+          items: [
+            {
+              xtype: 'component',
+              html: \`
+                <div class="combo">
+                  <kbd class="polaris-keyboard-key">Ctrl</kbd> +
+                  <kbd class="polaris-keyboard-key">C</kbd>
+                  <span>Copy</span>
+                </div>
+              \`
+            },
+            {
+              xtype: 'component',
+              html: \`
+                <div class="combo">
+                  <kbd class="polaris-keyboard-key">Ctrl</kbd> +
+                  <kbd class="polaris-keyboard-key">V</kbd>
+                  <span>Paste</span>
+                </div>
+              \`
+            },
+            {
+              xtype: 'component',
+              html: \`
+                <div class="combo">
+                  <kbd class="polaris-keyboard-key">Ctrl</kbd> +
+                  <kbd class="polaris-keyboard-key">Z</kbd>
+                  <span>Undo</span>
+                </div>
+              \`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      xtype: 'fieldset',
+      title: 'Mac Combinations',
+      margin: '16 0 0 0',
+      items: [
+        {
+          xtype: 'container',
+          layout: 'hbox',
+          defaults: { margin: '0 16 0 0' },
+          items: [
+            {
+              xtype: 'component',
+              html: \`
+                <div class="combo">
+                  <kbd class="polaris-keyboard-key">⌘</kbd> +
+                  <kbd class="polaris-keyboard-key">C</kbd>
+                </div>
+              \`
+            },
+            {
+              xtype: 'component',
+              html: \`
+                <div class="combo">
+                  <kbd class="polaris-keyboard-key">⌘</kbd> +
+                  <kbd class="polaris-keyboard-key">⌥</kbd> +
+                  <kbd class="polaris-keyboard-key">Esc</kbd>
+                </div>
+              \`
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  renderTo: Ext.getBody()
+});
+
+// Keyboard shortcut manager
+Ext.define('ShortcutManager', {
+  singleton: true,
+
+  shortcuts: {},
+
+  register: function(combo, handler) {
+    this.shortcuts[combo] = handler;
+  },
+
+  handleKeyPress: function(e) {
+    const combo = [];
+    if (e.ctrlKey) combo.push('Ctrl');
+    if (e.shiftKey) combo.push('Shift');
+    if (e.altKey) combo.push('Alt');
+    combo.push(e.key.toUpperCase());
+
+    const comboStr = combo.join('+');
+    if (this.shortcuts[comboStr]) {
+      e.preventDefault();
+      this.shortcuts[comboStr]();
+    }
+  }
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface KeyCombo {
+  keys: string[];
+  description: string;
+  platform?: 'windows' | 'mac' | 'all';
+}
+
+const COMMON_COMBOS: KeyCombo[] = [
+  { keys: ['Ctrl', 'C'], description: 'Copy', platform: 'windows' },
+  { keys: ['Ctrl', 'V'], description: 'Paste', platform: 'windows' },
+  { keys: ['Ctrl', 'Z'], description: 'Undo', platform: 'windows' },
+  { keys: ['Ctrl', 'S'], description: 'Save', platform: 'windows' },
+];
+
+const MAC_COMBOS: KeyCombo[] = [
+  { keys: ['⌘', 'C'], description: 'Copy', platform: 'mac' },
+  { keys: ['⌘', 'V'], description: 'Paste', platform: 'mac' },
+  { keys: ['⌘', '⌥', 'Esc'], description: 'Force Quit', platform: 'mac' },
+];
+
+interface KeyCombinationsExampleProps {
+  onComboClick?: (combo: KeyCombo) => void;
+}
+
+function KeyCombinationsExample({ onComboClick }: KeyCombinationsExampleProps): JSX.Element {
+  const renderCombo = React.useCallback((combo: KeyCombo, index: number) => (
+    <div
+      key={index}
+      onClick={() => onComboClick?.(combo)}
+      style={{
+        cursor: onComboClick ? 'pointer' : 'default',
+        padding: '8px',
+        borderRadius: '4px',
+        transition: 'background-color 0.2s'
+      }}
+    >
+      <InlineStack gap="100" blockAlign="center">
+        {combo.keys.map((key, keyIndex) => (
+          <React.Fragment key={keyIndex}>
+            {keyIndex > 0 && <Text>+</Text>}
+            <KeyboardKey>{key}</KeyboardKey>
+          </React.Fragment>
+        ))}
+        {combo.description && (
+          <Text variant="bodySm" tone="subdued">
+            {combo.description}
+          </Text>
+        )}
+      </InlineStack>
+    </div>
+  ), [onComboClick]);
+
+  return (
+    <div style={{ padding: '24px' }}>
+      <BlockStack gap="400">
+        <div>
+          <Text as="p" variant="headingSm">Common Combinations:</Text>
+          <InlineStack gap="300" wrap>
+            {COMMON_COMBOS.map((combo, index) => renderCombo(combo, index))}
+          </InlineStack>
+        </div>
+
+        <div>
+          <Text as="p" variant="headingSm">Mac Combinations:</Text>
+          <InlineStack gap="300" wrap>
+            {MAC_COMBOS.map((combo, index) => renderCombo(combo, index))}
+          </InlineStack>
+        </div>
+      </BlockStack>
+    </div>
+  );
+}
+
+export default KeyCombinationsExample;`,
+  },
+
+  shortcutguide: {
+    react: `import { KeyboardKey, InlineStack, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+function ShortcutGuideExample() {
+  const shortcuts = [
+    { category: 'Navigation', keys: ['Ctrl', '+', 'Home'], description: 'Go to beginning' },
+    { category: 'Editing', keys: ['Ctrl', '+', 'C'], description: 'Copy' },
+    { category: 'Editing', keys: ['Ctrl', '+', 'V'], description: 'Paste' },
+    { category: 'Search', keys: ['Ctrl', '+', 'F'], description: 'Find' },
+  ];
+
+  const categories = Array.from(new Set(shortcuts.map(s => s.category)));
+
+  return (
+    <div style={{ maxWidth: '800px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Keyboard Shortcuts</h3>
+              <Text as="p">Master these shortcuts to work more efficiently.</Text>
+            </div>
+
+            {categories.map((category) => (
+              <div key={category}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>{category}</h4>
+                <div style={{ display: 'grid', gap: '12px' }}>
+                  {shortcuts
+                    .filter(s => s.category === category)
+                    .map((shortcut, index) => (
+                      <div key={index} style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        padding: '8px 12px',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '6px'
+                      }}>
+                        <Text variant="bodySm">{shortcut.description}</Text>
+                        <InlineStack gap="50">
+                          {shortcut.keys.map((key, i) => (
+                            <React.Fragment key={i}>
+                              {key !== '+' ? <KeyboardKey>{key}</KeyboardKey> : <Text>{key}</Text>}
+                            </React.Fragment>
+                          ))}
+                        </InlineStack>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default ShortcutGuideExample;`,
+
+    vanilla: `<!-- Shortcut Guide -->
+<div class="shortcut-guide">
+  <div class="guide-header">
+    <h3>Keyboard Shortcuts</h3>
+    <p>Master these shortcuts to work more efficiently.</p>
+  </div>
+
+  <div class="shortcuts-container" id="shortcuts"></div>
+</div>
+
+<script>
+import { $, createElement } from '@cin7/vanilla-js';
+
+const shortcuts = [
+  { category: 'Navigation', combo: ['Ctrl', 'Home'], description: 'Go to beginning' },
+  { category: 'Editing', combo: ['Ctrl', 'C'], description: 'Copy' },
+  { category: 'Editing', combo: ['Ctrl', 'V'], description: 'Paste' },
+  { category: 'Editing', combo: ['Ctrl', 'Z'], description: 'Undo' },
+  { category: 'Search', combo: ['Ctrl', 'F'], description: 'Find' },
+];
+
+const container = $('#shortcuts');
+const categories = [...new Set(shortcuts.map(s => s.category))];
+
+categories.forEach(category => {
+  const section = createElement('div', { className: 'shortcut-section' });
+  const title = createElement('h4', { textContent: category });
+  section.appendChild(title);
+
+  const items = shortcuts.filter(s => s.category === category);
+  items.forEach(item => {
+    const row = createElement('div', { className: 'shortcut-row' });
+
+    const desc = createElement('span', {
+      className: 'shortcut-desc',
+      textContent: item.description
+    });
+
+    const keys = createElement('div', { className: 'shortcut-keys' });
+    item.combo.forEach((key, i) => {
+      if (i > 0) {
+        keys.appendChild(document.createTextNode(' + '));
+      }
+      const kbd = createElement('kbd', {
+        className: 'polaris-keyboard-key',
+        textContent: key
+      });
+      keys.appendChild(kbd);
+    });
+
+    row.appendChild(desc);
+    row.appendChild(keys);
+    section.appendChild(row);
+  });
+
+  container.appendChild(section);
+});
+</script>
+
+<style>
+.shortcut-guide {
+  max-width: 800px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e1e3e5;
+  border-radius: 8px;
+}
+
+.guide-header h3 {
+  margin: 0 0 8px 0;
+}
+
+.shortcuts-container {
+  margin-top: 24px;
+}
+
+.shortcut-section {
+  margin-bottom: 24px;
+}
+
+.shortcut-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #202223;
+}
+
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.shortcut-desc {
+  font-size: 14px;
+}
+
+.shortcut-keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #fff;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Keyboard Shortcut Guide
+Ext.define('ShortcutGuide', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.shortcutguide',
+
+  title: 'Keyboard Shortcuts',
+  bodyPadding: 24,
+  width: 800,
+
+  initComponent: function() {
+    const shortcuts = [
+      { category: 'Navigation', combo: ['Ctrl', 'Home'], description: 'Go to beginning' },
+      { category: 'Editing', combo: ['Ctrl', 'C'], description: 'Copy' },
+      { category: 'Editing', combo: ['Ctrl', 'V'], description: 'Paste' },
+      { category: 'Editing', combo: ['Ctrl', 'Z'], description: 'Undo' },
+      { category: 'Search', combo: ['Ctrl', 'F'], description: 'Find' },
+    ];
+
+    const categories = [...new Set(shortcuts.map(s => s.category))];
+
+    this.items = [
+      {
+        xtype: 'component',
+        html: '<p>Master these shortcuts to work more efficiently.</p>',
+        margin: '0 0 16 0'
+      },
+      ...categories.map(category => ({
+        xtype: 'fieldset',
+        title: category,
+        margin: '0 0 16 0',
+        items: shortcuts
+          .filter(s => s.category === category)
+          .map(shortcut => ({
+            xtype: 'container',
+            layout: 'hbox',
+            margin: '8 0',
+            items: [
+              {
+                xtype: 'component',
+                html: shortcut.description,
+                flex: 1
+              },
+              {
+                xtype: 'component',
+                html: shortcut.combo.map(key =>
+                  \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`
+                ).join(' + ')
+              }
+            ]
+          }))
+      }))
+    ];
+
+    this.callParent(arguments);
+  }
+});
+
+Ext.create('ShortcutGuide', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface Shortcut {
+  category: string;
+  keys: string[];
+  description: string;
+  platform?: 'windows' | 'mac' | 'all';
+}
+
+const SHORTCUTS: Shortcut[] = [
+  { category: 'Navigation', keys: ['Ctrl', 'Home'], description: 'Go to beginning', platform: 'all' },
+  { category: 'Navigation', keys: ['Ctrl', 'End'], description: 'Go to end', platform: 'all' },
+  { category: 'Editing', keys: ['Ctrl', 'X'], description: 'Cut', platform: 'windows' },
+  { category: 'Editing', keys: ['Ctrl', 'C'], description: 'Copy', platform: 'windows' },
+  { category: 'Editing', keys: ['Ctrl', 'V'], description: 'Paste', platform: 'windows' },
+  { category: 'Editing', keys: ['Ctrl', 'Z'], description: 'Undo', platform: 'windows' },
+  { category: 'Search', keys: ['Ctrl', 'F'], description: 'Find', platform: 'all' },
+  { category: 'Windows', keys: ['Ctrl', 'W'], description: 'Close tab', platform: 'all' },
+];
+
+interface ShortcutGuideExampleProps {
+  filterPlatform?: 'windows' | 'mac' | 'all';
+}
+
+function ShortcutGuideExample({ filterPlatform = 'all' }: ShortcutGuideExampleProps): JSX.Element {
+  const filteredShortcuts = React.useMemo(() => {
+    if (filterPlatform === 'all') return SHORTCUTS;
+    return SHORTCUTS.filter(s => s.platform === filterPlatform || s.platform === 'all');
+  }, [filterPlatform]);
+
+  const categories = React.useMemo(
+    () => Array.from(new Set(filteredShortcuts.map(s => s.category))),
+    [filteredShortcuts]
+  );
+
+  return (
+    <div style={{ maxWidth: '800px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Keyboard Shortcuts</h3>
+              <Text as="p">Master these shortcuts to work more efficiently.</Text>
+            </div>
+
+            {categories.map((category) => (
+              <div key={category}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '16px' }}>{category}</h4>
+                <div style={{ display: 'grid', gap: '12px' }}>
+                  {filteredShortcuts
+                    .filter(s => s.category === category)
+                    .map((shortcut, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '8px 12px',
+                          backgroundColor: '#f8f9fa',
+                          borderRadius: '6px'
+                        }}
+                      >
+                        <Text variant="bodySm">{shortcut.description}</Text>
+                        <InlineStack gap="50">
+                          {shortcut.keys.map((key, keyIndex) => (
+                            <React.Fragment key={keyIndex}>
+                              {keyIndex > 0 && <Text>+</Text>}
+                              <KeyboardKey>{key}</KeyboardKey>
+                            </React.Fragment>
+                          ))}
+                        </InlineStack>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default ShortcutGuideExample;`,
+  },
+
+  interactivekeyboard: {
+    react: `import { KeyboardKey, InlineStack, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+function InteractiveKeyboardExample() {
+  const [pressedKeys, setPressedKeys] = React.useState<string[]>([]);
+  const [keyHistory, setKeyHistory] = React.useState<string[][]>([]);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const keyMap: { [key: string]: string } = {
+        'Control': 'Ctrl',
+        'Meta': '⌘',
+        'Alt': 'Alt',
+        'Shift': 'Shift',
+        'Enter': 'Enter',
+        'Escape': 'Esc',
+        ' ': 'Space',
+      };
+
+      const key = keyMap[e.key] || e.key.toUpperCase();
+
+      setPressedKeys(prev => {
+        if (prev.includes(key)) return prev;
+        const newKeys = [...prev, key];
+        if (newKeys.length > 4) {
+          setKeyHistory(history => [...history.slice(-4), newKeys]);
+          return [];
+        }
+        return newKeys;
+      });
+    };
+
+    const handleKeyUp = () => {
+      setTimeout(() => {
+        setPressedKeys(prev => {
+          if (prev.length > 0) {
+            setKeyHistory(history => [...history.slice(-4), prev]);
+          }
+          return [];
+        });
+      }, 100);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  return (
+    <div style={{ maxWidth: '700px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3>Interactive Keyboard Demo</h3>
+              <Text as="p">Press any keys to see them displayed.</Text>
+            </div>
+
+            <div style={{
+              minHeight: '120px',
+              padding: '20px',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              border: '2px dashed #e1e3e5',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              {pressedKeys.length > 0 ? (
+                <InlineStack gap="200">
+                  {pressedKeys.map((key, index) => (
+                    <React.Fragment key={index}>
+                      <KeyboardKey>{key}</KeyboardKey>
+                      {index < pressedKeys.length - 1 && <Text>+</Text>}
+                    </React.Fragment>
+                  ))}
+                </InlineStack>
+              ) : (
+                <Text as="p" tone="subdued">Press keys to see them here...</Text>
+              )}
+            </div>
+
+            {keyHistory.length > 0 && (
+              <div>
+                <h4 style={{ fontSize: '14px' }}>Recent Combinations:</h4>
+                <BlockStack gap="200">
+                  {keyHistory.map((combo, index) => (
+                    <div key={index} style={{
+                      padding: '8px 12px',
+                      backgroundColor: '#f1f3f4',
+                      borderRadius: '6px'
+                    }}>
+                      <InlineStack gap="200">
+                        {combo.map((key, keyIndex) => (
+                          <React.Fragment key={keyIndex}>
+                            <KeyboardKey>{key}</KeyboardKey>
+                            {keyIndex < combo.length - 1 && <Text>+</Text>}
+                          </React.Fragment>
+                        ))}
+                      </InlineStack>
+                    </div>
+                  ))}
+                </BlockStack>
+              </div>
+            )}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default InteractiveKeyboardExample;`,
+
+    vanilla: `<!-- Interactive Keyboard Demo -->
+<div class="interactive-keyboard">
+  <div class="keyboard-header">
+    <h3>Interactive Keyboard Demo</h3>
+    <p>Press any keys to see them displayed below.</p>
+  </div>
+
+  <div id="key-display" class="key-display">
+    <p class="placeholder">Press keys to see them here...</p>
+  </div>
+
+  <div id="key-history" class="key-history" style="display: none;">
+    <h4>Recent Combinations:</h4>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<script>
+import { $, addClass, removeClass, on } from '@cin7/vanilla-js';
+
+const display = $('#key-display');
+const historyContainer = $('#key-history');
+const historyList = $('#history-list');
+let pressedKeys = [];
+let keyHistory = [];
+
+const keyMap = {
+  'Control': 'Ctrl',
+  'Meta': '⌘',
+  'Alt': 'Alt',
+  'Shift': 'Shift',
+  'Enter': 'Enter',
+  'Escape': 'Esc',
+  ' ': 'Space'
+};
+
+on(window, 'keydown', (e) => {
+  const key = keyMap[e.key] || e.key.toUpperCase();
+
+  if (!pressedKeys.includes(key)) {
+    pressedKeys.push(key);
+    updateDisplay();
+  }
+
+  if (pressedKeys.length > 4) {
+    addToHistory(pressedKeys);
+    pressedKeys = [];
+    updateDisplay();
+  }
+});
+
+on(window, 'keyup', () => {
+  setTimeout(() => {
+    if (pressedKeys.length > 0) {
+      addToHistory(pressedKeys);
+      pressedKeys = [];
+      updateDisplay();
+    }
+  }, 100);
+});
+
+function updateDisplay() {
+  if (pressedKeys.length === 0) {
+    display.innerHTML = '<p class="placeholder">Press keys to see them here...</p>';
+  } else {
+    display.innerHTML = pressedKeys
+      .map(key => \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`)
+      .join(' + ');
+  }
+}
+
+function addToHistory(keys) {
+  keyHistory.push([...keys]);
+  if (keyHistory.length > 5) keyHistory.shift();
+
+  historyContainer.style.display = 'block';
+  historyList.innerHTML = keyHistory.map(combo =>
+    \`<div class="history-item">
+      \${combo.map(k => \`<kbd class="polaris-keyboard-key">\${k}</kbd>\`).join(' + ')}
+    </div>\`
+  ).join('');
+}
+</script>
+
+<style>
+.interactive-keyboard {
+  max-width: 700px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #e1e3e5;
+  border-radius: 8px;
+}
+
+.key-display {
+  min-height: 120px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #e1e3e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.placeholder {
+  color: #6b7280;
+}
+
+.key-history {
+  margin-top: 24px;
+}
+
+.key-history h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+}
+
+.history-item {
+  padding: 8px 12px;
+  background-color: #f1f3f4;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #fff;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 4px;
+}
+</style>`,
+
+    extjs: `// ExtJS Interactive Keyboard Component
+Ext.define('InteractiveKeyboard', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.interactivekeyboard',
+
+  title: 'Interactive Keyboard Demo',
+  width: 700,
+  bodyPadding: 24,
+
+  pressedKeys: [],
+  keyHistory: [],
+
+  initComponent: function() {
+    this.items = [
+      {
+        xtype: 'component',
+        html: '<p>Press any keys to see them displayed below. Try combinations!</p>',
+        margin: '0 0 16 0'
+      },
+      {
+        xtype: 'container',
+        itemId: 'keyDisplay',
+        cls: 'key-display',
+        html: '<p class="placeholder">Press keys to see them here...</p>',
+        style: {
+          minHeight: '120px',
+          padding: '20px',
+          backgroundColor: '#f8f9fa',
+          borderRadius: '8px',
+          border: '2px dashed #e1e3e5',
+          textAlign: 'center'
+        }
+      },
+      {
+        xtype: 'container',
+        itemId: 'keyHistory',
+        hidden: true,
+        margin: '16 0 0 0',
+        items: [
+          {
+            xtype: 'component',
+            html: '<h4 style="margin: 0 0 12px 0; font-size: 14px;">Recent Combinations:</h4>'
+          },
+          {
+            xtype: 'container',
+            itemId: 'historyList'
+          }
+        ]
+      }
+    ];
+
+    this.callParent(arguments);
+    this.initKeyboardListeners();
+  },
+
+  initKeyboardListeners: function() {
+    const me = this;
+    const keyMap = {
+      'Control': 'Ctrl',
+      'Meta': '⌘',
+      'Alt': 'Alt',
+      'Shift': 'Shift',
+      'Enter': 'Enter',
+      'Escape': 'Esc',
+      ' ': 'Space'
+    };
+
+    Ext.getBody().on('keydown', function(e) {
+      const key = keyMap[e.browserEvent.key] || e.browserEvent.key.toUpperCase();
+
+      if (!me.pressedKeys.includes(key)) {
+        me.pressedKeys.push(key);
+        me.updateDisplay();
+      }
+
+      if (me.pressedKeys.length > 4) {
+        me.addToHistory();
+        me.pressedKeys = [];
+        me.updateDisplay();
+      }
+    });
+
+    Ext.getBody().on('keyup', function() {
+      setTimeout(function() {
+        if (me.pressedKeys.length > 0) {
+          me.addToHistory();
+          me.pressedKeys = [];
+          me.updateDisplay();
+        }
+      }, 100);
+    });
+  },
+
+  updateDisplay: function() {
+    const display = this.down('#keyDisplay');
+
+    if (this.pressedKeys.length === 0) {
+      display.update('<p class="placeholder">Press keys to see them here...</p>');
+    } else {
+      const html = this.pressedKeys
+        .map(key => \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`)
+        .join(' + ');
+      display.update(html);
+    }
+  },
+
+  addToHistory: function() {
+    this.keyHistory.push([...this.pressedKeys]);
+    if (this.keyHistory.length > 5) {
+      this.keyHistory.shift();
+    }
+
+    const historyContainer = this.down('#keyHistory');
+    const historyList = this.down('#historyList');
+
+    historyContainer.setHidden(false);
+
+    historyList.removeAll();
+    this.keyHistory.forEach(combo => {
+      historyList.add({
+        xtype: 'component',
+        html: combo.map(k => \`<kbd class="polaris-keyboard-key">\${k}</kbd>\`).join(' + '),
+        style: {
+          padding: '8px 12px',
+          backgroundColor: '#f1f3f4',
+          borderRadius: '6px',
+          marginBottom: '8px'
+        }
+      });
+    });
+  }
+});
+
+Ext.create('InteractiveKeyboard', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface KeyMapping {
+  [key: string]: string;
+}
+
+const KEY_MAP: KeyMapping = {
+  'Control': 'Ctrl',
+  'Meta': '⌘',
+  'Alt': 'Alt',
+  'Shift': 'Shift',
+  'Enter': 'Enter',
+  'Escape': 'Esc',
+  'ArrowUp': '↑',
+  'ArrowDown': '↓',
+  'ArrowLeft': '←',
+  'ArrowRight': '→',
+  ' ': 'Space',
+};
+
+function InteractiveKeyboardExample(): JSX.Element {
+  const [pressedKeys, setPressedKeys] = React.useState<string[]>([]);
+  const [keyHistory, setKeyHistory] = React.useState<string[][]>([]);
+
+  const handleKeyDown = React.useCallback((e: KeyboardEvent) => {
+    const key = KEY_MAP[e.key] || e.key.toUpperCase();
+
+    setPressedKeys(prev => {
+      if (prev.includes(key)) return prev;
+
+      const newKeys = [...prev, key];
+
+      if (newKeys.length > 4) {
+        setKeyHistory(history => [...history.slice(-4), newKeys]);
+        return [];
+      }
+
+      return newKeys;
+    });
+  }, []);
+
+  const handleKeyUp = React.useCallback(() => {
+    const timeout = setTimeout(() => {
+      setPressedKeys(prev => {
+        if (prev.length > 0) {
+          setKeyHistory(history => [...history.slice(-4), prev]);
+        }
+        return [];
+      });
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [handleKeyDown, handleKeyUp]);
+
+  return (
+    <div style={{ maxWidth: '700px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Interactive Keyboard Demo</h3>
+              <Text as="p">Press any keys to see them displayed below. Try combinations!</Text>
+            </div>
+
+            <div style={{
+              minHeight: '120px',
+              padding: '20px',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              border: '2px dashed #e1e3e5',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              {pressedKeys.length > 0 ? (
+                <InlineStack gap="200">
+                  {pressedKeys.map((key, index) => (
+                    <React.Fragment key={index}>
+                      <KeyboardKey>{key}</KeyboardKey>
+                      {index < pressedKeys.length - 1 && <Text>+</Text>}
+                    </React.Fragment>
+                  ))}
+                </InlineStack>
+              ) : (
+                <Text as="p" tone="subdued">Press keys to see them here...</Text>
+              )}
+            </div>
+
+            {keyHistory.length > 0 && (
+              <div>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '14px' }}>Recent Combinations:</h4>
+                <BlockStack gap="200">
+                  {keyHistory.map((combo, index) => (
+                    <div key={index} style={{
+                      padding: '8px 12px',
+                      backgroundColor: '#f1f3f4',
+                      borderRadius: '6px'
+                    }}>
+                      <InlineStack gap="200">
+                        {combo.map((key, keyIndex) => (
+                          <React.Fragment key={keyIndex}>
+                            <KeyboardKey>{key}</KeyboardKey>
+                            {keyIndex < combo.length - 1 && <Text>+</Text>}
+                          </React.Fragment>
+                        ))}
+                      </InlineStack>
+                    </div>
+                  ))}
+                </BlockStack>
+              </div>
+            )}
+
+            <div style={{
+              padding: '12px',
+              backgroundColor: '#e3f2fd',
+              borderRadius: '6px',
+              border: '1px solid #90caf9'
+            }}>
+              <Text variant="bodySm" as="p">
+                <strong>Tip:</strong> Try common shortcuts like Ctrl+C, Ctrl+V, or Ctrl+Z.
+                On Mac, use the ⌘ key instead of Ctrl.
+              </Text>
+            </div>
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default InteractiveKeyboardExample;`,
+  },
+
+  gamingkeyboard: {
+    react: `import { KeyboardKey, BlockStack, InlineStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface GameControl {
+  keys: string[];
+  description: string;
+  color: string;
+}
+
+function GamingKeyboardExample() {
+  const gameControls: GameControl[] = [
+    { keys: ['W', 'A', 'S', 'D'], description: 'Movement', color: '#4CAF50' },
+    { keys: ['Space'], description: 'Jump', color: '#2196F3' },
+    { keys: ['Shift'], description: 'Run', color: '#FF9800' },
+    { keys: ['E'], description: 'Interact', color: '#9C27B0' },
+    { keys: ['Q'], description: 'Ability 1', color: '#F44336' },
+    { keys: ['R'], description: 'Reload', color: '#607D8B' },
+    { keys: ['Tab'], description: 'Scoreboard', color: '#795548' },
+    { keys: ['Esc'], description: 'Menu', color: '#3F51B5' },
+  ];
+
+  return (
+    <div style={{ maxWidth: '800px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Game Controls</h3>
+              <Text as="p">Common keyboard layouts for gaming controls.</Text>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+              {gameControls.map((control, index) => (
+                <div key={index} style={{
+                  padding: '16px',
+                  backgroundColor: '#f8f9fa',
+                  borderRadius: '8px',
+                  border: \`1px solid \${control.color}20\`,
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
+                    width: '4px',
+                    height: '100%',
+                    backgroundColor: control.color,
+                    borderRadius: '8px 0 0 8px'
+                  }} />
+                  <BlockStack gap="200">
+                    <Text as="p" fontWeight="600">{control.description}</Text>
+                    <InlineStack gap="100" wrap>
+                      {control.keys.map((key, keyIndex) => (
+                        <KeyboardKey key={keyIndex}>{key}</KeyboardKey>
+                      ))}
+                    </InlineStack>
+                  </BlockStack>
+                </div>
+              ))}
+            </div>
+
+            <div style={{
+              padding: '16px',
+              backgroundColor: '#fff3e0',
+              borderRadius: '8px',
+              border: '1px solid #ffcc02'
+            }}>
+              <BlockStack gap="200">
+                <Text as="p" fontWeight="600">WASD Movement Layout</Text>
+                <Text variant="bodySm" as="p">
+                  The WASD keys are the standard movement controls in most PC games,
+                  providing easy access to other keys while keeping fingers in a comfortable position.
+                </Text>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 40px)', gap: '4px' }}>
+                    <div />
+                    <KeyboardKey>W</KeyboardKey>
+                    <div />
+                    <KeyboardKey>A</KeyboardKey>
+                    <KeyboardKey>S</KeyboardKey>
+                    <KeyboardKey>D</KeyboardKey>
+                  </div>
+                </div>
+              </BlockStack>
+            </div>
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default GamingKeyboardExample;`,
+
+    vanilla: `<!-- Gaming Keyboard Controls -->
+<div class="gaming-controls">
+  <div class="header">
+    <h3>Game Controls</h3>
+    <p>Common keyboard layouts for gaming controls.</p>
+  </div>
+
+  <div class="controls-grid">
+    <div class="control-card" data-color="#4CAF50">
+      <div class="color-bar"></div>
+      <h4>Movement</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">W</kbd>
+        <kbd class="polaris-keyboard-key">A</kbd>
+        <kbd class="polaris-keyboard-key">S</kbd>
+        <kbd class="polaris-keyboard-key">D</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#2196F3">
+      <div class="color-bar"></div>
+      <h4>Jump</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">Space</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#FF9800">
+      <div class="color-bar"></div>
+      <h4>Run</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">Shift</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#9C27B0">
+      <div class="color-bar"></div>
+      <h4>Interact</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">E</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#F44336">
+      <div class="color-bar"></div>
+      <h4>Ability 1</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">Q</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#607D8B">
+      <div class="color-bar"></div>
+      <h4>Reload</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">R</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#795548">
+      <div class="color-bar"></div>
+      <h4>Scoreboard</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">Tab</kbd>
+      </div>
+    </div>
+
+    <div class="control-card" data-color="#3F51B5">
+      <div class="color-bar"></div>
+      <h4>Menu</h4>
+      <div class="keys">
+        <kbd class="polaris-keyboard-key">Esc</kbd>
+      </div>
+    </div>
+  </div>
+
+  <div class="wasd-info">
+    <h4>WASD Movement Layout</h4>
+    <p>The WASD keys are the standard movement controls in most PC games.</p>
+    <div class="wasd-grid">
+      <div></div>
+      <kbd class="polaris-keyboard-key">W</kbd>
+      <div></div>
+      <kbd class="polaris-keyboard-key">A</kbd>
+      <kbd class="polaris-keyboard-key">S</kbd>
+      <kbd class="polaris-keyboard-key">D</kbd>
+    </div>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+// Add dynamic color bars
+document.querySelectorAll('.control-card').forEach(card => {
+  const color = card.getAttribute('data-color');
+  const colorBar = card.querySelector('.color-bar');
+  if (colorBar && color) {
+    colorBar.style.backgroundColor = color;
+  }
+  card.style.border = \`1px solid \${color}20\`;
+});
+</script>
+
+<style>
+.gaming-controls {
+  max-width: 800px;
+  background: #fff;
+  border: 1px solid #e1e3e5;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.control-card {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  position: relative;
+}
+
+.color-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 8px 0 0 8px;
+}
+
+.control-card h4 {
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wasd-info {
+  padding: 16px;
+  background-color: #fff3e0;
+  border-radius: 8px;
+  border: 1px solid #ffcc02;
+}
+
+.wasd-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  gap: 4px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  min-width: 40px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Gaming Keyboard Controls
+Ext.define('GamingControls', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.gamingcontrols',
+
+  title: 'Game Controls',
+  width: 800,
+  bodyPadding: 24,
+
+  gameControls: [
+    { keys: ['W', 'A', 'S', 'D'], description: 'Movement', color: '#4CAF50' },
+    { keys: ['Space'], description: 'Jump', color: '#2196F3' },
+    { keys: ['Shift'], description: 'Run', color: '#FF9800' },
+    { keys: ['E'], description: 'Interact', color: '#9C27B0' },
+    { keys: ['Q'], description: 'Ability 1', color: '#F44336' },
+    { keys: ['R'], description: 'Reload', color: '#607D8B' },
+    { keys: ['Tab'], description: 'Scoreboard', color: '#795548' },
+    { keys: ['Esc'], description: 'Menu', color: '#3F51B5' }
+  ],
+
+  initComponent: function() {
+    this.items = [
+      {
+        xtype: 'component',
+        html: '<p>Common keyboard layouts for gaming controls.</p>',
+        margin: '0 0 16 0'
+      },
+      {
+        xtype: 'container',
+        layout: {
+          type: 'table',
+          columns: 4
+        },
+        items: this.createControlCards()
+      },
+      {
+        xtype: 'container',
+        cls: 'wasd-info',
+        style: {
+          padding: '16px',
+          backgroundColor: '#fff3e0',
+          borderRadius: '8px',
+          border: '1px solid #ffcc02',
+          marginTop: '24px'
+        },
+        items: [
+          {
+            xtype: 'component',
+            html: '<h4>WASD Movement Layout</h4><p>The WASD keys are the standard movement controls in most PC games.</p>'
+          },
+          this.createWASDLayout()
+        ]
+      }
+    ];
+
+    this.callParent(arguments);
+  },
+
+  createControlCards: function() {
+    return this.gameControls.map(control => ({
+      xtype: 'container',
+      width: 200,
+      height: 100,
+      style: {
+        padding: '16px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '8px',
+        border: \`1px solid \${control.color}20\`,
+        position: 'relative',
+        margin: '8px'
+      },
+      items: [
+        {
+          xtype: 'component',
+          html: \`
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+                        background-color: \${control.color}; border-radius: 8px 0 0 8px;"></div>
+            <h4 style="margin: 0 0 12px 0; font-weight: 600;">\${control.description}</h4>
+            <div>
+              \${control.keys.map(key => \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`).join(' ')}
+            </div>
+          \`
+        }
+      ]
+    }));
+  },
+
+  createWASDLayout: function() {
+    return {
+      xtype: 'container',
+      layout: {
+        type: 'table',
+        columns: 3
+      },
+      style: {
+        marginTop: '16px',
+        justifyContent: 'center'
+      },
+      items: [
+        { xtype: 'component', html: '' },
+        { xtype: 'component', html: '<kbd class="polaris-keyboard-key" style="width: 40px; height: 40px;">W</kbd>' },
+        { xtype: 'component', html: '' },
+        { xtype: 'component', html: '<kbd class="polaris-keyboard-key" style="width: 40px; height: 40px;">A</kbd>' },
+        { xtype: 'component', html: '<kbd class="polaris-keyboard-key" style="width: 40px; height: 40px;">S</kbd>' },
+        { xtype: 'component', html: '<kbd class="polaris-keyboard-key" style="width: 40px; height: 40px;">D</kbd>' }
+      ]
+    };
+  }
+});
+
+Ext.create('GamingControls', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, BlockStack, InlineStack, Text, Card } from '@shopify/polaris';
+import React from 'react';
+
+interface GameControl {
+  keys: string[];
+  description: string;
+  color: string;
+}
+
+interface GamingKeyboardExampleProps {
+  customControls?: GameControl[];
+  showWASDLayout?: boolean;
+}
+
+const DEFAULT_GAME_CONTROLS: GameControl[] = [
+  { keys: ['W', 'A', 'S', 'D'], description: 'Movement', color: '#4CAF50' },
+  { keys: ['Space'], description: 'Jump', color: '#2196F3' },
+  { keys: ['Shift'], description: 'Run', color: '#FF9800' },
+  { keys: ['E'], description: 'Interact', color: '#9C27B0' },
+  { keys: ['Q'], description: 'Ability 1', color: '#F44336' },
+  { keys: ['R'], description: 'Reload', color: '#607D8B' },
+  { keys: ['Tab'], description: 'Scoreboard', color: '#795548' },
+  { keys: ['Esc'], description: 'Menu', color: '#3F51B5' },
+];
+
+function GamingKeyboardExample({
+  customControls,
+  showWASDLayout = true
+}: GamingKeyboardExampleProps): JSX.Element {
+  const gameControls = customControls || DEFAULT_GAME_CONTROLS;
+
+  return (
+    <div style={{ maxWidth: '800px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Game Controls</h3>
+              <Text as="p">Common keyboard layouts for gaming controls.</Text>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '16px'
+            }}>
+              {gameControls.map((control, index) => (
+                <div
+                  key={index}
+                  style={{
+                    padding: '16px',
+                    backgroundColor: '#f8f9fa',
+                    borderRadius: '8px',
+                    border: \`1px solid \${control.color}20\`,
+                    position: 'relative'
+                  }}
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '0',
+                      left: '0',
+                      width: '4px',
+                      height: '100%',
+                      backgroundColor: control.color,
+                      borderRadius: '8px 0 0 8px'
+                    }}
+                  />
+                  <BlockStack gap="200">
+                    <Text as="p" fontWeight="600">{control.description}</Text>
+                    <InlineStack gap="100" wrap>
+                      {control.keys.map((key, keyIndex) => (
+                        <KeyboardKey key={keyIndex}>{key}</KeyboardKey>
+                      ))}
+                    </InlineStack>
+                  </BlockStack>
+                </div>
+              ))}
+            </div>
+
+            {showWASDLayout && (
+              <div
+                style={{
+                  padding: '16px',
+                  backgroundColor: '#fff3e0',
+                  borderRadius: '8px',
+                  border: '1px solid #ffcc02'
+                }}
+              >
+                <BlockStack gap="200">
+                  <Text as="p" fontWeight="600">WASD Movement Layout</Text>
+                  <Text variant="bodySm" as="p">
+                    The WASD keys are the standard movement controls in most PC games,
+                    providing easy access to other keys while keeping fingers in a comfortable position.
+                  </Text>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 40px)', gap: '4px' }}>
+                      <div />
+                      <KeyboardKey>W</KeyboardKey>
+                      <div />
+                      <KeyboardKey>A</KeyboardKey>
+                      <KeyboardKey>S</KeyboardKey>
+                      <KeyboardKey>D</KeyboardKey>
+                    </div>
+                  </div>
+                </BlockStack>
+              </div>
+            )}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default GamingKeyboardExample;`,
+  },
+
+  accessibilityinfo: {
+    react: `import { KeyboardKey, InlineStack, BlockStack, Text, Card, Badge } from '@shopify/polaris';
+import React from 'react';
+
+interface Shortcut {
+  keys: string[];
+  description: string;
+}
+
+interface PlatformShortcuts {
+  platform: string;
+  shortcuts: Shortcut[];
+}
+
+function AccessibilityInfoExample() {
+  const accessibilityShortcuts: PlatformShortcuts[] = [
+    {
+      platform: 'Windows',
+      shortcuts: [
+        { keys: ['Alt', '+', 'Tab'], description: 'Switch between windows' },
+        { keys: ['Alt', '+', 'F4'], description: 'Close current window' },
+        { keys: ['Ctrl', '+', 'Esc'], description: 'Open Task Manager' },
+        { keys: ['Windows', '+', 'D'], description: 'Show desktop' },
+        { keys: ['Windows', '+', 'L'], description: 'Lock computer' },
+      ]
+    },
+    {
+      platform: 'Mac',
+      shortcuts: [
+        { keys: ['⌘', '+', 'Tab'], description: 'Switch between apps' },
+        { keys: ['⌘', '+', 'Q'], description: 'Quit current app' },
+        { keys: ['⌘', '+', '⌥', '+', 'Esc'], description: 'Force Quit' },
+        { keys: ['⌘', '+', 'F3'], description: 'Show desktop' },
+        { keys: ['⌘', '+', '⌃', '+', 'Q'], description: 'Lock screen' },
+      ]
+    }
+  ];
+
+  return (
+    <div style={{ maxWidth: '900px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Accessibility Shortcuts</h3>
+              <Text as="p">Essential keyboard shortcuts for accessibility and system navigation.</Text>
+            </div>
+
+            {accessibilityShortcuts.map((platform) => (
+              <div key={platform.platform}>
+                <h4 style={{ margin: '0 0 16px 0', fontSize: '18px' }}>
+                  <Badge tone="info">{platform.platform}</Badge>
+                </h4>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '12px'
+                }}>
+                  {platform.shortcuts.map((shortcut, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '12px 16px',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '8px',
+                        border: '1px solid #e1e3e5'
+                      }}
+                    >
+                      <Text>{shortcut.description}</Text>
+                      <InlineStack gap="50">
+                        {shortcut.keys.map((key, keyIndex) => (
+                          <React.Fragment key={keyIndex}>
+                            {key !== '+' ? <KeyboardKey>{key}</KeyboardKey> : <Text>{key}</Text>}
+                          </React.Fragment>
+                        ))}
+                      </InlineStack>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            <div
+              style={{
+                padding: '16px',
+                backgroundColor: '#e8f5e8',
+                borderRadius: '8px',
+                border: '1px solid #4CAF50'
+              }}
+            >
+              <BlockStack gap="200">
+                <Text as="p" fontWeight="600">Accessibility Tips</Text>
+                <Text variant="bodySm" as="p">
+                  • Use keyboard navigation when mouse control is difficult<br/>
+                  • Learn screen reader shortcuts for better accessibility<br/>
+                  • Customize keyboard shortcuts in system settings<br/>
+                  • Use sticky keys for one-handed keyboard operation
+                </Text>
+              </BlockStack>
+            </div>
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default AccessibilityInfoExample;`,
+
+    vanilla: `<!-- Accessibility Shortcuts -->
+<div class="accessibility-shortcuts">
+  <div class="header">
+    <h3>Accessibility Shortcuts</h3>
+    <p>Essential keyboard shortcuts for accessibility and system navigation.</p>
+  </div>
+
+  <div class="platform-section">
+    <h4><span class="badge badge-info">Windows</span></h4>
+    <div class="shortcuts-grid">
+      <div class="shortcut-row">
+        <span>Switch between windows</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">Alt</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Tab</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Close current window</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">Alt</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">F4</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Open Task Manager</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">Ctrl</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Esc</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Show desktop</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">Windows</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">D</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Lock computer</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">Windows</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">L</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="platform-section">
+    <h4><span class="badge badge-info">Mac</span></h4>
+    <div class="shortcuts-grid">
+      <div class="shortcut-row">
+        <span>Switch between apps</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">⌘</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Tab</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Quit current app</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">⌘</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Q</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Force Quit</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">⌘</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">⌥</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Esc</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Show desktop</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">⌘</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">F3</kbd>
+        </div>
+      </div>
+      <div class="shortcut-row">
+        <span>Lock screen</span>
+        <div class="keys">
+          <kbd class="polaris-keyboard-key">⌘</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">⌃</kbd>
+          <span>+</span>
+          <kbd class="polaris-keyboard-key">Q</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <h4>Accessibility Tips</h4>
+    <ul>
+      <li>Use keyboard navigation when mouse control is difficult</li>
+      <li>Learn screen reader shortcuts for better accessibility</li>
+      <li>Customize keyboard shortcuts in system settings</li>
+      <li>Use sticky keys for one-handed keyboard operation</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+import { createShortcutTable } from '@cin7/vanilla-js';
+
+// Dynamically create shortcuts from data
+const platformData = [
+  {
+    platform: 'Windows',
+    shortcuts: [
+      { keys: ['Alt', '+', 'Tab'], description: 'Switch between windows' },
+      { keys: ['Alt', '+', 'F4'], description: 'Close current window' },
+      { keys: ['Ctrl', '+', 'Esc'], description: 'Open Task Manager' },
+      { keys: ['Windows', '+', 'D'], description: 'Show desktop' },
+      { keys: ['Windows', '+', 'L'], description: 'Lock computer' }
+    ]
+  }
+];
+</script>
+
+<style>
+.accessibility-shortcuts {
+  max-width: 900px;
+  background: #fff;
+  border: 1px solid #e1e3e5;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.platform-section {
+  margin: 24px 0;
+}
+
+.platform-section h4 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.badge-info {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e1e3e5;
+}
+
+.keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tips-section {
+  padding: 16px;
+  background-color: #e8f5e8;
+  border-radius: 8px;
+  border: 1px solid #4CAF50;
+  margin-top: 24px;
+}
+
+.tips-section h4 {
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.tips-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.tips-section li {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #fff;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+</style>`,
+
+    extjs: `// ExtJS Accessibility Shortcuts Panel
+Ext.define('AccessibilityShortcuts', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.accessibilityshortcuts',
+
+  title: 'Accessibility Shortcuts',
+  width: 900,
+  bodyPadding: 24,
+
+  platformShortcuts: [
+    {
+      platform: 'Windows',
+      shortcuts: [
+        { keys: ['Alt', '+', 'Tab'], description: 'Switch between windows' },
+        { keys: ['Alt', '+', 'F4'], description: 'Close current window' },
+        { keys: ['Ctrl', '+', 'Esc'], description: 'Open Task Manager' },
+        { keys: ['Windows', '+', 'D'], description: 'Show desktop' },
+        { keys: ['Windows', '+', 'L'], description: 'Lock computer' }
+      ]
+    },
+    {
+      platform: 'Mac',
+      shortcuts: [
+        { keys: ['⌘', '+', 'Tab'], description: 'Switch between apps' },
+        { keys: ['⌘', '+', 'Q'], description: 'Quit current app' },
+        { keys: ['⌘', '+', '⌥', '+', 'Esc'], description: 'Force Quit' },
+        { keys: ['⌘', '+', 'F3'], description: 'Show desktop' },
+        { keys: ['⌘', '+', '⌃', '+', 'Q'], description: 'Lock screen' }
+      ]
+    }
+  ],
+
+  initComponent: function() {
+    const platformPanels = this.platformShortcuts.map(platform =>
+      this.createPlatformPanel(platform)
+    );
+
+    this.items = [
+      {
+        xtype: 'component',
+        html: '<p>Essential keyboard shortcuts for accessibility and system navigation.</p>',
+        margin: '0 0 16 0'
+      },
+      ...platformPanels,
+      {
+        xtype: 'container',
+        cls: 'tips-panel',
+        style: {
+          padding: '16px',
+          backgroundColor: '#e8f5e8',
+          borderRadius: '8px',
+          border: '1px solid #4CAF50',
+          marginTop: '24px'
+        },
+        items: [
+          {
+            xtype: 'component',
+            html: \`
+              <h4 style="margin: 0 0 12px 0; font-weight: 600;">Accessibility Tips</h4>
+              <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li>Use keyboard navigation when mouse control is difficult</li>
+                <li>Learn screen reader shortcuts for better accessibility</li>
+                <li>Customize keyboard shortcuts in system settings</li>
+                <li>Use sticky keys for one-handed keyboard operation</li>
+              </ul>
+            \`
+          }
+        ]
+      }
+    ];
+
+    this.callParent(arguments);
+  },
+
+  createPlatformPanel: function(platform) {
+    return {
+      xtype: 'container',
+      margin: '16 0',
+      items: [
+        {
+          xtype: 'component',
+          html: \`<h4 style="margin: 0 0 16px 0; font-size: 18px;">
+                   <span class="badge badge-info">\${platform.platform}</span>
+                 </h4>\`,
+          margin: '0 0 12 0'
+        },
+        {
+          xtype: 'container',
+          layout: {
+            type: 'table',
+            columns: 2
+          },
+          items: platform.shortcuts.map(shortcut => ({
+            xtype: 'container',
+            width: 450,
+            style: {
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              border: '1px solid #e1e3e5',
+              margin: '6px'
+            },
+            html: \`
+              <span>\${shortcut.description}</span>
+              <div class="keys">
+                \${shortcut.keys.map(key =>
+                  key !== '+'
+                    ? \`<kbd class="polaris-keyboard-key">\${key}</kbd>\`
+                    : '<span>+</span>'
+                ).join(' ')}
+              </div>
+            \`
+          }))
+        }
+      ]
+    };
+  }
+});
+
+Ext.create('AccessibilityShortcuts', {
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { KeyboardKey, InlineStack, BlockStack, Text, Card, Badge } from '@shopify/polaris';
+import React from 'react';
+
+interface Shortcut {
+  keys: string[];
+  description: string;
+}
+
+interface PlatformShortcuts {
+  platform: string;
+  shortcuts: Shortcut[];
+}
+
+interface AccessibilityInfoExampleProps {
+  customShortcuts?: PlatformShortcuts[];
+  showTips?: boolean;
+}
+
+const DEFAULT_SHORTCUTS: PlatformShortcuts[] = [
+  {
+    platform: 'Windows',
+    shortcuts: [
+      { keys: ['Alt', '+', 'Tab'], description: 'Switch between windows' },
+      { keys: ['Alt', '+', 'F4'], description: 'Close current window' },
+      { keys: ['Ctrl', '+', 'Esc'], description: 'Open Task Manager' },
+      { keys: ['Windows', '+', 'D'], description: 'Show desktop' },
+      { keys: ['Windows', '+', 'L'], description: 'Lock computer' },
+    ]
+  },
+  {
+    platform: 'Mac',
+    shortcuts: [
+      { keys: ['⌘', '+', 'Tab'], description: 'Switch between apps' },
+      { keys: ['⌘', '+', 'Q'], description: 'Quit current app' },
+      { keys: ['⌘', '+', '⌥', '+', 'Esc'], description: 'Force Quit' },
+      { keys: ['⌘', '+', 'F3'], description: 'Show desktop' },
+      { keys: ['⌘', '+', '⌃', '+', 'Q'], description: 'Lock screen' },
+    ]
+  }
+];
+
+function AccessibilityInfoExample({
+  customShortcuts,
+  showTips = true
+}: AccessibilityInfoExampleProps): JSX.Element {
+  const accessibilityShortcuts = customShortcuts || DEFAULT_SHORTCUTS;
+
+  return (
+    <div style={{ maxWidth: '900px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Accessibility Shortcuts</h3>
+              <Text as="p">Essential keyboard shortcuts for accessibility and system navigation.</Text>
+            </div>
+
+            {accessibilityShortcuts.map((platform) => (
+              <div key={platform.platform}>
+                <h4 style={{ margin: '0 0 16px 0', fontSize: '18px' }}>
+                  <Badge tone="info">{platform.platform}</Badge>
+                </h4>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '12px'
+                }}>
+                  {platform.shortcuts.map((shortcut, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '12px 16px',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '8px',
+                        border: '1px solid #e1e3e5'
+                      }}
+                    >
+                      <Text>{shortcut.description}</Text>
+                      <InlineStack gap="50">
+                        {shortcut.keys.map((key, keyIndex) => (
+                          <React.Fragment key={keyIndex}>
+                            {key !== '+' ? <KeyboardKey>{key}</KeyboardKey> : <Text>{key}</Text>}
+                          </React.Fragment>
+                        ))}
+                      </InlineStack>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {showTips && (
+              <div
+                style={{
+                  padding: '16px',
+                  backgroundColor: '#e8f5e8',
+                  borderRadius: '8px',
+                  border: '1px solid #4CAF50'
+                }}
+              >
+                <BlockStack gap="200">
+                  <Text as="p" fontWeight="600">Accessibility Tips</Text>
+                  <Text variant="bodySm" as="p">
+                    • Use keyboard navigation when mouse control is difficult<br/>
+                    • Learn screen reader shortcuts for better accessibility<br/>
+                    • Customize keyboard shortcuts in system settings<br/>
+                    • Use sticky keys for one-handed keyboard operation
+                  </Text>
+                </BlockStack>
+              </div>
+            )}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default AccessibilityInfoExample;`,
+  },
+
+  customstyling: {
+    react: `import { KeyboardKey, InlineStack, Text, Card, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+function CustomStylingExample() {
+  return (
+    <div style={{ maxWidth: '600px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Styled Keyboard Examples</h3>
+              <Text as="p">Different ways to style and present keyboard keys.</Text>
+            </div>
+
+            <div>
+              <h4 style={{ margin: '0 0 12px 0' }}>Standard Style:</h4>
+              <InlineStack gap="200">
+                <KeyboardKey>Ctrl</KeyboardKey>
+                <Text>+</Text>
+                <KeyboardKey>S</KeyboardKey>
+              </InlineStack>
+            </div>
+
+            <div>
+              <h4 style={{ margin: '0 0 12px 0' }}>Compact Style:</h4>
+              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                {['Ctrl', '+', 'S'].map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      padding: item === '+' ? '0 4px' : '2px 8px',
+                      backgroundColor: item === '+' ? 'transparent' : '#f1f3f4',
+                      border: item === '+' ? 'none' : '1px solid #dadce0',
+                      borderRadius: item === '+' ? '0' : '4px',
+                      fontSize: '12px',
+                      fontFamily: 'monospace'
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 style={{ margin: '0 0 12px 0' }}>Highlighted Style:</h4>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                {['Ctrl', '+', 'S'].map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      padding: item === '+' ? '0 4px' : '4px 10px',
+                      backgroundColor: item === '+' ? 'transparent' : '#e3f2fd',
+                      border: item === '+' ? 'none' : '1px solid #2196F3',
+                      borderRadius: item === '+' ? '0' : '6px',
+                      fontSize: '13px',
+                      fontWeight: '500',
+                      color: item === '+' ? '#666' : '#1976D2'
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 style={{ margin: '0 0 12px 0' }}>Minimal Style:</h4>
+              <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+                {['Ctrl', '+', 'S'].map((item, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      padding: item === '+' ? '0 2px' : '1px 6px',
+                      backgroundColor: item === '+' ? 'transparent' : '#fafafa',
+                      border: item === '+' ? 'none' : '1px solid #e0e0e0',
+                      borderRadius: '2px',
+                      fontSize: '11px',
+                      fontFamily: 'monospace'
+                    }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default CustomStylingExample;`,
+
+    vanilla: `<!-- Custom Styled Keyboard Keys -->
+<div class="custom-keyboard-styles">
+  <div class="header">
+    <h3>Styled Keyboard Examples</h3>
+    <p>Different ways to style and present keyboard keys.</p>
+  </div>
+
+  <div class="style-examples">
+    <div class="style-section">
+      <h4>Standard Style:</h4>
+      <div class="keys-row">
+        <kbd class="polaris-keyboard-key">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="polaris-keyboard-key">S</kbd>
+      </div>
+    </div>
+
+    <div class="style-section">
+      <h4>Compact Style:</h4>
+      <div class="keys-row">
+        <kbd class="kbd-compact">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="kbd-compact">S</kbd>
+      </div>
+    </div>
+
+    <div class="style-section">
+      <h4>Highlighted Style:</h4>
+      <div class="keys-row">
+        <kbd class="kbd-highlighted">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="kbd-highlighted">S</kbd>
+      </div>
+    </div>
+
+    <div class="style-section">
+      <h4>Minimal Style:</h4>
+      <div class="keys-row">
+        <kbd class="kbd-minimal">Ctrl</kbd>
+        <span>+</span>
+        <kbd class="kbd-minimal">S</kbd>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { $ } from '@cin7/vanilla-js';
+
+// Apply dynamic styling if needed
+document.querySelectorAll('.kbd-highlighted').forEach(kbd => {
+  kbd.addEventListener('mouseenter', () => {
+    kbd.style.transform = 'scale(1.05)';
+  });
+  kbd.addEventListener('mouseleave', () => {
+    kbd.style.transform = 'scale(1)';
+  });
+});
+</script>
+
+<style>
+.custom-keyboard-styles {
+  max-width: 600px;
+  background: #fff;
+  border: 1px solid #e1e3e5;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.style-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.style-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+}
+
+.keys-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Standard style */
+.polaris-keyboard-key {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #f4f6f8;
+  border: 1px solid #c4cdd5;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Compact style */
+.kbd-compact {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #f1f3f4;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* Highlighted style */
+.kbd-highlighted {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #e3f2fd;
+  border: 1px solid #2196F3;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1976D2;
+  transition: transform 0.2s;
+}
+
+.kbd-highlighted:hover {
+  transform: scale(1.05);
+}
+
+/* Minimal style */
+.kbd-minimal {
+  display: inline-block;
+  padding: 1px 6px;
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  font-size: 11px;
+  font-family: monospace;
+}
+</style>`,
+
+    extjs: `// ExtJS Custom Keyboard Key Styles
+Ext.define('CustomKeyboardStyles', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.customkeyboardstyles',
+
+  title: 'Styled Keyboard Examples',
+  width: 600,
+  bodyPadding: 24,
+
+  initComponent: function() {
+    this.items = [
+      {
+        xtype: 'component',
+        html: '<p>Different ways to style and present keyboard keys.</p>',
+        margin: '0 0 24 0'
+      },
+      {
+        xtype: 'container',
+        items: [
+          this.createStyleExample('Standard Style:', 'standard'),
+          this.createStyleExample('Compact Style:', 'compact'),
+          this.createStyleExample('Highlighted Style:', 'highlighted'),
+          this.createStyleExample('Minimal Style:', 'minimal')
+        ]
+      }
+    ];
+
+    this.callParent(arguments);
+  },
+
+  createStyleExample: function(title, styleType) {
+    const keys = ['Ctrl', '+', 'S'];
+    let styleClass = '';
+
+    switch(styleType) {
+      case 'standard':
+        styleClass = 'polaris-keyboard-key';
+        break;
+      case 'compact':
+        styleClass = 'kbd-compact';
+        break;
+      case 'highlighted':
+        styleClass = 'kbd-highlighted';
+        break;
+      case 'minimal':
+        styleClass = 'kbd-minimal';
+        break;
+    }
+
+    return {
+      xtype: 'container',
+      margin: '0 0 24 0',
+      items: [
+        {
+          xtype: 'component',
+          html: \`<h4 style="margin: 0 0 12px 0; font-size: 14px;">\${title}</h4>\`
+        },
+        {
+          xtype: 'container',
+          layout: 'hbox',
+          items: keys.map(key => {
+            if (key === '+') {
+              return {
+                xtype: 'component',
+                html: '<span style="padding: 0 4px;">+</span>'
+              };
+            }
+            return {
+              xtype: 'component',
+              html: \`<kbd class="\${styleClass}">\${key}</kbd>\`,
+              margin: '0 8 0 0'
+            };
+          })
+        }
+      ]
+    };
+  }
+});
+
+Ext.create('CustomKeyboardStyles', {
+  renderTo: Ext.getBody()
+});
+
+// Add CSS styles dynamically
+Ext.util.CSS.createStyleSheet(\`
+  .polaris-keyboard-key {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #f4f6f8;
+    border: 1px solid #c4cdd5;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .kbd-compact {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #f1f3f4;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  .kbd-highlighted {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #e3f2fd;
+    border: 1px solid #2196F3;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1976D2;
+  }
+
+  .kbd-minimal {
+    display: inline-block;
+    padding: 1px 6px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    font-size: 11px;
+    font-family: monospace;
+  }
+\`);`,
+
+    typescript: `import { KeyboardKey, InlineStack, Text, Card, BlockStack } from '@shopify/polaris';
+import React from 'react';
+
+interface StyleVariant {
+  name: string;
+  getStyle: (item: string) => React.CSSProperties;
+}
+
+interface CustomStylingExampleProps {
+  customVariants?: StyleVariant[];
+  showAllVariants?: boolean;
+}
+
+const DEFAULT_STYLE_VARIANTS: StyleVariant[] = [
+  {
+    name: 'Standard Style',
+    getStyle: (item) => ({
+      padding: item === '+' ? '0 4px' : '4px 8px',
+      backgroundColor: item === '+' ? 'transparent' : '#f4f6f8',
+      border: item === '+' ? 'none' : '1px solid #c4cdd5',
+      borderRadius: item === '+' ? '0' : '4px',
+      fontSize: '12px',
+      fontFamily: 'monospace',
+      boxShadow: item === '+' ? 'none' : '0 1px 0 rgba(0, 0, 0, 0.1)'
+    })
+  },
+  {
+    name: 'Compact Style',
+    getStyle: (item) => ({
+      padding: item === '+' ? '0 4px' : '2px 8px',
+      backgroundColor: item === '+' ? 'transparent' : '#f1f3f4',
+      border: item === '+' ? 'none' : '1px solid #dadce0',
+      borderRadius: item === '+' ? '0' : '4px',
+      fontSize: '12px',
+      fontFamily: 'monospace'
+    })
+  },
+  {
+    name: 'Highlighted Style',
+    getStyle: (item) => ({
+      padding: item === '+' ? '0 4px' : '4px 10px',
+      backgroundColor: item === '+' ? 'transparent' : '#e3f2fd',
+      border: item === '+' ? 'none' : '1px solid #2196F3',
+      borderRadius: item === '+' ? '0' : '6px',
+      fontSize: '13px',
+      fontWeight: '500',
+      color: item === '+' ? '#666' : '#1976D2'
+    })
+  },
+  {
+    name: 'Minimal Style',
+    getStyle: (item) => ({
+      padding: item === '+' ? '0 2px' : '1px 6px',
+      backgroundColor: item === '+' ? 'transparent' : '#fafafa',
+      border: item === '+' ? 'none' : '1px solid #e0e0e0',
+      borderRadius: '2px',
+      fontSize: '11px',
+      fontFamily: 'monospace'
+    })
+  }
+];
+
+function CustomStylingExample({
+  customVariants,
+  showAllVariants = true
+}: CustomStylingExampleProps): JSX.Element {
+  const styleVariants = customVariants || DEFAULT_STYLE_VARIANTS;
+  const keys = ['Ctrl', '+', 'S'];
+
+  return (
+    <div style={{ maxWidth: '600px', width: '100%' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="400">
+            <div>
+              <h3 style={{ margin: '0 0 16px 0' }}>Styled Keyboard Examples</h3>
+              <Text as="p">Different ways to style and present keyboard keys.</Text>
+            </div>
+
+            {(showAllVariants ? styleVariants : styleVariants.slice(0, 1)).map((variant, variantIndex) => (
+              <div key={variantIndex}>
+                <h4 style={{ margin: '0 0 12px 0' }}>{variant.name}:</h4>
+                <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                  {keys.map((item, index) => (
+                    <div key={index} style={variant.getStyle(item)}>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </BlockStack>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default CustomStylingExample;`,
   }
 };
+
 
 // Text Component Examples
 export const textExamples: Record<string, CodeVariant> = {
@@ -21125,50 +32140,42 @@ export default TextExample;`,
   This is default body text using the Text component.
 </p>
 
+<script>
+// Using @cin7/vanilla-js for dynamic text creation
+import { createTextElement } from '@cin7/vanilla-js';
+
+const textEl = createTextElement({
+  tag: 'p',
+  text: 'This is default body text using the Text component.',
+  className: 'polaris-text polaris-text--body-md'
+});
+
+document.getElementById('app').appendChild(textEl);
+</script>
+
 <style>
 .polaris-text--body-md {
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
 }
-
-.polaris-text--heading-md {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 600;
-}
 </style>`,
 
-    extjs: `// ExtJS Text representation
+    extjs: `// ExtJS Text representation using @cin7/extjs-adapters
 Ext.create('Ext.Component', {
   html: '<p class="polaris-text polaris-text--body-md">This is default body text using the Text component.</p>',
   renderTo: Ext.getBody()
 });
 
-// For different text variants
-Ext.create('Ext.panel.Panel', {
-  title: 'Text Variants',
-  bodyPadding: 16,
-  items: [
-    {
-      xtype: 'component',
-      html: '<h3 class="polaris-text polaris-text--heading-md">Heading Text</h3>',
-      margin: '0 0 8 0'
-    },
-    {
-      xtype: 'component',
-      html: '<p class="polaris-text polaris-text--body-md">Body text with medium size.</p>',
-      margin: '0 0 8 0'
-    },
-    {
-      xtype: 'component',
-      html: '<p class="polaris-text polaris-text--body-sm polaris-text--subdued">Small subdued text for captions.</p>'
-    }
-  ],
+// Alternative: Using ExtJS Container with typography
+Ext.create('Ext.container.Container', {
+  html: 'This is default body text using the Text component.',
+  cls: 'polaris-text polaris-text--body-md',
   renderTo: Ext.getBody()
 });`,
 
     typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
 
 interface TextExampleProps {
   variant?: 'bodySm' | 'bodyMd' | 'bodyLg' | 'headingSm' | 'headingMd' | 'headingLg' | 'headingXl';
@@ -21190,7 +32197,752 @@ function TextExample({
   );
 }
 
-export default TextExample;`
+export default TextExample;`,
+  },
+
+  variants: {
+    react: `import { Text } from '@shopify/polaris';
+
+function TextVariantsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
+      <Text variant="bodySm" as="p">
+        Body Small - Used for captions, metadata, and helper text
+      </Text>
+      <Text variant="bodyMd" as="p">
+        Body Medium - Default text for paragraphs and descriptions
+      </Text>
+      <Text variant="bodyLg" as="p">
+        Body Large - Emphasized body text and short descriptions
+      </Text>
+      <Text variant="headingSm" as="h4">
+        Heading Small - Section headers and card titles
+      </Text>
+      <Text variant="headingMd" as="h3">
+        Heading Medium - Subsection titles and important labels
+      </Text>
+      <Text variant="headingLg" as="h2">
+        Heading Large - Main section titles
+      </Text>
+      <Text variant="headingXl" as="h1">
+        Heading XL - Page titles and major headlines
+      </Text>
+    </div>
+  );
+}
+
+export default TextVariantsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="text-variants-container" style="display: flex; flex-direction: column; gap: 16px; max-width: 600px;">
+  <p class="polaris-text polaris-text--body-sm">
+    Body Small - Used for captions, metadata, and helper text
+  </p>
+  <p class="polaris-text polaris-text--body-md">
+    Body Medium - Default text for paragraphs and descriptions
+  </p>
+  <p class="polaris-text polaris-text--body-lg">
+    Body Large - Emphasized body text and short descriptions
+  </p>
+  <h4 class="polaris-text polaris-text--heading-sm">
+    Heading Small - Section headers and card titles
+  </h4>
+  <h3 class="polaris-text polaris-text--heading-md">
+    Heading Medium - Subsection titles and important labels
+  </h3>
+  <h2 class="polaris-text polaris-text--heading-lg">
+    Heading Large - Main section titles
+  </h2>
+  <h1 class="polaris-text polaris-text--heading-xl">
+    Heading XL - Page titles and major headlines
+  </h1>
+</div>
+
+<style>
+.polaris-text--body-sm { font-size: 12px; line-height: 16px; font-weight: 400; }
+.polaris-text--body-md { font-size: 14px; line-height: 20px; font-weight: 400; }
+.polaris-text--body-lg { font-size: 16px; line-height: 24px; font-weight: 400; }
+.polaris-text--heading-sm { font-size: 14px; line-height: 20px; font-weight: 600; }
+.polaris-text--heading-md { font-size: 16px; line-height: 24px; font-weight: 600; }
+.polaris-text--heading-lg { font-size: 20px; line-height: 28px; font-weight: 700; }
+.polaris-text--heading-xl { font-size: 24px; line-height: 32px; font-weight: 700; }
+</style>`,
+
+    extjs: `// ExtJS Text Variants Panel using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Text Variants',
+  bodyPadding: 16,
+  width: 600,
+  items: [
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-sm">Body Small - Used for captions, metadata, and helper text</p>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md">Body Medium - Default text for paragraphs and descriptions</p>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-lg">Body Large - Emphasized body text and short descriptions</p>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<h4 class="polaris-text polaris-text--heading-sm">Heading Small - Section headers and card titles</h4>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Heading Medium - Subsection titles and important labels</h3>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<h2 class="polaris-text polaris-text--heading-lg">Heading Large - Main section titles</h2>',
+      margin: '0 0 16 0'
+    },
+    {
+      xtype: 'component',
+      html: '<h1 class="polaris-text polaris-text--heading-xl">Heading XL - Page titles and major headlines</h1>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+type TextVariant = 'bodySm' | 'bodyMd' | 'bodyLg' | 'headingSm' | 'headingMd' | 'headingLg' | 'headingXl';
+type TextElement = 'p' | 'h1' | 'h2' | 'h3' | 'h4';
+
+interface VariantConfig {
+  variant: TextVariant;
+  as: TextElement;
+  text: string;
+}
+
+function TextVariantsExample(): JSX.Element {
+  const variants: VariantConfig[] = [
+    { variant: 'bodySm', as: 'p', text: 'Body Small - Used for captions, metadata, and helper text' },
+    { variant: 'bodyMd', as: 'p', text: 'Body Medium - Default text for paragraphs and descriptions' },
+    { variant: 'bodyLg', as: 'p', text: 'Body Large - Emphasized body text and short descriptions' },
+    { variant: 'headingSm', as: 'h4', text: 'Heading Small - Section headers and card titles' },
+    { variant: 'headingMd', as: 'h3', text: 'Heading Medium - Subsection titles and important labels' },
+    { variant: 'headingLg', as: 'h2', text: 'Heading Large - Main section titles' },
+    { variant: 'headingXl', as: 'h1', text: 'Heading XL - Page titles and major headlines' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
+      {variants.map((config, index) => (
+        <Text key={index} variant={config.variant} as={config.as}>
+          {config.text}
+        </Text>
+      ))}
+    </div>
+  );
+}
+
+export default TextVariantsExample;`,
+  },
+
+  tones: {
+    react: `import { Text } from '@shopify/polaris';
+
+function TextTonesExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px' }}>
+      <Text variant="bodyMd" tone="base">Base tone - Default text color</Text>
+      <Text variant="bodyMd" tone="subdued">Subdued tone - Secondary information</Text>
+      <Text variant="bodyMd" tone="success">Success tone - Positive messages</Text>
+      <Text variant="bodyMd" tone="warning">Warning tone - Caution messages</Text>
+      <Text variant="bodyMd" tone="attention">Attention tone - Important notices</Text>
+      <Text variant="bodyMd" tone="critical">Critical tone - Error messages</Text>
+      <Text variant="bodyMd" tone="info">Info tone - Informational content</Text>
+    </div>
+  );
+}
+
+export default TextTonesExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 500px;">
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-base">
+    Base tone - Default text color
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-subdued">
+    Subdued tone - Secondary information
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-success">
+    Success tone - Positive messages
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-warning">
+    Warning tone - Caution messages
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-attention">
+    Attention tone - Important notices
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-critical">
+    Critical tone - Error messages
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--tone-info">
+    Info tone - Informational content
+  </p>
+</div>
+
+<style>
+.polaris-text--tone-base { color: #202223; }
+.polaris-text--tone-subdued { color: #6d7175; }
+.polaris-text--tone-success { color: #008060; }
+.polaris-text--tone-warning { color: #916a00; }
+.polaris-text--tone-attention { color: #c05717; }
+.polaris-text--tone-critical { color: #d72c0d; }
+.polaris-text--tone-info { color: #006fbb; }
+</style>`,
+
+    extjs: `// ExtJS Text Tones using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Text Tones',
+  bodyPadding: 16,
+  width: 500,
+  items: [
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-base">Base tone - Default text color</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-subdued">Subdued tone - Secondary information</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-success">Success tone - Positive messages</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-warning">Warning tone - Caution messages</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-attention">Attention tone - Important notices</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-critical">Critical tone - Error messages</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--tone-info">Info tone - Informational content</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+type TextTone = 'base' | 'subdued' | 'success' | 'warning' | 'attention' | 'critical' | 'info';
+
+interface ToneConfig {
+  tone: TextTone;
+  label: string;
+}
+
+function TextTonesExample(): JSX.Element {
+  const tones: ToneConfig[] = [
+    { tone: 'base', label: 'Base tone - Default text color' },
+    { tone: 'subdued', label: 'Subdued tone - Secondary information' },
+    { tone: 'success', label: 'Success tone - Positive messages' },
+    { tone: 'warning', label: 'Warning tone - Caution messages' },
+    { tone: 'attention', label: 'Attention tone - Important notices' },
+    { tone: 'critical', label: 'Critical tone - Error messages' },
+    { tone: 'info', label: 'Info tone - Informational content' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px' }}>
+      {tones.map((config, index) => (
+        <Text key={index} variant="bodyMd" tone={config.tone}>
+          {config.label}
+        </Text>
+      ))}
+    </div>
+  );
+}
+
+export default TextTonesExample;`,
+  },
+
+  fontWeights: {
+    react: `import { Text } from '@shopify/polaris';
+
+function FontWeightsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px' }}>
+      <Text variant="bodyMd" fontWeight="regular">Regular weight - Default text</Text>
+      <Text variant="bodyMd" fontWeight="medium">Medium weight - Slightly emphasized</Text>
+      <Text variant="bodyMd" fontWeight="semibold">Semibold weight - Moderately emphasized</Text>
+      <Text variant="bodyMd" fontWeight="bold">Bold weight - Strongly emphasized</Text>
+    </div>
+  );
+}
+
+export default FontWeightsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 500px;">
+  <p class="polaris-text polaris-text--body-md polaris-text--weight-regular">
+    Regular weight - Default text
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--weight-medium">
+    Medium weight - Slightly emphasized
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--weight-semibold">
+    Semibold weight - Moderately emphasized
+  </p>
+  <p class="polaris-text polaris-text--body-md polaris-text--weight-bold">
+    Bold weight - Strongly emphasized
+  </p>
+</div>
+
+<style>
+.polaris-text--weight-regular { font-weight: 400; }
+.polaris-text--weight-medium { font-weight: 500; }
+.polaris-text--weight-semibold { font-weight: 600; }
+.polaris-text--weight-bold { font-weight: 700; }
+</style>`,
+
+    extjs: `// ExtJS Font Weights using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Font Weights',
+  bodyPadding: 16,
+  width: 500,
+  items: [
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--weight-regular">Regular weight - Default text</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--weight-medium">Medium weight - Slightly emphasized</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--weight-semibold">Semibold weight - Moderately emphasized</p>',
+      margin: '0 0 12 0'
+    },
+    {
+      xtype: 'component',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--weight-bold">Bold weight - Strongly emphasized</p>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+type FontWeight = 'regular' | 'medium' | 'semibold' | 'bold';
+
+interface WeightConfig {
+  weight: FontWeight;
+  label: string;
+}
+
+function FontWeightsExample(): JSX.Element {
+  const weights: WeightConfig[] = [
+    { weight: 'regular', label: 'Regular weight - Default text' },
+    { weight: 'medium', label: 'Medium weight - Slightly emphasized' },
+    { weight: 'semibold', label: 'Semibold weight - Moderately emphasized' },
+    { weight: 'bold', label: 'Bold weight - Strongly emphasized' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px' }}>
+      {weights.map((config, index) => (
+        <Text key={index} variant="bodyMd" fontWeight={config.weight}>
+          {config.label}
+        </Text>
+      ))}
+    </div>
+  );
+}
+
+export default FontWeightsExample;`,
+  },
+
+  alignment: {
+    react: `import { Text } from '@shopify/polaris';
+
+function TextAlignmentExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
+      <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+        <Text variant="bodyMd" alignment="start">
+          Left aligned text (start) - Default alignment for most content
+        </Text>
+      </div>
+      <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+        <Text variant="bodyMd" alignment="center">
+          Center aligned text - Perfect for headers and callouts
+        </Text>
+      </div>
+      <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+        <Text variant="bodyMd" alignment="end">
+          Right aligned text (end) - Good for prices and metadata
+        </Text>
+      </div>
+      <div style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+        <Text variant="bodyMd" alignment="justify">
+          Justified text - Creates clean columns and professional layouts
+        </Text>
+      </div>
+    </div>
+  );
+}
+
+export default TextAlignmentExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 600px;">
+  <div style="padding: 12px; background-color: #f8f9fa; border-radius: 4px;">
+    <p class="polaris-text polaris-text--body-md polaris-text--align-start">
+      Left aligned text (start) - Default alignment for most content
+    </p>
+  </div>
+  <div style="padding: 12px; background-color: #f8f9fa; border-radius: 4px;">
+    <p class="polaris-text polaris-text--body-md polaris-text--align-center">
+      Center aligned text - Perfect for headers and callouts
+    </p>
+  </div>
+  <div style="padding: 12px; background-color: #f8f9fa; border-radius: 4px;">
+    <p class="polaris-text polaris-text--body-md polaris-text--align-end">
+      Right aligned text (end) - Good for prices and metadata
+    </p>
+  </div>
+  <div style="padding: 12px; background-color: #f8f9fa; border-radius: 4px;">
+    <p class="polaris-text polaris-text--body-md polaris-text--align-justify">
+      Justified text - Creates clean columns and professional layouts
+    </p>
+  </div>
+</div>
+
+<style>
+.polaris-text--align-start { text-align: left; }
+.polaris-text--align-center { text-align: center; }
+.polaris-text--align-end { text-align: right; }
+.polaris-text--align-justify { text-align: justify; }
+</style>`,
+
+    extjs: `// ExtJS Text Alignment using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Text Alignment',
+  bodyPadding: 16,
+  width: 600,
+  items: [
+    {
+      xtype: 'container',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--align-start">Left aligned text (start) - Default alignment for most content</p>',
+      style: {
+        padding: '12px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px',
+        marginBottom: '16px'
+      }
+    },
+    {
+      xtype: 'container',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--align-center">Center aligned text - Perfect for headers and callouts</p>',
+      style: {
+        padding: '12px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px',
+        marginBottom: '16px'
+      }
+    },
+    {
+      xtype: 'container',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--align-end">Right aligned text (end) - Good for prices and metadata</p>',
+      style: {
+        padding: '12px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px',
+        marginBottom: '16px'
+      }
+    },
+    {
+      xtype: 'container',
+      html: '<p class="polaris-text polaris-text--body-md polaris-text--align-justify">Justified text - Creates clean columns and professional layouts</p>',
+      style: {
+        padding: '12px',
+        backgroundColor: '#f8f9fa',
+        borderRadius: '4px'
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+type TextAlignment = 'start' | 'center' | 'end' | 'justify';
+
+interface AlignmentConfig {
+  alignment: TextAlignment;
+  label: string;
+}
+
+function TextAlignmentExample(): JSX.Element {
+  const alignments: AlignmentConfig[] = [
+    { alignment: 'start', label: 'Left aligned text (start) - Default alignment for most content' },
+    { alignment: 'center', label: 'Center aligned text - Perfect for headers and callouts' },
+    { alignment: 'end', label: 'Right aligned text (end) - Good for prices and metadata' },
+    { alignment: 'justify', label: 'Justified text - Creates clean columns and professional layouts' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
+      {alignments.map((config, index) => (
+        <div key={index} style={{ padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
+          <Text variant="bodyMd" alignment={config.alignment}>
+            {config.label}
+          </Text>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default TextAlignmentExample;`,
+  },
+
+  specialized: {
+    react: `import { Text } from '@shopify/polaris';
+
+function SpecializedTextExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
+      <div>
+        <Text variant="headingMd" as="h3">Numeric Text</Text>
+        <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Text variant="bodyLg" numeric>123,456.78</Text>
+          <Text variant="bodyMd" numeric>$1,234.56</Text>
+          <Text variant="bodySm" numeric>99.9%</Text>
+        </div>
+      </div>
+
+      <div>
+        <Text variant="headingMd" as="h3">Truncated Text</Text>
+        <div style={{ marginTop: '8px' }}>
+          <Text variant="bodyMd" truncate>
+            This is a very long text that will be truncated with an ellipsis when it exceeds the container width
+          </Text>
+        </div>
+      </div>
+
+      <div>
+        <Text variant="headingMd" as="h3">Text with Word Breaking</Text>
+        <div style={{ marginTop: '8px', width: '200px' }}>
+          <Text variant="bodyMd" breakWord>
+            Supercalifragilisticexpialidocious
+          </Text>
+        </div>
+      </div>
+
+      <div>
+        <Text variant="headingMd" as="h3">Semantic HTML Elements</Text>
+        <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <Text variant="bodyMd" as="p">Paragraph text</Text>
+          <Text variant="bodyMd" as="label">Label text</Text>
+          <Text variant="bodyMd" as="strong">Strong text</Text>
+          <Text variant="bodyMd" as="em">Emphasized text</Text>
+          <Text variant="bodyMd" as="span">Span text</Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SpecializedTextExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; flex-direction: column; gap: 20px; max-width: 600px;">
+  <!-- Numeric Text -->
+  <div>
+    <h3 class="polaris-text polaris-text--heading-md">Numeric Text</h3>
+    <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+      <p class="polaris-text polaris-text--body-lg polaris-text--numeric">123,456.78</p>
+      <p class="polaris-text polaris-text--body-md polaris-text--numeric">$1,234.56</p>
+      <p class="polaris-text polaris-text--body-sm polaris-text--numeric">99.9%</p>
+    </div>
+  </div>
+
+  <!-- Truncated Text -->
+  <div>
+    <h3 class="polaris-text polaris-text--heading-md">Truncated Text</h3>
+    <div style="margin-top: 8px;">
+      <p class="polaris-text polaris-text--body-md polaris-text--truncate">
+        This is a very long text that will be truncated with an ellipsis when it exceeds the container width
+      </p>
+    </div>
+  </div>
+
+  <!-- Word Breaking -->
+  <div>
+    <h3 class="polaris-text polaris-text--heading-md">Text with Word Breaking</h3>
+    <div style="margin-top: 8px; width: 200px;">
+      <p class="polaris-text polaris-text--body-md polaris-text--break-word">
+        Supercalifragilisticexpialidocious
+      </p>
+    </div>
+  </div>
+
+  <!-- Semantic Elements -->
+  <div>
+    <h3 class="polaris-text polaris-text--heading-md">Semantic HTML Elements</h3>
+    <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+      <p class="polaris-text polaris-text--body-md">Paragraph text</p>
+      <label class="polaris-text polaris-text--body-md">Label text</label>
+      <strong class="polaris-text polaris-text--body-md">Strong text</strong>
+      <em class="polaris-text polaris-text--body-md">Emphasized text</em>
+      <span class="polaris-text polaris-text--body-md">Span text</span>
+    </div>
+  </div>
+</div>
+
+<style>
+.polaris-text--numeric { font-variant-numeric: tabular-nums; }
+.polaris-text--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.polaris-text--break-word { word-break: break-word; }
+</style>`,
+
+    extjs: `// ExtJS Specialized Text using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: 'Specialized Text',
+  bodyPadding: 16,
+  width: 600,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  items: [
+    {
+      xtype: 'container',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Numeric Text</h3>' +
+            '<p class="polaris-text polaris-text--body-lg polaris-text--numeric">123,456.78</p>' +
+            '<p class="polaris-text polaris-text--body-md polaris-text--numeric">$1,234.56</p>' +
+            '<p class="polaris-text polaris-text--body-sm polaris-text--numeric">99.9%</p>',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Truncated Text</h3>' +
+            '<p class="polaris-text polaris-text--body-md polaris-text--truncate">This is a very long text that will be truncated with an ellipsis when it exceeds the container width</p>',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Text with Word Breaking</h3>' +
+            '<p class="polaris-text polaris-text--body-md polaris-text--break-word" style="width: 200px;">Supercalifragilisticexpialidocious</p>',
+      margin: '0 0 20 0'
+    },
+    {
+      xtype: 'container',
+      html: '<h3 class="polaris-text polaris-text--heading-md">Semantic HTML Elements</h3>' +
+            '<p class="polaris-text polaris-text--body-md">Paragraph text</p>' +
+            '<label class="polaris-text polaris-text--body-md">Label text</label><br>' +
+            '<strong class="polaris-text polaris-text--body-md">Strong text</strong><br>' +
+            '<em class="polaris-text polaris-text--body-md">Emphasized text</em><br>' +
+            '<span class="polaris-text polaris-text--body-md">Span text</span>'
+    }
+  ],
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Text } from '@shopify/polaris';
+import React from 'react';
+
+interface SpecializedTextExampleProps {
+  showNumeric?: boolean;
+  showTruncate?: boolean;
+  showBreakWord?: boolean;
+  showSemantic?: boolean;
+}
+
+function SpecializedTextExample({
+  showNumeric = true,
+  showTruncate = true,
+  showBreakWord = true,
+  showSemantic = true
+}: SpecializedTextExampleProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }}>
+      {showNumeric && (
+        <div>
+          <Text variant="headingMd" as="h3">Numeric Text</Text>
+          <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <Text variant="bodyLg" numeric>123,456.78</Text>
+            <Text variant="bodyMd" numeric>$1,234.56</Text>
+            <Text variant="bodySm" numeric>99.9%</Text>
+          </div>
+        </div>
+      )}
+
+      {showTruncate && (
+        <div>
+          <Text variant="headingMd" as="h3">Truncated Text</Text>
+          <div style={{ marginTop: '8px' }}>
+            <Text variant="bodyMd" truncate>
+              This is a very long text that will be truncated with an ellipsis when it exceeds the container width
+            </Text>
+          </div>
+        </div>
+      )}
+
+      {showBreakWord && (
+        <div>
+          <Text variant="headingMd" as="h3">Text with Word Breaking</Text>
+          <div style={{ marginTop: '8px', width: '200px' }}>
+            <Text variant="bodyMd" breakWord>
+              Supercalifragilisticexpialidocious
+            </Text>
+          </div>
+        </div>
+      )}
+
+      {showSemantic && (
+        <div>
+          <Text variant="headingMd" as="h3">Semantic HTML Elements</Text>
+          <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <Text variant="bodyMd" as="p">Paragraph text</Text>
+            <Text variant="bodyMd" as="label">Label text</Text>
+            <Text variant="bodyMd" as="strong">Strong text</Text>
+            <Text variant="bodyMd" as="em">Emphasized text</Text>
+            <Text variant="bodyMd" as="span">Span text</Text>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default SpecializedTextExample;`,
   }
 };
 
@@ -21307,6 +33059,760 @@ function AlphaStackDefault({
 }
 
 export default AlphaStackDefault;`
+  },
+
+  vertical: {
+    react: `import { AlphaStack, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+function VerticalAlphaStack() {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        Vertical AlphaStack
+      </Text>
+
+      <AlphaStack spacing="base" direction="vertical">
+        <Text as="h4" variant="headingSm">Section 1</Text>
+        <Text as="p" variant="bodySm">
+          Content for the first section with base spacing.
+        </Text>
+
+        <Text as="h4" variant="headingSm">Section 2</Text>
+        <Text as="p" variant="bodySm">
+          Content for the second section with the same spacing.
+        </Text>
+
+        <Text as="h4" variant="headingSm">Section 3</Text>
+        <Text as="p" variant="bodySm">
+          Content for the third section maintaining consistent spacing.
+        </Text>
+      </AlphaStack>
+    </Card>
+  );
+}
+
+export default VerticalAlphaStack;`,
+
+    vanilla: `<!-- Vertical AlphaStack -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <h3 class="polaris-heading-md" style="margin-bottom: 16px">Vertical AlphaStack</h3>
+
+    <div id="vertical-stack"></div>
+  </div>
+</div>
+
+<script>
+import { createStack } from '@cin7/vanilla-js';
+
+const sections = [
+  { title: 'Section 1', content: 'Content for the first section with base spacing.' },
+  { title: 'Section 2', content: 'Content for the second section with the same spacing.' },
+  { title: 'Section 3', content: 'Content for the third section maintaining consistent spacing.' }
+];
+
+const verticalStack = createStack({
+  direction: 'column',
+  gap: '16px',
+  children: sections.map(section =>
+    \`<div>
+      <h4 class="polaris-heading-sm">\${section.title}</h4>
+      <p class="polaris-text-sm">\${section.content}</p>
+    </div>\`
+  )
+});
+
+document.getElementById('vertical-stack').appendChild(verticalStack);
+</script>`,
+
+    extjs: `// Vertical stack with ExtJS vbox layout
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Vertical AlphaStack',
+  bodyPadding: 16,
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    xtype: 'container',
+    margin: '0 0 16 0'
+  },
+  items: [
+    {
+      html: \`
+        <h4>Section 1</h4>
+        <p>Content for the first section with base spacing.</p>
+      \`
+    },
+    {
+      html: \`
+        <h4>Section 2</h4>
+        <p>Content for the second section with the same spacing.</p>
+      \`
+    },
+    {
+      html: \`
+        <h4>Section 3</h4>
+        <p>Content for the third section maintaining consistent spacing.</p>
+      \`
+    }
+  ]
+});`,
+
+    typescript: `import { AlphaStack, Card, Text } from '@shopify/polaris';
+import React from 'react';
+
+interface Section {
+  title: string;
+  content: string;
+}
+
+interface VerticalAlphaStackProps {
+  title?: string;
+  sections?: Section[];
+  spacing?: 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
+}
+
+function VerticalAlphaStack({
+  title = 'Vertical AlphaStack',
+  sections = [
+    { title: 'Section 1', content: 'Content for the first section with base spacing.' },
+    { title: 'Section 2', content: 'Content for the second section with the same spacing.' },
+    { title: 'Section 3', content: 'Content for the third section maintaining consistent spacing.' }
+  ],
+  spacing = 'base'
+}: VerticalAlphaStackProps): JSX.Element {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        {title}
+      </Text>
+
+      <AlphaStack spacing={spacing} direction="vertical">
+        {sections.map((section, index) => (
+          <React.Fragment key={index}>
+            <Text as="h4" variant="headingSm">{section.title}</Text>
+            <Text as="p" variant="bodySm">{section.content}</Text>
+          </React.Fragment>
+        ))}
+      </AlphaStack>
+    </Card>
+  );
+}
+
+export default VerticalAlphaStack;`
+  },
+
+  horizontal: {
+    react: `import { AlphaStack, Card, Text, Button } from '@shopify/polaris';
+import React from 'react';
+
+function HorizontalAlphaStack() {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        Horizontal AlphaStack
+      </Text>
+
+      <AlphaStack spacing="loose" direction="horizontal">
+        <Button variant="primary">Save</Button>
+        <Button>Save Draft</Button>
+        <Button variant="plain">Preview</Button>
+        <Button variant="plain">Cancel</Button>
+      </AlphaStack>
+    </Card>
+  );
+}
+
+export default HorizontalAlphaStack;`,
+
+    vanilla: `<!-- Horizontal AlphaStack -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <h3 class="polaris-heading-md" style="margin-bottom: 16px">Horizontal AlphaStack</h3>
+
+    <div id="horizontal-stack"></div>
+  </div>
+</div>
+
+<script>
+import { createStack } from '@cin7/vanilla-js';
+
+const horizontalStack = createStack({
+  direction: 'row',
+  gap: '20px',
+  children: [
+    '<button class="polaris-button polaris-button--primary">Save</button>',
+    '<button class="polaris-button">Save Draft</button>',
+    '<button class="polaris-button polaris-button--plain">Preview</button>',
+    '<button class="polaris-button polaris-button--plain">Cancel</button>'
+  ]
+});
+
+document.getElementById('horizontal-stack').appendChild(horizontalStack);
+</script>`,
+
+    extjs: `// Horizontal stack with ExtJS hbox layout
+Ext.create('Ext.panel.Panel', {
+  renderTo: Ext.getBody(),
+  title: 'Horizontal AlphaStack',
+  bodyPadding: 16,
+  layout: {
+    type: 'hbox',
+    align: 'middle'
+  },
+  defaults: {
+    xtype: 'button',
+    margin: '0 20 0 0'
+  },
+  items: [
+    {
+      text: 'Save',
+      ui: 'primary',
+      handler: function() { console.log('Save'); }
+    },
+    {
+      text: 'Save Draft',
+      handler: function() { console.log('Save Draft'); }
+    },
+    {
+      text: 'Preview',
+      ui: 'plain',
+      handler: function() { console.log('Preview'); }
+    },
+    {
+      text: 'Cancel',
+      ui: 'plain',
+      margin: 0,
+      handler: function() { console.log('Cancel'); }
+    }
+  ]
+});`,
+
+    typescript: `import { AlphaStack, Card, Text, Button } from '@shopify/polaris';
+import React from 'react';
+
+interface ButtonAction {
+  label: string;
+  variant?: 'primary' | 'plain';
+  onAction: () => void;
+}
+
+interface HorizontalAlphaStackProps {
+  title?: string;
+  actions?: ButtonAction[];
+  spacing?: 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
+}
+
+function HorizontalAlphaStack({
+  title = 'Horizontal AlphaStack',
+  actions = [
+    { label: 'Save', variant: 'primary', onAction: () => console.log('Save') },
+    { label: 'Save Draft', onAction: () => console.log('Save Draft') },
+    { label: 'Preview', variant: 'plain', onAction: () => console.log('Preview') },
+    { label: 'Cancel', variant: 'plain', onAction: () => console.log('Cancel') }
+  ],
+  spacing = 'loose'
+}: HorizontalAlphaStackProps): JSX.Element {
+  return (
+    <Card sectioned>
+      <Text as="h3" variant="headingMd" style={{ marginBottom: '16px' }}>
+        {title}
+      </Text>
+
+      <AlphaStack spacing={spacing} direction="horizontal">
+        {actions.map((action, index) => (
+          <Button
+            key={index}
+            variant={action.variant}
+            onClick={action.onAction}
+          >
+            {action.label}
+          </Button>
+        ))}
+      </AlphaStack>
+    </Card>
+  );
+}
+
+export default HorizontalAlphaStack;`
+  },
+
+  spacing: {
+    react: `import { AlphaStack, Card, Text, Badge } from '@shopify/polaris';
+import React from 'react';
+
+function SpacingVariations() {
+  const spacings: Array<'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose'> = [
+    'extraTight', 'tight', 'base', 'loose', 'extraLoose'
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {spacings.map((spacing) => (
+        <Card key={spacing} sectioned>
+          <Text as="h3" variant="headingSm">
+            {spacing.charAt(0).toUpperCase() + spacing.slice(1).replace(/([A-Z])/g, ' $1')} Spacing
+          </Text>
+          <AlphaStack spacing={spacing} direction="horizontal">
+            <Badge status="success">Active</Badge>
+            <Badge status="info">Pending</Badge>
+            <Badge status="attention">Warning</Badge>
+          </AlphaStack>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default SpacingVariations;`,
+
+    vanilla: `<!-- Spacing Variations -->
+<div id="spacing-variations" style="display: flex; flex-direction: column; gap: 24px; max-width: 600px"></div>
+
+<script>
+import { createStack } from '@cin7/vanilla-js';
+
+const spacings = [
+  { name: 'Extra Tight', gap: '4px' },
+  { name: 'Tight', gap: '8px' },
+  { name: 'Base', gap: '16px' },
+  { name: 'Loose', gap: '20px' },
+  { name: 'Extra Loose', gap: '24px' }
+];
+
+const container = document.getElementById('spacing-variations');
+
+spacings.forEach(({ name, gap }) => {
+  const card = document.createElement('div');
+  card.className = 'polaris-card';
+  card.innerHTML = \`
+    <div class="polaris-card__section">
+      <h3 class="polaris-heading-sm">\${name} Spacing</h3>
+      <div style="display: flex; gap: \${gap}; margin-top: 12px">
+        <span class="polaris-badge polaris-badge--success">Active</span>
+        <span class="polaris-badge polaris-badge--info">Pending</span>
+        <span class="polaris-badge polaris-badge--attention">Warning</span>
+      </div>
+    </div>
+  \`;
+
+  container.appendChild(card);
+});
+</script>`,
+
+    extjs: `// Spacing variations with different gap configurations
+const spacings = [
+  { name: 'Extra Tight Spacing', gap: 4 },
+  { name: 'Tight Spacing', gap: 8 },
+  { name: 'Base Spacing', gap: 16 },
+  { name: 'Loose Spacing', gap: 20 },
+  { name: 'Extra Loose Spacing', gap: 24 }
+];
+
+Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 24 0',
+    maxWidth: 600
+  },
+  items: spacings.map(function(spacing) {
+    return {
+      xtype: 'panel',
+      title: spacing.name,
+      bodyPadding: 16,
+      layout: {
+        type: 'hbox'
+      },
+      defaults: {
+        margin: \`0 \${spacing.gap} 0 0\`
+      },
+      items: [
+        { xtype: 'component', html: '<span class="badge-success">Active</span>' },
+        { xtype: 'component', html: '<span class="badge-info">Pending</span>' },
+        { xtype: 'component', html: '<span class="badge-attention">Warning</span>', margin: 0 }
+      ]
+    };
+  })
+});`,
+
+    typescript: `import { AlphaStack, Card, Text, Badge, BadgeProps } from '@shopify/polaris';
+import React from 'react';
+
+type SpacingOption = 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
+
+interface SpacingExample {
+  spacing: SpacingOption;
+  label: string;
+}
+
+interface BadgeConfig {
+  status: BadgeProps['status'];
+  label: string;
+}
+
+function SpacingVariations(): JSX.Element {
+  const spacings: SpacingExample[] = [
+    { spacing: 'extraTight', label: 'Extra Tight Spacing' },
+    { spacing: 'tight', label: 'Tight Spacing' },
+    { spacing: 'base', label: 'Base Spacing' },
+    { spacing: 'loose', label: 'Loose Spacing' },
+    { spacing: 'extraLoose', label: 'Extra Loose Spacing' }
+  ];
+
+  const badges: BadgeConfig[] = [
+    { status: 'success', label: 'Active' },
+    { status: 'info', label: 'Pending' },
+    { status: 'attention', label: 'Warning' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {spacings.map(({ spacing, label }) => (
+        <Card key={spacing} sectioned>
+          <Text as="h3" variant="headingSm">{label}</Text>
+          <AlphaStack spacing={spacing} direction="horizontal">
+            {badges.map((badge, index) => (
+              <Badge key={index} status={badge.status}>{badge.label}</Badge>
+            ))}
+          </AlphaStack>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default SpacingVariations;`
+  },
+
+  distribution: {
+    react: `import { AlphaStack, Card, Text, Button } from '@shopify/polaris';
+import React from 'react';
+
+function DistributionOptions() {
+  const distributions: Array<'leading' | 'trailing' | 'center' | 'fill' | 'fillEvenly' | 'equalSpacing'> = [
+    'leading', 'trailing', 'center', 'fill', 'equalSpacing', 'fillEvenly'
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {distributions.map((distribution) => (
+        <Card key={distribution} sectioned>
+          <Text as="h3" variant="headingSm">
+            {distribution.charAt(0).toUpperCase() + distribution.slice(1).replace(/([A-Z])/g, ' $1')} Distribution
+          </Text>
+          <AlphaStack distribution={distribution} direction="horizontal">
+            <Button size="small">Left</Button>
+            <Button size="small">Center</Button>
+            <Button size="small">Right</Button>
+          </AlphaStack>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default DistributionOptions;`,
+
+    vanilla: `<!-- Distribution Options -->
+<div id="distribution-options" style="display: flex; flex-direction: column; gap: 24px; max-width: 600px"></div>
+
+<script>
+import { createStack } from '@cin7/vanilla-js';
+
+const distributions = [
+  { name: 'Leading', justify: 'flex-start' },
+  { name: 'Trailing', justify: 'flex-end' },
+  { name: 'Center', justify: 'center' },
+  { name: 'Fill', justify: 'stretch' },
+  { name: 'Equal Spacing', justify: 'space-between' },
+  { name: 'Fill Evenly', justify: 'space-evenly' }
+];
+
+const container = document.getElementById('distribution-options');
+
+distributions.forEach(({ name, justify }) => {
+  const card = document.createElement('div');
+  card.className = 'polaris-card';
+  card.innerHTML = \`
+    <div class="polaris-card__section">
+      <h3 class="polaris-heading-sm">\${name} Distribution</h3>
+      <div style="display: flex; gap: 12px; justify-content: \${justify}; margin-top: 12px">
+        <button class="polaris-button polaris-button--small">Left</button>
+        <button class="polaris-button polaris-button--small">Center</button>
+        <button class="polaris-button polaris-button--small">Right</button>
+      </div>
+    </div>
+  \`;
+
+  container.appendChild(card);
+});
+</script>`,
+
+    extjs: `// Distribution options with different pack configurations
+const distributions = [
+  { name: 'Leading Distribution', pack: 'start' },
+  { name: 'Trailing Distribution', pack: 'end' },
+  { name: 'Center Distribution', pack: 'center' },
+  { name: 'Fill Distribution', pack: 'start' },
+  { name: 'Equal Spacing Distribution', pack: 'justify' },
+  { name: 'Fill Evenly Distribution', pack: 'center' }
+];
+
+Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 24 0',
+    maxWidth: 600
+  },
+  items: distributions.map(function(dist) {
+    return {
+      xtype: 'panel',
+      title: dist.name,
+      bodyPadding: 16,
+      layout: {
+        type: 'hbox',
+        pack: dist.pack
+      },
+      defaults: {
+        xtype: 'button',
+        scale: 'small',
+        margin: '0 12 0 0'
+      },
+      items: [
+        { text: 'Left' },
+        { text: 'Center' },
+        { text: 'Right', margin: 0 }
+      ]
+    };
+  })
+});`,
+
+    typescript: `import { AlphaStack, Card, Text, Button, AlphaStackProps } from '@shopify/polaris';
+import React from 'react';
+
+type DistributionOption = 'leading' | 'trailing' | 'center' | 'fill' | 'fillEvenly' | 'equalSpacing';
+
+interface DistributionExample {
+  distribution: DistributionOption;
+  label: string;
+}
+
+function DistributionOptions(): JSX.Element {
+  const distributions: DistributionExample[] = [
+    { distribution: 'leading', label: 'Leading Distribution' },
+    { distribution: 'trailing', label: 'Trailing Distribution' },
+    { distribution: 'center', label: 'Center Distribution' },
+    { distribution: 'fill', label: 'Fill Distribution' },
+    { distribution: 'equalSpacing', label: 'Equal Spacing Distribution' },
+    { distribution: 'fillEvenly', label: 'Fill Evenly Distribution' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {distributions.map(({ distribution, label }) => (
+        <Card key={distribution} sectioned>
+          <Text as="h3" variant="headingSm">{label}</Text>
+          <AlphaStack distribution={distribution} direction="horizontal">
+            <Button size="small">Left</Button>
+            <Button size="small">Center</Button>
+            <Button size="small">Right</Button>
+          </AlphaStack>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default DistributionOptions;`
+  },
+
+  alignment: {
+    react: `import { AlphaStack, Card, Text, Button } from '@shopify/polaris';
+import React from 'react';
+
+function AlignmentOptions() {
+  const alignments: Array<'leading' | 'trailing' | 'center' | 'fill' | 'baseline'> = [
+    'leading', 'trailing', 'center', 'fill', 'baseline'
+  ];
+
+  const getAlignItems = (alignment: string) => {
+    switch (alignment) {
+      case 'leading': return 'flex-start';
+      case 'trailing': return 'flex-end';
+      case 'center': return 'center';
+      case 'fill': return 'stretch';
+      case 'baseline': return 'baseline';
+      default: return 'flex-start';
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {alignments.map((alignment) => (
+        <Card key={alignment} sectioned>
+          <Text as="h3" variant="headingSm">
+            {alignment.charAt(0).toUpperCase() + alignment.slice(1)} Alignment
+          </Text>
+          <div style={{
+            height: '80px',
+            backgroundColor: '#f4f6f8',
+            borderRadius: '4px',
+            padding: '8px',
+            display: 'flex',
+            alignItems: getAlignItems(alignment)
+          }}>
+            <AlphaStack alignment={alignment} direction="horizontal">
+              <Button size="small">Small</Button>
+              <Button>Medium</Button>
+              <Button size="large">Large</Button>
+            </AlphaStack>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default AlignmentOptions;`,
+
+    vanilla: `<!-- Alignment Options -->
+<div id="alignment-options" style="display: flex; flex-direction: column; gap: 24px; max-width: 600px"></div>
+
+<script>
+import { createStack } from '@cin7/vanilla-js';
+
+const alignments = [
+  { name: 'Leading', align: 'flex-start' },
+  { name: 'Trailing', align: 'flex-end' },
+  { name: 'Center', align: 'center' },
+  { name: 'Fill', align: 'stretch' },
+  { name: 'Baseline', align: 'baseline' }
+];
+
+const container = document.getElementById('alignment-options');
+
+alignments.forEach(({ name, align }) => {
+  const card = document.createElement('div');
+  card.className = 'polaris-card';
+  card.innerHTML = \`
+    <div class="polaris-card__section">
+      <h3 class="polaris-heading-sm">\${name} Alignment</h3>
+      <div style="height: 80px; background: #f4f6f8; border-radius: 4px; padding: 8px; display: flex; align-items: \${align}; margin-top: 12px">
+        <div style="display: flex; gap: 12px">
+          <button class="polaris-button polaris-button--small">Small</button>
+          <button class="polaris-button">Medium</button>
+          <button class="polaris-button polaris-button--large">Large</button>
+        </div>
+      </div>
+    </div>
+  \`;
+
+  container.appendChild(card);
+});
+</script>`,
+
+    extjs: `// Alignment options with different align configurations
+const alignments = [
+  { name: 'Leading Alignment', align: 'top' },
+  { name: 'Trailing Alignment', align: 'bottom' },
+  { name: 'Center Alignment', align: 'middle' },
+  { name: 'Fill Alignment', align: 'stretch' },
+  { name: 'Baseline Alignment', align: 'baseline' }
+];
+
+Ext.create('Ext.container.Container', {
+  renderTo: Ext.getBody(),
+  layout: {
+    type: 'vbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 0 24 0',
+    maxWidth: 600
+  },
+  items: alignments.map(function(alignment) {
+    return {
+      xtype: 'panel',
+      title: alignment.name,
+      bodyPadding: 16,
+      height: 120,
+      layout: {
+        type: 'hbox',
+        align: alignment.align
+      },
+      style: {
+        backgroundColor: '#f4f6f8'
+      },
+      defaults: {
+        xtype: 'button',
+        margin: '0 12 0 0'
+      },
+      items: [
+        { text: 'Small', scale: 'small' },
+        { text: 'Medium', scale: 'medium' },
+        { text: 'Large', scale: 'large', margin: 0 }
+      ]
+    };
+  })
+});`,
+
+    typescript: `import { AlphaStack, Card, Text, Button, AlphaStackProps } from '@shopify/polaris';
+import React from 'react';
+
+type AlignmentOption = 'leading' | 'trailing' | 'center' | 'fill' | 'baseline';
+
+interface AlignmentExample {
+  alignment: AlignmentOption;
+  label: string;
+  cssAlign: string;
+}
+
+function AlignmentOptions(): JSX.Element {
+  const alignments: AlignmentExample[] = [
+    { alignment: 'leading', label: 'Leading Alignment', cssAlign: 'flex-start' },
+    { alignment: 'trailing', label: 'Trailing Alignment', cssAlign: 'flex-end' },
+    { alignment: 'center', label: 'Center Alignment', cssAlign: 'center' },
+    { alignment: 'fill', label: 'Fill Alignment', cssAlign: 'stretch' },
+    { alignment: 'baseline', label: 'Baseline Alignment', cssAlign: 'baseline' }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '600px' }}>
+      {alignments.map(({ alignment, label, cssAlign }) => (
+        <Card key={alignment} sectioned>
+          <Text as="h3" variant="headingSm">{label}</Text>
+          <div style={{
+            height: '80px',
+            backgroundColor: '#f4f6f8',
+            borderRadius: '4px',
+            padding: '8px',
+            display: 'flex',
+            alignItems: cssAlign
+          }}>
+            <AlphaStack alignment={alignment} direction="horizontal">
+              <Button size="small">Small</Button>
+              <Button>Medium</Button>
+              <Button size="large">Large</Button>
+            </AlphaStack>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default AlignmentOptions;`
   }
 };
 
@@ -22089,7 +34595,7 @@ function ActionListExample({ onAction }: ActionListExampleProps): JSX.Element {
   return <ActionList items={items} />;
 }
 
-export default ActionListExample;`
+export default ActionListExample;`,
   },
 
   'with-actions': {
@@ -22965,7 +35471,7 @@ function NestedMenuExample({ onSelect }: NestedMenuExampleProps): JSX.Element {
   );
 }
 
-export default NestedMenuExample;`
+export default NestedMenuExample;`,
   },
 
   'bulk-actions-example': {
@@ -23160,7 +35666,7 @@ function BulkActionsExample({ onBulkAction }: BulkActionsExampleProps): JSX.Elem
   );
 }
 
-export default BulkActionsExample;`
+export default BulkActionsExample;`,
   },
 
   'context-menu-example': {
@@ -23378,7 +35884,7 @@ function ContextMenuExample({ onAction }: ContextMenuExampleProps): JSX.Element 
   );
 }
 
-export default ContextMenuExample;`
+export default ContextMenuExample;`,
   }
 };
 
@@ -23705,6 +36211,349 @@ function BulkActionsExample({
           </IndexTable.Row>
         ))}
       </IndexTable>
+    </Card>
+  );
+}`
+  },
+
+  withPageActions: {
+    react: `import { Button, Card, Text, InlineStack, ButtonGroup } from '@shopify/polaris';
+import { EditIcon, DeleteIcon, PlusIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+function BulkActionsWithPageActions() {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const handleBulkAction = (action: string) => {
+    console.log(\`Action "\${action}" performed on:\`, selectedItems);
+  };
+
+  const pageActions = [
+    {
+      content: 'Add products',
+      onAction: () => handleBulkAction('add'),
+      icon: PlusIcon,
+    },
+    {
+      content: 'Import products',
+      onAction: () => handleBulkAction('import'),
+    },
+  ];
+
+  const promotedActions = [
+    {
+      content: 'Edit selected',
+      onAction: () => handleBulkAction('edit'),
+      icon: EditIcon,
+    },
+    {
+      content: 'Delete selected',
+      onAction: () => handleBulkAction('delete'),
+      icon: DeleteIcon,
+      destructive: true,
+    },
+  ];
+
+  return (
+    <Card>
+      <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
+        <InlineStack align="space-between">
+          <Text variant="headingMd">Products</Text>
+          <InlineStack gap="200">
+            {pageActions.map((action, idx) => (
+              <Button key={idx} onClick={action.onAction} icon={action.icon}>
+                {action.content}
+              </Button>
+            ))}
+          </InlineStack>
+        </InlineStack>
+      </div>
+
+      {selectedItems.length > 0 && (
+        <div style={{ padding: '16px', backgroundColor: '#f8f9fa' }}>
+          <Text>{selectedItems.length} items selected</Text>
+          <div style={{ marginTop: '12px' }}>
+            <ButtonGroup>
+              {promotedActions.map((action, idx) => (
+                <Button
+                  key={idx}
+                  onClick={action.onAction}
+                  icon={action.icon}
+                  tone={action.destructive ? 'critical' : undefined}
+                >
+                  {action.content}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+}`,
+
+    vanilla: `<!-- Page-level actions with bulk selection -->
+<div class="product-manager">
+  <div class="page-header">
+    <h2>Products</h2>
+    <div class="page-actions">
+      <button class="btn-primary" id="add-btn">
+        <i class="icon-plus"></i> Add Products
+      </button>
+      <button class="btn-secondary" id="import-btn">Import Products</button>
+    </div>
+  </div>
+
+  <div class="bulk-selection-bar" id="bulk-bar" style="display: none;">
+    <span id="selection-text">0 items selected</span>
+    <div class="bulk-actions">
+      <button class="btn-primary" id="bulk-edit-btn">
+        <i class="icon-edit"></i> Edit Selected
+      </button>
+      <button class="btn-destructive" id="bulk-delete-btn">
+        <i class="icon-delete"></i> Delete Selected
+      </button>
+    </div>
+  </div>
+
+  <div id="product-grid"></div>
+</div>
+
+<script>
+import { $, on, show, hide } from '@cin7/vanilla-js';
+
+let selectedItems = [];
+
+function updateBulkBar() {
+  const bulkBar = $('#bulk-bar');
+  const selectionText = $('#selection-text');
+
+  if (selectedItems.length > 0) {
+    show(bulkBar);
+    selectionText.textContent = \`\${selectedItems.length} item\${selectedItems.length !== 1 ? 's' : ''} selected\`;
+  } else {
+    hide(bulkBar);
+  }
+}
+
+// Page actions
+on($('#add-btn'), 'click', () => {
+  console.log('Add products');
+});
+
+on($('#import-btn'), 'click', () => {
+  console.log('Import products');
+});
+
+// Bulk actions
+on($('#bulk-edit-btn'), 'click', () => {
+  console.log('Edit selected:', selectedItems);
+});
+
+on($('#bulk-delete-btn'), 'click', () => {
+  if (confirm(\`Delete \${selectedItems.length} item(s)?\`)) {
+    console.log('Delete selected:', selectedItems);
+  }
+});
+
+// Simulate selection
+function selectItems(ids) {
+  selectedItems = ids;
+  updateBulkBar();
+}
+</script>`,
+
+    extjs: `// ExtJS Panel with page actions and bulk selection
+Ext.create('Ext.panel.Panel', {
+  title: 'Products',
+  layout: 'fit',
+  tbar: [{
+    text: 'Add Products',
+    iconCls: 'icon-plus',
+    cls: 'polaris-btn-primary',
+    handler: function() {
+      console.log('Add products');
+    }
+  }, {
+    text: 'Import Products',
+    handler: function() {
+      console.log('Import products');
+    }
+  }],
+  items: [{
+    xtype: 'grid',
+    itemId: 'productGrid',
+    store: {
+      fields: ['id', 'name', 'price'],
+      data: [
+        { id: 1, name: 'Product A', price: '$29.99' },
+        { id: 2, name: 'Product B', price: '$49.99' },
+        { id: 3, name: 'Product C', price: '$19.99' }
+      ]
+    },
+    columns: [
+      { text: 'Name', dataIndex: 'name', flex: 1 },
+      { text: 'Price', dataIndex: 'price', width: 100 }
+    ],
+    selModel: {
+      mode: 'MULTI',
+      listeners: {
+        selectionchange: function(sm, selected) {
+          const panel = this.up('panel');
+          let bulkToolbar = panel.down('toolbar[itemId=bulkToolbar]');
+
+          if (selected.length > 0) {
+            if (!bulkToolbar) {
+              bulkToolbar = Ext.widget('toolbar', {
+                itemId: 'bulkToolbar',
+                dock: 'top',
+                style: {
+                  backgroundColor: '#f8f9fa'
+                },
+                items: [{
+                  xtype: 'tbtext',
+                  itemId: 'bulkText',
+                  text: selected.length + ' item(s) selected'
+                }, '->', {
+                  text: 'Edit Selected',
+                  iconCls: 'icon-edit',
+                  handler: function() {
+                    const grid = this.up('panel').down('grid');
+                    console.log('Edit selected:', grid.getSelection());
+                  }
+                }, {
+                  text: 'Delete Selected',
+                  iconCls: 'icon-delete',
+                  cls: 'polaris-btn-destructive',
+                  handler: function() {
+                    const grid = this.up('panel').down('grid');
+                    const selected = grid.getSelection();
+                    Ext.Msg.confirm('Delete',
+                      'Delete ' + selected.length + ' item(s)?',
+                      function(btn) {
+                        if (btn === 'yes') {
+                          console.log('Delete selected:', selected);
+                        }
+                      }
+                    );
+                  }
+                }]
+              });
+              panel.addDocked(bulkToolbar);
+            } else {
+              bulkToolbar.down('#bulkText').setText(selected.length + ' item(s) selected');
+              bulkToolbar.show();
+            }
+          } else if (bulkToolbar) {
+            bulkToolbar.hide();
+          }
+        }
+      }
+    }
+  }],
+  height: 400,
+  width: 600,
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Button, Card, Text, InlineStack } from '@shopify/polaris';
+import { EditIcon, DeleteIcon, PlusIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+interface PageAction {
+  content: string;
+  onAction: () => void;
+  icon?: React.ComponentType;
+}
+
+interface BulkAction {
+  content: string;
+  onAction: () => void;
+  icon?: React.ComponentType;
+  destructive?: boolean;
+}
+
+interface BulkActionsWithPageActionsProps {
+  onPageAction?: (action: string) => void;
+  onBulkAction?: (action: string, selectedIds: string[]) => void;
+}
+
+function BulkActionsWithPageActions({
+  onPageAction,
+  onBulkAction,
+}: BulkActionsWithPageActionsProps): JSX.Element {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const handleBulkAction = (action: string): void => {
+    console.log(\`Action "\${action}" performed on:\`, selectedItems);
+    onBulkAction?.(action, selectedItems);
+  };
+
+  const handlePageAction = (action: string): void => {
+    console.log(\`Page action "\${action}"\`);
+    onPageAction?.(action);
+  };
+
+  const pageActions: PageAction[] = [
+    {
+      content: 'Add products',
+      onAction: () => handlePageAction('add'),
+      icon: PlusIcon,
+    },
+    {
+      content: 'Import products',
+      onAction: () => handlePageAction('import'),
+    },
+  ];
+
+  const promotedActions: BulkAction[] = [
+    {
+      content: 'Edit selected',
+      onAction: () => handleBulkAction('edit'),
+      icon: EditIcon,
+    },
+    {
+      content: 'Delete selected',
+      onAction: () => handleBulkAction('delete'),
+      icon: DeleteIcon,
+      destructive: true,
+    },
+  ];
+
+  return (
+    <Card>
+      <div style={{ padding: '16px', borderBottom: '1px solid #e1e3e5' }}>
+        <InlineStack align="space-between">
+          <Text variant="headingMd">Products</Text>
+          <InlineStack gap="200">
+            {pageActions.map((action, idx) => (
+              <Button key={idx} onClick={action.onAction} icon={action.icon}>
+                {action.content}
+              </Button>
+            ))}
+          </InlineStack>
+        </InlineStack>
+      </div>
+
+      {selectedItems.length > 0 && (
+        <div style={{ padding: '16px', backgroundColor: '#f8f9fa' }}>
+          <Text>{selectedItems.length} items selected</Text>
+          <div style={{ marginTop: '12px' }}>
+            <InlineStack gap="200">
+              {promotedActions.map((action, idx) => (
+                <Button
+                  key={idx}
+                  onClick={action.onAction}
+                  icon={action.icon}
+                  tone={action.destructive ? 'critical' : undefined}
+                >
+                  {action.content}
+                </Button>
+              ))}
+            </InlineStack>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }`
@@ -24275,7 +37124,7 @@ function VerticalScrollingExample({
   );
 }
 
-export default VerticalScrollingExample;`
+export default VerticalScrollingExample;`,
   },
 
   horizontalScrolling: {
@@ -24442,7 +37291,7 @@ function HorizontalScrollingExample({
   );
 }
 
-export default HorizontalScrollingExample;`
+export default HorizontalScrollingExample;`,
   }
 };
 
@@ -24877,7 +37726,7 @@ function AppProviderExample({
   );
 }
 
-export default AppProviderExample;`
+export default AppProviderExample;`,
   },
 
   'with-custom-i18n': {
@@ -25304,7 +38153,7 @@ function CustomI18nExample({ locale = 'zh' }: CustomI18nExampleProps): JSX.Eleme
   );
 }
 
-export default CustomI18nExample;`
+export default CustomI18nExample;`,
   },
 
   'with-custom-theme': {
@@ -25778,7 +38627,7 @@ function DarkThemeExample({ theme = darkTheme }: DarkThemeExampleProps): JSX.Ele
   );
 }
 
-export default DarkThemeExample;`
+export default DarkThemeExample;`,
   },
 
   'with-custom-link': {
@@ -26140,7 +38989,7 @@ function CustomLinkExample({
   );
 }
 
-export default CustomLinkExample;`
+export default CustomLinkExample;`,
   },
 
   'nested-providers': {
@@ -26559,7 +39408,7 @@ function NestedProvidersExample({
   );
 }
 
-export default NestedProvidersExample;`
+export default NestedProvidersExample;`,
   },
 
   'complete-app': {
@@ -27246,7 +40095,7 @@ function CompleteApplicationExample({
   );
 }
 
-export default CompleteApplicationExample;`
+export default CompleteApplicationExample;`,
   },
 
   'error-boundary': {
@@ -27757,7 +40606,7 @@ function ErrorBoundaryExample({ enableLogging = true }: ErrorBoundaryExampleProp
   );
 }
 
-export default ErrorBoundaryExample;`
+export default ErrorBoundaryExample;`,
   }
 };
 
@@ -28365,6 +41214,827 @@ function OptionListExample({
     />
   );
 }`
+  },
+
+  'multiple-selection': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function MultipleSelectionExample() {
+  const [selected, setSelected] = useState<string[]>(['electronics', 'clothing']);
+
+  return (
+    <OptionList
+      title="Select categories"
+      allowMultiple
+      options={[
+        {value: 'electronics', label: 'Electronics'},
+        {value: 'clothing', label: 'Clothing & Apparel'},
+        {value: 'home', label: 'Home & Garden'},
+        {value: 'sports', label: 'Sports & Outdoors'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Select categories',
+  vertical: true,
+  columns: 1,
+  items: [{
+    boxLabel: 'Electronics',
+    name: 'categories',
+    inputValue: 'electronics',
+    checked: true
+  }, {
+    boxLabel: 'Clothing & Apparel',
+    name: 'categories',
+    inputValue: 'clothing',
+    checked: true
+  }, {
+    boxLabel: 'Home & Garden',
+    name: 'categories',
+    inputValue: 'home'
+  }, {
+    boxLabel: 'Sports & Outdoors',
+    name: 'categories',
+    inputValue: 'sports'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Select categories</h4>
+  <div class="option-list__items">
+    <label><input type="checkbox" name="categories" value="electronics" checked /> Electronics</label>
+    <label><input type="checkbox" name="categories" value="clothing" checked /> Clothing & Apparel</label>
+    <label><input type="checkbox" name="categories" value="home" /> Home & Garden</label>
+    <label><input type="checkbox" name="categories" value="sports" /> Sports & Outdoors</label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function MultipleSelectionExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(['electronics', 'clothing']);
+
+  return (
+    <OptionList
+      title="Select categories"
+      allowMultiple
+      options={[
+        {value: 'electronics', label: 'Electronics'},
+        {value: 'clothing', label: 'Clothing & Apparel'},
+        {value: 'home', label: 'Home & Garden'},
+        {value: 'sports', label: 'Sports & Outdoors'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'with-icons': {
+    react: `import {OptionList, Icon} from '@shopify/polaris';
+import {PersonIcon, ProductIcon, OrderIcon} from '@shopify/polaris-icons';
+import {useState} from 'react';
+
+function WithIconsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Navigation options"
+      options={[
+        {value: 'customers', label: 'Customers', media: <Icon source={PersonIcon} />},
+        {value: 'products', label: 'Products', media: <Icon source={ProductIcon} />},
+        {value: 'orders', label: 'Orders', media: <Icon source={OrderIcon} />},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Navigation options',
+  vertical: true,
+  items: [{
+    boxLabel: '<i class="fa fa-user"></i> Customers',
+    name: 'nav',
+    inputValue: 'customers'
+  }, {
+    boxLabel: '<i class="fa fa-box"></i> Products',
+    name: 'nav',
+    inputValue: 'products'
+  }, {
+    boxLabel: '<i class="fa fa-shopping-cart"></i> Orders',
+    name: 'nav',
+    inputValue: 'orders'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Navigation options</h4>
+  <div class="option-list__items">
+    <label><input type="radio" name="nav" value="customers" /> 👤 Customers</label>
+    <label><input type="radio" name="nav" value="products" /> 📦 Products</label>
+    <label><input type="radio" name="nav" value="orders" /> 🛒 Orders</label>
+  </div>
+</div>`,
+    typescript: `import {OptionList, Icon} from '@shopify/polaris';
+import {PersonIcon, ProductIcon, OrderIcon} from '@shopify/polaris-icons';
+import {useState} from 'react';
+
+function WithIconsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Navigation options"
+      options={[
+        {value: 'customers', label: 'Customers', media: <Icon source={PersonIcon} />},
+        {value: 'products', label: 'Products', media: <Icon source={ProductIcon} />},
+        {value: 'orders', label: 'Orders', media: <Icon source={OrderIcon} />},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'with-descriptions': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithDescriptionsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Shipping methods"
+      options={[
+        {value: 'standard', label: 'Standard Shipping', description: '5-7 business days'},
+        {value: 'express', label: 'Express Shipping', description: '2-3 business days'},
+        {value: 'overnight', label: 'Overnight Shipping', description: 'Next business day'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Shipping methods',
+  vertical: true,
+  items: [{
+    boxLabel: 'Standard Shipping<br/><small>5-7 business days</small>',
+    name: 'shipping',
+    inputValue: 'standard'
+  }, {
+    boxLabel: 'Express Shipping<br/><small>2-3 business days</small>',
+    name: 'shipping',
+    inputValue: 'express'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Shipping methods</h4>
+  <div class="option-list__items">
+    <label>
+      <input type="radio" name="shipping" value="standard" />
+      <div>
+        <strong>Standard Shipping</strong>
+        <p>5-7 business days</p>
+      </div>
+    </label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithDescriptionsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Shipping methods"
+      options={[
+        {value: 'standard', label: 'Standard Shipping', description: '5-7 business days'},
+        {value: 'express', label: 'Express Shipping', description: '2-3 business days'},
+        {value: 'overnight', label: 'Overnight Shipping', description: 'Next business day'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'with-badges': {
+    react: `import {OptionList, Badge} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithBadgesExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Payment methods"
+      options={[
+        {value: 'credit', label: 'Credit Card', media: <Badge status="success">Active</Badge>},
+        {value: 'paypal', label: 'PayPal', media: <Badge status="success">Active</Badge>},
+        {value: 'google', label: 'Google Pay', media: <Badge status="attention">Setup needed</Badge>},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Payment methods',
+  vertical: true,
+  items: [{
+    boxLabel: 'Credit Card <span class="badge-success">Active</span>',
+    name: 'payment',
+    inputValue: 'credit'
+  }, {
+    boxLabel: 'PayPal <span class="badge-success">Active</span>',
+    name: 'payment',
+    inputValue: 'paypal'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Payment methods</h4>
+  <div class="option-list__items">
+    <label><input type="radio" name="payment" value="credit" /> Credit Card <span class="badge">Active</span></label>
+    <label><input type="radio" name="payment" value="paypal" /> PayPal <span class="badge">Active</span></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList, Badge} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithBadgesExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Payment methods"
+      options={[
+        {value: 'credit', label: 'Credit Card', media: <Badge status="success">Active</Badge>},
+        {value: 'paypal', label: 'PayPal', media: <Badge status="success">Active</Badge>},
+        {value: 'google', label: 'Google Pay', media: <Badge status="attention">Setup needed</Badge>},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'with-disabled-options': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithDisabledOptionsExample() {
+  const [selected, setSelected] = useState<string[]>(['standard']);
+
+  return (
+    <OptionList
+      title="Subscription plans"
+      options={[
+        {value: 'basic', label: 'Basic Plan', disabled: true},
+        {value: 'standard', label: 'Standard Plan'},
+        {value: 'premium', label: 'Premium Plan'},
+        {value: 'enterprise', label: 'Enterprise Plan', disabled: true},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Subscription plans',
+  vertical: true,
+  items: [{
+    boxLabel: 'Basic Plan',
+    name: 'plan',
+    inputValue: 'basic',
+    disabled: true
+  }, {
+    boxLabel: 'Standard Plan',
+    name: 'plan',
+    inputValue: 'standard',
+    checked: true
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Subscription plans</h4>
+  <div class="option-list__items">
+    <label><input type="radio" name="plan" value="basic" disabled /> Basic Plan</label>
+    <label><input type="radio" name="plan" value="standard" checked /> Standard Plan</label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function WithDisabledOptionsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(['standard']);
+
+  return (
+    <OptionList
+      title="Subscription plans"
+      options={[
+        {value: 'basic', label: 'Basic Plan', disabled: true},
+        {value: 'standard', label: 'Standard Plan'},
+        {value: 'premium', label: 'Premium Plan'},
+        {value: 'enterprise', label: 'Enterprise Plan', disabled: true},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'user-role-selection': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function UserRoleSelectionExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      options={[
+        {value: 'viewer', label: 'Viewer', description: 'Can view content but cannot make changes'},
+        {value: 'editor', label: 'Editor', description: 'Can create and edit content'},
+        {value: 'admin', label: 'Administrator', description: 'Full access to all features'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'User Role',
+  vertical: true,
+  items: [{
+    boxLabel: 'Viewer - Can view content but cannot make changes',
+    name: 'role',
+    inputValue: 'viewer'
+  }, {
+    boxLabel: 'Editor - Can create and edit content',
+    name: 'role',
+    inputValue: 'editor'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <div class="option-list__items">
+    <label><input type="radio" name="role" value="viewer" /> Viewer<br/><small>Can view content but cannot make changes</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function UserRoleSelectionExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      options={[
+        {value: 'viewer', label: 'Viewer', description: 'Can view content but cannot make changes'},
+        {value: 'editor', label: 'Editor', description: 'Can create and edit content'},
+        {value: 'admin', label: 'Administrator', description: 'Full access to all features'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'product-categories': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ProductCategoriesExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      allowMultiple
+      options={[
+        {value: 'phones', label: 'Smartphones', description: 'iPhone, Android devices'},
+        {value: 'laptops', label: 'Laptops & Computers', description: 'MacBooks, Windows PCs'},
+        {value: 'tablets', label: 'Tablets', description: 'iPad, Android tablets'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Product Categories',
+  vertical: true,
+  items: [{
+    boxLabel: 'Smartphones - iPhone, Android devices',
+    name: 'categories',
+    inputValue: 'phones'
+  }, {
+    boxLabel: 'Laptops & Computers - MacBooks, Windows PCs',
+    name: 'categories',
+    inputValue: 'laptops'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <div class="option-list__items">
+    <label><input type="checkbox" name="categories" value="phones" /> Smartphones<br/><small>iPhone, Android devices</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ProductCategoriesExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      allowMultiple
+      options={[
+        {value: 'phones', label: 'Smartphones', description: 'iPhone, Android devices'},
+        {value: 'laptops', label: 'Laptops & Computers', description: 'MacBooks, Windows PCs'},
+        {value: 'tablets', label: 'Tablets', description: 'iPad, Android tablets'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'notification-settings': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function NotificationSettingsExample() {
+  const [selected, setSelected] = useState<string[]>(['order-created', 'low-inventory']);
+
+  return (
+    <OptionList
+      allowMultiple
+      title="Order notifications"
+      options={[
+        {value: 'order-created', label: 'New orders', description: 'When a customer places a new order'},
+        {value: 'order-updated', label: 'Order updates', description: 'When order status changes'},
+        {value: 'low-inventory', label: 'Low inventory', description: 'When stock levels are low'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Order notifications',
+  vertical: true,
+  items: [{
+    boxLabel: 'New orders - When a customer places a new order',
+    name: 'notifications',
+    inputValue: 'order-created',
+    checked: true
+  }, {
+    boxLabel: 'Low inventory - When stock levels are low',
+    name: 'notifications',
+    inputValue: 'low-inventory',
+    checked: true
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Order notifications</h4>
+  <div class="option-list__items">
+    <label><input type="checkbox" name="notifications" value="order-created" checked /> New orders<br/><small>When a customer places a new order</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function NotificationSettingsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(['order-created', 'low-inventory']);
+
+  return (
+    <OptionList
+      allowMultiple
+      title="Order notifications"
+      options={[
+        {value: 'order-created', label: 'New orders', description: 'When a customer places a new order'},
+        {value: 'order-updated', label: 'Order updates', description: 'When order status changes'},
+        {value: 'low-inventory', label: 'Low inventory', description: 'When stock levels are low'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'theme-selection': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ThemeSelectionExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Choose your theme"
+      options={[
+        {value: 'light', label: 'Light Theme', description: 'Clean and bright interface'},
+        {value: 'dark', label: 'Dark Theme', description: 'Easy on the eyes in low light'},
+        {value: 'auto', label: 'Auto Theme', description: 'Follows system preferences'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Choose your theme',
+  vertical: true,
+  items: [{
+    boxLabel: 'Light Theme - Clean and bright interface',
+    name: 'theme',
+    inputValue: 'light'
+  }, {
+    boxLabel: 'Dark Theme - Easy on the eyes in low light',
+    name: 'theme',
+    inputValue: 'dark'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Choose your theme</h4>
+  <div class="option-list__items">
+    <label><input type="radio" name="theme" value="light" /> Light Theme<br/><small>Clean and bright interface</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ThemeSelectionExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      title="Choose your theme"
+      options={[
+        {value: 'light', label: 'Light Theme', description: 'Clean and bright interface'},
+        {value: 'dark', label: 'Dark Theme', description: 'Easy on the eyes in low light'},
+        {value: 'auto', label: 'Auto Theme', description: 'Follows system preferences'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'shipping-options': {
+    react: `import {OptionList, Badge} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ShippingOptionsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      options={[
+        {value: 'free', label: 'Free Shipping', description: '5-7 business days', media: <Badge status="success">FREE</Badge>},
+        {value: 'standard', label: 'Standard Shipping', description: '3-5 business days'},
+        {value: 'express', label: 'Express Shipping', description: '2-3 business days'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Shipping Method',
+  vertical: true,
+  items: [{
+    boxLabel: 'Free Shipping - 5-7 business days <span class="badge">FREE</span>',
+    name: 'shipping',
+    inputValue: 'free'
+  }, {
+    boxLabel: 'Standard Shipping - 3-5 business days',
+    name: 'shipping',
+    inputValue: 'standard'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <div class="option-list__items">
+    <label><input type="radio" name="shipping" value="free" /> Free Shipping <span class="badge">FREE</span><br/><small>5-7 business days</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList, Badge} from '@shopify/polaris';
+import {useState} from 'react';
+
+function ShippingOptionsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      options={[
+        {value: 'free', label: 'Free Shipping', description: '5-7 business days', media: <Badge status="success">FREE</Badge>},
+        {value: 'standard', label: 'Standard Shipping', description: '3-5 business days'},
+        {value: 'express', label: 'Express Shipping', description: '2-3 business days'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'permission-settings': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function PermissionSettingsExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      allowMultiple
+      title="Store Management"
+      options={[
+        {value: 'view-products', label: 'View products', description: 'Can browse product catalog'},
+        {value: 'edit-products', label: 'Edit products', description: 'Can modify product information'},
+        {value: 'delete-products', label: 'Delete products', description: 'Can remove products from store'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Store Management',
+  vertical: true,
+  items: [{
+    boxLabel: 'View products - Can browse product catalog',
+    name: 'permissions',
+    inputValue: 'view-products'
+  }, {
+    boxLabel: 'Edit products - Can modify product information',
+    name: 'permissions',
+    inputValue: 'edit-products'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Store Management</h4>
+  <div class="option-list__items">
+    <label><input type="checkbox" name="permissions" value="view-products" /> View products<br/><small>Can browse product catalog</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function PermissionSettingsExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <OptionList
+      allowMultiple
+      title="Store Management"
+      options={[
+        {value: 'view-products', label: 'View products', description: 'Can browse product catalog'},
+        {value: 'edit-products', label: 'Edit products', description: 'Can modify product information'},
+        {value: 'delete-products', label: 'Delete products', description: 'Can remove products from store'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'language-selection': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LanguageSelectionExample() {
+  const [selected, setSelected] = useState<string[]>(['en']);
+
+  return (
+    <OptionList
+      title="Select your preferred language"
+      options={[
+        {value: 'en', label: 'English', description: 'English (United States)'},
+        {value: 'es', label: 'Spanish', description: 'Español (México)'},
+        {value: 'fr', label: 'French', description: 'Français (France)'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.RadioGroup', {
+  fieldLabel: 'Select your preferred language',
+  vertical: true,
+  items: [{
+    boxLabel: 'English - English (United States)',
+    name: 'language',
+    inputValue: 'en',
+    checked: true
+  }, {
+    boxLabel: 'Spanish - Español (México)',
+    name: 'language',
+    inputValue: 'es'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <h4>Select your preferred language</h4>
+  <div class="option-list__items">
+    <label><input type="radio" name="language" value="en" checked /> English<br/><small>English (United States)</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function LanguageSelectionExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>(['en']);
+
+  return (
+    <OptionList
+      title="Select your preferred language"
+      options={[
+        {value: 'en', label: 'English', description: 'English (United States)'},
+        {value: 'es', label: 'Spanish', description: 'Español (México)'},
+        {value: 'fr', label: 'French', description: 'Français (France)'},
+      ]}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
+  },
+
+  'interactive': {
+    react: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function InteractiveExample() {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const options = [
+    {value: 'newsletter', label: 'Newsletter', description: 'Weekly updates and news'},
+    {value: 'promotions', label: 'Promotional Offers', description: 'Special deals and discounts'},
+    {value: 'new-features', label: 'New Features', description: 'Product updates and announcements'},
+  ];
+
+  return (
+    <OptionList
+      allowMultiple
+      options={options}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`,
+    extjs: `Ext.create('Ext.form.CheckboxGroup', {
+  fieldLabel: 'Communication Preferences',
+  vertical: true,
+  items: [{
+    boxLabel: 'Newsletter - Weekly updates and news',
+    name: 'prefs',
+    inputValue: 'newsletter'
+  }, {
+    boxLabel: 'Promotional Offers - Special deals and discounts',
+    name: 'prefs',
+    inputValue: 'promotions'
+  }]
+});`,
+    vanilla: `<div class="option-list">
+  <div class="option-list__items">
+    <label><input type="checkbox" name="prefs" value="newsletter" /> Newsletter<br/><small>Weekly updates and news</small></label>
+  </div>
+</div>`,
+    typescript: `import {OptionList} from '@shopify/polaris';
+import {useState} from 'react';
+
+function InteractiveExample(): JSX.Element {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const options = [
+    {value: 'newsletter', label: 'Newsletter', description: 'Weekly updates and news'},
+    {value: 'promotions', label: 'Promotional Offers', description: 'Special deals and discounts'},
+    {value: 'new-features', label: 'New Features', description: 'Product updates and announcements'},
+  ];
+
+  return (
+    <OptionList
+      allowMultiple
+      options={options}
+      selected={selected}
+      onChange={setSelected}
+    />
+  );
+}`
   }
 };
 
@@ -28440,7 +42110,7 @@ function FooterHelpExample({
   );
 }
 
-export default FooterHelpExample;`
+export default FooterHelpExample;`,
   }
 };
 
@@ -28548,7 +42218,7 @@ function KeypressListenerExample({
   );
 }
 
-export default KeypressListenerExample;`
+export default KeypressListenerExample;`,
   }
 };
 
@@ -28741,7 +42411,7 @@ function FrameExample({
   );
 }
 
-export default FrameExample;`
+export default FrameExample;`,
   }
 };
 
@@ -28880,7 +42550,7 @@ function PageActionsExample({
   );
 }
 
-export default PageActionsExample;`
+export default PageActionsExample;`,
   }
 };
 
@@ -29018,26 +42688,556 @@ button?.addEventListener('click', () => console.log('clicked'));`
 // EcommerceComponents Component Examples
 export const ecommerceComponentsExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { Card, Button } from '@shopify/polaris';
-function ProductCard({ product }: { product: any }) {
-  return <Card><h3>{product.name}</h3><p>\\\${product.price}</p><Button>Add to Cart</Button></Card>;
+    react: `// E-commerce Product Showcase - React + Polaris
+import { Card, Button, Badge, Thumbnail, Text } from '@shopify/polaris';
+import { CartIcon } from '@shopify/polaris-icons';
+
+function ProductShowcase({ product }) {
+  return (
+    <Card>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px', padding: '16px' }}>
+        <Thumbnail size="large" source={product.image} alt={product.name} />
+        <div>
+          <Text variant="headingLg">{product.name}</Text>
+          <Text variant="headingMd">\${product.price}</Text>
+          <Button primary icon={CartIcon}>Add to Cart</Button>
+        </div>
+      </div>
+    </Card>
+  );
 }`,
-    extjs: `Ext.create('Ext.panel.Panel', {
-  html: '<div class="product"><h3>Product</h3><button>Add to Cart</button></div>'
+    vanilla: `// E-commerce Product Showcase - Vanilla JS + @cin7/vanilla-js
+import { $, on, EventBus, createCard } from '@cin7/vanilla-js';
+
+const product = { name: 'Product', price: 299.99, image: 'image.jpg' };
+const card = createCard({ title: product.name });
+card.innerHTML = \`<img src="\${product.image}" /><h2>\${product.name}</h2><p>\\$\${product.price}</p><button id="add-to-cart">Add to Cart</button>\`;
+on($('#add-to-cart'), 'click', () => EventBus.emit('cart:add', { product }));`,
+    extjs: `// E-commerce Product Showcase - ExtJS
+Ext.create('Ext.panel.Panel', {
+  layout: 'hbox',
+  items: [{
+    xtype: 'image',
+    src: 'product.jpg',
+    width: 300
+  }, {
+    xtype: 'container',
+    flex: 1,
+    items: [{
+      html: '<h2>Product Name</h2><p>$299.99</p>'
+    }, {
+      xtype: 'button',
+      text: 'Add to Cart',
+      iconCls: 'x-fa fa-shopping-cart'
+    }]
+  }]
 });`,
-    vanilla: `<div class="product-card">
-  <h3>Product Name</h3>
-  <p>$99.99</p>
-  <button>Add to Cart</button>
-</div>`,
-    typescript: `interface Product { name: string; price: number; }
-function ProductCard({ product }: { product: Product }) {
-  return <div><h3>{product.name}</h3><p>\\\${product.price}</p></div>;
-}`
+    typescript: `// E-commerce Product Showcase - TypeScript
+import { Card, Button, Thumbnail, Text } from '@shopify/polaris';
+import { CartIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface ProductShowcaseProps {
+  product: Product;
+  onAddToCart?: (product: Product) => void;
+}
+
+const ProductShowcase: React.FC<ProductShowcaseProps> = ({ product, onAddToCart }) => {
+  return (
+    <Card>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px', padding: '16px' }}>
+        <Thumbnail size="large" source={product.image} alt={product.name} />
+        <div>
+          <Text variant="headingLg">{product.name}</Text>
+          <Text variant="headingMd">\${product.price.toFixed(2)}</Text>
+          <Button primary icon={CartIcon} onClick={() => onAddToCart?.(product)}>Add to Cart</Button>
+        </div>
+      </div>
+    </Card>
+  );
+};`
+  },
+
+  productcatalog: {
+    react: `// Product Catalog Grid - React
+import { Card, Button, Thumbnail, Text } from '@shopify/polaris';
+import { CartIcon } from '@shopify/polaris-icons';
+
+function ProductCatalog({ products }) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+      {products.map(p => (
+        <Card key={p.id}>
+          <Thumbnail source={p.image} alt={p.name} />
+          <Text variant="headingMd">{p.name}</Text>
+          <Text>\${p.price}</Text>
+          <Button primary fullWidth icon={CartIcon}>Add to Cart</Button>
+        </Card>
+      ))}
+    </div>
+  );
+}`,
+    vanilla: `// Product Catalog Grid - Vanilla JS
+import { $, createCard } from '@cin7/vanilla-js';
+
+const products = [{ id: 1, name: 'Product', price: 299.99 }];
+const grid = document.createElement('div');
+grid.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;';
+products.forEach(p => {
+  const card = createCard({ sectioned: true });
+  card.innerHTML = \`<h3>\${p.name}</h3><p>\\$\${p.price}</p><button>Add to Cart</button>\`;
+  grid.appendChild(card);
+});
+$('#app').appendChild(grid);`,
+    extjs: `// Product Catalog Grid - ExtJS
+Ext.create('Ext.view.View', {
+  store: Ext.create('Ext.data.Store', {
+    fields: ['id', 'name', 'price'],
+    data: [{ id: 1, name: 'Product', price: 299.99 }]
+  }),
+  tpl: '<div class="product-grid"><tpl for="."><div class="card"><h3>{name}</h3><p>\\${price}</p></div></tpl></div>'
+});`,
+    typescript: `// Product Catalog Grid - TypeScript
+import { Card, Button, Thumbnail, Text } from '@shopify/polaris';
+import { CartIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+const ProductCatalog: React.FC<{ products: Product[] }> = ({ products }) => {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+      {products.map(p => (
+        <Card key={p.id}>
+          <Thumbnail source={p.image} alt={p.name} />
+          <Text variant="headingMd">{p.name}</Text>
+          <Text>\${p.price.toFixed(2)}</Text>
+          <Button primary fullWidth icon={CartIcon}>Add to Cart</Button>
+        </Card>
+      ))}
+    </div>
+  );
+};`
+  },
+
+  shoppingcartview: {
+    react: `// Shopping Cart - React
+import { Card, Button, Text } from '@shopify/polaris';
+import { MinusIcon, PlusIcon } from '@shopify/polaris-icons';
+import { useState } from 'react';
+
+function ShoppingCart() {
+  const [items, setItems] = useState([{ id: 1, name: 'Product', price: 299.99, qty: 1 }]);
+  const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  return (
+    <Card>
+      <Text variant="headingLg">Shopping Cart</Text>
+      {items.map(item => (
+        <div key={item.id} style={{ display: 'flex', gap: '16px' }}>
+          <Text>{item.name}</Text>
+          <Button size="small" icon={MinusIcon} />
+          <Text>{item.qty}</Text>
+          <Button size="small" icon={PlusIcon} />
+        </div>
+      ))}
+      <Text variant="headingMd">Total: \${total.toFixed(2)}</Text>
+      <Button primary fullWidth>Checkout</Button>
+    </Card>
+  );
+}`,
+    vanilla: `// Shopping Cart - Vanilla JS
+import { $, createCard } from '@cin7/vanilla-js';
+
+let items = [{ id: 1, name: 'Product', price: 299.99, qty: 1 }];
+function renderCart() {
+  const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const card = createCard({ title: 'Shopping Cart' });
+  card.innerHTML = \`<div>\${items.map(i => \`<div>\${i.name} - Qty: \${i.qty}</div>\`).join('')}<h3>Total: \\$\${total.toFixed(2)}</h3><button>Checkout</button></div>\`;
+  $('#app').innerHTML = '';
+  $('#app').appendChild(card);
+}
+renderCart();`,
+    extjs: `// Shopping Cart - ExtJS
+Ext.create('Ext.panel.Panel', {
+  title: 'Shopping Cart',
+  items: [{
+    xtype: 'grid',
+    store: Ext.create('Ext.data.Store', {
+      fields: ['name', 'price', 'qty'],
+      data: [{ name: 'Product', price: 299.99, qty: 1 }]
+    }),
+    columns: [{ text: 'Name', dataIndex: 'name' }, { text: 'Price', dataIndex: 'price' }, { text: 'Qty', dataIndex: 'qty' }]
+  }, {
+    xtype: 'button',
+    text: 'Checkout'
+  }]
+});`,
+    typescript: `// Shopping Cart - TypeScript
+import { Card, Button, Text } from '@shopify/polaris';
+import { MinusIcon, PlusIcon } from '@shopify/polaris-icons';
+import React, { useState } from 'react';
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  qty: number;
+}
+
+const ShoppingCart: React.FC = () => {
+  const [items, setItems] = useState<CartItem[]>([{ id: 1, name: 'Product', price: 299.99, qty: 1 }]);
+  const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  return (
+    <Card>
+      <Text variant="headingLg">Shopping Cart</Text>
+      {items.map(item => (
+        <div key={item.id}><Text>{item.name}</Text><Text>{item.qty}</Text></div>
+      ))}
+      <Text variant="headingMd">Total: \${total.toFixed(2)}</Text>
+      <Button primary fullWidth>Checkout</Button>
+    </Card>
+  );
+};`
+  },
+
+  checkoutprocess: {
+    react: `// Checkout Flow - React
+import { Card, Button, Text, TextField, BlockStack } from '@shopify/polaris';
+import { useState } from 'react';
+
+function CheckoutFlow() {
+  const [step, setStep] = useState(0);
+  const steps = ['Shipping', 'Payment', 'Review'];
+
+  return (
+    <Card>
+      <Text variant="headingLg">Checkout - {steps[step]}</Text>
+      {step === 0 && <BlockStack gap="400"><TextField label="Email" /><Button primary onClick={() => setStep(1)}>Continue</Button></BlockStack>}
+      {step === 1 && <BlockStack gap="400"><TextField label="Card Number" /><Button primary onClick={() => setStep(2)}>Review</Button></BlockStack>}
+      {step === 2 && <BlockStack gap="400"><Text>Total: \$359.97</Text><Button primary>Place Order</Button></BlockStack>}
+    </Card>
+  );
+}`,
+    vanilla: `// Checkout Flow - Vanilla JS
+import { $, on, createCard } from '@cin7/vanilla-js';
+
+let step = 0;
+function renderCheckout() {
+  const card = createCard({ title: \`Checkout Step \${step + 1}\` });
+  if (step === 0) card.innerHTML = '<input placeholder="Email" /><button id="next">Continue</button>';
+  else if (step === 1) card.innerHTML = '<input placeholder="Card" /><button id="next">Review</button>';
+  else card.innerHTML = '<p>Total: \\$359.97</p><button>Place Order</button>';
+  $('#app').innerHTML = '';
+  $('#app').appendChild(card);
+  if ($('#next')) on($('#next'), 'click', () => { step++; renderCheckout(); });
+}
+renderCheckout();`,
+    extjs: `// Checkout Flow - ExtJS
+Ext.create('Ext.panel.Panel', {
+  title: 'Checkout',
+  layout: 'card',
+  items: [{
+    title: 'Shipping',
+    items: [{ xtype: 'textfield', fieldLabel: 'Email' }, { xtype: 'button', text: 'Continue' }]
+  }, {
+    title: 'Payment',
+    items: [{ xtype: 'textfield', fieldLabel: 'Card' }, { xtype: 'button', text: 'Review' }]
+  }, {
+    title: 'Review',
+    items: [{ html: '<p>Total: $359.97</p>' }, { xtype: 'button', text: 'Place Order' }]
+  }]
+});`,
+    typescript: `// Checkout Flow - TypeScript
+import { Card, Button, Text, TextField, BlockStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+const CheckoutFlow: React.FC = () => {
+  const [step, setStep] = useState<number>(0);
+  const steps = ['Shipping', 'Payment', 'Review'];
+
+  return (
+    <Card>
+      <Text variant="headingLg">Checkout - {steps[step]}</Text>
+      {step === 0 && <BlockStack gap="400"><TextField label="Email" /><Button primary onClick={() => setStep(1)}>Continue</Button></BlockStack>}
+      {step === 1 && <BlockStack gap="400"><TextField label="Card Number" /><Button primary onClick={() => setStep(2)}>Review</Button></BlockStack>}
+      {step === 2 && <BlockStack gap="400"><Text>Total: \$359.97</Text><Button primary>Place Order</Button></BlockStack>}
+    </Card>
+  );
+};`
+  },
+
+  productreviews: {
+    react: `// Customer Reviews - React
+import { Card, Text, Badge, Icon, InlineStack } from '@shopify/polaris';
+import { StarFilledIcon } from '@shopify/polaris-icons';
+
+function CustomerReviews({ reviews }) {
+  return (
+    <Card>
+      <Text variant="headingLg">Customer Reviews</Text>
+      <Text variant="heading2xl">4.5</Text>
+      {reviews.map(r => (
+        <div key={r.id} style={{ padding: '16px 0', borderTop: '1px solid #e1e1e1' }}>
+          <InlineStack gap="200">
+            <Text fontWeight="semibold">{r.name}</Text>
+            {r.verified && <Badge status="success">Verified</Badge>}
+          </InlineStack>
+          <InlineStack gap="025">
+            {Array.from({ length: 5 }, (_, i) => <Icon key={i} source={StarFilledIcon} />)}
+          </InlineStack>
+          <Text>{r.content}</Text>
+        </div>
+      ))}
+    </Card>
+  );
+}`,
+    vanilla: `// Customer Reviews - Vanilla JS
+import { $, createCard } from '@cin7/vanilla-js';
+
+const reviews = [{ id: 1, name: 'Sarah', rating: 5, verified: true, content: 'Amazing!' }];
+const card = createCard({ title: 'Customer Reviews' });
+let html = '<h2>4.5 Stars</h2>';
+reviews.forEach(r => {
+  html += \`<div><strong>\${r.name}</strong> \${r.verified ? '✓' : ''}<div class="stars">★★★★★</div><p>\${r.content}</p></div>\`;
+});
+card.innerHTML = html;
+$('#app').appendChild(card);`,
+    extjs: `// Customer Reviews - ExtJS
+Ext.create('Ext.panel.Panel', {
+  title: 'Customer Reviews',
+  items: [{
+    html: '<h2>4.5 Stars</h2>'
+  }, {
+    xtype: 'dataview',
+    store: Ext.create('Ext.data.Store', {
+      fields: ['name', 'content'],
+      data: [{ name: 'Sarah', content: 'Amazing!' }]
+    }),
+    tpl: '<tpl for="."><div><strong>{name}</strong><p>{content}</p></div></tpl>'
+  }]
+});`,
+    typescript: `// Customer Reviews - TypeScript
+import { Card, Text, Badge, Icon, InlineStack } from '@shopify/polaris';
+import { StarFilledIcon } from '@shopify/polaris-icons';
+import React from 'react';
+
+interface Review {
+  id: number;
+  name: string;
+  rating: number;
+  verified: boolean;
+  content: string;
+}
+
+const CustomerReviews: React.FC<{ reviews: Review[] }> = ({ reviews }) => {
+  return (
+    <Card>
+      <Text variant="headingLg">Customer Reviews</Text>
+      <Text variant="heading2xl">4.5</Text>
+      {reviews.map(r => (
+        <div key={r.id} style={{ padding: '16px 0', borderTop: '1px solid #e1e1e1' }}>
+          <InlineStack gap="200">
+            <Text fontWeight="semibold">{r.name}</Text>
+            {r.verified && <Badge status="success">Verified</Badge>}
+          </InlineStack>
+          <Text>{r.content}</Text>
+        </div>
+      ))}
+    </Card>
+  );
+};`
+  },
+
+  inventorymanagement: {
+    react: `// Inventory Management - React
+import { Card, Text, Badge, Button } from '@shopify/polaris';
+
+function InventoryManagement({ items }) {
+  const getStatusBadge = (status) => {
+    if (status === 'normal') return <Badge status="success">In Stock</Badge>;
+    if (status === 'low') return <Badge status="attention">Low Stock</Badge>;
+    return <Badge status="critical">Out of Stock</Badge>;
+  };
+
+  return (
+    <Card>
+      <Text variant="headingLg">Inventory</Text>
+      {items.map(item => (
+        <div key={item.sku} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: '16px', padding: '12px 0' }}>
+          <Text fontWeight="semibold">{item.sku}</Text>
+          <Text>{item.name}</Text>
+          <Text>{item.stock}</Text>
+          {getStatusBadge(item.status)}
+          {item.stock <= item.reorder && <Button size="small" primary>Reorder</Button>}
+        </div>
+      ))}
+    </Card>
+  );
+}`,
+    vanilla: `// Inventory Management - Vanilla JS
+import { $, createCard } from '@cin7/vanilla-js';
+
+const items = [{ sku: 'WH-001', name: 'Headphones', stock: 45, status: 'normal', reorder: 20 }];
+const card = createCard({ title: 'Inventory' });
+let html = '<div>';
+items.forEach(i => {
+  const badge = i.status === 'normal' ? 'In Stock' : 'Low Stock';
+  html += \`<div><strong>\${i.sku}</strong> \${i.name} - \${i.stock} <span>\${badge}</span></div>\`;
+});
+html += '</div>';
+card.innerHTML = html;
+$('#app').appendChild(card);`,
+    extjs: `// Inventory Management - ExtJS
+Ext.create('Ext.grid.Panel', {
+  title: 'Inventory',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['sku', 'name', 'stock', 'status'],
+    data: [{ sku: 'WH-001', name: 'Headphones', stock: 45, status: 'normal' }]
+  }),
+  columns: [
+    { text: 'SKU', dataIndex: 'sku' },
+    { text: 'Product', dataIndex: 'name', flex: 1 },
+    { text: 'Stock', dataIndex: 'stock' },
+    { text: 'Status', dataIndex: 'status' }
+  ]
+});`,
+    typescript: `// Inventory Management - TypeScript
+import { Card, Text, Badge, Button } from '@shopify/polaris';
+import React from 'react';
+
+interface InventoryItem {
+  sku: string;
+  name: string;
+  stock: number;
+  status: 'normal' | 'low' | 'out';
+  reorder: number;
+}
+
+const InventoryManagement: React.FC<{ items: InventoryItem[] }> = ({ items }) => {
+  const getStatusBadge = (status: InventoryItem['status']) => {
+    if (status === 'normal') return <Badge status="success">In Stock</Badge>;
+    if (status === 'low') return <Badge status="attention">Low Stock</Badge>;
+    return <Badge status="critical">Out of Stock</Badge>;
+  };
+
+  return (
+    <Card>
+      <Text variant="headingLg">Inventory</Text>
+      {items.map(item => (
+        <div key={item.sku}>
+          <Text fontWeight="semibold">{item.sku}</Text>
+          <Text>{item.name} - {item.stock}</Text>
+          {getStatusBadge(item.status)}
+        </div>
+      ))}
+    </Card>
+  );
+};`
+  },
+
+  productcomparison: {
+    react: `// Product Comparison - React
+import { Card, Text, Thumbnail } from '@shopify/polaris';
+
+function ProductComparison({ products, features }) {
+  return (
+    <Card>
+      <Text variant="headingLg">Product Comparison</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: '200px repeat(3, 1fr)', gap: '16px' }}>
+        <div />
+        {products.map(p => (
+          <div key={p.id} style={{ textAlign: 'center' }}>
+            <Thumbnail size="small" source={p.image} alt={p.name} />
+            <Text variant="bodySm" fontWeight="semibold">{p.name}</Text>
+          </div>
+        ))}
+        {features.map(f => (
+          <>
+            <Text key={f} variant="bodySm">{f}</Text>
+            {products.map(p => <Text key={p.id} variant="bodySm">{p[f.toLowerCase()]}</Text>)}
+          </>
+        ))}
+      </div>
+    </Card>
+  );
+}`,
+    vanilla: `// Product Comparison - Vanilla JS
+import { $, createCard } from '@cin7/vanilla-js';
+
+const products = [{ id: 1, name: 'Product A', price: 299.99 }, { id: 2, name: 'Product B', price: 199.99 }];
+const features = ['Price', 'Warranty'];
+const card = createCard({ title: 'Comparison' });
+let html = '<table><tr><th>Feature</th>';
+products.forEach(p => html += \`<th>\${p.name}</th>\`);
+html += '</tr>';
+features.forEach(f => {
+  html += \`<tr><td>\${f}</td>\`;
+  products.forEach(p => html += \`<td>\${p[f.toLowerCase()]}</td>\`);
+  html += '</tr>';
+});
+html += '</table>';
+card.innerHTML = html;
+$('#app').appendChild(card);`,
+    extjs: `// Product Comparison - ExtJS
+Ext.create('Ext.grid.Panel', {
+  title: 'Product Comparison',
+  store: Ext.create('Ext.data.Store', {
+    fields: ['feature', 'product1', 'product2'],
+    data: [
+      { feature: 'Price', product1: '$299.99', product2: '$199.99' },
+      { feature: 'Warranty', product1: '2 Years', product2: '1 Year' }
+    ]
+  }),
+  columns: [
+    { text: 'Feature', dataIndex: 'feature', flex: 1 },
+    { text: 'Product A', dataIndex: 'product1' },
+    { text: 'Product B', dataIndex: 'product2' }
+  ]
+});`,
+    typescript: `// Product Comparison - TypeScript
+import { Card, Text, Thumbnail } from '@shopify/polaris';
+import React from 'react';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  warranty: string;
+  image: string;
+}
+
+const ProductComparison: React.FC<{ products: Product[]; features: string[] }> = ({ products, features }) => {
+  return (
+    <Card>
+      <Text variant="headingLg">Product Comparison</Text>
+      <div style={{ display: 'grid', gridTemplateColumns: '200px repeat(3, 1fr)', gap: '16px' }}>
+        <div />
+        {products.map(p => (
+          <div key={p.id} style={{ textAlign: 'center' }}>
+            <Thumbnail size="small" source={p.image} alt={p.name} />
+            <Text variant="bodySm" fontWeight="semibold">{p.name}</Text>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+};`
   }
 };
-
-// UseCase Component Examples
 export const useCaseExamples: Record<string, CodeVariant> = {
   default: {
     react: `import { useState } from 'react';
@@ -29194,7 +43394,7 @@ function AutocompleteExample({ onSelectionChange }: AutocompleteExampleProps): J
   );
 }
 
-export default AutocompleteExample;`
+export default AutocompleteExample;`,
   }
 };
 
@@ -29267,7 +43467,7 @@ function ChoiceListExample({ onPlanChange }: ChoiceListExampleProps): JSX.Elemen
   );
 }
 
-export default ChoiceListExample;`
+export default ChoiceListExample;`,
   }
 };
 
@@ -29330,7 +43530,7 @@ function ColorPickerExample({ onColorChange }: ColorPickerExampleProps): JSX.Ele
   );
 }
 
-export default ColorPickerExample;`
+export default ColorPickerExample;`,
   }
 };
 
@@ -29442,7 +43642,7 @@ function ComboboxExample({ onSelect }: ComboboxExampleProps): JSX.Element {
   );
 }
 
-export default ComboboxExample;`
+export default ComboboxExample;`,
   }
 };
 
@@ -29517,7 +43717,7 @@ function DatePickerExample({ onDateChange }: DatePickerExampleProps): JSX.Elemen
   );
 }
 
-export default DatePickerExample;`
+export default DatePickerExample;`,
   }
 };
 
@@ -29584,7 +43784,7 @@ function FormLayoutExample({ onFormChange }: FormLayoutExampleProps): JSX.Elemen
   );
 }
 
-export default FormLayoutExample;`
+export default FormLayoutExample;`,
   }
 };
 
@@ -29655,7 +43855,7 @@ function RangeSliderExample({ onRangeChange }: RangeSliderExampleProps): JSX.Ele
   );
 }
 
-export default RangeSliderExample;`
+export default RangeSliderExample;`,
   }
 };
 
@@ -29727,7 +43927,7 @@ function PaginationExample({
   );
 }
 
-export default PaginationExample;`
+export default PaginationExample;`,
   },
 
   middlePage: {
@@ -29824,7 +44024,7 @@ function MiddlePageExample({
   );
 }
 
-export default MiddlePageExample;`
+export default MiddlePageExample;`,
   },
 
   lastPage: {
@@ -29899,7 +44099,7 @@ function LastPageExample({
   );
 }
 
-export default LastPageExample;`
+export default LastPageExample;`,
   },
 
   customTooltips: {
@@ -30036,7 +44236,928 @@ function CustomTooltipsExample({
   );
 }
 
-export default CustomTooltipsExample;`
+export default CustomTooltipsExample;`,
+  },
+
+  productCatalog: {
+    react: `import { Pagination } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ProductCatalogExample() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalProducts = 247;
+  const productsPerPage = 20;
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const startIndex = (currentPage - 1) * productsPerPage + 1;
+  const endIndex = Math.min(currentPage * productsPerPage, totalProducts);
+
+  return (
+    <div>
+      <h2>Product Catalog</h2>
+      <p>Showing {startIndex}-{endIndex} of {totalProducts} products</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Product catalog pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <input
+        type="number"
+        min="1"
+        max={totalPages}
+        value={currentPage}
+        onChange={(e) => {
+          const page = parseInt(e.target.value);
+          if (page >= 1 && page <= totalPages) setCurrentPage(page);
+        }}
+      />
+    </div>
+  );
+}
+
+export default ProductCatalogExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="product-catalog">
+  <h2>Product Catalog</h2>
+  <p id="catalog-info">Showing 1-20 of 247 products</p>
+
+  <div class="polaris-pagination">
+    <button id="prev-btn" disabled>Previous</button>
+    <button id="next-btn">Next</button>
+  </div>
+
+  <input type="number" id="page-input" min="1" max="13" value="1" />
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const state = { totalProducts: 247, productsPerPage: 20, currentPage: 1 };
+
+function updateUI() {
+  const start = (state.currentPage - 1) * state.productsPerPage + 1;
+  const end = Math.min(state.currentPage * state.productsPerPage, state.totalProducts);
+  const totalPages = Math.ceil(state.totalProducts / state.productsPerPage);
+
+  $('#catalog-info').textContent = \`Showing \${start}-\${end} of \${state.totalProducts} products\`;
+  $('#prev-btn').disabled = state.currentPage === 1;
+  $('#next-btn').disabled = state.currentPage === totalPages;
+  $('#page-input').value = state.currentPage;
+}
+
+on($('#prev-btn'), 'click', () => {
+  if (state.currentPage > 1) { state.currentPage--; updateUI(); }
+});
+
+on($('#next-btn'), 'click', () => {
+  const totalPages = Math.ceil(state.totalProducts / state.productsPerPage);
+  if (state.currentPage < totalPages) { state.currentPage++; updateUI(); }
+});
+
+on($('#page-input'), 'change', (e) => {
+  const page = parseInt(e.target.value);
+  const totalPages = Math.ceil(state.totalProducts / state.productsPerPage);
+  if (page >= 1 && page <= totalPages) { state.currentPage = page; updateUI(); }
+});
+
+updateUI();
+</script>`,
+
+    extjs: `// ExtJS Product Catalog with Jump-to-Page
+const store = Ext.create('Ext.data.Store', {
+  pageSize: 20,
+  proxy: {
+    type: 'memory',
+    data: { data: Array.from({ length: 247 }, (_, i) => ({ id: i + 1, name: \`Product \${i + 1}\` })), total: 247 },
+    reader: { type: 'json', rootProperty: 'data', totalProperty: 'total' }
+  },
+  autoLoad: true
+});
+
+Ext.create('Ext.toolbar.Paging', {
+  store: store,
+  displayInfo: true,
+  displayMsg: 'Showing products {0} - {1} of {2}',
+  renderTo: Ext.getBody(),
+  items: ['-', 'Jump to:', {
+    xtype: 'numberfield',
+    width: 60,
+    minValue: 1,
+    maxValue: Math.ceil(247 / 20),
+    value: 1,
+    listeners: {
+      change: function(field, value) {
+        if (value >= 1 && value <= Math.ceil(247 / 20)) store.loadPage(value);
+      }
+    }
+  }]
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface ProductCatalogProps {
+  totalProducts?: number;
+  productsPerPage?: number;
+  onPageChange?: (page: number) => void;
+}
+
+function ProductCatalogExample({
+  totalProducts = 247,
+  productsPerPage = 20,
+  onPageChange
+}: ProductCatalogProps): JSX.Element {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+  const handleNext = useCallback(() => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, totalPages, onPageChange]);
+
+  const handlePrevious = useCallback(() => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, onPageChange]);
+
+  const handleJumpToPage = useCallback((page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      onPageChange?.(page);
+    }
+  }, [totalPages, onPageChange]);
+
+  const startIndex = (currentPage - 1) * productsPerPage + 1;
+  const endIndex = Math.min(currentPage * productsPerPage, totalProducts);
+
+  return (
+    <div>
+      <h2>Product Catalog</h2>
+      <p>Showing {startIndex}-{endIndex} of {totalProducts} products</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Product catalog pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <input
+        type="number"
+        min="1"
+        max={totalPages}
+        value={currentPage}
+        onChange={(e) => handleJumpToPage(parseInt(e.target.value))}
+      />
+    </div>
+  );
+}
+
+export default ProductCatalogExample;`,
+  },
+
+  dataTable: {
+    react: `import { Pagination } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function DataTableExample() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const totalOrders = 89;
+  const totalPages = Math.ceil(totalOrders / rowsPerPage);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const startIndex = (currentPage - 1) * rowsPerPage + 1;
+  const endIndex = Math.min(currentPage * rowsPerPage, totalOrders);
+
+  return (
+    <div>
+      <h2>Order Management</h2>
+      <p>Total {totalOrders} orders • Page {currentPage} of {totalPages}</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Order table pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <select value={rowsPerPage} onChange={(e) => { setRowsPerPage(parseInt(e.target.value)); setCurrentPage(1); }}>
+        <option value={10}>10 rows</option>
+        <option value={25}>25 rows</option>
+        <option value={50}>50 rows</option>
+      </select>
+
+      <p>Showing {startIndex}-{endIndex} of {totalOrders} orders</p>
+    </div>
+  );
+}
+
+export default DataTableExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="order-table">
+  <h2>Order Management</h2>
+  <p id="table-info">Total 89 orders • Page 1 of 9</p>
+
+  <div class="polaris-pagination">
+    <button id="prev-btn" disabled>Previous</button>
+    <button id="next-btn">Next</button>
+  </div>
+
+  <select id="rows-per-page">
+    <option value="10">10 rows</option>
+    <option value="25">25 rows</option>
+    <option value="50">50 rows</option>
+  </select>
+
+  <p id="rows-info">Showing 1-10 of 89 orders</p>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const state = { totalOrders: 89, rowsPerPage: 10, currentPage: 1 };
+
+function updateUI() {
+  const totalPages = Math.ceil(state.totalOrders / state.rowsPerPage);
+  const start = (state.currentPage - 1) * state.rowsPerPage + 1;
+  const end = Math.min(state.currentPage * state.rowsPerPage, state.totalOrders);
+
+  $('#table-info').textContent = \`Total \${state.totalOrders} orders • Page \${state.currentPage} of \${totalPages}\`;
+  $('#rows-info').textContent = \`Showing \${start}-\${end} of \${state.totalOrders} orders\`;
+  $('#prev-btn').disabled = state.currentPage === 1;
+  $('#next-btn').disabled = state.currentPage === totalPages;
+}
+
+on($('#prev-btn'), 'click', () => {
+  if (state.currentPage > 1) { state.currentPage--; updateUI(); }
+});
+
+on($('#next-btn'), 'click', () => {
+  if (state.currentPage < Math.ceil(state.totalOrders / state.rowsPerPage)) { state.currentPage++; updateUI(); }
+});
+
+on($('#rows-per-page'), 'change', (e) => {
+  state.rowsPerPage = parseInt(e.target.value);
+  state.currentPage = 1;
+  updateUI();
+});
+
+updateUI();
+</script>`,
+
+    extjs: `// ExtJS Grid with Pagination and Rows Per Page
+Ext.define('Order', {
+  extend: 'Ext.data.Model',
+  fields: ['id', 'customer', 'amount', 'status', 'date']
+});
+
+const store = Ext.create('Ext.data.Store', {
+  model: 'Order',
+  pageSize: 10,
+  proxy: {
+    type: 'memory',
+    data: { data: Array.from({ length: 89 }, (_, i) => ({ id: i + 1, customer: \`Customer \${i + 1}\`, amount: (Math.random() * 1000).toFixed(2), status: 'Pending', date: new Date() })), total: 89 },
+    reader: { type: 'json', rootProperty: 'data', totalProperty: 'total' }
+  },
+  autoLoad: true
+});
+
+Ext.create('Ext.grid.Panel', {
+  store: store,
+  columns: [
+    { text: 'ID', dataIndex: 'id', width: 80 },
+    { text: 'Customer', dataIndex: 'customer', flex: 1 },
+    { text: 'Amount', dataIndex: 'amount', width: 120, renderer: v => '$' + v }
+  ],
+  dockedItems: [{
+    xtype: 'pagingtoolbar',
+    dock: 'bottom',
+    store: store,
+    displayInfo: true,
+    displayMsg: 'Showing orders {0} - {1} of {2}',
+    items: ['-', 'Rows:', {
+      xtype: 'combobox',
+      width: 100,
+      value: 10,
+      store: [10, 25, 50],
+      listeners: { select: (c, r) => { store.pageSize = r.get('field1'); store.loadPage(1); } }
+    }]
+  }],
+  renderTo: Ext.getBody(),
+  width: 700,
+  height: 400
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface DataTableProps {
+  totalOrders?: number;
+  defaultRowsPerPage?: number;
+  onPageChange?: (page: number, rowsPerPage: number) => void;
+}
+
+function DataTableExample({
+  totalOrders = 89,
+  defaultRowsPerPage = 10,
+  onPageChange
+}: DataTableProps): JSX.Element {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(defaultRowsPerPage);
+
+  const totalPages = Math.ceil(totalOrders / rowsPerPage);
+
+  const handleNext = useCallback(() => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage, rowsPerPage);
+    }
+  }, [currentPage, totalPages, rowsPerPage, onPageChange]);
+
+  const handlePrevious = useCallback(() => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage, rowsPerPage);
+    }
+  }, [currentPage, rowsPerPage, onPageChange]);
+
+  const handleRowsPerPageChange = useCallback((newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setCurrentPage(1);
+    onPageChange?.(1, newRowsPerPage);
+  }, [onPageChange]);
+
+  const startIndex = (currentPage - 1) * rowsPerPage + 1;
+  const endIndex = Math.min(currentPage * rowsPerPage, totalOrders);
+
+  return (
+    <div>
+      <h2>Order Management</h2>
+      <p>Total {totalOrders} orders • Page {currentPage} of {totalPages}</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Order table pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <select value={rowsPerPage} onChange={(e) => handleRowsPerPageChange(parseInt(e.target.value))}>
+        <option value={10}>10 rows</option>
+        <option value={25}>25 rows</option>
+        <option value={50}>50 rows</option>
+      </select>
+
+      <p>Showing {startIndex}-{endIndex} of {totalOrders} orders</p>
+    </div>
+  );
+}
+
+export default DataTableExample;`,
+  },
+
+  searchResults: {
+    react: `import { Pagination } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function SearchResultsExample() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalResults = 156;
+  const resultsPerPage = 8;
+  const totalPages = Math.ceil(totalResults / resultsPerPage);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    for (let i = 0; i < Math.min(5, totalPages); i++) {
+      let pageNum;
+      if (totalPages <= 5) pageNum = i + 1;
+      else if (currentPage <= 3) pageNum = i + 1;
+      else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+      else pageNum = currentPage - 2 + i;
+      pages.push(pageNum);
+    }
+    return pages;
+  };
+
+  const startResult = (currentPage - 1) * resultsPerPage + 1;
+  const endResult = Math.min(currentPage * resultsPerPage, totalResults);
+
+  return (
+    <div>
+      <h2>Search Results</h2>
+      <p>Showing {startResult}-{endResult} of {totalResults} results</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Search results pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <div>
+        {renderPageNumbers().map((num) => (
+          <button key={num} onClick={() => setCurrentPage(num)}>{num}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default SearchResultsExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="search-results">
+  <h2>Search Results</h2>
+  <p id="search-info">Showing 1-8 of 156 results</p>
+
+  <div class="polaris-pagination">
+    <button id="prev-btn" disabled>Previous</button>
+    <button id="next-btn">Next</button>
+  </div>
+
+  <div id="page-numbers"></div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const state = { totalResults: 156, resultsPerPage: 8, currentPage: 1 };
+
+function renderPageNumbers() {
+  const totalPages = Math.ceil(state.totalResults / state.resultsPerPage);
+  const pages = [];
+
+  for (let i = 0; i < Math.min(5, totalPages); i++) {
+    let pageNum;
+    if (totalPages <= 5) pageNum = i + 1;
+    else if (state.currentPage <= 3) pageNum = i + 1;
+    else if (state.currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+    else pageNum = state.currentPage - 2 + i;
+    pages.push(pageNum);
+  }
+
+  $('#page-numbers').innerHTML = pages.map(page =>
+    \`<button class="page-btn \${page === state.currentPage ? 'active' : ''}" data-page="\${page}">\${page}</button>\`
+  ).join('');
+
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    on(btn, 'click', () => {
+      state.currentPage = parseInt(btn.getAttribute('data-page'));
+      updateUI();
+    });
+  });
+}
+
+function updateUI() {
+  const totalPages = Math.ceil(state.totalResults / state.resultsPerPage);
+  const start = (state.currentPage - 1) * state.resultsPerPage + 1;
+  const end = Math.min(state.currentPage * state.resultsPerPage, state.totalResults);
+
+  $('#search-info').textContent = \`Showing \${start}-\${end} of \${state.totalResults} results\`;
+  $('#prev-btn').disabled = state.currentPage === 1;
+  $('#next-btn').disabled = state.currentPage === totalPages;
+
+  renderPageNumbers();
+}
+
+on($('#prev-btn'), 'click', () => {
+  if (state.currentPage > 1) { state.currentPage--; updateUI(); }
+});
+
+on($('#next-btn'), 'click', () => {
+  const totalPages = Math.ceil(state.totalResults / state.resultsPerPage);
+  if (state.currentPage < totalPages) { state.currentPage++; updateUI(); }
+});
+
+updateUI();
+</script>`,
+
+    extjs: `// ExtJS Search Results with Page Number Buttons
+const store = Ext.create('Ext.data.Store', {
+  pageSize: 8,
+  proxy: {
+    type: 'memory',
+    data: { data: Array.from({ length: 156 }, (_, i) => ({ id: i + 1, title: \`Result \${i + 1}\` })), total: 156 },
+    reader: { type: 'json', rootProperty: 'data', totalProperty: 'total' }
+  },
+  autoLoad: true
+});
+
+Ext.create('Ext.panel.Panel', {
+  title: 'Search Results',
+  renderTo: Ext.getBody(),
+  width: 700,
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    items: [
+      { xtype: 'tbtext', itemId: 'resultsCount', text: '1-8 of 156 results' },
+      '->',
+      { xtype: 'pagingtoolbar', store: store, displayInfo: false },
+      '->',
+      { xtype: 'container', itemId: 'pageNumbers' }
+    ]
+  }],
+  listeners: {
+    afterrender: function() {
+      store.on('load', () => {
+        const page = store.currentPage;
+        const total = store.getTotalCount();
+        const pageSize = store.pageSize;
+        this.down('[itemId=resultsCount]').setText(\`\${(page - 1) * pageSize + 1}-\${Math.min(page * pageSize, total)} of \${total} results\`);
+      });
+    }
+  }
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface SearchResultsProps {
+  totalResults?: number;
+  resultsPerPage?: number;
+  onPageChange?: (page: number) => void;
+}
+
+function SearchResultsExample({
+  totalResults = 156,
+  resultsPerPage = 8,
+  onPageChange
+}: SearchResultsProps): JSX.Element {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages = Math.ceil(totalResults / resultsPerPage);
+
+  const handleNext = useCallback(() => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, totalPages, onPageChange]);
+
+  const handlePrevious = useCallback(() => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, onPageChange]);
+
+  const handlePageClick = useCallback((page: number) => {
+    setCurrentPage(page);
+    onPageChange?.(page);
+  }, [onPageChange]);
+
+  const renderPageNumbers = useCallback((): number[] => {
+    const pages: number[] = [];
+    for (let i = 0; i < Math.min(5, totalPages); i++) {
+      let pageNum: number;
+      if (totalPages <= 5) pageNum = i + 1;
+      else if (currentPage <= 3) pageNum = i + 1;
+      else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+      else pageNum = currentPage - 2 + i;
+      pages.push(pageNum);
+    }
+    return pages;
+  }, [currentPage, totalPages]);
+
+  const startResult = (currentPage - 1) * resultsPerPage + 1;
+  const endResult = Math.min(currentPage * resultsPerPage, totalResults);
+
+  return (
+    <div>
+      <h2>Search Results</h2>
+      <p>Showing {startResult}-{endResult} of {totalResults} results</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Search results pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <div>
+        {renderPageNumbers().map((pageNum) => (
+          <button key={pageNum} onClick={() => handlePageClick(pageNum)}>{pageNum}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default SearchResultsExample;`,
+  },
+
+  photoGallery: {
+    react: `import { Pagination } from '@shopify/polaris';
+import React, { useState, useEffect } from 'react';
+
+type ViewMode = 'grid' | 'list';
+
+function PhotoGalleryExample() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedView, setSelectedView] = useState<ViewMode>('grid');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+
+  const totalPhotos = 84;
+  const photosPerPage = selectedView === 'grid' ? 12 : 8;
+  const totalPages = Math.ceil(totalPhotos / photosPerPage);
+
+  useEffect(() => {
+    setItemsPerPage(photosPerPage);
+  }, [photosPerPage]);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleViewChange = (view: ViewMode) => {
+    setSelectedView(view);
+    setCurrentPage(1);
+  };
+
+  const startPhoto = (currentPage - 1) * photosPerPage + 1;
+  const endPhoto = Math.min(currentPage * photosPerPage, totalPhotos);
+
+  return (
+    <div>
+      <h2>Photo Gallery</h2>
+      <button onClick={() => handleViewChange('grid')}>Grid View</button>
+      <button onClick={() => handleViewChange('list')}>List View</button>
+
+      <p>{startPhoto}-{endPhoto} of {totalPhotos} photos</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Photo gallery pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(parseInt(e.target.value)); setCurrentPage(1); }}>
+        <option value={8}>8</option>
+        <option value={12}>12</option>
+        <option value={24}>24</option>
+      </select>
+    </div>
+  );
+}
+
+export default PhotoGalleryExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div id="photo-gallery">
+  <h2>Photo Gallery</h2>
+  <button id="grid-view" class="active">Grid View</button>
+  <button id="list-view">List View</button>
+
+  <p id="gallery-info">1-12 of 84 photos</p>
+
+  <div class="polaris-pagination">
+    <button id="prev-btn" disabled>Previous</button>
+    <button id="next-btn">Next</button>
+  </div>
+
+  <select id="items-select">
+    <option value="8">8</option>
+    <option value="12" selected>12</option>
+    <option value="24">24</option>
+  </select>
+</div>
+
+<script>
+import { $, on, addClass, removeClass } from '@cin7/vanilla-js';
+
+const state = { totalPhotos: 84, itemsPerPage: 12, currentPage: 1, viewMode: 'grid' };
+
+function updateUI() {
+  const totalPages = Math.ceil(state.totalPhotos / state.itemsPerPage);
+  const start = (state.currentPage - 1) * state.itemsPerPage + 1;
+  const end = Math.min(state.currentPage * state.itemsPerPage, state.totalPhotos);
+
+  $('#gallery-info').textContent = \`\${start}-\${end} of \${state.totalPhotos} photos\`;
+  $('#prev-btn').disabled = state.currentPage === 1;
+  $('#next-btn').disabled = state.currentPage === totalPages;
+}
+
+on($('#grid-view'), 'click', () => {
+  state.viewMode = 'grid';
+  state.itemsPerPage = 12;
+  state.currentPage = 1;
+  addClass($('#grid-view'), 'active');
+  removeClass($('#list-view'), 'active');
+  $('#items-select').value = '12';
+  updateUI();
+});
+
+on($('#list-view'), 'click', () => {
+  state.viewMode = 'list';
+  state.itemsPerPage = 8;
+  state.currentPage = 1;
+  addClass($('#list-view'), 'active');
+  removeClass($('#grid-view'), 'active');
+  $('#items-select').value = '8';
+  updateUI();
+});
+
+on($('#prev-btn'), 'click', () => {
+  if (state.currentPage > 1) { state.currentPage--; updateUI(); }
+});
+
+on($('#next-btn'), 'click', () => {
+  const totalPages = Math.ceil(state.totalPhotos / state.itemsPerPage);
+  if (state.currentPage < totalPages) { state.currentPage++; updateUI(); }
+});
+
+on($('#items-select'), 'change', (e) => {
+  state.itemsPerPage = parseInt(e.target.value);
+  state.currentPage = 1;
+  updateUI();
+});
+
+updateUI();
+</script>`,
+
+    extjs: `// ExtJS Photo Gallery with View Switching
+const store = Ext.create('Ext.data.Store', {
+  fields: ['id', 'title', 'category'],
+  pageSize: 12,
+  proxy: {
+    type: 'memory',
+    data: { data: Array.from({ length: 84 }, (_, i) => ({ id: i + 1, title: \`Photo \${i + 1}\`, category: 'Nature' })), total: 84 },
+    reader: { type: 'json', rootProperty: 'data', totalProperty: 'total' }
+  },
+  autoLoad: true
+});
+
+const dataView = Ext.create('Ext.view.View', {
+  store: store,
+  tpl: '<div class="photo-grid"><tpl for="."><div class="photo-card">{title}</div></tpl></div>',
+  itemSelector: 'div.photo-card'
+});
+
+Ext.create('Ext.panel.Panel', {
+  title: 'Photo Gallery',
+  items: [dataView],
+  dockedItems: [
+    {
+      xtype: 'toolbar',
+      dock: 'top',
+      items: [
+        { text: 'Grid View', pressed: true, enableToggle: true, toggleGroup: 'view', handler: () => { store.pageSize = 12; store.loadPage(1); } },
+        { text: 'List View', enableToggle: true, toggleGroup: 'view', handler: () => { store.pageSize = 8; store.loadPage(1); } }
+      ]
+    },
+    {
+      xtype: 'pagingtoolbar',
+      dock: 'bottom',
+      store: store,
+      displayInfo: true,
+      items: ['-', 'Items:', {
+        xtype: 'combobox',
+        width: 80,
+        value: 12,
+        store: [8, 12, 24],
+        listeners: { select: (c, r) => { store.pageSize = r.get('field1'); store.loadPage(1); } }
+      }]
+    }
+  ],
+  renderTo: Ext.getBody(),
+  width: 700,
+  height: 500
+});`,
+
+    typescript: `import { Pagination } from '@shopify/polaris';
+import React, { useState, useEffect, useCallback } from 'react';
+
+type ViewMode = 'grid' | 'list';
+
+interface PhotoGalleryProps {
+  totalPhotos?: number;
+  gridItemsPerPage?: number;
+  listItemsPerPage?: number;
+  onPageChange?: (page: number) => void;
+  onViewChange?: (viewMode: ViewMode) => void;
+}
+
+function PhotoGalleryExample({
+  totalPhotos = 84,
+  gridItemsPerPage = 12,
+  listItemsPerPage = 8,
+  onPageChange,
+  onViewChange
+}: PhotoGalleryProps): JSX.Element {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedView, setSelectedView] = useState<ViewMode>('grid');
+  const [itemsPerPage, setItemsPerPage] = useState<number>(gridItemsPerPage);
+
+  const photosPerPage = selectedView === 'grid' ? gridItemsPerPage : listItemsPerPage;
+  const totalPages = Math.ceil(totalPhotos / photosPerPage);
+
+  useEffect(() => {
+    setItemsPerPage(photosPerPage);
+  }, [photosPerPage]);
+
+  const handleNext = useCallback(() => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, totalPages, onPageChange]);
+
+  const handlePrevious = useCallback(() => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      onPageChange?.(newPage);
+    }
+  }, [currentPage, onPageChange]);
+
+  const handleViewChange = useCallback((view: ViewMode) => {
+    setSelectedView(view);
+    setCurrentPage(1);
+    onViewChange?.(view);
+    onPageChange?.(1);
+  }, [onViewChange, onPageChange]);
+
+  const startPhoto = (currentPage - 1) * photosPerPage + 1;
+  const endPhoto = Math.min(currentPage * photosPerPage, totalPhotos);
+
+  return (
+    <div>
+      <h2>Photo Gallery</h2>
+      <button onClick={() => handleViewChange('grid')}>Grid View</button>
+      <button onClick={() => handleViewChange('list')}>List View</button>
+
+      <p>{startPhoto}-{endPhoto} of {totalPhotos} photos</p>
+
+      <Pagination
+        hasNext={currentPage < totalPages}
+        hasPrevious={currentPage > 1}
+        label={\`Photo gallery pagination, page \${currentPage} of \${totalPages}\`}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
+
+      <select value={itemsPerPage} onChange={(e) => { setItemsPerPage(parseInt(e.target.value)); setCurrentPage(1); }}>
+        <option value={8}>8</option>
+        <option value={12}>12</option>
+        <option value={24}>24</option>
+      </select>
+    </div>
+  );
+}
+
+export default PhotoGalleryExample;`,
   }
 };
 
@@ -30124,7 +45245,7 @@ function LinkExample({
   );
 }
 
-export default LinkExample;`
+export default LinkExample;`,
   },
 
   externalLink: {
@@ -30215,7 +45336,7 @@ function ExternalLinkExample({
   );
 }
 
-export default ExternalLinkExample;`
+export default ExternalLinkExample;`,
   },
 
   monochrome: {
@@ -30307,7 +45428,7 @@ function MonochromeLinkExample({
   );
 }
 
-export default MonochromeLinkExample;`
+export default MonochromeLinkExample;`,
   },
 
   noUnderline: {
@@ -30399,7 +45520,7 @@ function NoUnderlineLinkExample({
   );
 }
 
-export default NoUnderlineLinkExample;`
+export default NoUnderlineLinkExample;`,
   },
 
   inlineText: {
@@ -30534,7 +45655,7 @@ function InlineTextLinkExample({
   );
 }
 
-export default InlineTextLinkExample;`
+export default InlineTextLinkExample;`,
   },
 
   navigationLinks: {
@@ -30719,7 +45840,7 @@ function NavigationLinksExample({
   );
 }
 
-export default NavigationLinksExample;`
+export default NavigationLinksExample;`,
   },
 
   footerLinks: {
@@ -30787,7 +45908,7 @@ function FooterLinksExample({ links }: FooterLinksProps): JSX.Element {
   );
 }
 
-export default FooterLinksExample;`
+export default FooterLinksExample;`,
   },
 
   cardActions: {
@@ -30848,7 +45969,7 @@ function CardActionsExample({ title, primaryUrl, secondaryUrl }: CardActionsProp
   );
 }
 
-export default CardActionsExample;`
+export default CardActionsExample;`,
   },
 
   helpDocumentation: {
@@ -30903,7 +46024,7 @@ function HelpDocumentationExample({ quickStartUrl, apiDocsUrl }: HelpDocumentati
   );
 }
 
-export default HelpDocumentationExample;`
+export default HelpDocumentationExample;`,
   },
 
   breadcrumbStyle: {
@@ -30973,7 +46094,7 @@ function BreadcrumbStyleExample({ items }: BreadcrumbStyleProps): JSX.Element {
   );
 }
 
-export default BreadcrumbStyleExample;`
+export default BreadcrumbStyleExample;`,
   },
 
   tagCloud: {
@@ -31045,7 +46166,7 @@ function TagCloudExample({ tags }: TagCloudProps): JSX.Element {
   );
 }
 
-export default TagCloudExample;`
+export default TagCloudExample;`,
   },
 
   tableOfContents: {
@@ -31118,7 +46239,7 @@ function TableOfContentsExample({ sections }: TableOfContentsProps): JSX.Element
   );
 }
 
-export default TableOfContentsExample;`
+export default TableOfContentsExample;`,
   },
 
   socialLinks: {
@@ -31180,7 +46301,7 @@ function SocialLinksExample({ platforms }: SocialLinksProps): JSX.Element {
   );
 }
 
-export default SocialLinksExample;`
+export default SocialLinksExample;`,
   }
 };
 
@@ -31278,7 +46399,7 @@ function BlockStackExample({
   );
 }
 
-export default BlockStackExample;`
+export default BlockStackExample;`,
   }
 };
 
@@ -31421,7 +46542,7 @@ function LayoutExample({
   );
 }
 
-export default LayoutExample;`
+export default LayoutExample;`,
   }
 };
 
@@ -31550,7 +46671,7 @@ function PageExample({
   );
 }
 
-export default PageExample;`
+export default PageExample;`,
   }
 ,
 
@@ -32393,8 +47514,8 @@ function ProgressBarExample({
   );
 }
 
-export default ProgressBarExample;`
-,
+export default ProgressBarExample;`,
+  },
 
   sizes: {
     react: `import { ProgressBar, Text } from '@shopify/polaris';
@@ -32549,7 +47670,7 @@ function ProgressBarSizes(): JSX.Element {
 }
 
 export default ProgressBarSizes;`
-  }  }
+  },
 };
 
 // Spinner Component Examples - Feedback
@@ -32628,7 +47749,7 @@ function SpinnerExample({
   );
 }
 
-export default SpinnerExample;`
+export default SpinnerExample;`,
   }
 };
 
@@ -32749,7 +47870,458 @@ function ToastExample({
   );
 }
 
-export default ToastExample;`
+export default ToastExample;`,
+  },
+
+  error: {
+    react: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ErrorToastExample() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Frame>
+      <Button onClick={() => setActive(true)}>Show Error Toast</Button>
+      {active && (
+        <Toast
+          content="Failed to save changes"
+          error
+          onDismiss={() => setActive(false)}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default ErrorToastExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<button id="show-error-toast">Show Error Toast</button>
+
+<div class="polaris-toast-wrapper polaris-toast--error" style="display: none;">
+  <div class="polaris-toast">
+    <div class="polaris-toast__icon">⚠️</div>
+    <div class="polaris-toast__content">Failed to save changes</div>
+    <button class="polaris-toast__close">×</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createToast } from '@cin7/vanilla-js';
+
+const button = document.getElementById('show-error-toast');
+
+button.addEventListener('click', () => {
+  const toast = createToast({
+    content: 'Failed to save changes',
+    error: true,
+    duration: 5000,
+    onDismiss: () => {
+      console.log('Error toast dismissed');
+    }
+  });
+
+  document.body.appendChild(toast);
+});
+</script>`,
+
+    extjs: `// ExtJS Error Toast notification
+Ext.toast({
+  html: 'Failed to save changes',
+  title: 'Error',
+  width: 300,
+  align: 'br',
+  autoCloseDelay: 5000,
+  cls: 'error-toast',
+  iconCls: 'fa fa-exclamation-triangle'
+});
+
+// Or using Ext.Msg for errors
+Ext.Msg.show({
+  title: 'Error',
+  message: 'Failed to save changes',
+  buttons: Ext.Msg.OK,
+  icon: Ext.Msg.ERROR,
+  fn: function() {
+    console.log('Error acknowledged');
+  }
+});`,
+
+    typescript: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface ErrorToastProps {
+  errorMessage?: string;
+  onRetry?: () => void;
+}
+
+function ErrorToastExample({
+  errorMessage = 'Failed to save changes',
+  onRetry
+}: ErrorToastProps): JSX.Element {
+  const [active, setActive] = useState(false);
+
+  const handleDismiss = () => {
+    setActive(false);
+  };
+
+  return (
+    <Frame>
+      <Button onClick={() => setActive(true)}>Show Error Toast</Button>
+      {active && (
+        <Toast
+          content={errorMessage}
+          error
+          action={onRetry ? {
+            content: 'Retry',
+            onAction: onRetry
+          } : undefined}
+          onDismiss={handleDismiss}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default ErrorToastExample;`,
+  },
+
+  withAction: {
+    react: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function ToastWithActionExample() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Frame>
+      <Button onClick={() => setActive(true)}>Show Toast with Action</Button>
+      {active && (
+        <Toast
+          content="Image uploaded successfully"
+          action={{
+            content: 'View image',
+            onAction: () => console.log('View image clicked'),
+          }}
+          onDismiss={() => setActive(false)}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default ToastWithActionExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<button id="show-action-toast">Upload Image</button>
+
+<div class="polaris-toast-wrapper" style="display: none;">
+  <div class="polaris-toast">
+    <div class="polaris-toast__content">Image uploaded successfully</div>
+    <button class="polaris-toast__action">View image</button>
+    <button class="polaris-toast__close">×</button>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createToast } from '@cin7/vanilla-js';
+
+const button = document.getElementById('show-action-toast');
+
+button.addEventListener('click', () => {
+  const toast = createToast({
+    content: 'Image uploaded successfully',
+    action: {
+      label: 'View image',
+      onClick: () => {
+        console.log('View image clicked');
+        window.open('/images/uploaded.jpg', '_blank');
+      }
+    },
+    duration: 6000,
+    onDismiss: () => {
+      console.log('Toast dismissed');
+    }
+  });
+
+  document.body.appendChild(toast);
+});
+</script>`,
+
+    extjs: `// ExtJS Toast with action button
+const toast = Ext.create('Ext.window.Toast', {
+  html: 'Image uploaded successfully',
+  title: 'Success',
+  width: 350,
+  align: 'br',
+  autoCloseDelay: 6000,
+  closable: true,
+  tools: [{
+    type: 'search',
+    tooltip: 'View image',
+    handler: function() {
+      console.log('View image clicked');
+      window.open('/images/uploaded.jpg', '_blank');
+    }
+  }]
+});
+
+toast.show();
+
+// Or using buttons
+Ext.toast({
+  html: 'Image uploaded successfully',
+  title: 'Success',
+  width: 350,
+  align: 'br',
+  autoCloseDelay: 6000,
+  buttons: [{
+    text: 'View image',
+    handler: function() {
+      console.log('View image clicked');
+      window.open('/images/uploaded.jpg', '_blank');
+    }
+  }]
+});`,
+
+    typescript: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+interface ToastAction {
+  content: string;
+  onAction: () => void;
+}
+
+interface ToastWithActionProps {
+  message?: string;
+  action?: ToastAction;
+}
+
+function ToastWithActionExample({
+  message = 'Image uploaded successfully',
+  action = {
+    content: 'View image',
+    onAction: () => console.log('View image clicked')
+  }
+}: ToastWithActionProps): JSX.Element {
+  const [active, setActive] = useState(false);
+
+  return (
+    <Frame>
+      <Button onClick={() => setActive(true)}>Show Toast with Action</Button>
+      {active && (
+        <Toast
+          content={message}
+          action={action}
+          onDismiss={() => setActive(false)}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default ToastWithActionExample;`,
+  },
+
+  customDuration: {
+    react: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function CustomDurationToastExample() {
+  const [quickActive, setQuickActive] = useState(false);
+  const [slowActive, setSlowActive] = useState(false);
+  const [persistentActive, setPersistentActive] = useState(false);
+
+  return (
+    <Frame>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <Button onClick={() => setQuickActive(true)}>Quick (2s)</Button>
+        <Button onClick={() => setSlowActive(true)}>Slow (8s)</Button>
+        <Button onClick={() => setPersistentActive(true)}>Persistent</Button>
+      </div>
+
+      {quickActive && (
+        <Toast
+          content="Quick notification"
+          duration={2000}
+          onDismiss={() => setQuickActive(false)}
+        />
+      )}
+
+      {slowActive && (
+        <Toast
+          content="This will stay for 8 seconds"
+          duration={8000}
+          onDismiss={() => setSlowActive(false)}
+        />
+      )}
+
+      {persistentActive && (
+        <Toast
+          content="This won't auto-dismiss"
+          duration={0}
+          action={{
+            content: 'Dismiss',
+            onAction: () => setPersistentActive(false),
+          }}
+          onDismiss={() => setPersistentActive(false)}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default CustomDurationToastExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div style="display: flex; gap: 8px;">
+  <button id="quick-toast">Quick (2s)</button>
+  <button id="slow-toast">Slow (8s)</button>
+  <button id="persistent-toast">Persistent</button>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createToast } from '@cin7/vanilla-js';
+
+// Quick toast - 2 seconds
+document.getElementById('quick-toast').addEventListener('click', () => {
+  const toast = createToast({
+    content: 'Quick notification',
+    duration: 2000,
+    onDismiss: () => console.log('Quick toast dismissed')
+  });
+  document.body.appendChild(toast);
+});
+
+// Slow toast - 8 seconds
+document.getElementById('slow-toast').addEventListener('click', () => {
+  const toast = createToast({
+    content: 'This will stay for 8 seconds',
+    duration: 8000,
+    onDismiss: () => console.log('Slow toast dismissed')
+  });
+  document.body.appendChild(toast);
+});
+
+// Persistent toast - doesn't auto-dismiss
+document.getElementById('persistent-toast').addEventListener('click', () => {
+  const toast = createToast({
+    content: "This won't auto-dismiss",
+    duration: 0, // 0 means no auto-dismiss
+    action: {
+      label: 'Dismiss',
+      onClick: () => toast.remove()
+    },
+    onDismiss: () => console.log('Persistent toast dismissed')
+  });
+  document.body.appendChild(toast);
+});
+</script>`,
+
+    extjs: `// Quick toast - 2 seconds
+Ext.toast({
+  html: 'Quick notification',
+  title: 'Info',
+  width: 300,
+  align: 'br',
+  autoCloseDelay: 2000
+});
+
+// Slow toast - 8 seconds
+Ext.toast({
+  html: 'This will stay for 8 seconds',
+  title: 'Info',
+  width: 300,
+  align: 'br',
+  autoCloseDelay: 8000
+});
+
+// Persistent toast - doesn't auto-close
+const persistentToast = Ext.create('Ext.window.Toast', {
+  html: "This won't auto-dismiss",
+  title: 'Persistent',
+  width: 300,
+  align: 'br',
+  autoCloseDelay: 0, // 0 means no auto-close
+  closable: true,
+  buttons: [{
+    text: 'Dismiss',
+    handler: function() {
+      persistentToast.close();
+    }
+  }]
+});
+
+persistentToast.show();`,
+
+    typescript: `import { Toast, Frame, Button } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+type ToastDuration = 2000 | 5000 | 8000 | 0;
+
+interface DurationToastProps {
+  quickDuration?: number;
+  slowDuration?: number;
+}
+
+function CustomDurationToastExample({
+  quickDuration = 2000,
+  slowDuration = 8000
+}: DurationToastProps): JSX.Element {
+  const [quickActive, setQuickActive] = useState(false);
+  const [slowActive, setSlowActive] = useState(false);
+  const [persistentActive, setPersistentActive] = useState(false);
+
+  return (
+    <Frame>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <Button onClick={() => setQuickActive(true)}>
+          Quick ({quickDuration / 1000}s)
+        </Button>
+        <Button onClick={() => setSlowActive(true)}>
+          Slow ({slowDuration / 1000}s)
+        </Button>
+        <Button onClick={() => setPersistentActive(true)}>
+          Persistent
+        </Button>
+      </div>
+
+      {quickActive && (
+        <Toast
+          content="Quick notification"
+          duration={quickDuration}
+          onDismiss={() => setQuickActive(false)}
+        />
+      )}
+
+      {slowActive && (
+        <Toast
+          content={\`This will stay for \${slowDuration / 1000} seconds\`}
+          duration={slowDuration}
+          onDismiss={() => setSlowActive(false)}
+        />
+      )}
+
+      {persistentActive && (
+        <Toast
+          content="This won't auto-dismiss"
+          duration={0}
+          action={{
+            content: 'Dismiss',
+            onAction: () => setPersistentActive(false),
+          }}
+          onDismiss={() => setPersistentActive(false)}
+        />
+      )}
+    </Frame>
+  );
+}
+
+export default CustomDurationToastExample;`,
   }
 };
 
@@ -32963,7 +48535,7 @@ function NavigationExample({
   );
 }
 
-export default NavigationExample;`
+export default NavigationExample;`,
   },
 
   nestedNavigation: {
@@ -33379,7 +48951,7 @@ function NestedNavigationExample({
   );
 }
 
-export default NestedNavigationExample;`
+export default NestedNavigationExample;`,
   },
 
   ecommerceNavigation: {
@@ -34062,7 +49634,7 @@ function EcommerceNavigationExample({
   );
 }
 
-export default EcommerceNavigationExample;`
+export default EcommerceNavigationExample;`,
   }
 };
 
@@ -34179,7 +49751,7 @@ function TabsExample({ onTabChange }: TabsExampleProps): JSX.Element {
   );
 }
 
-export default TabsExample;`
+export default TabsExample;`,
   },
   withBadges: {
     react: `import { Tabs } from '@shopify/polaris';
@@ -36303,7 +51875,7 @@ function ActionMenuExample({
   );
 }
 
-export default ActionMenuExample;`
+export default ActionMenuExample;`,
   }
 };
 
@@ -36419,7 +51991,7 @@ function ButtonGroupExample({ buttons }: ButtonGroupExampleProps): JSX.Element {
   );
 }
 
-export default ButtonGroupExample;`
+export default ButtonGroupExample;`,
   },
 
   segmented: {
@@ -36548,7 +52120,7 @@ function SegmentedButtonGroupExample({ onChange }: SegmentedProps): JSX.Element 
   );
 }
 
-export default SegmentedButtonGroupExample;`
+export default SegmentedButtonGroupExample;`,
   },
 
   fullwidth: {
@@ -36648,7 +52220,7 @@ function FullWidthButtonGroupExample({ actions }: FullWidthProps): JSX.Element {
   );
 }
 
-export default FullWidthButtonGroupExample;`
+export default FullWidthButtonGroupExample;`,
   },
   'variant-group': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -36893,7 +52465,7 @@ export function VariantGroupExample({
   );
 }
 
-export default VariantGroupExample;`
+export default VariantGroupExample;`,
   },
   'icon-buttons': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -37172,7 +52744,7 @@ export function IconButtonsExample({
   );
 }
 
-export default IconButtonsExample;`
+export default IconButtonsExample;`,
   },
   'size-variations': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -37500,7 +53072,7 @@ export function SizeVariationsExample({
   );
 }
 
-export default SizeVariationsExample;`
+export default SizeVariationsExample;`,
   },
   'action-groups': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -37828,7 +53400,7 @@ export function ActionGroupsExample({
   );
 }
 
-export default ActionGroupsExample;`
+export default ActionGroupsExample;`,
   },
   'state-variations': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -38285,7 +53857,7 @@ export function StateVariationsExample({
   );
 }
 
-export default StateVariationsExample;`
+export default StateVariationsExample;`,
   },
   'connected-buttons': {
     react: `import { ButtonGroup, Button, BlockStack, Text, Card } from '@shopify/polaris';
@@ -38619,7 +54191,7 @@ export function ConnectedButtonsExample({
   );
 }
 
-export default ConnectedButtonsExample;`
+export default ConnectedButtonsExample;`,
   }
 };
 
@@ -38783,7 +54355,7 @@ function ImageExample({
   );
 }
 
-export default ImageExample;`
+export default ImageExample;`,
   }
 };
 
@@ -38943,7 +54515,7 @@ function BreadcrumbsExample({
   return <Breadcrumbs breadcrumbs={breadcrumbs} />;
 }
 
-export default BreadcrumbsExample;`
+export default BreadcrumbsExample;`,
   }
 };
 
@@ -39069,7 +54641,7 @@ function PopoverExample({
   );
 }
 
-export default PopoverExample;`
+export default PopoverExample;`,
   }
 ,
 
@@ -39559,7 +55131,7 @@ function PopoverPositionsExample(): JSX.Element {
   );
 }
 
-export default PopoverPositionsExample;`
+export default PopoverPositionsExample;`,
   },
 
   withActionList: {
@@ -41477,7 +57049,7 @@ function TooltipExample({
   );
 }
 
-export default TooltipExample;`
+export default TooltipExample;`,
   },
 
   withText: {
@@ -41589,7 +57161,7 @@ function TextTooltipExample({
   );
 }
 
-export default TextTooltipExample;`
+export default TextTooltipExample;`,
   },
 
   withIcon: {
@@ -41743,7 +57315,7 @@ function IconTooltipExample({
   );
 }
 
-export default IconTooltipExample;`
+export default IconTooltipExample;`,
   }
 };
 
@@ -41892,7 +57464,412 @@ function SheetExample({
   );
 }
 
-export default SheetExample;`
+export default SheetExample;`,
+  }
+};
+
+// Basic Components Examples
+export const basicComponentsExamples: Record<string, CodeVariant> = {
+  buttonExamples: {
+    react: `import { Button } from '@shopify/polaris';
+import React from 'react';
+
+function ButtonExamples() {
+  return (
+    <div style={{ display: 'flex', gap: '12px' }}>
+      <Button>Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="tertiary">Tertiary</Button>
+    </div>
+  );
+}
+
+export default ButtonExamples;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="button-examples" style="display: flex; gap: 12px;">
+  <button class="polaris-button polaris-button--primary">Primary</button>
+  <button class="polaris-button polaris-button--secondary">Secondary</button>
+  <button class="polaris-button polaris-button--tertiary">Tertiary</button>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createButton } from '@cin7/vanilla-js';
+
+const container = document.querySelector('.button-examples');
+
+// Create primary button
+const primaryBtn = createButton({
+  text: 'Primary',
+  variant: 'primary',
+  onClick: () => console.log('Primary clicked')
+});
+
+// Create secondary button
+const secondaryBtn = createButton({
+  text: 'Secondary',
+  variant: 'secondary',
+  onClick: () => console.log('Secondary clicked')
+});
+
+// Create tertiary button
+const tertiaryBtn = createButton({
+  text: 'Tertiary',
+  variant: 'tertiary',
+  onClick: () => console.log('Tertiary clicked')
+});
+
+container.append(primaryBtn, secondaryBtn, tertiaryBtn);
+</script>`,
+
+    extjs: `// ExtJS Button Group using @cin7/extjs-adapters
+Ext.create('Ext.container.Container', {
+  layout: {
+    type: 'hbox',
+    align: 'stretch'
+  },
+  defaults: {
+    margin: '0 6 0 0'
+  },
+  items: [
+    {
+      xtype: 'button',
+      text: 'Primary',
+      cls: 'polaris-button-primary',
+      handler: function() {
+        console.log('Primary clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Secondary',
+      cls: 'polaris-button-secondary',
+      handler: function() {
+        console.log('Secondary clicked');
+      }
+    },
+    {
+      xtype: 'button',
+      text: 'Tertiary',
+      cls: 'polaris-button-tertiary',
+      handler: function() {
+        console.log('Tertiary clicked');
+      }
+    }
+  ],
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisButtonGroup } from '@cin7/extjs-adapters';
+
+const buttonGroup = Ext.create('PolarisButtonGroup', {
+  buttons: [
+    { text: 'Primary', variant: 'primary' },
+    { text: 'Secondary', variant: 'secondary' },
+    { text: 'Tertiary', variant: 'tertiary' }
+  ]
+});`,
+
+    typescript: `import { Button } from '@shopify/polaris';
+import React from 'react';
+
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+interface ButtonConfig {
+  label: string;
+  variant?: ButtonVariant;
+  onClick?: () => void;
+}
+
+interface ButtonExamplesProps {
+  buttons?: ButtonConfig[];
+  gap?: string;
+}
+
+function ButtonExamples({
+  buttons = [
+    { label: 'Primary', variant: 'primary' },
+    { label: 'Secondary', variant: 'secondary' },
+    { label: 'Tertiary', variant: 'tertiary' }
+  ],
+  gap = '12px'
+}: ButtonExamplesProps): JSX.Element {
+  return (
+    <div style={{ display: 'flex', gap }}>
+      {buttons.map((button, index) => (
+        <Button
+          key={index}
+          variant={button.variant}
+          onClick={button.onClick}
+        >
+          {button.label}
+        </Button>
+      ))}
+    </div>
+  );
+}
+
+export default ButtonExamples;`
+  },
+
+  cardExamples: {
+    react: `import { Card } from '@shopify/polaris';
+import React from 'react';
+
+function CardExamples() {
+  return (
+    <Card sectioned>
+      <p>This is a basic card with sectioned content.</p>
+    </Card>
+  );
+}
+
+export default CardExamples;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-card">
+  <div class="polaris-card__section">
+    <p>This is a basic card with sectioned content.</p>
+  </div>
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createCard } from '@cin7/vanilla-js';
+
+const card = createCard({
+  sectioned: true,
+  content: '<p>This is a basic card with sectioned content.</p>',
+  onClick: () => console.log('Card clicked')
+});
+
+document.getElementById('app').appendChild(card);
+</script>
+
+<style>
+/* Basic card styling following Polaris design tokens */
+.polaris-card {
+  background-color: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: var(--p-shadow-200);
+  overflow: hidden;
+}
+
+.polaris-card__section {
+  padding: var(--p-space-400);
+}
+
+.polaris-card__section p {
+  margin: 0;
+  color: var(--p-color-text);
+}
+</style>`,
+
+    extjs: `// ExtJS Panel (Card equivalent) using @cin7/extjs-adapters
+Ext.create('Ext.panel.Panel', {
+  title: null,
+  bodyPadding: 16,
+  cls: 'polaris-card',
+  html: '<p>This is a basic card with sectioned content.</p>',
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisCard } from '@cin7/extjs-adapters';
+
+const card = Ext.create('PolarisCard', {
+  sectioned: true,
+  items: [
+    {
+      xtype: 'component',
+      html: '<p>This is a basic card with sectioned content.</p>'
+    }
+  ]
+});`,
+
+    typescript: `import { Card } from '@shopify/polaris';
+import React from 'react';
+
+interface CardExamplesProps {
+  content?: string | React.ReactNode;
+  sectioned?: boolean;
+  title?: string;
+  actions?: Array<{ content: string; onAction: () => void }>;
+}
+
+function CardExamples({
+  content = 'This is a basic card with sectioned content.',
+  sectioned = true,
+  title,
+  actions
+}: CardExamplesProps): JSX.Element {
+  return (
+    <Card sectioned={sectioned} title={title} actions={actions}>
+      {typeof content === 'string' ? <p>{content}</p> : content}
+    </Card>
+  );
+}
+
+export default CardExamples;`
+  },
+
+  textFieldExamples: {
+    react: `import { TextField } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+function TextFieldExamples() {
+  const [value, setValue] = useState('');
+
+  const handleChange = useCallback(
+    (newValue: string) => setValue(newValue),
+    []
+  );
+
+  return (
+    <TextField
+      label="Basic text field"
+      placeholder="Enter text here"
+      value={value}
+      onChange={handleChange}
+    />
+  );
+}
+
+export default TextFieldExamples;`,
+
+    vanilla: `<!-- HTML Structure -->
+<div class="polaris-text-field">
+  <label for="basic-field" class="polaris-label">Basic text field</label>
+  <input
+    id="basic-field"
+    type="text"
+    class="polaris-input"
+    placeholder="Enter text here"
+  />
+</div>
+
+<script>
+// JavaScript behavior using @cin7/vanilla-js
+import { createTextField, on } from '@cin7/vanilla-js';
+
+const textField = createTextField({
+  label: 'Basic text field',
+  placeholder: 'Enter text here',
+  onChange: (value) => {
+    console.log('Input value:', value);
+  }
+});
+
+document.getElementById('app').appendChild(textField);
+
+// Alternative: Direct DOM manipulation
+const input = document.getElementById('basic-field');
+on(input, 'input', (e) => {
+  console.log('Input value:', e.target.value);
+});
+</script>
+
+<style>
+/* Basic text field styling following Polaris design tokens */
+.polaris-text-field {
+  margin-bottom: var(--p-space-400);
+}
+
+.polaris-label {
+  display: block;
+  margin-bottom: var(--p-space-200);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-text);
+}
+
+.polaris-input {
+  width: 100%;
+  padding: var(--p-space-300);
+  border: 1px solid var(--p-color-border);
+  border-radius: var(--p-border-radius-200);
+  font-size: var(--p-font-size-325);
+  line-height: var(--p-font-line-height-500);
+}
+
+.polaris-input:focus {
+  outline: none;
+  border-color: var(--p-color-border-focus);
+  box-shadow: 0 0 0 1px var(--p-color-border-focus);
+}
+</style>`,
+
+    extjs: `// ExtJS TextField using @cin7/extjs-adapters
+Ext.create('Ext.form.field.Text', {
+  fieldLabel: 'Basic text field',
+  emptyText: 'Enter text here',
+  cls: 'polaris-textfield',
+  listeners: {
+    change: function(field, newValue, oldValue) {
+      console.log('Input value:', newValue);
+    }
+  },
+  renderTo: Ext.getBody()
+});
+
+// Or using Polaris adapter
+import { PolarisTextField } from '@cin7/extjs-adapters';
+
+const textField = Ext.create('PolarisTextField', {
+  label: 'Basic text field',
+  placeholder: 'Enter text here',
+  onChange: function(value) {
+    console.log('Input value:', value);
+  }
+});`,
+
+    typescript: `import { TextField } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface TextFieldExamplesProps {
+  label?: string;
+  placeholder?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  type?: 'text' | 'email' | 'number' | 'password';
+  disabled?: boolean;
+  error?: string;
+}
+
+function TextFieldExamples({
+  label = 'Basic text field',
+  placeholder = 'Enter text here',
+  defaultValue = '',
+  onChange,
+  type = 'text',
+  disabled = false,
+  error
+}: TextFieldExamplesProps): JSX.Element {
+  const [value, setValue] = useState<string>(defaultValue);
+
+  const handleChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onChange?.(newValue);
+    },
+    [onChange]
+  );
+
+  return (
+    <TextField
+      label={label}
+      placeholder={placeholder}
+      value={value}
+      onChange={handleChange}
+      type={type}
+      disabled={disabled}
+      error={error}
+    />
+  );
+}
+
+export default TextFieldExamples;`
   }
 };
 
@@ -41909,6 +57886,7 @@ export function getCodeVariants(
     modal: modalExamples,
     banner: bannerExamples,
     actionlist: actionList,
+    basiccomponents: basicComponentsExamples,
     bulkactions: bulkActionsExamples,
     tabs: tabsExamples,
     pagination: paginationExamples,
