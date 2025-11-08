@@ -632,6 +632,14 @@ const CustomerReviews = () => {
 
 // Stories
 export const ProductShowcaseStory: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'default'),
+    docs: {
+      description: {
+        story: 'A comprehensive product showcase component with image gallery, ratings, reviews, feature lists, quantity selector, and action buttons. Optimized for conversion with clear pricing, inventory status, and add-to-cart functionality.',
+      },
+    },
+  },
   render: () => (
     <div style={{ maxWidth: '900px' }}>
       <ProductShowcase product={products[0]} showQuickActions showReviews />
@@ -640,6 +648,14 @@ export const ProductShowcaseStory: Story = {
 };
 
 export const ProductCatalog: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'productcatalog'),
+    docs: {
+      description: {
+        story: 'A responsive product catalog grid that displays multiple products with images, ratings, pricing, and quick actions. Features automatic grid layout that adapts to screen size.',
+      },
+    },
+  },
   render: () => (
     <div style={{ maxWidth: '1200px' }}>
       <div style={{ marginBottom: '24px' }}>
@@ -662,18 +678,50 @@ export const ProductCatalog: Story = {
 };
 
 export const ShoppingCartView: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'shoppingcartview'),
+    docs: {
+      description: {
+        story: 'A full-featured shopping cart with quantity controls, item removal, promo code input, and order totals calculation including subtotal, shipping, tax, and total. Shows free shipping threshold.',
+      },
+    },
+  },
   render: () => <ShoppingCart />,
 };
 
 export const CheckoutProcess: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'checkoutprocess'),
+    docs: {
+      description: {
+        story: 'A multi-step checkout flow with progress indicator, shipping information form, payment details with security badges, and order review summary. Clear step navigation with back/forward buttons.',
+      },
+    },
+  },
   render: () => <CheckoutFlow />,
 };
 
 export const ProductReviews: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'productreviews'),
+    docs: {
+      description: {
+        story: 'Customer reviews section with overall rating summary, rating distribution chart, individual review cards with verified badges, star ratings, dates, and helpful voting buttons.',
+      },
+    },
+  },
   render: () => <CustomerReviews />,
 };
 
 export const InventoryManagement: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'inventorymanagement'),
+    docs: {
+      description: {
+        story: 'Inventory management dashboard showing product SKUs, stock levels, status badges (in stock, low stock, out of stock), and automatic reorder buttons when stock falls below threshold.',
+      },
+    },
+  },
   render: () => {
     const inventoryItems = [
       { sku: 'WH-001', name: 'Premium Wireless Headphones', stock: 45, status: 'normal', reorder: 20 },
@@ -745,6 +793,14 @@ export const InventoryManagement: Story = {
 };
 
 export const ProductComparison: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('ecommercecomponents', 'productcomparison'),
+    docs: {
+      description: {
+        story: 'Side-by-side product comparison table showing multiple products with key features, specifications, ratings, and pricing. Helps customers make informed purchase decisions by comparing options.',
+      },
+    },
+  },
   render: () => {
     const comparisonProducts = products.slice(0, 3);
     const features = [

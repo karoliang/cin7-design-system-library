@@ -119,7 +119,6 @@ export const WithValue: Story = {
   parameters: {
     codeVariants: getCodeVariants('select', 'default'),
   },
-
 };
 
 export const Disabled: Story = {
@@ -141,9 +140,8 @@ export const WithHelpText: Story = {
     helpText: 'Select the primary category for your product',
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'default'),
+    codeVariants: getCodeVariants('select', 'with-subtitle'),
   },
-
 };
 
 export const Required: Story = {
@@ -161,7 +159,6 @@ export const Required: Story = {
   parameters: {
     codeVariants: getCodeVariants('select', 'default'),
   },
-
 };
 
 export const WithError: Story = {
@@ -187,7 +184,7 @@ export const GroupedOptions: Story = {
     placeholder: 'Select a category',
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'groups'),
+    codeVariants: getCodeVariants('select', 'default'),
   },
 };
 
@@ -226,9 +223,8 @@ export const LanguageSelector: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'default'),
+    codeVariants: getCodeVariants('select', 'with-subtitle'),
   },
-
 };
 
 export const ProductConfiguration: Story = {
@@ -330,9 +326,8 @@ export const ProductConfiguration: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'default'),
+    codeVariants: getCodeVariants('select', 'with-separate-validation-error'),
   },
-
 };
 
 export const AddressForm: Story = {
@@ -440,9 +435,8 @@ export const AddressForm: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'default'),
+    codeVariants: getCodeVariants('select', 'with-validation-error'),
   },
-
 };
 
 export const AdvancedFiltering: Story = {
@@ -575,7 +569,6 @@ export const AdvancedFiltering: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('select', 'default'),
+    codeVariants: getCodeVariants('select', 'with-inline-label'),
   },
-
 };

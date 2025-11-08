@@ -53,7 +53,7 @@ export const SingleKeys: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'singlekeys'),
   },
 
 };
@@ -69,7 +69,7 @@ export const LetterKeys: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'letterkeys'),
   },
 
 };
@@ -85,7 +85,7 @@ export const NumberKeys: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'numberkeys'),
   },
 
 };
@@ -121,7 +121,7 @@ export const SymbolKeys: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'symbolkeys'),
   },
 
 };
@@ -157,7 +157,7 @@ export const ArrowKeys: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'arrowkeys'),
   },
 
 };
@@ -243,7 +243,7 @@ export const KeyCombinations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'keycombinations'),
   },
 
 };
@@ -312,7 +312,7 @@ export const ShortcutGuide: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'shortcutguide'),
   },
 
 };
@@ -446,7 +446,7 @@ export const InteractiveKeyboard: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'interactivekeyboard'),
   },
 
 };
@@ -535,7 +535,7 @@ export const GamingKeyboard: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'gamingkeyboard'),
   },
 
 };
@@ -628,7 +628,7 @@ export const AccessibilityInfo: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'accessibilityinfo'),
   },
 
 };
@@ -715,7 +715,7 @@ export const CustomStyling: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('keyboardkey', 'default'),
+    codeVariants: getCodeVariants('keyboardkey', 'customstyling'),
   },
 
 };

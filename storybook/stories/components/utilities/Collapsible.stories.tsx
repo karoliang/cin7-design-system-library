@@ -115,7 +115,7 @@ export const BasicUsage: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'basicUsage'),
   },
 
 };
@@ -189,7 +189,7 @@ export const AccordionStyle: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'accordion'),
   },
 
 };
@@ -262,7 +262,7 @@ export const NestedCollapsibles: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'nested'),
   },
 
 };
@@ -328,7 +328,7 @@ export const MultipleCollapsibles: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'multiple'),
   },
 
 };
@@ -517,7 +517,7 @@ export const CollapsibleForms: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'forms'),
   },
 
 };
@@ -639,7 +639,7 @@ export const ProgressiveDisclosure: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'progressive'),
   },
 
 };
@@ -716,7 +716,7 @@ export const CollapsibleWithAnimation: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('collapsible', 'default'),
+    codeVariants: getCodeVariants('collapsible', 'animation'),
   },
 
 };

@@ -105,7 +105,7 @@ export const Variants: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'variants'),
   },
 
 };
@@ -123,7 +123,7 @@ export const Tones: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'tones'),
   },
 
 };
@@ -138,7 +138,7 @@ export const FontWeights: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'fontWeights'),
   },
 
 };
@@ -161,7 +161,7 @@ export const Alignment: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'alignment'),
   },
 
 };
@@ -213,7 +213,7 @@ export const MarketingCopy: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -271,7 +271,7 @@ export const ProductDescriptions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -328,7 +328,7 @@ export const FeatureLists: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -450,7 +450,7 @@ export const PricingCopy: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -532,7 +532,7 @@ export const CustomerTestimonials: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -608,7 +608,7 @@ export const InteractiveText: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'body'),
   },
 
 };
@@ -670,7 +670,7 @@ export const SpecializedText: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('text', 'default'),
+    codeVariants: getCodeVariants('text', 'specialized'),
   },
 
 };

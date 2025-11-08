@@ -80,7 +80,7 @@ export const WithValue: Story = {
     value: 'john.doe@example.com',
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-help-text'),
   },
 
 };
@@ -115,7 +115,7 @@ export const Required: Story = {
     required: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-error'),
   },
 
 };
@@ -279,7 +279,7 @@ export const PasswordField: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-error'),
   },
 
 };
@@ -354,7 +354,7 @@ export const SearchField: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-prefix-suffix'),
   },
 
 };
@@ -367,7 +367,7 @@ export const UrlInput: Story = {
     helpText: 'Include https:// for valid URLs',
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-help-text'),
   },
 
 };
@@ -413,7 +413,7 @@ export const TelephoneInput: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-error'),
   },
 
 };
@@ -532,7 +532,7 @@ export const AutoComplete: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'with-help-text'),
   },
 
 };
@@ -650,7 +650,7 @@ export const FormExample: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('textfield', 'multiline'),
   },
 
 };

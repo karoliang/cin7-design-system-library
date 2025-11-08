@@ -79,7 +79,7 @@ export const SizeVariants: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'sizeVariants'),
   },
 
 };
@@ -157,7 +157,7 @@ export const WithBackgrounds: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'withBackgrounds'),
   },
 
 };
@@ -239,7 +239,7 @@ export const InteractiveLoading: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'interactiveLoading'),
   },
 
 };
@@ -301,7 +301,7 @@ export const InlineLoading: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'inlineLoading'),
   },
 
 };
@@ -381,7 +381,7 @@ export const LoadingInForms: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'loadingInForms'),
   },
 
 };
@@ -488,7 +488,7 @@ export const LoadingSteps: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'loadingSteps'),
   },
 
 };
@@ -558,7 +558,7 @@ export const AccessibilityDemo: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('loading', 'default'),
+    codeVariants: getCodeVariants('loading', 'accessibilityDemo'),
   },
 
 };

@@ -117,7 +117,7 @@ export const Required: Story = {
     required: true,
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'required'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };
 
@@ -178,7 +178,7 @@ export const ShippingOptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'shipping-options'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };
 
@@ -264,7 +264,7 @@ export const PaymentMethods: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'payment-methods'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };
 
@@ -325,7 +325,7 @@ export const ProductVariants: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'product-variants'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };
 
@@ -419,7 +419,7 @@ export const SurveyQuestions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'survey-questions'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };
 
@@ -461,6 +461,6 @@ export const AccessibilityExamples: Story = {
     </BlockStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('radiobutton', 'accessibility-examples'),
+    codeVariants: getCodeVariants('radiobutton', 'default'),
   },
 };

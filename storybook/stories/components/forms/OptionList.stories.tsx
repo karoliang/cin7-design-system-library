@@ -99,7 +99,7 @@ export const MultipleSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'multiple-selection'),
   },
 
 };
@@ -151,7 +151,7 @@ export const WithIcons: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'with-icons'),
   },
 
 };
@@ -198,7 +198,7 @@ export const WithDescriptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'with-descriptions'),
   },
 
 };
@@ -250,7 +250,7 @@ export const WithStatusBadges: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'with-badges'),
   },
 
 };
@@ -294,7 +294,7 @@ export const WithDisabledOptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'with-disabled-options'),
   },
 
 };
@@ -359,7 +359,7 @@ export const UserRoleSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'user-role-selection'),
   },
 
 };
@@ -456,7 +456,7 @@ export const ProductCategories: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'product-categories'),
   },
 
 };
@@ -551,7 +551,7 @@ export const NotificationSettings: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'notification-settings'),
   },
 
 };
@@ -621,7 +621,7 @@ export const ThemeSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'theme-selection'),
   },
 
 };
@@ -680,7 +680,7 @@ export const ShippingOptions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'shipping-options'),
   },
 
 };
@@ -795,7 +795,7 @@ export const PermissionSettings: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'permission-settings'),
   },
 
 };
@@ -866,7 +866,7 @@ export const LanguageSelection: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'language-selection'),
   },
 
 };
@@ -960,7 +960,7 @@ export const InteractiveExample: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('optionlist', 'default'),
+    codeVariants: getCodeVariants('optionlist', 'interactive'),
   },
 
 };

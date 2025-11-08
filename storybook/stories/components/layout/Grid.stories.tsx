@@ -63,6 +63,9 @@ export const Default: Story = {
 };
 
 export const ResponsiveGrid: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ maxWidth: '1200px' }}>
       <Text as="h2" variant="headingMd" style={{ marginBottom: 'var(--spacing-4)' }}>Responsive Product Grid</Text>
@@ -169,13 +172,12 @@ export const ResponsiveGrid: Story = {
       </Grid>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };
 
 export const SpacingVariations: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-8)', maxWidth: '800px' }}>
       <div>
@@ -254,13 +256,12 @@ export const SpacingVariations: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };
 
 export const DashboardLayout: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ maxWidth: '1200px', width: '100%' }}>
       <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)' }}>Dashboard Overview</Text>
@@ -334,13 +335,12 @@ export const DashboardLayout: Story = {
       </Grid>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };
 
 export const ProductFeatures: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ maxWidth: '1000px', width: '100%' }}>
       <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)', textAlign: 'center' }}>Product Features</Text>
@@ -420,13 +420,12 @@ export const ProductFeatures: Story = {
       </Grid>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };
 
 export const FormSections: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ maxWidth: '1000px', width: '100%' }}>
       <Card sectioned>
@@ -533,13 +532,12 @@ export const FormSections: Story = {
       </Card>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };
 
 export const StatisticsGrid: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('grid', 'default'),
+  },
   render: () => (
     <div style={{ maxWidth: '1200px', width: '100%' }}>
       <Text as="h2" variant="headingLg" style={{ marginBottom: 'var(--spacing-6)' }}>Analytics Dashboard</Text>
@@ -623,8 +621,4 @@ export const StatisticsGrid: Story = {
       </Grid>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('grid', 'default'),
-  },
-
 };

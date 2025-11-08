@@ -221,7 +221,7 @@ export const ProductCatalog: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pagination', 'default'),
+    codeVariants: getCodeVariants('pagination', 'productCatalog'),
   },
 
 };
@@ -426,7 +426,7 @@ export const DataTable: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pagination', 'default'),
+    codeVariants: getCodeVariants('pagination', 'dataTable'),
   },
 
 };
@@ -652,7 +652,7 @@ export const SearchResults: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pagination', 'default'),
+    codeVariants: getCodeVariants('pagination', 'searchResults'),
   },
 
 };
@@ -876,7 +876,7 @@ export const PhotoGallery: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('pagination', 'default'),
+    codeVariants: getCodeVariants('pagination', 'photoGallery'),
   },
 
 };

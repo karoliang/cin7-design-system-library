@@ -31,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 export const ButtonExamples: Story = {
   parameters: {
-    codeVariants: getCodeVariants('button', 'default'),
+    codeVariants: getCodeVariants('basiccomponents', 'buttonExamples'),
   },
   render: () => (
     <div style={{ display: 'flex', gap: '12px' }}>
@@ -44,7 +44,7 @@ export const ButtonExamples: Story = {
 
 export const CardExamples: Story = {
   parameters: {
-    codeVariants: getCodeVariants('card', 'default'),
+    codeVariants: getCodeVariants('basiccomponents', 'cardExamples'),
   },
   render: () => (
     <Card sectioned>
@@ -55,7 +55,7 @@ export const CardExamples: Story = {
 
 export const TextFieldExamples: Story = {
   parameters: {
-    codeVariants: getCodeVariants('textfield', 'default'),
+    codeVariants: getCodeVariants('basiccomponents', 'textFieldExamples'),
   },
   render: () => (
     <TextField

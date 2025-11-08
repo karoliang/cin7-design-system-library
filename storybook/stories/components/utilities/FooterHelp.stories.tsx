@@ -51,7 +51,7 @@ export const WithLearnMore: Story = {
     },
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'withLearnMore'),
   },
 
 };
@@ -61,7 +61,7 @@ export const ShortText: Story = {
     children: 'Press "?" for keyboard shortcuts.',
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'shortText'),
   },
 
 };
@@ -71,7 +71,7 @@ export const LongText: Story = {
     children: 'This section allows you to configure your store\'s basic settings including name, currency, and timezone. These settings affect how your store displays prices and dates to customers. Make sure to review these settings carefully as they impact your entire store operation.',
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'longText'),
   },
 
 };
@@ -96,7 +96,7 @@ export const WithIcon: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'withIcon'),
   },
 
 };
@@ -153,7 +153,7 @@ export const DocumentationLinks: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'documentationLinks'),
   },
 
 };
@@ -246,7 +246,7 @@ export const InteractiveHelp: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'interactiveHelp'),
   },
 
 };
@@ -289,7 +289,7 @@ export const FormContextHelp: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'formContextHelp'),
   },
 
 };
@@ -384,7 +384,7 @@ export const SupportCenter: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'supportCenter'),
   },
 
 };
@@ -457,7 +457,7 @@ export const LearningResources: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'learningResources'),
   },
 
 };
@@ -551,7 +551,7 @@ export const ContextualHelp: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'contextualHelp'),
   },
 
 };
@@ -596,7 +596,7 @@ export const MobileOptimized: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('footerhelp', 'default'),
+    codeVariants: getCodeVariants('footerhelp', 'mobileOptimized'),
   },
 
 };

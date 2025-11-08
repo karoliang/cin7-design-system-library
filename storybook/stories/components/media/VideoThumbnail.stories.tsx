@@ -80,7 +80,7 @@ export const WithPlayButton: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'withplaybutton'),
   },
 
 };
@@ -132,7 +132,7 @@ export const VideoLengthDisplay: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'videolengthdisplay'),
   },
 
 };
@@ -191,7 +191,7 @@ export const VideoGallery: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'videogallery'),
   },
 
 };
@@ -318,7 +318,7 @@ export const CourseContent: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'coursecontent'),
   },
 
 };
@@ -484,7 +484,7 @@ export const InteractivePreview: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'interactivepreview'),
   },
 
 };
@@ -573,7 +573,7 @@ export const WithMetadata: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'withmetadata'),
   },
 
 };
@@ -629,7 +629,7 @@ export const LoadingState: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'loadingstate'),
   },
 
 };
@@ -694,7 +694,7 @@ export const Accessibility: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'accessibility'),
   },
 
 };
@@ -752,7 +752,7 @@ export const ResponsiveDesign: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'responsivedesign'),
   },
 
 };
@@ -825,7 +825,7 @@ export const CustomStyling: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('videothumbnail', 'default'),
+    codeVariants: getCodeVariants('videothumbnail', 'customstyling'),
   },
 
 };

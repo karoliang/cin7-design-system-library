@@ -99,7 +99,7 @@ export const Colors: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'colors'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -134,7 +134,7 @@ export const ProgressValues: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'progressvalues'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -198,7 +198,7 @@ export const InteractiveProgress: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'interactive'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -267,7 +267,7 @@ export const FileUpload: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'fileupload'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -354,7 +354,7 @@ export const MultiStepProcess: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'multistep'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -427,7 +427,7 @@ export const DataSync: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'datasync'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };
@@ -493,7 +493,7 @@ export const RealWorldScenarios: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('progressbar', 'realworld'),
+    codeVariants: getCodeVariants('progressbar', 'default'),
   },
 
 };

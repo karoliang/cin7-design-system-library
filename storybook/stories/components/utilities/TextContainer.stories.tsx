@@ -57,7 +57,7 @@ export const BasicUsage: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'basicUsage'),
   },
 
 };
@@ -107,7 +107,7 @@ export const LongFormContent: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'longFormContent'),
   },
 
 };
@@ -148,7 +148,7 @@ export const ProductDescription: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'productDescription'),
   },
 
 };
@@ -218,7 +218,7 @@ export const HelpArticle: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'helpArticle'),
   },
 
 };
@@ -297,7 +297,7 @@ export const BlogPost: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'blogPost'),
   },
 
 };
@@ -350,7 +350,7 @@ export const ComparisonLayout: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'comparisonLayout'),
   },
 
 };
@@ -390,7 +390,7 @@ export const NarrowContent: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'narrowContent'),
   },
 
 };
@@ -463,7 +463,7 @@ export const TechnicalDocumentation: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'default'),
+    codeVariants: getCodeVariants('textcontainer', 'technicalDocumentation'),
   },
 
 };

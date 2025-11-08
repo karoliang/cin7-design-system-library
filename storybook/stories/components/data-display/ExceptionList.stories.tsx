@@ -84,7 +84,7 @@ export const ErrorList: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'errorlist'),
   },
 
 };
@@ -123,7 +123,7 @@ export const WarningList: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'warninglist'),
   },
 
 };
@@ -168,7 +168,7 @@ export const MixedStatuses: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'mixedstatuses'),
   },
 
 };
@@ -219,7 +219,7 @@ export const ValidationErrors: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'validationerrors'),
   },
 
 };
@@ -258,7 +258,7 @@ export const ShippingIssues: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'shippingissues'),
   },
 
 };
@@ -344,7 +344,7 @@ export const InteractiveExceptionList: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'interactive'),
   },
 
 };
@@ -389,7 +389,7 @@ export const SystemAlerts: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'systemalerts'),
   },
 
 };
@@ -434,7 +434,7 @@ export const CustomerFeedback: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'customerfeedback'),
   },
 
 };
@@ -459,7 +459,7 @@ export const MinimalList: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('exceptionlist', 'default'),
+    codeVariants: getCodeVariants('exceptionlist', 'minimal'),
   },
 
 };

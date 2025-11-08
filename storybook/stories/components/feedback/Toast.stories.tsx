@@ -144,7 +144,7 @@ export const WithActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('toast', 'default'),
+    codeVariants: getCodeVariants('toast', 'withAction'),
   },
 
 };
@@ -196,7 +196,7 @@ export const CustomDuration: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('toast', 'default'),
+    codeVariants: getCodeVariants('toast', 'customDuration'),
   },
 
 };
@@ -301,7 +301,7 @@ export const ErrorHandling: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('toast', 'default'),
+    codeVariants: getCodeVariants('toast', 'error'),
   },
 
 };

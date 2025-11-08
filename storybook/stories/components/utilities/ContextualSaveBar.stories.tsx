@@ -229,7 +229,7 @@ export const WithCustomMessage: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'withCustomMessage'),
   },
 
 };
@@ -346,7 +346,7 @@ export const WithValidation: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'withValidation'),
   },
 
 };
@@ -396,7 +396,7 @@ export const FullWidthLayout: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'fullWidth'),
   },
 
 };
@@ -504,7 +504,7 @@ export const AutoSaveExample: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'autoSave'),
   },
 
 };
@@ -616,7 +616,7 @@ export const MultiFormExample: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'multiForm'),
   },
 
 };
@@ -688,7 +688,7 @@ export const WithContextControl: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('contextualsavebar', 'default'),
+    codeVariants: getCodeVariants('contextualsavebar', 'withContextControl'),
   },
 
 };

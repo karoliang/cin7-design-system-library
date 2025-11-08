@@ -435,6 +435,9 @@ export const Default: Story = {
 };
 
 export const WithSearchAndFilters: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('indexfilters', 'withSearchAndFilters'),
+  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [queryValue, setQueryValue] = React.useState('');
@@ -517,6 +520,9 @@ export const WithSearchAndFilters: Story = {
 };
 
 export const WithTabs: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('indexfilters', 'withTabs'),
+  },
   render: () => {
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [queryValue, setQueryValue] = React.useState('');
@@ -558,6 +564,9 @@ export const WithTabs: Story = {
 };
 
 export const WithSorting: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('indexfilters', 'withSorting'),
+  },
   render: () => {
     const [sortSelected, setSortSelected] = React.useState(['name_asc']);
     const [queryValue, setQueryValue] = React.useState('');
@@ -597,6 +606,9 @@ export const WithSorting: Story = {
 };
 
 export const WithSelectionMode: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('indexfilters', 'withSelectionMode'),
+  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [mode, setMode] = React.useState<'default' | 'selecting'>('default');
@@ -658,6 +670,9 @@ export const WithSelectionMode: Story = {
 };
 
 export const ComplexFiltersExample: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('indexfilters', 'complexFilters'),
+  },
   render: () => {
     const [selected, setSelected] = React.useState([]);
     const [queryValue, setQueryValue] = React.useState('');

@@ -146,7 +146,7 @@ export const MultipleFiles: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('dropzone', 'default'),
+    codeVariants: getCodeVariants('dropzone', 'multipleFiles'),
   },
 
 };
@@ -189,7 +189,7 @@ export const ImageUpload: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('dropzone', 'default'),
+    codeVariants: getCodeVariants('dropzone', 'imageUpload'),
   },
 
 };
@@ -314,7 +314,7 @@ export const WithPreview: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('dropzone', 'default'),
+    codeVariants: getCodeVariants('dropzone', 'withPreview'),
   },
 
 };
@@ -332,7 +332,7 @@ export const Disabled: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('dropzone', 'default'),
+    codeVariants: getCodeVariants('dropzone', 'disabled'),
   },
 
 };

@@ -107,7 +107,7 @@ export const WithIconButtonActivator: Story = {
     ),
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'withIconButtonActivator'),
   },
 
 };
@@ -150,7 +150,7 @@ export const GroupedActions: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'groupedActions'),
   },
 
 };
@@ -215,7 +215,7 @@ export const RollupVariations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'rollupVariations'),
   },
 
 };
@@ -250,7 +250,7 @@ export const DisabledActions: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'disabledActions'),
   },
 
 };
@@ -294,7 +294,7 @@ export const ActionsWithBadges: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'actionsWithBadges'),
   },
 
 };
@@ -314,7 +314,7 @@ export const LongActionList: Story = {
     ],
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'longActionList'),
   },
 
 };
@@ -366,7 +366,7 @@ export const InteractiveMenu: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'interactiveMenu'),
   },
 
 };
@@ -483,7 +483,7 @@ export const ContextualUsage: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'contextualUsage'),
   },
 
 };
@@ -519,7 +519,7 @@ export const AccessibilityDemo: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'accessibilityDemo'),
   },
 
 };
@@ -566,7 +566,7 @@ export const WithinPopover: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('actionmenu', 'default'),
+    codeVariants: getCodeVariants('actionmenu', 'withinPopover'),
   },
 
 };

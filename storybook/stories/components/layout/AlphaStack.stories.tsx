@@ -117,7 +117,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   parameters: {
-    codeVariants: getCodeVariants('blockstack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'default'),
   },
   render: () => (
     <CustomAlphaStack spacing="loose">
@@ -147,7 +147,7 @@ export const VerticalStack: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('alphastack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'vertical'),
   },
 
 };
@@ -166,7 +166,7 @@ export const HorizontalStack: Story = {
     </Card>
   ),
   parameters: {
-    codeVariants: getCodeVariants('alphastack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'horizontal'),
   },
 
 };
@@ -221,7 +221,7 @@ export const SpacingVariations: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('alphastack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'spacing'),
   },
 
 };
@@ -285,7 +285,7 @@ export const DistributionOptions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('alphastack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'distribution'),
   },
 
 };
@@ -385,7 +385,7 @@ export const AlignmentOptions: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('alphastack', 'default'),
+    codeVariants: getCodeVariants('alphastack', 'alignment'),
   },
 
 };

@@ -83,7 +83,7 @@ export const BasicTags: Story = {
     </InlineStack>
   ),
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'basictags'),
   },
 
 };
@@ -130,7 +130,7 @@ export const RemovableTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'removabletags'),
   },
 
 };
@@ -170,7 +170,7 @@ export const ClickableTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'clickabletags'),
   },
 
 };
@@ -206,7 +206,7 @@ export const TagSizes: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'tagsizes'),
   },
 
 };
@@ -244,7 +244,7 @@ export const StatusTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'statustags'),
   },
 
 };
@@ -350,7 +350,7 @@ export const TagInputSystem: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'taginputsystem'),
   },
 
 };
@@ -457,7 +457,7 @@ export const FilterTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'filtertags'),
   },
 
 };
@@ -570,7 +570,7 @@ export const InteractiveTagCloud: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'interactivetagcloud'),
   },
 
 };
@@ -636,7 +636,7 @@ export const TagGroups: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'taggroups'),
   },
 
 };
@@ -679,7 +679,7 @@ export const DisabledTags: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('tag', 'default'),
+    codeVariants: getCodeVariants('tag', 'disabledtags'),
   },
 
 };

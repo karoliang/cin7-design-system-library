@@ -54,7 +54,7 @@ export const Default: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('list', 'bulleted'),
+    codeVariants: getCodeVariants('list', 'default'),
   },
 };
 
@@ -86,7 +86,7 @@ export const NumberedList: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('list', 'bulleted'),
+    codeVariants: getCodeVariants('list', 'numbered'),
   },
 };
 
@@ -102,7 +102,7 @@ export const WithIcons: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('list', 'bulleted'),
+    codeVariants: getCodeVariants('list', 'withIcons'),
   },
 };
 
@@ -132,7 +132,7 @@ export const WithBadges: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('list', 'bulleted'),
+    codeVariants: getCodeVariants('list', 'withBadges'),
   },
 };
 

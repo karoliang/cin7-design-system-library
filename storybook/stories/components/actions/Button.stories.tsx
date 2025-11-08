@@ -86,7 +86,7 @@ export const Variants: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('button', 'primary'),
+    codeVariants: getCodeVariants('button', 'variants'),
   },
 };
 
@@ -100,7 +100,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('button', 'large'),
+    codeVariants: getCodeVariants('button', 'sizes'),
   },
 };
 
@@ -113,7 +113,7 @@ export const States: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('button', 'loading'),
+    codeVariants: getCodeVariants('button', 'states'),
   },
 };
 
@@ -711,7 +711,7 @@ export const VanillaJS: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('button', 'default'),
+    codeVariants: getCodeVariants('button', 'variants'),
   },
 };
 
@@ -778,7 +778,7 @@ export const ExtJS: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('button', 'default'),
+    codeVariants: getCodeVariants('button', 'variants'),
   },
 };
 
@@ -899,7 +899,7 @@ export const TypeScript: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('button', 'default'),
+    codeVariants: getCodeVariants('button', 'variants'),
   },
 };
 
@@ -924,7 +924,7 @@ export const WithIcons: Story = {
     </div>
   ),
   parameters: {
-    codeVariants: getCodeVariants('button', 'default'),
+    codeVariants: getCodeVariants('button', 'icon-only'),
   },
 };
 

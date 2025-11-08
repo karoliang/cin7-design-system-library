@@ -306,7 +306,7 @@ export const FinancialData: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'financialData'),
   },
 
 };
@@ -348,7 +348,7 @@ export const UserManagement: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'userManagement'),
   },
 
 };
@@ -393,7 +393,7 @@ export const InventoryTable: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'inventoryTable'),
   },
 
 };
@@ -498,7 +498,7 @@ export const InteractiveTable: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('datatable', 'default'),
+    codeVariants: getCodeVariants('datatable', 'interactiveTable'),
   },
 
 };

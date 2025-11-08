@@ -384,7 +384,7 @@ export const WithPageActions: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('bulkactions', 'default'),
+    codeVariants: getCodeVariants('bulkactions', 'withPageActions'),
   },
 
 };
