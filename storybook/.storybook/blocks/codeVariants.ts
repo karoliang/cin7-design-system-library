@@ -42802,7 +42802,7 @@ Ext.create('Ext.view.View', {
     fields: ['id', 'name', 'price'],
     data: [{ id: 1, name: 'Product', price: 299.99 }]
   }),
-  tpl: '<div class="product-grid"><tpl for="."><div class="card"><h3>{name}</h3><p>\\${price}</p></div></tpl></div>'
+  tpl: '<div class="product-grid"><tpl for="."><div class="card"><h3>{name}</h3><p>\${price}</p></div></tpl></div>'
 });`,
     typescript: `// Product Catalog Grid - TypeScript
 import { Card, Button, Thumbnail, Text } from '@shopify/polaris';
@@ -42853,7 +42853,7 @@ function ShoppingCart() {
           <Button size="small" icon={PlusIcon} />
         </div>
       ))}
-      <Text variant="headingMd">Total: ${total.toFixed(2)}</Text>
+      <Text variant="headingMd">{\`Total: $\${total.toFixed(2)}\`}</Text>
       <Button primary fullWidth>Checkout</Button>
     </Card>
   );
@@ -42907,7 +42907,7 @@ const ShoppingCart: React.FC = () => {
       {items.map(item => (
         <div key={item.id}><Text>{item.name}</Text><Text>{item.qty}</Text></div>
       ))}
-      <Text variant="headingMd">Total: ${total.toFixed(2)}</Text>
+      <Text variant="headingMd">{\`Total: $\${total.toFixed(2)}\`}</Text>
       <Button primary fullWidth>Checkout</Button>
     </Card>
   );
