@@ -5,12 +5,14 @@ import React, { useState } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // Helper function to create inline SVG placeholder images
+// Uses Unicode-safe base64 encoding to support emoji and special characters
 const createPlaceholder = (text: string, bgColor: string, textColor: string) => {
   const svg = `<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
     <rect width="60" height="60" fill="${bgColor}"/>
     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}" font-family="Arial, sans-serif" font-size="24" font-weight="bold">${text}</text>
   </svg>`;
-  return `data:image/svg+xml;base64,${btoa(svg)}`;
+  // Use btoa with encodeURIComponent for Unicode support
+  return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
 };
 
 const meta = {
