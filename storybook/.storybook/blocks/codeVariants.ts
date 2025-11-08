@@ -33959,28 +33959,96 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, BlockStack } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
+import type { CSSProperties } from 'react';
 
+/**
+ * Props interface for the TruncateDefault component
+ * @interface TruncateDefaultProps
+ */
 interface TruncateDefaultProps {
-  maxWidth?: string;
+  /** Maximum width of the truncated text container */
+  maxWidth?: string | number;
+  /** Text content to be displayed and potentially truncated */
   text?: string;
+  /** Optional callback when text is truncated */
+  onTruncate?: (isTruncated: boolean) => void;
 }
 
-function TruncateDefault({
+/**
+ * Configuration for truncation behavior
+ * @interface TruncateConfig
+ */
+interface TruncateConfig {
+  readonly maxWidth: string;
+  readonly displayText: string;
+  readonly shouldTruncate: boolean;
+}
+
+/**
+ * Type guard to check if a value is a valid width string
+ * @param value - The value to check
+ * @returns True if the value is a valid width string
+ */
+const isValidWidth = (value: string | number | undefined): value is string | number => {
+  return value !== undefined && (typeof value === 'string' || typeof value === 'number');
+};
+
+/**
+ * TruncateDefault component with comprehensive type safety
+ * Demonstrates basic text truncation with configurable width
+ */
+const TruncateDefault: React.FC<TruncateDefaultProps> = ({
   maxWidth = '200px',
-  text = 'This is a very long text that will be truncated with an ellipsis when it exceeds the container width'
-}: TruncateDefaultProps): JSX.Element {
+  text = 'This is a very long text that will be truncated with an ellipsis when it exceeds the container width',
+  onTruncate
+}): JSX.Element => {
+  /**
+   * Memoized truncation configuration
+   */
+  const config = useMemo<TruncateConfig>(() => {
+    const width = isValidWidth(maxWidth)
+      ? typeof maxWidth === 'number' ? \`\${maxWidth}px\` : maxWidth
+      : '200px';
+
+    return {
+      maxWidth: width,
+      displayText: text,
+      shouldTruncate: text.length > 50
+    };
+  }, [maxWidth, text]);
+
+  /**
+   * Container styles with proper typing
+   */
+  const containerStyle = useMemo<CSSProperties>(() => ({
+    maxWidth: config.maxWidth
+  }), [config.maxWidth]);
+
+  /**
+   * Effect callback for truncation detection
+   */
+  const handleTruncationCheck = useCallback(() => {
+    if (onTruncate && config.shouldTruncate) {
+      onTruncate(true);
+    }
+  }, [onTruncate, config.shouldTruncate]);
+
+  React.useEffect(() => {
+    handleTruncationCheck();
+  }, [handleTruncationCheck]);
+
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Basic Truncation</Text>
-      <div style={{ maxWidth }}>
+      <div style={containerStyle}>
         <Text variant="bodyMd" truncate>
-          {text}
+          {config.displayText}
         </Text>
       </div>
     </BlockStack>
   );
-}
+};
 
 export default TruncateDefault;`,
   },
@@ -34092,37 +34160,111 @@ Ext.create('Ext.grid.Panel', {
 });`,
 
     typescript: `import { DataTable, Card } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import type { DataTableProps } from '@shopify/polaris';
 
-interface Product {
-  name: string;
-  description: string;
+/**
+ * Product entity with detailed type information
+ * @interface ProductEntity
+ */
+interface ProductEntity {
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly category?: string;
 }
 
+/**
+ * Table configuration with type-safe column definitions
+ * @interface TableConfig
+ */
+interface TableConfig {
+  readonly columnContentTypes: DataTableProps['columnContentTypes'];
+  readonly headings: string[];
+  readonly enableTruncation: boolean;
+}
+
+/**
+ * Props for the TruncateInTableCell component
+ * @interface TruncateInTableCellProps
+ */
 interface TruncateInTableCellProps {
-  products?: Product[];
+  /** Array of products to display in the table */
+  products?: ReadonlyArray<ProductEntity>;
+  /** Enable or disable text truncation */
+  truncate?: boolean;
+  /** Callback when a row is clicked */
+  onRowClick?: (product: ProductEntity) => void;
 }
 
-function TruncateInTableCell({
+/**
+ * Type guard to validate product entity structure
+ * @param product - The product to validate
+ * @returns True if the product is valid
+ */
+const isValidProduct = (product: any): product is ProductEntity => {
+  return (
+    typeof product === 'object' &&
+    product !== null &&
+    typeof product.name === 'string' &&
+    typeof product.description === 'string'
+  );
+};
+
+/**
+ * TruncateInTableCell component with comprehensive type safety
+ * Demonstrates truncation in data table cells with validation
+ */
+const TruncateInTableCell: React.FC<TruncateInTableCellProps> = ({
   products = [
-    { name: 'Product A', description: 'This is a very long product description that will be truncated in the table cell to maintain layout consistency' },
-    { name: 'Product B', description: 'Another lengthy description that demonstrates how truncation works within DataTable cells' },
-    { name: 'Product C', description: 'Short description' }
-  ]
-}: TruncateInTableCellProps): JSX.Element {
-  const rows = products.map(product => [product.name, product.description]);
+    { id: '1', name: 'Product A', description: 'This is a very long product description that will be truncated in the table cell to maintain layout consistency', category: 'Electronics' },
+    { id: '2', name: 'Product B', description: 'Another lengthy description that demonstrates how truncation works within DataTable cells', category: 'Accessories' },
+    { id: '3', name: 'Product C', description: 'Short description', category: 'Software' }
+  ],
+  truncate = true,
+  onRowClick
+}): JSX.Element => {
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
+
+  /**
+   * Validate and transform products into table rows
+   */
+  const tableRows = useMemo<string[][]>(() => {
+    const validProducts = products.filter(isValidProduct);
+    return validProducts.map(product => [product.name, product.description]);
+  }, [products]);
+
+  /**
+   * Table configuration with proper typing
+   */
+  const tableConfig = useMemo<TableConfig>(() => ({
+    columnContentTypes: ['text', 'text'],
+    headings: ['Product', 'Description'],
+    enableTruncation: truncate
+  }), [truncate]);
+
+  /**
+   * Handle row selection with type safety
+   */
+  const handleRowInteraction = React.useCallback((rowIndex: number) => {
+    setSelectedRowIndex(rowIndex);
+    const product = products[rowIndex];
+    if (product && isValidProduct(product) && onRowClick) {
+      onRowClick(product);
+    }
+  }, [products, onRowClick]);
 
   return (
     <Card>
       <DataTable
-        columnContentTypes={['text', 'text']}
-        headings={['Product', 'Description']}
-        rows={rows}
-        truncate
+        columnContentTypes={tableConfig.columnContentTypes}
+        headings={tableConfig.headings}
+        rows={tableRows}
+        truncate={tableConfig.enableTruncation}
       />
     </Card>
   );
-}
+};
 
 export default TruncateInTableCell;`,
   },
@@ -34225,48 +34367,154 @@ Ext.create('Ext.panel.Panel', {
 });`,
 
     typescript: `import { List, Card, BlockStack } from '@shopify/polaris';
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
-interface ListItemData {
-  text: string;
-  truncate?: boolean;
+/**
+ * Type for list item types
+ */
+type ListType = 'bullet' | 'number';
+
+/**
+ * Detailed list item entity with metadata
+ * @interface ListItemEntity
+ */
+interface ListItemEntity {
+  readonly id: string;
+  readonly text: string;
+  readonly shouldTruncate: boolean;
+  readonly priority?: 'high' | 'medium' | 'low';
+  readonly metadata?: Record<string, unknown>;
 }
 
+/**
+ * Styling configuration for truncated items
+ * @interface TruncateStyleConfig
+ */
+interface TruncateStyleConfig {
+  readonly maxWidth: string;
+  readonly containerStyle: CSSProperties;
+  readonly textStyle: CSSProperties;
+}
+
+/**
+ * Props for TruncateInListItem component
+ * @interface TruncateInListItemProps
+ */
 interface TruncateInListItemProps {
-  items?: ListItemData[];
-  maxWidth?: string;
+  /** Array of list items to display */
+  items?: ReadonlyArray<ListItemEntity>;
+  /** Maximum width for truncated items */
+  maxWidth?: string | number;
+  /** List type (bullet or number) */
+  listType?: ListType;
+  /** Callback when item is clicked */
+  onItemClick?: (item: ListItemEntity) => void;
 }
 
-function TruncateInListItem({
+/**
+ * Type guard to validate list item structure
+ * @param item - The item to validate
+ * @returns True if the item is valid
+ */
+const isValidListItem = (item: any): item is ListItemEntity => {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    typeof item.text === 'string' &&
+    typeof item.shouldTruncate === 'boolean'
+  );
+};
+
+/**
+ * Creates style configuration for truncated text
+ * @param maxWidth - Maximum width value
+ * @returns Style configuration object
+ */
+const createTruncateStyles = (maxWidth: string | number): TruncateStyleConfig => {
+  const widthValue = typeof maxWidth === 'number' ? \`\${maxWidth}px\` : maxWidth;
+
+  return {
+    maxWidth: widthValue,
+    containerStyle: {
+      maxWidth: widthValue
+    },
+    textStyle: {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      display: 'block'
+    }
+  };
+};
+
+/**
+ * TruncateInListItem component with comprehensive type safety
+ * Demonstrates conditional truncation in list items with validation
+ */
+const TruncateInListItem: React.FC<TruncateInListItemProps> = ({
   items = [
-    { text: 'This is a very long list item that will be truncated to maintain consistent layout', truncate: true },
-    { text: 'Another lengthy item demonstrating truncation in list contexts', truncate: true },
-    { text: 'Short item', truncate: false }
+    { id: '1', text: 'This is a very long list item that will be truncated to maintain consistent layout', shouldTruncate: true, priority: 'high' },
+    { id: '2', text: 'Another lengthy item demonstrating truncation in list contexts', shouldTruncate: true, priority: 'medium' },
+    { id: '3', text: 'Short item', shouldTruncate: false, priority: 'low' }
   ],
-  maxWidth = '300px'
-}: TruncateInListItemProps): JSX.Element {
+  maxWidth = '300px',
+  listType = 'bullet',
+  onItemClick
+}): JSX.Element => {
+  /**
+   * Validate all items
+   */
+  const validatedItems = useMemo<ReadonlyArray<ListItemEntity>>(() => {
+    return items.filter(isValidListItem);
+  }, [items]);
+
+  /**
+   * Memoized style configuration
+   */
+  const styleConfig = useMemo<TruncateStyleConfig>(() => {
+    return createTruncateStyles(maxWidth);
+  }, [maxWidth]);
+
+  /**
+   * Renders a single list item with proper truncation handling
+   */
+  const renderListItem = useCallback((item: ListItemEntity, index: number): ReactNode => {
+    const handleClick = () => {
+      if (onItemClick) {
+        onItemClick(item);
+      }
+    };
+
+    if (item.shouldTruncate) {
+      return (
+        <List.Item key={item.id || index}>
+          <div style={styleConfig.containerStyle} onClick={handleClick}>
+            <span style={styleConfig.textStyle}>
+              {item.text}
+            </span>
+          </div>
+        </List.Item>
+      );
+    }
+
+    return (
+      <List.Item key={item.id || index} onClick={handleClick}>
+        {item.text}
+      </List.Item>
+    );
+  }, [styleConfig, onItemClick]);
+
   return (
     <Card>
       <BlockStack gap="400">
-        <List type="bullet">
-          {items.map((item, index) => (
-            <List.Item key={index}>
-              {item.truncate ? (
-                <div style={{ maxWidth }}>
-                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
-                    {item.text}
-                  </span>
-                </div>
-              ) : (
-                item.text
-              )}
-            </List.Item>
-          ))}
+        <List type={listType}>
+          {validatedItems.map((item, index) => renderListItem(item, index))}
         </List>
       </BlockStack>
     </Card>
   );
-}
+};
 
 export default TruncateInListItem;`,
   },
@@ -34377,40 +34625,169 @@ Ext.create('Ext.container.Container', {
 });`,
 
     typescript: `import { Text, Tooltip, BlockStack } from '@shopify/polaris';
-import React from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 
-interface TruncateWithTooltipProps {
-  text?: string;
-  maxWidth?: string;
-  showTooltip?: boolean;
+/**
+ * Tooltip configuration options
+ * @interface TooltipConfig
+ */
+interface TooltipConfig {
+  readonly enabled: boolean;
+  readonly content: string;
+  readonly preferredPosition?: 'above' | 'below';
+  readonly dismissOnMouseOut?: boolean;
 }
 
-function TruncateWithTooltip({
+/**
+ * Truncation state management
+ * @interface TruncationState
+ */
+interface TruncationState {
+  readonly isHovered: boolean;
+  readonly isTruncated: boolean;
+  readonly shouldShowTooltip: boolean;
+}
+
+/**
+ * Props for TruncateWithTooltip component
+ * @interface TruncateWithTooltipProps
+ */
+interface TruncateWithTooltipProps {
+  /** Text content to display and potentially truncate */
+  text?: string;
+  /** Maximum width of the container */
+  maxWidth?: string | number;
+  /** Whether to show tooltip on hover */
+  showTooltip?: boolean;
+  /** Tooltip configuration */
+  tooltipConfig?: Partial<TooltipConfig>;
+  /** Callback when tooltip is shown */
+  onTooltipShow?: (text: string) => void;
+  /** Callback when tooltip is hidden */
+  onTooltipHide?: () => void;
+}
+
+/**
+ * Type guard to check if text should be truncated
+ * @param text - The text to check
+ * @param threshold - Character threshold
+ * @returns True if text exceeds threshold
+ */
+const shouldTruncateText = (text: string, threshold: number = 50): boolean => {
+  return text.length > threshold;
+};
+
+/**
+ * Creates normalized width value
+ * @param width - Width value (string or number)
+ * @returns Normalized width string
+ */
+const normalizeWidth = (width: string | number | undefined): string => {
+  if (width === undefined) return '200px';
+  return typeof width === 'number' ? \`\${width}px\` : width;
+};
+
+/**
+ * TruncateWithTooltip component with comprehensive state management
+ * Demonstrates truncation with interactive tooltip and hover state tracking
+ */
+const TruncateWithTooltip: React.FC<TruncateWithTooltipProps> = ({
   text = 'This is a very long text that will be truncated with an ellipsis. Hover to see the full content in a tooltip.',
   maxWidth = '200px',
-  showTooltip = true
-}: TruncateWithTooltipProps): JSX.Element {
-  const truncatedText = (
-    <Text variant="bodyMd" truncate>
-      {text}
-    </Text>
+  showTooltip = true,
+  tooltipConfig,
+  onTooltipShow,
+  onTooltipHide
+}): JSX.Element => {
+  const textRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<TruncationState>({
+    isHovered: false,
+    isTruncated: false,
+    shouldShowTooltip: false
+  });
+
+  /**
+   * Merged tooltip configuration
+   */
+  const mergedTooltipConfig = useMemo<TooltipConfig>(() => ({
+    enabled: showTooltip,
+    content: text,
+    preferredPosition: tooltipConfig?.preferredPosition ?? 'above',
+    dismissOnMouseOut: tooltipConfig?.dismissOnMouseOut ?? true
+  }), [showTooltip, text, tooltipConfig]);
+
+  /**
+   * Container style configuration
+   */
+  const containerStyle = useMemo<CSSProperties>(() => ({
+    maxWidth: normalizeWidth(maxWidth)
+  }), [maxWidth]);
+
+  /**
+   * Check if text is actually truncated
+   */
+  useEffect(() => {
+    if (textRef.current) {
+      const isTruncated = shouldTruncateText(text);
+      setState(prev => ({
+        ...prev,
+        isTruncated,
+        shouldShowTooltip: isTruncated && mergedTooltipConfig.enabled
+      }));
+    }
+  }, [text, mergedTooltipConfig.enabled]);
+
+  /**
+   * Handle mouse enter event
+   */
+  const handleMouseEnter = useCallback(() => {
+    setState(prev => ({ ...prev, isHovered: true }));
+    if (state.shouldShowTooltip && onTooltipShow) {
+      onTooltipShow(text);
+    }
+  }, [state.shouldShowTooltip, onTooltipShow, text]);
+
+  /**
+   * Handle mouse leave event
+   */
+  const handleMouseLeave = useCallback(() => {
+    setState(prev => ({ ...prev, isHovered: false }));
+    if (mergedTooltipConfig.dismissOnMouseOut && onTooltipHide) {
+      onTooltipHide();
+    }
+  }, [mergedTooltipConfig.dismissOnMouseOut, onTooltipHide]);
+
+  /**
+   * Render truncated text element
+   */
+  const truncatedTextElement: ReactElement = (
+    <div
+      ref={textRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Text variant="bodyMd" truncate>
+        {text}
+      </Text>
+    </div>
   );
 
   return (
     <BlockStack gap="400">
       <Text as="h3" variant="headingMd">Truncate with Tooltip</Text>
-      <div style={{ maxWidth }}>
-        {showTooltip ? (
-          <Tooltip content={text}>
-            {truncatedText}
+      <div style={containerStyle}>
+        {state.shouldShowTooltip ? (
+          <Tooltip content={mergedTooltipConfig.content} preferredPosition={mergedTooltipConfig.preferredPosition}>
+            {truncatedTextElement}
           </Tooltip>
         ) : (
-          truncatedText
+          truncatedTextElement
         )}
       </div>
     </BlockStack>
   );
-}
+};
 
 export default TruncateWithTooltip;`,
   },
@@ -48476,26 +48853,50 @@ interface BasicLabelExampleProps {
   initialValue?: string;
   label?: string;
   onValueChange?: (value: string) => void;
+  maxLength?: number;
 }
+
+interface FieldState {
+  value: string;
+  characterCount: number;
+}
+
+type ValueChangeHandler = (value: string, characterCount: number) => void;
 
 function BasicLabelExample({
   initialValue = '',
   label = 'Store name',
-  onValueChange
+  onValueChange,
+  maxLength = 100
 }: BasicLabelExampleProps): JSX.Element {
-  const [value, setValue] = useState<string>(initialValue);
+  const [state, setState] = useState<FieldState>({
+    value: initialValue,
+    characterCount: initialValue.length
+  });
 
-  const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    onValueChange?.(newValue);
+  const handleChange = useCallback((newValue: string): void => {
+    const count = newValue.length;
+    setState({
+      value: newValue,
+      characterCount: count
+    });
+
+    if (onValueChange) {
+      onValueChange(newValue);
+    }
   }, [onValueChange]);
 
   return (
-    <Labelled id="basic-field" label={label}>
+    <Labelled
+      id="basic-field"
+      label={label}
+      helpText={\`\${state.characterCount}/\${maxLength} characters\`}
+    >
       <TextField
-        value={value}
+        value={state.value}
         onChange={handleChange}
         autoComplete="off"
+        maxLength={maxLength}
       />
     </Labelled>
   );
@@ -48509,7 +48910,7 @@ export default BasicLabelExample;`
 import {useState} from 'react';
 
 function RequiredFieldExample() {
-  const [value, setValue] = useState('');
+  const [email, setEmail] = useState('');
 
   return (
     <Labelled
@@ -48519,8 +48920,8 @@ function RequiredFieldExample() {
     >
       <TextField
         type="email"
-        value={value}
-        onChange={setValue}
+        value={email}
+        onChange={setEmail}
         autoComplete="email"
       />
     </Labelled>
@@ -48570,41 +48971,89 @@ import {useState, useCallback} from 'react';
 
 interface RequiredFieldExampleProps {
   initialValue?: string;
-  onValueChange?: (value: string) => void;
-  validateEmail?: boolean;
+  onValueChange?: (value: string, isValid: boolean) => void;
+  customValidator?: EmailValidator;
 }
+
+interface ValidationResult {
+  isValid: boolean;
+  errorMessage?: string;
+}
+
+interface FieldState {
+  value: string;
+  error: string;
+  touched: boolean;
+  isValid: boolean;
+}
+
+type EmailValidator = (email: string) => ValidationResult;
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function RequiredFieldExample({
   initialValue = '',
   onValueChange,
-  validateEmail = true
+  customValidator
 }: RequiredFieldExampleProps): JSX.Element {
-  const [value, setValue] = useState<string>(initialValue);
-  const [error, setError] = useState<string>('');
+  const [state, setState] = useState<FieldState>({
+    value: initialValue,
+    error: '',
+    touched: false,
+    isValid: false
+  });
 
-  const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    if (validateEmail && newValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newValue)) {
-      setError('Please enter a valid email address');
-    } else {
-      setError('');
+  const validateEmail: EmailValidator = useCallback((email: string): ValidationResult => {
+    if (customValidator) {
+      return customValidator(email);
     }
-    onValueChange?.(newValue);
-  }, [onValueChange, validateEmail]);
+
+    if (!email) {
+      return { isValid: false, errorMessage: 'Email address is required' };
+    }
+
+    if (!emailRegex.test(email)) {
+      return { isValid: false, errorMessage: 'Please enter a valid email address' };
+    }
+
+    return { isValid: true };
+  }, [customValidator]);
+
+  const handleChange = useCallback((newValue: string): void => {
+    const validationResult = validateEmail(newValue);
+
+    setState({
+      value: newValue,
+      error: validationResult.errorMessage || '',
+      touched: true,
+      isValid: validationResult.isValid
+    });
+
+    onValueChange?.(newValue, validationResult.isValid);
+  }, [validateEmail, onValueChange]);
+
+  const handleBlur = useCallback((): void => {
+    if (!state.touched) {
+      setState(prev => ({ ...prev, touched: true }));
+    }
+  }, [state.touched]);
+
+  const displayError = state.touched && state.error;
 
   return (
     <Labelled
       id="required-field"
       label="Email address"
       requiredIndicator
-      error={error}
+      error={displayError || undefined}
     >
       <TextField
         type="email"
-        value={value}
+        value={state.value}
         onChange={handleChange}
+        onBlur={handleBlur}
         autoComplete="email"
-        error={Boolean(error)}
+        error={Boolean(displayError)}
       />
     </Labelled>
   );
@@ -48679,40 +49128,102 @@ import {useState, useCallback} from 'react';
 
 interface LabelWithHelpTextProps {
   minLength?: number;
-  onPasswordChange?: (value: string, isValid: boolean) => void;
+  onPasswordChange?: (value: string, strength: PasswordStrength) => void;
+  requireSpecialChar?: boolean;
+  requireNumber?: boolean;
 }
+
+interface PasswordValidation {
+  isValid: boolean;
+  strength: PasswordStrength;
+  errors: string[];
+}
+
+enum PasswordStrength {
+  Weak = 'weak',
+  Medium = 'medium',
+  Strong = 'strong'
+}
+
+interface PasswordState {
+  value: string;
+  strength: PasswordStrength;
+  errors: string[];
+  touched: boolean;
+}
+
+type PasswordValidator = (password: string) => PasswordValidation;
 
 function LabelWithHelpText({
   minLength = 8,
-  onPasswordChange
+  onPasswordChange,
+  requireSpecialChar = false,
+  requireNumber = false
 }: LabelWithHelpTextProps): JSX.Element {
-  const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [state, setState] = useState<PasswordState>({
+    value: '',
+    strength: PasswordStrength.Weak,
+    errors: [],
+    touched: false
+  });
 
-  const handleChange = useCallback((newValue: string) => {
-    setValue(newValue);
-    const isValid = newValue.length >= minLength;
-    if (!isValid && newValue.length > 0) {
-      setError(\`Must be at least \${minLength} characters\`);
+  const validatePassword: PasswordValidator = useCallback((password: string): PasswordValidation => {
+    const errors: string[] = [];
+    let strength: PasswordStrength = PasswordStrength.Weak;
+
+    if (password.length < minLength) {
+      errors.push(\`Must be at least \${minLength} characters\`);
     } else {
-      setError('');
+      strength = PasswordStrength.Medium;
     }
-    onPasswordChange?.(newValue, isValid);
-  }, [minLength, onPasswordChange]);
+
+    if (requireNumber && !/\d/.test(password)) {
+      errors.push('Must contain at least one number');
+    }
+
+    if (requireSpecialChar && !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      errors.push('Must contain a special character');
+    }
+
+    if (password.length >= minLength && /\d/.test(password) && /[!@#$%^&*]/.test(password)) {
+      strength = PasswordStrength.Strong;
+    }
+
+    return {
+      isValid: errors.length === 0,
+      strength,
+      errors
+    };
+  }, [minLength, requireNumber, requireSpecialChar]);
+
+  const handleChange = useCallback((newValue: string): void => {
+    const validation = validatePassword(newValue);
+
+    setState({
+      value: newValue,
+      strength: validation.strength,
+      errors: validation.errors,
+      touched: true
+    });
+
+    onPasswordChange?.(newValue, validation.strength);
+  }, [validatePassword, onPasswordChange]);
+
+  const displayError = state.touched && state.errors.length > 0 ? state.errors[0] : undefined;
 
   return (
     <Labelled
       id="help-text-field"
       label="Password"
-      helpText={\`Must be at least \${minLength} characters\`}
-      error={error}
+      helpText={\`Must be at least \${minLength} characters\${requireNumber ? ' with a number' : ''}\${requireSpecialChar ? ' and special character' : ''}\`}
+      error={displayError}
     >
       <TextField
         type="password"
-        value={value}
+        value={state.value}
         onChange={handleChange}
         autoComplete="new-password"
-        error={Boolean(error)}
+        error={Boolean(displayError)}
       />
     </Labelled>
   );
@@ -48788,47 +49299,99 @@ const input = $('#error-field');
   renderTo: Ext.getBody()
 });`,
     typescript: `import {Labelled, TextField} from '@shopify/polaris';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 
 interface LabelWithErrorProps {
   initialValue?: string;
-  validateEmail?: (email: string) => string | undefined;
+  customValidator?: EmailValidatorFunction;
+  onErrorStateChange?: (hasError: boolean, errorMessage?: string) => void;
 }
+
+interface ErrorState {
+  message: string;
+  fieldTouched: boolean;
+  lastValidValue: string;
+}
+
+type EmailValidatorFunction = (email: string) => ValidationError | null;
+
+interface ValidationError {
+  code: ErrorCode;
+  message: string;
+}
+
+enum ErrorCode {
+  Required = 'REQUIRED',
+  InvalidFormat = 'INVALID_FORMAT',
+  Custom = 'CUSTOM'
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LabelWithError({
   initialValue = 'invalid@',
-  validateEmail
+  customValidator,
+  onErrorStateChange
 }: LabelWithErrorProps): JSX.Element {
   const [value, setValue] = useState<string>(initialValue);
-  const [error, setError] = useState<string>('Email is not valid');
+  const [errorState, setErrorState] = useState<ErrorState>({
+    message: 'Email is not valid',
+    fieldTouched: false,
+    lastValidValue: ''
+  });
 
-  const defaultValidateEmail = useCallback((email: string): string | undefined => {
-    if (!email) return 'Email is required';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return 'Email is not valid';
+  const validateEmailField: EmailValidatorFunction = useCallback((email: string): ValidationError | null => {
+    if (customValidator) {
+      return customValidator(email);
     }
-    return undefined;
-  }, []);
 
-  const handleChange = useCallback((newValue: string) => {
+    if (!email || email.trim() === '') {
+      return { code: ErrorCode.Required, message: 'Email is required' };
+    }
+
+    if (!EMAIL_REGEX.test(email)) {
+      return { code: ErrorCode.InvalidFormat, message: 'Email is not valid' };
+    }
+
+    return null;
+  }, [customValidator]);
+
+  const handleChange = useCallback((newValue: string): void => {
     setValue(newValue);
-    const validationError = validateEmail
-      ? validateEmail(newValue)
-      : defaultValidateEmail(newValue);
-    setError(validationError || '');
-  }, [validateEmail, defaultValidateEmail]);
+    const validationError = validateEmailField(newValue);
+
+    const newErrorState: ErrorState = {
+      message: validationError?.message || '',
+      fieldTouched: true,
+      lastValidValue: validationError ? errorState.lastValidValue : newValue
+    };
+
+    setErrorState(newErrorState);
+    onErrorStateChange?.(Boolean(validationError), validationError?.message);
+  }, [validateEmailField, errorState.lastValidValue, onErrorStateChange]);
+
+  useEffect(() => {
+    const initialError = validateEmailField(initialValue);
+    if (initialError) {
+      setErrorState({
+        message: initialError.message,
+        fieldTouched: false,
+        lastValidValue: ''
+      });
+    }
+  }, [initialValue, validateEmailField]);
 
   return (
     <Labelled
       id="error-field"
       label="Email"
-      error={error}
+      error={errorState.message}
     >
       <TextField
         type="email"
         value={value}
         onChange={handleChange}
-        error={error}
+        error={errorState.message}
         autoComplete="email"
       />
     </Labelled>
@@ -48920,25 +49483,63 @@ function generateNewKey() {
   field.setValue(newKey);
   Ext.Msg.alert('Success', 'New key generated');
 }`,
-    typescript: `import {Labelled, TextField, Link} from '@shopify/polaris';
+    typescript: `import {Labelled, TextField} from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 
 interface LabelWithActionProps {
-  onGenerateKey?: (key: string) => void;
+  onGenerateKey?: KeyGenerationHandler;
   actionLabel?: string;
+  keyPrefix?: string;
+  keyLength?: number;
 }
+
+interface GeneratedKey {
+  value: string;
+  timestamp: number;
+  expiresAt?: number;
+}
+
+interface KeyGenerationOptions {
+  prefix: string;
+  length: number;
+  includeTimestamp: boolean;
+}
+
+type KeyGenerationHandler = (key: GeneratedKey) => void;
+type KeyGenerator = (options: KeyGenerationOptions) => string;
+
+const generateSecureKey: KeyGenerator = ({ prefix, length, includeTimestamp }): string => {
+  const randomPart = Math.random().toString(36).substring(2, 2 + length);
+  const timestampPart = includeTimestamp ? Date.now().toString(36) : '';
+  return \`\${prefix}_\${timestampPart}\${randomPart}\`;
+};
 
 function LabelWithAction({
   onGenerateKey,
-  actionLabel = 'Generate new key'
+  actionLabel = 'Generate new key',
+  keyPrefix = 'key',
+  keyLength = 7
 }: LabelWithActionProps): JSX.Element {
   const [value, setValue] = useState<string>('');
+  const [lastGenerated, setLastGenerated] = useState<GeneratedKey | null>(null);
 
-  const handleAction = useCallback(() => {
-    const newKey = 'key_' + Math.random().toString(36).substring(7);
-    setValue(newKey);
-    onGenerateKey?.(newKey);
-  }, [onGenerateKey]);
+  const handleAction = useCallback((): void => {
+    const newKeyValue = generateSecureKey({
+      prefix: keyPrefix,
+      length: keyLength,
+      includeTimestamp: true
+    });
+
+    const generatedKey: GeneratedKey = {
+      value: newKeyValue,
+      timestamp: Date.now(),
+      expiresAt: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days
+    };
+
+    setValue(newKeyValue);
+    setLastGenerated(generatedKey);
+    onGenerateKey?.(generatedKey);
+  }, [onGenerateKey, keyPrefix, keyLength]);
 
   return (
     <Labelled
@@ -48948,6 +49549,7 @@ function LabelWithAction({
         content: actionLabel,
         onAction: handleAction
       }}
+      helpText={lastGenerated ? \`Generated at: \${new Date(lastGenerated.timestamp).toLocaleString()}\` : undefined}
     >
       <TextField
         value={value}
