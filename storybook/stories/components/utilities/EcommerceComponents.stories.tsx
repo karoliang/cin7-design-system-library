@@ -43,18 +43,18 @@ import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/E-commerce/Overview',
+  title: 'Business Patterns/E-commerce Examples',
   component: Card,
   parameters: {
     layout: 'centered',
     codeVariants: getCodeVariants('ecommercecomponents', 'default'),
     docs: {
       description: {
-        component: 'Comprehensive e-commerce components for product showcases, shopping cart, checkout flows, customer reviews, and inventory management. These components are optimized for conversion and user experience in business applications.',
+        component: 'Production-ready e-commerce patterns for product showcases, shopping cart, checkout flows, customer reviews, and inventory management. These business components demonstrate real-world implementations optimized for conversion and user experience.',
       },
     },
   },
-  tags: ['autodocs', 'business', 'ecommerce'],
+  tags: ['autodocs', 'business', 'ecommerce', 'patterns'],
   argTypes: {
     showQuickActions: {
       control: 'boolean',

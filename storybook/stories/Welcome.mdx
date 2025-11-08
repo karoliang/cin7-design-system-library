@@ -1,0 +1,660 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Welcome to Cin7 DSL" />
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    # Welcome to CIN7 Design System Library
+
+    A production-ready, multi-layered enterprise framework combining Shopify Polaris, ExtJS, Vanilla JavaScript, and TypeScript to create scalable applications with clear separation of concerns.
+  </div>
+</div>
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    ## What is CIN7 DSL?
+
+    CIN7 DSL is a comprehensive framework built on four architectural layers:
+    - **Design System Layer** - Extended Polaris design tokens and theming
+    - **UI Interaction Layer** - Vanilla JavaScript for lightweight DOM interactions
+    - **Component Layer** - React components with Polaris and ExtJS integration
+    - **Application Layer** - TypeScript SDK for business logic and domain modeling
+  </div>
+</div>
+
+---
+
+## Quick Start
+
+### Installation
+
+Create a new project with all features:
+
+```bash
+npx @cin7/create-dsl-app my-app --template=full
+cd my-app
+pnpm install
+pnpm dev
+```
+
+Or install individual packages:
+
+```bash
+# Core packages
+pnpm add @cin7/core @cin7/polaris-adapter
+
+# Charts
+pnpm add @cin7/highcharts-adapter
+
+# Vanilla JS utilities
+pnpm add @cin7/vanilla-js
+
+# TypeScript business logic
+pnpm add @cin7/typescript-sdk
+
+# ExtJS components
+pnpm add @cin7/extjs-adapters
+```
+
+### Basic Setup
+
+```tsx
+import { Cin7ThemeProvider, Page, Card, Text } from '@cin7/polaris-adapter';
+import { LineChart } from '@cin7/highcharts-adapter/react';
+import '@shopify/polaris/build/esm/styles.css';
+import '@cin7/design-tokens/css';
+
+function App() {
+  return (
+    <Cin7ThemeProvider>
+      <Page title="Dashboard">
+        <Card>
+          <Text variant="headingMd" as="h2">
+            Monthly Sales
+          </Text>
+          <LineChart
+            data={[10, 20, 15, 25, 22, 30]}
+            categories={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
+          />
+        </Card>
+      </Page>
+    </Cin7ThemeProvider>
+  );
+}
+```
+
+---
+
+## Package Import Reference
+
+### @cin7/core - Core Utilities
+
+```typescript
+// Main imports
+import { clsx } from '@cin7/core';
+
+// Subpath imports
+import { DOMUtils, ValidationUtils } from '@cin7/core/utils';
+import { BaseEntity, ApiResponse } from '@cin7/core/types';
+```
+
+**Common Use Cases:** Utility functions, TypeScript types, shared helpers
+
+### @cin7/design-tokens - Design System
+
+```typescript
+// CSS import (add to main.tsx)
+import '@cin7/design-tokens/css';
+
+// SCSS import (in SCSS files)
+@import '@cin7/design-tokens/scss';
+
+// JavaScript tokens
+import { tokens } from '@cin7/design-tokens';
+const primaryColor = tokens.color.primary[500];
+```
+
+**Common Use Cases:** Theming, design consistency, custom styling
+
+### @cin7/polaris-adapter - React Components
+
+```typescript
+// Main component imports
+import {
+  Cin7ThemeProvider,
+  Page,
+  Card,
+  Button,
+  TextField,
+  DataTable,
+  Badge,
+} from '@cin7/polaris-adapter';
+
+// Theme customization
+import { Cin7Theme, customTheme } from '@cin7/polaris-adapter/theme';
+
+// Always import Polaris styles
+import '@shopify/polaris/build/esm/styles.css';
+```
+
+**Common Use Cases:** UI components, forms, layouts, data display
+
+### @cin7/highcharts-adapter - Charts & Visualizations
+
+```typescript
+// React chart components
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  AreaChart,
+  ScatterChart,
+  WaterfallChart,
+} from '@cin7/highcharts-adapter/react';
+
+// ExtJS integration
+import { HighchartsPanel } from '@cin7/highcharts-adapter/extjs';
+
+// Vanilla JavaScript
+import { createChart } from '@cin7/highcharts-adapter/vanilla';
+
+// TypeScript utilities
+import { ChartConfig, SeriesData } from '@cin7/highcharts-adapter/typescript';
+
+// Chart utilities
+import { formatChartData, mergeOptions } from '@cin7/highcharts-adapter/utilities';
+```
+
+**Common Use Cases:** Data visualization, dashboards, analytics
+
+### @cin7/vanilla-js - DOM Utilities
+
+```typescript
+// Main imports
+import { DOMUtils, EventUtils } from '@cin7/vanilla-js';
+
+// Subpath imports
+import { $, query, queryAll } from '@cin7/vanilla-js/dom';
+import { on, off, delegate } from '@cin7/vanilla-js/events';
+import { fadeIn, fadeOut, slideUp, slideDown } from '@cin7/vanilla-js/animations';
+```
+
+**Common Use Cases:** DOM manipulation, event handling, lightweight interactions
+
+### @cin7/typescript-sdk - Business Logic
+
+```typescript
+// Main pattern imports
+import { Repository, UseCase } from '@cin7/typescript-sdk';
+
+// Subpath imports
+import { Repository, Entity, ValueObject } from '@cin7/typescript-sdk/patterns';
+import { ApiClient, HttpService } from '@cin7/typescript-sdk/services';
+import { User, Product, Order } from '@cin7/typescript-sdk/models';
+import { createStore, useStore } from '@cin7/typescript-sdk/state';
+```
+
+**Common Use Cases:** Domain modeling, API integration, state management
+
+### @cin7/extjs-adapters - Enterprise Components
+
+```typescript
+// Main imports
+import { ExtDataGrid, ExtFormPanel } from '@cin7/extjs-adapters';
+
+// Subpath imports
+import { ExtDataGrid, GridFeatures } from '@cin7/extjs-adapters/grid';
+import { ExtFormPanel, FormValidation } from '@cin7/extjs-adapters/form';
+import { ExtChart, ChartConfig } from '@cin7/extjs-adapters/charts';
+```
+
+**Common Use Cases:** Data grids, complex forms, enterprise data management
+
+---
+
+## Copy-Paste Examples
+
+### React Chart Example
+
+```tsx
+import { LineChart } from '@cin7/highcharts-adapter/react';
+import { Card, Text } from '@cin7/polaris-adapter';
+
+export const SalesChart = () => (
+  <Card>
+    <Text variant="headingMd" as="h2">Monthly Sales</Text>
+    <LineChart
+      data={[10, 20, 15, 25, 22, 30]}
+      categories={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
+      title="Sales Trend"
+      yAxisTitle="Revenue ($K)"
+      height={300}
+    />
+  </Card>
+);
+```
+
+### Bar Chart with Multiple Series
+
+```tsx
+import { BarChart } from '@cin7/highcharts-adapter/react';
+
+export const RegionalSales = () => (
+  <BarChart
+    series={[
+      { name: 'Q1', data: [50, 70, 90] },
+      { name: 'Q2', data: [60, 80, 95] },
+      { name: 'Q3', data: [70, 85, 100] },
+    ]}
+    categories={['North', 'South', 'East']}
+    title="Regional Performance"
+    stacked={false}
+  />
+);
+```
+
+### Pie Chart Example
+
+```tsx
+import { PieChart } from '@cin7/highcharts-adapter/react';
+
+export const MarketShare = () => (
+  <PieChart
+    data={[
+      { name: 'Product A', y: 45 },
+      { name: 'Product B', y: 30 },
+      { name: 'Product C', y: 25 },
+    ]}
+    title="Market Share by Product"
+    showLegend={true}
+    donut={true}
+  />
+);
+```
+
+### Vanilla JS Interaction Example
+
+```typescript
+import { DOMUtils, EventUtils } from '@cin7/vanilla-js';
+
+// Toggle panel visibility
+EventUtils.on(document.getElementById('toggle-btn'), 'click', () => {
+  DOMUtils.toggleClass(document.getElementById('panel'), 'active');
+});
+
+// Fade in element
+DOMUtils.fadeIn(document.getElementById('notification'), 300);
+
+// Delegate event handling
+EventUtils.delegate(document.body, '.delete-btn', 'click', (event, target) => {
+  const itemId = target.dataset.id;
+  deleteItem(itemId);
+});
+```
+
+### ExtJS Data Grid Example
+
+```typescript
+import { ExtDataGrid } from '@cin7/extjs-adapters/grid';
+
+const grid = ExtDataGrid.create({
+  store: productStore,
+  columns: [
+    { text: 'Product', dataIndex: 'name', flex: 1 },
+    { text: 'SKU', dataIndex: 'sku', width: 120 },
+    { text: 'Price', dataIndex: 'price', width: 100, renderer: 'usMoney' },
+    { text: 'Stock', dataIndex: 'stock', width: 80 },
+  ],
+  features: ['sorting', 'filtering', 'grouping', 'export'],
+  pagination: {
+    pageSize: 50,
+    serverSide: true,
+  },
+  height: 600,
+});
+```
+
+### TypeScript Repository Pattern
+
+```typescript
+import { Repository } from '@cin7/typescript-sdk/patterns';
+import { Product } from '@cin7/typescript-sdk/models';
+
+class ProductRepository extends Repository<Product> {
+  constructor() {
+    super('/api/products');
+  }
+
+  async findByCategory(category: string): Promise<Product[]> {
+    return this.client.get(`${this.endpoint}/category/${category}`);
+  }
+
+  async updateStock(id: string, quantity: number): Promise<Product> {
+    return this.client.patch(`${this.endpoint}/${id}/stock`, { quantity });
+  }
+}
+
+// Usage
+const productRepo = new ProductRepository();
+const products = await productRepo.findAll();
+const electronics = await productRepo.findByCategory('electronics');
+```
+
+### Form with Validation
+
+```tsx
+import { FormLayout, TextField, Button, Banner } from '@cin7/polaris-adapter';
+import { useState } from 'react';
+
+export const ProductForm = () => {
+  const [formData, setFormData] = useState({ name: '', price: '', sku: '' });
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name) newErrors.name = 'Product name is required';
+    if (!formData.price || parseFloat(formData.price) <= 0) {
+      newErrors.price = 'Valid price is required';
+    }
+    if (!formData.sku) newErrors.sku = 'SKU is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validate()) {
+      // Submit form
+      console.log('Form submitted:', formData);
+    }
+  };
+
+  return (
+    <FormLayout>
+      <TextField
+        label="Product Name"
+        value={formData.name}
+        onChange={(value) => setFormData({ ...formData, name: value })}
+        error={errors.name}
+        requiredIndicator
+      />
+      <TextField
+        label="Price"
+        type="number"
+        prefix="$"
+        value={formData.price}
+        onChange={(value) => setFormData({ ...formData, price: value })}
+        error={errors.price}
+        requiredIndicator
+      />
+      <TextField
+        label="SKU"
+        value={formData.sku}
+        onChange={(value) => setFormData({ ...formData, sku: value })}
+        error={errors.sku}
+        requiredIndicator
+      />
+      <Button variant="primary" onClick={handleSubmit}>
+        Save Product
+      </Button>
+    </FormLayout>
+  );
+};
+```
+
+---
+
+## Multi-Layer Integration Example
+
+Here's how all layers work together in a complete feature:
+
+```tsx
+// 1. Design System Layer - Tokens
+import '@cin7/design-tokens/css';
+
+// 2. Application Layer - Business Logic (TypeScript SDK)
+import { ProductRepository } from '@cin7/typescript-sdk/patterns';
+import { ApiClient } from '@cin7/typescript-sdk/services';
+
+// 3. Component Layer - UI Components (React + ExtJS)
+import { Page, Card, Button } from '@cin7/polaris-adapter';
+import { ExtDataGrid } from '@cin7/extjs-adapters/grid';
+import { LineChart } from '@cin7/highcharts-adapter/react';
+
+// 4. UI Interaction Layer - DOM Utilities (Vanilla JS)
+import { DOMUtils, EventUtils } from '@cin7/vanilla-js';
+
+export const ProductDashboard = () => {
+  // Business logic layer
+  const productRepo = new ProductRepository();
+  const [products, setProducts] = useState([]);
+  const [salesData, setSalesData] = useState([]);
+
+  useEffect(() => {
+    // Load data using TypeScript SDK
+    productRepo.findAll().then(setProducts);
+    productRepo.getSalesData().then(setSalesData);
+  }, []);
+
+  // UI interaction with Vanilla JS
+  const handleRowClick = (row) => {
+    DOMUtils.addClass(row.element, 'selected');
+    EventUtils.trigger(document, 'product:selected', { product: row.data });
+  };
+
+  return (
+    <Page title="Product Dashboard">
+      {/* Polaris components */}
+      <Card>
+        <LineChart
+          data={salesData}
+          title="Sales Trend"
+          height={300}
+        />
+      </Card>
+
+      {/* ExtJS grid with Vanilla JS interactions */}
+      <Card>
+        <ExtDataGrid
+          store={products}
+          columns={[
+            { text: 'Product', dataIndex: 'name', flex: 1 },
+            { text: 'Price', dataIndex: 'price', width: 120 },
+            { text: 'Stock', dataIndex: 'stock', width: 80 },
+          ]}
+          onRowClick={handleRowClick}
+          features={['sorting', 'filtering']}
+        />
+      </Card>
+    </Page>
+  );
+};
+```
+
+---
+
+## Explore Storybook
+
+### Framework Adapters
+- **[Vanilla JS](/?path=/story/cin7-dsl-foundation-core-utilities)** - DOM utilities, event handling, animations
+- **[TypeScript SDK](/?path=/story/cin7-dsl-typescript-sdk-repository-pattern)** - Business logic patterns
+- **[ExtJS Adapters](/?path=/story/cin7-dsl-extjs-adapters-form-panel)** - Enterprise components
+
+### Charts & Visualizations
+- **[Line Charts](/?path=/story/components-charts-linechart)** - Trend analysis
+- **[Bar Charts](/?path=/story/components-charts-barchart)** - Comparisons
+- **[Pie Charts](/?path=/story/components-charts-piechart)** - Proportions
+
+### UI Components
+- **[Forms & Inputs](/?path=/story/components-forms-textfield)** - Text fields, selects, checkboxes
+- **[Layout Components](/?path=/story/components-layout-card)** - Cards, pages, grids
+- **[Data Display](/?path=/story/components-data-display-datatable)** - Tables, lists, badges
+
+### Guides
+- **[Getting Started](/?path=/story/cin7-dsl-guides-getting-started)** - Complete onboarding guide
+- **[Component Selection](/?path=/story/cin7-dsl-guides-component-selection)** - Choose the right components
+
+---
+
+## Documentation
+
+### Full Documentation Site
+Visit [https://cin7-dsl.netlify.app](https://cin7-dsl.netlify.app) for comprehensive documentation including:
+- Architecture guides
+- API reference
+- Best practices
+- Real-world examples
+- Migration guides
+
+### Quick Links
+- [Installation Guide](https://cin7-dsl.netlify.app/getting-started/installation)
+- [Architecture Overview](https://cin7-dsl.netlify.app/getting-started/architecture)
+- [Component Library](https://cin7-dsl.netlify.app/components)
+- [Patterns](https://cin7-dsl.netlify.app/patterns)
+
+---
+
+## Troubleshooting
+
+### Common Import Errors
+
+**Module not found**
+```bash
+# Solution: Install the missing package
+pnpm add @cin7/package-name
+```
+
+**Subpath imports not working**
+```json
+// Solution: Update tsconfig.json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler"
+  }
+}
+```
+
+**Polaris styles missing**
+```tsx
+// Solution: Import Polaris CSS in your main file
+import '@shopify/polaris/build/esm/styles.css';
+```
+
+### Chart Setup Issues
+
+**Highcharts license error**
+```typescript
+// Solution: Set license key before using charts
+import Highcharts from 'highcharts';
+Highcharts.setOptions({
+  credits: { enabled: false }
+});
+```
+
+**Chart not rendering**
+```css
+/* Solution: Ensure container has height */
+.chart-container {
+  height: 400px;
+}
+```
+
+**TypeScript errors with chart data**
+```typescript
+// Solution: Use proper type definitions
+import { SeriesData } from '@cin7/highcharts-adapter/typescript';
+
+const data: SeriesData[] = [10, 20, 30];
+```
+
+### ExtJS Grid Issues
+
+**Grid not displaying**
+```typescript
+// Solution: Ensure store is loaded
+const store = Ext.create('Ext.data.Store', {
+  autoLoad: true,
+  data: products
+});
+```
+
+**Column configuration errors**
+```typescript
+// Solution: Use proper column config
+columns: [
+  { text: 'Name', dataIndex: 'name', flex: 1 }, // flex instead of width
+  { text: 'Price', dataIndex: 'price', width: 100 } // fixed width
+]
+```
+
+---
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    ## Need Help?
+
+    - **GitHub Issues:** [Report bugs or request features](https://github.com/cin7/dsl/issues)
+    - **Documentation:** [Browse full docs](https://cin7-dsl.netlify.app)
+    - **Examples:** [Real-world patterns](https://cin7-dsl.netlify.app/patterns)
+  </div>
+</div>
+
+<style>
+  {`
+  .sb-container {
+    margin-bottom: 48px;
+  }
+
+  .sb-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .sb-section-title {
+    margin-bottom: 32px;
+  }
+
+  .sb-section a:not(h1 a, h2 a, h3 a) {
+    font-size: 14px;
+  }
+
+  pre {
+    background: #f6f8fa;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  code {
+    background: #f6f8fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e1e4e8;
+  }
+
+  th {
+    font-weight: 600;
+    background: #f6f8fa;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e1e4e8;
+    margin: 32px 0;
+  }
+  `}
+</style>
