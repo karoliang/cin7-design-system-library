@@ -21772,7 +21772,7 @@ function IndexTableExample() {
           <IndexTable.Row id={id} key={id} position={index}>
             <IndexTable.Cell>{name}</IndexTable.Cell>
             <IndexTable.Cell>{sku}</IndexTable.Cell>
-            <IndexTable.Cell numeric>\${price.toFixed(2)}</IndexTable.Cell>
+            <IndexTable.Cell numeric>{price.toFixed(2)}</IndexTable.Cell>
             <IndexTable.Cell numeric>{quantity}</IndexTable.Cell>
             <IndexTable.Cell>
               <Badge status={status === 'Active' ? 'success' : 'info'}>
@@ -21912,7 +21912,7 @@ function IndexTableExample({
           >
             <IndexTable.Cell>{name}</IndexTable.Cell>
             <IndexTable.Cell>{sku}</IndexTable.Cell>
-            <IndexTable.Cell numeric>\${price.toFixed(2)}</IndexTable.Cell>
+            <IndexTable.Cell numeric>{price.toFixed(2)}</IndexTable.Cell>
             <IndexTable.Cell numeric>{quantity}</IndexTable.Cell>
             <IndexTable.Cell>
               <Badge status={status === 'Active' ? 'success' : 'info'}>
@@ -22657,7 +22657,7 @@ function ResourceListExample() {
               </Text>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px' }}>
                 <Text variant="bodyMd" fontWeight="medium">
-                  \${price.toFixed(2)}
+                  {price.toFixed(2)}
                 </Text>
                 {statusBadge}
                 <Text color="subdued" variant="bodySm">
@@ -22883,7 +22883,7 @@ function ResourceListExample({
               </Text>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '4px' }}>
                 <Text variant="bodyMd" fontWeight="medium">
-                  \${price.toFixed(2)}
+                  {price.toFixed(2)}
                 </Text>
                 {statusBadge}
                 <Text color="subdued" variant="bodySm">
