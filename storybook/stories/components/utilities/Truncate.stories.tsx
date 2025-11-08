@@ -79,9 +79,6 @@ export const InTableCell: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'inTableCell'),
-  },
 };
 
 export const InListItem: Story = {
@@ -116,9 +113,6 @@ export const InListItem: Story = {
       </Card>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'inListItem'),
-  },
 };
 
 export const WithTooltip: Story = {
@@ -144,9 +138,6 @@ export const WithTooltip: Story = {
         ))}
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'withTooltip'),
   },
 };
 
@@ -193,9 +184,6 @@ export const MultilineTruncation: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'multiline'),
-  },
 };
 
 export const ResponsiveTruncation: Story = {
@@ -228,9 +216,6 @@ export const ResponsiveTruncation: Story = {
         </div>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'responsive'),
   },
 };
 
@@ -298,9 +283,6 @@ export const ProductCardTruncation: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'productCard'),
-  },
 };
 
 export const VariableWidthContainers: Story = {
@@ -340,9 +322,6 @@ export const VariableWidthContainers: Story = {
         </div>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'variableWidth'),
   },
 };
 
@@ -412,9 +391,6 @@ export const AccessibilityExample: Story = {
       </div>
     );
   },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'accessibility'),
-  },
 };
 
 export const DataTableExample: Story = {
@@ -475,9 +451,6 @@ export const DataTableExample: Story = {
         />
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'dataTable'),
   },
 };
 
@@ -548,8 +521,5 @@ export const EmailSubjects: Story = {
         </Card>
       </div>
     );
-  },
-  parameters: {
-    codeVariants: getCodeVariants('truncate', 'emailSubjects'),
   },
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TopBar } from '@shopify/polaris';
+import { Frame, TopBar } from '@shopify/polaris';
 import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
@@ -74,14 +74,16 @@ export const Default: Story = {
     );
 
     return (
-      <div style={{ height: '60px' }}>
-        <TopBar
-          showNavigationToggle
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-        />
-      </div>
+      <Frame>
+        <div style={{ height: '60px' }}>
+          <TopBar
+            showNavigationToggle
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+          />
+        </div>
+      </Frame>
     );
   },
   parameters: {
@@ -143,15 +145,17 @@ export const WithUserMenu: Story = {
     );
 
     return (
-      <div style={{ height: '60px' }}>
-        <TopBar
-          showNavigationToggle
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-        />
-      </div>
+      <Frame>
+        <div style={{ height: '60px' }}>
+          <TopBar
+            showNavigationToggle
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+          />
+        </div>
+      </Frame>
     );
   },
   parameters: {
@@ -274,17 +278,19 @@ export const EcommerceHeader: Story = {
     ) : null;
 
     return (
-      <div style={{ position: 'relative' }}>
-        <TopBar
-          showNavigationToggle
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-          onNavigationToggle={handleNavigationToggle}
-        />
-        {searchResults}
-      </div>
+      <Frame>
+        <div style={{ position: 'relative' }}>
+          <TopBar
+            showNavigationToggle
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+            onNavigationToggle={handleNavigationToggle}
+          />
+          {searchResults}
+        </div>
+      </Frame>
     );
   },
 
@@ -352,14 +358,16 @@ export const AdminDashboard: Story = {
     );
 
     return (
-      <div style={{ height: '60px', backgroundColor: '#1f2937' }}>
-        <TopBar
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-        />
-      </div>
+      <Frame>
+        <div style={{ height: '60px', backgroundColor: '#1f2937' }}>
+          <TopBar
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+          />
+        </div>
+      </Frame>
     );
   },
 
@@ -503,25 +511,27 @@ export const ProjectManagement: Story = {
     ) : null;
 
     return (
-      <div style={{ position: 'relative', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
-        <div style={{
-          padding: '8px 16px',
-          backgroundColor: '#f8fafc',
-          borderBottom: '1px solid #e5e7eb'
-        }}>
-          <span style={{ fontSize: "12px", color: '#6b7280' }}>
-            Current Project: <strong style={{ color: '#1f2937' }}>{currentProject}</strong>
-          </span>
+      <Frame>
+        <div style={{ position: 'relative', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
+          <div style={{
+            padding: '8px 16px',
+            backgroundColor: '#f8fafc',
+            borderBottom: '1px solid #e5e7eb'
+          }}>
+            <span style={{ fontSize: "12px", color: '#6b7280' }}>
+              Current Project: <strong style={{ color: '#1f2937' }}>{currentProject}</strong>
+            </span>
+          </div>
+          <TopBar
+            showNavigationToggle
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+          />
+          {searchResults}
         </div>
-        <TopBar
-          showNavigationToggle
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-        />
-        {searchResults}
-      </div>
+      </Frame>
     );
   },
 
@@ -596,15 +606,17 @@ export const CustomerSupport: Story = {
     );
 
     return (
-      <div style={{ height: '60px' }}>
-        <TopBar
-          showNavigationToggle
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-        />
-      </div>
+      <Frame>
+        <div style={{ height: '60px' }}>
+          <TopBar
+            showNavigationToggle
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+          />
+        </div>
+      </Frame>
     );
   },
 
@@ -680,30 +692,32 @@ export const EducationalPlatform: Story = {
     );
 
     return (
-      <div style={{ border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
-        <div style={{
-          padding: '12px 20px',
-          background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
-          color: 'white'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: "14px", opacity: 0.9 }}>Currently Learning</div>
-              <div style={{ fontSize: '16px', fontWeight: '600' }}>{currentCourse}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: "20px", fontWeight: '700' }}>{learningProgress}%</div>
-              <div style={{ fontSize: "12px", opacity: 0.9 }}>Complete</div>
+      <Frame>
+        <div style={{ border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
+          <div style={{
+            padding: '12px 20px',
+            background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
+            color: 'white'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <div style={{ fontSize: "14px", opacity: 0.9 }}>Currently Learning</div>
+                <div style={{ fontSize: '16px', fontWeight: '600' }}>{currentCourse}</div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: "20px", fontWeight: '700' }}>{learningProgress}%</div>
+                <div style={{ fontSize: "12px", opacity: 0.9 }}>Complete</div>
+              </div>
             </div>
           </div>
+          <TopBar
+            searchField={searchField}
+            searchResultsVisible={searchResultsVisible}
+            onSearchResultsDismiss={handleSearchResultsDismiss}
+            userMenu={userMenu}
+          />
         </div>
-        <TopBar
-          searchField={searchField}
-          searchResultsVisible={searchResultsVisible}
-          onSearchResultsDismiss={handleSearchResultsDismiss}
-          userMenu={userMenu}
-        />
-      </div>
+      </Frame>
     );
   },
 

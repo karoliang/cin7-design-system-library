@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Navigation } from '@shopify/polaris';
+import { Frame, Navigation } from '@shopify/polaris';
 import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
@@ -39,33 +39,35 @@ export const Default: Story = {
     const [location, setLocation] = React.useState('/home');
 
     return (
-      <div style={{ height: '400px', display: 'flex' }}>
-        <Navigation location={location}>
-          <Navigation.Section
-            items={[
-              {
-                url: '/home',
-                label: 'Home',
-                icon: 'home',
-              },
-              {
-                url: '/orders',
-                label: 'Orders',
-                icon: 'orders',
-                badge: '12',
-              },
-              {
-                url: '/products',
-                label: 'Products',
-                icon: 'products',
-              },
-            ]}
-          />
-        </Navigation>
-        <div style={{ flex: 1, padding: '20px', backgroundColor: '#f9fafb' }}>
-          <h2>Current Location: {location}</h2>
+      <Frame>
+        <div style={{ height: '400px', display: 'flex' }}>
+          <Navigation location={location}>
+            <Navigation.Section
+              items={[
+                {
+                  url: '/home',
+                  label: 'Home',
+                  icon: 'home',
+                },
+                {
+                  url: '/orders',
+                  label: 'Orders',
+                  icon: 'orders',
+                  badge: '12',
+                },
+                {
+                  url: '/products',
+                  label: 'Products',
+                  icon: 'products',
+                },
+              ]}
+            />
+          </Navigation>
+          <div style={{ flex: 1, padding: '20px', backgroundColor: '#f9fafb' }}>
+            <h2>Current Location: {location}</h2>
+          </div>
         </div>
-      </div>
+      </Frame>
     );
   },
   parameters: {
@@ -78,73 +80,75 @@ export const NestedNavigation: Story = {
     const [location, setLocation] = React.useState('/dashboard');
 
     return (
-      <div style={{ height: '500px', display: 'flex' }}>
-        <Navigation location={location}>
-          <Navigation.Section
-            title="Sales"
-            items={[
-              {
-                url: '/dashboard',
-                label: 'Dashboard',
-                icon: 'home',
-                selected: location.startsWith('/dashboard'),
-              },
-              {
-                url: '/orders',
-                label: 'Orders',
-                icon: 'orders',
-                badge: '24',
-                selected: location.startsWith('/orders'),
-                subNavigationItems: [
-                  {
-                    url: '/orders/all',
-                    label: 'All Orders',
-                    selected: location === '/orders/all',
-                  },
-                  {
-                    url: '/orders/fulfillments',
-                    label: 'Fulfillments',
-                    selected: location === '/orders/fulfillments',
-                  },
-                  {
-                    url: '/orders/returns',
-                    label: 'Returns',
-                    selected: location === '/orders/returns',
-                    badge: '3',
-                  },
-                ],
-              },
-              {
-                url: '/customers',
-                label: 'Customers',
-                icon: 'customers',
-                selected: location.startsWith('/customers'),
-                subNavigationItems: [
-                  {
-                    url: '/customers/all',
-                    label: 'All Customers',
-                    selected: location === '/customers/all',
-                  },
-                  {
-                    url: '/customers/segments',
-                    label: 'Segments',
-                    selected: location === '/customers/segments',
-                  },
-                  {
-                    url: '/customers/groups',
-                    label: 'Groups',
-                    selected: location === '/customers/groups',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Navigation>
-        <div style={{ flex: 1, padding: '20px', backgroundColor: '#f9fafb' }}>
-          <h2>Sales Dashboard</h2>
-          <p>Managing sales operations and customer relationships</p>
+      <Frame>
+        <div style={{ height: '500px', display: 'flex' }}>
+          <Navigation location={location}>
+            <Navigation.Section
+              title="Sales"
+              items={[
+                {
+                  url: '/dashboard',
+                  label: 'Dashboard',
+                  icon: 'home',
+                  selected: location.startsWith('/dashboard'),
+                },
+                {
+                  url: '/orders',
+                  label: 'Orders',
+                  icon: 'orders',
+                  badge: '24',
+                  selected: location.startsWith('/orders'),
+                  subNavigationItems: [
+                    {
+                      url: '/orders/all',
+                      label: 'All Orders',
+                      selected: location === '/orders/all',
+                    },
+                    {
+                      url: '/orders/fulfillments',
+                      label: 'Fulfillments',
+                      selected: location === '/orders/fulfillments',
+                    },
+                    {
+                      url: '/orders/returns',
+                      label: 'Returns',
+                      selected: location === '/orders/returns',
+                      badge: '3',
+                    },
+                  ],
+                },
+                {
+                  url: '/customers',
+                  label: 'Customers',
+                  icon: 'customers',
+                  selected: location.startsWith('/customers'),
+                  subNavigationItems: [
+                    {
+                      url: '/customers/all',
+                      label: 'All Customers',
+                      selected: location === '/customers/all',
+                    },
+                    {
+                      url: '/customers/segments',
+                      label: 'Segments',
+                      selected: location === '/customers/segments',
+                    },
+                    {
+                      url: '/customers/groups',
+                      label: 'Groups',
+                      selected: location === '/customers/groups',
+                    },
+                  ],
+                },
+              ]}
+            />
+          </Navigation>
+          <div style={{ flex: 1, padding: '20px', backgroundColor: '#f9fafb' }}>
+            <h2>Sales Dashboard</h2>
+            <p>Managing sales operations and customer relationships</p>
+          </div>
         </div>
-      </div>
+      </Frame>
     );
   },
   parameters: {
@@ -161,8 +165,9 @@ export const EcommerceNavigation: Story = {
     };
 
     return (
-      <div style={{ height: '600px', display: 'flex' }}>
-        <Navigation location={location}>
+      <Frame>
+        <div style={{ height: '600px', display: 'flex' }}>
+          <Navigation location={location}>
           <Navigation.Section
             title="Online Store"
             items={[
@@ -303,7 +308,8 @@ export const EcommerceNavigation: Story = {
             </p>
           </div>
         </div>
-      </div>
+        </div>
+      </Frame>
     );
   },
   parameters: {
@@ -323,8 +329,9 @@ export const ProjectManagement: Story = {
     ];
 
     return (
-      <div style={{ height: '600px', display: 'flex' }}>
-        <Navigation location={location}>
+      <Frame>
+        <div style={{ height: '600px', display: 'flex' }}>
+          <Navigation location={location}>
           <Navigation.Section
             title="Workspace"
             items={[
@@ -449,7 +456,8 @@ export const ProjectManagement: Story = {
             </div>
           )}
         </div>
-      </div>
+        </div>
+      </Frame>
     );
   },
 };
@@ -482,8 +490,9 @@ export const AdminPanel: Story = {
     };
 
     return (
-      <div style={{ height: '600px', display: 'flex' }}>
-        <Navigation location={location}>
+      <Frame>
+        <div style={{ height: '600px', display: 'flex' }}>
+          <Navigation location={location}>
           <Navigation.Section
             title="Admin Panel"
             items={[
@@ -679,7 +688,8 @@ export const AdminPanel: Story = {
             </p>
           </div>
         </div>
-      </div>
+        </div>
+      </Frame>
     );
   },
 };
@@ -702,8 +712,9 @@ export const LearningPlatform: Story = {
     ];
 
     return (
-      <div style={{ height: '600px', display: 'flex' }}>
-        <Navigation location={location}>
+      <Frame>
+        <div style={{ height: '600px', display: 'flex' }}>
+          <Navigation location={location}>
           <Navigation.Section
             title="Learning Hub"
             items={[
@@ -869,7 +880,8 @@ export const LearningPlatform: Story = {
             </div>
           )}
         </div>
-      </div>
+        </div>
+      </Frame>
     );
   },
 };

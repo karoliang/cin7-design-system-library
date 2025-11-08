@@ -563,7 +563,7 @@ export const SearchResults: Story = {
                   <span style={{ color: '#f59e0b', fontSize: "var(--font-size-sm)" }}>⭐</span>
                   <span style={{ fontSize: "var(--font-size-sm)", fontWeight: 'var(--font-weight-semibold)' }}>{result.rating}</span>
                   <span style={{ fontSize: "var(--font-size-xs)", color: '#6b7280' }}>
-                    ({reviews.toLocaleString()} reviews)
+                    ({result.reviews.toLocaleString()} reviews)
                   </span>
                 </div>
 
