@@ -50489,6 +50489,98 @@ const transformToPiePoints = (data: PieSliceData[]): PiePoint[] => {
     y: slice.value,
     color: slice.color || undefined
   }));
+};
+
+const calculatePercentage = (value: number, total: number): string => {
+  return ((value / total) * 100).toFixed(1);
+};
+
+const calculateTotal = (data: PieSliceData[]): number => {
+  return data.reduce((sum, slice) => sum + slice.value, 0);
+};
+
+// Configuration functions
+const createTooltipConfig = (suffix: string = ''): TooltipConfig => ({
+  pointFormat: '<b>{point.percentage:.1f}%</b>',
+  valueSuffix: suffix
+});
+
+const createPieChartConfig = (options: Partial<PieChartConfig> = {}): PieChartConfig => ({
+  showLegend: true,
+  showDataLabels: true,
+  enableTooltips: true,
+  height: 400,
+  ...options
+});
+
+// Sample data
+const salesData: PieSliceData[] = [
+  { name: 'Electronics', value: 450, color: '#0078D4', description: 'Tech products' },
+  { name: 'Clothing', value: 320, color: '#00B7C3', description: 'Fashion items' },
+  { name: 'Food', value: 180, color: '#8764B8', description: 'Groceries' },
+  { name: 'Books', value: 90, color: '#D83B01', description: 'Publications' },
+  { name: 'Other', value: 60, color: '#737373', description: 'Miscellaneous' }
+];
+
+const metadata: ChartMetadata = {
+  title: 'Sales by Category',
+  subtitle: 'Q4 2024 Distribution',
+  period: 'October - December 2024'
+};
+
+const config = createPieChartConfig({
+  showLegend: true,
+  showDataLabels: true,
+  enableTooltips: true,
+  height: 400
+});
+
+// Transform data and calculate metrics
+const points = transformToPiePoints(salesData);
+const total = calculateTotal(salesData);
+const tooltipConfig = createTooltipConfig(' sales');
+
+// Create the pie chart
+Highcharts.chart('container', {
+  chart: {
+    type: 'pie',
+    height: config.height
+  },
+  title: {
+    text: metadata.title
+  },
+  subtitle: {
+    text: metadata.subtitle
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: config.showDataLabels,
+        format: '<b>{point.name}</b>: {point.percentage:.1f}%'
+      },
+      showInLegend: config.showLegend
+    }
+  },
+  tooltip: config.enableTooltips ? {
+    pointFormat: tooltipConfig.pointFormat + tooltipConfig.valueSuffix
+  } : {
+    enabled: false
+  },
+  series: [{
+    type: 'pie',
+    name: 'Sales',
+    data: points
+  }] as SeriesPieOptions[]
+});
+
+// Log summary statistics
+console.log(\`Total Sales: \${total}\`);
+salesData.forEach(slice => {
+  console.log(\`\${slice.name}: \${calculatePercentage(slice.value, total)}%\`);
+});`
+  },
 
   donut: {
     react: `import { PieChart } from '@cin7/highcharts-adapter/react';
@@ -52046,271 +52138,8 @@ const chartOptions: TaskCompletionOptions = {
 
 const options = createTaskCompletionOptions(chartOptions);
 Highcharts.chart('container', options);`
-  },
-
-};
-
-const createTooltipConfig = (suffix: string = ''): TooltipConfig => ({
-  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-  valueSuffix: suffix
-});
-
-// Chart options builder
-const buildChartOptions = (
-  data: PieSliceData[],
-  metadata: ChartMetadata,
-  config: PieChartConfig
-): Highcharts.Options => {
-  const series: PieSeries = [{
-    type: 'pie',
-    name: 'Market Share',
-    data: transformToPiePoints(data),
-    dataLabels: {
-      enabled: config.showDataLabels,
-      format: '<b>{point.name}</b>: {point.percentage:.1f}%'
-    }
-  }];
-
-  return {
-    chart: {
-      type: 'pie',
-      height: config.height || 400
-    },
-    title: {
-      text: metadata.title
-    },
-    subtitle: {
-      text: metadata.subtitle
-    },
-    tooltip: config.enableTooltips ? createTooltipConfig() : undefined,
-    legend: {
-      enabled: config.showLegend
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: config.showDataLabels
-        },
-        showInLegend: config.showLegend
-      }
-    },
-    series
-  };
-};
-
-// Usage
-const marketData: PieSliceData[] = [
-  { name: 'Product A', value: 45.0, color: '#5C6AC4', description: 'Leading product' },
-  { name: 'Product B', value: 26.8, color: '#006FBB', description: 'Growing segment' },
-  { name: 'Product C', value: 18.2, color: '#47C1BF', description: 'Niche market' },
-  { name: 'Product D', value: 10.0, color: '#955BA5', description: 'New launch' }
-];
-
-const chartMetadata: ChartMetadata = {
-  title: 'Market Share by Product',
-  subtitle: 'Q1 2025',
-  period: '2025-Q1'
-};
-
-const chartConfig: PieChartConfig = {
-  showLegend: true,
-  showDataLabels: true,
-  enableTooltips: true,
-  height: 400
-};
-
-const options = buildChartOptions(marketData, chartMetadata, chartConfig);
-Highcharts.chart('container', options);`
-  },
-
-  donut: {
-    react: `import { PieChart } from '@cin7/highcharts-adapter/react';
-
-function SalesDistributionChart() {
-  const data = [
-    { name: 'Online', y: 55 },
-    { name: 'Retail', y: 30 },
-    { name: 'Wholesale', y: 15 }
-  ];
-
-  return (
-    <PieChart
-      title="Sales Distribution"
-      variant="donut"
-      innerSize="50%"
-      data={data}
-      dataLabels={true}
-      height={400}
-    />
-  );
-}`,
-    vanilla: `Highcharts.chart('container', {
-  chart: { type: 'pie' },
-  title: { text: 'Sales Distribution' },
-  plotOptions: {
-    pie: {
-      innerSize: '50%',
-      dataLabels: { enabled: true }
-    }
-  },
-  series: [{
-    data: [
-      { name: 'Online', y: 55 },
-      { name: 'Retail', y: 30 },
-      { name: 'Wholesale', y: 15 }
-    ]
-  }]
-});`,
-    extjs: `Ext.create('Ext.chart.PolarChart', {
-  renderTo: Ext.getBody(),
-  width: 600,
-  height: 400,
-  store: Ext.create('Ext.data.Store', {
-    fields: ['channel', 'sales'],
-    data: [
-      { channel: 'Online', sales: 55 },
-      { channel: 'Retail', sales: 30 },
-      { channel: 'Wholesale', sales: 15 }
-    ]
-  }),
-  series: [{
-    type: 'pie',
-    angleField: 'sales',
-    donut: 50,
-    label: {
-      field: 'channel',
-      display: 'outside'
-    }
-  }]
-});`,
-    typescript: `import Highcharts from 'highcharts';
-import type { SeriesPieOptions, PlotPieOptions } from 'highcharts';
-
-// Donut-specific interfaces
-interface SalesChannel {
-  name: string;
-  amount: number;
-  percentage?: number;
-}
-
-interface DonutConfig {
-  innerSize: string;
-  thickness: 'thin' | 'medium' | 'thick';
-}
-
-interface DonutChartOptions {
-  channels: SalesChannel[];
-  config: DonutConfig;
-  showCenterLabel?: boolean;
-}
-
-// Type definitions
-type DonutSeries = SeriesPieOptions;
-
-// Thickness mapping
-const THICKNESS_MAP: Record<DonutConfig['thickness'], string> = {
-  thin: '70%',
-  medium: '50%',
-  thick: '30%'
-};
-
-// Data calculation functions
-const calculatePercentages = (channels: SalesChannel[]): SalesChannel[] => {
-  const total = channels.reduce((sum, channel) => sum + channel.amount, 0);
-
-  return channels.map(channel => ({
-    ...channel,
-    percentage: (channel.amount / total) * 100
-  }));
-};
-
-const calculateTotal = (channels: SalesChannel[]): number => {
-  return channels.reduce((sum, channel) => sum + channel.amount, 0);
-};
-
-// Chart configuration builder
-const buildDonutSeries = (
-  channels: SalesChannel[],
-  config: DonutConfig
-): DonutSeries => {
-  const processedChannels = calculatePercentages(channels);
-  const innerSize = THICKNESS_MAP[config.thickness] || config.innerSize;
-
-  return {
-    type: 'pie',
-    name: 'Sales',
-    data: processedChannels.map(channel => ({
-      name: channel.name,
-      y: channel.amount
-    })),
-    innerSize,
-    dataLabels: {
-      enabled: true,
-      format: '<b>{point.name}</b>: {point.percentage:.1f}%'
-    }
-  };
-};
-
-const createDonutOptions = (options: DonutChartOptions): Highcharts.Options => {
-  const { channels, config, showCenterLabel } = options;
-  const total = calculateTotal(channels);
-
-  const plotOptions: PlotPieOptions = {
-    innerSize: THICKNESS_MAP[config.thickness] || config.innerSize,
-    dataLabels: {
-      enabled: true,
-      distance: -30,
-      style: {
-        fontWeight: 'bold',
-        color: 'white'
-      }
-    }
-  };
-
-  return {
-    chart: {
-      type: 'pie',
-      height: 400
-    },
-    title: {
-      text: 'Sales Distribution'
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
-    },
-    plotOptions: {
-      pie: plotOptions
-    },
-    series: [buildDonutSeries(channels, config)]
-  };
-};
-
-// Usage
-const salesChannels: SalesChannel[] = [
-  { name: 'Online', amount: 55 },
-  { name: 'Retail', amount: 30 },
-  { name: 'Wholesale', amount: 15 }
-];
-
-const donutConfiguration: DonutConfig = {
-  innerSize: '50%',
-  thickness: 'medium'
-};
-
-const chartOptions: DonutChartOptions = {
-  channels: salesChannels,
-  config: donutConfiguration,
-  showCenterLabel: true
-};
-
-const options = createDonutOptions(chartOptions);
-Highcharts.chart('container', options);`
   }
-};
-Highcharts.chart('container', options);`
-  }
+
 };
 
 // AreaChart Component Examples
