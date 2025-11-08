@@ -1,0 +1,594 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Guides/Deployment" />
+
+# Deployment Guide
+
+## Quick Answer
+
+The Cin7 DSL documentation site uses a **multi-step Netlify build** that:
+1. Builds all package dependencies (core, design-tokens, polaris packages)
+2. Builds Storybook separately
+3. Copies Storybook to the Next.js public folder
+4. Builds the Next.js documentation site
+5. Deploys everything as a standalone Next.js application
+
+Build time: ~4 minutes (cached) to ~14 minutes (clean build)
+
+## Architecture Overview
+
+### Build Pipeline
+
+The deployment uses a custom build script (`scripts/netlify-build.sh`) that orchestrates the entire build process:
+
+```bash
+# Simplified build order
+1. Install dependencies (pnpm install)
+2. Build @cin7/core
+3. Build @cin7/design-tokens
+4. Build @shopify/polaris-tokens
+5. Build @shopify/polaris-icons
+6. Build @shopify/polaris (polaris-react)
+7. Build @cin7/highcharts-adapter
+8. Build Storybook → storybook-static/
+9. Copy Storybook to polaris.shopify.com/public/storybook/
+10. Generate colors and assets
+11. Build Next.js site → .next/
+```
+
+### Why This Order?
+
+Dependencies must build in this specific order because:
+- **@cin7/core** provides EventBus and types used everywhere
+- **design-tokens** extends Polaris tokens with Cin7-specific values
+- **polaris packages** must build before components can use them
+- **Storybook** must build before Next.js to be included as static assets
+
+## Netlify Configuration
+
+### netlify.toml
+
+```toml
+[build]
+  base = "polaris/polaris.shopify.com"
+  publish = ".next"
+  command = "bash ../../scripts/netlify-build.sh"
+  # Always build (disable smart build detection)
+  ignore = "exit 1"
+
+[build.environment]
+  NODE_VERSION = "20.10.0"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+```
+
+### Key Configuration Points
+
+**Base Directory**: `polaris/polaris.shopify.com`
+- Build runs from the Next.js site directory
+- Script navigates to repo root to build packages
+
+**Publish Directory**: `.next`
+- Next.js standalone output
+- Includes all static assets (Storybook, images, fonts)
+
+**Always Build**: `ignore = "exit 1"`
+- Never skip builds
+- Ensures Storybook changes trigger rebuilds
+- Critical for keeping docs in sync
+
+**Node Version**: `20.10.0`
+- Stable LTS version
+- Required for Next.js 14+ and Storybook 8
+
+## Custom Build Script
+
+### scripts/netlify-build.sh
+
+```bash
+#!/bin/bash
+set -e  # Exit on any error
+set -x  # Print commands as they execute
+
+echo "Starting Cin7 DSL Netlify Build"
+
+# Navigate to repository root
+cd ../..
+
+# Install dependencies
+pnpm install
+
+# Build all packages in dependency order
+cd packages/core && pnpm build
+cd ../design-tokens && pnpm build
+cd ../../polaris/polaris-tokens && pnpm build
+cd ../polaris-icons && pnpm build
+cd ../polaris-react && pnpm build
+cd ../../packages/highcharts-adapter && pnpm build
+
+# Build Storybook
+cd ../../storybook && pnpm build
+
+# Copy Storybook to docs site
+cd ../polaris/polaris.shopify.com
+mkdir -p public/storybook
+cp -r ../../storybook/storybook-static/* public/storybook/
+
+# Generate assets
+pnpm gen-colors
+pnpm gen-assets
+
+# Build Next.js site
+pnpm next-build
+```
+
+### Error Handling
+
+The script uses `set -e` to exit immediately on any error:
+- If any package build fails, deployment stops
+- Prevents deploying incomplete builds
+- Provides clear error messages in Netlify logs
+
+### Verbose Logging
+
+The script uses `set -x` to print all commands:
+- Makes debugging easier
+- Shows exactly which step failed
+- Useful for tracking build performance
+
+## Storybook Integration
+
+### Build Configuration
+
+Storybook builds separately from Next.js:
+
+```json
+// storybook/package.json
+{
+  "scripts": {
+    "build": "storybook build -o storybook-static"
+  }
+}
+```
+
+### Static Export
+
+Storybook exports as static HTML/JS/CSS:
+- No server required
+- All interactions work client-side
+- Perfect for CDN deployment
+
+### Integration with Next.js
+
+```bash
+# Copy Storybook build to Next.js public folder
+mkdir -p public/storybook
+cp -r ../../storybook/storybook-static/* public/storybook/
+```
+
+This makes Storybook available at `/storybook/` path:
+- https://cin7-dsl.netlify.app/storybook/
+- Served as static assets by Next.js
+- No additional server configuration needed
+
+## Custom Headers Configuration
+
+### Security Headers
+
+```toml
+# Deny iframe embedding for all pages by default
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"
+
+# Allow Storybook to use iframes (for component previews)
+[[headers]]
+  for = "/storybook/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"
+```
+
+### Why Different Headers for Storybook?
+
+**Main site (DENY)**:
+- Prevents clickjacking attacks
+- Site should not be embedded in iframes
+- Standard security practice
+
+**Storybook path (SAMEORIGIN)**:
+- Storybook uses iframes for component previews
+- Must allow same-origin iframe embedding
+- Still blocks cross-origin embedding
+
+## Environment Variables
+
+### Build Environment
+
+Netlify automatically provides:
+- `NODE_ENV=production`
+- `NETLIFY=true`
+- `CONTEXT=production|deploy-preview|branch-deploy`
+
+### Custom Variables
+
+Set in Netlify UI (Site Settings → Environment Variables):
+
+```bash
+# Disable Next.js telemetry (already in netlify.toml)
+NEXT_TELEMETRY_DISABLED=1
+
+# Optional: Algolia search (if used)
+NEXT_PUBLIC_ALGOLIA_APP_ID=your_app_id
+NEXT_PUBLIC_ALGOLIA_API_KEY=your_api_key
+```
+
+### Accessing in Code
+
+```typescript
+// Next.js automatically prefixes with NEXT_PUBLIC_
+const searchAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
+
+// Server-side only (no NEXT_PUBLIC_ prefix)
+const secretKey = process.env.SECRET_API_KEY;
+```
+
+## Build Optimization
+
+### Netlify Cache
+
+Netlify caches:
+- `node_modules/` directories
+- `.pnpm-store/` for faster installs
+- Next.js build cache (`.next/cache/`)
+- Storybook webpack cache
+
+### Cache Benefits
+
+**First build**: ~14 minutes (no cache)
+**Subsequent builds**: ~4 minutes (with cache)
+- 70% time reduction
+- Faster for documentation-only changes
+- Critical for rapid iteration
+
+### Clearing Cache
+
+When needed (rare):
+1. Go to Netlify dashboard
+2. Site Settings → Build & Deploy
+3. Click "Clear cache and deploy site"
+4. Use for: dependency updates, build issues
+
+## CI/CD Integration
+
+### Automatic Deployments
+
+**Production deploys**:
+- Trigger: Push to `main` branch
+- URL: https://cin7-dsl.netlify.app
+- Runs full build pipeline
+
+**Deploy previews**:
+- Trigger: Pull requests
+- URL: Unique preview URL per PR
+- Same build as production
+- Useful for reviewing changes
+
+**Branch deploys** (optional):
+- Trigger: Push to other branches
+- URL: Branch-specific URL
+- Can enable in Netlify settings
+
+### GitHub Integration
+
+Netlify automatically:
+- Comments on PRs with deploy preview links
+- Updates commit status (pending/success/failed)
+- Provides build logs and errors
+
+## Testing Builds Locally
+
+### Quick Documentation-Only Test
+
+```bash
+# Test just the Next.js site build
+cd polaris/polaris.shopify.com
+pnpm build
+
+# Should complete in ~30 seconds if dependencies are built
+```
+
+### Full Pipeline Test
+
+```bash
+# Run the complete Netlify build locally
+./test-full-build.sh
+
+# Simulates exact Netlify environment
+# Takes 4-14 minutes depending on cache
+# Best test before pushing to main
+```
+
+### Local Preview
+
+```bash
+# After building, preview the site
+cd polaris/polaris.shopify.com
+pnpm start
+
+# Visit http://localhost:3000
+# Storybook available at http://localhost:3000/storybook/
+```
+
+## Troubleshooting Deployment Issues
+
+### Build Fails: "Cannot find module '@cin7/core'"
+
+**Cause**: Packages not built in correct order
+
+**Solution**: Check build script order, ensure dependencies build first
+
+```bash
+# Fix: Rebuild packages in order
+cd packages/core && pnpm build
+cd ../design-tokens && pnpm build
+# ... etc
+```
+
+### Build Fails: "Out of memory"
+
+**Cause**: Large builds exceed Node.js memory limit
+
+**Solution**: Increase Node.js memory in build command
+
+```toml
+# netlify.toml
+[build.environment]
+  NODE_OPTIONS = "--max-old-space-size=4096"
+```
+
+### Storybook Not Showing at /storybook/
+
+**Cause**: Copy step failed or wrong directory
+
+**Solution**: Verify copy command and directory structure
+
+```bash
+# Check Storybook built successfully
+ls -la storybook/storybook-static/
+
+# Check copied to Next.js public
+ls -la polaris/polaris.shopify.com/public/storybook/
+```
+
+### Headers Not Working (X-Frame-Options)
+
+**Cause**: Header order matters, more specific paths must come after general
+
+**Solution**: Ensure `/storybook/*` rule comes AFTER `/*` rule
+
+```toml
+# Correct order (specific after general)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/storybook/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+```
+
+### Build Takes Too Long (>15 minutes)
+
+**Possible causes**:
+1. No cache (first build or cache cleared)
+2. Dependency updates (npm/pnpm install takes longer)
+3. Large asset generation
+
+**Solutions**:
+- Wait for cache to build (subsequent builds faster)
+- Review asset generation scripts
+- Consider parallel builds for independent packages
+
+### Deploy Preview Not Updating
+
+**Cause**: Netlify using cached build
+
+**Solution**: Push empty commit or clear build cache
+
+```bash
+# Force new build
+git commit --allow-empty -m "Trigger rebuild"
+git push
+```
+
+### TypeScript Build Errors
+
+**Common errors**:
+- Missing type definitions
+- Type mismatches between packages
+- Incorrect tsconfig.json paths
+
+**Solution**: Check type exports and references
+
+```json
+// package.json
+{
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  }
+}
+```
+
+## Performance Monitoring
+
+### Build Time Metrics
+
+Track in Netlify dashboard:
+- Total build time
+- Package build times
+- Deploy time
+- Cache hit rate
+
+### Optimization Tips
+
+1. **Parallel builds**: Independent packages can build in parallel
+2. **Incremental builds**: Only rebuild changed packages
+3. **Cache everything**: Maximize cache usage
+4. **Minimize asset generation**: Only generate what's needed
+
+### Build Time Budget
+
+Target build times:
+- **Cached build**: < 5 minutes
+- **Clean build**: < 15 minutes
+- **Documentation-only**: < 2 minutes
+
+## Security Best Practices
+
+### Environment Secrets
+
+**Never commit**:
+- API keys
+- Access tokens
+- Database credentials
+- Private keys
+
+**Use Netlify environment variables**:
+- Set in Netlify UI
+- Never in code or netlify.toml
+- Access via `process.env`
+
+### Content Security Policy
+
+Consider adding CSP headers:
+
+```toml
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+```
+
+### Dependency Security
+
+Regular maintenance:
+```bash
+# Check for vulnerabilities
+pnpm audit
+
+# Update dependencies
+pnpm update
+
+# Test after updates
+./test-full-build.sh
+```
+
+## Rollback Strategy
+
+### Automatic Rollback
+
+Netlify keeps all previous deploys:
+1. Go to Netlify dashboard
+2. Deploys tab
+3. Find working deploy
+4. Click "Publish deploy"
+
+### Manual Rollback
+
+```bash
+# Revert to previous commit
+git revert HEAD
+git push origin main
+
+# Or reset to specific commit
+git reset --hard <commit-hash>
+git push --force origin main  # Use with caution!
+```
+
+### Testing Before Rollback
+
+Use deploy previews:
+1. Create branch with fix
+2. Open PR
+3. Test deploy preview
+4. Merge when verified
+
+## Monitoring and Alerts
+
+### Netlify Notifications
+
+Configure in Netlify:
+- Deploy success/failure emails
+- Slack notifications
+- Webhook notifications
+
+### Build Failure Alerts
+
+Netlify automatically:
+- Emails on build failure
+- Shows status in GitHub PR
+- Provides build log links
+
+### Uptime Monitoring
+
+Consider external monitoring:
+- Pingdom
+- UptimeRobot
+- StatusCake
+
+Monitor:
+- https://cin7-dsl.netlify.app
+- https://cin7-dsl.netlify.app/storybook/
+
+## Best Practices Summary
+
+1. **Always test locally** with `./test-full-build.sh` before pushing
+2. **Use deploy previews** for reviewing changes
+3. **Monitor build times** and optimize when needed
+4. **Keep dependencies updated** but test thoroughly
+5. **Use environment variables** for secrets and config
+6. **Document changes** that affect build process
+7. **Clear cache** only when necessary
+8. **Review build logs** for warnings and errors
+9. **Test Storybook integration** after changes
+10. **Maintain security headers** and CSP
+
+## Additional Resources
+
+- [Netlify Documentation](https://docs.netlify.com/)
+- [Next.js Deployment Guide](https://nextjs.org/docs/deployment)
+- [Storybook Static Export](https://storybook.js.org/docs/react/sharing/publish-storybook)
+- [pnpm Workspace Guide](https://pnpm.io/workspaces)
+
+## Quick Reference
+
+```bash
+# Local testing
+./test-full-build.sh                          # Full build
+cd polaris/polaris.shopify.com && pnpm build  # Docs only
+cd storybook && pnpm build                    # Storybook only
+
+# Deployment
+git push origin main                          # Deploy production
+git push origin feature-branch                # Create deploy preview
+
+# Troubleshooting
+pnpm install                                  # Fix dependencies
+pnpm build --filter @cin7/core               # Build single package
+rm -rf node_modules .pnpm-store && pnpm install  # Clean install
+```

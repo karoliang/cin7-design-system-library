@@ -47,7 +47,7 @@ const CustomVerticalStack: React.FC<{
 };
 
 const meta = {
-  title: 'Components/Structure/VerticalStack',
+  title: 'Components/Layout/VerticalStack',
   component: CustomVerticalStack,
   parameters: {
     layout: 'centered',

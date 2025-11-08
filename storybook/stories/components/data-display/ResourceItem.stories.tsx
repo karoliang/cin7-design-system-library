@@ -16,7 +16,7 @@ const createPlaceholder = (text: string, bgColor: string, textColor: string) => 
 };
 
 const meta = {
-  title: 'Components/Data/ResourceItem',
+  title: 'Components/Data Display/ResourceItem',
   component: ResourceItem,
   parameters: {
     layout: 'centered',

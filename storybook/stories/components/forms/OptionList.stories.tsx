@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Selection/OptionList',
+  title: 'Components/Forms/OptionList',
   component: OptionList,
   parameters: {
     layout: 'padded',

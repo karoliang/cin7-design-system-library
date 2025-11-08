@@ -26,7 +26,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Media/Icon',
+  title: 'Components/Data Display/Icon',
   component: Icon,
   parameters: {
     layout: 'centered',

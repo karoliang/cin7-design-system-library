@@ -1,0 +1,907 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Guides/Testing Guide" />
+
+# Testing in Cin7 DSL
+
+## Overview
+
+The Cin7 Design System Library (DSL) is a multi-layered framework combining React (Polaris), Vanilla JavaScript, TypeScript, and ExtJS. Each layer requires specific testing strategies to ensure reliability and maintainability across your applications.
+
+This guide covers comprehensive testing approaches for all layers of the framework:
+
+- **Unit Testing** - Test individual components and functions in isolation
+- **Integration Testing** - Test cross-layer communication and data flow
+- **E2E Testing** - Test complete user flows and scenarios
+- **Visual Regression** - Test component appearance and styling
+
+---
+
+## Testing Strategy
+
+### Layer-Based Testing Approach
+
+```
+┌─────────────────────────────────────────────────┐
+│  E2E Tests (Playwright)                         │
+│  - Complete user flows                          │
+│  - Cross-layer integration                      │
+└─────────────────────────────────────────────────┘
+         ↓
+┌─────────────────────────────────────────────────┐
+│  Integration Tests (Vitest)                     │
+│  - EventBus communication                       │
+│  - Service layer integration                    │
+│  - Data flow between layers                     │
+└─────────────────────────────────────────────────┘
+         ↓
+┌──────────────┬──────────────┬──────────────┬────┐
+│ React Tests  │ TypeScript   │ Vanilla JS   │ExtJS│
+│ (RTL + Vite) │ Tests (Vite) │ (JSDOM)      │Tests│
+└──────────────┴──────────────┴──────────────┴────┘
+```
+
+---
+
+## Unit Testing
+
+### React Components (Polaris)
+
+Test React components using **Vitest** and **React Testing Library** for user-centric testing.
+
+**Setup:**
+
+```typescript
+// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+  },
+});
+```
+
+**Test Example:**
+
+```typescript
+// ProductCard.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { ProductCard } from './ProductCard';
+
+describe('ProductCard', () => {
+  const mockProduct = {
+    id: '1',
+    name: 'Wireless Headphones',
+    price: 89.99,
+    inStock: true,
+  };
+
+  it('renders product information correctly', () => {
+    render(<ProductCard product={mockProduct} />);
+
+    expect(screen.getByText('Wireless Headphones')).toBeInTheDocument();
+    expect(screen.getByText('$89.99')).toBeInTheDocument();
+    expect(screen.getByText('In Stock')).toBeInTheDocument();
+  });
+
+  it('calls onAddToCart when button is clicked', () => {
+    const onAddToCart = vi.fn();
+    render(<ProductCard product={mockProduct} onAddToCart={onAddToCart} />);
+
+    fireEvent.click(screen.getByText('Add to Cart'));
+
+    expect(onAddToCart).toHaveBeenCalledWith(mockProduct);
+  });
+
+  it('shows out of stock badge when product is unavailable', () => {
+    const outOfStockProduct = { ...mockProduct, inStock: false };
+    render(<ProductCard product={outOfStockProduct} />);
+
+    expect(screen.getByText('Out of Stock')).toBeInTheDocument();
+  });
+});
+```
+
+**Testing Polaris Components:**
+
+```typescript
+// FormSection.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { ProductForm } from './ProductForm';
+
+describe('ProductForm', () => {
+  it('validates required fields', async () => {
+    const onSubmit = vi.fn();
+    render(<ProductForm onSubmit={onSubmit} />);
+
+    // Try to submit without filling required fields
+    fireEvent.click(screen.getByText('Save Product'));
+
+    expect(await screen.findByText('Product name is required')).toBeInTheDocument();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('submits form with valid data', async () => {
+    const onSubmit = vi.fn();
+    const user = userEvent.setup();
+    render(<ProductForm onSubmit={onSubmit} />);
+
+    await user.type(screen.getByLabelText('Product Name'), 'New Product');
+    await user.type(screen.getByLabelText('Price'), '99.99');
+    await user.click(screen.getByText('Save Product'));
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      name: 'New Product',
+      price: 99.99,
+    });
+  });
+});
+```
+
+---
+
+### TypeScript SDK (Domain Models & Services)
+
+Test business logic with pure unit tests using **Vitest**.
+
+**Domain Model Tests:**
+
+```typescript
+// Product.test.ts
+import { describe, it, expect } from 'vitest';
+import { Product } from '@cin7/typescript-sdk';
+
+describe('Product', () => {
+  it('calculates discount correctly', () => {
+    const product = new Product({
+      id: '1',
+      name: 'Test Product',
+      price: 100,
+      discountPercent: 20,
+    });
+
+    expect(product.discountedPrice).toBe(80);
+  });
+
+  it('validates price is positive', () => {
+    expect(() => {
+      new Product({
+        id: '1',
+        name: 'Test Product',
+        price: -10,
+      });
+    }).toThrow('Price must be positive');
+  });
+
+  it('checks stock availability', () => {
+    const product = new Product({
+      id: '1',
+      name: 'Test Product',
+      price: 100,
+      stockQuantity: 5,
+    });
+
+    expect(product.isInStock()).toBe(true);
+    expect(product.isAvailable(3)).toBe(true);
+    expect(product.isAvailable(10)).toBe(false);
+  });
+});
+```
+
+**Service Layer Tests:**
+
+```typescript
+// ProductService.test.ts
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { ProductService } from '@cin7/typescript-sdk';
+import { ApiClient } from '@cin7/core';
+
+vi.mock('@cin7/core');
+
+describe('ProductService', () => {
+  let service: ProductService;
+  let mockApiClient: any;
+
+  beforeEach(() => {
+    mockApiClient = {
+      get: vi.fn(),
+      post: vi.fn(),
+      put: vi.fn(),
+      delete: vi.fn(),
+    };
+    service = new ProductService(mockApiClient);
+  });
+
+  it('fetches products with pagination', async () => {
+    const mockResponse = {
+      data: [
+        { id: '1', name: 'Product 1' },
+        { id: '2', name: 'Product 2' },
+      ],
+      total: 50,
+      page: 1,
+      pageSize: 10,
+    };
+
+    mockApiClient.get.mockResolvedValue(mockResponse);
+
+    const result = await service.getProducts({ page: 1, pageSize: 10 });
+
+    expect(mockApiClient.get).toHaveBeenCalledWith('/products', {
+      params: { page: 1, pageSize: 10 },
+    });
+    expect(result.data).toHaveLength(2);
+    expect(result.total).toBe(50);
+  });
+
+  it('handles API errors gracefully', async () => {
+    mockApiClient.get.mockRejectedValue(new Error('Network error'));
+
+    await expect(service.getProducts()).rejects.toThrow('Network error');
+  });
+
+  it('creates product with validation', async () => {
+    const newProduct = {
+      name: 'New Product',
+      price: 99.99,
+    };
+
+    mockApiClient.post.mockResolvedValue({ id: '123', ...newProduct });
+
+    const result = await service.createProduct(newProduct);
+
+    expect(mockApiClient.post).toHaveBeenCalledWith('/products', newProduct);
+    expect(result.id).toBe('123');
+  });
+});
+```
+
+**Repository Pattern Tests:**
+
+```typescript
+// ProductRepository.test.ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { ProductRepository } from '@cin7/typescript-sdk';
+
+describe('ProductRepository', () => {
+  let repository: ProductRepository;
+
+  beforeEach(() => {
+    repository = new ProductRepository();
+  });
+
+  it('stores and retrieves entities', () => {
+    const product = { id: '1', name: 'Test Product', price: 100 };
+
+    repository.save(product);
+
+    const retrieved = repository.findById('1');
+    expect(retrieved).toEqual(product);
+  });
+
+  it('filters entities by criteria', () => {
+    repository.save({ id: '1', name: 'Product A', price: 50 });
+    repository.save({ id: '2', name: 'Product B', price: 150 });
+    repository.save({ id: '3', name: 'Product C', price: 75 });
+
+    const results = repository.findBy({ price: { $gte: 75 } });
+
+    expect(results).toHaveLength(2);
+    expect(results.map(p => p.id)).toEqual(['2', '3']);
+  });
+
+  it('updates existing entities', () => {
+    const product = { id: '1', name: 'Original', price: 100 };
+    repository.save(product);
+
+    repository.update('1', { name: 'Updated' });
+
+    const updated = repository.findById('1');
+    expect(updated?.name).toBe('Updated');
+    expect(updated?.price).toBe(100);
+  });
+});
+```
+
+---
+
+### Vanilla JS Utilities
+
+Test DOM manipulation and utility functions with **JSDOM**.
+
+**DOM Utilities Tests:**
+
+```typescript
+// dom-utils.test.ts
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { $, on, fadeIn, fadeOut } from '@cin7/vanilla-js';
+
+describe('DOM Utilities', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <div id="test-container">
+        <button id="test-button">Click me</button>
+        <div id="test-panel" style="display: none;">Panel</div>
+      </div>
+    `;
+  });
+
+  it('selects elements with $ utility', () => {
+    const button = $('#test-button');
+    expect(button).toBeDefined();
+    expect(button?.textContent).toBe('Click me');
+  });
+
+  it('attaches event listeners with on utility', () => {
+    const handler = vi.fn();
+    on('#test-button', 'click', handler);
+
+    const button = document.getElementById('test-button');
+    button?.click();
+
+    expect(handler).toHaveBeenCalled();
+  });
+
+  it('fades in hidden elements', async () => {
+    const panel = $('#test-panel');
+    expect(panel?.style.display).toBe('none');
+
+    await fadeIn('#test-panel');
+
+    expect(panel?.style.display).not.toBe('none');
+  });
+
+  it('fades out visible elements', async () => {
+    const panel = $('#test-panel');
+    panel!.style.display = 'block';
+
+    await fadeOut('#test-panel');
+
+    expect(panel?.style.display).toBe('none');
+  });
+});
+```
+
+**Validation Utilities Tests:**
+
+```typescript
+// validation.test.ts
+import { describe, it, expect } from 'vitest';
+import { validateEmail, validatePrice, validateSKU } from '@cin7/vanilla-js';
+
+describe('Validation Utilities', () => {
+  describe('validateEmail', () => {
+    it('accepts valid email addresses', () => {
+      expect(validateEmail('test@example.com')).toBe(true);
+      expect(validateEmail('user.name+tag@example.co.uk')).toBe(true);
+    });
+
+    it('rejects invalid email addresses', () => {
+      expect(validateEmail('invalid')).toBe(false);
+      expect(validateEmail('@example.com')).toBe(false);
+      expect(validateEmail('test@')).toBe(false);
+    });
+  });
+
+  describe('validatePrice', () => {
+    it('accepts valid prices', () => {
+      expect(validatePrice('99.99')).toBe(true);
+      expect(validatePrice('0.01')).toBe(true);
+      expect(validatePrice('1000')).toBe(true);
+    });
+
+    it('rejects invalid prices', () => {
+      expect(validatePrice('-10')).toBe(false);
+      expect(validatePrice('abc')).toBe(false);
+      expect(validatePrice('99.999')).toBe(false);
+    });
+  });
+});
+```
+
+---
+
+### ExtJS Components
+
+Test ExtJS components using ExtJS testing utilities.
+
+**Grid Component Tests:**
+
+```typescript
+// ProductGrid.test.ts
+import { describe, it, expect } from 'vitest';
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+describe('ExtJS Product Grid', () => {
+  it('creates grid with correct configuration', () => {
+    const grid = ExtDataGrid.create({
+      store: {
+        data: [
+          { id: 1, name: 'Product 1', price: 99.99 },
+          { id: 2, name: 'Product 2', price: 149.99 },
+        ],
+      },
+      columns: [
+        { text: 'Name', dataIndex: 'name' },
+        { text: 'Price', dataIndex: 'price', xtype: 'numbercolumn' },
+      ],
+    });
+
+    expect(grid.getStore().getCount()).toBe(2);
+    expect(grid.getColumns()).toHaveLength(2);
+  });
+
+  it('filters grid data', () => {
+    const grid = ExtDataGrid.create({
+      store: {
+        data: [
+          { id: 1, name: 'Product A', price: 50 },
+          { id: 2, name: 'Product B', price: 150 },
+          { id: 3, name: 'Product C', price: 75 },
+        ],
+      },
+    });
+
+    grid.getStore().filterBy((record: any) => record.get('price') > 60);
+
+    expect(grid.getStore().getCount()).toBe(2);
+  });
+
+  it('sorts grid data', () => {
+    const grid = ExtDataGrid.create({
+      store: {
+        data: [
+          { id: 1, name: 'C Product', price: 100 },
+          { id: 2, name: 'A Product', price: 200 },
+          { id: 3, name: 'B Product', price: 150 },
+        ],
+      },
+    });
+
+    grid.getStore().sort('name', 'ASC');
+
+    const firstRecord = grid.getStore().getAt(0);
+    expect(firstRecord.get('name')).toBe('A Product');
+  });
+});
+```
+
+**Form Component Tests:**
+
+```typescript
+// ProductForm.extjs.test.ts
+import { describe, it, expect } from 'vitest';
+import { ExtFormPanel } from '@cin7/extjs-adapters';
+
+describe('ExtJS Product Form', () => {
+  it('validates required fields', () => {
+    const form = ExtFormPanel.create({
+      items: [
+        { xtype: 'textfield', name: 'name', fieldLabel: 'Name', allowBlank: false },
+        { xtype: 'numberfield', name: 'price', fieldLabel: 'Price', allowBlank: false },
+      ],
+    });
+
+    const isValid = form.isValid();
+    expect(isValid).toBe(false);
+  });
+
+  it('loads data into form', () => {
+    const form = ExtFormPanel.create({
+      items: [
+        { xtype: 'textfield', name: 'name', fieldLabel: 'Name' },
+        { xtype: 'numberfield', name: 'price', fieldLabel: 'Price' },
+      ],
+    });
+
+    form.loadRecord({
+      data: {
+        name: 'Test Product',
+        price: 99.99,
+      },
+    });
+
+    const values = form.getValues();
+    expect(values.name).toBe('Test Product');
+    expect(values.price).toBe(99.99);
+  });
+});
+```
+
+---
+
+## Integration Testing
+
+Test cross-layer communication and data flow using **EventBus** patterns.
+
+**EventBus Integration:**
+
+```typescript
+// cross-layer.integration.test.ts
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { EventBus } from '@cin7/core';
+import { ProductService } from '@cin7/typescript-sdk';
+import { updateProductUI } from '@cin7/vanilla-js';
+
+describe('Cross-Layer Integration', () => {
+  beforeEach(() => {
+    EventBus.clear();
+  });
+
+  it('propagates product updates across layers', async () => {
+    const uiUpdateSpy = vi.fn();
+
+    // UI layer listens for product updates
+    EventBus.on('product:updated', uiUpdateSpy);
+
+    // Business logic layer updates product
+    const service = new ProductService();
+    await service.updateProduct('1', { name: 'Updated Product' });
+
+    // EventBus should notify UI layer
+    expect(uiUpdateSpy).toHaveBeenCalledWith({
+      id: '1',
+      name: 'Updated Product',
+    });
+  });
+
+  it('handles errors across layers', async () => {
+    const errorHandler = vi.fn();
+    EventBus.on('product:error', errorHandler);
+
+    const service = new ProductService();
+
+    // Simulate API error
+    await service.updateProduct('invalid-id', {});
+
+    expect(errorHandler).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.any(String) })
+    );
+  });
+
+  it('coordinates between React and ExtJS layers', () => {
+    const reactHandler = vi.fn();
+    const extjsHandler = vi.fn();
+
+    EventBus.on('data:refresh', reactHandler);
+    EventBus.on('data:refresh', extjsHandler);
+
+    // Trigger refresh from any layer
+    EventBus.emit('data:refresh', { timestamp: Date.now() });
+
+    expect(reactHandler).toHaveBeenCalled();
+    expect(extjsHandler).toHaveBeenCalled();
+  });
+});
+```
+
+**Service Integration Tests:**
+
+```typescript
+// product-workflow.integration.test.ts
+import { describe, it, expect } from 'vitest';
+import { ProductService, ProductRepository } from '@cin7/typescript-sdk';
+import { EventBus } from '@cin7/core';
+
+describe('Product Workflow Integration', () => {
+  it('completes full product creation workflow', async () => {
+    const repository = new ProductRepository();
+    const service = new ProductService(repository);
+    const events: string[] = [];
+
+    EventBus.on('product:creating', () => events.push('creating'));
+    EventBus.on('product:created', () => events.push('created'));
+    EventBus.on('product:validated', () => events.push('validated'));
+
+    const product = await service.createProduct({
+      name: 'New Product',
+      price: 99.99,
+      sku: 'PROD-001',
+    });
+
+    expect(product.id).toBeDefined();
+    expect(events).toEqual(['creating', 'validated', 'created']);
+    expect(repository.findById(product.id)).toBeDefined();
+  });
+});
+```
+
+---
+
+## E2E Testing
+
+Test complete user flows using **Playwright**.
+
+**Setup:**
+
+```typescript
+// playwright.config.ts
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+  },
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+  ],
+  webServer: {
+    command: 'pnpm dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+});
+```
+
+**E2E Test Example:**
+
+```typescript
+// product-management.e2e.test.ts
+import { test, expect } from '@playwright/test';
+
+test.describe('Product Management Flow', () => {
+  test('creates new product successfully', async ({ page }) => {
+    await page.goto('/products');
+
+    // Click "Add Product" button
+    await page.click('text=Add Product');
+
+    // Fill in product form
+    await page.fill('input[name="name"]', 'Test Product');
+    await page.fill('input[name="price"]', '99.99');
+    await page.fill('input[name="sku"]', 'TEST-001');
+    await page.selectOption('select[name="category"]', 'electronics');
+
+    // Submit form
+    await page.click('button:has-text("Save Product")');
+
+    // Verify success message
+    await expect(page.locator('text=Product created successfully')).toBeVisible();
+
+    // Verify product appears in list
+    await expect(page.locator('text=Test Product')).toBeVisible();
+    await expect(page.locator('text=$99.99')).toBeVisible();
+  });
+
+  test('validates required fields', async ({ page }) => {
+    await page.goto('/products/new');
+
+    // Try to submit empty form
+    await page.click('button:has-text("Save Product")');
+
+    // Verify validation errors
+    await expect(page.locator('text=Product name is required')).toBeVisible();
+    await expect(page.locator('text=Price is required')).toBeVisible();
+  });
+
+  test('edits existing product', async ({ page }) => {
+    await page.goto('/products');
+
+    // Click edit on first product
+    await page.click('[data-testid="product-row"]:first-child button:has-text("Edit")');
+
+    // Update product name
+    await page.fill('input[name="name"]', 'Updated Product Name');
+    await page.click('button:has-text("Save Changes")');
+
+    // Verify update
+    await expect(page.locator('text=Product updated successfully')).toBeVisible();
+    await expect(page.locator('text=Updated Product Name')).toBeVisible();
+  });
+
+  test('deletes product with confirmation', async ({ page }) => {
+    await page.goto('/products');
+
+    // Click delete button
+    await page.click('[data-testid="product-row"]:first-child button:has-text("Delete")');
+
+    // Confirm deletion in modal
+    await expect(page.locator('text=Are you sure you want to delete')).toBeVisible();
+    await page.click('button:has-text("Delete Product")');
+
+    // Verify deletion
+    await expect(page.locator('text=Product deleted successfully')).toBeVisible();
+  });
+});
+```
+
+---
+
+## Visual Regression Testing
+
+Use **Storybook** with visual testing tools for component appearance testing.
+
+**Chromatic Integration:**
+
+```typescript
+// .storybook/main.ts
+export default {
+  stories: ['../stories/**/*.stories.@(ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+  ],
+  framework: '@storybook/react-vite',
+  docs: { autodocs: true },
+};
+```
+
+**Visual Test Example:**
+
+```typescript
+// ProductCard.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { ProductCard } from './ProductCard';
+import { expect, within } from '@storybook/test';
+
+const meta: Meta<typeof ProductCard> = {
+  title: 'Components/ProductCard',
+  component: ProductCard,
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    product: {
+      id: '1',
+      name: 'Wireless Headphones',
+      price: 89.99,
+      inStock: true,
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Verify visual elements
+    await expect(canvas.getByText('Wireless Headphones')).toBeVisible();
+    await expect(canvas.getByText('$89.99')).toBeVisible();
+    await expect(canvas.getByText('In Stock')).toBeVisible();
+  },
+};
+
+export const OutOfStock: Story = {
+  args: {
+    product: {
+      id: '1',
+      name: 'Wireless Headphones',
+      price: 89.99,
+      inStock: false,
+    },
+  },
+};
+```
+
+---
+
+## Best Practices
+
+### Testing Principles
+
+1. **Test Behavior, Not Implementation** - Focus on what the component does, not how it does it
+2. **Write Maintainable Tests** - Tests should be easy to understand and update
+3. **Use Realistic Test Data** - Test with data that resembles production scenarios
+4. **Test Edge Cases** - Don't just test the happy path
+5. **Keep Tests Independent** - Tests should not depend on each other
+6. **Use Descriptive Test Names** - Test names should clearly describe what they're testing
+
+### Test Organization
+
+```
+src/
+├── components/
+│   ├── ProductCard/
+│   │   ├── ProductCard.tsx
+│   │   ├── ProductCard.test.tsx
+│   │   └── ProductCard.stories.tsx
+├── services/
+│   ├── ProductService.ts
+│   └── ProductService.test.ts
+├── utils/
+│   ├── validation.ts
+│   └── validation.test.ts
+└── e2e/
+    ├── product-management.e2e.ts
+    └── user-workflows.e2e.ts
+```
+
+### Coverage Goals
+
+- **Unit Tests**: Aim for 80%+ code coverage
+- **Integration Tests**: Cover critical data flows and cross-layer communication
+- **E2E Tests**: Cover primary user journeys and critical business flows
+- **Visual Tests**: Cover all component variations and states
+
+### Common Pitfalls to Avoid
+
+❌ **Don't test implementation details**
+```typescript
+// Bad: Testing internal state
+expect(component.state.loading).toBe(true);
+
+// Good: Testing behavior
+expect(screen.getByRole('status')).toHaveTextContent('Loading...');
+```
+
+❌ **Don't make tests too specific**
+```typescript
+// Bad: Brittle test tied to exact structure
+expect(container.querySelector('.card > .header > .title')).toBeTruthy();
+
+// Good: Test from user perspective
+expect(screen.getByRole('heading', { name: 'Product Title' })).toBeInTheDocument();
+```
+
+❌ **Don't skip error scenarios**
+```typescript
+// Always test both success and failure cases
+it('handles successful product creation', async () => { /* ... */ });
+it('handles API errors gracefully', async () => { /* ... */ });
+it('handles validation errors', async () => { /* ... */ });
+```
+
+---
+
+## Testing Tools Reference
+
+### Recommended Tools
+
+- **Vitest** - Fast, modern test runner with great DX
+- **React Testing Library** - User-centric React component testing
+- **Playwright** - Reliable E2E testing across browsers
+- **Storybook** - Component development and visual testing
+- **Chromatic** - Visual regression testing for Storybook
+
+### Useful Commands
+
+```bash
+# Run unit tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run E2E tests
+pnpm test:e2e
+
+# Run E2E tests in UI mode
+pnpm test:e2e:ui
+
+# Build and test Storybook
+pnpm storybook:build
+pnpm storybook:test
+```
+
+---
+
+## Additional Resources
+
+- [Vitest Documentation](https://vitest.dev)
+- [React Testing Library](https://testing-library.com/react)
+- [Playwright Documentation](https://playwright.dev)
+- [Storybook Testing](https://storybook.js.org/docs/writing-tests)
+- [Testing Best Practices](https://testingjavascript.com)

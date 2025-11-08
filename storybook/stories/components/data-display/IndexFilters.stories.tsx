@@ -22,7 +22,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Tables/IndexFilters',
+  title: 'Components/Data Display/IndexFilters',
   component: IndexFilters,
   parameters: {
     layout: 'fullscreen',

@@ -18,7 +18,7 @@ import { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Providers/AppProvider',
+  title: 'Components/Utilities/AppProvider',
   component: AppProvider,
   parameters: {
     layout: 'centered',

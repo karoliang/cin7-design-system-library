@@ -4,7 +4,7 @@ import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Components/Structure/TextContainer',
+  title: 'Components/Layout/TextContainer',
   component: TextContainer,
   parameters: {
     layout: 'centered',

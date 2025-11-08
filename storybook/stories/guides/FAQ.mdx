@@ -1,0 +1,990 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Guides/FAQ" />
+
+# Frequently Asked Questions
+
+## Framework Architecture
+
+### When should I use Vanilla JS vs React?
+
+**Quick Answer**: Use **Vanilla JS** for simple DOM manipulation and **React** for complex stateful UIs.
+
+**Detailed Guide**:
+
+**Use Vanilla JS when:**
+- Simple DOM updates (show/hide, add/remove classes)
+- Event handling (clicks, keyboard shortcuts)
+- Animations and transitions
+- Performance-critical operations
+- Working with legacy code
+- Minimal dependencies needed
+
+```javascript
+import { $, on, addClass } from '@cin7/vanilla-js';
+
+// Simple interaction
+on('#toggle-button', 'click', () => {
+  const panel = $('#settings-panel');
+  addClass(panel, 'visible');
+});
+```
+
+**Use React (Polaris) when:**
+- Complex component composition
+- State management across multiple components
+- Form handling with validation
+- Data-driven UIs
+- Reusable component libraries
+- Modern app features (routing, context, hooks)
+
+```typescript
+import { Button, Modal, TextField } from '@shopify/polaris';
+import { useState } from 'react';
+
+function SettingsPanel() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState('');
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Settings</Button>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+        <TextField label="Name" value={name} onChange={setName} />
+      </Modal>
+    </>
+  );
+}
+```
+
+**Pro tip**: You can mix both! Use React for components and Vanilla JS for simple interactions.
+
+---
+
+### When should I use ExtJS vs Polaris components?
+
+**Quick Answer**: Use **ExtJS** for enterprise data grids (1000+ rows) and complex forms. Use **Polaris** for modern UIs and small-to-medium datasets.
+
+**Detailed Guide**:
+
+**Use ExtJS when you need:**
+- Large datasets (1000+ rows)
+- Complex grid features (grouping, pivoting, cell editing)
+- Advanced form layouts with dynamic fields
+- Real-time data updates with high-frequency changes
+- Enterprise-grade data handling
+- Excel-like functionality
+
+```typescript
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const grid = ExtDataGrid.create({
+  store: productStore,
+  columns: [
+    { dataIndex: 'name', text: 'Product' },
+    { dataIndex: 'price', text: 'Price', type: 'currency' },
+    { dataIndex: 'stock', text: 'Stock', type: 'number' }
+  ],
+  features: ['grouping', 'sorting', 'filtering', 'export'],
+  pageSize: 100,
+  buffered: true  // Virtual scrolling for performance
+});
+```
+
+**Use Polaris when you need:**
+- Modern, accessible UI components
+- Small-to-medium datasets (<1000 rows)
+- Standard CRUD operations
+- Mobile-responsive layouts
+- Quick development time
+- Consistent design system
+
+```typescript
+import { DataTable, Card } from '@shopify/polaris';
+
+<Card>
+  <DataTable
+    columnContentTypes={['text', 'numeric', 'text']}
+    headings={['Product', 'Price', 'Stock']}
+    rows={products.map(p => [p.name, `$${p.price}`, p.stock])}
+  />
+</Card>
+```
+
+**Decision Matrix**:
+| Requirement | ExtJS | Polaris |
+|-------------|-------|---------|
+| Dataset size < 1000 | ❌ Overkill | ✅ Perfect |
+| Dataset size > 1000 | ✅ Optimized | ❌ Slow |
+| Cell editing | ✅ Built-in | ❌ Manual |
+| Mobile responsive | ⚠️ Limited | ✅ Excellent |
+| Modern design | ⚠️ Dated | ✅ Modern |
+| Learning curve | ⚠️ Steep | ✅ Easy |
+
+---
+
+### How do I choose the right chart type?
+
+**Quick Answer**: **Line charts** for trends, **bar charts** for comparisons, **pie charts** for proportions.
+
+**Detailed Guide**:
+
+**Line Chart - Trends Over Time**
+```typescript
+import { LineChart } from '@cin7/highcharts-adapter';
+
+// Use for: Sales trends, growth metrics, time-series data
+<LineChart
+  title="Monthly Sales"
+  data={[
+    { name: 'Revenue', data: [100, 150, 200, 250, 300] }
+  ]}
+  categories={['Jan', 'Feb', 'Mar', 'Apr', 'May']}
+/>
+```
+
+**When to use line charts:**
+- Showing trends over time
+- Multiple data series comparison
+- Continuous data
+- Stock prices, temperature, sales over time
+
+**Bar Chart - Categorical Comparisons**
+```typescript
+import { BarChart } from '@cin7/highcharts-adapter';
+
+// Use for: Product comparisons, regional sales, category totals
+<BarChart
+  title="Sales by Product"
+  data={[
+    { name: 'Q1', data: [50, 70, 90] }
+  ]}
+  categories={['Product A', 'Product B', 'Product C']}
+/>
+```
+
+**When to use bar charts:**
+- Comparing discrete categories
+- Showing rankings or distribution
+- Multiple series comparison
+- Sales by region, revenue by product
+
+**Pie Chart - Part-to-Whole Relationships**
+```typescript
+import { PieChart } from '@cin7/highcharts-adapter';
+
+// Use for: Market share, budget allocation, demographic splits
+<PieChart
+  title="Market Share"
+  data={[
+    { name: 'Product A', y: 45 },
+    { name: 'Product B', y: 30 },
+    { name: 'Product C', y: 25 }
+  ]}
+/>
+```
+
+**When to use pie charts:**
+- Showing proportions (percentages)
+- Limited categories (3-7 max)
+- Part of a whole relationship
+- Market share, budget breakdown
+
+**Avoid pie charts when:**
+- More than 7 categories (use bar chart)
+- Precise comparison needed (use bar chart)
+- Multiple data series (use line/bar chart)
+- Values are similar (hard to distinguish slices)
+
+---
+
+### How do I integrate TypeScript SDK with React?
+
+**Quick Answer**: Use hooks to connect TypeScript business logic with React components.
+
+**Detailed Guide**:
+
+**Step 1: Define your domain model (TypeScript SDK)**
+```typescript
+// packages/typescript-sdk/src/domain/product.ts
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+}
+
+export class ProductRepository extends Repository<Product> {
+  constructor(private api: ApiClient) {
+    super();
+  }
+
+  async findAll(): Promise<Product[]> {
+    return this.api.get('/products');
+  }
+
+  async updateStock(id: string, quantity: number): Promise<void> {
+    return this.api.patch(`/products/${id}/stock`, { quantity });
+  }
+}
+```
+
+**Step 2: Create a React hook**
+```typescript
+// src/hooks/useProducts.ts
+import { useState, useEffect } from 'react';
+import { ProductRepository } from '@cin7/typescript-sdk';
+
+export function useProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  const repository = new ProductRepository(apiClient);
+
+  useEffect(() => {
+    repository.findAll()
+      .then(setProducts)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const updateStock = async (id: string, quantity: number) => {
+    await repository.updateStock(id, quantity);
+    // Refresh products
+    const updated = await repository.findAll();
+    setProducts(updated);
+  };
+
+  return { products, loading, error, updateStock };
+}
+```
+
+**Step 3: Use in React component**
+```typescript
+// src/components/ProductList.tsx
+import { Card, DataTable, Button } from '@shopify/polaris';
+import { useProducts } from '../hooks/useProducts';
+
+export function ProductList() {
+  const { products, loading, error, updateStock } = useProducts();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return (
+    <Card>
+      <DataTable
+        columnContentTypes={['text', 'numeric', 'numeric', 'text']}
+        headings={['Product', 'Price', 'Stock', 'Actions']}
+        rows={products.map(p => [
+          p.name,
+          `$${p.price}`,
+          p.stock,
+          <Button onClick={() => updateStock(p.id, p.stock + 10)}>
+            Add Stock
+          </Button>
+        ])}
+      />
+    </Card>
+  );
+}
+```
+
+**Benefits of this approach:**
+- ✅ Type safety across layers
+- ✅ Business logic separate from UI
+- ✅ Testable in isolation
+- ✅ Reusable across components
+- ✅ Easy to mock for testing
+
+---
+
+### How do I use EventBus for cross-layer communication?
+
+**Quick Answer**: Import EventBus from `@cin7/core` and emit/listen to events across all layers.
+
+**Detailed Guide**:
+
+**The Problem**: Different layers (React, ExtJS, Vanilla JS, TypeScript) need to communicate without tight coupling.
+
+**The Solution**: EventBus provides pub/sub pattern for loose coupling.
+
+**Example: Product Updated Event**
+
+**1. Emit event from TypeScript layer**
+```typescript
+// packages/typescript-sdk/src/usecases/update-product.ts
+import { EventBus } from '@cin7/core';
+
+export class UpdateProductUseCase {
+  async execute(id: string, data: UpdateProductDTO): Promise<Product> {
+    const product = await this.repository.update(id, data);
+
+    // Emit event for other layers
+    EventBus.emit('product:updated', { product });
+
+    return product;
+  }
+}
+```
+
+**2. Listen in React component**
+```typescript
+// src/components/ProductCard.tsx
+import { useEffect, useState } from 'react';
+import { EventBus } from '@cin7/core';
+
+export function ProductCard({ productId }) {
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    // Listen for updates
+    const unsubscribe = EventBus.on('product:updated', (event) => {
+      if (event.product.id === productId) {
+        setProduct(event.product);
+      }
+    });
+
+    // Cleanup
+    return unsubscribe;
+  }, [productId]);
+
+  return <Card>{product?.name}</Card>;
+}
+```
+
+**3. Listen in Vanilla JS layer**
+```javascript
+// src/ui/product-badge.js
+import { EventBus } from '@cin7/core';
+import { $, setText } from '@cin7/vanilla-js';
+
+EventBus.on('product:updated', (event) => {
+  const badge = $(`#product-badge-${event.product.id}`);
+  if (badge) {
+    setText(badge, event.product.stock > 0 ? 'In Stock' : 'Out of Stock');
+  }
+});
+```
+
+**4. Listen in ExtJS grid**
+```typescript
+// src/grids/product-grid.ts
+import { EventBus } from '@cin7/core';
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const grid = ExtDataGrid.create({
+  store: productStore,
+  // ... config
+});
+
+// Refresh grid when product updates
+EventBus.on('product:updated', (event) => {
+  const record = grid.store.findRecord('id', event.product.id);
+  if (record) {
+    record.set(event.product);
+  }
+});
+```
+
+**Event Naming Convention**:
+- `entity:action` - Standard format (e.g., `product:created`, `order:shipped`)
+- `domain:entity:action` - For large apps (e.g., `inventory:product:updated`)
+- Use past tense for actions (`:created`, `:updated`, `:deleted`)
+
+**Best Practices**:
+- ✅ Keep event payloads small and simple
+- ✅ Always unsubscribe in cleanup (React useEffect return)
+- ✅ Use TypeScript for event payload types
+- ✅ Document events in a central registry
+- ❌ Don't use for request/response patterns (use async/await)
+- ❌ Don't create circular event chains
+
+---
+
+## Installation & Setup
+
+### Package installation keeps failing
+
+**Quick Answer**: Clear cache and reinstall with `rm -rf node_modules .pnpm-store && pnpm install`
+
+**Common Issues & Solutions**:
+
+**Issue 1: "Cannot find module '@cin7/core'"**
+```bash
+# Cause: Workspace packages not linked
+# Solution: Install from root
+cd /path/to/cin7dsl
+pnpm install
+
+# Verify workspace links
+ls -la node_modules/@cin7
+```
+
+**Issue 2: "ENOENT: no such file or directory"**
+```bash
+# Cause: Corrupted lock file or cache
+# Solution: Clean install
+rm -rf node_modules
+rm pnpm-lock.yaml
+pnpm install
+```
+
+**Issue 3: "Peer dependency warnings"**
+```bash
+# Cause: Version conflicts
+# Solution: Check package.json versions match
+# Example: All packages should use same React version
+
+# Find conflicts
+pnpm list react
+pnpm list @shopify/polaris
+
+# Fix by aligning versions in package.json
+```
+
+**Issue 4: "Out of disk space"**
+```bash
+# Cause: pnpm store is large
+# Solution: Prune unused packages
+pnpm store prune
+
+# Or relocate store
+pnpm config set store-dir /path/to/larger/disk
+```
+
+---
+
+### Import resolution problems
+
+**Quick Answer**: Check `tsconfig.json` paths and `package.json` exports.
+
+**Problem 1: Cannot resolve package imports**
+
+```bash
+# Error: Cannot find module '@cin7/core'
+# Check: Is package built?
+cd packages/core
+pnpm build
+ls -la dist/  # Should see index.js, index.d.ts
+
+# Check: Is workspace link correct?
+pnpm ls @cin7/core  # Should show workspace:* version
+```
+
+**Problem 2: TypeScript can't find types**
+
+```json
+// tsconfig.json - Add paths
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@cin7/*": ["packages/*/src"]
+    }
+  }
+}
+```
+
+**Problem 3: Vite/Webpack can't resolve**
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import path from 'path';
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@cin7/core': path.resolve(__dirname, '../packages/core/src'),
+      '@cin7/vanilla-js': path.resolve(__dirname, '../packages/vanilla-js/src'),
+    }
+  }
+});
+```
+
+**Problem 4: Import from wrong path**
+
+```typescript
+// ❌ Wrong - importing from src in production
+import { EventBus } from '@cin7/core/src';
+
+// ✅ Correct - importing from package root
+import { EventBus } from '@cin7/core';
+```
+
+---
+
+## Build & Development
+
+### Build errors and solutions
+
+**Quick Answer**: Run builds in dependency order starting with `@cin7/core`.
+
+**Error: "Cannot find module '@cin7/core'"**
+```bash
+# Solution: Build core first
+cd packages/core
+pnpm build
+
+# Then build dependent packages
+cd ../design-tokens
+pnpm build
+```
+
+**Error: "Type error: Cannot find name 'Ext'"**
+```bash
+# Solution: Install ExtJS types
+pnpm add -D @types/extjs
+
+# Or create ambient declaration
+// src/types/extjs.d.ts
+declare var Ext: any;
+```
+
+**Error: "Module not found: Can't resolve '@shopify/polaris'"**
+```bash
+# Solution: Build Polaris packages
+cd polaris/polaris-tokens
+pnpm build
+
+cd ../polaris-icons
+pnpm build
+
+cd ../polaris-react
+pnpm build
+```
+
+**Error: "Unexpected token 'export'"**
+```bash
+# Cause: ESM/CJS mismatch
+# Solution: Check package.json type field
+
+// package.json
+{
+  "type": "module",  // For ESM
+  "type": "commonjs" // For CJS
+}
+
+# Or use proper build tool (tsup, rollup, esbuild)
+```
+
+**Error: "Out of memory"**
+```bash
+# Solution: Increase Node memory
+export NODE_OPTIONS="--max-old-space-size=4096"
+pnpm build
+
+# Or add to package.json script
+{
+  "scripts": {
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build"
+  }
+}
+```
+
+---
+
+### Performance optimization
+
+**Quick Answer**: Use lazy loading, memoization, and pagination for large datasets.
+
+**Optimization 1: Code Splitting**
+```typescript
+// Instead of static import
+import HeavyComponent from './HeavyComponent';
+
+// Use dynamic import
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+// Wrap with Suspense
+<Suspense fallback={<Spinner />}>
+  <HeavyComponent />
+</Suspense>
+```
+
+**Optimization 2: Memoization**
+```typescript
+import { useMemo, useCallback } from 'react';
+
+function ProductList({ products }) {
+  // Expensive calculation - memoize
+  const sortedProducts = useMemo(() => {
+    return products.sort((a, b) => b.price - a.price);
+  }, [products]);
+
+  // Stable function reference - useCallback
+  const handleClick = useCallback((id) => {
+    console.log('Clicked:', id);
+  }, []);
+
+  return <div>{/* render */}</div>;
+}
+```
+
+**Optimization 3: Pagination**
+```typescript
+// ❌ Bad - Loading all 10,000 products
+const products = await repository.findAll();
+
+// ✅ Good - Load in pages
+const products = await repository.findAll({
+  page: 1,
+  pageSize: 50
+});
+
+// Use DataTable pagination
+<DataTable
+  rows={currentPage}
+  pagination={{
+    hasNext: page < totalPages,
+    hasPrevious: page > 1,
+    onNext: () => setPage(page + 1),
+    onPrevious: () => setPage(page - 1)
+  }}
+/>
+```
+
+**Optimization 4: Virtual Scrolling**
+```typescript
+// For ExtJS grids with large datasets
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const grid = ExtDataGrid.create({
+  store: hugeDataset,
+  buffered: true,  // Enable virtual scrolling
+  pageSize: 100,   // Rows to buffer
+  leadingBufferZone: 50
+});
+```
+
+**Optimization 5: Bundle Analysis**
+```bash
+# Analyze bundle size
+pnpm build
+npx vite-bundle-visualizer
+
+# Look for:
+# - Large dependencies that could be lazy loaded
+# - Duplicate packages
+# - Unused code
+```
+
+---
+
+## Migration & Integration
+
+### Migration from pure Polaris
+
+**Quick Answer**: Install Cin7 packages alongside Polaris, gradually adopt new patterns.
+
+**Step 1: Install Cin7 packages**
+```bash
+# Add Cin7 packages to existing project
+pnpm add @cin7/core @cin7/vanilla-js @cin7/typescript-sdk @cin7/polaris-adapter
+```
+
+**Step 2: Keep existing Polaris code**
+```typescript
+// Your existing code works unchanged
+import { Button, Card } from '@shopify/polaris';
+
+function MyComponent() {
+  return (
+    <Card>
+      <Button>Click me</Button>
+    </Card>
+  );
+}
+```
+
+**Step 3: Add EventBus for cross-component communication**
+```typescript
+// Gradually add EventBus where needed
+import { EventBus } from '@cin7/core';
+
+function ProductForm() {
+  const handleSave = async () => {
+    await saveProduct();
+    EventBus.emit('product:saved', { product });
+  };
+
+  return <Button onClick={handleSave}>Save</Button>;
+}
+```
+
+**Step 4: Extract business logic to TypeScript SDK**
+```typescript
+// Before: Logic in component
+function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(setProducts);
+  }, []);
+}
+
+// After: Logic in repository
+import { ProductRepository } from '@cin7/typescript-sdk';
+
+function ProductList() {
+  const [products, setProducts] = useState([]);
+  const repository = new ProductRepository();
+
+  useEffect(() => {
+    repository.findAll().then(setProducts);
+  }, []);
+}
+```
+
+**Step 5: Add Vanilla JS for simple interactions**
+```typescript
+// For simple DOM manipulation
+import { $, addClass, on } from '@cin7/vanilla-js';
+
+useEffect(() => {
+  on('#toggle', 'click', () => {
+    addClass($('#panel'), 'visible');
+  });
+}, []);
+```
+
+**Migration is gradual**:
+- ✅ No breaking changes to existing code
+- ✅ Adopt new patterns incrementally
+- ✅ Mix Polaris and Cin7 components
+- ✅ Migrate feature by feature, not all at once
+
+---
+
+### Theming and customization
+
+**Quick Answer**: Use design tokens from `@cin7/design-tokens` for consistent theming.
+
+**Using Design Tokens**
+```typescript
+import { tokens } from '@cin7/design-tokens';
+
+// In CSS
+const styles = {
+  backgroundColor: tokens.color.surface.primary,
+  padding: tokens.spacing.medium,
+  borderRadius: tokens.borderRadius.default,
+  fontSize: tokens.fontSize.body
+};
+
+// In styled components
+import styled from 'styled-components';
+
+const Card = styled.div`
+  background: ${tokens.color.surface.primary};
+  padding: ${tokens.spacing.medium};
+  border-radius: ${tokens.borderRadius.default};
+`;
+```
+
+**Extending Design Tokens**
+```typescript
+// Create your own token extensions
+// src/tokens/custom.ts
+import { tokens } from '@cin7/design-tokens';
+
+export const customTokens = {
+  ...tokens,
+  color: {
+    ...tokens.color,
+    brand: {
+      primary: '#1a73e8',
+      secondary: '#34a853'
+    }
+  }
+};
+```
+
+**Theming Polaris Components**
+```typescript
+import { AppProvider } from '@shopify/polaris';
+
+const customTheme = {
+  colors: {
+    surface: '#f6f6f7',
+    onSurface: '#111213',
+    interactive: '#2c6ecb',
+    primary: '#008060',
+  },
+  fontFamily: {
+    base: 'Inter, sans-serif',
+  },
+};
+
+<AppProvider theme={customTheme}>
+  <App />
+</AppProvider>
+```
+
+**Dark Mode Support**
+```typescript
+import { useState } from 'react';
+import { tokens } from '@cin7/design-tokens';
+
+function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const theme = darkMode ? tokens.dark : tokens.light;
+
+  return (
+    <div style={{ background: theme.color.surface.primary }}>
+      <Button onClick={() => setDarkMode(!darkMode)}>
+        Toggle Dark Mode
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+### Testing strategies
+
+**Quick Answer**: Test each layer independently, use EventBus for integration tests.
+
+**Unit Testing Business Logic (TypeScript SDK)**
+```typescript
+// packages/typescript-sdk/src/usecases/update-product.test.ts
+import { describe, it, expect, vi } from 'vitest';
+import { UpdateProductUseCase } from './update-product';
+
+describe('UpdateProductUseCase', () => {
+  it('should update product and emit event', async () => {
+    const mockRepo = {
+      update: vi.fn().mockResolvedValue({ id: '1', name: 'Updated' })
+    };
+
+    const useCase = new UpdateProductUseCase(mockRepo);
+    const result = await useCase.execute('1', { name: 'Updated' });
+
+    expect(result.name).toBe('Updated');
+    expect(mockRepo.update).toHaveBeenCalledWith('1', { name: 'Updated' });
+  });
+});
+```
+
+**Component Testing (React)**
+```typescript
+// src/components/ProductCard.test.tsx
+import { render, screen } from '@testing-library/react';
+import { ProductCard } from './ProductCard';
+
+describe('ProductCard', () => {
+  it('renders product name', () => {
+    const product = { id: '1', name: 'Test Product', price: 100 };
+    render(<ProductCard product={product} />);
+
+    expect(screen.getByText('Test Product')).toBeInTheDocument();
+  });
+});
+```
+
+**Integration Testing with EventBus**
+```typescript
+// tests/integration/product-flow.test.ts
+import { EventBus } from '@cin7/core';
+import { UpdateProductUseCase } from '@cin7/typescript-sdk';
+
+describe('Product update flow', () => {
+  it('should update product and notify UI', async () => {
+    let eventReceived = false;
+
+    EventBus.on('product:updated', () => {
+      eventReceived = true;
+    });
+
+    const useCase = new UpdateProductUseCase(mockRepo);
+    await useCase.execute('1', { name: 'Updated' });
+
+    expect(eventReceived).toBe(true);
+  });
+});
+```
+
+**E2E Testing (Playwright/Cypress)**
+```typescript
+// tests/e2e/product-management.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('should update product stock', async ({ page }) => {
+  await page.goto('/products');
+  await page.click('[data-testid="product-1"]');
+  await page.fill('[data-testid="stock-input"]', '100');
+  await page.click('[data-testid="save-button"]');
+
+  await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
+});
+```
+
+---
+
+## Quick Troubleshooting
+
+### Common error messages
+
+**"Module not found: Can't resolve '@cin7/core'"**
+- Run `pnpm build` in `packages/core`
+- Check `pnpm install` completed successfully
+- Verify workspace link: `pnpm ls @cin7/core`
+
+**"Type 'X' is not assignable to type 'Y'"**
+- Check TypeScript versions match across packages
+- Rebuild type definitions: `pnpm build`
+- Clear TypeScript cache: `rm -rf node_modules/.cache`
+
+**"Cannot read property 'emit' of undefined"**
+- EventBus not imported correctly
+- Check import: `import { EventBus } from '@cin7/core'`
+- Ensure @cin7/core is built and linked
+
+**"Hydration failed because the initial UI does not match"**
+- Server/client mismatch in Next.js
+- Check for browser-only code in SSR components
+- Use `useEffect` for client-only logic
+
+**"Maximum call stack size exceeded"**
+- Circular dependency in imports
+- Infinite loop in useEffect (missing dependency)
+- Recursive function without base case
+
+**"Failed to compile: ENOSPC: System limit for number of file watchers"**
+```bash
+# Increase file watcher limit (Linux)
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
+
+---
+
+## Additional Resources
+
+- [Cin7 DSL Documentation](https://cin7-dsl.netlify.app)
+- [Storybook Examples](https://cin7-dsl.netlify.app/storybook)
+- [Shopify Polaris](https://polaris.shopify.com)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [React Documentation](https://react.dev)
+
+---
+
+## Still Need Help?
+
+If your question isn't answered here:
+1. Check the [component examples](https://cin7-dsl.netlify.app/storybook)
+2. Review the [architecture documentation](https://cin7-dsl.netlify.app/architecture)
+3. Search [GitHub discussions](https://github.com/cin7/dsl/discussions)
+4. Create a [GitHub issue](https://github.com/cin7/dsl/issues)
+
+**Remember**: Most issues are solved by:
+1. `pnpm install` from repository root
+2. Build packages in order (core → design-tokens → polaris → others)
+3. Check `tsconfig.json` and `package.json` configuration
+4. Clear cache: `rm -rf node_modules .pnpm-store && pnpm install`
