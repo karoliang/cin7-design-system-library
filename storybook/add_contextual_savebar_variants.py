@@ -1,0 +1,380 @@
+#!/usr/bin/env python3
+"""
+Script to add comprehensive code variants for ContextualSaveBar component.
+This script safely inserts new variants into the codeVariants.ts file.
+"""
+
+import os
+import sys
+
+# Path to the codeVariants.ts file
+CODE_VARIANTS_FILE = ".storybook/blocks/codeVariants.ts"
+
+# New variants to add (we'll insert these before the closing brace of contextualsavebarExamples)
+NEW_VARIANTS = """,
+
+  withCustomMessage: {
+    react: `import { ContextualSaveBar, Card, TextField, FormLayout, Text, BlockStack } from '@shopify/polaris';
+import React, { useState } from 'react';
+
+function CustomMessageExample() {
+  const [fieldValues, setFieldValues] = useState({
+    title: '',
+    price: '',
+    inventory: '',
+  });
+  const [isDirty, setIsDirty] = useState(false);
+
+  const handleSave = () => {
+    console.log('Saving:', fieldValues);
+    setIsDirty(false);
+  };
+
+  const handleDiscard = () => {
+    setFieldValues({ title: '', price: '', inventory: '' });
+    setIsDirty(false);
+  };
+
+  const changedFields = Object.entries(fieldValues)
+    .filter(([_, value]) => value !== '')
+    .map(([key]) => key)
+    .join(', ');
+
+  return (
+    <div style={{ position: 'relative', height: '500px' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="16px">
+            <Text variant="headingMd">Edit Product</Text>
+            <FormLayout>
+              <TextField
+                label="Title"
+                value={fieldValues.title}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, title: value });
+                  setIsDirty(true);
+                }}
+              />
+              <TextField
+                label="Price"
+                value={fieldValues.price}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, price: value });
+                  setIsDirty(true);
+                }}
+                prefix="$"
+              />
+              <TextField
+                label="Inventory"
+                value={fieldValues.inventory}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, inventory: value });
+                  setIsDirty(true);
+                }}
+                type="number"
+              />
+            </FormLayout>
+          </BlockStack>
+        </div>
+      </Card>
+
+      {isDirty && (
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+          <ContextualSaveBar
+            message={`Changes to ${changedFields || 'fields'}`}
+            saveAction={{
+              content: 'Save product',
+              onAction: handleSave,
+            }}
+            discardAction={{
+              content: 'Cancel',
+              onAction: handleDiscard,
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default CustomMessageExample;`,
+
+    vanilla: `<!-- Custom Message Save Bar -->
+<div id="form-container" style="position: relative; height: 500px;">
+  <div class="polaris-card">
+    <div style="padding: 24px;">
+      <h2>Edit Product</h2>
+      <form id="product-form">
+        <div class="polaris-form-layout">
+          <input type="text" placeholder="Title" class="polaris-text-field" id="title-field" data-field="title">
+          <input type="text" placeholder="Price" class="polaris-text-field" id="price-field" data-field="price">
+          <input type="number" placeholder="Inventory" class="polaris-text-field" id="inventory-field" data-field="inventory">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="polaris-contextual-save-bar" id="save-bar" style="display: none; position: absolute; bottom: 0; left: 0; right: 0;">
+    <div class="polaris-contextual-save-bar__content">
+      <span class="polaris-contextual-save-bar__message" id="save-message">Changes to fields</span>
+      <div class="polaris-contextual-save-bar__actions">
+        <button class="polaris-button" id="discard-btn">Cancel</button>
+        <button class="polaris-button polaris-button--primary" id="save-btn">Save product</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+import { $, on } from '@cin7/vanilla-js';
+
+const fieldValues = { title: '', price: '', inventory: '' };
+const saveBar = $('#save-bar');
+const saveMessage = $('#save-message');
+const changedFields = new Set();
+
+function updateMessage() {
+  const fields = Array.from(changedFields).join(', ');
+  saveMessage.textContent = \\`Changes to \\${fields || 'fields'}\\`;
+}
+
+['#title-field', '#price-field', '#inventory-field'].forEach(selector => {
+  on(selector, 'input', (e) => {
+    const field = e.target.dataset.field;
+    fieldValues[field] = e.target.value;
+
+    if (e.target.value) {
+      changedFields.add(field);
+    } else {
+      changedFields.delete(field);
+    }
+
+    saveBar.style.display = 'flex';
+    updateMessage();
+  });
+});
+
+on('#save-btn', 'click', () => {
+  console.log('Saving:', fieldValues);
+  saveBar.style.display = 'none';
+  changedFields.clear();
+});
+
+on('#discard-btn', 'click', () => {
+  Object.keys(fieldValues).forEach(key => {
+    fieldValues[key] = '';
+    $(\\`#\\${key}-field\\`).value = '';
+  });
+  changedFields.clear();
+  saveBar.style.display = 'none';
+});
+</script>`,
+
+    extjs: `// ExtJS Custom Message Save Bar
+Ext.create('Ext.panel.Panel', {
+  height: 500,
+  layout: 'fit',
+  items: [{
+    xtype: 'form',
+    title: 'Edit Product',
+    bodyPadding: 24,
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Title',
+      name: 'title',
+      listeners: {
+        change: function(field, newValue) {
+          updateSaveBar(field.name, newValue);
+        }
+      }
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Price',
+      name: 'price',
+      listeners: {
+        change: function(field, newValue) {
+          updateSaveBar(field.name, newValue);
+        }
+      }
+    }, {
+      xtype: 'numberfield',
+      fieldLabel: 'Inventory',
+      name: 'inventory',
+      listeners: {
+        change: function(field, newValue) {
+          updateSaveBar(field.name, newValue);
+        }
+      }
+    }]
+  }],
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'bottom',
+    cls: 'polaris-contextual-save-bar',
+    hidden: true,
+    id: 'contextual-save-bar',
+    items: [{
+      xtype: 'component',
+      id: 'save-message',
+      html: '<span>Changes to fields</span>',
+      flex: 1
+    }, {
+      xtype: 'button',
+      text: 'Cancel',
+      handler: function() {
+        Ext.getCmp('contextual-save-bar').hide();
+      }
+    }, {
+      xtype: 'button',
+      text: 'Save product',
+      cls: 'polaris-button--primary',
+      handler: function() {
+        console.log('Saving product');
+        Ext.getCmp('contextual-save-bar').hide();
+      }
+    }]
+  }],
+  renderTo: Ext.getBody()
+});
+
+const changedFields = new Set();
+
+function updateSaveBar(fieldName, value) {
+  if (value) {
+    changedFields.add(fieldName);
+  } else {
+    changedFields.delete(fieldName);
+  }
+
+  const fields = Array.from(changedFields).join(', ');
+  Ext.getCmp('save-message').setHtml(\\`<span>Changes to \\${fields || 'fields'}</span>\\`);
+  Ext.getCmp('contextual-save-bar').show();
+}`,
+
+    typescript: `import { ContextualSaveBar, Card, TextField, FormLayout, Text, BlockStack } from '@shopify/polaris';
+import React, { useState, useCallback } from 'react';
+
+interface FieldValues {
+  title: string;
+  price: string;
+  inventory: string;
+}
+
+function CustomMessageExample(): JSX.Element {
+  const [fieldValues, setFieldValues] = useState<FieldValues>({
+    title: '',
+    price: '',
+    inventory: '',
+  });
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+
+  const handleSave = useCallback((): void => {
+    console.log('Saving:', fieldValues);
+    setIsDirty(false);
+  }, [fieldValues]);
+
+  const handleDiscard = useCallback((): void => {
+    setFieldValues({ title: '', price: '', inventory: '' });
+    setIsDirty(false);
+  }, []);
+
+  const changedFields = Object.entries(fieldValues)
+    .filter(([_, value]) => value !== '')
+    .map(([key]) => key)
+    .join(', ');
+
+  return (
+    <div style={{ position: 'relative', height: '500px' }}>
+      <Card>
+        <div style={{ padding: '24px' }}>
+          <BlockStack gap="16px">
+            <Text variant="headingMd">Edit Product</Text>
+            <FormLayout>
+              <TextField
+                label="Title"
+                value={fieldValues.title}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, title: value });
+                  setIsDirty(true);
+                }}
+              />
+              <TextField
+                label="Price"
+                value={fieldValues.price}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, price: value });
+                  setIsDirty(true);
+                }}
+                prefix="$"
+              />
+              <TextField
+                label="Inventory"
+                value={fieldValues.inventory}
+                onChange={(value) => {
+                  setFieldValues({ ...fieldValues, inventory: value });
+                  setIsDirty(true);
+                }}
+                type="number"
+              />
+            </FormLayout>
+          </BlockStack>
+        </div>
+      </Card>
+
+      {isDirty && (
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+          <ContextualSaveBar
+            message={`Changes to ${changedFields || 'fields'}`}
+            saveAction={{
+              content: 'Save product',
+              onAction: handleSave,
+            }}
+            discardAction={{
+              content: 'Cancel',
+              onAction: handleDiscard,
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default CustomMessageExample;`
+  }"""
+
+def main():
+    # Check if file exists
+    if not os.path.exists(CODE_VARIANTS_FILE):
+        print(f"Error: {CODE_VARIANTS_FILE} not found!")
+        return 1
+
+    # Read the file
+    with open(CODE_VARIANTS_FILE, 'r') as f:
+        content = f.read()
+
+    # Find the insertion point (right before the closing brace of contextualsavebarExamples)
+    # We're looking for the pattern: export default ContextualSaveBarExample;`\n  }\n};
+    search_pattern = "export default ContextualSaveBarExample;`\n  }\n};"
+
+    if search_pattern not in content:
+        print("Error: Could not find the insertion point!")
+        print("Searching for pattern:", repr(search_pattern))
+        return 1
+
+    # Insert the new variants
+    new_content = content.replace(
+        search_pattern,
+        f"export default ContextualSaveBarExample;`\n  }}{NEW_VARIANTS}\n}};"
+    )
+
+    # Write the updated content
+    with open(CODE_VARIANTS_FILE, 'w') as f:
+        f.write(new_content)
+
+    print(f"✅ Successfully added 'withCustomMessage' variant to {CODE_VARIANTS_FILE}")
+    print("   Total variants for ContextualSaveBar: 2 (default, withCustomMessage)")
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

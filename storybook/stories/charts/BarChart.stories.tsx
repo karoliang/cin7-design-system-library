@@ -90,6 +90,9 @@ export const Horizontal: Story = {
     },
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('barchart', 'horizontal'),
+  },
 };
 
 export const WithDataLabels: Story = {
@@ -110,6 +113,9 @@ export const WithDataLabels: Story = {
       title: { text: 'Units' },
     },
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('barchart', 'withdatalabels'),
   },
 };
 
@@ -139,6 +145,9 @@ export const Stacked: Story = {
     },
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('barchart', 'stacked'),
+  },
 };
 
 export const PercentageStacked: Story = {
@@ -167,6 +176,9 @@ export const PercentageStacked: Story = {
     },
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('barchart', 'percentagestacked'),
+  },
 };
 
 export const Grouped: Story = {
@@ -190,5 +202,8 @@ export const Grouped: Story = {
       title: { text: 'Revenue ($K)' },
     },
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('barchart', 'grouped'),
   },
 };

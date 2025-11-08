@@ -67,6 +67,9 @@ export const Default: Story = {
 };
 
 export const SmoothCurves: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('linechart', 'smoothcurves'),
+  },
   args: {
     title: 'Sales Trend',
     smooth: true,
@@ -87,6 +90,9 @@ export const SmoothCurves: Story = {
 };
 
 export const WithMarkers: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('linechart', 'withmarkers'),
+  },
   args: {
     title: 'Order Tracking',
     markers: true,
@@ -107,6 +113,9 @@ export const WithMarkers: Story = {
 };
 
 export const MultiSeries: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('linechart', 'multiseries'),
+  },
   args: {
     title: 'Regional Sales Comparison',
     series: [
@@ -134,6 +143,9 @@ export const MultiSeries: Story = {
 };
 
 export const SmoothWithMarkers: Story = {
+  parameters: {
+    codeVariants: getCodeVariants('linechart', 'smoothwithmarkers'),
+  },
   args: {
     title: 'Product Performance',
     smooth: true,

@@ -80,6 +80,9 @@ export const Donut: Story = {
     dataLabels: true,
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'donut'),
+  },
 };
 
 export const SemiCircle: Story = {
@@ -91,6 +94,9 @@ export const SemiCircle: Story = {
       { name: 'Remaining', y: 25 },
     ],
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'semicircle'),
   },
 };
 
@@ -106,6 +112,9 @@ export const WithCustomColors: Story = {
     dataLabels: true,
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'withcustomcolors'),
+  },
 };
 
 export const LegendOnly: Story = {
@@ -119,6 +128,9 @@ export const LegendOnly: Story = {
       { name: 'Asia Pacific', y: 25 },
     ],
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'legendonly'),
   },
 };
 
@@ -136,6 +148,9 @@ export const WithPercentages: Story = {
     ],
     height: 400,
   },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'withpercentages'),
+  },
 };
 
 export const BudgetAllocation: Story = {
@@ -149,6 +164,9 @@ export const BudgetAllocation: Story = {
     legend: true,
     dataLabels: true,
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'budgetallocation'),
   },
 };
 
@@ -165,5 +183,8 @@ export const TaskCompletion: Story = {
     legend: true,
     dataLabels: true,
     height: 400,
+  },
+  parameters: {
+    codeVariants: getCodeVariants('piechart', 'taskcompletion'),
   },
 };

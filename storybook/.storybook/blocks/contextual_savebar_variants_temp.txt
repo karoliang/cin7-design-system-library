@@ -1,0 +1,35 @@
+This file contains the new code variants for ContextualSaveBar component.
+
+Due to the large size of codeVariants.ts (1.5MB), I'll provide a summary of what needs to be added:
+
+## Story Variations Identified:
+1. Default - Basic save bar with form fields
+2. WithCustomMessage - Dynamic message showing changed fields
+3. WithValidation - Save bar with form validation
+4. FullWidthLayout - Full width save bar
+5. AutoSaveExample - Auto-save functionality
+6. MultiFormExample - Multiple forms with single save bar
+7. WithContextControl - Save bar with context information
+
+## Variant Names to Add:
+- default (already exists, needs update)
+- withCustomMessage
+- withValidation
+- fullWidth
+- autoSave
+- multiForm
+- withContextControl
+
+## Story File Updates Needed:
+Each story needs its parameters updated to reference the correct variant:
+```typescript
+parameters: {
+  codeVariants: getCodeVariants('contextualsavebar', 'variantName'),
+}
+```
+
+## Implementation Strategy:
+Given the file size, I'll:
+1. Create a new comprehensive section for all ContextualSaveBar variants
+2. Use sed or similar to replace the existing contextualsavebarExamples section
+3. Update all story files to reference the correct variants

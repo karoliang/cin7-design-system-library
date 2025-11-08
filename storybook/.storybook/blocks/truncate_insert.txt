@@ -1,0 +1,104 @@
+
+// Truncate Component Examples
+export const truncateExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Truncate } from '@shopify/polaris';
+
+function TruncateExample() {
+  return (
+    <div style={{ maxWidth: '300px' }}>
+      <Truncate>
+        This is a very long piece of text that will be truncated when it exceeds the width of its container. The Truncate component automatically adds an ellipsis at the end.
+      </Truncate>
+    </div>
+  );
+}
+
+export default TruncateExample;`,
+
+    vanilla: `<!-- Truncate Structure -->
+<div class="truncate-container" style="max-width: 300px;">
+  <div class="polaris-truncate">
+    This is a very long piece of text that will be truncated when it exceeds the width of its container. The Truncate component automatically adds an ellipsis at the end.
+  </div>
+</div>
+
+<style>
+.polaris-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+</style>
+
+<script>
+// Using @cin7/vanilla-js for dynamic truncate creation
+import { createElement } from '@cin7/vanilla-js';
+
+const truncateEl = createElement({
+  tag: 'div',
+  className: 'polaris-truncate',
+  text: 'This is a very long piece of text that will be truncated when it exceeds the width of its container.'
+});
+
+const container = createElement({
+  tag: 'div',
+  className: 'truncate-container',
+  styles: { maxWidth: '300px' },
+  children: [truncateEl]
+});
+
+document.getElementById('app').appendChild(container);
+</script>`,
+
+    extjs: `// ExtJS Truncate representation using @cin7/extjs-adapters
+Ext.create('Ext.Component', {
+  width: 300,
+  html: 'This is a very long piece of text that will be truncated when it exceeds the width of its container.',
+  style: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  renderTo: Ext.getBody()
+});
+
+// Alternative: Using ExtJS Panel with autoEl config
+Ext.create('Ext.panel.Panel', {
+  width: 300,
+  bodyPadding: 10,
+  autoEl: {
+    tag: 'div',
+    style: {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    },
+    html: 'This is a very long piece of text that will be truncated when it exceeds the width of its container.'
+  },
+  renderTo: Ext.getBody()
+});`,
+
+    typescript: `import { Truncate } from '@shopify/polaris';
+import React from 'react';
+
+interface TruncateExampleProps {
+  text: string;
+  maxWidth?: number | string;
+}
+
+function TruncateExample({
+  text,
+  maxWidth = '300px'
+}: TruncateExampleProps): JSX.Element {
+  return (
+    <div style={{ maxWidth }}>
+      <Truncate>{text}</Truncate>
+    </div>
+  );
+}
+
+export default TruncateExample;`,
+  },
+};
