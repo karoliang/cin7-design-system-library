@@ -42699,7 +42699,7 @@ function ProductShowcase({ product }) {
         <Thumbnail size="large" source={product.image} alt={product.name} />
         <div>
           <Text variant="headingLg">{product.name}</Text>
-          <Text variant="headingMd">\${product.price}</Text>
+          <Text variant="headingMd">{product.price}</Text>
           <Button primary icon={CartIcon}>Add to Cart</Button>
         </div>
       </div>
@@ -42756,7 +42756,7 @@ const ProductShowcase: React.FC<ProductShowcaseProps> = ({ product, onAddToCart 
         <Thumbnail size="large" source={product.image} alt={product.name} />
         <div>
           <Text variant="headingLg">{product.name}</Text>
-          <Text variant="headingMd">\${product.price.toFixed(2)}</Text>
+          <Text variant="headingMd">{product.price.toFixed(2)}</Text>
           <Button primary icon={CartIcon} onClick={() => onAddToCart?.(product)}>Add to Cart</Button>
         </div>
       </div>
@@ -42777,7 +42777,7 @@ function ProductCatalog({ products }) {
         <Card key={p.id}>
           <Thumbnail source={p.image} alt={p.name} />
           <Text variant="headingMd">{p.name}</Text>
-          <Text>\${p.price}</Text>
+          <Text>{p.price}</Text>
           <Button primary fullWidth icon={CartIcon}>Add to Cart</Button>
         </Card>
       ))}
@@ -42823,7 +42823,7 @@ const ProductCatalog: React.FC<{ products: Product[] }> = ({ products }) => {
         <Card key={p.id}>
           <Thumbnail source={p.image} alt={p.name} />
           <Text variant="headingMd">{p.name}</Text>
-          <Text>\${p.price.toFixed(2)}</Text>
+          <Text>{p.price.toFixed(2)}</Text>
           <Button primary fullWidth icon={CartIcon}>Add to Cart</Button>
         </Card>
       ))}
@@ -42853,7 +42853,7 @@ function ShoppingCart() {
           <Button size="small" icon={PlusIcon} />
         </div>
       ))}
-      <Text variant="headingMd">Total: \${total.toFixed(2)}</Text>
+      <Text variant="headingMd">Total: ${total.toFixed(2)}</Text>
       <Button primary fullWidth>Checkout</Button>
     </Card>
   );
@@ -42907,7 +42907,7 @@ const ShoppingCart: React.FC = () => {
       {items.map(item => (
         <div key={item.id}><Text>{item.name}</Text><Text>{item.qty}</Text></div>
       ))}
-      <Text variant="headingMd">Total: \${total.toFixed(2)}</Text>
+      <Text variant="headingMd">Total: ${total.toFixed(2)}</Text>
       <Button primary fullWidth>Checkout</Button>
     </Card>
   );
