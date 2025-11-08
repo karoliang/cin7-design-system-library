@@ -22,6 +22,7 @@ const meta = {
       description: 'Array of breadcrumb objects with content and url',
     },
     backAction: {
+      control: false,
       table: { disable: true },
     },
   },
