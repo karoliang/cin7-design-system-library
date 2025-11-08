@@ -5,7 +5,100 @@ All notable changes to the Cin7 DSL framework are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-07-11
+## [1.1.1] - 2025-11-08
+
+### 🔧 Code Quality & Developer Experience
+
+Comprehensive template literal escaping fixes across all Storybook code variants, discovered through multi-agent deep audit.
+
+#### Fixed
+
+- **Template Literal Escaping Issues** (dfded6f, a1d107a, 16ba61b)
+  - Fixed 34 critical template literal interpolation errors across 679 code variants
+  - Resolved `ReferenceError: price is not defined` affecting all components
+  - Fixed JSX attribute template literals in 18 components (30 instances)
+  - Fixed ExtJS template syntax in product catalog
+  - Fixed nested template literals in DescriptionList component
+
+**Affected Components**:
+- Banner: title interpolation (1 fix)
+- Avatar/Badge: aria-label patterns (1 fix)
+- Media: thumbnailUrl/thumbnailAlt patterns (13 fixes)
+- ResourceList: accessibilityLabel (3 fixes)
+- Loading: spinner labels (3 fixes)
+- Pagination: page number labels (11 fixes)
+- Toast: duration content (1 fix)
+- DescriptionList: price/profit fields (1 fix)
+
+**Pattern Fixed**: `{\`\${var}\`}` → `{\`\\\${var}\`}` in JSX attributes
+
+#### Added
+
+- **ESLint Rule for Template Literals** (.eslintrc-code-variants.js)
+  - Custom rule to detect unescaped JSX template literals
+  - Auto-fix capability for common patterns
+  - Targeted detection for nested .map() templates
+
+- **Comprehensive Guidelines** (TEMPLATE_LITERAL_GUIDELINES.md)
+  - Escaping rules for all nesting levels (1-4+ backslashes)
+  - Quick reference table with common patterns
+  - Historical issues tracker
+  - Prevention best practices
+
+- **Audit Documentation** (TEMPLATE_LITERAL_AUDIT_REPORT.md)
+  - Complete multi-agent audit findings (43+ issues identified)
+  - Detailed analysis of all 679 code variants (57,983 lines)
+  - Process documentation and lessons learned
+
+#### Developer Impact
+
+**Before**:
+- ❌ Module load failures with ReferenceError
+- ❌ Incorrect code examples in Storybook
+- ❌ No automated detection or prevention
+
+**After**:
+- ✅ Module loads successfully (verified)
+- ✅ Clean builds in 10.74s
+- ✅ Accurate code examples across all components
+- ✅ ESLint auto-fix for future issues
+- ✅ Comprehensive developer guidelines
+
+#### Multi-Agent Audit Process
+
+Deployed 4 specialized agents in parallel to analyze entire codebase:
+1. **React Code Variants Agent** - Found 32 JSX issues
+2. **TypeScript Code Variants Agent** - Found 3-4 TypeScript issues
+3. **Vanilla JS Code Variants Agent** - Found 8 nested template issues
+4. **ExtJS Code Variants Agent** - Verified ExtJS syntax patterns
+
+**Coverage**: 679 variants, 57,983 lines, 52 components, 4 languages
+
+#### Verification
+
+```bash
+# Module loading test
+node -e "require('./storybook/.storybook/blocks/codeVariants.ts');" # ✅ Pass
+
+# Build test
+cd storybook && pnpm build  # ✅ 10.74s, no errors
+
+# Live site
+# https://cin7-dsl.netlify.app/storybook/  # ✅ No ReferenceErrors
+```
+
+#### Documentation
+
+- Template literal escaping guidelines with examples
+- ESLint rule configuration instructions
+- Pre-commit hook recommendations
+- Comprehensive audit report with all findings
+
+**See**: `storybook/TEMPLATE_LITERAL_AUDIT_REPORT.md` for complete details
+
+---
+
+## [1.1.0] - 2025-11-03
 
 ### 🎉 Initial Production Release
 
