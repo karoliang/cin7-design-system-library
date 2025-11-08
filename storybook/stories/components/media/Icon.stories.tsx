@@ -129,9 +129,6 @@ export const Tones: Story = {
       </BlockStack>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'tones'),
-  },
 };
 
 export const CommonIcons: Story = {
@@ -208,9 +205,6 @@ export const CommonIcons: Story = {
       </BlockStack>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'commonIcons'),
-  },
 };
 
 export const WithText: Story = {
@@ -239,9 +233,6 @@ export const WithText: Story = {
       </BlockStack>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'withText'),
-  },
 };
 
 export const InButtons: Story = {
@@ -276,9 +267,6 @@ export const InButtons: Story = {
       </Badge>
     </InlineStack>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'inButtons'),
-  },
 };
 
 export const ContactIcons: Story = {
@@ -302,9 +290,6 @@ export const ContactIcons: Story = {
       </BlockStack>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'contactIcons'),
-  },
 };
 
 export const InteractiveIcons: Story = {
@@ -362,9 +347,6 @@ export const InteractiveIcons: Story = {
       </div>
     </InlineStack>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'interactiveIcons'),
-  },
 };
 
 export const AccessibilityExample: Story = {
@@ -415,7 +397,4 @@ export const AccessibilityExample: Story = {
       </BlockStack>
     </Card>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('icon', 'accessibilityExample'),
-  },
 };

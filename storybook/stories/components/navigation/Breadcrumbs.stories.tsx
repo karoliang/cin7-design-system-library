@@ -21,6 +21,9 @@ const meta = {
       control: 'object',
       description: 'Array of breadcrumb objects with content and url',
     },
+    backAction: {
+      table: { disable: true },
+    },
   },
 } satisfies Meta<typeof Breadcrumbs>;
 

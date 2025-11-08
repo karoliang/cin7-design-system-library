@@ -423,7 +423,6 @@ const ProductsListWithFilters = () => {
         renderItem={productItem}
         selectedItems={selected}
         onSelectionChange={setSelected}
-        bulkActions={mode === 'selecting'}
         promotedBulkActions={[
           {
             content: 'Edit products',

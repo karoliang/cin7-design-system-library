@@ -157,11 +157,9 @@ export const SpacingVariations: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'spacingVariations'),
-  },
-
 };
+
+
 
 export const AlignmentOptions: Story = {
   render: () => (
@@ -197,11 +195,9 @@ export const AlignmentOptions: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('blockstack', 'alignmentOptions'),
-  },
-
 };
+
+
 
 export const FormLayout: Story = {
   render: () => (
@@ -289,11 +285,9 @@ export const FormLayout: Story = {
       </CustomVerticalStack>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
-  },
-
 };
+
+
 
 export const CardComponents: Story = {
   render: () => (
@@ -348,11 +342,9 @@ export const CardComponents: Story = {
       </div>
     </CustomVerticalStack>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
-  },
-
 };
+
+
 
 export const MixedContent: Story = {
   render: () => (
@@ -432,11 +424,9 @@ export const MixedContent: Story = {
       </div>
     </CustomVerticalStack>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
-  },
-
 };
+
+
 
 export const NestedStacks: Story = {
   render: () => (
@@ -492,11 +482,9 @@ export const NestedStacks: Story = {
       </div>
     </CustomVerticalStack>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
-  },
-
 };
+
+
 
 export const ResponsiveLayout: Story = {
   render: () => (
@@ -535,8 +523,5 @@ export const ResponsiveLayout: Story = {
       </CustomVerticalStack>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('verticalstack', 'default'),
-  },
-
 };
+

@@ -22,7 +22,8 @@ const meta = {
       description: 'Text content to wrap',
     },
     spacing: {
-      control: 'boolean',
+      control: 'select',
+      options: ['tight', 'loose'],
       description: 'Add vertical spacing between text elements',
     },
   },
@@ -56,10 +57,6 @@ export const BasicUsage: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'basicUsage'),
-  },
-
 };
 
 export const LongFormContent: Story = {
@@ -106,10 +103,6 @@ export const LongFormContent: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'longFormContent'),
-  },
-
 };
 
 export const ProductDescription: Story = {
@@ -147,10 +140,6 @@ export const ProductDescription: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'productDescription'),
-  },
-
 };
 
 export const HelpArticle: Story = {
@@ -217,10 +206,6 @@ export const HelpArticle: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'helpArticle'),
-  },
-
 };
 
 export const BlogPost: Story = {
@@ -296,10 +281,6 @@ export const BlogPost: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'blogPost'),
-  },
-
 };
 
 export const ComparisonLayout: Story = {
@@ -349,10 +330,6 @@ export const ComparisonLayout: Story = {
       </div>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'comparisonLayout'),
-  },
-
 };
 
 export const NarrowContent: Story = {
@@ -389,10 +366,6 @@ export const NarrowContent: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'narrowContent'),
-  },
-
 };
 
 export const TechnicalDocumentation: Story = {
@@ -462,8 +435,4 @@ export const TechnicalDocumentation: Story = {
       </TextContainer>
     </div>
   ),
-  parameters: {
-    codeVariants: getCodeVariants('textcontainer', 'technicalDocumentation'),
-  },
-
 };
