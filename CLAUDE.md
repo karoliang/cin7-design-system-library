@@ -297,6 +297,30 @@ See "Next Steps" section at the end of this file for current priorities.
 - Added interactive demo links to all chart documentation pages
 - Self-hosted solution with zero external dependencies
 
+### Recent Completed Work (November 8, 2025)
+- **v1.1.1 Release**: Template literal escaping fixes across all Storybook code variants
+- Fixed 34 critical template literal interpolation errors in codeVariants.ts (679 variants, 57,983 lines)
+- Resolved `ReferenceError: price is not defined` affecting all components
+- Conducted multi-agent deep audit with 4 specialized agents (React, TypeScript, Vanilla JS, ExtJS)
+- Fixed JSX attribute template literals in 18 components (30 instances)
+- Fixed ExtJS template syntax in product catalog
+- Fixed nested template literals in DescriptionList component
+- Created ESLint rule (.eslintrc-code-variants.js) with auto-fix capability
+- Created comprehensive template literal guidelines (TEMPLATE_LITERAL_GUIDELINES.md)
+- Created detailed audit report (TEMPLATE_LITERAL_AUDIT_REPORT.md)
+- Updated CHANGELOG.md with v1.1.1 release notes
+- Build verified: 10.74s, no errors
+- Deployed to production: https://cin7-dsl.netlify.app/storybook/
+
+### Template Literal Escaping Knowledge
+- **Critical Pattern**: JSX attributes in code variant strings need triple-backslash escaping: `{\`\\\${var}\`}`
+- **Nested Templates**: First level needs double backslashes: `.map(x => \`\\${x}\`)`
+- **ExtJS Syntax**: Uses `{fieldName}` not `${fieldName}` for template fields
+- **Module Load vs Runtime**: Distinguish between code that executes and code that displays as examples
+- **Validation**: Always test with `node -e "require('./path/to/codeVariants.ts')"` after changes
+- **Prevention**: Use .eslintrc-code-variants.js for auto-detection and fixing
+- **Reference**: See TEMPLATE_LITERAL_GUIDELINES.md for complete escaping rules
+
 ### Documentation Patterns
 - Follow simple markdown patterns over complex component structures
 - Avoid excessive Grid/Card usage in content pages
