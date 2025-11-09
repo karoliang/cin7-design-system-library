@@ -2,6 +2,45 @@ import type { CodeVariant } from './types';
 
 // Theme Playground Examples
 export const themePlaygroundExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import React, { useState } from 'react';
+import { Page, Card, Select, TextField, Button } from '@shopify/polaris';
+import { themes, applyTheme } from './themes/themeConfig';
+
+export function ThemePlayground() {
+  const [currentTheme, setCurrentTheme] = useState('light');
+  const [customPrimary, setCustomPrimary] = useState('#007ace');
+
+  const handleThemeChange = (value) => {
+    setCurrentTheme(value);
+    applyTheme(themes[value]);
+  };
+
+  return (
+    <Page title="Theme Playground">
+      <Card>
+        <Select
+          label="Select Theme"
+          options={[
+            { label: 'Polaris Light', value: 'light' },
+            { label: 'Polaris Dark', value: 'dark' },
+            { label: 'Cin7 Core Light', value: 'cin7CoreLight' },
+            { label: 'Cin7 Core Dark', value: 'cin7CoreDark' },
+          ]}
+          value={currentTheme}
+          onChange={handleThemeChange}
+        />
+        <TextField
+          label="Primary Color"
+          value={customPrimary}
+          onChange={setCustomPrimary}
+          type="color"
+        />
+      </Card>
+    </Page>
+  );
+}`,
+  },
   playground: {
     react: `import React, { useState } from 'react';
 import { Button, Card, Select, TextField } from '@shopify/polaris';
@@ -355,6 +394,96 @@ class ThemeService {
   public getTheme(): CustomTheme {
     return this.currentTheme;
   }
-}`
+}`,
+
+  overview: {
+    react: `import React from 'react';
+import { Card, Text } from '@shopify/polaris';
+
+export function ThemeOverview() {
+  return (
+    <Card>
+      <Text variant="headingMd" as="h2">
+        Theme System Overview
+      </Text>
+      <Text>
+        The Cin7 Design System provides a comprehensive theming system
+        that supports multiple themes including Polaris Light, Polaris Dark,
+        Cin7 Core Light, and Cin7 Core Dark.
+      </Text>
+    </Card>
+  );
+}`,
+  },
+
+  customthemes: {
+    react: `import React, { useState } from 'react';
+import { Card, TextField, Button } from '@shopify/polaris';
+import { applyTheme } from './themes/themeConfig';
+
+export function CustomThemeCreator() {
+  const [customColors, setCustomColors] = useState({
+    primary: '#007ace',
+    secondary: '#6b46c1',
+    accent: '#f59e0b'
+  });
+
+  const applyCustomTheme = () => {
+    const customTheme = {
+      name: 'Custom',
+      colors: customColors
+    };
+    applyTheme(customTheme);
+  };
+
+  return (
+    <Card>
+      <TextField
+        label="Primary Color"
+        value={customColors.primary}
+        onChange={(value) => setCustomColors({...customColors, primary: value})}
+        type="color"
+      />
+      <TextField
+        label="Secondary Color"
+        value={customColors.secondary}
+        onChange={(value) => setCustomColors({...customColors, secondary: value})}
+        type="color"
+      />
+      <TextField
+        label="Accent Color"
+        value={customColors.accent}
+        onChange={(value) => setCustomColors({...customColors, accent: value})}
+        type="color"
+      />
+      <Button onClick={applyCustomTheme}>
+        Apply Custom Theme
+      </Button>
+    </Card>
+  );
+}`,
+  },
+
+  bestpractices: {
+    react: `import React from 'react';
+import { Card, Banner, Text } from '@shopify/polaris';
+
+export function ThemeBestPractices() {
+  return (
+    <Card>
+      <Banner status="info" title="Theme Best Practices">
+        <Text>
+          1. Always provide sufficient contrast for accessibility
+          2. Use semantic color tokens instead of hard-coded values
+          3. Test your designs in both light and dark themes
+          4. Respect user preferences for reduced motion
+          5. Ensure theme persistence across user sessions
+        </Text>
+      </Banner>
+    </Card>
+  );
+}`,
+  }
+
   }
 };
