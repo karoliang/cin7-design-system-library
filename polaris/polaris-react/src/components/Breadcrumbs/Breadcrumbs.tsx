@@ -5,6 +5,9 @@ import type {CallbackAction, LinkAction} from '../../types';
 import {handleMouseUpByBlurring} from '../../utilities/focus';
 import {Button} from '../Button';
 
+// Bundle hash forcing constant - CDN cache break: 2025-11-10T09:15:00Z
+const BREADCRUMBS_CACHE_BUSTER = "FORCE-BUNDLE-HASH-CHANGE-1762725300000";
+
 export interface BreadcrumbItem {
   content: string;
   url?: string;
@@ -25,6 +28,9 @@ export interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
+  // Bundle hash break reference - forces new compilation
+  console.log('Breadcrumbs cache buster:', BREADCRUMBS_CACHE_BUSTER);
+
   // Bulletproof: Ensure props are defined and valid
   if (!backAction && (!breadcrumbs || breadcrumbs.length === 0)) {
     return null;

@@ -1,5 +1,5 @@
 # Build configuration for Cin7 DSL documentation site with integrated Storybook
-# NUCLEAR DEPLOYMENT: 2025-11-10T09:00:00Z - Complete CDN cache invalidation + bundle rebuild
+# DRAMATIC BUNDLE HASH CHANGE: 2025-11-10T09:15:00Z - Force new compilation
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
