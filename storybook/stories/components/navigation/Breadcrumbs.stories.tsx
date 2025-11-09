@@ -114,6 +114,9 @@ export const ShortPath: Story = {
       { content: 'About', url: '#' },
     ],
   },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'shortPath'),
+  },
 };
 
 export const LongPath: Story = {
@@ -127,6 +130,9 @@ export const LongPath: Story = {
       { content: 'Headphones', url: '#' },
       { content: 'Wireless', url: '#' },
     ],
+  },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'longPath'),
   },
 };
 
@@ -205,6 +211,9 @@ export const ProductNavigation: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'productNavigation'),
   },
 };
 
@@ -337,6 +346,9 @@ export const EcommerceNavigation: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'ecommerceNavigation'),
   },
 };
 
@@ -513,6 +525,9 @@ export const AdminPanel: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'adminPanel'),
   },
 };
 
@@ -733,5 +748,8 @@ export const DocumentationSite: Story = {
         </div>
       </div>
     );
+  },
+  parameters: {
+    codeVariants: getCodeVariants('breadcrumbs', 'documentationSite'),
   },
 };

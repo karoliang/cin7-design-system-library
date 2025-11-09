@@ -379,7 +379,7 @@ export const WithLogo: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    codeVariants: getCodeVariants('frame', 'withLogo'),
   },
 
 };
@@ -478,7 +478,7 @@ export const WithNotifications: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    codeVariants: getCodeVariants('frame', 'withNotifications'),
   },
 
 };
@@ -631,7 +631,7 @@ export const EcommerceLayout: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    codeVariants: getCodeVariants('frame', 'ecommerceLayout'),
   },
 
 };
@@ -698,7 +698,7 @@ export const MinimalLayout: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    codeVariants: getCodeVariants('frame', 'minimalLayout'),
   },
 
 };
@@ -779,7 +779,7 @@ export const ResponsiveBehavior: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    codeVariants: getCodeVariants('frame', 'responsiveBehavior'),
   },
 
 };
