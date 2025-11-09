@@ -5620,11 +5620,13 @@ function BreadcrumbsExample({
     }
   };
 
-  const breadcrumbs = items.map(item => ({
-    content: item.content,
-    url: item.url,
-    onAction: item.onAction || (() => handleBreadcrumbClick(item.url, item.onAction))
-  }));
+  const breadcrumbs = items
+    .filter(item => item && item.content) // Filter out undefined items and items without content
+    .map(item => ({
+      content: item.content,
+      url: item.url,
+      onAction: item.onAction || (() => handleBreadcrumbClick(item.url, item.onAction))
+    }));
 
   return <Breadcrumbs breadcrumbs={breadcrumbs} />;
 }
