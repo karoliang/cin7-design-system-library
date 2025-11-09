@@ -1,6 +1,6 @@
 {
   "name": "@cin7/storybook",
-  "version": "0.1.0",
+  "version": "0.1.0-NUCLEAR-1762719448823-hpfeo",
   "private": true,
   "description": "Interactive component documentation for Cin7 Design System Library",
   "scripts": {
@@ -52,5 +52,6 @@
     "storybook": "^8.6.14",
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
-  }
+  },
+  "cacheBust": "NUCLEAR-1762719448823-hpfeo"
 }
