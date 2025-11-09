@@ -1,5 +1,5 @@
 # Build configuration for Cin7 DSL documentation site with integrated Storybook
-# Build cache invalidated: 2025-11-10T08:30:00Z - Ultra-deep deployment verification for Breadcrumbs fix
+# ULTRA-CLEAN DEPLOYMENT: 2025-11-10T08:45:00Z - Complete cache purge + fresh rebuild
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
@@ -10,6 +10,11 @@
 [build.environment]
   NODE_VERSION = "20.10.0"
   NEXT_TELEMETRY_DISABLED = "1"
+  # Force clean build - disable all caching
+  NPM_CONFIG_CACHE = "/dev/null"
+  NETLIFY_BUILD_CACHE = "false"
+  NEXT_FORCE_NO_CACHE = "true"
+  YARN_CACHE_FOLDER = "/dev/null"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
