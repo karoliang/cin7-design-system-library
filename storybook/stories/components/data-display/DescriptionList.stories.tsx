@@ -137,77 +137,83 @@ export const CustomerInformation: Story = {
 };
 
 export const WithBadges: Story = {
-  args: {
-    items: [
-      {
-        term: 'Status',
-        description: <Badge status="success">Active</Badge>,
-      },
-      {
-        term: 'Priority',
-        description: <Badge status="attention">High</Badge>,
-      },
-      {
-        term: 'Verification',
-        description: <Badge status="info">Pending</Badge>,
-      },
-      {
-        term: 'Risk Level',
-        description: <Badge status="critical">Low</Badge>,
-      },
-    ],
-  },
+  render: () => (
+    <Card>
+      <DescriptionList
+        items={[
+          {
+            term: 'Status',
+            description: <Badge status="success">Active</Badge>,
+          },
+          {
+            term: 'Priority',
+            description: <Badge status="attention">High</Badge>,
+          },
+          {
+            term: 'Verification',
+            description: <Badge status="info">Pending</Badge>,
+          },
+          {
+            term: 'Risk Level',
+            description: <Badge status="critical">Low</Badge>,
+          },
+        ]}
+      />
+    </Card>
+  ),
   parameters: {
     codeVariants: getCodeVariants('descriptionlist', 'default'),
   },
-
 };
 
 export const WithIcons: Story = {
-  args: {
-    items: [
-      {
-        term: (
-          <InlineStack gap="200">
-            <Icon source={EmailIcon} />
-            Email
-          </InlineStack>
-        ),
-        description: 'contact@company.com',
-      },
-      {
-        term: (
-          <InlineStack gap="200">
-            <Icon source={PhoneIcon} />
-            Phone
-          </InlineStack>
-        ),
-        description: '+1 (555) 987-6543',
-      },
-      {
-        term: (
-          <InlineStack gap="200">
-            <Icon source={LocationIcon} />
-            Address
-          </InlineStack>
-        ),
-        description: '123 Business St, Suite 100',
-      },
-      {
-        term: (
-          <InlineStack gap="200">
-            <Icon source={ClockIcon} />
-            Business Hours
-          </InlineStack>
-        ),
-        description: 'Mon-Fri: 9AM-6PM EST',
-      },
-    ],
-  },
+  render: () => (
+    <Card>
+      <DescriptionList
+        items={[
+          {
+            term: (
+              <InlineStack gap="200">
+                <Icon source={EmailIcon} />
+                Email
+              </InlineStack>
+            ),
+            description: 'contact@company.com',
+          },
+          {
+            term: (
+              <InlineStack gap="200">
+                <Icon source={PhoneIcon} />
+                Phone
+              </InlineStack>
+            ),
+            description: '+1 (555) 987-6543',
+          },
+          {
+            term: (
+              <InlineStack gap="200">
+                <Icon source={LocationIcon} />
+                Address
+              </InlineStack>
+            ),
+            description: '123 Business St, Suite 100',
+          },
+          {
+            term: (
+              <InlineStack gap="200">
+                <Icon source={ClockIcon} />
+                Business Hours
+              </InlineStack>
+            ),
+            description: 'Mon-Fri: 9AM-6PM EST',
+          },
+        ]}
+      />
+    </Card>
+  ),
   parameters: {
     codeVariants: getCodeVariants('descriptionlist', 'default'),
   },
-
 };
 
 export const TwoColumns: Story = {

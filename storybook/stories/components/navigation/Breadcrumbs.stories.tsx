@@ -21,11 +21,6 @@ const meta = {
       control: 'object',
       description: 'Array of breadcrumb objects with content and url',
     },
-    backAction: {
-      control: false,
-      table: { disable: true },
-      description: 'Internal Polaris prop - disabled',
-    },
   },
 } satisfies Meta<typeof Breadcrumbs>;
 
