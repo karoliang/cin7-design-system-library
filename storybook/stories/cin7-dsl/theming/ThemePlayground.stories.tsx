@@ -26,7 +26,7 @@ import {
   EditIcon,
   SunIcon,
   MoonIcon,
-  CircleTickIcon,
+  CheckCircleIcon,
   RefreshIcon,
   CheckIcon,
   ViewIcon,
