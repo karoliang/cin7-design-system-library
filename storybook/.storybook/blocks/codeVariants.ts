@@ -77393,45 +77393,1498 @@ const customerGrid = ExtDataGrid.create({
   },
 };
 
+import type { CodeVariant } from '../types';
+
 export const analyticsDashboardExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { Page, Grid, Card } from '@shopify/polaris';
-import { LineChart, PieChart } from '@cin7/highcharts-adapter/react';
+    react: `import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Page, Layout, Card, Select, Button, Badge, Text,
+  BlockStack, InlineStack, DataTable, Icon
+} from '@shopify/polaris';
+import { ExportIcon } from '@shopify/polaris-icons';
+import { LineChart, PieChart, BarChart } from '@cin7/highcharts-adapter/react';
+import { EventBus } from '@cin7/core';
 
-function AnalyticsDashboard() {
+interface RevenueData {
+  period: string;
+  revenue: number;
+  orders: number;
+  growthRate?: number;
+}
+
+interface CategoryData {
+  name: string;
+  value: number;
+  revenue: number;
+  color?: string;
+}
+
+interface TopProduct {
+  product: string;
+  sales: number;
+  revenue: number;
+  margin: number;
+  trend: 'up' | 'down' | 'stable';
+}
+
+export function AnalyticsDashboard() {
+  const [dateRange, setDateRange] = useState('7days');
+  const [isLoading, setIsLoading] = useState(false);
+  const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
+  const [categoryData, setCategoryData] = useState<CategoryData[]>([]);
+  const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
+  const [metrics, setMetrics] = useState({
+    totalRevenue: 0,
+    totalOrders: 0,
+    avgOrderValue: 0,
+    growthRate: 0,
+  });
+
+  // Load analytics data based on date range
+  const loadAnalytics = useCallback(async (range: string) => {
+    setIsLoading(true);
+    try {
+      // Simulate API call - in production, this would call AnalyticsService
+      const response = await fetch(\`/api/analytics?range=\${range}\`);
+      const data = await response.json();
+
+      setRevenueData(data.revenue);
+      setCategoryData(data.categories);
+      setTopProducts(data.topProducts);
+
+      // Calculate metrics
+      const totalRev = data.revenue.reduce((sum: number, r: RevenueData) => sum + r.revenue, 0);
+      const totalOrd = data.revenue.reduce((sum: number, r: RevenueData) => sum + r.orders, 0);
+      const avgOrder = totalOrd > 0 ? totalRev / totalOrd : 0;
+      const growth = data.revenue.length > 1
+        ? ((data.revenue[data.revenue.length - 1].revenue - data.revenue[0].revenue) / data.revenue[0].revenue) * 100
+        : 0;
+
+      setMetrics({
+        totalRevenue: totalRev,
+        totalOrders: totalOrd,
+        avgOrderValue: avgOrder,
+        growthRate: growth,
+      });
+
+      // Emit event for cross-layer communication
+      EventBus.emit('analytics:loaded', { range, data });
+    } catch (error) {
+      console.error('Failed to load analytics:', error);
+      EventBus.emit('analytics:error', { error });
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadAnalytics(dateRange);
+  }, [dateRange, loadAnalytics]);
+
+  // Export analytics data
+  const handleExport = useCallback(() => {
+    const csvData = [
+      ['Period', 'Revenue', 'Orders', 'Avg Order Value'],
+      ...revenueData.map(d => [
+        d.period,
+        d.revenue.toFixed(2),
+        d.orders.toString(),
+        (d.revenue / d.orders).toFixed(2),
+      ]),
+    ];
+
+    const csv = csvData.map(row => row.join(',')).join('\\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = \`analytics-\${dateRange}.csv\`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    EventBus.emit('analytics:exported', { range: dateRange, rows: csvData.length });
+  }, [revenueData, dateRange]);
+
+  // Prepare table data for top products
+  const productRows = topProducts.map(p => [
+    p.product,
+    p.sales.toString(),
+    \`$\${p.revenue.toFixed(2)}\`,
+    \`\${p.margin.toFixed(1)}%\`,
+    <Badge tone={p.trend === 'up' ? 'success' : p.trend === 'down' ? 'critical' : 'info'}>
+      {p.trend === 'up' ? '↑' : p.trend === 'down' ? '↓' : '→'} {p.trend}
+    </Badge>,
+  ]);
+
   return (
-    <Page title="Analytics Dashboard">
-      <Grid>
-        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+    <Page
+      title="Analytics Dashboard"
+      subtitle="Business intelligence and insights"
+      primaryAction={{
+        content: 'Export All Data',
+        icon: ExportIcon,
+        onAction: handleExport,
+        loading: isLoading,
+      }}
+      secondaryActions={[
+        { content: 'Schedule Report', onAction: () => EventBus.emit('analytics:schedule-report') },
+        { content: 'Share Dashboard', onAction: () => EventBus.emit('analytics:share') },
+      ]}
+    >
+      <Layout>
+        {/* Performance Metrics */}
+        <Layout.Section>
           <Card>
-            <LineChart title="Revenue Trend" />
+            <InlineStack align="space-between" blockAlign="center">
+              <Text variant="headingLg" as="h3">Performance Overview</Text>
+              <Select
+                label=""
+                labelHidden
+                options={[
+                  { label: 'Last 7 days', value: '7days' },
+                  { label: 'Last 30 days', value: '30days' },
+                  { label: 'Last 90 days', value: '90days' },
+                  { label: 'This year', value: 'year' },
+                ]}
+                value={dateRange}
+                onChange={setDateRange}
+              />
+            </InlineStack>
           </Card>
-        </Grid.Cell>
-        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+        </Layout.Section>
+
+        {/* Revenue & Orders Trend */}
+        <Layout.Section>
           <Card>
-            <PieChart title="Sales by Category" />
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg" as="h3">Revenue & Orders Trend</Text>
+                <Badge tone={metrics.growthRate >= 0 ? 'success' : 'critical'}>
+                  {metrics.growthRate >= 0 ? '+' : ''}{metrics.growthRate.toFixed(1)}% Growth
+                </Badge>
+              </InlineStack>
+              <LineChart
+                title="Weekly Performance"
+                subtitle="Revenue and order volume"
+                smooth={true}
+                markers={true}
+                series={[
+                  {
+                    name: 'Revenue ($)',
+                    data: revenueData.map(d => d.revenue),
+                    color: '#008060',
+                  },
+                  {
+                    name: 'Orders (x100)',
+                    data: revenueData.map(d => d.orders * 100),
+                    color: '#5C6AC4',
+                  },
+                ]}
+                xAxis={{
+                  categories: revenueData.map(d => d.period),
+                }}
+                yAxis={{
+                  title: { text: 'Amount' },
+                }}
+                height={350}
+              />
+            </BlockStack>
           </Card>
-        </Grid.Cell>
-      </Grid>
+        </Layout.Section>
+
+        {/* Category Distribution */}
+        <Layout.Section variant="oneHalf">
+          <Card>
+            <BlockStack gap="400">
+              <Text variant="headingLg" as="h3">Sales by Category</Text>
+              <PieChart
+                title="Category Distribution"
+                subtitle="Percentage breakdown"
+                series={[{
+                  name: 'Sales',
+                  data: categoryData.map(cat => ({
+                    name: cat.name,
+                    y: cat.value,
+                  })),
+                }]}
+                height={350}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+
+        {/* Revenue by Category */}
+        <Layout.Section variant="oneHalf">
+          <Card>
+            <BlockStack gap="400">
+              <Text variant="headingLg" as="h3">Revenue by Category</Text>
+              <BarChart
+                title="Category Performance"
+                subtitle="Revenue comparison"
+                orientation="vertical"
+                dataLabels={true}
+                series={[{
+                  name: 'Revenue',
+                  data: categoryData.map(cat => cat.revenue),
+                  color: '#5C6AC4',
+                }]}
+                xAxis={{
+                  categories: categoryData.map(cat => cat.name),
+                }}
+                yAxis={{
+                  title: { text: 'Revenue ($)' },
+                }}
+                height={350}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+
+        {/* Top Products Table */}
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg" as="h3">Top Performing Products</Text>
+                <Button icon={ExportIcon} onClick={handleExport}>Export to Excel</Button>
+              </InlineStack>
+              <DataTable
+                columnContentTypes={['text', 'numeric', 'numeric', 'numeric', 'text']}
+                headings={['Product', 'Units Sold', 'Revenue', 'Margin', 'Trend']}
+                rows={productRows}
+                footerContent={
+                  \`Showing top \${topProducts.length} products by revenue\`
+                }
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
     </Page>
   );
-}`,
-    typescript: `import { Repository } from '@cin7/typescript-sdk';
+}
 
-class AnalyticsService {
-  async getRevenueMetrics(): Promise<RevenueMetrics> {
-    // Calculate revenue metrics
+export default AnalyticsDashboard;`,
+    typescript: `import { Repository, Entity, ValueObject } from '@cin7/typescript-sdk';
+import { EventBus } from '@cin7/core';
+
+// Value Objects
+class Money extends ValueObject<{ amount: number; currency: string }> {
+  get amount(): number {
+    return this.props.amount;
   }
-}`,
-    vanilla: `import { $ } from '@cin7/vanilla-js';
 
-function updateDashboard(data) {
-  $('#revenue').textContent = data.revenue;
+  get currency(): string {
+    return this.props.currency;
+  }
+
+  get formatted(): string {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: this.currency,
+    }).format(this.amount);
+  }
+
+  add(other: Money): Money {
+    if (other.currency !== this.currency) {
+      throw new Error('Cannot add money with different currencies');
+    }
+    return new Money({ amount: this.amount + other.amount, currency: this.currency });
+  }
+
+  subtract(other: Money): Money {
+    if (other.currency !== this.currency) {
+      throw new Error('Cannot subtract money with different currencies');
+    }
+    return new Money({ amount: this.amount - other.amount, currency: this.currency });
+  }
+
+  multiply(factor: number): Money {
+    return new Money({ amount: this.amount * factor, currency: this.currency });
+  }
+
+  percentage(percent: number): Money {
+    return this.multiply(percent / 100);
+  }
+}
+
+class DateRange extends ValueObject<{ start: Date; end: Date }> {
+  get start(): Date {
+    return this.props.start;
+  }
+
+  get end(): Date {
+    return this.props.end;
+  }
+
+  get days(): number {
+    const diff = this.end.getTime() - this.start.getTime();
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  }
+
+  contains(date: Date): boolean {
+    return date >= this.start && date <= this.end;
+  }
+
+  static fromPreset(preset: '7days' | '30days' | '90days' | 'year'): DateRange {
+    const end = new Date();
+    const start = new Date();
+
+    switch (preset) {
+      case '7days':
+        start.setDate(end.getDate() - 7);
+        break;
+      case '30days':
+        start.setDate(end.getDate() - 30);
+        break;
+      case '90days':
+        start.setDate(end.getDate() - 90);
+        break;
+      case 'year':
+        start.setFullYear(end.getFullYear() - 1);
+        break;
+    }
+
+    return new DateRange({ start, end });
+  }
+}
+
+// Entities
+class RevenueMetric extends Entity {
+  constructor(
+    id: string,
+    public readonly period: string,
+    public readonly revenue: Money,
+    public readonly orders: number,
+    public readonly date: Date
+  ) {
+    super(id);
+  }
+
+  get averageOrderValue(): Money {
+    if (this.orders === 0) {
+      return new Money({ amount: 0, currency: this.revenue.currency });
+    }
+    return new Money({
+      amount: this.revenue.amount / this.orders,
+      currency: this.revenue.currency,
+    });
+  }
+
+  calculateGrowthRate(previous: RevenueMetric): number {
+    if (previous.revenue.amount === 0) return 0;
+    return ((this.revenue.amount - previous.revenue.amount) / previous.revenue.amount) * 100;
+  }
+}
+
+class CategoryPerformance extends Entity {
+  constructor(
+    id: string,
+    public readonly name: string,
+    public readonly salesVolume: number,
+    public readonly revenue: Money,
+    public readonly margin: number,
+    public readonly dateRange: DateRange
+  ) {
+    super(id);
+  }
+
+  get percentageOfTotal(): number {
+    return this.salesVolume; // This would be calculated against total in service
+  }
+
+  get averageItemRevenue(): Money {
+    if (this.salesVolume === 0) {
+      return new Money({ amount: 0, currency: this.revenue.currency });
+    }
+    return new Money({
+      amount: this.revenue.amount / this.salesVolume,
+      currency: this.revenue.currency,
+    });
+  }
+
+  get profitMargin(): Money {
+    return this.revenue.percentage(this.margin);
+  }
+}
+
+class ProductPerformance extends Entity {
+  constructor(
+    id: string,
+    public readonly productName: string,
+    public readonly sku: string,
+    public readonly unitsSold: number,
+    public readonly revenue: Money,
+    public readonly cost: Money,
+    public readonly previousPeriodSales: number
+  ) {
+    super(id);
+  }
+
+  get margin(): number {
+    const profit = this.revenue.subtract(this.cost);
+    return (profit.amount / this.revenue.amount) * 100;
+  }
+
+  get trend(): 'up' | 'down' | 'stable' {
+    const change = ((this.unitsSold - this.previousPeriodSales) / this.previousPeriodSales) * 100;
+    if (change > 5) return 'up';
+    if (change < -5) return 'down';
+    return 'stable';
+  }
+
+  get trendPercentage(): number {
+    if (this.previousPeriodSales === 0) return 0;
+    return ((this.unitsSold - this.previousPeriodSales) / this.previousPeriodSales) * 100;
+  }
+}
+
+// Repository
+class AnalyticsRepository extends Repository<RevenueMetric> {
+  async getRevenueByDateRange(range: DateRange): Promise<RevenueMetric[]> {
+    const metrics = await this.query({
+      filter: (metric) => range.contains(metric.date),
+      orderBy: 'date',
+      order: 'asc',
+    });
+
+    EventBus.emit('analytics:revenue-loaded', { count: metrics.length, range });
+    return metrics;
+  }
+
+  async getCategoryPerformance(range: DateRange): Promise<CategoryPerformance[]> {
+    const categories = await this.executeQuery<CategoryPerformance>(\`
+      SELECT category_id, name, SUM(sales) as volume, SUM(revenue) as revenue, AVG(margin) as margin
+      FROM sales
+      WHERE date BETWEEN ? AND ?
+      GROUP BY category_id, name
+      ORDER BY revenue DESC
+    \`, [range.start, range.end]);
+
+    return categories.map(c => new CategoryPerformance(
+      c.category_id,
+      c.name,
+      c.volume,
+      new Money({ amount: c.revenue, currency: 'USD' }),
+      c.margin,
+      range
+    ));
+  }
+
+  async getTopProducts(range: DateRange, limit: number = 10): Promise<ProductPerformance[]> {
+    const products = await this.executeQuery<any>(\`
+      SELECT
+        p.id,
+        p.name,
+        p.sku,
+        SUM(s.quantity) as units_sold,
+        SUM(s.revenue) as revenue,
+        SUM(s.cost) as cost,
+        prev.units as previous_sales
+      FROM products p
+      INNER JOIN sales s ON p.id = s.product_id
+      LEFT JOIN previous_period_sales prev ON p.id = prev.product_id
+      WHERE s.date BETWEEN ? AND ?
+      GROUP BY p.id, p.name, p.sku, prev.units
+      ORDER BY revenue DESC
+      LIMIT ?
+    \`, [range.start, range.end, limit]);
+
+    return products.map(p => new ProductPerformance(
+      p.id,
+      p.name,
+      p.sku,
+      p.units_sold,
+      new Money({ amount: p.revenue, currency: 'USD' }),
+      new Money({ amount: p.cost, currency: 'USD' }),
+      p.previous_sales || 0
+    ));
+  }
+}
+
+// Service Layer
+class AnalyticsService {
+  constructor(private repository: AnalyticsRepository) {}
+
+  async getRevenueMetrics(preset: '7days' | '30days' | '90days' | 'year'): Promise<{
+    metrics: RevenueMetric[];
+    totalRevenue: Money;
+    totalOrders: number;
+    avgOrderValue: Money;
+    growthRate: number;
+  }> {
+    const range = DateRange.fromPreset(preset);
+    const metrics = await this.repository.getRevenueByDateRange(range);
+
+    if (metrics.length === 0) {
+      return {
+        metrics: [],
+        totalRevenue: new Money({ amount: 0, currency: 'USD' }),
+        totalOrders: 0,
+        avgOrderValue: new Money({ amount: 0, currency: 'USD' }),
+        growthRate: 0,
+      };
+    }
+
+    // Calculate aggregates
+    const totalRevenue = metrics.reduce(
+      (sum, m) => sum.add(m.revenue),
+      new Money({ amount: 0, currency: 'USD' })
+    );
+
+    const totalOrders = metrics.reduce((sum, m) => sum + m.orders, 0);
+
+    const avgOrderValue = new Money({
+      amount: totalOrders > 0 ? totalRevenue.amount / totalOrders : 0,
+      currency: 'USD',
+    });
+
+    // Calculate growth rate (first period vs last period)
+    const growthRate = metrics.length > 1
+      ? metrics[metrics.length - 1].calculateGrowthRate(metrics[0])
+      : 0;
+
+    EventBus.emit('analytics:metrics-calculated', {
+      range: preset,
+      totalRevenue: totalRevenue.amount,
+      totalOrders,
+      growthRate,
+    });
+
+    return {
+      metrics,
+      totalRevenue,
+      totalOrders,
+      avgOrderValue,
+      growthRate,
+    };
+  }
+
+  async getSalesByCategory(preset: '7days' | '30days' | '90days' | 'year'): Promise<{
+    categories: CategoryPerformance[];
+    totalRevenue: Money;
+  }> {
+    const range = DateRange.fromPreset(preset);
+    const categories = await this.repository.getCategoryPerformance(range);
+
+    const totalRevenue = categories.reduce(
+      (sum, c) => sum.add(c.revenue),
+      new Money({ amount: 0, currency: 'USD' })
+    );
+
+    EventBus.emit('analytics:categories-loaded', {
+      count: categories.length,
+      totalRevenue: totalRevenue.amount,
+    });
+
+    return { categories, totalRevenue };
+  }
+
+  async getTopProducts(
+    preset: '7days' | '30days' | '90days' | 'year',
+    limit: number = 10
+  ): Promise<ProductPerformance[]> {
+    const range = DateRange.fromPreset(preset);
+    const products = await this.repository.getTopProducts(range, limit);
+
+    EventBus.emit('analytics:top-products-loaded', {
+      count: products.length,
+      topRevenue: products[0]?.revenue.amount || 0,
+    });
+
+    return products;
+  }
+
+  async exportData(preset: '7days' | '30days' | '90days' | 'year'): Promise<{
+    revenue: RevenueMetric[];
+    categories: CategoryPerformance[];
+    products: ProductPerformance[];
+  }> {
+    const range = DateRange.fromPreset(preset);
+
+    const [revenue, categoryData, products] = await Promise.all([
+      this.repository.getRevenueByDateRange(range),
+      this.repository.getCategoryPerformance(range),
+      this.repository.getTopProducts(range, 50),
+    ]);
+
+    EventBus.emit('analytics:exported', {
+      range: preset,
+      revenueRows: revenue.length,
+      categories: categoryData.length,
+      products: products.length,
+    });
+
+    return {
+      revenue,
+      categories: categoryData,
+      products,
+    };
+  }
+}
+
+// Usage Example
+export async function initializeAnalyticsDashboard() {
+  const repository = new AnalyticsRepository();
+  const service = new AnalyticsService(repository);
+
+  // Subscribe to events
+  EventBus.on('analytics:date-range-changed', async (data: { range: string }) => {
+    const metrics = await service.getRevenueMetrics(data.range as any);
+    EventBus.emit('analytics:data-updated', metrics);
+  });
+
+  EventBus.on('analytics:export-requested', async (data: { range: string }) => {
+    const exportData = await service.exportData(data.range as any);
+    EventBus.emit('analytics:export-ready', exportData);
+  });
+
+  // Load initial data
+  const initialMetrics = await service.getRevenueMetrics('7days');
+  return { service, initialMetrics };
 }`,
-    extjs: `// ExtJS charts for analytics
-const revenueChart = Ext.create('Ext.chart.Chart', {
-  // Chart configuration
-});`,
+    vanilla: `import { $, $$, on, addClass, removeClass, fadeIn, fadeOut } from '@cin7/vanilla-js';
+import { EventBus } from '@cin7/core';
+
+// Analytics Dashboard Initialization
+export function initAnalyticsDashboard() {
+  const dateRangeSelector = $('#date-range-selector') as HTMLSelectElement;
+  const exportButton = $('#export-analytics-btn');
+  const refreshButton = $('#refresh-analytics-btn');
+  const revenueChartContainer = $('#revenue-chart');
+  const categoryChartContainer = $('#category-chart');
+  const productsTableBody = $('#top-products-table tbody');
+
+  let currentDateRange = '7days';
+  let analyticsData: any = null;
+
+  // Date Range Change Handler
+  on(dateRangeSelector, 'change', async (e) => {
+    const range = (e.target as HTMLSelectElement).value;
+    currentDateRange = range;
+
+    // Show loading state
+    showLoadingState();
+
+    try {
+      // Emit event for TypeScript layer
+      EventBus.emit('analytics:date-range-changed', { range });
+
+      // Fetch new data
+      const response = await fetch(\`/api/analytics?range=\${range}\`);
+      analyticsData = await response.json();
+
+      // Update all components
+      await updateDashboard(analyticsData);
+
+      // Emit success event
+      EventBus.emit('analytics:loaded', { range, data: analyticsData });
+    } catch (error) {
+      console.error('Failed to load analytics:', error);
+      showErrorMessage('Failed to load analytics data');
+      EventBus.emit('analytics:error', { error });
+    } finally {
+      hideLoadingState();
+    }
+  });
+
+  // Export Button Handler
+  on(exportButton, 'click', async () => {
+    if (!analyticsData) {
+      showErrorMessage('No data to export');
+      return;
+    }
+
+    addClass(exportButton, 'loading');
+
+    try {
+      // Generate CSV
+      const csv = generateCSV(analyticsData);
+
+      // Download file
+      downloadFile(csv, \`analytics-\${currentDateRange}.csv\`, 'text/csv');
+
+      // Emit export event
+      EventBus.emit('analytics:exported', { range: currentDateRange });
+
+      // Show success message
+      showSuccessMessage('Analytics exported successfully');
+    } catch (error) {
+      console.error('Export failed:', error);
+      showErrorMessage('Failed to export data');
+    } finally {
+      removeClass(exportButton, 'loading');
+    }
+  });
+
+  // Refresh Button Handler
+  on(refreshButton, 'click', async () => {
+    addClass(refreshButton, 'rotating');
+
+    try {
+      const response = await fetch(\`/api/analytics?range=\${currentDateRange}&fresh=true\`);
+      analyticsData = await response.json();
+      await updateDashboard(analyticsData);
+
+      showSuccessMessage('Dashboard refreshed');
+    } catch (error) {
+      showErrorMessage('Failed to refresh dashboard');
+    } finally {
+      removeClass(refreshButton, 'rotating');
+    }
+  });
+
+  // Update Dashboard Components
+  async function updateDashboard(data: any) {
+    // Update metrics with animation
+    await updateMetrics(data.metrics);
+
+    // Update revenue chart
+    updateRevenueChart(data.revenue);
+
+    // Update category chart
+    updateCategoryChart(data.categories);
+
+    // Update products table
+    updateProductsTable(data.topProducts);
+
+    // Update growth indicators
+    updateGrowthIndicators(data.metrics);
+  }
+
+  // Update Metrics Cards with Animation
+  async function updateMetrics(metrics: any) {
+    const totalRevenueEl = $('#total-revenue');
+    const totalOrdersEl = $('#total-orders');
+    const avgOrderValueEl = $('#avg-order-value');
+    const growthRateEl = $('#growth-rate');
+
+    if (totalRevenueEl) {
+      await animateNumber(totalRevenueEl, metrics.totalRevenue, '$', 1000);
+    }
+
+    if (totalOrdersEl) {
+      await animateNumber(totalOrdersEl, metrics.totalOrders, '', 1000);
+    }
+
+    if (avgOrderValueEl) {
+      await animateNumber(avgOrderValueEl, metrics.avgOrderValue, '$', 1000);
+    }
+
+    if (growthRateEl) {
+      const growth = metrics.growthRate;
+      growthRateEl.textContent = \`\${growth >= 0 ? '+' : ''}\${growth.toFixed(1)}%\`;
+
+      // Update badge color based on growth
+      removeClass(growthRateEl, 'positive', 'negative', 'neutral');
+      addClass(growthRateEl, growth > 0 ? 'positive' : growth < 0 ? 'negative' : 'neutral');
+    }
+  }
+
+  // Animate Number Changes
+  function animateNumber(
+    element: HTMLElement,
+    targetValue: number,
+    prefix: string = '',
+    duration: number = 1000
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      const currentValue = parseFloat(element.textContent?.replace(/[^0-9.-]/g, '') || '0');
+      const increment = (targetValue - currentValue) / (duration / 16);
+      const steps = Math.floor(duration / 16);
+      let currentStep = 0;
+      let value = currentValue;
+
+      const timer = setInterval(() => {
+        value += increment;
+        currentStep++;
+
+        const formatted = prefix + value.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        element.textContent = formatted;
+
+        if (currentStep >= steps) {
+          const finalFormatted = prefix + targetValue.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+          element.textContent = finalFormatted;
+          clearInterval(timer);
+          resolve();
+        }
+      }, 16);
+    });
+  }
+
+  // Update Revenue Chart
+  function updateRevenueChart(revenueData: any[]) {
+    if (!revenueChartContainer) return;
+
+    // Emit event for chart library to update
+    EventBus.emit('chart:update', {
+      container: revenueChartContainer,
+      type: 'line',
+      data: {
+        categories: revenueData.map(d => d.period),
+        series: [
+          {
+            name: 'Revenue ($)',
+            data: revenueData.map(d => d.revenue),
+          },
+          {
+            name: 'Orders (x100)',
+            data: revenueData.map(d => d.orders * 100),
+          },
+        ],
+      },
+    });
+
+    // Fade in chart
+    fadeIn(revenueChartContainer, 500);
+  }
+
+  // Update Category Chart
+  function updateCategoryChart(categoryData: any[]) {
+    if (!categoryChartContainer) return;
+
+    EventBus.emit('chart:update', {
+      container: categoryChartContainer,
+      type: 'pie',
+      data: {
+        series: [{
+          name: 'Sales',
+          data: categoryData.map(c => ({
+            name: c.name,
+            y: c.value,
+          })),
+        }],
+      },
+    });
+
+    fadeIn(categoryChartContainer, 500);
+  }
+
+  // Update Products Table
+  function updateProductsTable(products: any[]) {
+    if (!productsTableBody) return;
+
+    // Clear existing rows with fade out
+    fadeOut(productsTableBody, 200);
+
+    setTimeout(() => {
+      productsTableBody.innerHTML = '';
+
+      products.forEach((product, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = \`
+          <td>\${product.product}</td>
+          <td class="numeric">\${product.sales.toLocaleString()}</td>
+          <td class="numeric">$\${product.revenue.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+          <td class="numeric">\${product.margin.toFixed(1)}%</td>
+          <td>
+            <span class="trend-badge trend-\${product.trend}">
+              \${product.trend === 'up' ? '↑' : product.trend === 'down' ? '↓' : '→'}
+              \${product.trend}
+            </span>
+          </td>
+        \`;
+
+        // Add hover effects
+        on(row, 'mouseenter', () => {
+          addClass(row, 'highlighted');
+        });
+
+        on(row, 'mouseleave', () => {
+          removeClass(row, 'highlighted');
+        });
+
+        productsTableBody.appendChild(row);
+
+        // Stagger animation for rows
+        setTimeout(() => {
+          addClass(row, 'fade-in');
+        }, index * 50);
+      });
+
+      fadeIn(productsTableBody, 300);
+    }, 200);
+  }
+
+  // Update Growth Indicators
+  function updateGrowthIndicators(metrics: any) {
+    const indicators = $$('.growth-indicator');
+
+    indicators.forEach(indicator => {
+      const type = indicator.dataset.type;
+      const value = metrics[type];
+
+      if (value !== undefined) {
+        const arrow = indicator.querySelector('.arrow');
+        const valueEl = indicator.querySelector('.value');
+
+        if (valueEl) {
+          valueEl.textContent = value.toFixed(1) + '%';
+        }
+
+        if (arrow) {
+          removeClass(arrow, 'up', 'down', 'neutral');
+          addClass(arrow, value > 0 ? 'up' : value < 0 ? 'down' : 'neutral');
+          arrow.textContent = value > 0 ? '↑' : value < 0 ? '↓' : '→';
+        }
+      }
+    });
+  }
+
+  // Helper Functions
+  function showLoadingState() {
+    const dashboard = $('#analytics-dashboard');
+    if (dashboard) {
+      addClass(dashboard, 'loading');
+    }
+  }
+
+  function hideLoadingState() {
+    const dashboard = $('#analytics-dashboard');
+    if (dashboard) {
+      removeClass(dashboard, 'loading');
+    }
+  }
+
+  function showSuccessMessage(message: string) {
+    showToast(message, 'success');
+  }
+
+  function showErrorMessage(message: string) {
+    showToast(message, 'error');
+  }
+
+  function showToast(message: string, type: 'success' | 'error') {
+    const toast = document.createElement('div');
+    toast.className = \`toast toast-\${type}\`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    fadeIn(toast, 300);
+
+    setTimeout(() => {
+      fadeOut(toast, 300);
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 300);
+    }, 3000);
+  }
+
+  function generateCSV(data: any): string {
+    const rows: string[][] = [
+      ['Period', 'Revenue', 'Orders', 'Avg Order Value'],
+      ...data.revenue.map((d: any) => [
+        d.period,
+        d.revenue.toFixed(2),
+        d.orders.toString(),
+        (d.revenue / d.orders).toFixed(2),
+      ]),
+    ];
+
+    return rows.map(row => row.join(',')).join('\\n');
+  }
+
+  function downloadFile(content: string, filename: string, mimeType: string) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Listen for external events
+  EventBus.on('analytics:data-updated', (data) => {
+    analyticsData = data;
+    updateDashboard(data);
+  });
+
+  // Load initial data
+  async function initialize() {
+    showLoadingState();
+    try {
+      const response = await fetch(\`/api/analytics?range=\${currentDateRange}\`);
+      analyticsData = await response.json();
+      await updateDashboard(analyticsData);
+    } catch (error) {
+      showErrorMessage('Failed to load initial data');
+    } finally {
+      hideLoadingState();
+    }
+  }
+
+  // Initialize
+  initialize();
+
+  return {
+    refresh: () => refreshButton.click(),
+    export: () => exportButton.click(),
+    setDateRange: (range: string) => {
+      dateRangeSelector.value = range;
+      dateRangeSelector.dispatchEvent(new Event('change'));
+    },
+  };
+}`,
+    extjs: `import { EventBus } from '@cin7/core';
+
+// ExtJS Analytics Dashboard Configuration
+Ext.define('Analytics.Dashboard', {
+  extend: 'Ext.panel.Panel',
+  xtype: 'analytics-dashboard',
+
+  title: 'Analytics Dashboard',
+  layout: 'border',
+
+  requires: [
+    'Ext.chart.CartesianChart',
+    'Ext.chart.series.Line',
+    'Ext.chart.series.Bar',
+    'Ext.chart.series.Pie',
+    'Ext.grid.Panel',
+    'Ext.toolbar.Toolbar',
+  ],
+
+  initComponent: function() {
+    const me = this;
+
+    me.items = [
+      me.buildToolbar(),
+      me.buildChartsPanel(),
+      me.buildProductsGrid(),
+    ];
+
+    me.callParent(arguments);
+    me.loadAnalytics('7days');
+  },
+
+  buildToolbar: function() {
+    return {
+      xtype: 'toolbar',
+      region: 'north',
+      items: [
+        {
+          xtype: 'component',
+          html: '<h2>Performance Overview</h2>',
+          flex: 1,
+        },
+        {
+          xtype: 'combo',
+          fieldLabel: 'Date Range',
+          store: [
+            ['7days', 'Last 7 days'],
+            ['30days', 'Last 30 days'],
+            ['90days', 'Last 90 days'],
+            ['year', 'This year'],
+          ],
+          value: '7days',
+          editable: false,
+          listeners: {
+            change: function(combo, newValue) {
+              this.up('analytics-dashboard').loadAnalytics(newValue);
+            },
+          },
+        },
+        {
+          text: 'Export All Data',
+          iconCls: 'x-fa fa-download',
+          handler: function() {
+            this.up('analytics-dashboard').exportData();
+          },
+        },
+        {
+          text: 'Schedule Report',
+          iconCls: 'x-fa fa-calendar',
+          handler: function() {
+            EventBus.emit('analytics:schedule-report');
+          },
+        },
+      ],
+    };
+  },
+
+  buildChartsPanel: function() {
+    return {
+      xtype: 'panel',
+      region: 'center',
+      layout: {
+        type: 'vbox',
+        align: 'stretch',
+      },
+      items: [
+        // Revenue & Orders Trend Chart
+        {
+          xtype: 'cartesian',
+          reference: 'revenueChart',
+          flex: 1,
+          store: {
+            fields: ['period', 'revenue', 'orders'],
+            data: [],
+          },
+          legend: {
+            docked: 'right',
+          },
+          axes: [
+            {
+              type: 'numeric',
+              position: 'left',
+              title: {
+                text: 'Revenue ($)',
+              },
+              grid: true,
+            },
+            {
+              type: 'category',
+              position: 'bottom',
+              fields: ['period'],
+              title: {
+                text: 'Period',
+              },
+            },
+          ],
+          series: [
+            {
+              type: 'line',
+              xField: 'period',
+              yField: 'revenue',
+              title: 'Revenue ($)',
+              smooth: true,
+              marker: {
+                type: 'circle',
+                radius: 4,
+              },
+              highlight: {
+                size: 6,
+              },
+              tooltip: {
+                trackMouse: true,
+                renderer: function(tooltip, record) {
+                  tooltip.setHtml(\`Revenue: $\${record.get('revenue').toLocaleString()}\`);
+                },
+              },
+            },
+            {
+              type: 'line',
+              xField: 'period',
+              yField: 'orders',
+              title: 'Orders',
+              smooth: true,
+              marker: {
+                type: 'square',
+                radius: 4,
+              },
+              tooltip: {
+                trackMouse: true,
+                renderer: function(tooltip, record) {
+                  tooltip.setHtml(\`Orders: \${record.get('orders')}\`);
+                },
+              },
+            },
+          ],
+        },
+
+        // Category Distribution Panel
+        {
+          xtype: 'panel',
+          flex: 1,
+          layout: {
+            type: 'hbox',
+            align: 'stretch',
+          },
+          items: [
+            // Pie Chart - Sales by Category
+            {
+              xtype: 'polar',
+              reference: 'categoryPieChart',
+              flex: 1,
+              store: {
+                fields: ['name', 'value'],
+                data: [],
+              },
+              series: [{
+                type: 'pie',
+                angleField: 'value',
+                label: {
+                  field: 'name',
+                  display: 'rotate',
+                },
+                highlight: true,
+                tooltip: {
+                  trackMouse: true,
+                  renderer: function(tooltip, record) {
+                    const total = record.store.sum('value');
+                    const percent = (record.get('value') / total * 100).toFixed(1);
+                    tooltip.setHtml(\`\${record.get('name')}: \${percent}%\`);
+                  },
+                },
+              }],
+            },
+
+            // Bar Chart - Revenue by Category
+            {
+              xtype: 'cartesian',
+              reference: 'categoryBarChart',
+              flex: 1,
+              store: {
+                fields: ['name', 'revenue'],
+                data: [],
+              },
+              axes: [
+                {
+                  type: 'numeric',
+                  position: 'bottom',
+                  title: {
+                    text: 'Revenue ($)',
+                  },
+                  grid: true,
+                },
+                {
+                  type: 'category',
+                  position: 'left',
+                  fields: ['name'],
+                },
+              ],
+              series: [{
+                type: 'bar',
+                xField: 'revenue',
+                yField: 'name',
+                label: {
+                  display: 'insideEnd',
+                  field: 'revenue',
+                  renderer: function(value) {
+                    return '$' + value.toLocaleString();
+                  },
+                },
+                tooltip: {
+                  trackMouse: true,
+                  renderer: function(tooltip, record) {
+                    tooltip.setHtml(\`\${record.get('name')}: $\${record.get('revenue').toLocaleString()}\`);
+                  },
+                },
+              }],
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+  buildProductsGrid: function() {
+    return {
+      xtype: 'grid',
+      reference: 'productsGrid',
+      region: 'south',
+      height: 300,
+      title: 'Top Performing Products',
+
+      store: {
+        fields: ['product', 'sales', 'revenue', 'margin', 'trend'],
+        data: [],
+      },
+
+      columns: [
+        {
+          text: 'Product',
+          dataIndex: 'product',
+          flex: 2,
+        },
+        {
+          text: 'Units Sold',
+          dataIndex: 'sales',
+          width: 120,
+          align: 'right',
+          renderer: function(value) {
+            return value.toLocaleString();
+          },
+        },
+        {
+          text: 'Revenue',
+          dataIndex: 'revenue',
+          width: 150,
+          align: 'right',
+          renderer: function(value) {
+            return '$' + value.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            });
+          },
+        },
+        {
+          text: 'Margin %',
+          dataIndex: 'margin',
+          width: 100,
+          align: 'right',
+          renderer: function(value) {
+            const color = value > 30 ? 'green' : value > 20 ? 'orange' : 'red';
+            return \`<span style="color: \${color};">\${value.toFixed(1)}%</span>\`;
+          },
+        },
+        {
+          text: 'Trend',
+          dataIndex: 'trend',
+          width: 100,
+          align: 'center',
+          renderer: function(value) {
+            const icon = value === 'up' ? '↑' : value === 'down' ? '↓' : '→';
+            const color = value === 'up' ? 'green' : value === 'down' ? 'red' : 'gray';
+            return \`<span style="color: \${color}; font-size: 18px;">\${icon} \${value}</span>\`;
+          },
+        },
+      ],
+
+      tbar: [
+        {
+          text: 'Export to Excel',
+          iconCls: 'x-fa fa-file-excel',
+          handler: function() {
+            this.up('grid').exportToExcel();
+          },
+        },
+        '->',
+        {
+          xtype: 'textfield',
+          emptyText: 'Search products...',
+          width: 200,
+          listeners: {
+            change: function(field, value) {
+              const grid = this.up('grid');
+              grid.store.clearFilter();
+              if (value) {
+                grid.store.filter('product', value);
+              }
+            },
+          },
+        },
+      ],
+
+      features: [{
+        ftype: 'grouping',
+        groupHeaderTpl: 'Trend: {name} ({rows.length} Product{[values.rows.length > 1 ? "s" : ""]})',
+      }],
+
+      exportToExcel: function() {
+        const data = [];
+        this.store.each(function(record) {
+          data.push(record.getData());
+        });
+
+        // Export using EventBus
+        EventBus.emit('grid:export-excel', {
+          data: data,
+          filename: 'top-products.xlsx',
+        });
+      },
+    };
+  },
+
+  loadAnalytics: function(dateRange) {
+    const me = this;
+
+    me.setLoading('Loading analytics...');
+
+    // Emit event to TypeScript layer
+    EventBus.emit('analytics:date-range-changed', { range: dateRange });
+
+    // Fetch data from API
+    Ext.Ajax.request({
+      url: '/api/analytics',
+      params: { range: dateRange },
+      success: function(response) {
+        const data = Ext.decode(response.responseText);
+        me.updateDashboard(data);
+        me.setLoading(false);
+
+        EventBus.emit('analytics:loaded', { range: dateRange, data });
+      },
+      failure: function() {
+        me.setLoading(false);
+        Ext.Msg.alert('Error', 'Failed to load analytics data');
+        EventBus.emit('analytics:error', { message: 'Load failed' });
+      },
+    });
+  },
+
+  updateDashboard: function(data) {
+    const me = this;
+
+    // Update revenue chart
+    const revenueChart = me.lookupReference('revenueChart');
+    if (revenueChart) {
+      revenueChart.getStore().loadData(data.revenue);
+    }
+
+    // Update category pie chart
+    const categoryPieChart = me.lookupReference('categoryPieChart');
+    if (categoryPieChart) {
+      categoryPieChart.getStore().loadData(data.categories);
+    }
+
+    // Update category bar chart
+    const categoryBarChart = me.lookupReference('categoryBarChart');
+    if (categoryBarChart) {
+      categoryBarChart.getStore().loadData(data.categories);
+    }
+
+    // Update products grid
+    const productsGrid = me.lookupReference('productsGrid');
+    if (productsGrid) {
+      productsGrid.getStore().loadData(data.topProducts);
+    }
+  },
+
+  exportData: function() {
+    const me = this;
+
+    me.setLoading('Exporting data...');
+
+    Ext.Ajax.request({
+      url: '/api/analytics/export',
+      params: {
+        range: me.down('combo').getValue(),
+      },
+      success: function(response) {
+        const blob = new Blob([response.responseText], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'analytics-export.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        me.setLoading(false);
+        Ext.Msg.alert('Success', 'Analytics data exported successfully');
+        EventBus.emit('analytics:exported', { timestamp: new Date() });
+      },
+      failure: function() {
+        me.setLoading(false);
+        Ext.Msg.alert('Error', 'Failed to export data');
+      },
+    });
+  },
+});
+
+// Create and show the dashboard
+export function createAnalyticsDashboard() {
+  const dashboard = Ext.create('Analytics.Dashboard', {
+    renderTo: Ext.getBody(),
+    width: '100%',
+    height: 800,
+  });
+
+  // Subscribe to EventBus events
+  EventBus.on('analytics:refresh', () => {
+    dashboard.loadAnalytics(dashboard.down('combo').getValue());
+  });
+
+  return dashboard;
+}`,
   },
 };
 // Utility function to get code variants
