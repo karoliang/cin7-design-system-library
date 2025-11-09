@@ -88,7 +88,7 @@ export const ProductNavigation: Story = {
         const url = '/' + segments.slice(0, index + 1).join('/');
         const content = breadcrumbMap[segment] || segment;
         return { content, url };
-      });
+      }).filter(item => item && item.content);
     };
 
     const handleNavigation = (path: string) => {
@@ -194,7 +194,7 @@ export const EcommerceNavigation: Story = {
         crumbs.push({ content: product, url: `#${category}/${subcategory}/${product}` });
       }
 
-      return crumbs;
+      return crumbs.filter(item => item && item.content);
     };
 
     return (
@@ -326,7 +326,7 @@ export const AdminPanel: Story = {
 
       if (section && subsection && adminStructure[section as keyof typeof adminStructure].subsections[subsection as keyof typeof adminStructure[typeof section]['subsections']]) {
         crumbs.push({
-          content: adminStructure[section as keyof typeof adminStructure].subsections[subsection as keyof typeof adminStructure[typeof section]['subcategories']].name,
+          content: adminStructure[section as keyof typeof adminStructure].subsections[subsection as keyof typeof adminStructure[typeof section]['subsections']].name,
           url: `#${section}/${subsection}`
         });
       }
@@ -338,7 +338,7 @@ export const AdminPanel: Story = {
         }
       }
 
-      return crumbs;
+      return crumbs.filter(item => item && item.content);
     };
 
     return (
@@ -537,7 +537,7 @@ export const DocumentationSite: Story = {
         }
       }
 
-      return crumbs;
+      return crumbs.filter(item => item && item.content);
     };
 
     const navigateTo = (newPath: string[]) => {

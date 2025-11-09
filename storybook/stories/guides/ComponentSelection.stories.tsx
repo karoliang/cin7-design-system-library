@@ -1112,7 +1112,7 @@ export const NavigationSelection: Story = {
                   {content: 'Products', url: '/products'},
                   {content: 'Electronics', url: '/products/electronics'},
                   {content: 'Laptops', url: '/products/electronics/laptops'},
-                ]}
+                ].filter(item => item && item.content)}
               />
             </BlockStack>
 
