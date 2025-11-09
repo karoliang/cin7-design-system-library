@@ -73,7 +73,7 @@ export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
 
   // Fallback to deprecated backAction API
   if (backAction) {
-    const {content} = backAction || {};
+    const content = backAction?.content;
 
     return (
       <Button
