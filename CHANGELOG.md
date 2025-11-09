@@ -5,6 +5,18 @@ All notable changes to the Cin7 DSL framework are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-11-10
+
+### 🐛 Bug Fixes
+
+#### Fixed
+
+- **Breadcrumbs Component Destructuring Error** (critical)
+  - Fixed `TypeError: Cannot destructure property 'content' of 'e' as it is undefined`
+  - Updated Polaris React Breadcrumbs component to use optional chaining (`backAction?.content`)
+  - Rebuilt Storybook assets to deploy fix to production
+  - Issue affected production Storybook at https://cin7-dsl.netlify.app/storybook/?path=/docs/components-navigation-breadcrumbs--docs
+
 ## [1.1.1] - 2025-11-08
 
 ### 🔧 Code Quality & Developer Experience
