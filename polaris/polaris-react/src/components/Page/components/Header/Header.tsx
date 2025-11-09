@@ -312,8 +312,10 @@ function shouldShowIconOnly(
   isMobile: boolean,
   action: PrimaryAction,
 ): PrimaryAction {
-  let {content, accessibilityLabel} = action;
-  const {icon} = action;
+  if (!action) return action;
+
+  let {content, accessibilityLabel} = action || {};
+  const {icon} = action || {};
   if (icon == null) return {...action, icon: undefined};
 
   if (isMobile) {

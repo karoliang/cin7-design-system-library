@@ -99,7 +99,6 @@ export const ProductNavigation: Story = {
       <div style={{ width: '600px' }}>
         <Breadcrumbs
           breadcrumbs={buildBreadcrumbs(currentPath)}
-          onAction={(breadcrumb) => handleNavigation(breadcrumb.url || '#')}
         />
 
         <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f9fafb', borderRadius: '6px' }}>
@@ -548,12 +547,6 @@ export const DocumentationSite: Story = {
       <div style={{ width: '800px' }}>
         <Breadcrumbs
           breadcrumbs={buildBreadcrumbs()}
-          onAction={(breadcrumb) => {
-            const index = buildBreadcrumbs().findIndex(b => b.url === breadcrumb.url);
-            if (index !== -1) {
-              navigateTo(path.slice(0, index + 1));
-            }
-          }}
         />
 
         <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0' }}>

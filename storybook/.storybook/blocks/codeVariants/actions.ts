@@ -5813,4 +5813,505 @@ export default ConnectedButtonsExample;`,
   }
 };
 
+// ActionList Component Examples
+
+export const actionListExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import React, { useState } from 'react';
+import { ActionList, Button, Popover } from '@shopify/polaris';
+import {
+  MobileNavigationMajorIcon,
+  HomeMajorIcon,
+  OrdersMajorIcon,
+  ProductsMajorIcon,
+  CustomersMajorIcon,
+  AnalyticsMajorIcon,
+  SettingsMajorIcon,
+  LogOutMinorIcon
+} from '@shopify/polaris-icons';
+
+export function ActionListExample() {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = () => {
+    setPopoverActive(!popoverActive);
+  };
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure="down" icon={MobileNavigationMajorIcon}>
+      Navigation menu
+    </Button>
+  );
+
+  const actions = [
+    {
+      content: 'Home',
+      icon: HomeMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Orders',
+      icon: OrdersMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Products',
+      icon: ProductsMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Customers',
+      icon: CustomersMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Analytics',
+      icon: AnalyticsMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Settings',
+      icon: SettingsMajorIcon,
+      url: '#',
+    },
+    {
+      content: 'Log out',
+      icon: LogOutMinorIcon,
+      destructive: true,
+      onAction: () => console.log('Log out clicked'),
+    },
+  ];
+
+  return (
+    <Popover
+      active={popoverActive}
+      activator={activator}
+      onClose={togglePopoverActive}
+    >
+      <ActionList items={actions} />
+    </Popover>
+  );
+}
+
+export default ActionListExample;`,
+
+    vanilla: `<!-- HTML Structure -->
+<button id="menu-button" class="polaris-button">
+  <span>Navigation menu</span>
+  <svg class="polaris-icon" viewBox="0 0 20 20">
+    <path d="M6 8l4 4 4-4" stroke="currentColor" fill="none"/>
+  </svg>
+</button>
+
+<div id="action-menu" class="action-menu" style="display: none;">
+  <ul class="action-list">
+    <li class="action-item">
+      <a href="#" class="action-link">
+        <svg class="action-icon" viewBox="0 0 20 20">
+          <path d="M10 2v16M2 10h16" stroke="currentColor"/>
+        </svg>
+        Home
+      </a>
+    </li>
+    <li class="action-item">
+      <a href="#" class="action-link">
+        <svg class="action-icon" viewBox="0 0 20 20">
+          <rect x="3" y="5" width="14" height="10" rx="1" stroke="currentColor" fill="none"/>
+        </svg>
+        Orders
+      </a>
+    </li>
+    <li class="action-item">
+      <a href="#" class="action-link">
+        <svg class="action-icon" viewBox="0 0 20 20">
+          <path d="M3 7l7-4 7 4v8a1 1 0 01-1 1H4a1 1 0 01-1-1V7z" stroke="currentColor" fill="none"/>
+        </svg>
+        Products
+      </a>
+    </li>
+    <li class="action-item destructive">
+      <a href="#" class="action-link">
+        <svg class="action-icon" viewBox="0 0 20 20">
+          <path d="M3 3l14 14M17 3L3 17" stroke="currentColor"/>
+        </svg>
+        Log out
+      </a>
+    </li>
+  </ul>
+</div>
+
+<script>
+// Action menu functionality using @cin7/vanilla-js
+import { createToggle } from '@cin7/vanilla-js';
+
+const menuButton = document.getElementById('menu-button');
+const actionMenu = document.getElementById('action-menu');
+
+const toggle = createToggle({
+  trigger: menuButton,
+  target: actionMenu,
+  onShow: () => {
+    menuButton.setAttribute('aria-expanded', 'true');
+    actionMenu.setAttribute('aria-hidden', 'false');
+  },
+  onHide: () => {
+    menuButton.setAttribute('aria-expanded', 'false');
+    actionMenu.setAttribute('aria-hidden', 'true');
+  }
+});
+
+// Handle action item clicks
+document.querySelectorAll('.action-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const action = e.currentTarget.textContent.trim();
+    console.log(\`Action clicked: \\\${action}\`);
+
+    // Close menu after selection
+    toggle.hide();
+  });
+});
+</script>`,
+
+    extjs: `// ExtJS Action Menu using @cin7/extjs-adapters
+Ext.define('ActionMenuExample', {
+  extend: 'Ext.container.Container',
+
+  initComponent: function() {
+    this.items = [{
+      xtype: 'button',
+      text: 'Navigation menu',
+      iconCls: 'x-fa fa-bars',
+      menu: {
+        xtype: 'menu',
+        items: [{
+          text: 'Home',
+          iconCls: 'x-fa fa-home',
+          handler: function() { console.log('Home clicked'); }
+        }, {
+          text: 'Orders',
+          iconCls: 'x-fa fa-shopping-cart',
+          handler: function() { console.log('Orders clicked'); }
+        }, {
+          text: 'Products',
+          iconCls: 'x-fa fa-box',
+          handler: function() { console.log('Products clicked'); }
+        }, {
+          text: 'Customers',
+          iconCls: 'x-fa fa-users',
+          handler: function() { console.log('Customers clicked'); }
+        }, {
+          text: 'Analytics',
+          iconCls: 'x-fa fa-chart-bar',
+          handler: function() { console.log('Analytics clicked'); }
+        }, '-', {
+          text: 'Log out',
+          iconCls: 'x-fa fa-sign-out-alt',
+          cls: 'destructive-action',
+          handler: function() { console.log('Log out clicked'); }
+        }]
+      }
+    }];
+
+    this.callParent();
+  }
+});
+
+// Or using Polaris adapter
+import { PolarisActionList, PolarisPopover } from '@cin7/extjs-adapters';
+
+const actionMenu = Ext.create('PolarisPopover', {
+  items: [{
+    xtype: 'polaris-actionlist',
+    items: [{
+      content: 'Home',
+      icon: 'HomeMajorIcon',
+      url: '#'
+    }, {
+      content: 'Orders',
+      icon: 'OrdersMajorIcon',
+      url: '#'
+    }, {
+      content: 'Products',
+      icon: 'ProductsMajorIcon',
+      url: '#'
+    }, {
+      content: 'Log out',
+      icon: 'LogOutMinorIcon',
+      destructive: true,
+      onAction: () => console.log('Log out clicked')
+    }]
+  }]
+});`,
+
+    typescript: `import React, { useState } from 'react';
+import { ActionList, Button, Popover, ActionListProps } from '@shopify/polaris';
+import { IconProps } from '@shopify/polaris-icons';
+
+interface ActionItem {
+  content: string;
+  icon?: React.FunctionComponent<IconProps>;
+  url?: string;
+  onAction?: () => void;
+  destructive?: boolean;
+  badge?: {
+    content: string;
+    status?: 'new' | 'success' | 'info' | 'attention' | 'warning' | 'critical';
+  };
+}
+
+interface ActionListExampleProps {
+  actions?: ActionItem[];
+  onAction?: (action: ActionItem) => void;
+  position?: 'left' | 'center' | 'right';
+}
+
+export function ActionListExample({
+  actions = defaultActions,
+  onAction,
+  position = 'left'
+}: ActionListExampleProps) {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = () => {
+    setPopoverActive(!popoverActive);
+  };
+
+  const handleAction = (action: ActionItem) => {
+    if (action.onAction) {
+      action.onAction();
+    } else if (onAction) {
+      onAction(action);
+    }
+
+    if (action.url) {
+      window.location.href = action.url;
+    }
+
+    setPopoverActive(false);
+  };
+
+  const activator = (
+    <Button
+      onClick={togglePopoverActive}
+      disclosure="down"
+      icon={MobileNavigationMajorIcon}
+    >
+      Navigation menu
+    </Button>
+  );
+
+  return (
+    <Popover
+      active={popoverActive}
+      activator={activator}
+      onClose={togglePopoverActive}
+      preferredAlignment={position}
+    >
+      <ActionList
+        items={actions.map(action => ({
+          ...action,
+          onAction: () => handleAction(action)
+        }))}
+      />
+    </Popover>
+  );
+}
+
+const defaultActions: ActionItem[] = [
+  {
+    content: 'Home',
+    icon: HomeMajorIcon,
+    url: '/',
+    badge: { content: 'New', status: 'new' }
+  },
+  {
+    content: 'Orders',
+    icon: OrdersMajorIcon,
+    url: '/orders',
+    badge: { content: '3', status: 'attention' }
+  },
+  {
+    content: 'Products',
+    icon: ProductsMajorIcon,
+    url: '/products'
+  },
+  {
+    content: 'Customers',
+    icon: CustomersMajorIcon,
+    url: '/customers'
+  },
+  {
+    content: 'Analytics',
+    icon: AnalyticsMajorIcon,
+    url: '/analytics'
+  },
+  {
+    content: 'Settings',
+    icon: SettingsMajorIcon,
+    url: '/settings'
+  },
+  {
+    content: 'Log out',
+    icon: LogOutMinorIcon,
+    destructive: true,
+    onAction: () => {
+      // Handle logout logic
+      localStorage.removeItem('authToken');
+      window.location.href = '/login';
+    }
+  }
+];
+
+export default ActionListExample;`
+  },
+
+  segmented: {
+    react: `import React, { useState } from 'react';
+import { ActionList, Button, Popover, Box } from '@shopify/polaris';
+import {
+  MobileNavigationMajorIcon,
+  ShopMajorIcon,
+  ProductsMajorIcon,
+  OnlineStoreMajorIcon,
+  PointOfSaleMajorIcon
+} from '@shopify/polaris-icons';
+
+export function SegmentedActionListExample() {
+  const [popoverActive, setPopoverActive] = useState(false);
+
+  const togglePopoverActive = () => {
+    setPopoverActive(!popoverActive);
+  };
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure="down">
+      Sales channels
+    </Button>
+  );
+
+  const sections = [
+    {
+      title: 'Online sales channels',
+      items: [
+        {
+          content: 'Online Store',
+          description: 'Sell on your own website',
+          icon: OnlineStoreMajorIcon,
+          url: '#',
+        },
+        {
+          content: 'Point of Sale',
+          description: 'Sell in person',
+          icon: PointOfSaleMajorIcon,
+          url: '#',
+        },
+      ],
+    },
+    {
+      title: 'Marketplaces',
+      items: [
+        {
+          content: 'Shopify Marketplace',
+          description: 'Reach new customers',
+          icon: ShopMajorIcon,
+          url: '#',
+        },
+        {
+          content: 'Other marketplaces',
+          description: 'Amazon, eBay, and more',
+          icon: ProductsMajorIcon,
+          url: '#',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <Box padding={400}>
+      <Popover
+        active={popoverActive}
+        activator={activator}
+        onClose={togglePopoverActive}
+      >
+        <ActionList sections={sections} />
+      </Popover>
+    </Box>
+  );
+}
+
+export default SegmentedActionListExample;`
+  },
+
+  destructive: {
+    react: `import React, { useState } from 'react';
+import { ActionList, Button, Popover, Banner } from '@shopify/polaris';
+import {
+  DeleteMajorIcon,
+  ArchiveMajorIcon,
+  WarningMajorIcon
+} from '@shopify/polaris-icons';
+
+export function DestructiveActionListExample() {
+  const [popoverActive, setPopoverActive] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+
+  const togglePopoverActive = () => {
+    setPopoverActive(!popoverActive);
+  };
+
+  const activator = (
+    <Button onClick={togglePopoverActive} disclosure="down" tone="critical">
+      Danger zone
+    </Button>
+  );
+
+  const actions = [
+    {
+      content: 'Archive product',
+      description: 'Hide from sales channel but keep data',
+      icon: ArchiveMajorIcon,
+      onAction: () => {
+        console.log('Archive clicked');
+        setShowWarning(true);
+      },
+    },
+    {
+      content: 'Delete product',
+      description: 'Permanently remove from store',
+      icon: DeleteMajorIcon,
+      destructive: true,
+      onAction: () => {
+        console.log('Delete clicked - confirm required');
+        // In real app, show confirmation modal
+      },
+    },
+  ];
+
+  return (
+    <div>
+      {showWarning && (
+        <Banner
+          status="warning"
+          title="Action completed"
+          onDismiss={() => setShowWarning(false)}
+        >
+          Product has been archived
+        </Banner>
+      )}
+
+      <Popover
+        active={popoverActive}
+        activator={activator}
+        onClose={togglePopoverActive}
+      >
+        <ActionList items={actions} />
+      </Popover>
+    </div>
+  );
+}
+
+export default DestructiveActionListExample;`
+  }
+};
+
 // Image Component Examples

@@ -168,13 +168,11 @@ export const WithBreadcrumbs: Story = {
       console.log('Navigation dismissed');
     }, []);
 
-    const breadcrumbs = {
-      breadcrumbs: [
-        { content: 'Home', url: '#' },
-        { content: 'Products', url: '#' },
-        { content: 'Edit Product' },
-      ],
-    };
+    const breadcrumbs = [
+      { content: 'Home', url: '#' },
+      { content: 'Products', url: '#' },
+      { content: 'Edit Product' },
+    ];
 
     return (
       <div style={{ height: '100vh' }}>

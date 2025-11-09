@@ -131,14 +131,15 @@ export function Actions({actions, groups, onActionRollup}: Props) {
       return true;
     })
     .map((action) => {
-      const {content, onAction, ...rest} = action;
+      if (!action) return null;
+      const {content, onAction, ...rest} = action || {};
 
       return (
-        <SecondaryAction key={content} onClick={onAction} {...rest}>
+        <SecondaryAction key={content || 'action'} onClick={onAction} {...rest}>
           {content}
         </SecondaryAction>
       );
-    });
+    }).filter(Boolean);
 
   const groupsToFilter =
     hiddenGroups.length > 0 || hiddenActions.length > 0

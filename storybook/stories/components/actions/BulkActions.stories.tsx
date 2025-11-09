@@ -34,7 +34,7 @@ const CustomBulkActions: React.FC<{
 
   const togglePopover = () => setPopoverActive(!popoverActive);
 
-  const promotedButtons = promotedActions.map((action, index) => (
+  const promotedButtons = promotedActions.filter(action => action && action.content).map((action, index) => (
     <Button
       key={index}
       onClick={action.onAction}
@@ -47,7 +47,7 @@ const CustomBulkActions: React.FC<{
     </Button>
   ));
 
-  const pageButtons = pageActions.map((action, index) => {
+  const pageButtons = pageActions.filter(action => action && action.content).map((action, index) => {
     if (action.actions) {
       return (
         <Popover
@@ -61,12 +61,12 @@ const CustomBulkActions: React.FC<{
           onClose={togglePopover}
         >
           <ActionList
-            items={action.actions.map((item: any) => ({
+            items={action.actions?.filter((item: any) => item && item.content).map((item: any) => ({
               content: item.content,
               onAction: item.onAction,
               icon: item.icon,
               destructive: item.destructive,
-            }))}
+            })) || []}
           />
         </Popover>
       );

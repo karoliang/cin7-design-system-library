@@ -73,16 +73,16 @@ export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
 
   // Fallback to deprecated backAction API
   if (backAction) {
-    const {content} = backAction;
+    const {content} = backAction || {};
 
     return (
       <Button
-        key={content}
+        key={content || 'back'}
         url={'url' in backAction ? backAction.url : undefined}
         onClick={'onAction' in backAction ? backAction.onAction : undefined}
         onPointerDown={handleMouseUpByBlurring}
         icon={ArrowLeftIcon}
-        accessibilityLabel={backAction.accessibilityLabel ?? content}
+        accessibilityLabel={backAction?.accessibilityLabel ?? content ?? 'Back'}
       />
     );
   }
