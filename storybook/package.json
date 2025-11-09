@@ -48,6 +48,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint-plugin-storybook": "^0.10.1",
+    "puppeteer": "^21.6.1",
     "storybook": "^8.6.14",
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
