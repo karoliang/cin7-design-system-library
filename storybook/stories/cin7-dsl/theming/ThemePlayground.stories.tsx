@@ -20,14 +20,13 @@ import {
   FormLayout,
   Checkbox,
   RadioButton,
-  Stack,
   ButtonGroup,
 } from '@shopify/polaris';
 import {
-  PaintBrushIcon,
+  EditIcon,
   SunIcon,
   MoonIcon,
-  ColorIcon,
+  CircleTickIcon,
   RefreshIcon,
   CheckIcon,
   ViewIcon,
@@ -143,13 +142,13 @@ function ComponentPreview({ theme }: { theme: Theme }) {
                 onChange={() => {}}
               />
 
-              <Stack vertical>
+              <BlockStack>
                 <Checkbox label="Checkbox option 1" checked={true} onChange={() => {}} />
                 <Checkbox label="Checkbox option 2" checked={false} onChange={() => {}} />
                 <Checkbox label="Checkbox option 3 (disabled)" disabled onChange={() => {}} />
-              </Stack>
+              </BlockStack>
 
-              <Stack vertical>
+              <BlockStack>
                 <RadioButton
                   label="Radio option 1"
                   checked={true}
@@ -164,7 +163,7 @@ function ComponentPreview({ theme }: { theme: Theme }) {
                   name="radioGroup"
                   onChange={() => {}}
                 />
-              </Stack>
+              </BlockStack>
             </FormLayout>
           </div>
         )}
@@ -341,7 +340,7 @@ export const Playground: Story = {
         subtitle="Experiment with themes and see real-time changes"
         primaryAction={{
           content: 'Apply Custom Theme',
-          icon: PaintBrushIcon,
+          icon: EditIcon,
           onAction: handleCustomColors,
         }}
         secondaryActions={[
