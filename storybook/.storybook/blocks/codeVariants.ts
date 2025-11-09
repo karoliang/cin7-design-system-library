@@ -77967,72 +77967,927 @@ function showCreateOrderWindow() {
 
 export const inventoryManagementExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { Page, Card, DataTable, Badge } from '@shopify/polaris';
-import { BarChart } from '@cin7/highcharts-adapter/react';
+    react: `import { Page, Card, Layout, DataTable, Badge, Grid, BlockStack, InlineStack, Text, Button, Banner } from '@shopify/polaris';
+import { PlusIcon, AlertTriangleIcon } from '@shopify/polaris-icons';
+import { BarChart, PieChart } from '@cin7/highcharts-adapter/react';
+import React, { useState } from 'react';
 
 function InventoryManagement() {
+  const [showLowStockOnly, setShowLowStockOnly] = useState(false);
+
   const inventoryData = [
-    { product: 'Wireless Headphones', current: 45, reorderPoint: 20, incoming: 100 },
-    // ... more items
+    { id: 1, product: 'Wireless Headphones', sku: 'WH-001', current: 45, reorderPoint: 20, incoming: 100, category: 'Electronics' },
+    { id: 2, product: 'USB-C Cable', sku: 'UC-002', current: 12, reorderPoint: 50, incoming: 200, category: 'Accessories' },
+    { id: 3, product: 'Laptop Stand', sku: 'LS-003', current: 0, reorderPoint: 10, incoming: 50, category: 'Furniture' },
+    { id: 4, product: 'Wireless Mouse', sku: 'WM-004', current: 78, reorderPoint: 30, incoming: 0, category: 'Electronics' },
+    { id: 5, product: 'Desk Lamp', sku: 'DL-005', current: 8, reorderPoint: 15, incoming: 40, category: 'Furniture' },
+  ];
+
+  const filteredData = showLowStockOnly
+    ? inventoryData.filter(item => item.current < item.reorderPoint)
+    : inventoryData;
+
+  const metrics = {
+    totalItems: inventoryData.length,
+    totalStock: inventoryData.reduce((sum, i) => sum + i.current, 0),
+    lowStock: inventoryData.filter(i => i.current < i.reorderPoint && i.current > 0).length,
+    outOfStock: inventoryData.filter(i => i.current === 0).length,
+  };
+
+  const categoryDistribution = [
+    { name: 'Electronics', value: inventoryData.filter(i => i.category === 'Electronics').length },
+    { name: 'Accessories', value: inventoryData.filter(i => i.category === 'Accessories').length },
+    { name: 'Furniture', value: inventoryData.filter(i => i.category === 'Furniture').length },
   ];
 
   return (
-    <Page title="Inventory Management">
+    <Page
+      title="Inventory Management"
+      subtitle="Track stock levels and manage reorders"
+      primaryAction={{
+        content: 'Add Item',
+        icon: PlusIcon,
+      }}
+    >
       <Layout>
+        {metrics.lowStock > 0 && (
+          <Layout.Section>
+            <Banner
+              title="Low Stock Alert"
+              status="warning"
+              icon={AlertTriangleIcon}
+            >
+              <p>{metrics.lowStock} items below reorder point. {metrics.outOfStock} items out of stock.</p>
+            </Banner>
+          </Layout.Section>
+        )}
+
+        <Layout.Section>
+          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Items</Text>
+                <Text variant="heading2xl" as="h2">{metrics.totalItems}</Text>
+                <Badge>SKUs</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Stock</Text>
+                <Text variant="heading2xl" as="h2">{metrics.totalStock}</Text>
+                <Badge tone="success">Units</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Low Stock</Text>
+                <Text variant="heading2xl" as="h2">{metrics.lowStock}</Text>
+                <Badge tone="warning">Alert</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Out of Stock</Text>
+                <Text variant="heading2xl" as="h2">{metrics.outOfStock}</Text>
+                <Badge tone="critical">Critical</Badge>
+              </BlockStack>
+            </Card>
+          </Grid>
+        </Layout.Section>
+
+        <Layout.Section>
+          <Grid columns={{ sm: 1, lg: 2 }} gap="400">
+            <Card>
+              <BlockStack gap="400">
+                <Text variant="headingLg" as="h3">Stock Levels by Product</Text>
+                <BarChart
+                  title="Current vs Reorder Point"
+                  series={[
+                    { name: 'Current Stock', data: inventoryData.map(i => i.current) },
+                    { name: 'Reorder Point', data: inventoryData.map(i => i.reorderPoint) },
+                    { name: 'Incoming', data: inventoryData.map(i => i.incoming) },
+                  ]}
+                  xAxis={{
+                    categories: inventoryData.map(i => i.product),
+                  }}
+                  height={300}
+                />
+              </BlockStack>
+            </Card>
+
+            <Card>
+              <BlockStack gap="400">
+                <Text variant="headingLg" as="h3">Inventory by Category</Text>
+                <PieChart
+                  title="Category Distribution"
+                  series={[{
+                    name: 'Items',
+                    data: categoryDistribution.map(c => ({ name: c.name, y: c.value })),
+                  }]}
+                  height={300}
+                />
+              </BlockStack>
+            </Card>
+          </Grid>
+        </Layout.Section>
+
         <Layout.Section>
           <Card>
-            <BarChart
-              title="Inventory Levels"
-              series={[
-                { name: 'Current Stock', data: inventoryData.map(i => i.current) },
-                { name: 'Incoming', data: inventoryData.map(i => i.incoming) }
-              ]}
-            />
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg" as="h3">Inventory Items</Text>
+                <Button
+                  onClick={() => setShowLowStockOnly(!showLowStockOnly)}
+                  pressed={showLowStockOnly}
+                >
+                  {showLowStockOnly ? 'Show All' : 'Show Low Stock Only'}
+                </Button>
+              </InlineStack>
+
+              <DataTable
+                columnContentTypes={['text', 'text', 'numeric', 'numeric', 'numeric', 'text']}
+                headings={['Product', 'SKU', 'Current', 'Reorder Point', 'Incoming', 'Status']}
+                rows={filteredData.map(item => [
+                  item.product,
+                  item.sku,
+                  item.current,
+                  item.reorderPoint,
+                  item.incoming,
+                  item.current === 0 ? (
+                    <Badge tone="critical">Out of Stock</Badge>
+                  ) : item.current < item.reorderPoint ? (
+                    <Badge tone="warning">Low Stock</Badge>
+                  ) : (
+                    <Badge tone="success">In Stock</Badge>
+                  ),
+                ])}
+              />
+            </BlockStack>
           </Card>
         </Layout.Section>
       </Layout>
     </Page>
   );
 }`,
-    typescript: `import { Repository } from '@cin7/typescript-sdk';
+    typescript: `// TypeScript SDK - Inventory Management Domain Layer
+import { Entity, ValueObject, Repository, EventBus } from '@cin7/typescript-sdk';
+
+// Value Objects
+class SKU extends ValueObject<string> {
+  constructor(value: string) {
+    super(value);
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (!/^[A-Z]{2}-\\d{3}$/.test(this.value)) {
+      throw new Error('SKU must be in format XX-000');
+    }
+  }
+}
+
+class StockQuantity extends ValueObject<number> {
+  constructor(value: number) {
+    super(value);
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (this.value < 0) {
+      throw new Error('Stock quantity cannot be negative');
+    }
+  }
+
+  add(quantity: number): StockQuantity {
+    return new StockQuantity(this.value + quantity);
+  }
+
+  subtract(quantity: number): StockQuantity {
+    const newValue = this.value - quantity;
+    if (newValue < 0) {
+      throw new Error('Cannot subtract more than current stock');
+    }
+    return new StockQuantity(newValue);
+  }
+}
+
+// Enums
+enum InventoryCategory {
+  Electronics = 'Electronics',
+  Accessories = 'Accessories',
+  Furniture = 'Furniture',
+  Office = 'Office',
+}
+
+// Entities
+class InventoryItem extends Entity {
+  constructor(
+    public readonly id: string,
+    public readonly productId: string,
+    public readonly productName: string,
+    public readonly sku: SKU,
+    public currentStock: StockQuantity,
+    public readonly reorderPoint: StockQuantity,
+    public incomingStock: StockQuantity,
+    public readonly category: InventoryCategory,
+    public lastRestocked: Date = new Date()
+  ) {
+    super(id);
+    this.validate();
+  }
+
+  protected validate(): void {
+    // Additional validation logic
+  }
+
+  get isLowStock(): boolean {
+    return this.currentStock.value < this.reorderPoint.value && this.currentStock.value > 0;
+  }
+
+  get isOutOfStock(): boolean {
+    return this.currentStock.value === 0;
+  }
+
+  get needsReorder(): boolean {
+    return this.currentStock.value < this.reorderPoint.value;
+  }
+
+  adjustStock(quantity: number, reason: string): InventoryItem {
+    const newStock = quantity > 0
+      ? this.currentStock.add(quantity)
+      : this.currentStock.subtract(Math.abs(quantity));
+
+    const updated = this.clone({ currentStock: newStock });
+
+    EventBus.emit('inventory:adjusted', {
+      itemId: this.id,
+      productName: this.productName,
+      quantity,
+      reason,
+      newStock: newStock.value,
+      timestamp: new Date(),
+    });
+
+    return updated;
+  }
+
+  receiveIncoming(quantity: number): InventoryItem {
+    const newStock = this.currentStock.add(quantity);
+    const newIncoming = this.incomingStock.subtract(quantity);
+
+    const updated = this.clone({
+      currentStock: newStock,
+      incomingStock: newIncoming,
+      lastRestocked: new Date(),
+    });
+
+    EventBus.emit('inventory:restocked', {
+      itemId: this.id,
+      productName: this.productName,
+      quantity,
+      newStock: newStock.value,
+    });
+
+    return updated;
+  }
+
+  initiateReorder(quantity: number): void {
+    const newIncoming = this.incomingStock.add(quantity);
+    this.incomingStock = newIncoming;
+
+    EventBus.emit('inventory:reorder:initiated', {
+      itemId: this.id,
+      productName: this.productName,
+      quantity,
+      expectedTotal: newIncoming.value,
+    });
+  }
+
+  private clone(updates: Partial<{
+    currentStock: StockQuantity;
+    incomingStock: StockQuantity;
+    lastRestocked: Date;
+  }>): InventoryItem {
+    return new InventoryItem(
+      this.id,
+      this.productId,
+      this.productName,
+      this.sku,
+      updates.currentStock ?? this.currentStock,
+      this.reorderPoint,
+      updates.incomingStock ?? this.incomingStock,
+      this.category,
+      updates.lastRestocked ?? this.lastRestocked
+    );
+  }
+}
+
+// Repository
+interface StockMetrics {
+  totalItems: number;
+  totalStock: number;
+  lowStock: number;
+  outOfStock: number;
+  needsReorder: number;
+}
 
 class InventoryRepository extends Repository<InventoryItem> {
-  async findBelowReorderPoint(): Promise<InventoryItem[]> {
-    const items = await this.findAll();
-    return items.filter(i => i.currentStock < i.reorderPoint);
+  async findByCategory(category: InventoryCategory): Promise<InventoryItem[]> {
+    return this.query({ category });
   }
 
-  async getStockLevels(): Promise<StockLevels> {
+  async findLowStock(): Promise<InventoryItem[]> {
     const items = await this.findAll();
+    return items.filter(i => i.isLowStock);
+  }
+
+  async findOutOfStock(): Promise<InventoryItem[]> {
+    const items = await this.findAll();
+    return items.filter(i => i.isOutOfStock);
+  }
+
+  async findNeedsReorder(): Promise<InventoryItem[]> {
+    const items = await this.findAll();
+    return items.filter(i => i.needsReorder);
+  }
+
+  async getStockMetrics(): Promise<StockMetrics> {
+    const items = await this.findAll();
+
     return {
-      total: items.reduce((sum, i) => sum + i.currentStock, 0),
-      lowStock: items.filter(i => i.currentStock < i.reorderPoint).length,
-      outOfStock: items.filter(i => i.currentStock === 0).length
+      totalItems: items.length,
+      totalStock: items.reduce((sum, i) => sum + i.currentStock.value, 0),
+      lowStock: items.filter(i => i.isLowStock).length,
+      outOfStock: items.filter(i => i.isOutOfStock).length,
+      needsReorder: items.filter(i => i.needsReorder).length,
     };
   }
-}`,
-    vanilla: `import { $, on } from '@cin7/vanilla-js';
 
-function initInventory() {
-  const reorderButtons = $$('.reorder-btn');
-  
-  reorderButtons.forEach(btn => {
-    on(btn, 'click', (e) => {
-      const productId = e.target.dataset.productId;
-      initiateReorder(productId);
+  async getCategoryDistribution(): Promise<{ category: string; count: number }[]> {
+    const items = await this.findAll();
+    const categories = Object.values(InventoryCategory);
+
+    return categories.map(category => ({
+      category,
+      count: items.filter(i => i.category === category).length,
+    }));
+  }
+}
+
+// Service Layer
+class InventoryService {
+  constructor(private readonly repository: InventoryRepository) {}
+
+  async adjustStock(itemId: string, quantity: number, reason: string): Promise<InventoryItem> {
+    const item = await this.repository.findById(itemId);
+    if (!item) throw new Error(\`Inventory item not found: \${itemId}\`);
+
+    const updated = item.adjustStock(quantity, reason);
+    await this.repository.save(updated);
+
+    return updated;
+  }
+
+  async receiveIncoming(itemId: string, quantity: number): Promise<InventoryItem> {
+    const item = await this.repository.findById(itemId);
+    if (!item) throw new Error(\`Inventory item not found: \${itemId}\`);
+
+    const updated = item.receiveIncoming(quantity);
+    await this.repository.save(updated);
+
+    return updated;
+  }
+
+  async initiateReorder(itemId: string, quantity: number): Promise<void> {
+    const item = await this.repository.findById(itemId);
+    if (!item) throw new Error(\`Inventory item not found: \${itemId}\`);
+
+    item.initiateReorder(quantity);
+    await this.repository.save(item);
+  }
+
+  async processLowStockAlerts(): Promise<InventoryItem[]> {
+    const lowStockItems = await this.repository.findLowStock();
+
+    lowStockItems.forEach(item => {
+      EventBus.emit('inventory:low-stock-alert', {
+        itemId: item.id,
+        productName: item.productName,
+        currentStock: item.currentStock.value,
+        reorderPoint: item.reorderPoint.value,
+      });
+    });
+
+    return lowStockItems;
+  }
+}`,
+    vanilla: `// Vanilla JS - Inventory Management UI Interactions
+import { $, $$, on, addClass, removeClass, fadeIn, fadeOut, attr, html } from '@cin7/vanilla-js';
+import { EventBus } from '@cin7/typescript-sdk';
+
+// Initialize Inventory Dashboard
+function initInventoryManagement() {
+  const dashboard = $('#inventory-dashboard');
+  if (!dashboard) return;
+
+  initInventoryTable();
+  initFilterButtons();
+  initReorderButtons();
+  initMetrics();
+  initEventListeners();
+}
+
+// Inventory Table
+function initInventoryTable() {
+  const rows = $$('.inventory-row');
+
+  rows.forEach(row => {
+    const current = parseInt(attr(row, 'data-current-stock') || '0');
+    const reorderPoint = parseInt(attr(row, 'data-reorder-point') || '0');
+
+    // Color-code rows based on stock level
+    if (current === 0) {
+      addClass(row, 'inventory-row--critical');
+    } else if (current < reorderPoint) {
+      addClass(row, 'inventory-row--warning');
+    }
+
+    on(row, 'mouseenter', () => {
+      addClass(row, 'inventory-row--hover');
+    });
+
+    on(row, 'mouseleave', () => {
+      removeClass(row, 'inventory-row--hover');
+    });
+
+    on(row, 'click', () => {
+      removeClass($$('.inventory-row'), 'inventory-row--selected');
+      addClass(row, 'selected');
+      showItemDetails(attr(row, 'data-item-id'));
     });
   });
-}`,
-    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+}
 
-const inventoryGrid = ExtDataGrid.create({
-  columns: [
-    { dataIndex: 'product', text: 'Product', flex: 1 },
-    { dataIndex: 'current', text: 'Current Stock', width: 120 },
-    { dataIndex: 'reorderPoint', text: 'Reorder Point', width: 120 }
+// Filter Buttons
+function initFilterButtons() {
+  const showAllBtn = $('#show-all-btn');
+  const showLowStockBtn = $('#show-low-stock-btn');
+
+  if (showAllBtn) {
+    on(showAllBtn, 'click', () => {
+      filterInventory('all');
+      setActiveFilter(showAllBtn);
+    });
+  }
+
+  if (showLowStockBtn) {
+    on(showLowStockBtn, 'click', () => {
+      filterInventory('low-stock');
+      setActiveFilter(showLowStockBtn);
+    });
+  }
+}
+
+function filterInventory(filter: string) {
+  const rows = $$('.inventory-row');
+
+  rows.forEach(row => {
+    const current = parseInt(attr(row, 'data-current-stock') || '0');
+    const reorderPoint = parseInt(attr(row, 'data-reorder-point') || '0');
+
+    if (filter === 'all') {
+      fadeIn(row, 150);
+    } else if (filter === 'low-stock') {
+      if (current < reorderPoint) {
+        fadeIn(row, 150);
+      } else {
+        fadeOut(row, 150);
+      }
+    }
+  });
+}
+
+function setActiveFilter(activeBtn: HTMLElement) {
+  $$('.filter-btn').forEach(btn => removeClass(btn, 'active'));
+  addClass(activeBtn, 'active');
+}
+
+// Reorder Buttons
+function initReorderButtons() {
+  const reorderButtons = $$('.reorder-btn');
+
+  reorderButtons.forEach(btn => {
+    on(btn, 'click', (e: Event) => {
+      e.stopPropagation();
+      const itemId = attr(btn, 'data-item-id');
+      const productName = attr(btn, 'data-product-name');
+
+      initiateReorder(itemId, productName);
+    });
+  });
+}
+
+function initiateReorder(itemId: string | null, productName: string | null) {
+  if (!itemId || !productName) return;
+
+  const quantity = prompt(\`Enter reorder quantity for \${productName}:\`, '100');
+
+  if (quantity && parseInt(quantity) > 0) {
+    EventBus.emit('inventory:reorder:requested', {
+      itemId,
+      productName,
+      quantity: parseInt(quantity),
+    });
+
+    showNotification(\`Reorder initiated for \${productName}\`, 'success');
+  }
+}
+
+// Item Details
+function showItemDetails(itemId: string | null) {
+  const detailsPanel = $('#item-details-panel');
+  if (!detailsPanel || !itemId) return;
+
+  const itemRow = $$(\`.inventory-row[data-item-id="\${itemId}"]\`)[0];
+  if (!itemRow) return;
+
+  html($('#detail-product-name'), attr(itemRow, 'data-product-name') || '');
+  html($('#detail-sku'), attr(itemRow, 'data-sku') || '');
+  html($('#detail-current-stock'), attr(itemRow, 'data-current-stock') || '0');
+  html($('#detail-reorder-point'), attr(itemRow, 'data-reorder-point') || '0');
+  html($('#detail-incoming'), attr(itemRow, 'data-incoming') || '0');
+
+  fadeIn(detailsPanel);
+}
+
+// Metrics
+function initMetrics() {
+  const metrics = $$('.metric-value');
+  metrics.forEach(metric => {
+    animateMetric(metric as HTMLElement);
+  });
+}
+
+function updateMetrics(data: { totalItems: number; totalStock: number; lowStock: number; outOfStock: number }) {
+  animateNumber($('#metric-total-items'), data.totalItems);
+  animateNumber($('#metric-total-stock'), data.totalStock);
+  animateNumber($('#metric-low-stock'), data.lowStock);
+  animateNumber($('#metric-out-of-stock'), data.outOfStock);
+}
+
+function animateMetric(element: HTMLElement) {
+  const targetValue = parseInt(attr(element, 'data-value') || '0');
+  animateNumber(element, targetValue, 1000);
+}
+
+function animateNumber(element: HTMLElement | null, targetValue: number, duration: number = 500) {
+  if (!element) return;
+
+  const currentValue = parseInt(element.textContent || '0');
+  const steps = 30;
+  const increment = (targetValue - currentValue) / steps;
+
+  let step = 0;
+  const interval = setInterval(() => {
+    if (step >= steps) {
+      element.textContent = targetValue.toString();
+      clearInterval(interval);
+      return;
+    }
+
+    element.textContent = Math.round(currentValue + increment * step).toString();
+    step++;
+  }, duration / steps);
+}
+
+// Event Listeners
+function initEventListeners() {
+  EventBus.on('inventory:adjusted', (event: any) => {
+    showNotification(\`Stock adjusted for \${event.productName}: \${event.quantity > 0 ? '+' : ''}\${event.quantity}\`, 'info');
+    updateStockDisplay(event.itemId, event.newStock);
+  });
+
+  EventBus.on('inventory:restocked', (event: any) => {
+    showNotification(\`\${event.productName} restocked: +\${event.quantity} units\`, 'success');
+    updateStockDisplay(event.itemId, event.newStock);
+  });
+
+  EventBus.on('inventory:low-stock-alert', (event: any) => {
+    showNotification(\`Low stock alert: \${event.productName} (\${event.currentStock} units)\`, 'warning');
+  });
+}
+
+function updateStockDisplay(itemId: string, newStock: number) {
+  const rows = $$('.inventory-row');
+  rows.forEach(row => {
+    if (attr(row, 'data-item-id') === itemId) {
+      attr(row, 'data-current-stock', newStock.toString());
+      const stockCell = row.querySelector('.stock-cell');
+      if (stockCell) {
+        html(stockCell, newStock.toString());
+        addClass(stockCell, 'stock-updated');
+        setTimeout(() => removeClass(stockCell, 'stock-updated'), 1000);
+      }
+    }
+  });
+}
+
+function showNotification(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') {
+  const notification = document.createElement('div');
+  notification.className = \`notification notification--\${type}\`;
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => addClass(notification, 'notification--visible'), 10);
+  setTimeout(() => {
+    removeClass(notification, 'notification--visible');
+    setTimeout(() => document.body.removeChild(notification), 300);
+  }, 3000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initInventoryManagement);
+} else {
+  initInventoryManagement();
+}`,
+    extjs: `// ExtJS - Inventory Management Grid
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+import { EventBus } from '@cin7/typescript-sdk';
+
+// Inventory Store
+const inventoryStore = Ext.create('Ext.data.Store', {
+  storeId: 'inventoryStore',
+  fields: [
+    { name: 'id', type: 'string' },
+    { name: 'productId', type: 'string' },
+    { name: 'productName', type: 'string' },
+    { name: 'sku', type: 'string' },
+    { name: 'currentStock', type: 'int' },
+    { name: 'reorderPoint', type: 'int' },
+    { name: 'incomingStock', type: 'int' },
+    { name: 'category', type: 'string' },
   ],
-  features: ['grouping', 'summary']
-});`,
+  proxy: {
+    type: 'ajax',
+    url: '/api/inventory',
+    reader: {
+      type: 'json',
+      rootProperty: 'data',
+    },
+  },
+  autoLoad: true,
+});
+
+// Inventory Grid
+const inventoryGrid = ExtDataGrid.create({
+  title: 'Inventory Management',
+  store: inventoryStore,
+
+  columns: [
+    {
+      dataIndex: 'productName',
+      text: 'Product',
+      flex: 2,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'sku',
+      text: 'SKU',
+      width: 100,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'currentStock',
+      text: 'Current Stock',
+      width: 120,
+      align: 'right',
+      summaryType: 'sum',
+      renderer: function(value, metaData, record) {
+        const reorderPoint = record.get('reorderPoint');
+        if (value === 0) {
+          metaData.style = 'background-color: #ffe6e6; color: #c41e3a; font-weight: bold;';
+          return value + ' (OUT)';
+        } else if (value < reorderPoint) {
+          metaData.style = 'background-color: #fff4e6; color: #ff8c00; font-weight: bold;';
+          return value + ' (LOW)';
+        }
+        return value;
+      },
+    },
+    {
+      dataIndex: 'reorderPoint',
+      text: 'Reorder Point',
+      width: 120,
+      align: 'right',
+    },
+    {
+      dataIndex: 'incomingStock',
+      text: 'Incoming',
+      width: 100,
+      align: 'right',
+      summaryType: 'sum',
+    },
+    {
+      dataIndex: 'category',
+      text: 'Category',
+      width: 120,
+      filter: {
+        type: 'list',
+        options: ['Electronics', 'Accessories', 'Furniture', 'Office'],
+      },
+    },
+    {
+      xtype: 'actioncolumn',
+      text: 'Actions',
+      width: 100,
+      items: [
+        {
+          iconCls: 'x-fa fa-plus-circle',
+          tooltip: 'Adjust Stock',
+          handler: function(grid, rowIndex, colIndex, item, e, record) {
+            showAdjustStockWindow(record);
+          },
+        },
+        {
+          iconCls: 'x-fa fa-shopping-cart',
+          tooltip: 'Reorder',
+          handler: function(grid, rowIndex, colIndex, item, e, record) {
+            showReorderWindow(record);
+          },
+        },
+      ],
+    },
+  ],
+
+  features: [
+    {
+      ftype: 'grouping',
+      groupHeaderTpl: '{name} ({rows.length} items)',
+    },
+    {
+      ftype: 'filters',
+    },
+    {
+      ftype: 'summary',
+      dock: 'bottom',
+    },
+  ],
+
+  tbar: [
+    {
+      text: 'Add Item',
+      iconCls: 'x-fa fa-plus',
+      handler: function() {
+        showAddItemWindow();
+      },
+    },
+    '-',
+    {
+      text: 'Low Stock Only',
+      enableToggle: true,
+      pressed: false,
+      handler: function(btn) {
+        const store = btn.up('grid').getStore();
+        if (btn.pressed) {
+          store.filterBy(function(record) {
+            return record.get('currentStock') < record.get('reorderPoint');
+          });
+        } else {
+          store.clearFilter();
+        }
+      },
+    },
+    '->',
+    {
+      xtype: 'textfield',
+      emptyText: 'Search products...',
+      width: 200,
+      listeners: {
+        change: function(field, value) {
+          const store = field.up('grid').getStore();
+          store.clearFilter();
+
+          if (value) {
+            store.filterBy(function(record) {
+              const name = record.get('productName').toLowerCase();
+              const sku = record.get('sku').toLowerCase();
+              const search = value.toLowerCase();
+              return name.includes(search) || sku.includes(search);
+            });
+          }
+        },
+      },
+    },
+  ],
+});
+
+function showAdjustStockWindow(record: any) {
+  Ext.create('Ext.window.Window', {
+    title: 'Adjust Stock - ' + record.get('productName'),
+    width: 400,
+    modal: true,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 15,
+      items: [
+        { xtype: 'displayfield', fieldLabel: 'Current Stock', value: record.get('currentStock') },
+        { xtype: 'numberfield', fieldLabel: 'Adjustment', name: 'adjustment', allowBlank: false },
+        { xtype: 'textfield', fieldLabel: 'Reason', name: 'reason', allowBlank: false },
+      ],
+      buttons: [{
+        text: 'Apply',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            const values = form.getValues();
+            const newStock = record.get('currentStock') + parseInt(values.adjustment);
+            record.set('currentStock', newStock);
+            record.commit();
+            EventBus.emit('inventory:adjusted', {
+              itemId: record.get('id'),
+              productName: record.get('productName'),
+              quantity: parseInt(values.adjustment),
+              newStock,
+            });
+            this.up('window').close();
+          }
+        },
+      }],
+    }],
+  }).show();
+}
+
+function showReorderWindow(record: any) {
+  Ext.create('Ext.window.Window', {
+    title: 'Reorder - ' + record.get('productName'),
+    width: 400,
+    modal: true,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 15,
+      items: [
+        { xtype: 'displayfield', fieldLabel: 'Current Stock', value: record.get('currentStock') },
+        { xtype: 'displayfield', fieldLabel: 'Reorder Point', value: record.get('reorderPoint') },
+        { xtype: 'numberfield', fieldLabel: 'Quantity', name: 'quantity', value: 100, minValue: 1 },
+      ],
+      buttons: [{
+        text: 'Initiate Reorder',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            const values = form.getValues();
+            const newIncoming = record.get('incomingStock') + parseInt(values.quantity);
+            record.set('incomingStock', newIncoming);
+            record.commit();
+            EventBus.emit('inventory:reorder:initiated', {
+              itemId: record.get('id'),
+              productName: record.get('productName'),
+              quantity: parseInt(values.quantity),
+            });
+            this.up('window').close();
+          }
+        },
+      }],
+    }],
+  }).show();
+}
+
+function showAddItemWindow() {
+  Ext.create('Ext.window.Window', {
+    title: 'Add Inventory Item',
+    width: 500,
+    modal: true,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 15,
+      items: [
+        { xtype: 'textfield', fieldLabel: 'Product Name', name: 'productName', allowBlank: false },
+        { xtype: 'textfield', fieldLabel: 'SKU', name: 'sku', allowBlank: false },
+        { xtype: 'numberfield', fieldLabel: 'Current Stock', name: 'currentStock', value: 0 },
+        { xtype: 'numberfield', fieldLabel: 'Reorder Point', name: 'reorderPoint', value: 10 },
+        {
+          xtype: 'combobox',
+          fieldLabel: 'Category',
+          name: 'category',
+          store: ['Electronics', 'Accessories', 'Furniture', 'Office'],
+          forceSelection: true,
+        },
+      ],
+      buttons: [{
+        text: 'Add',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            const values = form.getValues();
+            inventoryStore.insert(0, values);
+            this.up('window').close();
+          }
+        },
+      }],
+    }],
+  }).show();
+}`,
   },
 };
 
