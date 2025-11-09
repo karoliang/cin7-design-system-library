@@ -77162,15 +77162,6 @@ const productGrid = ExtDataGrid.create({
   },
 };
 
-export const productDashboardMultiExamples: Record<string, CodeVariant> = {
-  default: {
-    react: `// Same as productDashboard but see individual tabs for framework-specific implementations`,
-    typescript: `// See TypeScript SDK tab for domain models and repository pattern`,
-    vanilla: `// See Vanilla JS tab for DOM manipulation examples`,
-    extjs: `// See ExtJS tab for enterprise grid configuration`,
-  },
-};
-
 export const orderProcessingExamples: Record<string, CodeVariant> = {
   default: {
     react: `import { Page, Card, Layout, DataTable, Badge, Grid, BlockStack, InlineStack, Text, Select, Button } from '@shopify/polaris';
@@ -81315,7 +81306,6 @@ export function getCodeVariants(
     servicelayer: serviceLayerExamples,
     eventbus: eventBusExamples,
     productdashboard: productDashboardExamples,
-    productdashboardmulti: productDashboardMultiExamples,
     orderprocessing: orderProcessingExamples,
     inventorymanagement: inventoryManagementExamples,
     customerportal: customerPortalExamples,
