@@ -13,9 +13,9 @@ console.log('Cache Breaker:', cacheBreaker.CACHE_BREAKER);
 console.log('Build Version:', cacheBreaker.BUILD_VERSION);
 console.log('Force Rebuild:', cacheBreaker.FORCE_REBUILD);
 console.log('Bundle Hash:', cacheBreaker.BUNDLE_HASH);
-console.log('Frame Fix:', cacheBreaker.FRAME_COMPONENT_FIX);
-console.log('Breadcrumbs Fix:', cacheBreaker.BREADCRUMBS_COMPONENT_FIX);
-console.log('Template Fix:', cacheBreaker.TEMPLATE_LITERAL_FIX);
+console.log('Frame Fix:', cacheBreaker.FRAME_PROPS_FIX);
+console.log('Breadcrumbs Fix:', cacheBreaker.BREADCRUMBS_DESTRUCTURING_FIX);
+console.log('Theme Fix:', cacheBreaker.THEME_PROVIDER_FIX);
 
 // CRITICAL FIX: Error boundary for component debugging
 class StorybookErrorBoundary extends React.Component<
