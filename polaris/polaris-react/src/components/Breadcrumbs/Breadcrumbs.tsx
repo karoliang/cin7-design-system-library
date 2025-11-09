@@ -27,21 +27,33 @@ export interface BreadcrumbsProps {
 export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
   // Support new breadcrumbs API
   if (breadcrumbs && breadcrumbs.length > 0) {
+    // Filter out any undefined or invalid breadcrumb items
+    const validBreadcrumbs = breadcrumbs.filter(item =>
+      item &&
+      item.content &&
+      typeof item.content === 'string' &&
+      item.content.trim().length > 0
+    );
+
+    if (validBreadcrumbs.length === 0) {
+      return null;
+    }
+
     return (
       <nav aria-label="Breadcrumb">
-        {breadcrumbs.map((breadcrumb, index) => {
-          const isLast = index === breadcrumbs.length - 1;
+        {validBreadcrumbs.map((breadcrumb, index) => {
+          const isLast = index === validBreadcrumbs.length - 1;
 
           if (isLast) {
             return (
-              <span key={breadcrumb.content} style={{color: '#6b7280', fontSize: '14px'}}>
+              <span key={`${breadcrumb.content}-${index}`} style={{color: '#6b7280', fontSize: '14px'}}>
                 {breadcrumb.content}
               </span>
             );
           }
 
           return (
-            <React.Fragment key={breadcrumb.content}>
+            <React.Fragment key={`${breadcrumb.content}-${index}`}>
               <Button
                 url={breadcrumb.url}
                 onClick={breadcrumb.onAction}
