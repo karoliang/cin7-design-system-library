@@ -316,10 +316,83 @@ export const highContrastTheme: Theme = {
   },
 };
 
+// Cin7 Core Light Theme
+export const cin7CoreLightTheme: Theme = {
+  ...lightTheme,
+  name: 'Cin7 Core Light',
+  mode: 'light',
+  colors: {
+    primary: '#0066cc',
+    primaryLight: '#3380dd',
+    primaryDark: '#004c99',
+    secondary: '#00a86b',
+    secondaryLight: '#33bf8c',
+    secondaryDark: '#008055',
+    accent: '#ff6b35',
+    success: '#00a86b',
+    warning: '#ff9500',
+    critical: '#dc3545',
+    info: '#0066cc',
+    background: '#ffffff',
+    surface: '#ffffff',
+    surfaceSubdued: '#f8f9fa',
+    text: '#2c3e50',
+    textSubdued: '#6c757d',
+    border: '#dee2e6',
+    borderSubdued: '#f1f3f4',
+    interactive: '#0066cc',
+    interactiveHovered: '#3380dd',
+    interactivePressed: '#004c99',
+    interactiveDisabled: '#adb5bd',
+    focused: '#0066cc',
+  },
+};
+
+// Cin7 Core Dark Theme
+export const cin7CoreDarkTheme: Theme = {
+  ...darkTheme,
+  name: 'Cin7 Core Dark',
+  mode: 'dark',
+  colors: {
+    primary: '#4d94ff',
+    primaryLight: '#80b3ff',
+    primaryDark: '#3377dd',
+    secondary: '#4dc9a3',
+    secondaryLight: '#80dbbf',
+    secondaryDark: '#33b585',
+    accent: '#ff8c5a',
+    success: '#4dc9a3',
+    warning: '#ffb366',
+    critical: '#ff6b7a',
+    info: '#4d94ff',
+    background: '#1a1d23',
+    surface: '#2c3038',
+    surfaceSubdued: '#3d4148',
+    text: '#e9ecef',
+    textSubdued: '#adb5bd',
+    border: '#495057',
+    borderSubdued: '#343a40',
+    interactive: '#4d94ff',
+    interactiveHovered: '#80b3ff',
+    interactivePressed: '#3377dd',
+    interactiveDisabled: '#6c757d',
+    focused: '#4d94ff',
+  },
+  shadows: {
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
+    base: '0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.5)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5)',
+    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5)',
+  },
+};
+
 // All available themes
 export const themes = {
   light: lightTheme,
   dark: darkTheme,
+  cin7CoreLight: cin7CoreLightTheme,
+  cin7CoreDark: cin7CoreDarkTheme,
   ocean: oceanTheme,
   forest: forestTheme,
   sunset: sunsetTheme,

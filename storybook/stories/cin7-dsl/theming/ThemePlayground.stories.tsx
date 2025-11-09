@@ -366,13 +366,10 @@ export const Playground: Story = {
                 <Select
                   label="Select Theme"
                   options={[
-                    { label: '☀️ Light', value: 'light' },
-                    { label: '🌙 Dark', value: 'dark' },
-                    { label: '🌊 Ocean', value: 'ocean' },
-                    { label: '🌲 Forest', value: 'forest' },
-                    { label: '🌅 Sunset', value: 'sunset' },
-                    { label: '💜 Purple', value: 'purple' },
-                    { label: '⚡ High Contrast', value: 'highContrast' },
+                    { label: '☀️ Polaris Light', value: 'light' },
+                    { label: '🌙 Polaris Dark', value: 'dark' },
+                    { label: '💙 Cin7 Core Light', value: 'cin7CoreLight' },
+                    { label: '🖤 Cin7 Core Dark', value: 'cin7CoreDark' },
                   ]}
                   value={currentTheme}
                   onChange={handleThemeChange}
