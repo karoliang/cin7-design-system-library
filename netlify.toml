@@ -1,5 +1,5 @@
 # Build configuration for Cin7 DSL documentation site with integrated Storybook
-# 🚨 FINAL NUCLEAR PRODUCTION DEPLOYMENT: 2025-11-10T10:45:00Z - ABSOLUTE PRODUCTION CACHE ANNIHILATION
+# 🚨 EMERGENCY PRODUCTION DEPLOYMENT: 2025-11-10T11:30:00Z - FRAME BREADCRUMBS TEMPLATE FIX
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
@@ -16,15 +16,17 @@
   NEXT_FORCE_NO_CACHE = "true"
   YARN_CACHE_FOLDER = "/dev/null"
   NODE_OPTIONS = "--max-old-space-size=4096"
-  # 🚨 FORCE COMPLETE REBUILD - Level 10 Production Cache Breaking
-  CACHE_BUST = "NUCLEAR-PRODUCTION-1762732300000-ABSOLUTE-FORCE"
+  # 🚨 EMERGENCY PRODUCTION CACHE ANNIHILATION - Frame Breadcrumbs Template Fix
+  CACHE_BUST = "EMERGENCY-PRODUCTION-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-FIX"
   FORCE_REBUILD = "true"
   NETLIFY_FORCE_NO_CACHE = "true"
-  # 🚨 Bundle hash forcing - multiple layers
-  BUNDLE_HASH_FORCE = "PRODUCTION-BUNDLE-1762732300001"
-  FRAME_COMPONENT_FORCE = "FRAME-PRODUCTION-1762732300002"
-  BREADCRUMBS_COMPONENT_FORCE = "BREADCRUMBS-PRODUCTION-1762732300003"
+  # 🚨 Bundle hash forcing - emergency fix deployment
+  BUNDLE_HASH_FORCE = "EMERGENCY-BUNDLE-1754822400001-FRAME-FIX"
+  FRAME_COMPONENT_FORCE = "EMERGENCY-FRAME-1754822400002-PRODUCTION-FIX"
+  BREADCRUMBS_COMPONENT_FORCE = "EMERGENCY-BREADCRUMBS-1754822400003-PRODUCTION-FIX"
+  TEMPLATE_LITERAL_FORCE = "EMERGENCY-TEMPLATE-1754822400004-PRODUCTION-FIX"
   STORYBOOK_FORCE_REBUILD = "TRUE"
+  PRODUCTION_EMERGENCY_DEPLOY = "FRAME-BREADCRUMBS-TEMPLATE-LITERAL-FIX"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -38,19 +40,21 @@
     X-XSS-Protection = "1; mode=block"
     X-Robots-Tag = "noai, noimageai"
 
-# 🚨 NUCLEAR PRODUCTION CDN cache invalidation for all JavaScript bundles
+# 🚨 EMERGENCY PRODUCTION CDN cache invalidation for all JavaScript bundles
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate, max-age=0, private"
     Pragma = "no-cache"
     Expires = "0"
-    # 🚨 Multiple production cache breakers
-    X-Cache-Bust = "NUCLEAR-PRODUCTION-1762732300000-ABSOLUTE-FORCE"
-    X-Bundle-Force = "PRODUCTION-BUNDLE-1762732300001"
-    X-Frame-Force = "FRAME-PRODUCTION-1762732300002"
-    X-Breadcrumbs-Force = "BREADCRUMBS-PRODUCTION-1762732300003"
+    # 🚨 Emergency production cache breakers - Frame Breadcrumbs Template Fix
+    X-Cache-Bust = "EMERGENCY-PRODUCTION-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-FIX"
+    X-Bundle-Force = "EMERGENCY-BUNDLE-1754822400001-FRAME-FIX"
+    X-Frame-Force = "EMERGENCY-FRAME-1754822400002-PRODUCTION-FIX"
+    X-Breadcrumbs-Force = "EMERGENCY-BREADCRUMBS-1754822400003-PRODUCTION-FIX"
+    X-Template-Force = "EMERGENCY-TEMPLATE-1754822400004-PRODUCTION-FIX"
     X-Storybook-Rebuild = "TRUE"
+    X-Production-Emergency = "FRAME-BREADCRUMBS-TEMPLATE-LITERAL-FIX"
     # Force browser to not use any cached version
     Vary = "*"
     Surrogate-Control = "no-store, no-cache, must-revalidate"
@@ -66,4 +70,4 @@
     X-XSS-Protection = "1; mode=block"
     X-Robots-Tag = "noai, noimageai"
     Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
-    X-Cache-Bust = "NUCLEAR-1762719448823-hpfeo"
+    X-Cache-Bust = "EMERGENCY-PRODUCTION-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-FIX"

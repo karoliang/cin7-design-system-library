@@ -4,6 +4,19 @@ import { AppProvider } from '@shopify/polaris';
 import enTranslations from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/build/esm/styles.css';
 
+// NUCLEAR CACHE BREAKING - Force bundle regeneration
+import * as cacheBreaker from '../cache-breaker';
+
+// Force all cache breaking constants to be included in bundles
+console.log('🚨 NUCLEAR CACHE BREAKING ACTIVATED 🚨');
+console.log('Cache Breaker:', cacheBreaker.CACHE_BREAKER);
+console.log('Build Version:', cacheBreaker.BUILD_VERSION);
+console.log('Force Rebuild:', cacheBreaker.FORCE_REBUILD);
+console.log('Bundle Hash:', cacheBreaker.BUNDLE_HASH);
+console.log('Frame Fix:', cacheBreaker.FRAME_COMPONENT_FIX);
+console.log('Breadcrumbs Fix:', cacheBreaker.BREADCRUMBS_COMPONENT_FIX);
+console.log('Template Fix:', cacheBreaker.TEMPLATE_LITERAL_FIX);
+
 // CRITICAL FIX: Error boundary for component debugging
 class StorybookErrorBoundary extends React.Component<
   { children: React.ReactNode },

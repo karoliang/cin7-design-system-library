@@ -1,6 +1,6 @@
 {
   "name": "@cin7/storybook",
-  "version": "0.1.0-NUCLEAR-1762719448823-hpfeo",
+  "version": "0.1.2-EMERGENCY-PRODUCTION-FIX-1754822400000",
   "private": true,
   "description": "Interactive component documentation for Cin7 Design System Library",
   "scripts": {
@@ -53,5 +53,5 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
   },
-  "cacheBust": "NUCLEAR-1762719448823-hpfeo"
+  "cacheBust": "EMERGENCY-PRODUCTION-FIX-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-LITERAL"
 }

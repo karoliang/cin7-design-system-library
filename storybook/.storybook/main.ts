@@ -51,6 +51,50 @@ const config: StorybookConfig = {
       allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0']
     };
 
+    // NUCLEAR CACHE BREAKING - Force bundle regeneration
+    config.build = {
+      ...config.build,
+      // Force new chunk hashes with timestamp
+      rollupOptions: {
+        ...config.build?.rollupOptions,
+        output: {
+          ...config.build?.rollupOptions?.output,
+          // Force chunk hashes with cache breaking timestamp
+          chunkFileNames: (chunkInfo) => {
+            const timestamp = Date.now();
+            const hash = Math.random().toString(36).substring(2, 15);
+            return `assets/[name]-${timestamp}-${hash}.js`;
+          },
+          entryFileNames: (entryInfo) => {
+            const timestamp = Date.now();
+            const hash = Math.random().toString(36).substring(2, 15);
+            return `assets/[name]-${timestamp}-${hash}.js`;
+          },
+          assetFileNames: (assetInfo) => {
+            const timestamp = Date.now();
+            const hash = Math.random().toString(36).substring(2, 15);
+            if (assetInfo.name?.endsWith('.css')) {
+              return `assets/[name]-${timestamp}-${hash}.css`;
+            }
+            return `assets/[name]-${timestamp}-${hash}[extname]`;
+          }
+        }
+      }
+    };
+
+    // Force cache invalidation with query parameters
+    if (config.define) {
+      config.define.CACHE_BREAKER = JSON.stringify(Date.now());
+      config.define.BUILD_VERSION = JSON.stringify(`1.1.2-${Date.now()}`);
+      config.define.FORCE_REBUILD = JSON.stringify(Math.random().toString(36));
+    } else {
+      config.define = {
+        CACHE_BREAKER: JSON.stringify(Date.now()),
+        BUILD_VERSION: JSON.stringify(`1.1.2-${Date.now()}`),
+        FORCE_REBUILD: JSON.stringify(Math.random().toString(36))
+      };
+    }
+
     // Fix module resolution issues - remove problematic aliases for now
     // config.resolve = {
     //   ...config.resolve,

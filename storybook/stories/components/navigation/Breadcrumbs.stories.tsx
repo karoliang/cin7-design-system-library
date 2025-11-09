@@ -74,7 +74,7 @@ const meta = {
     codeVariants: getCodeVariants('breadcrumbs', 'default'),
   },
   tags: ['autodocs'],
-  // CRITICAL FIX: Add Breadcrumbs-specific error boundary decorator
+  // RESTORED: Breadcrumbs-specific error boundary decorator for debugging
   decorators: [
     (Story) => (
       <BreadcrumbsErrorBoundary>

@@ -99,7 +99,7 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-  // CRITICAL FIX: Add Frame-specific error boundary decorator
+  // RESTORED: Frame-specific error boundary decorator for debugging
   decorators: [
     (Story) => (
       <FrameErrorBoundary>
