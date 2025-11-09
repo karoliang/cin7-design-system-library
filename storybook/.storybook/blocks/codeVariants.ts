@@ -77173,66 +77173,317 @@ export const productDashboardMultiExamples: Record<string, CodeVariant> = {
 
 export const orderProcessingExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { Page, Card, Layout, DataTable, Badge, Banner } from '@shopify/polaris';
+    react: `import { Page, Card, Layout, DataTable, Badge, Grid, BlockStack, InlineStack, Text, Select, Button } from '@shopify/polaris';
+import { PlusIcon } from '@shopify/polaris-icons';
 import { LineChart } from '@cin7/highcharts-adapter/react';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 function OrderProcessing() {
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState('all');
 
   const orderData = [
-    { id: '10234', customer: 'John Doe', amount: 234.50, status: 'Fulfilled', date: '2025-01-10' },
-    { id: '10233', customer: 'Jane Smith', amount: 89.99, status: 'Processing', date: '2025-01-10' },
-    // ... more orders
+    { id: '10234', customer: 'John Doe', amount: 234.50, status: 'Fulfilled', date: '2025-01-10', items: 3 },
+    { id: '10233', customer: 'Jane Smith', amount: 89.99, status: 'Processing', date: '2025-01-10', items: 1 },
+    { id: '10232', customer: 'Bob Johnson', amount: 456.78, status: 'Pending', date: '2025-01-09', items: 5 },
+    { id: '10231', customer: 'Alice Brown', amount: 123.45, status: 'Fulfilled', date: '2025-01-09', items: 2 },
+    { id: '10230', customer: 'Charlie Davis', amount: 567.89, status: 'Shipped', date: '2025-01-08', items: 4 },
   ];
 
+  const filteredOrders = orderData.filter(order =>
+    filterStatus === 'all' || order.status === filterStatus
+  );
+
+  const statusCounts = {
+    total: orderData.length,
+    fulfilled: orderData.filter(o => o.status === 'Fulfilled').length,
+    processing: orderData.filter(o => o.status === 'Processing').length,
+    pending: orderData.filter(o => o.status === 'Pending').length,
+  };
+
+  const dailySales = [
+    { date: '2025-01-06', orders: 23, revenue: 1234.56 },
+    { date: '2025-01-07', orders: 28, revenue: 1567.89 },
+    { date: '2025-01-08', orders: 31, revenue: 1890.23 },
+    { date: '2025-01-09', orders: 27, revenue: 1456.78 },
+    { date: '2025-01-10', orders: 34, revenue: 2012.45 },
+  ];
+
+  const handleStatusChange = useCallback((value: string) => {
+    setFilterStatus(value);
+  }, []);
+
   return (
-    <Page title="Order Processing">
+    <Page
+      title="Order Processing"
+      subtitle="Process and manage customer orders"
+      primaryAction={{
+        content: 'Create Order',
+        icon: PlusIcon,
+      }}
+    >
       <Layout>
         <Layout.Section>
+          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Orders</Text>
+                <Text variant="heading2xl" as="h2">{statusCounts.total}</Text>
+                <Badge>Today</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Fulfilled</Text>
+                <Text variant="heading2xl" as="h2">{statusCounts.fulfilled}</Text>
+                <Badge tone="success">Complete</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Processing</Text>
+                <Text variant="heading2xl" as="h2">{statusCounts.processing}</Text>
+                <Badge tone="attention">In Progress</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Pending</Text>
+                <Text variant="heading2xl" as="h2">{statusCounts.pending}</Text>
+                <Badge tone="warning">Awaiting</Badge>
+              </BlockStack>
+            </Card>
+          </Grid>
+        </Layout.Section>
+
+        <Layout.Section>
           <Card>
-            <DataTable
-              columnContentTypes={['text', 'text', 'numeric', 'text', 'text']}
-              headings={['Order ID', 'Customer', 'Amount', 'Status', 'Date']}
-              rows={orderData.map(order => [
-                order.id,
-                order.customer,
-                \`$\${order.amount.toFixed(2)}\`,
-                <Badge tone={order.status === 'Fulfilled' ? 'success' : 'info'}>{order.status}</Badge>,
-                order.date
-              ])}
-            />
+            <BlockStack gap="400">
+              <Text variant="headingLg" as="h3">Revenue Trend</Text>
+              <LineChart
+                title="Daily Revenue"
+                subtitle="Last 5 days"
+                smooth={true}
+                markers={true}
+                series={[{
+                  name: 'Revenue',
+                  data: dailySales.map(d => d.revenue),
+                }]}
+                xAxis={{
+                  categories: dailySales.map(d => d.date),
+                }}
+                yAxis={{
+                  title: { text: 'Revenue ($)' },
+                }}
+                height={300}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg" as="h3">Recent Orders</Text>
+                <Select
+                  label=""
+                  options={[
+                    { label: 'All Orders', value: 'all' },
+                    { label: 'Fulfilled', value: 'Fulfilled' },
+                    { label: 'Processing', value: 'Processing' },
+                    { label: 'Pending', value: 'Pending' },
+                    { label: 'Shipped', value: 'Shipped' },
+                  ]}
+                  value={filterStatus}
+                  onChange={handleStatusChange}
+                />
+              </InlineStack>
+
+              <DataTable
+                columnContentTypes={['text', 'text', 'numeric', 'numeric', 'text', 'text']}
+                headings={['Order ID', 'Customer', 'Amount', 'Items', 'Status', 'Date']}
+                rows={filteredOrders.map(order => [
+                  \`#\${order.id}\`,
+                  order.customer,
+                  \`$\${order.amount.toFixed(2)}\`,
+                  order.items,
+                  order.status === 'Fulfilled' ? (
+                    <Badge tone="success">Fulfilled</Badge>
+                  ) : order.status === 'Processing' ? (
+                    <Badge tone="attention">Processing</Badge>
+                  ) : order.status === 'Pending' ? (
+                    <Badge tone="warning">Pending</Badge>
+                  ) : (
+                    <Badge tone="info">Shipped</Badge>
+                  ),
+                  order.date,
+                ])}
+              />
+            </BlockStack>
           </Card>
         </Layout.Section>
       </Layout>
     </Page>
   );
 }`,
-    typescript: `import { Entity, Repository, EventBus } from '@cin7/typescript-sdk';
+    typescript: `// TypeScript SDK - Order Processing Domain Layer
+import { Entity, ValueObject, Repository, EventBus } from '@cin7/typescript-sdk';
+
+// Value Objects
+class Money extends ValueObject<number> {
+  constructor(value: number, public readonly currency: string = 'USD') {
+    super(value);
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (this.value < 0) {
+      throw new Error('Money cannot be negative');
+    }
+  }
+
+  add(other: Money): Money {
+    if (this.currency !== other.currency) {
+      throw new Error('Cannot add money with different currencies');
+    }
+    return new Money(this.value + other.value, this.currency);
+  }
+
+  multiply(quantity: number): Money {
+    return new Money(this.value * quantity, this.currency);
+  }
+
+  static zero(currency: string = 'USD'): Money {
+    return new Money(0, currency);
+  }
+}
+
+class Email extends ValueObject<string> {
+  constructor(value: string) {
+    super(value);
+    this.validate();
+  }
+
+  protected validate(): void {
+    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    if (!emailRegex.test(this.value)) {
+      throw new Error('Invalid email address');
+    }
+  }
+}
+
+// Enums
+enum OrderStatus {
+  Pending = 'Pending',
+  Processing = 'Processing',
+  Shipped = 'Shipped',
+  Fulfilled = 'Fulfilled',
+  Cancelled = 'Cancelled',
+}
+
+// Entities
+class OrderItem {
+  constructor(
+    public readonly productId: string,
+    public readonly productName: string,
+    public readonly quantity: number,
+    public readonly unitPrice: Money
+  ) {
+    if (quantity <= 0) {
+      throw new Error('Quantity must be greater than 0');
+    }
+  }
+
+  get total(): Money {
+    return this.unitPrice.multiply(this.quantity);
+  }
+}
 
 class Order extends Entity {
   constructor(
     public readonly id: string,
     public readonly customerId: string,
+    public readonly customerName: string,
+    public readonly customerEmail: Email,
     public readonly items: OrderItem[],
     public status: OrderStatus,
-    public readonly createdAt: Date
+    public readonly createdAt: Date,
+    public updatedAt: Date = new Date()
   ) {
     super(id);
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (this.items.length === 0) {
+      throw new Error('Order must have at least one item');
+    }
   }
 
   get totalAmount(): Money {
-    return this.items.reduce((sum, item) => sum.add(item.total), Money.zero());
+    return this.items.reduce(
+      (sum, item) => sum.add(item.total),
+      Money.zero()
+    );
   }
 
-  fulfill(): void {
-    if (this.status !== OrderStatus.Processing) {
-      throw new Error('Order must be in Processing status to fulfill');
-    }
-    this.status = OrderStatus.Fulfilled;
-    EventBus.emit('order:fulfilled', { orderId: this.id });
+  get itemCount(): number {
+    return this.items.reduce((sum, item) => sum + item.quantity, 0);
   }
+
+  // State transitions
+  startProcessing(): Order {
+    if (this.status !== OrderStatus.Pending) {
+      throw new Error('Can only start processing pending orders');
+    }
+
+    const updated = this.clone({ status: OrderStatus.Processing });
+    EventBus.emit('order:processing:started', {
+      orderId: this.id,
+      customerId: this.customerId,
+      timestamp: new Date(),
+    });
+
+    return updated;
+  }
+
+  fulfill(): Order {
+    if (this.status !== OrderStatus.Processing) {
+      throw new Error('Can only fulfill processing orders');
+    }
+
+    const updated = this.clone({ status: OrderStatus.Fulfilled });
+    EventBus.emit('order:fulfilled', {
+      orderId: this.id,
+      customerId: this.customerId,
+      timestamp: new Date(),
+    });
+
+    return updated;
+  }
+
+  private clone(updates: Partial<{ status: OrderStatus }>): Order {
+    return new Order(
+      this.id,
+      this.customerId,
+      this.customerName,
+      this.customerEmail,
+      this.items,
+      updates.status ?? this.status,
+      this.createdAt,
+      new Date()
+    );
+  }
+}
+
+// Repository
+interface OrderMetrics {
+  total: number;
+  pending: number;
+  processing: number;
+  fulfilled: number;
+  totalRevenue: number;
 }
 
 class OrderRepository extends Repository<Order> {
@@ -77240,44 +77491,477 @@ class OrderRepository extends Repository<Order> {
     return this.query({ customerId });
   }
 
+  async findByStatus(status: OrderStatus): Promise<Order[]> {
+    return this.query({ status });
+  }
+
   async getOrderMetrics(): Promise<OrderMetrics> {
     const orders = await this.findAll();
+
+    const totalRevenue = orders
+      .filter(o => o.status !== OrderStatus.Cancelled)
+      .reduce((sum, o) => sum + o.totalAmount.value, 0);
+
     return {
       total: orders.length,
-      fulfilled: orders.filter(o => o.status === OrderStatus.Fulfilled).length,
+      pending: orders.filter(o => o.status === OrderStatus.Pending).length,
       processing: orders.filter(o => o.status === OrderStatus.Processing).length,
-      revenue: orders.reduce((sum, o) => sum + o.totalAmount.value, 0)
+      fulfilled: orders.filter(o => o.status === OrderStatus.Fulfilled).length,
+      totalRevenue,
     };
   }
-}`,
-    vanilla: `import { $, on, addClass } from '@cin7/vanilla-js';
 
+  async getDailyRevenue(days: number = 7): Promise<{ date: string; revenue: number }[]> {
+    const orders = await this.findAll();
+    const results: { date: string; revenue: number }[] = [];
+
+    for (let i = days - 1; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
+
+      const dayOrders = orders.filter(o => {
+        const orderDate = o.createdAt.toISOString().split('T')[0];
+        return orderDate === dateStr && o.status !== OrderStatus.Cancelled;
+      });
+
+      const revenue = dayOrders.reduce((sum, o) => sum + o.totalAmount.value, 0);
+      results.push({ date: dateStr, revenue });
+    }
+
+    return results;
+  }
+}
+
+// Service Layer
+class OrderService {
+  constructor(private readonly repository: OrderRepository) {}
+
+  async createOrder(
+    customerId: string,
+    customerName: string,
+    customerEmail: string,
+    items: { productId: string; productName: string; quantity: number; price: number }[]
+  ): Promise<Order> {
+    const email = new Email(customerEmail);
+    const orderItems = items.map(
+      item => new OrderItem(item.productId, item.productName, item.quantity, new Money(item.price))
+    );
+
+    const order = new Order(
+      \`ORD-\${Date.now()}\`,
+      customerId,
+      customerName,
+      email,
+      orderItems,
+      OrderStatus.Pending,
+      new Date()
+    );
+
+    await this.repository.save(order);
+    EventBus.emit('order:created', { orderId: order.id, customerId });
+
+    return order;
+  }
+
+  async processOrder(orderId: string): Promise<Order> {
+    const order = await this.repository.findById(orderId);
+    if (!order) throw new Error(\`Order not found: \${orderId}\`);
+
+    const updated = order.startProcessing();
+    await this.repository.save(updated);
+    return updated;
+  }
+
+  async fulfillOrder(orderId: string): Promise<Order> {
+    const order = await this.repository.findById(orderId);
+    if (!order) throw new Error(\`Order not found: \${orderId}\`);
+
+    const updated = order.fulfill();
+    await this.repository.save(updated);
+    return updated;
+  }
+}`,
+    vanilla: `// Vanilla JS - Order Processing UI Interactions
+import { $, $$, on, addClass, removeClass, fadeIn, fadeOut, attr, html } from '@cin7/vanilla-js';
+import { EventBus } from '@cin7/typescript-sdk';
+
+// Initialize Order Processing Dashboard
 function initOrderProcessing() {
-  const orderRows = $$('.order-row');
-  
-  orderRows.forEach(row => {
+  const dashboard = $('#order-dashboard');
+  if (!dashboard) return;
+
+  initOrderTable();
+  initStatusFilter();
+  initMetrics();
+  initEventListeners();
+}
+
+// Order Table
+function initOrderTable() {
+  const rows = $$('.order-row');
+
+  rows.forEach(row => {
+    on(row, 'mouseenter', () => {
+      addClass(row, 'order-row--hover');
+    });
+
+    on(row, 'mouseleave', () => {
+      removeClass(row, 'order-row--hover');
+    });
+
     on(row, 'click', () => {
-      removeClass($$('.order-row'), 'selected');
+      removeClass($$('.order-row'), 'order-row--selected');
       addClass(row, 'selected');
-      showOrderDetails(row.dataset.orderId);
+      showOrderDetails(attr(row, 'data-order-id'));
     });
   });
-}`,
-    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+}
 
-const orderGrid = ExtDataGrid.create({
-  title: 'Orders',
-  store: {
-    proxy: { url: '/api/orders' },
-    pageSize: 50
+// Status Filter
+function initStatusFilter() {
+  const filterSelect = $('#order-status-filter');
+  if (!filterSelect) return;
+
+  on(filterSelect, 'change', (e: Event) => {
+    const target = e.target as HTMLSelectElement;
+    filterOrdersByStatus(target.value);
+  });
+}
+
+function filterOrdersByStatus(status: string) {
+  const rows = $$('.order-row');
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const rowStatus = attr(row, 'data-order-status');
+    if (status === 'all' || rowStatus === status) {
+      fadeIn(row, 150);
+      visibleCount++;
+    } else {
+      fadeOut(row, 150);
+    }
+  });
+
+  updateOrderCount(visibleCount);
+  EventBus.emit('orders:filtered', { status, count: visibleCount });
+}
+
+// Order Details
+function showOrderDetails(orderId: string | null) {
+  const detailsPanel = $('#order-details-panel');
+  if (!detailsPanel || !orderId) return;
+
+  const orderRow = $$(\`.order-row[data-order-id="\${orderId}"]\`)[0];
+  if (!orderRow) return;
+
+  html($('#detail-order-id'), orderId);
+  html($('#detail-customer'), attr(orderRow, 'data-order-customer') || '');
+  html($('#detail-amount'), attr(orderRow, 'data-order-amount') || '');
+  html($('#detail-status'), attr(orderRow, 'data-order-status') || '');
+
+  fadeIn(detailsPanel);
+}
+
+// Metrics
+function initMetrics() {
+  const metrics = $$('.metric-value');
+  metrics.forEach(metric => {
+    animateMetric(metric as HTMLElement);
+  });
+}
+
+function updateMetrics(data: { total: number; fulfilled: number; processing: number; pending: number }) {
+  animateNumber($('#metric-total'), data.total);
+  animateNumber($('#metric-fulfilled'), data.fulfilled);
+  animateNumber($('#metric-processing'), data.processing);
+  animateNumber($('#metric-pending'), data.pending);
+}
+
+function animateMetric(element: HTMLElement) {
+  const targetValue = parseInt(attr(element, 'data-value') || '0');
+  animateNumber(element, targetValue, 1000);
+}
+
+function animateNumber(element: HTMLElement | null, targetValue: number, duration: number = 500) {
+  if (!element) return;
+
+  const currentValue = parseInt(element.textContent || '0');
+  const steps = 30;
+  const increment = (targetValue - currentValue) / steps;
+
+  let step = 0;
+  const interval = setInterval(() => {
+    if (step >= steps) {
+      element.textContent = targetValue.toString();
+      clearInterval(interval);
+      return;
+    }
+
+    element.textContent = Math.round(currentValue + increment * step).toString();
+    step++;
+  }, duration / steps);
+}
+
+function updateOrderCount(count: number) {
+  const countEl = $('#order-count');
+  if (countEl) {
+    html(countEl, \`Showing \${count} orders\`);
+  }
+}
+
+// Event Listeners
+function initEventListeners() {
+  EventBus.on('order:created', (event: any) => {
+    showNotification(\`Order #\${event.orderId} created\`, 'success');
+  });
+
+  EventBus.on('order:fulfilled', (event: any) => {
+    showNotification(\`Order #\${event.orderId} fulfilled\`, 'success');
+    updateOrderRowStatus(event.orderId, 'Fulfilled');
+  });
+
+  EventBus.on('metrics:updated', (metrics: any) => {
+    updateMetrics(metrics);
+  });
+}
+
+function updateOrderRowStatus(orderId: string, status: string) {
+  const rows = $$('.order-row');
+  rows.forEach(row => {
+    if (attr(row, 'data-order-id') === orderId) {
+      attr(row, 'data-order-status', status);
+      const statusBadge = row.querySelector('.status-badge');
+      if (statusBadge) {
+        html(statusBadge, status);
+      }
+    }
+  });
+}
+
+function showNotification(message: string, type: 'success' | 'error' | 'info' = 'info') {
+  const notification = document.createElement('div');
+  notification.className = \`notification notification--\${type}\`;
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => addClass(notification, 'notification--visible'), 10);
+  setTimeout(() => {
+    removeClass(notification, 'notification--visible');
+    setTimeout(() => document.body.removeChild(notification), 300);
+  }, 3000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initOrderProcessing);
+} else {
+  initOrderProcessing();
+}`,
+    extjs: `// ExtJS - Order Processing Grid
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+import { EventBus } from '@cin7/typescript-sdk';
+
+// Order Store
+const orderStore = Ext.create('Ext.data.Store', {
+  storeId: 'orderStore',
+  fields: [
+    { name: 'id', type: 'string' },
+    { name: 'customerId', type: 'string' },
+    { name: 'customerName', type: 'string' },
+    { name: 'amount', type: 'number' },
+    { name: 'items', type: 'int' },
+    { name: 'status', type: 'string' },
+    { name: 'createdAt', type: 'date' },
+  ],
+  proxy: {
+    type: 'ajax',
+    url: '/api/orders',
+    reader: {
+      type: 'json',
+      rootProperty: 'data',
+      totalProperty: 'total',
+    },
   },
+  autoLoad: true,
+  pageSize: 50,
+  sorters: [{ property: 'createdAt', direction: 'DESC' }],
+});
+
+// Order Grid
+const orderGrid = ExtDataGrid.create({
+  title: 'Order Management',
+  store: orderStore,
+
   columns: [
-    { dataIndex: 'id', text: 'Order ID', width: 100 },
-    { dataIndex: 'customer', text: 'Customer', flex: 1 },
-    { dataIndex: 'amount', text: 'Amount', xtype: 'numbercolumn', format: '$0,000.00' },
-    { dataIndex: 'status', text: 'Status', width: 120 }
-  ]
-});`,
+    {
+      dataIndex: 'id',
+      text: 'Order ID',
+      width: 120,
+      renderer: function(value) {
+        return '<strong>#' + value + '</strong>';
+      },
+    },
+    {
+      dataIndex: 'customerName',
+      text: 'Customer',
+      flex: 2,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'amount',
+      text: 'Amount',
+      width: 120,
+      align: 'right',
+      xtype: 'numbercolumn',
+      format: '$0,000.00',
+      summaryType: 'sum',
+    },
+    {
+      dataIndex: 'items',
+      text: 'Items',
+      width: 80,
+      align: 'center',
+    },
+    {
+      dataIndex: 'status',
+      text: 'Status',
+      width: 120,
+      filter: {
+        type: 'list',
+        options: ['Pending', 'Processing', 'Shipped', 'Fulfilled'],
+      },
+      renderer: function(value) {
+        const colors = {
+          'Fulfilled': '#28a745',
+          'Processing': '#ffc107',
+          'Pending': '#17a2b8',
+          'Shipped': '#007bff',
+        };
+        const color = colors[value] || '#6c757d';
+        return '<span style="background:' + color + ';color:white;padding:4px 12px;border-radius:12px;">' + value + '</span>';
+      },
+    },
+    {
+      dataIndex: 'createdAt',
+      text: 'Created',
+      width: 120,
+      xtype: 'datecolumn',
+      format: 'Y-m-d',
+    },
+    {
+      xtype: 'actioncolumn',
+      text: 'Actions',
+      width: 100,
+      items: [
+        {
+          iconCls: 'x-fa fa-eye',
+          tooltip: 'View Details',
+          handler: function(grid, rowIndex, colIndex, item, e, record) {
+            showOrderDetails(record.getData());
+          },
+        },
+        {
+          iconCls: 'x-fa fa-check',
+          tooltip: 'Fulfill Order',
+          handler: function(grid, rowIndex, colIndex, item, e, record) {
+            if (record.get('status') === 'Processing') {
+              record.set('status', 'Fulfilled');
+              record.commit();
+              EventBus.emit('order:fulfilled', { orderId: record.get('id') });
+            }
+          },
+        },
+      ],
+    },
+  ],
+
+  features: [
+    {
+      ftype: 'grouping',
+      groupHeaderTpl: 'Status: {name} ({rows.length} orders)',
+    },
+    {
+      ftype: 'filters',
+    },
+    {
+      ftype: 'summary',
+      dock: 'bottom',
+    },
+  ],
+
+  tbar: [
+    {
+      text: 'Create Order',
+      iconCls: 'x-fa fa-plus',
+      handler: function() {
+        showCreateOrderWindow();
+      },
+    },
+    '->',
+    {
+      xtype: 'combobox',
+      fieldLabel: 'Status',
+      store: ['All', 'Pending', 'Processing', 'Shipped', 'Fulfilled'],
+      value: 'All',
+      listeners: {
+        select: function(combo, record) {
+          const value = record.get('field1');
+          const store = combo.up('grid').getStore();
+          if (value === 'All') {
+            store.clearFilter();
+          } else {
+            store.filter('status', value);
+          }
+        },
+      },
+    },
+  ],
+
+  bbar: {
+    xtype: 'pagingtoolbar',
+    store: orderStore,
+    displayInfo: true,
+  },
+});
+
+function showOrderDetails(order: any) {
+  Ext.create('Ext.window.Window', {
+    title: 'Order #' + order.id,
+    width: 500,
+    modal: true,
+    html: '<div style="padding:20px;"><strong>Customer:</strong> ' + order.customerName + '<br>' +
+          '<strong>Amount:</strong> $' + order.amount.toFixed(2) + '<br>' +
+          '<strong>Status:</strong> ' + order.status + '</div>',
+  }).show();
+}
+
+function showCreateOrderWindow() {
+  Ext.create('Ext.window.Window', {
+    title: 'Create Order',
+    width: 400,
+    modal: true,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 15,
+      items: [
+        { xtype: 'textfield', fieldLabel: 'Customer', name: 'customerName', allowBlank: false },
+        { xtype: 'numberfield', fieldLabel: 'Amount', name: 'amount', minValue: 0 },
+      ],
+      buttons: [{
+        text: 'Create',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            const values = form.getValues();
+            orderStore.insert(0, values);
+            this.up('window').close();
+          }
+        },
+      }],
+    }],
+  }).show();
+}`,
   },
 };
 
