@@ -86,6 +86,34 @@ mkdir -p public/storybook
 cp -r ../../storybook/storybook-static/* public/storybook/
 echo "✓ Storybook copied to public/storybook/"
 
+# Validate Storybook build synchronization
+echo "=================================================="
+echo "Step 9.5: Validating Storybook build synchronization..."
+echo "=================================================="
+if [ ! -f "public/storybook/iframe.html" ]; then
+  echo "❌ CRITICAL: Storybook iframe.html missing!"
+  exit 1
+fi
+
+# Check for iframe JavaScript file with proper hash
+IFRAME_JS_FILE=$(find public/storybook/assets -name "iframe-*.js" | head -1)
+if [ -z "$IFRAME_JS_FILE" ]; then
+  echo "❌ CRITICAL: Storybook iframe JavaScript bundle missing!"
+  exit 1
+fi
+
+echo "✅ Found iframe JavaScript: $(basename $IFRAME_JS_FILE)"
+
+# Verify iframe.html references the correct JavaScript file
+if grep -q "$(basename $IFRAME_JS_FILE)" public/storybook/iframe.html; then
+  echo "✅ iframe.html references correct JavaScript bundle"
+else
+  echo "❌ CRITICAL: iframe.html does not reference $(basename $IFRAME_JS_FILE)!"
+  exit 1
+fi
+
+echo "✅ Storybook build validation passed"
+
 # Generate colors
 echo "=================================================="
 echo "Step 10: Generating colors..."
