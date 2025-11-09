@@ -17,13 +17,26 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    // CRITICAL FIX: Explicit module pre-bundling for complex components
     include: [
       'react',
       'react-dom',
       '@shopify/polaris',
       '@shopify/polaris-icons',
       '@shopify/polaris-tokens',
+      // CRITICAL: Add explicit includes for Frame and Breadcrumbs dependencies
+      '@shopify/polaris/build/esm/styles.css',
+      '@shopify/polaris/build/esm/components/Frame/Frame.css',
+      '@shopify/polaris/build/esm/components/Breadcrumbs/Breadcrumbs.css',
+      '@shopify/polaris/build/esm/utilities/i18n',
+      '@shopify/polaris/build/esm/utilities/media-query',
+      '@shopify/polaris/build/esm/utilities/frame',
+      '@shopify/polaris/build/esm/components/Frame',
+      '@shopify/polaris/build/esm/components/Breadcrumbs',
+      'react-transition-group',
     ],
+    // CRITICAL FIX: Force inclusion of problematic modules
+    force: true,
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

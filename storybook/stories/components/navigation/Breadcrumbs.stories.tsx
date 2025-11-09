@@ -3,6 +3,64 @@ import { Breadcrumbs } from '@shopify/polaris';
 import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
+// CRITICAL FIX: Breadcrumbs-specific error boundary for debugging
+class BreadcrumbsErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error?: Error; errorInfo?: React.ErrorInfo }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('🚨 Breadcrumbs Component Error:', error, errorInfo);
+    this.setState({ error, errorInfo });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          padding: '30px',
+          margin: '20px',
+          border: '2px solid orange',
+          borderRadius: '8px',
+          backgroundColor: '#fff8e1',
+          color: '#e65100',
+          fontFamily: 'monospace',
+          fontSize: '13px'
+        }}>
+          <h3>🚨 Breadcrumbs Component Failed to Render</h3>
+          <p><strong>Error:</strong> {this.state.error?.message}</p>
+          <p><strong>Component:</strong> Breadcrumbs</p>
+          <p><strong>Cause:</strong> This may be a props validation or dependency issue</p>
+          <details style={{ marginTop: '15px' }}>
+            <summary>Technical Details</summary>
+            <pre style={{
+              fontSize: '11px',
+              overflow: 'auto',
+              maxHeight: '200px',
+              backgroundColor: '#f5f5f5',
+              padding: '8px',
+              borderRadius: '4px',
+              marginTop: '8px'
+            }}>
+              {this.state.error?.stack}
+            </pre>
+          </details>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const meta = {
   title: 'Components/Navigation/Breadcrumbs',
   component: Breadcrumbs,
@@ -16,6 +74,14 @@ const meta = {
     codeVariants: getCodeVariants('breadcrumbs', 'default'),
   },
   tags: ['autodocs'],
+  // CRITICAL FIX: Add Breadcrumbs-specific error boundary decorator
+  decorators: [
+    (Story) => (
+      <BreadcrumbsErrorBoundary>
+        <Story />
+      </BreadcrumbsErrorBoundary>
+    ),
+  ],
   argTypes: {
     breadcrumbs: {
       control: 'object',

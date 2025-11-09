@@ -28,6 +28,64 @@ import {
 import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
+// CRITICAL FIX: Frame-specific error boundary for debugging
+class FrameErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error?: Error; errorInfo?: React.ErrorInfo }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('🚨 Frame Component Error:', error, errorInfo);
+    this.setState({ error, errorInfo });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          padding: '40px',
+          margin: '20px',
+          border: '3px solid red',
+          borderRadius: '12px',
+          backgroundColor: '#fff5f5',
+          color: '#d32f2f',
+          fontFamily: 'monospace',
+          fontSize: '14px'
+        }}>
+          <h2>🚨 Frame Component Failed to Render</h2>
+          <p><strong>Error:</strong> {this.state.error?.message}</p>
+          <p><strong>Component:</strong> Frame</p>
+          <p><strong>Cause:</strong> This is likely a context provider or dependency resolution issue</p>
+          <details style={{ marginTop: '20px' }}>
+            <summary>Technical Details</summary>
+            <pre style={{
+              fontSize: '11px',
+              overflow: 'auto',
+              maxHeight: '300px',
+              backgroundColor: '#f5f5f5',
+              padding: '10px',
+              borderRadius: '4px',
+              marginTop: '10px'
+            }}>
+              {this.state.error?.stack}
+            </pre>
+          </details>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const meta = {
   title: 'Components/Navigation/Frame',
   component: Frame,
@@ -41,6 +99,14 @@ const meta = {
     },
   },
   tags: ['autodocs'],
+  // CRITICAL FIX: Add Frame-specific error boundary decorator
+  decorators: [
+    (Story) => (
+      <FrameErrorBoundary>
+        <Story />
+      </FrameErrorBoundary>
+    ),
+  ],
   argTypes: {
     topBar: {
       control: 'object',
