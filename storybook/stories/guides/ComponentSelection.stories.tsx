@@ -83,7 +83,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Overview: Story = {
   render: () => (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">
         Component Selection Guide
       </Text>
@@ -91,7 +91,7 @@ export const Overview: Story = {
         Learn when to use different components and make informed design decisions.
       </Text>
 
-      <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 2, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="200">
             <Icon source={EditIcon} size="large" />
@@ -152,7 +152,7 @@ export const Overview: Story = {
 
 export const ButtonSelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">Button Component Selection</Text>
       <Text as="p">
         Choose the right button component for your specific use case.
@@ -160,7 +160,7 @@ export const ButtonSelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">Button</Text>
@@ -316,7 +316,7 @@ export const ButtonSelection: Story = {
 
 export const LayoutSelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">Layout Component Selection</Text>
       <Text as="p">
         Choose the right layout component to structure your content effectively.
@@ -324,7 +324,7 @@ export const LayoutSelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">BlockStack & InlineStack</Text>
@@ -391,7 +391,7 @@ export const LayoutSelection: Story = {
             <BlockStack gap="200">
               <Text fontWeight="semibold">Example:</Text>
               <Card sectioned>
-                <Grid columns={{ xs: 1, sm: 2, md: 3 }} gap="200">
+                <Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 4 }} gap="200">
                   <Card>Grid Item 1</Card>
                   <Card>Grid Item 2</Card>
                   <Card>Grid Item 3</Card>
@@ -501,7 +501,7 @@ export const LayoutSelection: Story = {
 
 export const TextComponentSelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">Text Component Selection</Text>
       <Text as="p">
         Choose the right text component for proper hierarchy and readability.
@@ -509,7 +509,7 @@ export const TextComponentSelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">DisplayText</Text>
@@ -655,7 +655,7 @@ export const TextComponentSelection: Story = {
 
 export const DataDisplaySelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">Data Display Component Selection</Text>
       <Text as="p">
         Choose the right component for presenting your data effectively.
@@ -663,7 +663,7 @@ export const DataDisplaySelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">DataTable</Text>
@@ -833,7 +833,7 @@ export const DataDisplaySelection: Story = {
 
 export const FeedbackSelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">User Feedback Component Selection</Text>
       <Text as="p">
         Choose the right feedback component for your message and context.
@@ -841,7 +841,7 @@ export const FeedbackSelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">Banner</Text>
@@ -1005,7 +1005,7 @@ export const FeedbackSelection: Story = {
 
 export const NavigationSelection: Story = {
   render: () => (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto', padding: '20px' }}>
       <Text variant="heading3xl" as="h1">Navigation Component Selection</Text>
       <Text as="p">
         Choose the right navigation component for your application structure.
@@ -1013,7 +1013,7 @@ export const NavigationSelection: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">Tabs</Text>
