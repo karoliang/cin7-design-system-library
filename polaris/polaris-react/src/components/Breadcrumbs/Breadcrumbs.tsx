@@ -25,6 +25,11 @@ export interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
+  // Bulletproof: Ensure props are defined and valid
+  if (!backAction && (!breadcrumbs || breadcrumbs.length === 0)) {
+    return null;
+  }
+
   // Support new breadcrumbs API
   if (breadcrumbs && breadcrumbs.length > 0) {
     // Filter out any undefined or invalid breadcrumb items
@@ -71,18 +76,22 @@ export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
     );
   }
 
-  // Fallback to deprecated backAction API
-  if (backAction) {
-    const content = backAction?.content;
+  // Fallback to deprecated backAction API with bulletproof protection
+  if (backAction && typeof backAction === 'object') {
+    // Multiple layers of protection against undefined destructuring
+    const content = backAction?.content || 'Back';
+    const url = backAction && 'url' in backAction ? backAction.url : undefined;
+    const onClick = backAction && 'onAction' in backAction ? backAction.onAction : undefined;
+    const accessibilityLabel = backAction?.accessibilityLabel || content;
 
     return (
       <Button
-        key={content || 'back'}
-        url={'url' in backAction ? backAction.url : undefined}
-        onClick={'onAction' in backAction ? backAction.onAction : undefined}
+        key={content}
+        url={url}
+        onClick={onClick}
         onPointerDown={handleMouseUpByBlurring}
         icon={ArrowLeftIcon}
-        accessibilityLabel={backAction?.accessibilityLabel ?? content ?? 'Back'}
+        accessibilityLabel={accessibilityLabel}
       />
     );
   }
