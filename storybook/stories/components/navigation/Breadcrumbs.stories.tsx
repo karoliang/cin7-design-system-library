@@ -3,12 +3,12 @@ import { Breadcrumbs } from '@shopify/polaris';
 import React from 'react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
-// CRITICAL FIX: Breadcrumbs-specific error boundary for debugging
+// CRITICAL FIX: Enhanced Breadcrumbs error boundary with prop validation
 class BreadcrumbsErrorBoundary extends React.Component<
-  { children: React.ReactNode },
+  { children: React.ReactNode; breadcrumbs?: any[] },
   { hasError: boolean; error?: Error; errorInfo?: React.ErrorInfo }
 > {
-  constructor(props: { children: React.ReactNode }) {
+  constructor(props: { children: React.ReactNode; breadcrumbs?: any[] }) {
     super(props);
     this.state = { hasError: false };
   }
@@ -19,7 +19,27 @@ class BreadcrumbsErrorBoundary extends React.Component<
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('🚨 Breadcrumbs Component Error:', error, errorInfo);
+    console.error('🔍 Breadcrumbs props:', this.props.breadcrumbs);
     this.setState({ error, errorInfo });
+  }
+
+  componentDidMount() {
+    // Validate breadcrumbs props in development
+    if (this.props.breadcrumbs) {
+      console.log('🔍 Breadcrumbs props validation:', {
+        isArray: Array.isArray(this.props.breadcrumbs),
+        length: this.props.breadcrumbs.length,
+        items: this.props.breadcrumbs.map((item, index) => ({
+          index,
+          hasContent: !!item?.content,
+          content: item?.content,
+          hasUrl: !!item?.url,
+          url: item?.url,
+          isUndefined: item === undefined,
+          isNull: item === null
+        }))
+      });
+    }
   }
 
   render() {
@@ -74,13 +94,16 @@ const meta = {
     codeVariants: getCodeVariants('breadcrumbs', 'default'),
   },
   tags: ['autodocs'],
-  // RESTORED: Breadcrumbs-specific error boundary decorator for debugging
+  // RESTORED: Enhanced Breadcrumbs error boundary decorator with prop forwarding
   decorators: [
-    (Story) => (
-      <BreadcrumbsErrorBoundary>
-        <Story />
-      </BreadcrumbsErrorBoundary>
-    ),
+    (Story, context) => {
+      const breadcrumbs = context?.args?.breadcrumbs;
+      return (
+        <BreadcrumbsErrorBoundary breadcrumbs={breadcrumbs}>
+          <Story />
+        </BreadcrumbsErrorBoundary>
+      );
+    },
   ],
   argTypes: {
     breadcrumbs: {

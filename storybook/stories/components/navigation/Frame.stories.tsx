@@ -230,24 +230,32 @@ export const Default: Story = {
       setSearchValue('');
     }, []);
 
+    const topBarSearchField = (
+      <TopBar.SearchField
+        placeholder="Search"
+        value={searchValue}
+        onChange={handleSearchChange}
+        onDismiss={handleSearchDismiss}
+        focused={isSearchActive}
+      />
+    );
+
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="John Doe"
+        detail="Store owner"
+        initials="JD"
+        avatar={<Avatar customer size="small" name="John Doe" />}
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle
         onNavigationToggle={toggleMobileNavigation}
-        searchField={{
-          placeholder: 'Search',
-          value: searchValue,
-          onChange: handleSearchChange,
-          onDismiss: handleSearchDismiss,
-          focused: isSearchActive,
-        }}
-        userMenu={{
-          name: 'John Doe',
-          detail: 'Store owner',
-          initials: 'JD',
-          avatar: <Avatar customer size="small" name="John Doe" />,
-          actions: userMenu,
-        }}
+        searchField={topBarSearchField}
+        userMenu={topBarUserMenu}
       />
     );
 
@@ -303,20 +311,41 @@ export const WithLogo: Story = {
       setMobileNavigationActive((active) => !active);
     }, []);
 
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearchChange = useCallback((value: string) => {
+      setSearchValue(value);
+    }, []);
+
+    const handleSearchDismiss = useCallback(() => {
+      setSearchValue('');
+    }, []);
+
+    const topBarSearchField = (
+      <TopBar.SearchField
+        placeholder="Search products, orders, customers..."
+        value={searchValue}
+        onChange={handleSearchChange}
+        onDismiss={handleSearchDismiss}
+      />
+    );
+
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="Sarah Chen"
+        detail="Store owner"
+        initials="SC"
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle
         onNavigationToggle={toggleMobileNavigation}
         searchResultsVisible={false}
-        searchField={{
-          placeholder: 'Search products, orders, customers...',
-        }}
-        userMenu={{
-          name: 'Sarah Chen',
-          detail: 'Store owner',
-          initials: 'SC',
-          actions: userMenu,
-        }}
+        searchField={topBarSearchField}
+        userMenu={topBarUserMenu}
       />
     );
 
@@ -388,26 +417,47 @@ export const WithNotifications: Story = {
   render: () => {
     const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
     const [isSearchActive, setIsSearchActive] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
     const [notificationCount, setNotificationCount] = useState(5);
 
     const toggleMobileNavigation = useCallback(() => {
       setMobileNavigationActive((active) => !active);
     }, []);
 
+    const handleSearchChange = useCallback((value: string) => {
+      setSearchValue(value);
+    }, []);
+
+    const handleSearchDismiss = useCallback(() => {
+      setIsSearchActive(false);
+      setSearchValue('');
+    }, []);
+
+    const topBarSearchField = (
+      <TopBar.SearchField
+        placeholder="Search..."
+        value={searchValue}
+        onChange={handleSearchChange}
+        onDismiss={handleSearchDismiss}
+        focused={isSearchActive}
+      />
+    );
+
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="Admin User"
+        detail="Super Admin"
+        initials="AU"
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle
         onNavigationToggle={toggleMobileNavigation}
-        searchField={{
-          placeholder: 'Search...',
-          focused: isSearchActive,
-        }}
-        userMenu={{
-          name: 'Admin User',
-          detail: 'Super Admin',
-          initials: 'AU',
-          actions: userMenu,
-        }}
+        searchField={topBarSearchField}
+        userMenu={topBarUserMenu}
       />
     );
 
@@ -545,21 +595,38 @@ export const EcommerceLayout: Story = {
       },
     ];
 
+    const handleSearchChange = useCallback((value: string) => {
+      setSearchValue(value);
+    }, []);
+
+    const handleSearchDismiss = useCallback(() => {
+      setSearchValue('');
+    }, []);
+
+    const topBarSearchField = (
+      <TopBar.SearchField
+        placeholder="Search products, orders, customers..."
+        value={searchValue}
+        onChange={handleSearchChange}
+        onDismiss={handleSearchDismiss}
+      />
+    );
+
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="Store Manager"
+        detail="Premium Plan"
+        initials="SM"
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle
         onNavigationToggle={toggleMobileNavigation}
-        searchField={{
-          placeholder: 'Search products, orders, customers...',
-          value: searchValue,
-          onChange: setSearchValue,
-        }}
-        userMenu={{
-          name: 'Store Manager',
-          detail: 'Premium Plan',
-          initials: 'SM',
-          actions: userMenu,
-        }}
+        searchField={topBarSearchField}
+        userMenu={topBarUserMenu}
       />
     );
 
@@ -649,15 +716,19 @@ export const MinimalLayout: Story = {
       { label: 'Settings', icon: SettingsIcon, url: '#' },
     ];
 
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="User"
+        initials="U"
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle
         onNavigationToggle={toggleMobileNavigation}
-        userMenu={{
-          name: 'User',
-          initials: 'U',
-          actions: userMenu,
-        }}
+        userMenu={topBarUserMenu}
       />
     );
 
@@ -707,6 +778,7 @@ export const ResponsiveBehavior: Story = {
   render: () => {
     const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+    const [searchValue, setSearchValue] = useState('');
 
     React.useEffect(() => {
       const handleResize = () => setViewportWidth(window.innerWidth);
@@ -718,18 +790,37 @@ export const ResponsiveBehavior: Story = {
       setMobileNavigationActive((active) => !active);
     }, []);
 
+    const handleSearchChange = useCallback((value: string) => {
+      setSearchValue(value);
+    }, []);
+
+    const handleSearchDismiss = useCallback(() => {
+      setSearchValue('');
+    }, []);
+
+    const topBarSearchField = (
+      <TopBar.SearchField
+        placeholder="Search..."
+        value={searchValue}
+        onChange={handleSearchChange}
+        onDismiss={handleSearchDismiss}
+      />
+    );
+
+    const topBarUserMenu = (
+      <TopBar.UserMenu
+        name="Responsive User"
+        initials="RU"
+        actions={userMenu}
+      />
+    );
+
     const topBarMarkup = (
       <TopBar
         showNavigationToggle={viewportWidth < 768}
         onNavigationToggle={toggleMobileNavigation}
-        searchField={{
-          placeholder: 'Search...',
-        }}
-        userMenu={{
-          name: 'Responsive User',
-          initials: 'RU',
-          actions: userMenu,
-        }}
+        searchField={topBarSearchField}
+        userMenu={topBarUserMenu}
       />
     );
 
