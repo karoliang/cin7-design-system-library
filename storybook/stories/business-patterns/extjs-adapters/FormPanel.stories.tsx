@@ -74,7 +74,7 @@ const ExtFormPanel = ({ title, fields, onSubmit }) => {
 };
 
 const meta = {
-  title: 'Cin7 DSL/06 Enterprise Components/ExtJS - Form Panel',
+  title: 'Cin7 DSL/Enterprise Components/ExtJS - Form Panel',
   component: ExtFormPanel,
   parameters: {
     layout: 'centered',

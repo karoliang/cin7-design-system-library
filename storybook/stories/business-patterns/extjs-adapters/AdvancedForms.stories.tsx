@@ -608,7 +608,7 @@ const ValidationPatternsForm: React.FC = () => {
 };
 
 const meta = {
-  title: 'Cin7 DSL/06 Enterprise Components/ExtJS - Advanced Forms',
+  title: 'Cin7 DSL/Enterprise Components/ExtJS - Advanced Forms',
   parameters: {
     layout: 'padded',
     codeVariants: getCodeVariants('advancedforms', 'default'),

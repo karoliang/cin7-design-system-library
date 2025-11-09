@@ -10,7 +10,7 @@ const DesignTokensShowcase = () => (
 );
 
 const meta = {
-  title: 'Cin7 DSL/02 Foundations/Design Tokens',
+  title: 'Cin7 DSL/Foundations/Design Tokens',
   component: DesignTokensShowcase,
   parameters: {
     layout: 'padded',

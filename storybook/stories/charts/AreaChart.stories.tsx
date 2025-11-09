@@ -3,7 +3,7 @@ import { AreaChart } from '@cin7/highcharts-adapter/react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Cin7 DSL/08 Data Visualization/Area Chart',
+  title: 'Cin7 DSL/Data Visualization/Area Chart',
   component: AreaChart,
   parameters: {
     layout: 'padded',

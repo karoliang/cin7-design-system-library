@@ -447,7 +447,7 @@ const SelectionDataGrid = ({ columns, data, title }) => {
 };
 
 const meta = {
-  title: 'Cin7 DSL/06 Enterprise Components/ExtJS - Data Grid',
+  title: 'Cin7 DSL/Enterprise Components/ExtJS - Data Grid',
   parameters: {
     layout: 'padded',
     codeVariants: getCodeVariants('datatable', 'default'),

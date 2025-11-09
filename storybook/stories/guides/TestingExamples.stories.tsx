@@ -25,7 +25,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Cin7 DSL/03 UI Patterns/Testing Examples',
+  title: 'Cin7 DSL/UI Patterns/Testing Examples',
   component: Card,
   parameters: {
     layout: 'centered',

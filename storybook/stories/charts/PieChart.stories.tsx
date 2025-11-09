@@ -3,7 +3,7 @@ import { PieChart } from '@cin7/highcharts-adapter/react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {
-  title: 'Cin7 DSL/08 Data Visualization/Pie Chart',
+  title: 'Cin7 DSL/Data Visualization/Pie Chart',
   component: PieChart,
   parameters: {
     layout: 'padded',

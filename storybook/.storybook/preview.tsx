@@ -12,6 +12,26 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    options: {
+      storySort: {
+        order: [
+          'Welcome',
+          'Cin7 DSL',
+          [
+            'Introduction',
+            'Foundations',
+            'UI Patterns',
+            'Business Logic',
+            'UI Interactions',
+            'Enterprise Components',
+            'Real-World Applications',
+            'Data Visualization',
+          ],
+          'Components',
+          'Charts',
+        ],
+      },
+    },
   },
   decorators: [
     (Story) => (

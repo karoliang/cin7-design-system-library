@@ -76614,6 +76614,826 @@ function DisabledForm(): JSX.Element {
   },
 };
 
+// Integration Examples Code Variants
+
+export const productDashboardExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Card, Layout, Badge, DataTable, Grid, BlockStack, InlineStack, Text, TextField, Select, Icon } from '@shopify/polaris';
+import { PlusIcon, ExportIcon, SearchIcon } from '@shopify/polaris-icons';
+import { BarChart } from '@cin7/highcharts-adapter/react';
+import React, { useState } from 'react';
+
+function ProductDashboard() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const productData = [
+    { id: 1, name: 'Wireless Headphones', sku: 'WH-001', price: 89.99, stock: 45, category: 'Electronics', sales: 234 },
+    { id: 2, name: 'USB-C Cable', sku: 'UC-002', price: 12.99, stock: 120, category: 'Accessories', sales: 567 },
+    // ... more products
+  ];
+
+  const filteredProducts = productData.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const totalProducts = productData.length;
+  const totalStock = productData.reduce((sum, p) => sum + p.stock, 0);
+  const lowStock = productData.filter(p => p.stock < 20).length;
+
+  return (
+    <Page
+      title="Product Dashboard"
+      subtitle="Manage your product catalog and inventory"
+      primaryAction={{ content: 'Add Product', icon: PlusIcon }}
+      secondaryActions={[{ content: 'Export', icon: ExportIcon }]}
+    >
+      <Layout>
+        {/* Metrics */}
+        <Layout.Section>
+          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Products</Text>
+                <Text variant="heading2xl">{totalProducts}</Text>
+                <Badge tone="info">Active</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Stock</Text>
+                <Text variant="heading2xl">{totalStock}</Text>
+                <Badge tone="success">Available</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Low Stock Alerts</Text>
+                <Text variant="heading2xl">{lowStock}</Text>
+                <Badge tone="warning">Action Required</Badge>
+              </BlockStack>
+            </Card>
+          </Grid>
+        </Layout.Section>
+
+        {/* Sales Chart */}
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <Text variant="headingLg">Product Sales Overview</Text>
+              <BarChart
+                title="Sales by Product"
+                series={[{ name: 'Sales', data: productData.map(p => p.sales) }]}
+                xAxis={{ categories: productData.map(p => p.name) }}
+                height={300}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+
+        {/* Product Grid */}
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg">Product Catalog</Text>
+                <InlineStack gap="200">
+                  <TextField
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    prefix={<Icon source={SearchIcon} />}
+                  />
+                  <Select
+                    options={[
+                      { label: 'All Categories', value: 'all' },
+                      { label: 'Electronics', value: 'Electronics' },
+                      { label: 'Accessories', value: 'Accessories' },
+                    ]}
+                    value={selectedCategory}
+                    onChange={setSelectedCategory}
+                  />
+                </InlineStack>
+              </InlineStack>
+
+              <DataTable
+                columnContentTypes={['text', 'text', 'numeric', 'numeric', 'text']}
+                headings={['Product', 'SKU', 'Price', 'Stock', 'Status']}
+                rows={filteredProducts.map(product => [
+                  product.name,
+                  product.sku,
+                  \`$\${product.price.toFixed(2)}\`,
+                  product.stock,
+                  product.stock === 0 ? <Badge tone="critical">Out of Stock</Badge> :
+                  product.stock < 20 ? <Badge tone="warning">Low Stock</Badge> :
+                  <Badge tone="success">In Stock</Badge>
+                ])}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    typescript: `// TypeScript SDK - Business Logic Layer
+import { Repository, Entity, ValueObject } from '@cin7/typescript-sdk';
+
+// Domain Model
+class Product extends Entity {
+  constructor(
+    public readonly id: string,
+    public readonly name: string,
+    public readonly sku: SKU,
+    public readonly price: Money,
+    public readonly stock: StockLevel,
+    public readonly category: Category
+  ) {
+    super(id);
+    this.validate();
+  }
+
+  get isLowStock(): boolean {
+    return this.stock.quantity < this.stock.reorderPoint;
+  }
+
+  get isOutOfStock(): boolean {
+    return this.stock.quantity === 0;
+  }
+
+  updateStock(quantity: number): void {
+    this.stock.adjustQuantity(quantity);
+    this.emitEvent('stock:updated', {
+      productId: this.id,
+      newQuantity: quantity
+    });
+  }
+}
+
+// Repository Pattern
+class ProductRepository extends Repository<Product> {
+  async findByCategory(category: string): Promise<Product[]> {
+    return this.query({ category });
+  }
+
+  async findLowStock(): Promise<Product[]> {
+    const products = await this.findAll();
+    return products.filter(p => p.isLowStock);
+  }
+
+  async getDashboardMetrics(): Promise<DashboardMetrics> {
+    const products = await this.findAll();
+    
+    return {
+      totalProducts: products.length,
+      totalStock: products.reduce((sum, p) => sum + p.stock.quantity, 0),
+      totalSales: products.reduce((sum, p) => sum + p.sales, 0),
+      lowStock: products.filter(p => p.isLowStock).length,
+      outOfStock: products.filter(p => p.isOutOfStock).length,
+    };
+  }
+
+  async searchProducts(query: string): Promise<Product[]> {
+    const products = await this.findAll();
+    const lowerQuery = query.toLowerCase();
+    
+    return products.filter(p => 
+      p.name.toLowerCase().includes(lowerQuery) ||
+      p.sku.value.toLowerCase().includes(lowerQuery)
+    );
+  }
+}
+
+// Usage in Dashboard
+const productRepo = new ProductRepository();
+
+// Get dashboard metrics
+const metrics = await productRepo.getDashboardMetrics();
+
+// Search products
+const results = await productRepo.searchProducts('wireless');
+
+// Get low stock alerts
+const alerts = await productRepo.findLowStock();
+
+// Update product stock
+const product = await productRepo.findById('prod-001');
+product.updateStock(50); // Emits 'stock:updated' event
+await productRepo.save(product);`,
+    vanilla: `// Vanilla JS - DOM Manipulation & Interactions
+import { $, $$, on, addClass, removeClass, fadeIn, fadeOut } from '@cin7/vanilla-js';
+
+// Initialize dashboard
+function initProductDashboard() {
+  const dashboard = $('#product-dashboard');
+  const metricsCards = $$('.metric-card');
+  const searchInput = $('#product-search');
+  const categoryFilter = $('#category-filter');
+  const productTable = $('#product-table');
+
+  // Add interactivity to metric cards
+  metricsCards.forEach(card => {
+    on(card, 'mouseenter', () => {
+      addClass(card, 'metric-card--hover');
+      fadeIn(card.querySelector('.metric-details'));
+    });
+
+    on(card, 'mouseleave', () => {
+      removeClass(card, 'metric-card--hover');
+      fadeOut(card.querySelector('.metric-details'));
+    });
+  });
+
+  // Real-time search
+  on(searchInput, 'input', (e) => {
+    const query = e.target.value.toLowerCase();
+    filterProducts(query, categoryFilter.value);
+  });
+
+  // Category filtering
+  on(categoryFilter, 'change', (e) => {
+    filterProducts(searchInput.value, e.target.value);
+  });
+
+  // Table row interactions
+  const rows = $$('.product-row');
+  rows.forEach(row => {
+    on(row, 'click', () => {
+      removeClass($$('.product-row'), 'selected');
+      addClass(row, 'selected');
+      showProductDetails(row.dataset.productId);
+    });
+  });
+}
+
+// Filter products
+function filterProducts(query, category) {
+  const rows = $$('.product-row');
+  
+  rows.forEach(row => {
+    const name = row.dataset.productName.toLowerCase();
+    const sku = row.dataset.productSku.toLowerCase();
+    const cat = row.dataset.productCategory;
+    
+    const matchesSearch = name.includes(query) || sku.includes(query);
+    const matchesCategory = category === 'all' || cat === category;
+    
+    if (matchesSearch && matchesCategory) {
+      fadeIn(row);
+    } else {
+      fadeOut(row);
+    }
+  });
+  
+  updateResultsCount();
+}
+
+// Update metrics with animation
+function updateMetrics(metrics) {
+  const totalProducts = $('#metric-total-products');
+  const totalStock = $('#metric-total-stock');
+  const lowStock = $('#metric-low-stock');
+  
+  animateNumber(totalProducts, metrics.totalProducts);
+  animateNumber(totalStock, metrics.totalStock);
+  animateNumber(lowStock, metrics.lowStock);
+}
+
+// Animate number changes
+function animateNumber(element, targetValue) {
+  const currentValue = parseInt(element.textContent);
+  const duration = 500; // ms
+  const steps = 30;
+  const increment = (targetValue - currentValue) / steps;
+  
+  let step = 0;
+  const interval = setInterval(() => {
+    if (step >= steps) {
+      element.textContent = targetValue;
+      clearInterval(interval);
+      return;
+    }
+    
+    element.textContent = Math.round(currentValue + (increment * step));
+    step++;
+  }, duration / steps);
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initProductDashboard);`,
+    extjs: `// ExtJS - Enterprise Data Grid
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+// Product Grid Configuration
+const productGrid = ExtDataGrid.create({
+  title: 'Product Catalog',
+  store: {
+    type: 'store',
+    proxy: {
+      type: 'ajax',
+      url: '/api/products',
+      reader: {
+        type: 'json',
+        rootProperty: 'data'
+      }
+    },
+    autoLoad: true,
+    pageSize: 50,
+    sorters: [{ property: 'name', direction: 'ASC' }]
+  },
+  
+  columns: [
+    {
+      dataIndex: 'id',
+      text: 'ID',
+      width: 80,
+      hidden: true
+    },
+    {
+      dataIndex: 'name',
+      text: 'Product Name',
+      flex: 2,
+      editor: {
+        type: 'textfield',
+        allowBlank: false
+      },
+      filter: {
+        type: 'string'
+      }
+    },
+    {
+      dataIndex: 'sku',
+      text: 'SKU',
+      width: 120,
+      editor: {
+        type: 'textfield'
+      },
+      filter: {
+        type: 'string'
+      }
+    },
+    {
+      dataIndex: 'price',
+      text: 'Price',
+      width: 100,
+      align: 'right',
+      xtype: 'numbercolumn',
+      format: '$0,000.00',
+      editor: {
+        type: 'numberfield',
+        minValue: 0,
+        decimalPrecision: 2
+      }
+    },
+    {
+      dataIndex: 'stock',
+      text: 'Stock',
+      width: 100,
+      align: 'right',
+      editor: {
+        type: 'numberfield',
+        minValue: 0
+      },
+      renderer: function(value, metaData, record) {
+        if (value === 0) {
+          metaData.tdStyle = 'color: red; font-weight: bold;';
+          return value + ' (Out)';
+        } else if (value < 20) {
+          metaData.tdStyle = 'color: orange; font-weight: bold;';
+          return value + ' (Low)';
+        }
+        return value;
+      }
+    },
+    {
+      dataIndex: 'category',
+      text: 'Category',
+      width: 150,
+      editor: {
+        type: 'combobox',
+        store: ['Electronics', 'Accessories', 'Furniture'],
+        forceSelection: true
+      },
+      filter: {
+        type: 'list',
+        options: ['Electronics', 'Accessories', 'Furniture']
+      }
+    },
+    {
+      dataIndex: 'sales',
+      text: 'Sales (YTD)',
+      width: 100,
+      align: 'right',
+      xtype: 'numbercolumn',
+      format: '0,000'
+    },
+    {
+      xtype: 'actioncolumn',
+      text: 'Actions',
+      width: 100,
+      items: [
+        {
+          iconCls: 'x-fa fa-edit',
+          tooltip: 'Edit',
+          handler: function(grid, rowIndex) {
+            grid.getSelectionModel().select(rowIndex);
+            grid.startEdit(rowIndex, 1);
+          }
+        },
+        {
+          iconCls: 'x-fa fa-trash',
+          tooltip: 'Delete',
+          handler: function(grid, rowIndex, colIndex, item, e, record) {
+            Ext.Msg.confirm('Delete', 'Delete product: ' + record.get('name') + '?', function(btn) {
+              if (btn === 'yes') {
+                grid.getStore().remove(record);
+              }
+            });
+          }
+        }
+      ]
+    }
+  ],
+  
+  // Features
+  features: [
+    {
+      ftype: 'grouping',
+      groupHeaderTpl: 'Category: {name} ({rows.length} item{[values.rows.length > 1 ? "s" : ""]})',
+      collapsible: true
+    },
+    {
+      ftype: 'filters',
+      menuFilterText: 'Filters'
+    },
+    {
+      ftype: 'summary',
+      dock: 'bottom'
+    }
+  ],
+  
+  // Plugins
+  plugins: {
+    cellediting: {
+      clicksToEdit: 2
+    }
+  },
+  
+  // Toolbar
+  tbar: [
+    {
+      text: 'Add Product',
+      iconCls: 'x-fa fa-plus',
+      handler: function() {
+        const store = this.up('grid').getStore();
+        store.insert(0, {
+          name: 'New Product',
+          sku: '',
+          price: 0,
+          stock: 0,
+          category: 'Electronics',
+          sales: 0
+        });
+      }
+    },
+    '-',
+    {
+      text: 'Export',
+      iconCls: 'x-fa fa-download',
+      menu: [
+        { text: 'Export to Excel', handler: () => exportGrid('excel') },
+        { text: 'Export to CSV', handler: () => exportGrid('csv') }
+      ]
+    },
+    '->',
+    {
+      xtype: 'textfield',
+      emptyText: 'Search products...',
+      width: 200,
+      listeners: {
+        change: function(field, value) {
+          const grid = field.up('grid');
+          const store = grid.getStore();
+          store.clearFilter();
+          
+          if (value) {
+            store.filterBy(function(record) {
+              const name = record.get('name').toLowerCase();
+              const sku = record.get('sku').toLowerCase();
+              const search = value.toLowerCase();
+              return name.includes(search) || sku.includes(search);
+            });
+          }
+        }
+      }
+    }
+  ],
+  
+  // Listeners
+  listeners: {
+    edit: function(editor, context) {
+      // Save changes to backend
+      Ext.Ajax.request({
+        url: '/api/products/' + context.record.get('id'),
+        method: 'PUT',
+        jsonData: context.record.getData(),
+        success: function() {
+          Ext.toast('Product updated successfully');
+        }
+      });
+    },
+    selectionchange: function(model, selected) {
+      if (selected.length > 0) {
+        updateDetailsPanel(selected[0]);
+      }
+    }
+  },
+  
+  // Pagination
+  bbar: {
+    xtype: 'pagingtoolbar',
+    displayInfo: true,
+    displayMsg: 'Products {0} - {1} of {2}',
+    emptyMsg: 'No products to display'
+  }
+});`,
+  },
+};
+
+export const productDashboardMultiExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `// Same as productDashboard but see individual tabs for framework-specific implementations`,
+    typescript: `// See TypeScript SDK tab for domain models and repository pattern`,
+    vanilla: `// See Vanilla JS tab for DOM manipulation examples`,
+    extjs: `// See ExtJS tab for enterprise grid configuration`,
+  },
+};
+
+export const orderProcessingExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Card, Layout, DataTable, Badge, Banner } from '@shopify/polaris';
+import { LineChart } from '@cin7/highcharts-adapter/react';
+import React, { useState } from 'react';
+
+function OrderProcessing() {
+  const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus] = useState('all');
+
+  const orderData = [
+    { id: '10234', customer: 'John Doe', amount: 234.50, status: 'Fulfilled', date: '2025-01-10' },
+    { id: '10233', customer: 'Jane Smith', amount: 89.99, status: 'Processing', date: '2025-01-10' },
+    // ... more orders
+  ];
+
+  return (
+    <Page title="Order Processing">
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <DataTable
+              columnContentTypes={['text', 'text', 'numeric', 'text', 'text']}
+              headings={['Order ID', 'Customer', 'Amount', 'Status', 'Date']}
+              rows={orderData.map(order => [
+                order.id,
+                order.customer,
+                \`$\${order.amount.toFixed(2)}\`,
+                <Badge tone={order.status === 'Fulfilled' ? 'success' : 'info'}>{order.status}</Badge>,
+                order.date
+              ])}
+            />
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    typescript: `import { Entity, Repository, EventBus } from '@cin7/typescript-sdk';
+
+class Order extends Entity {
+  constructor(
+    public readonly id: string,
+    public readonly customerId: string,
+    public readonly items: OrderItem[],
+    public status: OrderStatus,
+    public readonly createdAt: Date
+  ) {
+    super(id);
+  }
+
+  get totalAmount(): Money {
+    return this.items.reduce((sum, item) => sum.add(item.total), Money.zero());
+  }
+
+  fulfill(): void {
+    if (this.status !== OrderStatus.Processing) {
+      throw new Error('Order must be in Processing status to fulfill');
+    }
+    this.status = OrderStatus.Fulfilled;
+    EventBus.emit('order:fulfilled', { orderId: this.id });
+  }
+}
+
+class OrderRepository extends Repository<Order> {
+  async findByCustomer(customerId: string): Promise<Order[]> {
+    return this.query({ customerId });
+  }
+
+  async getOrderMetrics(): Promise<OrderMetrics> {
+    const orders = await this.findAll();
+    return {
+      total: orders.length,
+      fulfilled: orders.filter(o => o.status === OrderStatus.Fulfilled).length,
+      processing: orders.filter(o => o.status === OrderStatus.Processing).length,
+      revenue: orders.reduce((sum, o) => sum + o.totalAmount.value, 0)
+    };
+  }
+}`,
+    vanilla: `import { $, on, addClass } from '@cin7/vanilla-js';
+
+function initOrderProcessing() {
+  const orderRows = $$('.order-row');
+  
+  orderRows.forEach(row => {
+    on(row, 'click', () => {
+      removeClass($$('.order-row'), 'selected');
+      addClass(row, 'selected');
+      showOrderDetails(row.dataset.orderId);
+    });
+  });
+}`,
+    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const orderGrid = ExtDataGrid.create({
+  title: 'Orders',
+  store: {
+    proxy: { url: '/api/orders' },
+    pageSize: 50
+  },
+  columns: [
+    { dataIndex: 'id', text: 'Order ID', width: 100 },
+    { dataIndex: 'customer', text: 'Customer', flex: 1 },
+    { dataIndex: 'amount', text: 'Amount', xtype: 'numbercolumn', format: '$0,000.00' },
+    { dataIndex: 'status', text: 'Status', width: 120 }
+  ]
+});`,
+  },
+};
+
+export const inventoryManagementExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Card, DataTable, Badge } from '@shopify/polaris';
+import { BarChart } from '@cin7/highcharts-adapter/react';
+
+function InventoryManagement() {
+  const inventoryData = [
+    { product: 'Wireless Headphones', current: 45, reorderPoint: 20, incoming: 100 },
+    // ... more items
+  ];
+
+  return (
+    <Page title="Inventory Management">
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <BarChart
+              title="Inventory Levels"
+              series={[
+                { name: 'Current Stock', data: inventoryData.map(i => i.current) },
+                { name: 'Incoming', data: inventoryData.map(i => i.incoming) }
+              ]}
+            />
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    typescript: `import { Repository } from '@cin7/typescript-sdk';
+
+class InventoryRepository extends Repository<InventoryItem> {
+  async findBelowReorderPoint(): Promise<InventoryItem[]> {
+    const items = await this.findAll();
+    return items.filter(i => i.currentStock < i.reorderPoint);
+  }
+
+  async getStockLevels(): Promise<StockLevels> {
+    const items = await this.findAll();
+    return {
+      total: items.reduce((sum, i) => sum + i.currentStock, 0),
+      lowStock: items.filter(i => i.currentStock < i.reorderPoint).length,
+      outOfStock: items.filter(i => i.currentStock === 0).length
+    };
+  }
+}`,
+    vanilla: `import { $, on } from '@cin7/vanilla-js';
+
+function initInventory() {
+  const reorderButtons = $$('.reorder-btn');
+  
+  reorderButtons.forEach(btn => {
+    on(btn, 'click', (e) => {
+      const productId = e.target.dataset.productId;
+      initiateReorder(productId);
+    });
+  });
+}`,
+    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const inventoryGrid = ExtDataGrid.create({
+  columns: [
+    { dataIndex: 'product', text: 'Product', flex: 1 },
+    { dataIndex: 'current', text: 'Current Stock', width: 120 },
+    { dataIndex: 'reorderPoint', text: 'Reorder Point', width: 120 }
+  ],
+  features: ['grouping', 'summary']
+});`,
+  },
+};
+
+export const customerPortalExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Card, DataTable } from '@shopify/polaris';
+
+function CustomerPortal() {
+  return (
+    <Page title="Customer Portal">
+      <Card>
+        <DataTable
+          columnContentTypes={['text', 'text', 'text']}
+          headings={['Name', 'Email', 'Status']}
+          rows={[/* customer data */]}
+        />
+      </Card>
+    </Page>
+  );
+}`,
+    typescript: `import { Repository } from '@cin7/typescript-sdk';
+
+class CustomerRepository extends Repository<Customer> {
+  async findActive(): Promise<Customer[]> {
+    return this.query({ status: 'active' });
+  }
+}`,
+    vanilla: `import { $, on } from '@cin7/vanilla-js';
+
+function initCustomerPortal() {
+  const searchInput = $('#customer-search');
+  on(searchInput, 'input', filterCustomers);
+}`,
+    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+
+const customerGrid = ExtDataGrid.create({
+  columns: [
+    { dataIndex: 'name', text: 'Name', flex: 1 },
+    { dataIndex: 'email', text: 'Email', flex: 1 }
+  ]
+});`,
+  },
+};
+
+export const analyticsDashboardExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `import { Page, Grid, Card } from '@shopify/polaris';
+import { LineChart, PieChart } from '@cin7/highcharts-adapter/react';
+
+function AnalyticsDashboard() {
+  return (
+    <Page title="Analytics Dashboard">
+      <Grid>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card>
+            <LineChart title="Revenue Trend" />
+          </Card>
+        </Grid.Cell>
+        <Grid.Cell columnSpan={{xs: 6, sm: 3, md: 3, lg: 6, xl: 6}}>
+          <Card>
+            <PieChart title="Sales by Category" />
+          </Card>
+        </Grid.Cell>
+      </Grid>
+    </Page>
+  );
+}`,
+    typescript: `import { Repository } from '@cin7/typescript-sdk';
+
+class AnalyticsService {
+  async getRevenueMetrics(): Promise<RevenueMetrics> {
+    // Calculate revenue metrics
+  }
+}`,
+    vanilla: `import { $ } from '@cin7/vanilla-js';
+
+function updateDashboard(data) {
+  $('#revenue').textContent = data.revenue;
+}`,
+    extjs: `// ExtJS charts for analytics
+const revenueChart = Ext.create('Ext.chart.Chart', {
+  // Chart configuration
+});`,
+  },
+};
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -76717,6 +77537,12 @@ export function getCodeVariants(
     valueobjects: valueObjectsExamples,
     servicelayer: serviceLayerExamples,
     eventbus: eventBusExamples,
+    productdashboard: productDashboardExamples,
+    productdashboardmulti: productDashboardMultiExamples,
+    orderprocessing: orderProcessingExamples,
+    inventorymanagement: inventoryManagementExamples,
+    customerportal: customerPortalExamples,
+    analyticsdashboard: analyticsDashboardExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];

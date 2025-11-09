@@ -48,7 +48,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Cin7 DSL/01 Introduction/Getting Started',
+  title: 'Cin7 DSL/Introduction/Getting Started',
   component: Card,
   parameters: {
     layout: 'centered',

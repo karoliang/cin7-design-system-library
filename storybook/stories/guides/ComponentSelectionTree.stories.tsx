@@ -26,7 +26,7 @@ import {
 import React, { useState } from 'react';
 
 const meta = {
-  title: 'Cin7 DSL/01 Introduction/Component Selection Tree',
+  title: 'Cin7 DSL/Introduction/Component Selection Tree',
   component: Card,
   parameters: {
     layout: 'fullscreen',

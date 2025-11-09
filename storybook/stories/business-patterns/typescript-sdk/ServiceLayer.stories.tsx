@@ -183,7 +183,7 @@ class OrderProcessingService {
 }
 
 const meta = {
-  title: 'Cin7 DSL/04 Business Logic/TypeScript SDK - Service Layer',
+  title: 'Cin7 DSL/Business Logic/TypeScript SDK - Service Layer',
   component: Card,
   parameters: {
     layout: 'centered',
