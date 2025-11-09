@@ -78893,42 +78893,827 @@ function showAddItemWindow() {
 
 export const customerPortalExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { Page, Card, DataTable } from '@shopify/polaris';
+    react: `import { Page, Card, Layout, DataTable, Badge, Grid, BlockStack, InlineStack, Text, TextField, Tabs, Button, Avatar } from '@shopify/polaris';
+import { SearchIcon, EmailIcon } from '@shopify/polaris-icons';
+import { LineChart } from '@cin7/highcharts-adapter/react';
+import React, { useState, useCallback } from 'react';
 
 function CustomerPortal() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const customerData = [
+    { id: '1', name: 'John Smith', email: 'john@example.com', status: 'Active', orders: 24, lifetime: 2456.78, lastOrder: '2025-01-09' },
+    { id: '2', name: 'Jane Doe', email: 'jane@example.com', status: 'Active', orders: 18, lifetime: 1890.45, lastOrder: '2025-01-08' },
+    { id: '3', name: 'Bob Wilson', email: 'bob@example.com', status: 'Inactive', orders: 3, lifetime: 234.56, lastOrder: '2024-12-15' },
+    { id: '4', name: 'Alice Johnson', email: 'alice@example.com', status: 'Active', orders: 45, lifetime: 5678.90, lastOrder: '2025-01-10' },
+  ];
+
+  const filteredCustomers = customerData.filter(customer =>
+    customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    customer.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const metrics = {
+    total: customerData.length,
+    active: customerData.filter(c => c.status === 'Active').length,
+    totalRevenue: customerData.reduce((sum, c) => sum + c.lifetime, 0),
+    avgLifetime: customerData.reduce((sum, c) => sum + c.lifetime, 0) / customerData.length,
+  };
+
+  const revenueHistory = [
+    { month: 'Jan', revenue: 1200 },
+    { month: 'Feb', revenue: 1800 },
+    { month: 'Mar', revenue: 2400 },
+    { month: 'Apr', revenue: 2100 },
+    { month: 'May', revenue: 3200 },
+  ];
+
+  const handleSearch = useCallback((value: string) => {
+    setSearchQuery(value);
+  }, []);
+
+  const tabs = [
+    { id: 'all', content: 'All Customers' },
+    { id: 'active', content: 'Active' },
+    { id: 'inactive', content: 'Inactive' },
+  ];
+
   return (
-    <Page title="Customer Portal">
-      <Card>
-        <DataTable
-          columnContentTypes={['text', 'text', 'text']}
-          headings={['Name', 'Email', 'Status']}
-          rows={[/* customer data */]}
-        />
-      </Card>
+    <Page
+      title="Customer Portal"
+      subtitle="Manage customer accounts and relationships"
+    >
+      <Layout>
+        <Layout.Section>
+          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Customers</Text>
+                <Text variant="heading2xl" as="h2">{metrics.total}</Text>
+                <Badge>All Time</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Active Customers</Text>
+                <Text variant="heading2xl" as="h2">{metrics.active}</Text>
+                <Badge tone="success">This Month</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Total Revenue</Text>
+                <Text variant="heading2xl" as="h2">\${metrics.totalRevenue.toFixed(2)}</Text>
+                <Badge tone="info">Lifetime</Badge>
+              </BlockStack>
+            </Card>
+            <Card>
+              <BlockStack gap="200">
+                <Text as="p" tone="subdued">Avg Lifetime Value</Text>
+                <Text variant="heading2xl" as="h2">\${metrics.avgLifetime.toFixed(2)}</Text>
+                <Badge>Per Customer</Badge>
+              </BlockStack>
+            </Card>
+          </Grid>
+        </Layout.Section>
+
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <Text variant="headingLg" as="h3">Revenue Trend</Text>
+              <LineChart
+                title="Monthly Customer Revenue"
+                smooth={true}
+                markers={true}
+                series={[{
+                  name: 'Revenue',
+                  data: revenueHistory.map(r => r.revenue),
+                }]}
+                xAxis={{
+                  categories: revenueHistory.map(r => r.month),
+                }}
+                height={250}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+
+        <Layout.Section>
+          <Card>
+            <BlockStack gap="400">
+              <InlineStack align="space-between">
+                <Text variant="headingLg" as="h3">Customer Directory</Text>
+                <TextField
+                  label=""
+                  placeholder="Search customers..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  prefix={<Icon source={SearchIcon} />}
+                  autoComplete="off"
+                />
+              </InlineStack>
+
+              <Tabs tabs={tabs} selected={selectedTab} onSelect={setSelectedTab} />
+
+              <DataTable
+                columnContentTypes={['text', 'text', 'numeric', 'numeric', 'text', 'text']}
+                headings={['Customer', 'Email', 'Orders', 'Lifetime Value', 'Status', 'Last Order']}
+                rows={filteredCustomers.map(customer => [
+                  customer.name,
+                  customer.email,
+                  customer.orders,
+                  \`$\${customer.lifetime.toFixed(2)}\`,
+                  customer.status === 'Active' ? (
+                    <Badge tone="success">Active</Badge>
+                  ) : (
+                    <Badge>Inactive</Badge>
+                  ),
+                  customer.lastOrder,
+                ])}
+              />
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+      </Layout>
     </Page>
   );
 }`,
-    typescript: `import { Repository } from '@cin7/typescript-sdk';
+    typescript: `// TypeScript SDK - Customer Portal Domain Layer
+import { Entity, ValueObject, Repository, EventBus } from '@cin7/typescript-sdk';
+
+// Value Objects
+class Email extends ValueObject<string> {
+  constructor(value: string) {
+    super(value);
+    this.validate();
+  }
+
+  protected validate(): void {
+    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    if (!emailRegex.test(this.value)) {
+      throw new Error('Invalid email address');
+    }
+  }
+}
+
+class CustomerName extends ValueObject<{ first: string; last: string }> {
+  constructor(first: string, last: string) {
+    super({ first, last });
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (!this.value.first || !this.value.last) {
+      throw new Error('First and last name required');
+    }
+  }
+
+  get fullName(): string {
+    return \`\${this.value.first} \${this.value.last}\`;
+  }
+}
+
+// Enums
+enum CustomerStatus {
+  Active = 'Active',
+  Inactive = 'Inactive',
+  Suspended = 'Suspended',
+}
+
+// Entities
+class Customer extends Entity {
+  constructor(
+    public readonly id: string,
+    public readonly name: CustomerName,
+    public readonly email: Email,
+    public status: CustomerStatus,
+    public orderCount: number = 0,
+    public lifetimeValue: number = 0,
+    public readonly createdAt: Date = new Date(),
+    public lastOrderDate?: Date
+  ) {
+    super(id);
+    this.validate();
+  }
+
+  protected validate(): void {
+    if (this.lifetimeValue < 0) {
+      throw new Error('Lifetime value cannot be negative');
+    }
+  }
+
+  get isActive(): boolean {
+    return this.status === CustomerStatus.Active;
+  }
+
+  get daysSinceLastOrder(): number | null {
+    if (!this.lastOrderDate) return null;
+    const diff = Date.now() - this.lastOrderDate.getTime();
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  }
+
+  addOrder(orderValue: number): Customer {
+    const updated = this.clone({
+      orderCount: this.orderCount + 1,
+      lifetimeValue: this.lifetimeValue + orderValue,
+      lastOrderDate: new Date(),
+    });
+
+    EventBus.emit('customer:order:added', {
+      customerId: this.id,
+      customerName: this.name.fullName,
+      orderValue,
+      newLifetimeValue: updated.lifetimeValue,
+    });
+
+    return updated;
+  }
+
+  activate(): Customer {
+    if (this.status === CustomerStatus.Active) {
+      throw new Error('Customer is already active');
+    }
+
+    const updated = this.clone({ status: CustomerStatus.Active });
+
+    EventBus.emit('customer:activated', {
+      customerId: this.id,
+      customerName: this.name.fullName,
+    });
+
+    return updated;
+  }
+
+  suspend(): Customer {
+    const updated = this.clone({ status: CustomerStatus.Suspended });
+
+    EventBus.emit('customer:suspended', {
+      customerId: this.id,
+      customerName: this.name.fullName,
+    });
+
+    return updated;
+  }
+
+  private clone(updates: Partial<{
+    status: CustomerStatus;
+    orderCount: number;
+    lifetimeValue: number;
+    lastOrderDate: Date;
+  }>): Customer {
+    return new Customer(
+      this.id,
+      this.name,
+      this.email,
+      updates.status ?? this.status,
+      updates.orderCount ?? this.orderCount,
+      updates.lifetimeValue ?? this.lifetimeValue,
+      this.createdAt,
+      updates.lastOrderDate ?? this.lastOrderDate
+    );
+  }
+}
+
+// Repository
+interface CustomerMetrics {
+  total: number;
+  active: number;
+  inactive: number;
+  suspended: number;
+  totalRevenue: number;
+  avgLifetimeValue: number;
+}
 
 class CustomerRepository extends Repository<Customer> {
+  async findByEmail(email: string): Promise<Customer | null> {
+    const customers = await this.query({ email });
+    return customers[0] || null;
+  }
+
+  async findByStatus(status: CustomerStatus): Promise<Customer[]> {
+    return this.query({ status });
+  }
+
   async findActive(): Promise<Customer[]> {
-    return this.query({ status: 'active' });
+    return this.findByStatus(CustomerStatus.Active);
+  }
+
+  async findInactive(): Promise<Customer[]> {
+    const customers = await this.findAll();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    return customers.filter(c => {
+      return c.lastOrderDate && c.lastOrderDate < thirtyDaysAgo;
+    });
+  }
+
+  async getCustomerMetrics(): Promise<CustomerMetrics> {
+    const customers = await this.findAll();
+
+    const totalRevenue = customers.reduce((sum, c) => sum + c.lifetimeValue, 0);
+
+    return {
+      total: customers.length,
+      active: customers.filter(c => c.status === CustomerStatus.Active).length,
+      inactive: customers.filter(c => c.status === CustomerStatus.Inactive).length,
+      suspended: customers.filter(c => c.status === CustomerStatus.Suspended).length,
+      totalRevenue,
+      avgLifetimeValue: customers.length > 0 ? totalRevenue / customers.length : 0,
+    };
+  }
+
+  async searchCustomers(query: string): Promise<Customer[]> {
+    const customers = await this.findAll();
+    const lowerQuery = query.toLowerCase();
+
+    return customers.filter(c =>
+      c.name.fullName.toLowerCase().includes(lowerQuery) ||
+      c.email.value.toLowerCase().includes(lowerQuery)
+    );
+  }
+}
+
+// Service Layer
+class CustomerService {
+  constructor(private readonly repository: CustomerRepository) {}
+
+  async createCustomer(first: string, last: string, email: string): Promise<Customer> {
+    const existingCustomer = await this.repository.findByEmail(email);
+    if (existingCustomer) {
+      throw new Error(\`Customer with email \${email} already exists\`);
+    }
+
+    const customer = new Customer(
+      \`CUST-\${Date.now()}\`,
+      new CustomerName(first, last),
+      new Email(email),
+      CustomerStatus.Active
+    );
+
+    await this.repository.save(customer);
+    EventBus.emit('customer:created', {
+      customerId: customer.id,
+      customerName: customer.name.fullName,
+      email: customer.email.value,
+    });
+
+    return customer;
+  }
+
+  async recordOrder(customerId: string, orderValue: number): Promise<Customer> {
+    const customer = await this.repository.findById(customerId);
+    if (!customer) throw new Error(\`Customer not found: \${customerId}\`);
+
+    const updated = customer.addOrder(orderValue);
+    await this.repository.save(updated);
+
+    return updated;
+  }
+
+  async identifyAtRisk(): Promise<Customer[]> {
+    const customers = await this.repository.findAll();
+    const atRiskCustomers = customers.filter(c => {
+      const daysSince = c.daysSinceLastOrder;
+      return daysSince !== null && daysSince > 90 && c.isActive;
+    });
+
+    atRiskCustomers.forEach(customer => {
+      EventBus.emit('customer:at-risk', {
+        customerId: customer.id,
+        customerName: customer.name.fullName,
+        daysSinceLastOrder: customer.daysSinceLastOrder,
+      });
+    });
+
+    return atRiskCustomers;
   }
 }`,
-    vanilla: `import { $, on } from '@cin7/vanilla-js';
+    vanilla: `// Vanilla JS - Customer Portal UI Interactions
+import { $, $$, on, addClass, removeClass, fadeIn, fadeOut, attr, html } from '@cin7/vanilla-js';
+import { EventBus } from '@cin7/typescript-sdk';
 
+// Initialize Customer Portal
 function initCustomerPortal() {
-  const searchInput = $('#customer-search');
-  on(searchInput, 'input', filterCustomers);
-}`,
-    extjs: `import { ExtDataGrid } from '@cin7/extjs-adapters';
+  const portal = $('#customer-portal');
+  if (!portal) return;
 
+  initCustomerTable();
+  initSearchBar();
+  initTabFilters();
+  initMetrics();
+  initEventListeners();
+}
+
+// Customer Table
+function initCustomerTable() {
+  const rows = $$('.customer-row');
+
+  rows.forEach(row => {
+    on(row, 'mouseenter', () => {
+      addClass(row, 'customer-row--hover');
+    });
+
+    on(row, 'mouseleave', () => {
+      removeClass(row, 'customer-row--hover');
+    });
+
+    on(row, 'click', () => {
+      removeClass($$('.customer-row'), 'customer-row--selected');
+      addClass(row, 'selected');
+      showCustomerDetails(attr(row, 'data-customer-id'));
+    });
+  });
+}
+
+// Search Bar
+function initSearchBar() {
+  const searchInput = $('#customer-search');
+  if (!searchInput) return;
+
+  let debounceTimer: NodeJS.Timeout;
+
+  on(searchInput, 'input', (e: Event) => {
+    clearTimeout(debounceTimer);
+    const target = e.target as HTMLInputElement;
+
+    debounceTimer = setTimeout(() => {
+      searchCustomers(target.value);
+    }, 300);
+  });
+}
+
+function searchCustomers(query: string) {
+  const rows = $$('.customer-row');
+  const lowerQuery = query.toLowerCase();
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const name = (attr(row, 'data-customer-name') || '').toLowerCase();
+    const email = (attr(row, 'data-customer-email') || '').toLowerCase();
+
+    if (name.includes(lowerQuery) || email.includes(lowerQuery)) {
+      fadeIn(row, 150);
+      visibleCount++;
+    } else {
+      fadeOut(row, 150);
+    }
+  });
+
+  updateCustomerCount(visibleCount);
+}
+
+// Tab Filters
+function initTabFilters() {
+  const tabs = $$('.tab-button');
+
+  tabs.forEach(tab => {
+    on(tab, 'click', () => {
+      const filter = attr(tab, 'data-filter');
+      setActiveTab(tab);
+      filterByStatus(filter || 'all');
+    });
+  });
+}
+
+function setActiveTab(activeTab: HTMLElement) {
+  $$('.tab-button').forEach(tab => removeClass(tab, 'active'));
+  addClass(activeTab, 'active');
+}
+
+function filterByStatus(status: string) {
+  const rows = $$('.customer-row');
+  let visibleCount = 0;
+
+  rows.forEach(row => {
+    const rowStatus = attr(row, 'data-customer-status');
+
+    if (status === 'all' || rowStatus === status) {
+      fadeIn(row, 150);
+      visibleCount++;
+    } else {
+      fadeOut(row, 150);
+    }
+  });
+
+  updateCustomerCount(visibleCount);
+}
+
+// Customer Details
+function showCustomerDetails(customerId: string | null) {
+  const detailsPanel = $('#customer-details-panel');
+  if (!detailsPanel || !customerId) return;
+
+  const customerRow = $$(\`.customer-row[data-customer-id="\${customerId}"]\`)[0];
+  if (!customerRow) return;
+
+  html($('#detail-customer-name'), attr(customerRow, 'data-customer-name') || '');
+  html($('#detail-customer-email'), attr(customerRow, 'data-customer-email') || '');
+  html($('#detail-order-count'), attr(customerRow, 'data-order-count') || '0');
+  html($('#detail-lifetime-value'), attr(customerRow, 'data-lifetime-value') || '$0.00');
+  html($('#detail-status'), attr(customerRow, 'data-customer-status') || 'Unknown');
+
+  fadeIn(detailsPanel);
+}
+
+// Metrics
+function initMetrics() {
+  const metrics = $$('.metric-value');
+  metrics.forEach(metric => {
+    animateMetric(metric as HTMLElement);
+  });
+}
+
+function updateMetrics(data: { total: number; active: number; totalRevenue: number; avgLifetime: number }) {
+  animateNumber($('#metric-total'), data.total);
+  animateNumber($('#metric-active'), data.active);
+  animateDecimal($('#metric-revenue'), data.totalRevenue);
+  animateDecimal($('#metric-avg-lifetime'), data.avgLifetime);
+}
+
+function animateMetric(element: HTMLElement) {
+  const targetValue = parseFloat(attr(element, 'data-value') || '0');
+  animateNumber(element, targetValue, 1000);
+}
+
+function animateNumber(element: HTMLElement | null, targetValue: number, duration: number = 500) {
+  if (!element) return;
+
+  const currentValue = parseInt(element.textContent || '0');
+  const steps = 30;
+  const increment = (targetValue - currentValue) / steps;
+
+  let step = 0;
+  const interval = setInterval(() => {
+    if (step >= steps) {
+      element.textContent = targetValue.toString();
+      clearInterval(interval);
+      return;
+    }
+
+    element.textContent = Math.round(currentValue + increment * step).toString();
+    step++;
+  }, duration / steps);
+}
+
+function animateDecimal(element: HTMLElement | null, targetValue: number, duration: number = 500) {
+  if (!element) return;
+
+  const currentValue = parseFloat(element.textContent?.replace('$', '') || '0');
+  const steps = 30;
+  const increment = (targetValue - currentValue) / steps;
+
+  let step = 0;
+  const interval = setInterval(() => {
+    if (step >= steps) {
+      element.textContent = \`$\${targetValue.toFixed(2)}\`;
+      clearInterval(interval);
+      return;
+    }
+
+    const value = currentValue + increment * step;
+    element.textContent = \`$\${value.toFixed(2)}\`;
+    step++;
+  }, duration / steps);
+}
+
+function updateCustomerCount(count: number) {
+  const countEl = $('#customer-count');
+  if (countEl) {
+    html(countEl, \`Showing \${count} customers\`);
+  }
+}
+
+// Event Listeners
+function initEventListeners() {
+  EventBus.on('customer:created', (event: any) => {
+    showNotification(\`New customer: \${event.customerName}\`, 'success');
+  });
+
+  EventBus.on('customer:order:added', (event: any) => {
+    showNotification(\`\${event.customerName} placed an order: $\${event.orderValue.toFixed(2)}\`, 'info');
+  });
+
+  EventBus.on('customer:at-risk', (event: any) => {
+    showNotification(\`At-risk customer: \${event.customerName} (\${event.daysSinceLastOrder} days)\`, 'warning');
+  });
+}
+
+function showNotification(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') {
+  const notification = document.createElement('div');
+  notification.className = \`notification notification--\${type}\`;
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => addClass(notification, 'notification--visible'), 10);
+  setTimeout(() => {
+    removeClass(notification, 'notification--visible');
+    setTimeout(() => document.body.removeChild(notification), 300);
+  }, 3000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCustomerPortal);
+} else {
+  initCustomerPortal();
+}`,
+    extjs: `// ExtJS - Customer Portal Grid
+import { ExtDataGrid } from '@cin7/extjs-adapters';
+import { EventBus } from '@cin7/typescript-sdk';
+
+// Customer Store
+const customerStore = Ext.create('Ext.data.Store', {
+  storeId: 'customerStore',
+  fields: [
+    { name: 'id', type: 'string' },
+    { name: 'firstName', type: 'string' },
+    { name: 'lastName', type: 'string' },
+    { name: 'email', type: 'string' },
+    { name: 'status', type: 'string' },
+    { name: 'orderCount', type: 'int' },
+    { name: 'lifetimeValue', type: 'number' },
+    { name: 'createdAt', type: 'date' },
+    { name: 'lastOrderDate', type: 'date' },
+  ],
+  proxy: {
+    type: 'ajax',
+    url: '/api/customers',
+    reader: {
+      type: 'json',
+      rootProperty: 'data',
+    },
+  },
+  autoLoad: true,
+});
+
+// Customer Grid
 const customerGrid = ExtDataGrid.create({
+  title: 'Customer Directory',
+  store: customerStore,
+
   columns: [
-    { dataIndex: 'name', text: 'Name', flex: 1 },
-    { dataIndex: 'email', text: 'Email', flex: 1 }
-  ]
-});`,
+    {
+      dataIndex: 'firstName',
+      text: 'First Name',
+      flex: 1,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'lastName',
+      text: 'Last Name',
+      flex: 1,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'email',
+      text: 'Email',
+      flex: 2,
+      filter: { type: 'string' },
+    },
+    {
+      dataIndex: 'orderCount',
+      text: 'Orders',
+      width: 80,
+      align: 'right',
+      summaryType: 'sum',
+    },
+    {
+      dataIndex: 'lifetimeValue',
+      text: 'Lifetime Value',
+      width: 140,
+      align: 'right',
+      xtype: 'numbercolumn',
+      format: '$0,000.00',
+      summaryType: 'sum',
+    },
+    {
+      dataIndex: 'status',
+      text: 'Status',
+      width: 100,
+      filter: {
+        type: 'list',
+        options: ['Active', 'Inactive', 'Suspended'],
+      },
+      renderer: function(value) {
+        const colors = {
+          'Active': '#28a745',
+          'Inactive': '#6c757d',
+          'Suspended': '#dc3545',
+        };
+        const color = colors[value] || '#6c757d';
+        return '<span style="background:' + color + ';color:white;padding:4px 12px;border-radius:12px;">' + value + '</span>';
+      },
+    },
+    {
+      dataIndex: 'lastOrderDate',
+      text: 'Last Order',
+      width: 120,
+      xtype: 'datecolumn',
+      format: 'Y-m-d',
+    },
+  ],
+
+  features: [
+    {
+      ftype: 'filters',
+    },
+    {
+      ftype: 'summary',
+      dock: 'bottom',
+    },
+  ],
+
+  tbar: [
+    {
+      text: 'Add Customer',
+      iconCls: 'x-fa fa-user-plus',
+      handler: function() {
+        showAddCustomerWindow();
+      },
+    },
+    '-',
+    {
+      text: 'Active Only',
+      enableToggle: true,
+      pressed: false,
+      handler: function(btn) {
+        const store = btn.up('grid').getStore();
+        if (btn.pressed) {
+          store.filter('status', 'Active');
+        } else {
+          store.clearFilter();
+        }
+      },
+    },
+    '->',
+    {
+      xtype: 'textfield',
+      emptyText: 'Search customers...',
+      width: 250,
+      listeners: {
+        change: function(field, value) {
+          const store = field.up('grid').getStore();
+          store.clearFilter();
+
+          if (value) {
+            store.filterBy(function(record) {
+              const firstName = record.get('firstName').toLowerCase();
+              const lastName = record.get('lastName').toLowerCase();
+              const email = record.get('email').toLowerCase();
+              const search = value.toLowerCase();
+              return firstName.includes(search) || lastName.includes(search) || email.includes(search);
+            });
+          }
+        },
+      },
+    },
+  ],
+});
+
+function showAddCustomerWindow() {
+  Ext.create('Ext.window.Window', {
+    title: 'Add Customer',
+    width: 500,
+    modal: true,
+    items: [{
+      xtype: 'form',
+      bodyPadding: 15,
+      items: [
+        { xtype: 'textfield', fieldLabel: 'First Name', name: 'firstName', allowBlank: false },
+        { xtype: 'textfield', fieldLabel: 'Last Name', name: 'lastName', allowBlank: false },
+        { xtype: 'textfield', fieldLabel: 'Email', name: 'email', vtype: 'email', allowBlank: false },
+        {
+          xtype: 'combobox',
+          fieldLabel: 'Status',
+          name: 'status',
+          store: ['Active', 'Inactive', 'Suspended'],
+          value: 'Active',
+        },
+      ],
+      buttons: [{
+        text: 'Add',
+        handler: function() {
+          const form = this.up('form').getForm();
+          if (form.isValid()) {
+            const values = form.getValues();
+            values.orderCount = 0;
+            values.lifetimeValue = 0;
+            values.createdAt = new Date();
+            customerStore.insert(0, values);
+            EventBus.emit('customer:created', {
+              customerId: 'CUST-' + Date.now(),
+              customerName: values.firstName + ' ' + values.lastName,
+              email: values.email,
+            });
+            this.up('window').close();
+          }
+        },
+      }],
+    }],
+  }).show();
+}`,
   },
 };
 
