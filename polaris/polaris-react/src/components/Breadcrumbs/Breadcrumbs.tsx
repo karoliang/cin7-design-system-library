@@ -10,10 +10,14 @@ export interface BreadcrumbsProps {
    * @deprecated Back action link
    * Use `breadcrumbs` prop instead as documented [here](https://shopify.dev/docs/api/app-bridge/previous-versions/actions/titlebar#using-titlebar-with-polaris)
    */
-  backAction: CallbackAction | LinkAction;
+  backAction?: CallbackAction | LinkAction;
 }
 
 export function Breadcrumbs({backAction}: BreadcrumbsProps) {
+  if (!backAction) {
+    return null;
+  }
+
   const {content} = backAction;
 
   return (
