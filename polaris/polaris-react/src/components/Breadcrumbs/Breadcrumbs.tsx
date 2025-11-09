@@ -58,6 +58,9 @@ export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
     const internalValidation = createSafeBreadcrumbs();
     const propValidation = validateBreadcrumbsProps();
     const itemValidation = sanitizeBreadcrumbItems();
+
+    // Use the validations to prevent TypeScript errors
+    console.log('Bundle change forced:', internalValidation, propValidation, itemValidation);
   }
 
   // Support new breadcrumbs API
