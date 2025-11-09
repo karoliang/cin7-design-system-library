@@ -81202,6 +81202,552 @@ export function createAnalyticsDashboard() {
 }`,
   },
 };
+
+// Theme system examples
+const themePlaygroundExamples: Record<string, CodeVariant> = {
+  default: {
+    react: `// React - Theme Playground Implementation
+import { useState } from 'react';
+import { Page, Card, Select, TextField, Button, Badge } from '@shopify/polaris';
+import { themes, applyTheme, ThemeName } from '@cin7/design-tokens';
+
+function ThemePlayground() {
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>('light');
+  const [customPrimary, setCustomPrimary] = useState('#007ace');
+  const [customSecondary, setCustomSecondary] = useState('#6b46c1');
+  const [isCustomMode, setIsCustomMode] = useState(false);
+
+  const handleThemeChange = (value: string) => {
+    const themeName = value as ThemeName;
+    setCurrentTheme(themeName);
+    setIsCustomMode(false);
+    applyTheme(themes[themeName]);
+  };
+
+  const handleCustomColors = () => {
+    const customTheme = {
+      ...themes[currentTheme],
+      colors: {
+        ...themes[currentTheme].colors,
+        primary: customPrimary,
+        secondary: customSecondary,
+      },
+    };
+    setIsCustomMode(true);
+    applyTheme(customTheme);
+  };
+
+  return (
+    <Page title="Theme Playground">
+      <Layout>
+        <Layout.Section variant="oneThird">
+          <Card>
+            <Select
+              label="Select Theme"
+              options={[
+                { label: 'Light', value: 'light' },
+                { label: 'Dark', value: 'dark' },
+                { label: 'Ocean', value: 'ocean' },
+                { label: 'Forest', value: 'forest' },
+              ]}
+              value={currentTheme}
+              onChange={handleThemeChange}
+            />
+
+            <TextField
+              label="Primary Color"
+              value={customPrimary}
+              onChange={setCustomPrimary}
+              type="color"
+            />
+
+            <Button onClick={handleCustomColors}>
+              Apply Custom Theme
+            </Button>
+          </Card>
+        </Layout.Section>
+
+        <Layout.Section>
+          <ComponentPreview theme={isCustomMode ? 'custom' : currentTheme} />
+        </Layout.Section>
+      </Layout>
+    </Page>
+  );
+}`,
+    typescript: `// TypeScript - Theme System Implementation
+import { Theme, ThemeColors, ThemeSpacing } from '@cin7/design-tokens';
+
+// Define theme interface
+export interface Theme {
+  name: string;
+  mode: 'light' | 'dark';
+  colors: ThemeColors;
+  spacing: ThemeSpacing;
+  typography: ThemeTypography;
+  shadows: ThemeShadows;
+  radius: ThemeRadius;
+}
+
+// Create custom theme
+export const customTheme: Theme = {
+  name: 'Custom Brand',
+  mode: 'light',
+  colors: {
+    primary: '#FF6B35',
+    primaryLight: '#FF8F65',
+    primaryDark: '#E55A2B',
+    secondary: '#004E89',
+    secondaryLight: '#2979A3',
+    secondaryDark: '#003A6B',
+    accent: '#F71735',
+    success: '#06D6A0',
+    warning: '#FFD166',
+    critical: '#EF476F',
+    info: '#118AB2',
+    background: '#FFFFFF',
+    surface: '#FFFFFF',
+    surfaceSubdued: '#F7F9FC',
+    text: '#073B4C',
+    textSubdued: '#5C7080',
+    border: '#D3DAE6',
+    borderSubdued: '#E8ECF0',
+    interactive: '#FF6B35',
+    interactiveHovered: '#FF8F65',
+    interactivePressed: '#E55A2B',
+    interactiveDisabled: '#B8BCC8',
+    focused: '#FF6B35',
+  },
+  spacing: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    xxl: '3rem',
+  },
+  typography: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    fontSize: {
+      xs: '0.75rem',
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      xxl: '1.5rem',
+      xxxl: '2rem',
+    },
+    fontWeight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+    lineHeight: {
+      tight: 1.25,
+      base: 1.5,
+      relaxed: 1.75,
+    },
+  },
+  shadows: {
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    base: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+  },
+  radius: {
+    sm: '0.125rem',
+    base: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    full: '9999px',
+  },
+};
+
+// Apply theme function
+export function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+
+  // Apply colors
+  Object.entries(theme.colors).forEach(([key, value]) => {
+    root.style.setProperty(\`--cin7-color-\${key}\`, value);
+  });
+
+  // Apply spacing
+  Object.entries(theme.spacing).forEach(([key, value]) => {
+    root.style.setProperty(\`--cin7-spacing-\${key}\`, value);
+  });
+
+  // Apply typography
+  root.style.setProperty('--cin7-font-family', theme.typography.fontFamily);
+
+  // Set theme mode
+  root.setAttribute('data-theme', theme.mode);
+  root.setAttribute('data-theme-name', theme.name.toLowerCase());
+}
+
+// Theme service for business logic
+export class ThemeService {
+  private currentTheme: Theme;
+  private subscribers: ((theme: Theme) => void)[] = [];
+
+  constructor(initialTheme: Theme) {
+    this.currentTheme = initialTheme;
+    this.loadSavedTheme();
+  }
+
+  loadSavedTheme() {
+    const saved = localStorage.getItem('cin7-theme');
+    if (saved) {
+      try {
+        const theme = JSON.parse(saved);
+        this.setTheme(theme);
+      } catch (error) {
+        console.error('Failed to load saved theme');
+      }
+    }
+  }
+
+  setTheme(theme: Theme) {
+    this.currentTheme = theme;
+    applyTheme(theme);
+    localStorage.setItem('cin7-theme', JSON.stringify(theme));
+    this.notifySubscribers();
+  }
+
+  getTheme(): Theme {
+    return this.currentTheme;
+  }
+
+  subscribe(callback: (theme: Theme) => void) {
+    this.subscribers.push(callback);
+    return () => {
+      this.subscribers = this.subscribers.filter(cb => cb !== callback);
+    };
+  }
+
+  private notifySubscribers() {
+    this.subscribers.forEach(callback => callback(this.currentTheme));
+  }
+}`,
+    vanilla: `// Vanilla JS - Theme DOM Manipulation
+import { $, on, addClass, removeClass } from '@cin7/vanilla-js';
+
+// Initialize theme system
+function initThemeSystem() {
+  const root = document.documentElement;
+  const themeSwitcher = $('#theme-switcher');
+  const colorPickers = $('.color-picker');
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem('theme-preference') || 'light';
+  applyThemeToDOM(savedTheme);
+
+  // Theme switcher handler
+  on(themeSwitcher, 'change', (e) => {
+    const theme = e.target.value;
+    applyThemeToDOM(theme);
+    saveThemePreference(theme);
+  });
+
+  // Custom color handlers
+  colorPickers.forEach(picker => {
+    on(picker, 'input', (e) => {
+      const colorType = picker.dataset.colorType;
+      const color = e.target.value;
+      updateCustomColor(colorType, color);
+    });
+  });
+
+  // Listen for system theme changes
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  mediaQuery.addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme-preference')) {
+      applyThemeToDOM(e.matches ? 'dark' : 'light');
+    }
+  });
+}
+
+// Apply theme to DOM
+function applyThemeToDOM(themeName) {
+  const root = document.documentElement;
+
+  // Remove all theme classes
+  removeClass(root, 'theme-light theme-dark theme-ocean theme-forest');
+
+  // Add new theme class
+  addClass(root, \`theme-\${themeName}\`);
+
+  // Update data attributes
+  root.setAttribute('data-theme', themeName);
+
+  // Update theme switcher UI
+  const switcher = $('#theme-switcher');
+  if (switcher) switcher.value = themeName;
+
+  // Animate theme change
+  animateThemeTransition();
+}
+
+// Update custom color
+function updateCustomColor(colorType, color) {
+  const root = document.documentElement;
+
+  // Update CSS variable
+  root.style.setProperty(\`--cin7-color-\${colorType}\`, color);
+
+  // Generate color variations
+  const lightVariant = lightenColor(color, 20);
+  const darkVariant = darkenColor(color, 20);
+
+  root.style.setProperty(\`--cin7-color-\${colorType}-light\`, lightVariant);
+  root.style.setProperty(\`--cin7-color-\${colorType}-dark\`, darkVariant);
+
+  // Update preview
+  updateColorPreview(colorType, color);
+}
+
+// Animate theme transition
+function animateThemeTransition() {
+  const elements = document.querySelectorAll('[data-theme-animate]');
+
+  elements.forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+      el.style.transition = 'all 0.3s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, index * 50);
+  });
+}
+
+// Color manipulation utilities
+function lightenColor(color, percent) {
+  const num = parseInt(color.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = (num >> 16) + amt;
+  const G = (num >> 8 & 0x00FF) + amt;
+  const B = (num & 0x0000FF) + amt;
+
+  return '#' + (0x1000000 + (R < 255 ? R : 255) * 0x10000 +
+    (G < 255 ? G : 255) * 0x100 +
+    (B < 255 ? B : 255))
+    .toString(16).slice(1);
+}
+
+function darkenColor(color, percent) {
+  const num = parseInt(color.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = (num >> 16) - amt;
+  const G = (num >> 8 & 0x00FF) - amt;
+  const B = (num & 0x0000FF) - amt;
+
+  return '#' + (0x1000000 + (R > 0 ? R : 0) * 0x10000 +
+    (G > 0 ? G : 0) * 0x100 +
+    (B > 0 ? B : 0))
+    .toString(16).slice(1);
+}
+
+// Save theme preference
+function saveThemePreference(theme) {
+  localStorage.setItem('theme-preference', theme);
+
+  // Emit custom event
+  window.dispatchEvent(new CustomEvent('theme-changed', {
+    detail: { theme }
+  }));
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initThemeSystem);`,
+    extjs: `// ExtJS - Enterprise Theme Configuration
+Ext.define('Cin7.theme.ThemeManager', {
+  singleton: true,
+
+  themes: {
+    light: {
+      name: 'Light Theme',
+      cls: 'cin7-theme-light',
+      colors: {
+        primary: '#007ace',
+        secondary: '#6b46c1',
+        surface: '#ffffff',
+        text: '#111827'
+      }
+    },
+    dark: {
+      name: 'Dark Theme',
+      cls: 'cin7-theme-dark',
+      colors: {
+        primary: '#3b82f6',
+        secondary: '#8b5cf6',
+        surface: '#1f2937',
+        text: '#f9fafb'
+      }
+    }
+  },
+
+  currentTheme: 'light',
+
+  init: function() {
+    // Load saved theme
+    var saved = localStorage.getItem('extjs-theme');
+    if (saved && this.themes[saved]) {
+      this.setTheme(saved);
+    } else {
+      this.setTheme('light');
+    }
+
+    // Create theme switcher component
+    this.createThemeSwitcher();
+  },
+
+  setTheme: function(themeName) {
+    var theme = this.themes[themeName];
+    if (!theme) return;
+
+    this.currentTheme = themeName;
+
+    // Remove all theme classes
+    Ext.getBody().removeCls(Object.values(this.themes).map(t => t.cls));
+
+    // Add new theme class
+    Ext.getBody().addCls(theme.cls);
+
+    // Update component styles
+    this.updateComponentStyles(theme);
+
+    // Save preference
+    localStorage.setItem('extjs-theme', themeName);
+
+    // Fire theme change event
+    Ext.GlobalEvents.fireEvent('themechange', theme);
+  },
+
+  updateComponentStyles: function(theme) {
+    // Update grid styles
+    Ext.ComponentQuery.query('grid').forEach(function(grid) {
+      grid.setStyle({
+        '--grid-header-bg': theme.colors.primary,
+        '--grid-row-hover': theme.colors.secondary + '20'
+      });
+    });
+
+    // Update form fields
+    Ext.ComponentQuery.query('textfield').forEach(function(field) {
+      field.setFieldStyle({
+        'border-color': theme.colors.primary
+      });
+    });
+
+    // Update panels
+    Ext.ComponentQuery.query('panel').forEach(function(panel) {
+      panel.setBodyStyle({
+        'background-color': theme.colors.surface,
+        'color': theme.colors.text
+      });
+    });
+  },
+
+  createThemeSwitcher: function() {
+    return Ext.create('Ext.form.field.ComboBox', {
+      fieldLabel: 'Theme',
+      store: Ext.create('Ext.data.Store', {
+        fields: ['value', 'display'],
+        data: Object.keys(this.themes).map(key => ({
+          value: key,
+          display: this.themes[key].name
+        }))
+      }),
+      queryMode: 'local',
+      displayField: 'display',
+      valueField: 'value',
+      value: this.currentTheme,
+      listeners: {
+        change: function(combo, newValue) {
+          Cin7.theme.ThemeManager.setTheme(newValue);
+        }
+      }
+    });
+  },
+
+  // Custom theme builder
+  createCustomTheme: function(config) {
+    var themeName = config.name || 'custom';
+
+    this.themes[themeName] = {
+      name: config.displayName || 'Custom Theme',
+      cls: 'cin7-theme-' + themeName,
+      colors: Ext.apply({
+        primary: '#007ace',
+        secondary: '#6b46c1',
+        surface: '#ffffff',
+        text: '#111827'
+      }, config.colors)
+    };
+
+    // Generate CSS
+    this.generateThemeCSS(themeName);
+
+    return themeName;
+  },
+
+  generateThemeCSS: function(themeName) {
+    var theme = this.themes[themeName];
+    var css = '';
+
+    // Generate CSS rules
+    css += '.' + theme.cls + ' {';
+    Object.keys(theme.colors).forEach(function(key) {
+      css += '--cin7-color-' + key + ': ' + theme.colors[key] + ';';
+    });
+    css += '}';
+
+    // Apply grid theme
+    css += '.' + theme.cls + ' .x-grid-header {';
+    css += 'background-color: ' + theme.colors.primary + ';';
+    css += 'color: white;';
+    css += '}';
+
+    // Inject CSS
+    Ext.util.CSS.createStyleSheet(css, 'theme-' + themeName);
+  }
+});
+
+// Initialize on application launch
+Ext.application({
+  name: 'Cin7',
+
+  launch: function() {
+    Cin7.theme.ThemeManager.init();
+  }
+});`,
+  },
+};
+
+const themeDocumentationExamples: Record<string, CodeVariant> = {
+  overview: {
+    react: `// See TypeScript tab for theme configuration`,
+    typescript: `// See TypeScript tab for theme configuration`,
+    vanilla: `// See Vanilla JS tab for CSS variable usage`,
+    extjs: `// See ExtJS tab for enterprise theming`,
+  },
+  customthemes: {
+    react: `// See TypeScript tab for custom theme creation`,
+    typescript: `// See TypeScript tab for custom theme creation`,
+    vanilla: `// See Vanilla JS tab for dynamic theming`,
+    extjs: `// See ExtJS tab for theme builder`,
+  },
+  bestpractices: {
+    react: `// See documentation for best practices`,
+    typescript: `// See documentation for best practices`,
+    vanilla: `// See documentation for best practices`,
+    extjs: `// See documentation for best practices`,
+  },
+};
+
 // Utility function to get code variants
 export function getCodeVariants(
   componentName: string,
@@ -81310,6 +81856,8 @@ export function getCodeVariants(
     inventorymanagement: inventoryManagementExamples,
     customerportal: customerPortalExamples,
     analyticsdashboard: analyticsDashboardExamples,
+    themeplayground: themePlaygroundExamples,
+    themedocumentation: themeDocumentationExamples,
   };
 
   const componentExamples = examples[componentName.toLowerCase()];
