@@ -13,7 +13,9 @@ import {
   Badge,
   InlineStack,
   BlockStack,
+  AppProvider,
 } from '@shopify/polaris';
+import enTranslations from '@shopify/polaris/locales/en.json';
 import {
   HomeIcon,
   OrderIcon,
@@ -99,11 +101,51 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-  // RESTORED: Frame-specific error boundary decorator for debugging
+  // CRITICAL FIX: Frame must have both AppProvider and error boundary decorators
   decorators: [
     (Story) => (
       <FrameErrorBoundary>
-        <Story />
+        <AppProvider
+          i18n={enTranslations}
+          theme={{
+            colors: {
+              surface: '#ffffff',
+              onSurface: '#202223',
+              interactive: '#202223',
+              decorative: '#d2d5d9',
+              subText: '#6d7175',
+              border: '#c4c7ca',
+              background: '#ffffff',
+              backgroundHovered: '#f9f9f9',
+              backgroundPressed: '#f3f3f3',
+              backgroundSelected: '#eef1ff',
+              borderHovered: '#c4c7ca',
+              borderDisabled: '#eeeff2',
+              shadow: 'rgba(0, 0, 0, 0.1)',
+              icon: '#5c6ac4',
+              iconDisabled: '#919eab',
+              iconOnSurface: '#5c6ac4',
+              text: '#202223',
+              textDisabled: '#919eab',
+              textOnSurface: '#202223',
+              critical: '#de3618',
+              warning: '#bf8800',
+              highlight: '#007ace',
+              success: '#2b6a30',
+              primary: '#5c6ac4',
+              secondary: '#17212c',
+            },
+          }}
+        >
+          <div style={{
+            height: '100vh',
+            width: '100vw',
+            backgroundColor: '#ffffff',
+            overflow: 'hidden'
+          }}>
+            <Story />
+          </div>
+        </AppProvider>
       </FrameErrorBoundary>
     ),
   ],
