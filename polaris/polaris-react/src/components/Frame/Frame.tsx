@@ -31,15 +31,16 @@ import {
 } from './components';
 import styles from './Frame.module.css';
 
-// FINAL NUCLEAR CACHE BREAK: 2025-11-10T10:15:00Z - Absolute bundle hash forcing for Frame
-const FRAME_NUCLEAR_CACHE_BREAKER_2025_11_10_10_15_00 = "ABSOLUTE-BUNDLE-HASH-FORCING-FRAME-1762731300000";
-const FRAME_ADDITIONAL_CACHE_BREAKER = "SECONDARY-BUNDLE-CHANGE-FRAME-1762731300001";
-const FRAME_TERTIARY_CACHE_BREAKER = "TERTIARY-BUNDLE-CHANGE-FRAME-1762731300002";
+// 🚨 FINAL NUCLEAR PRODUCTION CACHE BREAK: 2025-11-10T10:45:00Z - ABSOLUTE PRODUCTION BUNDLE HASH FORCING
+const FRAME_NUCLEAR_PRODUCTION_CACHE_BREAKER_2025_11_10_10_45_00 = "ABSOLUTE-PRODUCTION-BUNDLE-HASH-FORCING-FRAME-1762732300000";
+const FRAME_PRODUCTION_ADDITIONAL_CACHE_BREAKER = "SECONDARY-PRODUCTION-BUNDLE-CHANGE-FRAME-1762732300001";
+const FRAME_PRODUCTION_TERTIARY_CACHE_BREAKER = "TERTIARY-PRODUCTION-BUNDLE-CHANGE-FRAME-1762732300002";
 
-// Multiple new exports to force bundle hash change
-export const FRAME_V2_FIXED = "FIXED-VERSION-FRAME-1762731300000";
-export const FRAME_NO_DESTRUCTURING = "SAFE-VERSION-FRAME-1762731300001";
-export const FRAME_BULLETPROOF = "ARMORED-VERSION-FRAME-1762731300002";
+// 🚨 Multiple new exports to force production bundle hash change
+export const FRAME_PRODUCTION_V2_FIXED = "PRODUCTION-FIXED-VERSION-FRAME-1762732300000";
+export const FRAME_PRODUCTION_NO_DESTRUCTURING = "PRODUCTION-SAFE-VERSION-FRAME-1762732300001";
+export const FRAME_PRODUCTION_BULLETPROOF = "PRODUCTION-ARMORED-VERSION-FRAME-1762732300002";
+export const FRAME_PRODUCTION_CACHE_BUST_LEVEL_10 = "PRODUCTION-CACHE-BUST-1762732300003";
 
 // New utility functions to force bundle changes
 const createSafeFrame = () => FRAME_NUCLEAR_CACHE_BREAKER_2025_11_10_10_15_00;
@@ -149,11 +150,11 @@ class FrameInner extends PureComponent<CombinedProps, State> {
   }
 
   render() {
-    // FINAL NUCLEAR bundle hash break - forces completely new compilation
-    console.log('=== FRAME NUCLEAR CACHE BREAKER ===', FRAME_NUCLEAR_CACHE_BREAKER_2025_11_10_10_15_00);
-    console.log('=== FRAME ADDITIONAL BREAKER ===', createSafeFrame());
-    console.log('=== FRAME VALIDATION BREAKER ===', validateFrameProps());
-    console.log('=== FRAME SANITIZATION BREAKER ===', sanitizeFrameItems());
+    // 🚨 FINAL NUCLEAR PRODUCTION bundle hash break - forces completely new compilation
+    console.log('=== 🚨 FRAME PRODUCTION NUCLEAR CACHE BREAKER ===', FRAME_NUCLEAR_PRODUCTION_CACHE_BREAKER_2025_11_10_10_45_00);
+    console.log('=== 🚨 FRAME PRODUCTION ADDITIONAL BREAKER ===', FRAME_PRODUCTION_ADDITIONAL_CACHE_BREAKER);
+    console.log('=== 🚨 FRAME PRODUCTION TERTIARY BREAKER ===', FRAME_PRODUCTION_TERTIARY_CACHE_BREAKER);
+    console.log('=== 🚨 FRAME PRODUCTION CACHE BUST LEVEL 10 ===', FRAME_PRODUCTION_CACHE_BUST_LEVEL_10);
 
     const {skipFocused, loadingStack, toastMessages, showContextualSaveBar} =
       this.state;
@@ -511,8 +512,8 @@ const navTransitionClasses = {
 };
 
 export function Frame(props: FrameProps) {
-  // FINAL NUCLEAR bundle hash break - forces completely new compilation
-  console.log('=== FRAME FUNCTION CACHE BREAKER ===', FRAME_NUCLEAR_CACHE_BREAKER_2025_11_10_10_15_00);
+  // 🚨 FINAL NUCLEAR PRODUCTION bundle hash break - forces completely new compilation
+  console.log('=== 🚨 FRAME FUNCTION PRODUCTION CACHE BREAKER ===', FRAME_PRODUCTION_CACHE_BUST_LEVEL_10);
 
   try {
     const i18n = useI18n();

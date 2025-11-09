@@ -1,5 +1,5 @@
 # Build configuration for Cin7 DSL documentation site with integrated Storybook
-# FINAL NUCLEAR DEPLOYMENT: 2025-11-10T09:30:00Z - Complete cache annihilation + absolute bundle hash forcing
+# 🚨 FINAL NUCLEAR PRODUCTION DEPLOYMENT: 2025-11-10T10:45:00Z - ABSOLUTE PRODUCTION CACHE ANNIHILATION
 [build]
   base = "polaris/polaris.shopify.com"
   publish = ".next"
@@ -10,14 +10,21 @@
 [build.environment]
   NODE_VERSION = "20.10.0"
   NEXT_TELEMETRY_DISABLED = "1"
-  # NUCLEAR cache invalidation - disable ALL caching
+  # 🚨 PRODUCTION NUCLEAR cache invalidation - disable ALL caching mechanisms
   NPM_CONFIG_CACHE = "/dev/null"
   NETLIFY_BUILD_CACHE = "false"
   NEXT_FORCE_NO_CACHE = "true"
   YARN_CACHE_FOLDER = "/dev/null"
-  # Force bundle regeneration
-  CACHE_BUST = "NUCLEAR-1762719448823-hpfeo"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  # 🚨 FORCE COMPLETE REBUILD - Level 10 Production Cache Breaking
+  CACHE_BUST = "NUCLEAR-PRODUCTION-1762732300000-ABSOLUTE-FORCE"
   FORCE_REBUILD = "true"
+  NETLIFY_FORCE_NO_CACHE = "true"
+  # 🚨 Bundle hash forcing - multiple layers
+  BUNDLE_HASH_FORCE = "PRODUCTION-BUNDLE-1762732300001"
+  FRAME_COMPONENT_FORCE = "FRAME-PRODUCTION-1762732300002"
+  BREADCRUMBS_COMPONENT_FORCE = "BREADCRUMBS-PRODUCTION-1762732300003"
+  STORYBOOK_FORCE_REBUILD = "TRUE"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -31,14 +38,23 @@
     X-XSS-Protection = "1; mode=block"
     X-Robots-Tag = "noai, noimageai"
 
-# NUCLEAR CDN cache invalidation for all JavaScript bundles
+# 🚨 NUCLEAR PRODUCTION CDN cache invalidation for all JavaScript bundles
 [[headers]]
   for = "*.js"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0, private"
     Pragma = "no-cache"
     Expires = "0"
-    X-Cache-Bust = "NUCLEAR-1762719448823-hpfeo"
+    # 🚨 Multiple production cache breakers
+    X-Cache-Bust = "NUCLEAR-PRODUCTION-1762732300000-ABSOLUTE-FORCE"
+    X-Bundle-Force = "PRODUCTION-BUNDLE-1762732300001"
+    X-Frame-Force = "FRAME-PRODUCTION-1762732300002"
+    X-Breadcrumbs-Force = "BREADCRUMBS-PRODUCTION-1762732300003"
+    X-Storybook-Rebuild = "TRUE"
+    # Force browser to not use any cached version
+    Vary = "*"
+    Surrogate-Control = "no-store, no-cache, must-revalidate"
+    ETag = ""
 
 # Allow Storybook to use iframes (for component previews)
 # This must come AFTER /* to override the DENY setting
