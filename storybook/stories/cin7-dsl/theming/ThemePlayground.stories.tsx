@@ -366,10 +366,10 @@ export const Playground: Story = {
                 <Select
                   label="Select Theme"
                   options={[
-                    { label: '☀️ Polaris Light', value: 'light' },
-                    { label: '🌙 Polaris Dark', value: 'dark' },
-                    { label: '💙 Cin7 Core Light', value: 'cin7CoreLight' },
-                    { label: '🖤 Cin7 Core Dark', value: 'cin7CoreDark' },
+                    { label: 'Polaris Light', value: 'light' },
+                    { label: 'Polaris Dark', value: 'dark' },
+                    { label: 'Cin7 Core Light', value: 'cin7CoreLight' },
+                    { label: 'Cin7 Core Dark', value: 'cin7CoreDark' },
                   ]}
                   value={currentTheme}
                   onChange={handleThemeChange}
