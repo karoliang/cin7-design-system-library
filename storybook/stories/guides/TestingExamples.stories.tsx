@@ -71,7 +71,7 @@ export const UnitTestingReact: Story = {
               </p>
             </Banner>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Component Code</Text>
                 <pre style={{
@@ -227,7 +227,7 @@ describe('ProductCard', () => {
           <BlockStack gap="400">
             <Text variant="headingXl" as="h2">Testing Form Components</Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Form Test Example</Text>
                 <pre style={{
@@ -345,7 +345,7 @@ export const UnitTestingTypeScript: Story = {
               </BlockStack>
             </InlineStack>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Domain Model</Text>
                 <pre style={{
@@ -461,7 +461,7 @@ describe('Product', () => {
           <BlockStack gap="400">
             <Text variant="headingXl" as="h2">Testing Services with Mocks</Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Service Layer</Text>
                 <pre style={{
@@ -624,7 +624,7 @@ export const UnitTestingVanillaJS: Story = {
               </BlockStack>
             </InlineStack>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">DOM Utilities</Text>
                 <pre style={{
@@ -743,7 +743,7 @@ describe('DOM Utilities', () => {
           <BlockStack gap="400">
             <Text variant="headingXl" as="h2">Testing Validation Functions</Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Validation Utilities</Text>
                 <pre style={{
@@ -913,7 +913,7 @@ export const IntegrationTesting: Story = {
               </p>
             </Banner>
 
-            <Grid columns={{ sm: 1 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Cross-Layer Integration Test</Text>
                 <pre style={{
@@ -1176,7 +1176,7 @@ export default defineConfig({
               </pre>
             </div>
 
-            <Grid columns={{ sm: 1 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Product Management E2E Test</Text>
                 <pre style={{
@@ -1347,7 +1347,7 @@ export const VisualRegression: Story = {
               </p>
             </Banner>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Story with Visual Test</Text>
                 <pre style={{
@@ -1514,7 +1514,7 @@ jobs:
             <Card background="bg-fill-info-secondary">
               <BlockStack gap="300">
                 <Text variant="headingMd" as="h3">Visual Testing Benefits</Text>
-                <Grid columns={{ sm: 1, md: 2 }} gap="400">
+                <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
                   <div>
                     <Text fontWeight="bold">Automatic Detection</Text>
                     <List>
@@ -1541,7 +1541,7 @@ jobs:
           <BlockStack gap="400">
             <Text variant="headingXl" as="h2">Testing Commands</Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <Card background="bg-fill-tertiary">
                 <BlockStack gap="200">
                   <Text fontWeight="semibold">Unit & Integration Tests</Text>

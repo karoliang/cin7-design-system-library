@@ -135,7 +135,7 @@ export const ProductDashboard: Story = {
         <Layout>
           {/* Metrics Section - React Layer */}
           <Layout.Section>
-            <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Products</Text>
@@ -314,7 +314,7 @@ export const OrderProcessing: Story = {
         <Layout>
           {/* Order Metrics */}
           <Layout.Section>
-            <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Orders</Text>
@@ -493,7 +493,7 @@ export const InventoryManagement: Story = {
         <Layout>
           {/* Stock Metrics */}
           <Layout.Section>
-            <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Current Stock</Text>
@@ -657,7 +657,7 @@ export const CustomerPortal: Story = {
         <Layout>
           {/* Account Overview */}
           <Layout.Section>
-            <Grid columns={{ sm: 1, md: 3 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 3 }} gap="400">
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Orders</Text>

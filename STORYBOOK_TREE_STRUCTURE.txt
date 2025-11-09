@@ -1,0 +1,198 @@
+CURRENT STORYBOOK STRUCTURE - CIN7 DSL SECTION
+==============================================
+
+Cin7 DSL/ (24 files, 106 stories)
+│
+├─ 1. Business Patterns/ (4 items)
+│  └─ Vanilla JS/
+│     ├─ Animations (3 stories)
+│     │  └─ FadeEffects, SlideEffects, CustomAnimations
+│     ├─ DOM Utilities (4 stories)
+│     │  └─ ElementSelection, ClassManagement, AttributeManipulation, ContentManipulation
+│     ├─ Event Handling (4 stories)
+│     │  └─ BasicEvents, EventDelegation, CustomEvents, EventBus
+│     └─ Form Utilities (3 stories)
+│        └─ FormValidation, FormSerialization, DynamicFields
+│
+├─ 2. ExtJS Adapters/ (5 items, 23 stories)
+│  ├─ Advanced Forms (4 stories)
+│  │  └─ ConditionalFields, ValidationPatterns, NestedFieldSets, MultiStepWizard
+│  ├─ Chart Integration (3 stories)
+│  │  └─ ExtJSWithHighcharts, Dashboard, Interactive
+│  ├─ Data Grid (6 stories)
+│  │  └─ BasicGrid, FilteredGrid, GroupedGrid, PaginatedGrid, EditableGrid, SelectionGrid
+│  ├─ Form Panel (3 stories)
+│  │  └─ BasicFormPanel, ComplexFormPanel, FormPanelWithDataGrid
+│  └─ TreePanel (3 stories)
+│     └─ BasicTree, CheckboxTree, EditableTree
+│
+├─ 3. Foundation/ (2 items, 6 stories)
+│  ├─ Core Utilities (3 stories)
+│  │  └─ DOMUtilities, EventUtilities, ValidationUtilities
+│  └─ Design Tokens (3 stories)
+│     └─ ColorTokens, SpacingTokens, TypographyTokens
+│
+├─ 4. Guides/ (6 items, 41 stories)
+│  ├─ Component Selection (7 stories)
+│  │  └─ Overview, ButtonSelection, DataDisplaySelection, FeedbackSelection, 
+│  │     LayoutSelection, NavigationSelection, TextComponentSelection
+│  ├─ Component Selection Tree (2 stories)
+│  │  └─ InteractiveDecisionTree, QuickReference
+│  ├─ Getting Started (7 stories)
+│  │  └─ Overview, BasicComponentUsage, ComponentComposition, StylingAndTheming,
+│  │     AccessibilityGuidelines, PerformanceTips, CommonMistakes
+│  ├─ Integration Examples (5 stories)
+│  │  └─ AnalyticsDashboard, CustomerPortal, InventoryManagement, OrderProcessing,
+│  │     ProductDashboard
+│  ├─ Testing Examples (10 stories)
+│  │  └─ Default, UnitTestingReact, UnitTestingVanillaJS, UnitTestingTypeScript,
+│  │     IntegrationTesting, E2ETesting, VisualRegression, ProductCard, OnSale, OutOfStock
+│  └─ Usage Patterns (6 stories)
+│     └─ Overview, DashboardPatterns, FormPatterns, TablePatterns, ModalPatterns, 
+│        LoadingPatterns
+│
+└─ 5. TypeScript SDK/ (6 items, 21 stories)
+   ├─ Domain Models (3 stories)
+   │  └─ EntityModeling, Aggregates, EntityValidation
+   ├─ Event Bus (3 stories)
+   │  └─ PublishSubscribe, CrossLayerEvents, EventPayloads
+   ├─ Repository Pattern (3 stories)
+   │  └─ BasicRepository, AsyncRepository, RepositoryWithUseCase
+   ├─ Service Layer (3 stories)
+   │  └─ DomainServices, ApplicationServices, ServiceComposition
+   ├─ Use Case Pattern (3 stories)
+   │  └─ BasicUseCase, ComplexUseCase, UseCaseWithEventBus
+   └─ Value Objects (3 stories)
+      └─ PrimitiveValueObjects, CompositeValueObjects, Equality
+
+
+NOTE: E-commerce stories (7 stories) are located at:
+      components/utilities/EcommerceComponents.stories.tsx
+      BUT titled as: 'Cin7 DSL/Business Patterns/E-commerce'
+      Stories: ProductCatalog, InventoryManagement, ShoppingCartView, CheckoutProcess,
+               ProductShowcaseStory, ProductComparison, ProductReviews
+
+
+==============================================
+RECOMMENDED STRUCTURE - LOGICAL LEARNING PATH
+==============================================
+
+Cin7 DSL/ (24 files, 106 stories) - REORGANIZED FOR OPTIMAL LEARNING
+
+├─ 01 Introduction/ (3 items, 16 stories)
+│  ├─ Getting Started (7 stories)
+│  │  └─ Overview, BasicComponentUsage, ComponentComposition, StylingAndTheming,
+│  │     AccessibilityGuidelines, PerformanceTips, CommonMistakes
+│  ├─ Component Selection (7 stories)
+│  │  └─ Overview, ButtonSelection, DataDisplaySelection, FeedbackSelection, 
+│  │     LayoutSelection, NavigationSelection, TextComponentSelection
+│  └─ Component Selection Tree (2 stories)
+│     └─ InteractiveDecisionTree, QuickReference
+│
+├─ 02 Foundations/ (2 items, 6 stories)
+│  ├─ Core Utilities (3 stories)
+│  │  └─ DOMUtilities, EventUtilities, ValidationUtilities
+│  └─ Design Tokens (3 stories)
+│     └─ ColorTokens, SpacingTokens, TypographyTokens
+│
+├─ 03 UI Patterns & Examples/ (3 items, 21 stories)
+│  ├─ Usage Patterns (6 stories)
+│  │  └─ Overview, DashboardPatterns, FormPatterns, TablePatterns, ModalPatterns, 
+│  │     LoadingPatterns
+│  ├─ Integration Examples (5 stories)
+│  │  └─ AnalyticsDashboard, CustomerPortal, InventoryManagement, OrderProcessing,
+│  │     ProductDashboard
+│  └─ Testing Examples (10 stories)
+│     └─ Default, UnitTestingReact, UnitTestingVanillaJS, UnitTestingTypeScript,
+│        IntegrationTesting, E2ETesting, VisualRegression, ProductCard, OnSale, OutOfStock
+│
+├─ 04 Business Logic Layer/ (6 items, 21 stories)
+│  ├─ TypeScript SDK - Domain Models (3 stories)
+│  │  └─ EntityModeling, Aggregates, EntityValidation
+│  ├─ TypeScript SDK - Value Objects (3 stories)
+│  │  └─ PrimitiveValueObjects, CompositeValueObjects, Equality
+│  ├─ TypeScript SDK - Repository Pattern (3 stories)
+│  │  └─ BasicRepository, AsyncRepository, RepositoryWithUseCase
+│  ├─ TypeScript SDK - Service Layer (3 stories)
+│  │  └─ DomainServices, ApplicationServices, ServiceComposition
+│  ├─ TypeScript SDK - Event Bus (3 stories)
+│  │  └─ PublishSubscribe, CrossLayerEvents, EventPayloads
+│  └─ TypeScript SDK - Use Case Pattern (3 stories)
+│     └─ BasicUseCase, ComplexUseCase, UseCaseWithEventBus
+│
+├─ 05 UI Interaction Layer/ (4 items, 14 stories)
+│  ├─ Vanilla JS - DOM Utilities (4 stories)
+│  │  └─ ElementSelection, ClassManagement, AttributeManipulation, ContentManipulation
+│  ├─ Vanilla JS - Animations (3 stories)
+│  │  └─ FadeEffects, SlideEffects, CustomAnimations
+│  ├─ Vanilla JS - Event Handling (4 stories)
+│  │  └─ BasicEvents, EventDelegation, CustomEvents, EventBus
+│  └─ Vanilla JS - Form Utilities (3 stories)
+│     └─ FormValidation, FormSerialization, DynamicFields
+│
+├─ 06 Enterprise Components/ (5 items, 22 stories)
+│  ├─ ExtJS Adapters - Form Panel (3 stories)
+│  │  └─ BasicFormPanel, ComplexFormPanel, FormPanelWithDataGrid
+│  ├─ ExtJS Adapters - Advanced Forms (4 stories)
+│  │  └─ ConditionalFields, ValidationPatterns, NestedFieldSets, MultiStepWizard
+│  ├─ ExtJS Adapters - Data Grid (6 stories)
+│  │  └─ BasicGrid, FilteredGrid, GroupedGrid, PaginatedGrid, EditableGrid, SelectionGrid
+│  ├─ ExtJS Adapters - Chart Integration (3 stories)
+│  │  └─ ExtJSWithHighcharts, Dashboard, Interactive
+│  └─ ExtJS Adapters - Tree Panel (3 stories)
+│     └─ BasicTree, CheckboxTree, EditableTree
+│
+└─ 07 Real-World Applications/ (1 item, 7 stories)
+   └─ E-commerce Patterns (7 stories)
+      └─ ProductCatalog, InventoryManagement, ShoppingCartView, CheckoutProcess,
+         ProductShowcaseStory, ProductComparison, ProductReviews
+
+
+==============================================
+STORY COUNT SUMMARY
+==============================================
+
+Current Structure:
+├─ Guides: 41 stories (39%)
+├─ TypeScript SDK: 21 stories (20%)
+├─ ExtJS Adapters: 23 stories (22%)
+├─ Business Patterns/Vanilla JS: 14 stories (13%)
+├─ Foundation: 6 stories (6%)
+└─ E-commerce: 7 stories (6%)
+Total: 106+ stories
+
+Recommended Structure:
+├─ 01 Introduction: 16 stories (15%)
+├─ 02 Foundations: 6 stories (6%)
+├─ 03 UI Patterns & Examples: 21 stories (20%)
+├─ 04 Business Logic Layer: 21 stories (20%)
+├─ 05 UI Interaction Layer: 14 stories (13%)
+├─ 06 Enterprise Components: 22 stories (21%)
+└─ 07 Real-World Applications: 7 stories (7%)
+Total: 107 stories
+
+
+==============================================
+KEY IMPROVEMENTS
+==============================================
+
+1. LOGICAL LEARNING PROGRESSION
+   Before: Alphabetical mixed all levels
+   After: Foundation → Patterns → Business Logic → UI → Enterprise → Applications
+
+2. CLEAR SEPARATION OF CONCERNS
+   Before: "Business Patterns" folder mixed Vanilla JS, TypeScript SDK, ExtJS
+   After: Clear layers (Business Logic, UI Interaction, Enterprise Components)
+
+3. OPTIMAL FILE LOCATION
+   Before: E-commerce in components/utilities/
+   After: business-patterns/e-commerce/ (correct location)
+
+4. CONSISTENT NAMING
+   Before: "TreePanel" vs "Form Panel" (inconsistent)
+   After: All follow "Type - Category" pattern
+
+5. DISCOVERY AND ONBOARDING
+   Before: No clear entry point
+   After: Start with "Getting Started", follow natural progression
+

@@ -1224,7 +1224,7 @@ import React from 'react';
 
 function GridDefault() {
   return (
-    <Grid columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} gap="400">
+    <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
       <Card sectioned>
         <Text as="h3" variant="headingSm">Column 1</Text>
         <Text as="p" variant="bodySm">First grid item</Text>

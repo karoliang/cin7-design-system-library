@@ -182,7 +182,7 @@ function ComponentPreview({ theme }: { theme: Theme }) {
                 ]}
               />
 
-              <Grid columns={{ sm: 1, md: 3 }} gap="400">
+              <Grid columns={{ xs: 1, sm: 1, md: 3 }} gap="400">
                 <Card>
                   <BlockStack gap="200">
                     <Text as="p" tone="subdued">Total Sales</Text>
@@ -252,7 +252,7 @@ function ComponentPreview({ theme }: { theme: Theme }) {
                     </Text>
                   </div>
 
-                  <Grid columns={{ sm: 1, md: 3 }} gap="400">
+                  <Grid columns={{ xs: 1, sm: 1, md: 3 }} gap="400">
                     <Card>
                       <div style={{ textAlign: 'center', padding: '20px' }}>
                         <div style={{ fontSize: '32px', fontWeight: 'bold', color: 'var(--cin7-color-primary)' }}>45%</div>

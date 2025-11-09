@@ -63,7 +63,7 @@ export const Overview: Story = {
         Learn how to combine Cin7 DSL components to build effective user interfaces.
       </Text>
 
-      <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} gap="400">
         <Card>
           <BlockStack gap="200">
             <Icon source={EditIcon} size="large" />
@@ -241,7 +241,7 @@ export const DashboardPatterns: Story = {
       >
         <Layout>
           <Layout.Section>
-            <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
               <Card>
                 <BlockStack gap="200">
                   <Text as="p" tone="subdued">Total Revenue</Text>
@@ -410,7 +410,7 @@ export const ModalPatterns: Story = {
     return (
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         <Page title="Modal Pattern Examples">
-          <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} gap="400">
             <Card sectioned>
               <BlockStack gap="400">
                 <Text variant="headingXl" as="h3">Confirmation Modal</Text>
@@ -482,7 +482,7 @@ export const LoadingPatterns: Story = {
   render: () => (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <Page title="Loading State Patterns">
-        <Grid columns={{ sm: 1, md: 2 }} gap="400">
+        <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
           <Card sectioned>
             <BlockStack gap="400">
               <Text variant="headingXl" as="h3">Page Loading</Text>

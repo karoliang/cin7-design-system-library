@@ -443,7 +443,7 @@ function ProductDashboard() {
       <Layout>
         {/* Metrics */}
         <Layout.Section>
-          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
             <Card>
               <BlockStack gap="200">
                 <Text as="p" tone="subdued">Total Products</Text>
@@ -1006,7 +1006,7 @@ function OrderProcessing() {
     >
       <Layout>
         <Layout.Section>
-          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
             <Card>
               <BlockStack gap="200">
                 <Text as="p" tone="subdued">Total Orders</Text>
@@ -1806,7 +1806,7 @@ function InventoryManagement() {
         )}
 
         <Layout.Section>
-          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
             <Card>
               <BlockStack gap="200">
                 <Text as="p" tone="subdued">Total Items</Text>
@@ -1839,7 +1839,7 @@ function InventoryManagement() {
         </Layout.Section>
 
         <Layout.Section>
-          <Grid columns={{ sm: 1, lg: 2 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 2 }} gap="400">
             <Card>
               <BlockStack gap="400">
                 <Text variant="headingLg" as="h3">Stock Levels by Product</Text>
@@ -2730,7 +2730,7 @@ function CustomerPortal() {
     >
       <Layout>
         <Layout.Section>
-          <Grid columns={{ sm: 1, md: 2, lg: 4 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 4 }} gap="400">
             <Card>
               <BlockStack gap="200">
                 <Text as="p" tone="subdued">Total Customers</Text>

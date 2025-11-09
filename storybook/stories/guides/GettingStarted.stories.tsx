@@ -81,7 +81,7 @@ export const Overview: Story = {
         Learn how to build beautiful, accessible, and performant user interfaces with the Cin7 Design System Library.
       </Text>
 
-      <Grid columns={{ sm: 1, md: 2, lg: 3 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2, lg: 3 }} gap="400">
         <Card>
           <BlockStack gap="200">
             <Icon source={CodeIcon} size="large" />
@@ -150,7 +150,7 @@ export const BasicComponentUsage: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">1. Importing Components</Text>
@@ -366,7 +366,7 @@ export const ComponentComposition: Story = {
               Combine multiple components to create a reusable product card.
             </Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Code Example</Text>
                 <pre style={{
@@ -527,7 +527,7 @@ export const StylingAndTheming: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">Component Sizing</Text>
@@ -679,7 +679,7 @@ export const AccessibilityGuidelines: Story = {
               Use proper HTML elements and headings for screen readers.
             </Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">✅ Good Practice</Text>
                 <pre style={{
@@ -806,7 +806,7 @@ export const AccessibilityGuidelines: Story = {
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">🎯 Key Accessibility Requirements</Text>
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">Keyboard Navigation</Text>
                 <List>
@@ -860,7 +860,7 @@ export const PerformanceTips: Story = {
 
       <Divider />
 
-      <Grid columns={{ sm: 1, md: 2 }} gap="400">
+      <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
         <Card>
           <BlockStack gap="400">
             <Text variant="headingXl" as="h3">Efficient Rendering</Text>
@@ -994,7 +994,7 @@ import * as Polaris from '@shopify/polaris';`}
       <Card>
         <BlockStack gap="400">
           <Text variant="headingXl" as="h3">⚡ Performance Checklist</Text>
-          <Grid columns={{ sm: 1, md: 2 }} gap="400">
+          <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
             <div>
               <Text fontWeight="semibold">Loading Performance</Text>
               <List>
@@ -1056,7 +1056,7 @@ export const CommonMistakes: Story = {
               Avoid these common layout and spacing errors.
             </Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">❌ Inconsistent Spacing</Text>
                 <div style={{
@@ -1132,7 +1132,7 @@ export const CommonMistakes: Story = {
               Avoid these performance anti-patterns.
             </Text>
 
-            <Grid columns={{ sm: 1, md: 2 }} gap="400">
+            <Grid columns={{ xs: 1, sm: 1, md: 2 }} gap="400">
               <div>
                 <Text fontWeight="semibold">❌ Rendering Large Lists</Text>
                 <pre style={{
