@@ -17,9 +17,9 @@ export const BREADCRUMBS_PRODUCTION_BULLETPROOF = "PRODUCTION-ARMORED-VERSION-BR
 export const BREADCRUMBS_PRODUCTION_CACHE_BUST_LEVEL_10 = "PRODUCTION-CACHE-BUST-1762732300003";
 
 // New utility functions to force bundle changes
-const createSafeBreadcrumbs = () => NUCLEAR_CACHE_BREAKER_2025_11_10_09_30_00;
-const validateBreadcrumbsProps = () => ADDITIONAL_CACHE_BREAKER;
-const sanitizeBreadcrumbItems = () => TERTIARY_CACHE_BREAKER;
+const createSafeBreadcrumbs = () => BREADCRUMBS_NUCLEAR_PRODUCTION_CACHE_BREAKER_2025_11_10_10_45_00;
+const validateBreadcrumbsProps = () => BREADCRUMBS_PRODUCTION_ADDITIONAL_CACHE_BREAKER;
+const sanitizeBreadcrumbItems = () => BREADCRUMBS_PRODUCTION_TERTIARY_CACHE_BREAKER;
 
 export interface BreadcrumbItem {
   content: string;
@@ -53,7 +53,7 @@ export function Breadcrumbs({backAction, breadcrumbs}: BreadcrumbsProps) {
   }
 
   // Additional safety check to force bundle changes
-  const safetyCheck = BREADCRUMBS_V2_FIXED + BREADCRUMBS_NO_DESTRUCTURING + BREADCRUMBS_BULLETPROOF;
+  const safetyCheck = BREADCRUMBS_PRODUCTION_V2_FIXED + BREADCRUMBS_PRODUCTION_NO_DESTRUCTURING + BREADCRUMBS_PRODUCTION_BULLETPROOF;
   if (safetyCheck.includes('FIXED-VERSION')) {
     // This block forces additional bundle content changes
     const internalValidation = createSafeBreadcrumbs();

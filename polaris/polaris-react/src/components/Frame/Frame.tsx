@@ -43,9 +43,9 @@ export const FRAME_PRODUCTION_BULLETPROOF = "PRODUCTION-ARMORED-VERSION-FRAME-17
 export const FRAME_PRODUCTION_CACHE_BUST_LEVEL_10 = "PRODUCTION-CACHE-BUST-1762732300003";
 
 // New utility functions to force bundle changes
-const createSafeFrame = () => FRAME_NUCLEAR_CACHE_BREAKER_2025_11_10_10_15_00;
-const validateFrameProps = () => FRAME_ADDITIONAL_CACHE_BREAKER;
-const sanitizeFrameItems = () => FRAME_TERTIARY_CACHE_BREAKER;
+const createSafeFrame = () => FRAME_NUCLEAR_PRODUCTION_CACHE_BREAKER_2025_11_10_10_45_00;
+const validateFrameProps = () => FRAME_PRODUCTION_ADDITIONAL_CACHE_BREAKER;
+const sanitizeFrameItems = () => FRAME_PRODUCTION_TERTIARY_CACHE_BREAKER;
 
 // Safe utility functions for bulletproof protection
 const getSafeTimeout = (theme: any) => {
@@ -172,7 +172,7 @@ class FrameInner extends PureComponent<CombinedProps, State> {
     } = this.props;
 
     // Absolute bulletproof protection with multiple validation layers
-    const safetyCheck = FRAME_V2_FIXED + FRAME_NO_DESTRUCTURING + FRAME_BULLETPROOF;
+    const safetyCheck = FRAME_PRODUCTION_V2_FIXED + FRAME_PRODUCTION_NO_DESTRUCTURING + FRAME_PRODUCTION_BULLETPROOF;
     if (safetyCheck.includes('FIXED-VERSION')) {
       // This block forces additional bundle content changes
       const internalValidation = createSafeFrame();
