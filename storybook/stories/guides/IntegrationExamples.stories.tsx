@@ -31,7 +31,7 @@ import {
   PersonIcon,
   ViewIcon,
 } from '@shopify/polaris-icons';
-import { LineChart, BarChart, PieChart } from '@cin7/highcharts-adapter/react';
+import { LineChart, BarChart, PieChart } from '@cin7/ag-charts-adapter/react';
 import React, { useState, useCallback } from 'react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 

@@ -1,6 +1,6 @@
 export const pieChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { PieChart } from '@cin7/highcharts-adapter/react';
+    react: `import { PieChart } from '@cin7/ag-charts-adapter/react';
 
 function MarketShareChart() {
   const data = [
@@ -187,7 +187,7 @@ Highcharts.chart('container', options);`
   },
 
   donut: {
-    react: `import { PieChart } from '@cin7/highcharts-adapter/react';
+    react: `import { PieChart } from '@cin7/ag-charts-adapter/react';
 
 function SalesDistributionChart() {
   const data = [

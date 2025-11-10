@@ -8,7 +8,7 @@ Powerful, flexible chart components built on Highcharts with seamless integratio
 
 ## What are Cin7 Charts?
 
-The `@cin7/highcharts-adapter` package provides React, ExtJS, and Vanilla JavaScript chart components that integrate Highcharts with Cin7 design tokens. Create beautiful, interactive visualizations that match your design system.
+The `@cin7/ag-charts-adapter` package provides React, ExtJS, and Vanilla JavaScript chart components that integrate Highcharts with Cin7 design tokens. Create beautiful, interactive visualizations that match your design system.
 
 ## Key Features
 
@@ -119,7 +119,7 @@ Track incremental changes:
 ### React Line Chart
 
 ```tsx
-import { LineChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
 
 function SalesChart() {
   return (
@@ -137,7 +137,7 @@ function SalesChart() {
 ### React Bar Chart
 
 ```tsx
-import { BarChart } from '@cin7/highcharts-adapter/react';
+import { BarChart } from '@cin7/ag-charts-adapter/react';
 
 function RegionalSales() {
   return (
@@ -157,7 +157,7 @@ function RegionalSales() {
 ### React Pie Chart
 
 ```tsx
-import { PieChart } from '@cin7/highcharts-adapter/react';
+import { PieChart } from '@cin7/ag-charts-adapter/react';
 
 function MarketShare() {
   return (
@@ -178,7 +178,7 @@ function MarketShare() {
 ### Vanilla JavaScript
 
 ```typescript
-import { createChart } from '@cin7/highcharts-adapter/vanilla';
+import { createChart } from '@cin7/ag-charts-adapter/vanilla';
 
 const chart = createChart('#chart-container', {
   type: 'line',
@@ -191,7 +191,7 @@ const chart = createChart('#chart-container', {
 ### ExtJS Integration
 
 ```javascript
-import { HighchartsPanel } from '@cin7/highcharts-adapter/extjs';
+import { HighchartsPanel } from '@cin7/ag-charts-adapter/extjs';
 
 const chartPanel = Ext.create('Ext.panel.Panel', {
   title: 'Sales Dashboard',
@@ -212,7 +212,7 @@ const chartPanel = Ext.create('Ext.panel.Panel', {
 Charts automatically use Cin7 design tokens for consistent theming:
 
 ```typescript
-import { LineChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
 
 // Colors automatically use design tokens
 <LineChart
@@ -308,7 +308,7 @@ Explore all chart types with interactive demos:
 ## Installation
 
 ```bash
-pnpm add @cin7/highcharts-adapter
+pnpm add @cin7/ag-charts-adapter
 
 # Peer dependencies
 pnpm add highcharts
@@ -316,7 +316,7 @@ pnpm add highcharts
 
 ## Learn More
 
-- **[Package Documentation](https://cin7-dsl.netlify.app/packages/highcharts-adapter)** - Complete API reference
+- **[Package Documentation](https://cin7-dsl.netlify.app/packages/ag-charts-adapter)** - Complete API reference
 - **[Chart Examples](https://cin7-dsl.netlify.app/examples/charts)** - Real-world examples
 - **[Highcharts Docs](https://www.highcharts.com/docs)** - Advanced configuration
 

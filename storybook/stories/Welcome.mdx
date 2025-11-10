@@ -44,7 +44,7 @@ Or install individual packages:
 pnpm add @cin7/core @cin7/polaris-adapter
 
 # Charts
-pnpm add @cin7/highcharts-adapter
+pnpm add @cin7/ag-charts-adapter
 
 # Vanilla JS utilities
 pnpm add @cin7/vanilla-js
@@ -60,7 +60,7 @@ pnpm add @cin7/extjs-adapters
 
 ```tsx
 import { Cin7ThemeProvider, Page, Card, Text } from '@cin7/polaris-adapter';
-import { LineChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
 import '@shopify/polaris/build/esm/styles.css';
 import '@cin7/design-tokens/css';
 
@@ -139,7 +139,7 @@ import '@shopify/polaris/build/esm/styles.css';
 
 **Common Use Cases:** UI components, forms, layouts, data display
 
-### @cin7/highcharts-adapter - Charts & Visualizations
+### @cin7/ag-charts-adapter - Charts & Visualizations
 
 ```typescript
 // React chart components
@@ -150,19 +150,19 @@ import {
   AreaChart,
   ScatterChart,
   WaterfallChart,
-} from '@cin7/highcharts-adapter/react';
+} from '@cin7/ag-charts-adapter/react';
 
 // ExtJS integration
-import { HighchartsPanel } from '@cin7/highcharts-adapter/extjs';
+import { HighchartsPanel } from '@cin7/ag-charts-adapter/extjs';
 
 // Vanilla JavaScript
-import { createChart } from '@cin7/highcharts-adapter/vanilla';
+import { createChart } from '@cin7/ag-charts-adapter/vanilla';
 
 // TypeScript utilities
-import { ChartConfig, SeriesData } from '@cin7/highcharts-adapter/typescript';
+import { ChartConfig, SeriesData } from '@cin7/ag-charts-adapter/typescript';
 
 // Chart utilities
-import { formatChartData, mergeOptions } from '@cin7/highcharts-adapter/utilities';
+import { formatChartData, mergeOptions } from '@cin7/ag-charts-adapter/utilities';
 ```
 
 **Common Use Cases:** Data visualization, dashboards, analytics
@@ -217,7 +217,7 @@ import { ExtChart, ChartConfig } from '@cin7/extjs-adapters/charts';
 ### React Chart Example
 
 ```tsx
-import { LineChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
 import { Card, Text } from '@cin7/polaris-adapter';
 
 export const SalesChart = () => (
@@ -237,7 +237,7 @@ export const SalesChart = () => (
 ### Bar Chart with Multiple Series
 
 ```tsx
-import { BarChart } from '@cin7/highcharts-adapter/react';
+import { BarChart } from '@cin7/ag-charts-adapter/react';
 
 export const RegionalSales = () => (
   <BarChart
@@ -256,7 +256,7 @@ export const RegionalSales = () => (
 ### Pie Chart Example
 
 ```tsx
-import { PieChart } from '@cin7/highcharts-adapter/react';
+import { PieChart } from '@cin7/ag-charts-adapter/react';
 
 export const MarketShare = () => (
   <PieChart
@@ -418,7 +418,7 @@ import { ApiClient } from '@cin7/typescript-sdk/services';
 // 3. Component Layer - UI Components (React + ExtJS)
 import { Page, Card, Button } from '@cin7/polaris-adapter';
 import { ExtDataGrid } from '@cin7/extjs-adapters/grid';
-import { LineChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
 
 // 4. UI Interaction Layer - DOM Utilities (Vanilla JS)
 import { DOMUtils, EventUtils } from '@cin7/vanilla-js';
@@ -561,7 +561,7 @@ Highcharts.setOptions({
 **TypeScript errors with chart data**
 ```typescript
 // Solution: Use proper type definitions
-import { SeriesData } from '@cin7/highcharts-adapter/typescript';
+import { SeriesData } from '@cin7/ag-charts-adapter/typescript';
 
 const data: SeriesData[] = [10, 20, 30];
 ```

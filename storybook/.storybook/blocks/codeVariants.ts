@@ -48035,7 +48035,7 @@ Highcharts.chart('container', options);`
 // AreaChart Component Examples
 export const areaChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    react: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 
 function MonthlyRevenue() {
   const data = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
@@ -48120,7 +48120,7 @@ Ext.create('Ext.chart.CartesianChart', {
     }
   }]
 });`,
-    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    typescript: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import React from 'react';
 import type { SeriesAreaOptions } from 'highcharts';
 
@@ -48196,7 +48196,7 @@ const MonthlyRevenue: React.FC<MonthlyRevenueProps> = ({
 export default MonthlyRevenue;`,
   },
   stacked: {
-    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    react: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 
 function StackedSales() {
   const series = [
@@ -48314,7 +48314,7 @@ Ext.create('Ext.chart.CartesianChart', {
     stacked: true
   }]
 });`,
-    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    typescript: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import React from 'react';
 
 interface ProductLineSeries {
@@ -48358,7 +48358,7 @@ const StackedSales: React.FC<StackedSalesProps> = ({
 export default StackedSales;`,
   },
   percentage: {
-    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    react: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 
 function MarketShareChart() {
   return (
@@ -48488,7 +48488,7 @@ Ext.create('Ext.chart.CartesianChart', {
     fullStack: true
   }]
 });`,
-    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    typescript: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import React from 'react';
 import type { SeriesAreaOptions, TooltipOptions } from 'highcharts';
 
@@ -48626,7 +48626,7 @@ const MarketShareChart: React.FC<MarketShareChartProps> = ({
 export default MarketShareChart;`,
   },
   splinearea: {
-    react: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    react: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 
 function TrafficAnalysis() {
   return (
@@ -48762,7 +48762,7 @@ Ext.create('Ext.chart.CartesianChart', {
     }
   }]
 });`,
-    typescript: `import { AreaChart } from '@cin7/highcharts-adapter/react';
+    typescript: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import React from 'react';
 
 interface TrafficSeries {

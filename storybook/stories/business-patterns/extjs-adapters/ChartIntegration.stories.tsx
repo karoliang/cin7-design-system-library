@@ -10,9 +10,9 @@ import {
   DataTable,
 } from '@shopify/polaris';
 import { useState } from 'react';
-import { LineChart } from '@cin7/highcharts-adapter/react';
-import { BarChart } from '@cin7/highcharts-adapter/react';
-import { PieChart } from '@cin7/highcharts-adapter/react';
+import { LineChart } from '@cin7/ag-charts-adapter/react';
+import { BarChart } from '@cin7/ag-charts-adapter/react';
+import { PieChart } from '@cin7/ag-charts-adapter/react';
 import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // ExtJS Panel with Highcharts Integration

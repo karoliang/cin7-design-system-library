@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AreaChart } from '@cin7/highcharts-adapter/react';
+import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import { getCodeVariants } from '../../.storybook/blocks/codeVariants';
 
 const meta = {

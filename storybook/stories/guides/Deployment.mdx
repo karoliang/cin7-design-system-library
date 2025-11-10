@@ -29,7 +29,7 @@ The deployment uses a custom build script (`scripts/netlify-build.sh`) that orch
 4. Build @shopify/polaris-tokens
 5. Build @shopify/polaris-icons
 6. Build @shopify/polaris (polaris-react)
-7. Build @cin7/highcharts-adapter
+7. Build @cin7/ag-charts-adapter
 8. Build Storybook → storybook-static/
 9. Copy Storybook to polaris.shopify.com/public/storybook/
 10. Generate colors and assets
@@ -106,7 +106,7 @@ cd ../design-tokens && pnpm build
 cd ../../polaris/polaris-tokens && pnpm build
 cd ../polaris-icons && pnpm build
 cd ../polaris-react && pnpm build
-cd ../../packages/highcharts-adapter && pnpm build
+cd ../../packages/ag-charts-adapter && pnpm build
 
 # Build Storybook
 cd ../../storybook && pnpm build

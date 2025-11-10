@@ -627,7 +627,7 @@ return (
           primary: 'LineChart',
           reason: 'Line charts excel at showing trends and changes over time',
           example: 'Sales trends, user growth, temperature changes',
-          codeExample: `import { LineChart } from '@cin7/highcharts-adapter';
+          codeExample: `import { LineChart } from '@cin7/ag-charts-adapter';
 
 <LineChart
   title="Monthly Sales"
@@ -655,7 +655,7 @@ return (
           primary: 'BarChart',
           reason: 'Bar charts are ideal for comparing values across categories',
           example: 'Sales by product, regional comparison, survey results',
-          codeExample: `import { BarChart } from '@cin7/highcharts-adapter';
+          codeExample: `import { BarChart } from '@cin7/ag-charts-adapter';
 
 <BarChart
   title="Sales by Product"
@@ -680,7 +680,7 @@ return (
           secondary: ['Use BarChart if >7 categories'],
           reason: 'Pie charts show proportions and percentages clearly (best for 3-7 slices)',
           example: 'Market share, budget breakdown, demographic distribution',
-          codeExample: `import { PieChart } from '@cin7/highcharts-adapter';
+          codeExample: `import { PieChart } from '@cin7/ag-charts-adapter';
 
 <PieChart
   title="Market Share"
