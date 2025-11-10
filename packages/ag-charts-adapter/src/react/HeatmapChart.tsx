@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface HeatmapChartDataPoint {
@@ -62,12 +63,12 @@ export interface HeatmapChartProps extends Omit<ChartContainerProps, 'options'> 
   legendPosition?: 'right' | 'bottom' | 'left' | 'top';
   /** X-axis configuration */
   xAxis?: {
-    title?: string;
+    title?: string | { text: string };
     labelRotation?: number;
   };
   /** Y-axis configuration */
   yAxis?: {
-    title?: string;
+    title?: string | { text: string };
     labelRotation?: number;
   };
   /** Additional AG Charts options */
@@ -235,9 +236,9 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: {
-          text: xAxis.title || 'X Axis',
-          enabled: !!xAxis.title,
+        title: normalizeAxisTitle(xAxis.title) || {
+          text: 'X Axis',
+          enabled: false,
         },
         categories: xCategories.length > 0 ? xCategories : undefined,
         label: {
@@ -250,9 +251,9 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
       {
         type: 'category',
         position: 'left',
-        title: {
-          text: yAxis.title || 'Y Axis',
-          enabled: !!yAxis.title,
+        title: normalizeAxisTitle(yAxis.title) || {
+          text: 'Y Axis',
+          enabled: false,
         },
         categories: yCategories.length > 0 ? yCategories : undefined,
         label: {

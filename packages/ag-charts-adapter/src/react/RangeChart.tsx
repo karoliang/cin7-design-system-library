@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface RangeChartDataPoint {
@@ -50,13 +51,13 @@ export interface RangeChartProps extends Omit<ChartContainerProps, 'options'> {
   legend?: boolean;
   /** X-axis configuration */
   xAxis?: {
-    title?: string;
+    title?: string | { text: string };
     categories?: string[];
     type?: 'category' | 'time' | 'number';
   };
   /** Y-axis configuration */
   yAxis?: {
-    title?: string;
+    title?: string | { text: string };
     min?: number;
     max?: number;
     labelFormat?: string;
@@ -198,9 +199,9 @@ export const RangeChart: React.FC<RangeChartProps> = ({
       {
         type: xAxis.type || (xAxis.categories ? 'category' : 'number'),
         position: 'bottom',
-        title: {
-          text: xAxis.title || (xAxis.categories ? 'Categories' : 'Values'),
-          enabled: !!xAxis.title || !xAxis.categories,
+        title: normalizeAxisTitle(xAxis.title) || {
+          text: xAxis.categories ? 'Categories' : 'Values',
+          enabled: !xAxis.categories,
         },
         categories: xAxis.categories,
         label: {
@@ -213,9 +214,9 @@ export const RangeChart: React.FC<RangeChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: {
-          text: yAxis.title || 'Values',
-          enabled: !!yAxis.title || true,
+        title: normalizeAxisTitle(yAxis.title) || {
+          text: 'Values',
+          enabled: true,
         },
         min: yAxis.min,
         max: yAxis.max,

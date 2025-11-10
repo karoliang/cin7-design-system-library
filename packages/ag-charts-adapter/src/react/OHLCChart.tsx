@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface OHLCChartDataPoint {
@@ -56,13 +57,13 @@ export interface OHLCChartProps extends Omit<ChartContainerProps, 'options'> {
   legend?: boolean;
   /** X-axis configuration */
   xAxis?: {
-    title?: string;
+    title?: string | { text: string };
     type?: 'category' | 'time' | 'number';
     labelFormat?: string;
   };
   /** Y-axis configuration */
   yAxis?: {
-    title?: string;
+    title?: string | { text: string };
     min?: number;
     max?: number;
     labelFormat?: string;
@@ -293,9 +294,9 @@ export const OHLCChart: React.FC<OHLCChartProps> = ({
       {
         type: xAxis.type || 'category',
         position: 'bottom',
-        title: {
-          text: xAxis.title || 'Time',
-          enabled: !!xAxis.title,
+        title: normalizeAxisTitle(xAxis.title) || {
+          text: 'Time',
+          enabled: false,
         },
         label: {
           format: xAxis.labelFormat || (xAxis.type === 'time' ? '%b %d, %Y' : undefined),
@@ -307,9 +308,9 @@ export const OHLCChart: React.FC<OHLCChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: {
-          text: yAxis.title || 'Price',
-          enabled: !!yAxis.title || true,
+        title: normalizeAxisTitle(yAxis.title) || {
+          text: 'Price',
+          enabled: true,
         },
         min: yAxis.min,
         max: yAxis.max,

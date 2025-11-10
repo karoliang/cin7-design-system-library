@@ -140,7 +140,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
-          label: {
+        label: {
           format: xAxis.labelFormat,
         },
       },
@@ -151,7 +151,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
-            label: {
+        label: {
           format: yAxis.labelFormat,
         },
       },
