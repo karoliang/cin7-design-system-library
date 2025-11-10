@@ -6,6 +6,12 @@ A comprehensive design system language that combines Shopify Polaris, ExtJS, Van
 
 Visit the documentation site at: [https://cin7-dsl.netlify.app](https://cin7-dsl.netlify.app)
 
+### 📚 Interactive Components
+Explore live component demos in our Storybook: [https://cin7-dsl.netlify.app/storybook](https://cin7-dsl.netlify.app/storybook)
+- **19 Interactive Stories** across LineChart, BarChart, and PieChart components
+- **Self-Hosted** with zero external dependencies
+- **Real-time Examples** with code previews and customization options
+
 ## 📖 What is Cin7 DSL?
 
 Cin7 DSL is a production-ready, multi-layered framework that implements the architecture principle: "Use the right tool for each job"
@@ -17,6 +23,13 @@ All packages are fully implemented and validated:
 - ✅ **Vanilla JS for UI interactions** - Lightweight, performant DOM manipulation
 - ✅ **TypeScript for business logic** - Type-safe patterns and domain modeling
 - ✅ **Modular architecture** - Clear separation of concerns across layers
+- ✅ **Interactive Storybook** - Live component demos and testing environment
+
+#### Recent Updates (November 2025)
+- **v1.1.1**: Template literal escaping fixes and comprehensive code variant updates
+- **Repository Cleanup**: Removed 28+ obsolete files and documentation
+- **Storybook Integration**: Self-hosted interactive component demos
+- **Production Ready**: All 760+ pages building successfully
 
 ## 🏗️ Architecture
 
@@ -84,12 +97,16 @@ All packages are implemented and ready for use:
 npx @cin7/create-dsl-app my-app --template=full
 
 # Or clone for development
-git clone https://github.com/karoliang/cin7dsl.git
-cd cin7dsl
+git clone https://github.com/karoliang/cin7-design-system-library.git
+cd cin7-design-system-library
 pnpm install
 
 # Start documentation site
 cd polaris/polaris.shopify.com
+pnpm dev
+
+# Start Storybook for component development
+cd storybook
 pnpm dev
 ```
 
@@ -151,6 +168,10 @@ cin7dsl/
 │   ├── polaris-react/          # React components
 │   ├── polaris-tokens/         # Design tokens
 │   └── polaris-icons/          # Icon library
+├── storybook/                  # Interactive component demos
+│   ├── stories/                # Component story files
+│   ├── .storybook/             # Storybook configuration
+│   └── storybook-static/       # Built static assets
 ├── scripts/                    # Build and deployment scripts
 ├── netlify.toml               # Netlify configuration
 ├── ARCHITECTURE_VALIDATION.md  # Architecture validation report
@@ -221,10 +242,23 @@ This project is based on Shopify Polaris and follows the same MIT License.
 
 ## 🤝 Support
 
-For questions or issues:
-- Check the documentation site
-- Review existing issues
-- Create a new issue with details
+### Getting Help
+- **Documentation**: [cin7-dsl.netlify.app](https://cin7-dsl.netlify.app)
+- **Interactive Demos**: [cin7-dsl.netlify.app/storybook](https://cin7-dsl.netlify.app/storybook)
+- **Issues**: [GitHub Issues](https://github.com/karoliang/cin7-design-system-library/issues)
+
+### Contributing Guidelines
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Resources
+- **Architecture Guide**: See `ARCHITECTURE_VALIDATION.md`
+- **Code Examples**: Explore the `storybook/stories/` directory
+- **Component Variations**: Check `packages/include-system/` for examples
+- **Development Setup**: Follow the Quick Start guide above
 
 ---
 
