@@ -61,13 +61,13 @@ cd ../polaris-react
 pnpm build
 echo "✓ @shopify/polaris built successfully"
 
-# Build @cin7/highcharts-adapter
+# Build @cin7/ag-charts-adapter
 echo "=================================================="
-echo "Step 7: Building @cin7/highcharts-adapter..."
+echo "Step 7: Building @cin7/ag-charts-adapter..."
 echo "=================================================="
-cd ../../packages/highcharts-adapter
+cd ../../packages/ag-charts-adapter
 pnpm build
-echo "✓ @cin7/highcharts-adapter built successfully"
+echo "✓ @cin7/ag-charts-adapter built successfully"
 
 # Build Storybook
 echo "=================================================="

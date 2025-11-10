@@ -8,7 +8,7 @@ const nextConfig = {
   reactStrictMode: false,
   // Transpile workspace packages for proper TypeScript resolution
   transpilePackages: [
-    '@cin7/highcharts-adapter',
+    '@cin7/ag-charts-adapter',
     '@cin7/design-tokens',
     '@cin7/core',
   ],

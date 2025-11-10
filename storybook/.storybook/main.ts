@@ -106,7 +106,7 @@ const config: StorybookConfig = {
     //     '@cin7/typescript-sdk': require.resolve('@cin7/typescript-sdk'),
     //     '@cin7/polaris-adapter': require.resolve('@cin7/polaris-adapter'),
     //     '@cin7/extjs-adapters': require.resolve('@cin7/extjs-adapters'),
-    //     '@cin7/highcharts-adapter': require.resolve('@cin7/highcharts-adapter'),
+    //     '@cin7/ag-charts-adapter': require.resolve('@cin7/ag-charts-adapter'),
     //   },
     // };
 
