@@ -151,10 +151,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'category' as any,
         position: 'bottom',
-        title: xAxis.title ? {
-          text: xAxis.title,
-          enabled: true,
-        } : undefined,
+        title: xAxis.title,
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -165,10 +162,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'number' as any,
         position: 'left',
-        title: yAxis.title ? {
-          text: yAxis.title,
-          enabled: true,
-        } : undefined,
+        title: yAxis.title,
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

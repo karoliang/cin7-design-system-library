@@ -128,10 +128,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       {
         type: 'number',
         position: 'bottom',
-        title: xAxis.title ? {
-          text: xAxis.title,
-          enabled: true,
-        } : undefined,
+        title: xAxis.title,
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -142,10 +139,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: yAxis.title ? {
-          text: yAxis.title,
-          enabled: true,
-        } : undefined,
+        title: yAxis.title,
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

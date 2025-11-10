@@ -134,6 +134,13 @@ export const BarChart: React.FC<BarChartProps> = ({
     };
   });
 
+  // Helper function to normalize title to string
+  const normalizeTitle = (title?: string | { text: string }): string | undefined => {
+    if (!title) return undefined;
+    if (typeof title === 'string') return title;
+    return title.text;
+  };
+
   const options: AgChartOptions = {
     ...chartOptions,
     title: {
@@ -150,7 +157,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'number' : 'category',
         position: isHorizontal ? 'bottom' : 'left',
-        title: isHorizontal ? yAxis.title : xAxis.title,
+        title: normalizeTitle(isHorizontal ? yAxis.title : xAxis.title),
         gridLine: {
           enabled: isHorizontal ? (yAxis.gridLines !== false) : (xAxis.gridLines !== false),
         },
@@ -163,7 +170,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'category' : 'number',
         position: isHorizontal ? 'left' : 'bottom',
-        title: isHorizontal ? xAxis.title : yAxis.title,
+        title: normalizeTitle(isHorizontal ? xAxis.title : yAxis.title),
         gridLine: {
           enabled: isHorizontal ? (xAxis.gridLines !== false) : (yAxis.gridLines !== false),
         },
