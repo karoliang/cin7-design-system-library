@@ -29,6 +29,7 @@ import {
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
 // import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+// CODE VARIANTS TEMPORARILY DISABLED DUE TO TEMPLATE LITERAL ERRORS
 
 // CRITICAL FIX: Frame-specific error boundary for debugging
 class FrameErrorBoundary extends React.Component<
@@ -93,7 +94,7 @@ const meta = {
   component: Frame,
   parameters: {
     layout: 'fullscreen',
-    // TEMPORARILY DISABLED: // codeVariants: getCodeVariants temporarily disabled,
+    // TEMPORARILY DISABLED: codeVariants completely disabled due to template literal errors
     docs: {
       description: {
         component: 'Frame provides the main application layout structure with navigation, top bar, and content areas. It\'s the foundation for building complete Shopify-style applications.',
@@ -340,7 +341,7 @@ export const Default: Story = {
     );
   },
   parameters: {
-    // // codeVariants: getCodeVariants temporarily disabled,
+    // codeVariants: DISABLED due to template literal errors in codeVariants module
   },
 
 };
@@ -450,7 +451,7 @@ export const WithLogo: Story = {
     );
   },
   parameters: {
-    // // codeVariants: getCodeVariants temporarily disabled,
+    // codeVariants: DISABLED due to template literal errors in codeVariants module
   },
 
 };
@@ -570,7 +571,7 @@ export const WithNotifications: Story = {
     );
   },
   parameters: {
-    // // codeVariants: getCodeVariants temporarily disabled,
+    // codeVariants: DISABLED due to template literal errors in codeVariants module
   },
 
 };

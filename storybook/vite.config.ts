@@ -44,14 +44,9 @@ export default defineConfig({
                 if (!isProduction) {
                   console.log(\`🔍 PropTypes.\${name} called with:\`, args);
                 }
-                return null; // Return null for validation success
+                return undefined; // Return undefined for validation success (not null!)
               };
-              mock.isRequired = (...args) => {
-                if (!isProduction) {
-                  console.log(\`⚠️ PropTypes.\${name}.isRequired called with:\`, args);
-                }
-                return null; // Return null for validation success
-              };
+              mock.isRequired = mock; // isRequired should return the same function for chaining
               return mock;
             };
 

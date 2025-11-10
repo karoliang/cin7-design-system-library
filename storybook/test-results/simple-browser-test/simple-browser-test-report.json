@@ -1,0 +1,274 @@
+{
+  "summary": {
+    "totalTests": 5,
+    "successfulTests": 0,
+    "failedTests": 5,
+    "frameTests": [
+      {
+        "scenario": "Frame - Default",
+        "category": "frame",
+        "url": "http://localhost:6012/iframe.html?id=components-navigation-frame--default&args=&viewMode=story",
+        "success": false,
+        "responseStatus": 200,
+        "analysis": {
+          "hasErrorDisplay": true,
+          "hasNoPreview": true,
+          "hasPreparingStory": true,
+          "hasStorybookRoot": true,
+          "frameElementCount": 0,
+          "breadcrumbsElementCount": 0,
+          "topBarElementCount": 0,
+          "templateLiteralErrorCount": 0,
+          "propTypesErrorCount": 0,
+          "bodyContentLength": 18204,
+          "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+          "successIndicators": [],
+          "scriptErrors": []
+        },
+        "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_default.html",
+        "timestamp": "2025-11-10T01:43:44.229Z"
+      },
+      {
+        "scenario": "Frame - Minimal",
+        "category": "frame",
+        "url": "http://localhost:6012/iframe.html?id=components-navigation-frameminimal--minimal&args=&viewMode=story",
+        "success": false,
+        "responseStatus": 200,
+        "analysis": {
+          "hasErrorDisplay": true,
+          "hasNoPreview": true,
+          "hasPreparingStory": true,
+          "hasStorybookRoot": true,
+          "frameElementCount": 0,
+          "breadcrumbsElementCount": 0,
+          "topBarElementCount": 0,
+          "templateLiteralErrorCount": 0,
+          "propTypesErrorCount": 0,
+          "bodyContentLength": 18204,
+          "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+          "successIndicators": [],
+          "scriptErrors": []
+        },
+        "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_minimal.html",
+        "timestamp": "2025-11-10T01:43:44.739Z"
+      },
+      {
+        "scenario": "Frame - With Top Bar",
+        "category": "frame",
+        "url": "http://localhost:6012/iframe.html?id=components-navigation-frame--with-top-bar&args=&viewMode=story",
+        "success": false,
+        "responseStatus": 200,
+        "analysis": {
+          "hasErrorDisplay": true,
+          "hasNoPreview": true,
+          "hasPreparingStory": true,
+          "hasStorybookRoot": true,
+          "frameElementCount": 0,
+          "breadcrumbsElementCount": 0,
+          "topBarElementCount": 0,
+          "templateLiteralErrorCount": 0,
+          "propTypesErrorCount": 0,
+          "bodyContentLength": 18204,
+          "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+          "successIndicators": [],
+          "scriptErrors": []
+        },
+        "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_with_top_bar.html",
+        "timestamp": "2025-11-10T01:43:45.250Z"
+      }
+    ],
+    "breadcrumbsTests": [
+      {
+        "scenario": "Breadcrumbs - Default",
+        "category": "breadcrumbs",
+        "url": "http://localhost:6012/iframe.html?id=components-navigation-breadcrumbs--default&args=&viewMode=story",
+        "success": false,
+        "responseStatus": 200,
+        "analysis": {
+          "hasErrorDisplay": true,
+          "hasNoPreview": true,
+          "hasPreparingStory": true,
+          "hasStorybookRoot": true,
+          "frameElementCount": 0,
+          "breadcrumbsElementCount": 0,
+          "topBarElementCount": 0,
+          "templateLiteralErrorCount": 0,
+          "propTypesErrorCount": 0,
+          "bodyContentLength": 18204,
+          "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+          "successIndicators": [],
+          "scriptErrors": []
+        },
+        "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/breadcrumbs_-_default.html",
+        "timestamp": "2025-11-10T01:43:45.765Z"
+      },
+      {
+        "scenario": "Breadcrumbs - With Actions",
+        "category": "breadcrumbs",
+        "url": "http://localhost:6012/iframe.html?id=components-navigation-breadcrumbs--with-actions&args=&viewMode=story",
+        "success": false,
+        "responseStatus": 200,
+        "analysis": {
+          "hasErrorDisplay": true,
+          "hasNoPreview": true,
+          "hasPreparingStory": true,
+          "hasStorybookRoot": true,
+          "frameElementCount": 0,
+          "breadcrumbsElementCount": 0,
+          "topBarElementCount": 0,
+          "templateLiteralErrorCount": 0,
+          "propTypesErrorCount": 0,
+          "bodyContentLength": 18204,
+          "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+          "successIndicators": [],
+          "scriptErrors": []
+        },
+        "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/breadcrumbs_-_with_actions.html",
+        "timestamp": "2025-11-10T01:43:46.271Z"
+      }
+    ],
+    "timestamp": "2025-11-10T01:43:46.772Z"
+  },
+  "results": [
+    {
+      "scenario": "Frame - Default",
+      "category": "frame",
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-frame--default&args=&viewMode=story",
+      "success": false,
+      "responseStatus": 200,
+      "analysis": {
+        "hasErrorDisplay": true,
+        "hasNoPreview": true,
+        "hasPreparingStory": true,
+        "hasStorybookRoot": true,
+        "frameElementCount": 0,
+        "breadcrumbsElementCount": 0,
+        "topBarElementCount": 0,
+        "templateLiteralErrorCount": 0,
+        "propTypesErrorCount": 0,
+        "bodyContentLength": 18204,
+        "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+        "successIndicators": [],
+        "scriptErrors": []
+      },
+      "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_default.html",
+      "timestamp": "2025-11-10T01:43:44.229Z"
+    },
+    {
+      "scenario": "Frame - Minimal",
+      "category": "frame",
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-frameminimal--minimal&args=&viewMode=story",
+      "success": false,
+      "responseStatus": 200,
+      "analysis": {
+        "hasErrorDisplay": true,
+        "hasNoPreview": true,
+        "hasPreparingStory": true,
+        "hasStorybookRoot": true,
+        "frameElementCount": 0,
+        "breadcrumbsElementCount": 0,
+        "topBarElementCount": 0,
+        "templateLiteralErrorCount": 0,
+        "propTypesErrorCount": 0,
+        "bodyContentLength": 18204,
+        "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+        "successIndicators": [],
+        "scriptErrors": []
+      },
+      "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_minimal.html",
+      "timestamp": "2025-11-10T01:43:44.739Z"
+    },
+    {
+      "scenario": "Frame - With Top Bar",
+      "category": "frame",
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-frame--with-top-bar&args=&viewMode=story",
+      "success": false,
+      "responseStatus": 200,
+      "analysis": {
+        "hasErrorDisplay": true,
+        "hasNoPreview": true,
+        "hasPreparingStory": true,
+        "hasStorybookRoot": true,
+        "frameElementCount": 0,
+        "breadcrumbsElementCount": 0,
+        "topBarElementCount": 0,
+        "templateLiteralErrorCount": 0,
+        "propTypesErrorCount": 0,
+        "bodyContentLength": 18204,
+        "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+        "successIndicators": [],
+        "scriptErrors": []
+      },
+      "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/frame_-_with_top_bar.html",
+      "timestamp": "2025-11-10T01:43:45.250Z"
+    },
+    {
+      "scenario": "Breadcrumbs - Default",
+      "category": "breadcrumbs",
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-breadcrumbs--default&args=&viewMode=story",
+      "success": false,
+      "responseStatus": 200,
+      "analysis": {
+        "hasErrorDisplay": true,
+        "hasNoPreview": true,
+        "hasPreparingStory": true,
+        "hasStorybookRoot": true,
+        "frameElementCount": 0,
+        "breadcrumbsElementCount": 0,
+        "topBarElementCount": 0,
+        "templateLiteralErrorCount": 0,
+        "propTypesErrorCount": 0,
+        "bodyContentLength": 18204,
+        "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+        "successIndicators": [],
+        "scriptErrors": []
+      },
+      "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/breadcrumbs_-_default.html",
+      "timestamp": "2025-11-10T01:43:45.765Z"
+    },
+    {
+      "scenario": "Breadcrumbs - With Actions",
+      "category": "breadcrumbs",
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-breadcrumbs--with-actions&args=&viewMode=story",
+      "success": false,
+      "responseStatus": 200,
+      "analysis": {
+        "hasErrorDisplay": true,
+        "hasNoPreview": true,
+        "hasPreparingStory": true,
+        "hasStorybookRoot": true,
+        "frameElementCount": 0,
+        "breadcrumbsElementCount": 0,
+        "topBarElementCount": 0,
+        "templateLiteralErrorCount": 0,
+        "propTypesErrorCount": 0,
+        "bodyContentLength": 18204,
+        "errorDisplayContent": "The component failed to render properly, likely due to a configuration issue in Storybook.\n      Here are some common causes and how you can address them:\n    \n    \n      \n        Missing Context/Providers: You can use decorators to supply specific\n        contexts or providers, which are sometimes necessary for components to render correctly. For\n        detailed instructions on using decorators, please visit the\n        Decorators documentation.\n      \n      \n        Misconfigured Webpack or Vite: Verify that Storybook picks up all necessary\n        settings for loaders, plugins, and other relevant parameters. You can find step-by-step\n        guides for configuring\n        Webpack or\n        Vite\n        with Storybook.\n      \n      \n        Missing Environment Variables: Your Storybook may require specific\n        environment variables to function as intended. You can set up custom environment variables\n        as outlined in the\n        Environment Variables documentation.",
+        "successIndicators": [],
+        "scriptErrors": []
+      },
+      "htmlPath": "/Users/karo/Library/Mobile Documents/com~apple~CloudDocs/Github/cin7-design-system-library/storybook/test-results/simple-browser-test/html-snapshots/breadcrumbs_-_with_actions.html",
+      "timestamp": "2025-11-10T01:43:46.271Z"
+    }
+  ],
+  "analysis": {
+    "commonErrors": {},
+    "templateLiteralErrors": [],
+    "propTypesErrors": [],
+    "workingComponents": [],
+    "brokenComponents": [
+      "Frame - Default",
+      "Frame - Minimal",
+      "Frame - With Top Bar",
+      "Breadcrumbs - Default",
+      "Breadcrumbs - With Actions"
+    ],
+    "patterns": {
+      "frameWorking": 0,
+      "breadcrumbsWorking": 0,
+      "frameBroken": 3,
+      "breadcrumbsBroken": 2
+    },
+    "errorDetails": []
+  }
+}
