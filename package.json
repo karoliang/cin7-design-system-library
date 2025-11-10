@@ -15,7 +15,9 @@
     "collect:variations": "npx tsc scripts/collect-component-variations.ts --outDir temp && node temp/collect-component-variations.js && rm -rf temp",
     "collect:variations:js": "node scripts/collect-component-variations.js",
     "check:variations": "npx tsc scripts/collect-component-variations.ts --outDir temp && node temp/collect-component-variations.js --check && rm -rf temp",
-    "check:variations:js": "node scripts/collect-component-variations.js --check"
+    "check:variations:js": "node scripts/collect-component-variations.js --check",
+    "auto-commit": "node scripts/auto-commit.js",
+    "git:sync": "git add -A && git commit -m \"auto: sync changes $(date '+%Y-%m-%d %H:%M:%S')\" && git push origin main"
   },
   "engines": {
     "node": ">=20.10.0",
