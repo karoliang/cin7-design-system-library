@@ -143,11 +143,11 @@ export const BarChart: React.FC<BarChartProps> = ({
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
         // Add category labels for categorical axis
-        ...(isHorizontal ? {} : xAxis.categories ? {
+        ...(isHorizontal ? {} : (xAxis.categories ? {
           category: {
             array: xAxis.categories,
           }
-        } : {}),
+        } : {})),
       },
       {
         type: isHorizontal ? 'category' : 'number',
@@ -160,11 +160,11 @@ export const BarChart: React.FC<BarChartProps> = ({
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
         // Add category labels for categorical axis
-        ...(isHorizontal ? xAxis.categories ? {
+        ...(isHorizontal ? (xAxis.categories ? {
           category: {
             array: xAxis.categories,
           }
-        } : {}),
+        } : {}) : {}),
       },
     ],
     legend: {
