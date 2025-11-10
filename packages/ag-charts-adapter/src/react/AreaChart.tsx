@@ -140,7 +140,8 @@ export const AreaChart: React.FC<AreaChartProps> = ({
         strokeWidth: 2,
       },
       stacked: stacking === 'normal' || stacking === 'percent',
-      groupBy: stacking === 'percent' ? 'y' : undefined,
+      // For percent stacking, set normalizedTo to 100
+      ...(stacking === 'percent' && { normalizedTo: 100 }),
       label: {
         enabled: dataLabels,
       },
@@ -149,6 +150,12 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       showInLegend: true,
     };
   });
+
+  // Helper function to normalize title to AG Charts v9.3.2 format
+  const normalizeTitle = (title?: string): { text: string; enabled: boolean } | undefined => {
+    if (!title) return undefined;
+    return { text: title, enabled: true };
+  };
 
   const options: AgChartOptions = {
     ...chartOptions,
@@ -166,7 +173,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: xAxis.title,
+        title: normalizeTitle(xAxis.title),
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -177,7 +184,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: yAxis.title,
+        title: normalizeTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface LineChartSeries {
@@ -130,6 +131,8 @@ export const LineChart: React.FC<LineChartProps> = ({
         enabled: seriesItem.marker !== false ? markers : false,
       },
       stacked: stacking === 'normal' || stacking === 'percent',
+      // For percent stacking, set normalizedTo to 100
+      ...(stacking === 'percent' && { normalizedTo: 100 }),
       label: {
         enabled: dataLabels,
       },
@@ -139,6 +142,7 @@ export const LineChart: React.FC<LineChartProps> = ({
     };
   });
 
+  
   const options: AgChartOptions = {
     ...chartOptions,
     title: {
@@ -155,7 +159,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'category' as any,
         position: 'bottom',
-        title: xAxis.title,
+        title: normalizeAxisTitle(xAxis.title),
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -166,7 +170,7 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'number' as any,
         position: 'left',
-        title: yAxis.title,
+        title: normalizeAxisTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

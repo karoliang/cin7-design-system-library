@@ -5,6 +5,7 @@
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
 import { getCin7ChartColors } from '../utilities/theme';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface BarChartSeries {
@@ -123,8 +124,6 @@ export const BarChart: React.FC<BarChartProps> = ({
       // Configure stacking
       ...(stacking && {
         stacked: true,
-        // Use stackGroup for percent stacking instead of groupBy
-        ...(stacking === 'percent' && { stackGroup: 'percent' }),
         // For percent stacking, set normalizedTo to 100
         ...(stacking === 'percent' && { normalizedTo: 100 }),
       }),
@@ -134,13 +133,7 @@ export const BarChart: React.FC<BarChartProps> = ({
     };
   });
 
-  // Helper function to normalize title to string
-  const normalizeTitle = (title?: string | { text: string }): string | undefined => {
-    if (!title) return undefined;
-    if (typeof title === 'string') return title;
-    return title.text;
-  };
-
+  
   const options: AgChartOptions = {
     ...chartOptions,
     title: {
@@ -157,7 +150,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'number' : 'category',
         position: isHorizontal ? 'bottom' : 'left',
-        title: normalizeTitle(isHorizontal ? yAxis.title : xAxis.title),
+        title: normalizeAxisTitle(isHorizontal ? yAxis.title : xAxis.title),
         gridLine: {
           enabled: isHorizontal ? (yAxis.gridLines !== false) : (xAxis.gridLines !== false),
         },
@@ -170,7 +163,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'category' : 'number',
         position: isHorizontal ? 'left' : 'bottom',
-        title: normalizeTitle(isHorizontal ? xAxis.title : yAxis.title),
+        title: normalizeAxisTitle(isHorizontal ? xAxis.title : yAxis.title),
         gridLine: {
           enabled: isHorizontal ? (xAxis.gridLines !== false) : (yAxis.gridLines !== false),
         },

@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface ScatterChartSeries {
@@ -90,6 +91,9 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
   // Convert series data to AG Charts format
   const agSeries = series.map((seriesItem) => ({
     type: variant,
+    xKey: 'x',
+    yKey: 'y',
+    sizeKey: variant === 'bubble' ? 'size' : undefined,
     data: seriesItem.data.map((point) => {
       if (point.length === 2) {
         // [x, y] - scatter plot
@@ -115,6 +119,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
     showInLegend: true,
   }));
 
+  
   const options: AgChartOptions = {
     ...chartOptions,
     title: {
@@ -131,7 +136,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       {
         type: 'number',
         position: 'bottom',
-        title: xAxis.title,
+        title: normalizeAxisTitle(xAxis.title),
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -142,7 +147,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: yAxis.title,
+        title: normalizeTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

@@ -258,7 +258,7 @@ export const OHLCChart: React.FC<OHLCChartProps> = ({
         }));
 
       mainSeries.push({
-        type: 'column',
+        type: 'bar',
         xKey: 'x',
         yKey: 'y',
         data: volumeData,

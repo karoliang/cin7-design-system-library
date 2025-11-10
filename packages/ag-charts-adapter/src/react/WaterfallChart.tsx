@@ -141,7 +141,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
 
   // Transform all series
   const agSeries = series.map((seriesItem) => ({
-    type: 'column' as const,
+    type: 'bar' as const,
     xKey: 'x',
     yKey: 'y',
     data: transformWaterfallData(seriesItem.data),
