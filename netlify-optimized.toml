@@ -1,0 +1,162 @@
+[build]
+# OPTIMIZED BUILD CONFIGURATION
+# Enable build caching and use optimized build script
+publish = "polaris/polaris.shopify.com/out"
+command = "./netlify-build-optimized.sh"
+
+# Enable build monitoring
+publish = "polaris/polaris.shopify.com/out"
+
+[build.environment]
+# Optimize Node.js memory and performance settings
+NODE_ENV = "production"
+NODE_OPTIONS = "--max-old-space-size=4096"
+PNPM_HOME = "/opt/buildhome/.pnpm"
+PNPM_STORE_DIR = "/opt/buildhome/.pnpm-store"
+
+# Disable telemetry for performance
+NEXT_TELEMETRY_DISABLED = "1"
+STORYBOOK_DISABLE_TELEMETRY = "1"
+
+# pnpm performance optimizations
+NPM_CONFIG_PRODUCTION = "false"
+PNPM_CONFIG_PREFER_OFFLINE = "true"
+PNPM_CONFIG_STRICT_PEER_DEPENDENCIES = "false"
+
+# Enable Netlify build cache
+CACHE_DIR = "/opt/build/cache"
+
+# Build caching for dependencies
+NETLIFY_BUILD_CACHE = "true"
+
+# Configure cache preservation
+GO_VERSION = "1.21"
+NPM_VERSION = "9"
+NODE_VERSION = "20"
+
+[[headers]]
+# Frame security for all paths except Storybook
+for = "/*"
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+# Allow Storybook iframe usage for component previews
+for = "/storybook/*"
+[headers.values]
+X-Frame-Options = "SAMEORIGIN"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets for 1 year
+[[headers]]
+for = "/_next/static/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/storybook/assets/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache images and assets
+[[headers]]
+for = "/images/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.png"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.jpg"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.svg"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.ico"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache CSS and JS with validation
+[[headers]]
+for = "*.css"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.js"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache HTML pages with shorter duration for content updates
+[[headers]]
+for = "*.html"
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+# Handle Next.js trailing slashes
+from = "/*"
+to = "/index.html"
+status = 200
+
+# API and dynamic routes
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200
+
+# Storybook specific redirect
+[[redirects]]
+from = "/storybook"
+to = "/storybook/index.html"
+status = 200
+
+# Build plugin: Optimize images
+[[plugins]]
+package = "netlify-plugin-image-optimizations"
+
+# Build plugin: Optimize dependencies
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
+# Build plugin: Essential for Next.js standalone builds
+[plugins.inputs]
+monorepo = true
+
+# Edge functions for API routes (if needed)
+[[edge_functions]]
+path = "/api/*"
+function = "api"
+
+# Build hooks for cache optimization
+[build.deploy]
+# Enable build artifact caching
+artifact_retention_days = 1
+
+# Optimize build process
+[build.processing]
+skip_processing = false
+
+# Compress assets
+[build.processing.css]
+bundle = true
+minify = true
+
+[build.processing.js]
+bundle = true
+minify = true
+
+[build.processing.html]
+pretty_urls = true
