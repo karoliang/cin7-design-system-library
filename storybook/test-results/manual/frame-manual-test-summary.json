@@ -1,0 +1,48 @@
+{
+  "timestamp": "2025-11-10T00:42:11.794Z",
+  "component": "frame",
+  "totalVariations": 6,
+  "successfulTests": 0,
+  "propTypesWorking": 0,
+  "propTypesFixWorking": false,
+  "totalErrors": 0,
+  "totalWarnings": 0,
+  "results": [
+    {
+      "component": "frame",
+      "variation": "default",
+      "error": "socket hang up",
+      "success": false
+    },
+    {
+      "component": "frame",
+      "variation": "with-logo",
+      "error": "socket hang up",
+      "success": false
+    },
+    {
+      "component": "frame",
+      "variation": "with-notifications",
+      "error": "socket hang up",
+      "success": false
+    },
+    {
+      "component": "frame",
+      "variation": "ecommerce-layout",
+      "error": "socket hang up",
+      "success": false
+    },
+    {
+      "component": "frame",
+      "variation": "minimal-layout",
+      "error": "socket hang up",
+      "success": false
+    },
+    {
+      "component": "frame",
+      "variation": "responsive-behavior",
+      "error": "socket hang up",
+      "success": false
+    }
+  ]
+}
