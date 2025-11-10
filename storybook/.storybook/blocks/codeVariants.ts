@@ -48050,6 +48050,520 @@ const BarChartComponent: React.FC = () => {
     />
   );
 };`
+  },
+
+  horizontal: {
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+function HorizontalBarChart() {
+  return (
+    <BarChart
+      title="Regional Performance"
+      orientation="horizontal"
+      series={[{
+        name: 'Revenue',
+        data: [107, 131, 165, 203, 178]
+      }]}
+      xAxis={{
+        categories: ['North', 'South', 'East', 'West', 'Central'],
+        title: 'Region'
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' }
+      }}
+      height={400}
+    />
+  );
+}`,
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Regional Performance',
+  orientation: 'horizontal',
+  series: [{
+    name: 'Revenue',
+    data: [107, 131, 165, 203, 178]
+  }],
+  xAxis: {
+    categories: ['North', 'South', 'East', 'West', 'Central'],
+    title: 'Region'
+  },
+  yAxis: {
+    title: 'Revenue ($K)'
+  },
+  height: 400
+});`,
+    vanilla: `import { initBarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const horizontalBarChart = await initBarChart({
+  container: 'container',
+  title: 'Regional Performance',
+  orientation: 'horizontal',
+  series: [{
+    name: 'Revenue',
+    data: [107, 131, 165, 203, 178]
+  }],
+  xAxis: {
+    categories: ['North', 'South', 'East', 'West', 'Central'],
+    title: 'Region'
+  },
+  yAxis: {
+    title: 'Revenue ($K)'
+  },
+  height: 400
+});`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const HorizontalBarChartComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Regional Performance"
+      orientation="horizontal"
+      series={[{
+        name: 'Revenue',
+        data: [107, 131, 165, 203, 178]
+      }]}
+      xAxis={{
+        categories: ['North', 'South', 'East', 'West', 'Central'],
+        title: 'Region'
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' }
+      }}
+      height={400}
+    />
+  );
+};`
+  },
+
+  withdatalabels: {
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+function BarChartWithDataLabels() {
+  return (
+    <BarChart
+      title="Monthly Sales"
+      dataLabels={true}
+      series={[{
+        name: 'Units Sold',
+        data: [150, 180, 220, 195, 210, 240]
+      }]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        title: 'Month'
+      }}
+      yAxis={{
+        title: 'Units'
+      }}
+      height={400}
+    />
+  );
+}`,
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Monthly Sales',
+  dataLabels: true,
+  series: [{
+    name: 'Units Sold',
+    data: [150, 180, 220, 195, 210, 240]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    title: 'Month'
+  },
+  yAxis: {
+    title: 'Units'
+  },
+  height: 400
+});`,
+    vanilla: `import { initBarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const barChartWithDataLabels = await initBarChart({
+  container: 'container',
+  title: 'Monthly Sales',
+  dataLabels: true,
+  series: [{
+    name: 'Units Sold',
+    data: [150, 180, 220, 195, 210, 240]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    title: 'Month'
+  },
+  yAxis: {
+    title: 'Units'
+  },
+  height: 400
+});`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const BarChartWithDataLabelsComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Monthly Sales"
+      dataLabels={true}
+      series={[{
+        name: 'Units Sold',
+        data: [150, 180, 220, 195, 210, 240]
+      }]}
+      xAxis={{
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        title: 'Month'
+      }}
+      yAxis={{
+        title: 'Units'
+      }}
+      height={400}
+    />
+  );
+};`
+  },
+
+  stacked: {
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+function StackedBarChart() {
+  return (
+    <BarChart
+      title="Product Composition"
+      stacking="normal"
+      series={[
+        {
+          name: 'Product A',
+          data: [50, 60, 70, 80]
+        },
+        {
+          name: 'Product B',
+          data: [30, 40, 50, 60]
+        },
+        {
+          name: 'Product C',
+          data: [20, 30, 40, 50]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: 'Total Sales'
+      }}
+      height={400}
+    />
+  );
+}`,
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Product Composition',
+  stacking: 'normal',
+  series: [
+    {
+      name: 'Product A',
+      data: [50, 60, 70, 80]
+    },
+    {
+      name: 'Product B',
+      data: [30, 40, 50, 60]
+    },
+    {
+      name: 'Product C',
+      data: [20, 30, 40, 50]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Total Sales'
+  },
+  height: 400
+});`,
+    vanilla: `import { initBarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const stackedBarChart = await initBarChart({
+  container: 'container',
+  title: 'Product Composition',
+  stacking: 'normal',
+  series: [
+    {
+      name: 'Product A',
+      data: [50, 60, 70, 80]
+    },
+    {
+      name: 'Product B',
+      data: [30, 40, 50, 60]
+    },
+    {
+      name: 'Product C',
+      data: [20, 30, 40, 50]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Total Sales'
+  },
+  height: 400
+});`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const StackedBarChartComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Product Composition"
+      stacking="normal"
+      series={[
+        {
+          name: 'Product A',
+          data: [50, 60, 70, 80]
+        },
+        {
+          name: 'Product B',
+          data: [30, 40, 50, 60]
+        },
+        {
+          name: 'Product C',
+          data: [20, 30, 40, 50]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: 'Total Sales'
+      }}
+      height={400}
+    />
+  );
+};`
+  },
+
+  percentagestacked: {
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+function PercentageStackedBarChart() {
+  return (
+    <BarChart
+      title="Device Usage Distribution"
+      stacking="percent"
+      series={[
+        {
+          name: 'Desktop',
+          data: [60, 55, 50, 45]
+        },
+        {
+          name: 'Mobile',
+          data: [30, 35, 40, 45]
+        },
+        {
+          name: 'Tablet',
+          data: [10, 10, 10, 10]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: 'Percentage'
+      }}
+      height={400}
+    />
+  );
+}`,
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Device Usage Distribution',
+  stacking: 'percent',
+  series: [
+    {
+      name: 'Desktop',
+      data: [60, 55, 50, 45]
+    },
+    {
+      name: 'Mobile',
+      data: [30, 35, 40, 45]
+    },
+    {
+      name: 'Tablet',
+      data: [10, 10, 10, 10]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Percentage'
+  },
+  height: 400
+});`,
+    vanilla: `import { initBarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const percentageStackedBarChart = await initBarChart({
+  container: 'container',
+  title: 'Device Usage Distribution',
+  stacking: 'percent',
+  series: [
+    {
+      name: 'Desktop',
+      data: [60, 55, 50, 45]
+    },
+    {
+      name: 'Mobile',
+      data: [30, 35, 40, 45]
+    },
+    {
+      name: 'Tablet',
+      data: [10, 10, 10, 10]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Percentage'
+  },
+  height: 400
+});`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const PercentageStackedBarChartComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Device Usage Distribution"
+      stacking="percent"
+      series={[
+        {
+          name: 'Desktop',
+          data: [60, 55, 50, 45]
+        },
+        {
+          name: 'Mobile',
+          data: [30, 35, 40, 45]
+        },
+        {
+          name: 'Tablet',
+          data: [10, 10, 10, 10]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: 'Percentage'
+      }}
+      height={400}
+    />
+  );
+};`
+  },
+
+  grouped: {
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+function GroupedBarChart() {
+  return (
+    <BarChart
+      title="Year-over-Year Comparison"
+      grouping={true}
+      series={[
+        {
+          name: '2024',
+          data: [100, 120, 140, 160]
+        },
+        {
+          name: '2025',
+          data: [120, 150, 180, 200]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' }
+      }}
+      height={400}
+    />
+  );
+}`,
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Year-over-Year Comparison',
+  grouping: true,
+  series: [
+    {
+      name: '2024',
+      data: [100, 120, 140, 160]
+    },
+    {
+      name: '2025',
+      data: [120, 150, 180, 200]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Revenue ($K)'
+  },
+  height: 400
+});`,
+    vanilla: `import { initBarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const groupedBarChart = await initBarChart({
+  container: 'container',
+  title: 'Year-over-Year Comparison',
+  grouping: true,
+  series: [
+    {
+      name: '2024',
+      data: [100, 120, 140, 160]
+    },
+    {
+      name: '2025',
+      data: [120, 150, 180, 200]
+    }
+  ],
+  xAxis: {
+    categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+    title: 'Quarter'
+  },
+  yAxis: {
+    title: 'Revenue ($K)'
+  },
+  height: 400
+});`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const GroupedBarChartComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Year-over-Year Comparison"
+      grouping={true}
+      series={[
+        {
+          name: '2024',
+          data: [100, 120, 140, 160]
+        },
+        {
+          name: '2025',
+          data: [120, 150, 180, 200]
+        }
+      ]}
+      xAxis={{
+        categories: ['Q1', 'Q2', 'Q3', 'Q4'],
+        title: 'Quarter'
+      }}
+      yAxis={{
+        title: { text: 'Revenue ($K)' }
+      }}
+      height={400}
+    />
+  );
+};`
   }
 };
 

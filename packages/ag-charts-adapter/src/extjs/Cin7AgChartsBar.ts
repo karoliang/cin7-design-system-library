@@ -81,7 +81,7 @@ export class Cin7AgChartsBar extends Cin7AgChartsBase {
 
     // Transform series data to AG Charts format
     const agSeries = series.map((seriesItem) => ({
-      type: orientation === 'vertical' ? 'column' : 'bar',
+      type: 'bar', // AG Charts v9.2.0 only accepts 'bar' series type
       xKey: typeof seriesItem.data[0] === 'string' || Array.isArray(seriesItem.data[0]) ? 'x' : undefined,
       yKey: 'y',
       data: seriesItem.data.map((point, index) => {
@@ -260,7 +260,7 @@ export class Cin7AgChartsBar extends Cin7AgChartsBase {
 
     const currentConfig = this.getBarChartConfig();
     currentConfig.series.push({
-      type: this.initialConfig.orientation === 'vertical' ? 'column' : 'bar',
+      type: 'bar', // AG Charts v9.2.0 only accepts 'bar' series type
       xKey: typeof seriesConfig.data[0] === 'string' || Array.isArray(seriesConfig.data[0]) ? 'x' : undefined,
       yKey: 'y',
       data: seriesConfig.data.map((point: any, index: number) => {

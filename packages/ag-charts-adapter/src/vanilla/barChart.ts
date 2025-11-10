@@ -108,7 +108,8 @@ export async function initBarChart(options: VanillaBarChartOptions): Promise<any
 
   // Apply theme
   const agTheme = getCin7AgChartsTheme(theme);
-  const chartType = orientation === 'vertical' ? 'column' : 'bar';
+  // AG Charts v9.2.0 only accepts 'bar' series type
+  const chartType = 'bar';
 
   // Transform series data for AG Charts
   const agSeries = series.map((seriesItem) => ({

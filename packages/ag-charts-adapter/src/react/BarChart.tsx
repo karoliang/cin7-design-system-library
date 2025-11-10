@@ -102,22 +102,34 @@ export const BarChart: React.FC<BarChartProps> = ({
   const chartColors = getCin7ChartColors(getThemeMode());
 
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem, index) => ({
-    type: 'bar', // AG Charts v9.2.0 only accepts 'bar' for both orientations
-    xKey: 'x',
-    yKey: 'y',
-    data: seriesItem.data.map((point, index) => {
-      if (Array.isArray(point)) {
-        return { x: point[0], y: point[1] };
-      }
-      // Use numerical indices for x-axis when categories are provided
-      return { x: index, y: point };
-    }),
-    fill: seriesItem.color || chartColors[index % chartColors.length],
-    label: {
-      enabled: dataLabels,
-    }
-  }));
+  const agSeries = series.map((seriesItem, index) => {
+    const yKey = stacking ? 'y' : `y_${index}`; // Use same yKey for stacked charts
+    return {
+      type: 'bar', // AG Charts v9.2.0 only accepts 'bar' for both orientations
+      xKey: 'x',
+      yKey: yKey,
+      data: seriesItem.data.map((point, index) => {
+        if (Array.isArray(point)) {
+          return { x: point[0], y: point[1] };
+        }
+        // Use numerical indices for x-axis when categories are provided
+        return { x: index, y: point };
+      }),
+      fill: seriesItem.color || chartColors[index % chartColors.length],
+      stroke: seriesItem.color || chartColors[index % chartColors.length],
+      label: {
+        enabled: dataLabels,
+      },
+      // Configure stacking
+      ...(stacking && {
+        stacked: true,
+        groupBy: stacking === 'percent' ? 'x' : undefined,
+      }),
+      // Series name for legend
+      name: seriesItem.name,
+      showInLegend: true,
+    };
+  });
 
   const options: AgChartOptions = {
     ...chartOptions,
@@ -144,9 +156,7 @@ export const BarChart: React.FC<BarChartProps> = ({
         },
         // Add category labels for categorical axis
         ...(isHorizontal ? {} : (xAxis.categories ? {
-          category: {
-            array: xAxis.categories,
-          }
+          category: xAxis.categories,
         } : {})),
       },
       {
@@ -161,9 +171,7 @@ export const BarChart: React.FC<BarChartProps> = ({
         },
         // Add category labels for categorical axis
         ...(isHorizontal ? (xAxis.categories ? {
-          category: {
-            array: xAxis.categories,
-          }
+          category: xAxis.categories,
         } : {}) : {}),
       },
     ],
