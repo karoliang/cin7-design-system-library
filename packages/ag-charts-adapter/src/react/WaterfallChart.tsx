@@ -192,10 +192,10 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: {
+        title: xAxis.title ? {
           text: xAxis.title,
-          enabled: !!xAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -209,10 +209,10 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: {
+        title: yAxis.title ? {
           text: yAxis.title,
-          enabled: !!yAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
@@ -230,33 +230,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
     legend: {
       enabled: legend,
     },
-    // Custom styling for waterfall appearance
-    overrides: {
-      column: {
-        series: {
-          strokeWidth: 1,
-          cornerRadius: 2,
-          label: {
-            enabled: dataLabels,
-            color: '#333333',
-            formatter: ({ datum }: any) => {
-              const sign = datum.y >= 0 ? '+' : '';
-              return `${sign}${datum.y.toLocaleString()}`;
-            },
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: 'rgba(0, 0, 0, 0.1)',
-            },
-          },
-          tooltip: {
-            enabled: tooltip,
-          },
-        },
-      },
-    },
-  };
+    };
 
   return <ChartContainer options={options} {...containerProps} ariaLabel={title || 'Waterfall chart'} />;
 };

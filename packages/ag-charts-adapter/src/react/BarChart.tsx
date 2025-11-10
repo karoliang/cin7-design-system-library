@@ -124,10 +124,13 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'number' : 'category',
         position: isHorizontal ? 'bottom' : 'left',
-        title: {
-          text: isHorizontal ? yAxis.title : xAxis.title,
-          enabled: !!(isHorizontal ? yAxis.title : xAxis.title),
-        },
+        title: isHorizontal && yAxis.title ? {
+          text: yAxis.title,
+          enabled: true,
+        } : !isHorizontal && xAxis.title ? {
+          text: xAxis.title,
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: isHorizontal ? (yAxis.gridLines !== false) : (xAxis.gridLines !== false),
         },
@@ -140,10 +143,13 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'category' : 'number',
         position: isHorizontal ? 'left' : 'bottom',
-        title: {
-          text: isHorizontal ? xAxis.title : yAxis.title,
-          enabled: !!(isHorizontal ? xAxis.title : yAxis.title),
-        },
+        title: isHorizontal && xAxis.title ? {
+          text: xAxis.title,
+          enabled: true,
+        } : !isHorizontal && yAxis.title ? {
+          text: yAxis.title,
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: isHorizontal ? (xAxis.gridLines !== false) : (yAxis.gridLines !== false),
         },

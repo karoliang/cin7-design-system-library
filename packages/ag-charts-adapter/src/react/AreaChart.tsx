@@ -95,46 +95,57 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   ...containerProps
 }) => {
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => ({
-    type: smooth ? 'area' : 'area', // AG Charts uses 'area' for both, smooth controlled by series options
-    xKey: typeof seriesItem.data[0] === 'string' || Array.isArray(seriesItem.data[0]) ? 'x' : undefined,
-    yKey: 'y',
-    data: seriesItem.data.map((point, index) => {
-      if (Array.isArray(point)) {
-        return { x: point[0], y: point[1] };
-      }
-      if (typeof point === 'string') {
-        return { x: index, y: 0 }; // This shouldn't happen with proper data
-      }
-      return { x: index, y: point };
-    }),
-    stroke: seriesItem.color,
-    strokeWidth: seriesItem.strokeWidth || 2,
-    fill: seriesItem.color,
-    fillOpacity: seriesItem.fillOpacity || fillOpacity,
-    // AG Charts smooth curve configuration
-    smooth: smooth,
-    // Add gradient fills for modern appearance
-    fillGradient: {
-      gradient: 'linear',
-      stops: [
-        { offset: 0, color: seriesItem.color + '40' }, // 40% opacity at top
-        { offset: 1, color: seriesItem.color }, // Full opacity at bottom
-      ],
-    },
-    marker: {
-      enabled: seriesItem.marker !== false ? markers : false,
-      size: 6,
-      strokeWidth: 2,
-    },
-    // @ts-ignore - stacking property exists in AG Charts
-    stacked: stacking === 'normal' || stacking === 'percent',
-    // @ts-ignore - stacking as percent
-    groupBy: stacking === 'percent' ? 'y' : undefined,
-    label: {
-      enabled: dataLabels,
-    },
-  }));
+  const agSeries = series.map((seriesItem) => {
+    // Determine data structure and xKey
+    let xKey: string = 'x';
+    let processedData: any[] = [];
+
+    if (Array.isArray(seriesItem.data[0])) {
+      // Data is in format [x, y] pairs
+      xKey = 'x';
+      processedData = seriesItem.data.map((point) => ({
+        x: point[0],
+        y: point[1],
+      }));
+    } else if (typeof seriesItem.data[0] === 'string') {
+      // Data is categories, need to map to indices
+      xKey = 'category';
+      processedData = seriesItem.data.map((point, index) => ({
+        category: point,
+        y: 0, // This should be updated with actual y values
+      }));
+    } else {
+      // Data is just y values with implicit x indices
+      xKey = 'x';
+      processedData = seriesItem.data.map((point, index) => ({
+        x: index,
+        y: point,
+      }));
+    }
+
+    return {
+      type: 'area',
+      xKey,
+      yKey: 'y',
+      data: processedData,
+      stroke: seriesItem.color,
+      strokeWidth: seriesItem.strokeWidth || 2,
+      fill: seriesItem.color,
+      fillOpacity: seriesItem.fillOpacity || fillOpacity,
+      // Note: AG Charts doesn't support 'smooth' property directly
+      // Use line interpolation instead if needed in chartOptions
+      marker: {
+        enabled: seriesItem.marker !== false ? markers : false,
+        size: 6,
+        strokeWidth: 2,
+      },
+      stacked: stacking === 'normal' || stacking === 'percent',
+      groupBy: stacking === 'percent' ? 'y' : undefined,
+      label: {
+        enabled: dataLabels,
+      },
+    };
+  });
 
   const options: AgChartOptions = {
     ...chartOptions,
@@ -152,10 +163,10 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: {
+        title: xAxis.title ? {
           text: xAxis.title,
-          enabled: !!xAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -168,10 +179,10 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: {
+        title: yAxis.title ? {
           text: yAxis.title,
-          enabled: !!yAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

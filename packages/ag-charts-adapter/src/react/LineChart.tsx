@@ -90,32 +90,51 @@ export const LineChart: React.FC<LineChartProps> = ({
   ...containerProps
 }) => {
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => ({
-    type: 'line',
-    xKey: typeof seriesItem.data[0] === 'string' || Array.isArray(seriesItem.data[0]) ? 'x' : undefined,
-    yKey: 'y',
-    data: seriesItem.data.map((point, index) => {
-      if (Array.isArray(point)) {
-        return { x: point[0], y: point[1] };
-      }
-      if (typeof point === 'string') {
-        return { x: index, y: 0 }; // This shouldn't happen with proper data
-      }
-      return { x: index, y: point };
-    }),
-    stroke: seriesItem.color,
-    strokeWidth: seriesItem.strokeWidth || 2,
-    marker: {
-      enabled: seriesItem.marker !== false ? markers : false,
-    },
-    // @ts-ignore - stacking property exists in AG Charts
-    stacked: stacking === 'normal' || stacking === 'percent',
-    // @ts-ignore - stacking as percent
-    groupBy: stacking === 'percent' ? 'y' : undefined,
-    label: {
-      enabled: dataLabels,
-    },
-  }));
+  const agSeries = series.map((seriesItem) => {
+    // Determine data structure and xKey
+    let xKey: string = 'x';
+    let processedData: any[] = [];
+
+    if (Array.isArray(seriesItem.data[0])) {
+      // Data is in format [x, y] pairs
+      xKey = 'x';
+      processedData = seriesItem.data.map((point) => ({
+        x: point[0],
+        y: point[1],
+      }));
+    } else if (typeof seriesItem.data[0] === 'string') {
+      // Data is categories, need to map to indices
+      xKey = 'category';
+      processedData = seriesItem.data.map((point, index) => ({
+        category: point,
+        y: 0, // This should be updated with actual y values
+      }));
+    } else {
+      // Data is just y values with implicit x indices
+      xKey = 'x';
+      processedData = seriesItem.data.map((point, index) => ({
+        x: index,
+        y: point,
+      }));
+    }
+
+    return {
+      type: 'line',
+      xKey,
+      yKey: 'y',
+      data: processedData,
+      stroke: seriesItem.color,
+      strokeWidth: seriesItem.strokeWidth || 2,
+      marker: {
+        enabled: seriesItem.marker !== false ? markers : false,
+      },
+      stacked: stacking === 'normal' || stacking === 'percent',
+      groupBy: stacking === 'percent' ? 'y' : undefined,
+      label: {
+        enabled: dataLabels,
+      },
+    };
+  });
 
   const options: AgChartOptions = {
     ...chartOptions,
@@ -133,10 +152,10 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'category' as any,
         position: 'bottom',
-        title: {
+        title: xAxis.title ? {
           text: xAxis.title,
-          enabled: !!xAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -149,10 +168,10 @@ export const LineChart: React.FC<LineChartProps> = ({
       {
         type: 'number' as any,
         position: 'left',
-        title: {
+        title: yAxis.title ? {
           text: yAxis.title,
-          enabled: !!yAxis.title,
-        },
+          enabled: true,
+        } : undefined,
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
