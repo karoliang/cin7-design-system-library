@@ -170,8 +170,6 @@ export const AreaChart: React.FC<AreaChartProps> = ({
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
-        min: xAxis.min,
-        max: xAxis.max,
         label: {
           format: xAxis.labelFormat,
         },
@@ -186,8 +184,6 @@ export const AreaChart: React.FC<AreaChartProps> = ({
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
-        min: yAxis.min,
-        max: yAxis.max,
         label: {
           format: yAxis.labelFormat,
         },

@@ -129,7 +129,6 @@ export const LineChart: React.FC<LineChartProps> = ({
         enabled: seriesItem.marker !== false ? markers : false,
       },
       stacked: stacking === 'normal' || stacking === 'percent',
-      groupBy: stacking === 'percent' ? 'y' : undefined,
       label: {
         enabled: dataLabels,
       },
@@ -159,8 +158,6 @@ export const LineChart: React.FC<LineChartProps> = ({
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
-        min: xAxis.min,
-        max: xAxis.max,
         label: {
           format: xAxis.labelFormat,
         },
@@ -175,8 +172,6 @@ export const LineChart: React.FC<LineChartProps> = ({
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
-        min: yAxis.min,
-        max: yAxis.max,
         label: {
           format: yAxis.labelFormat,
         },

@@ -134,9 +134,7 @@ export const BarChart: React.FC<BarChartProps> = ({
         gridLine: {
           enabled: isHorizontal ? (yAxis.gridLines !== false) : (xAxis.gridLines !== false),
         },
-        min: isHorizontal ? yAxis.min : undefined,
-        max: isHorizontal ? yAxis.max : undefined,
-        label: {
+          label: {
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
       },
@@ -153,9 +151,7 @@ export const BarChart: React.FC<BarChartProps> = ({
         gridLine: {
           enabled: isHorizontal ? (xAxis.gridLines !== false) : (yAxis.gridLines !== false),
         },
-        min: isHorizontal ? undefined : yAxis.min,
-        max: isHorizontal ? undefined : yAxis.max,
-        label: {
+          label: {
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
       },

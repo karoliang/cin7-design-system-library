@@ -216,9 +216,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
-        min: yAxis.min,
-        max: yAxis.max,
-        label: {
+          label: {
           formatter: (params: any) => {
             const value = params.value;
             const sign = value >= 0 ? '+' : '';

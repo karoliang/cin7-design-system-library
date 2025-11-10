@@ -67,11 +67,10 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
   const borderSubdued = getTokenValue('p-color-border-subdued') || (mode === 'light' ? '#e1e3e3' : '#363a3d');
 
   const theme: AgThemeOptions = {
-    baseTheme: mode === 'dark' ? 'ag-dark' : 'ag-default',
+    baseTheme: mode === 'dark' ? 'ag-default-dark' : 'ag-default',
     palette: {
-      colors,
       fills: colors,
-      strokes: colors.map((color) => color),
+      strokes: colors,
     },
     overrides: {
       common: {
