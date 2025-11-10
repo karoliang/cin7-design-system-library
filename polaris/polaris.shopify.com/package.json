@@ -27,7 +27,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@cin7/highcharts-adapter": "link:../../packages/highcharts-adapter",
+    "@cin7/ag-charts-adapter": "link:../../packages/ag-charts-adapter",
     "@floating-ui/react-dom-interactions": "^0.10.1",
     "@headlessui/react": "^1.6.5",
     "@juggle/resize-observer": "^3.4.0",
@@ -43,8 +43,6 @@
     "framer-motion": "^6.5.1",
     "fuse.js": "^6.5.3",
     "gray-matter": "^4.0.3",
-    "highcharts": "^12.4.0",
-    "highcharts-react-official": "^3.2.3",
     "lodash.get": "^4.4.2",
     "lodash.mapvalues": "^4.6.0",
     "lodash.throttle": "^4.1.1",

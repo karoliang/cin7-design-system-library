@@ -1,15 +1,15 @@
 /**
- * ChartContainer - Base wrapper component for Highcharts with Cin7 theming
+ * ChartContainer - Base wrapper component for AG Charts with Cin7 theming
  */
 
-import React, { useEffect, useRef, useState } from 'react';
-import * as Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { getCin7HighchartsTheme, Cin7ChartTheme, getResponsiveConfig } from '../utilities/theme';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { AgCharts } from 'ag-charts-react';
+import type { AgChartOptions, AgChartInstance } from 'ag-charts-community';
+import { getCin7AgChartsTheme, Cin7ChartTheme, getDocumentTheme, watchDocumentTheme } from '../utilities/theme';
 
 export interface ChartContainerProps {
-  /** Highcharts configuration options */
-  options: Highcharts.Options;
+  /** AG Charts configuration options */
+  options: AgChartOptions;
   /** Theme configuration (light/dark mode, custom colors) */
   theme?: Cin7ChartTheme;
   /** Chart height in pixels or CSS value */
@@ -21,9 +21,9 @@ export interface ChartContainerProps {
   /** CSS class name for container */
   className?: string;
   /** Callback when chart is created */
-  onChartReady?: (chart: Highcharts.Chart) => void;
+  onChartReady?: (chart: AgChartInstance) => void;
   /** Callback when chart updates */
-  onChartUpdate?: (chart: Highcharts.Chart) => void;
+  onChartUpdate?: (chart: AgChartInstance) => void;
   /** Loading state */
   loading?: boolean;
   /** Error state */
@@ -37,7 +37,7 @@ export interface ChartContainerProps {
  */
 export const ChartContainer: React.FC<ChartContainerProps> = ({
   options,
-  theme = { mode: 'light' },
+  theme,
   height = 400,
   width = '100%',
   responsive = true,
@@ -48,33 +48,28 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
   error = null,
   ariaLabel,
 }) => {
-  const chartRef = useRef<HighchartsReact.RefObject>(null);
+  const chartRef = useRef<AgCharts>(null);
   const [chartReady, setChartReady] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<Cin7ChartTheme>(() => ({
+    mode: getDocumentTheme(),
+    ...theme,
+  }));
 
-  // Apply theme to options
-  const themedOptions = React.useMemo(() => {
-    const baseTheme = getCin7HighchartsTheme(theme);
-    const mergedOptions: Highcharts.Options = {
-      ...baseTheme,
+  // Merge theme with options
+  const getThemedOptions = useCallback(() => {
+    const mergedTheme = { ...currentTheme, ...theme };
+    const cin7Theme = getCin7AgChartsTheme(mergedTheme);
+
+    return {
+      ...cin7Theme,
       ...options,
-      chart: {
-        ...baseTheme.chart,
-        ...options.chart,
-        height: typeof height === 'number' ? height : undefined,
-        width: typeof width === 'number' ? width : undefined,
-      },
-    };
+      height: typeof height === 'number' ? height : undefined,
+      width: typeof width === 'number' ? width : undefined,
+    } as AgChartOptions;
+  }, [options, currentTheme, theme, height, width]);
 
-    // Add responsive config if enabled
-    if (responsive) {
-      mergedOptions.responsive = getResponsiveConfig();
-    }
-
-    return mergedOptions;
-  }, [options, theme, height, width, responsive]);
-
-  // Handle chart ready
-  const handleChartCallback = (chart: Highcharts.Chart) => {
+  // Handle chart ready callback
+  const handleChartReady = useCallback((chart: AgChartInstance) => {
     if (!chartReady) {
       setChartReady(true);
       if (onChartReady) {
@@ -83,28 +78,15 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
     } else if (onChartUpdate) {
       onChartUpdate(chart);
     }
-  };
+  }, [chartReady, onChartReady, onChartUpdate]);
 
-  // Watch for theme changes in document
+  // Watch for theme changes
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
-      return;
-    }
-
-    const observer = new MutationObserver(() => {
-      const documentTheme = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark' | null;
-      if (documentTheme && chartRef.current?.chart) {
-        // Force chart reflow when theme changes
-        chartRef.current.chart.reflow();
-      }
+    const stopWatching = watchDocumentTheme((mode) => {
+      setCurrentTheme(prev => ({ ...prev, mode }));
     });
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-cin7-theme'],
-    });
-
-    return () => observer.disconnect();
+    return stopWatching;
   }, []);
 
   // Render loading state
@@ -169,11 +151,10 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
       role="img"
       aria-label={ariaLabel || 'Data visualization chart'}
     >
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={themedOptions}
+      <AgCharts
         ref={chartRef}
-        callback={handleChartCallback}
+        options={getThemedOptions()}
+        onChartReady={handleChartReady}
       />
     </div>
   );

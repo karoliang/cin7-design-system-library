@@ -1,7 +1,7 @@
 {
-  "name": "@cin7/highcharts-adapter",
+  "name": "@cin7/ag-charts-adapter",
   "version": "0.1.0",
-  "description": "Highcharts integration for Cin7 DSL with multi-language support (React, ExtJS, Vanilla JS, TypeScript)",
+  "description": "AG Charts integration for Cin7 DSL with multi-language support (React, ExtJS, Vanilla JS, TypeScript)",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -50,8 +50,8 @@
   "dependencies": {
     "@cin7/core": "workspace:*",
     "@cin7/design-tokens": "workspace:*",
-    "highcharts": "^12.4.0",
-    "highcharts-react-official": "^3.2.3"
+    "ag-charts-community": "^9.2.0",
+    "ag-charts-react": "^9.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
@@ -79,7 +79,7 @@
   "keywords": [
     "cin7",
     "design-system",
-    "highcharts",
+    "ag-charts",
     "charts",
     "data-visualization",
     "react",
