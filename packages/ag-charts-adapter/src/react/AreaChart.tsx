@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { getCin7ChartColors } from '../utilities/theme';
 import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
@@ -95,8 +96,19 @@ export const AreaChart: React.FC<AreaChartProps> = ({
   chartOptions = {},
   ...containerProps
 }) => {
+  // Get theme mode and colors
+  const getThemeMode = (): 'light' | 'dark' => {
+    if (typeof document !== 'undefined') {
+      const mode = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark';
+      return mode || 'light';
+    }
+    return 'light';
+  };
+
+  const chartColors = getCin7ChartColors(getThemeMode());
+
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => {
+  const agSeries = series.map((seriesItem, index) => {
     // Determine data structure and xKey
     let xKey: string = 'x';
     let processedData: any[] = [];
@@ -124,21 +136,28 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       }));
     }
 
+    const seriesColor = seriesItem.color || chartColors[index % chartColors.length];
+
     return {
       type: 'area',
       xKey,
       yKey: 'y',
       data: processedData,
-      // Remove stroke and fill properties - colors are handled through theme
-      // For custom colors, use item styling in chartOptions
+      // Apply fill and stroke properties at series level using FillOptions and StrokeOptions
+      fill: seriesColor,
+      stroke: seriesColor,
       strokeWidth: seriesItem.strokeWidth || 2,
       fillOpacity: seriesItem.fillOpacity || fillOpacity,
+      strokeOpacity: 1,
       // Note: AG Charts doesn't support 'smooth' property directly
       // Use line interpolation instead if needed in chartOptions
       marker: {
         enabled: seriesItem.marker !== false ? markers : false,
         size: 6,
         strokeWidth: 2,
+        // Apply marker fill and stroke to match series color
+        fill: seriesColor,
+        stroke: seriesColor,
       },
       stacked: stacking === 'normal' || stacking === 'percent',
       // For percent stacking, set normalizedTo to 100

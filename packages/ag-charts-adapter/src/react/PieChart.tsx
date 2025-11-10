@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { getCin7ChartColors } from '../utilities/theme';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface PieChartSeries {
@@ -64,6 +65,17 @@ export const PieChart: React.FC<PieChartProps> = ({
   chartOptions = {},
   ...containerProps
 }) => {
+  // Get theme mode and colors
+  const getThemeMode = (): 'light' | 'dark' => {
+    if (typeof document !== 'undefined') {
+      const mode = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark';
+      return mode || 'light';
+    }
+    return 'light';
+  };
+
+  const chartColors = getCin7ChartColors(getThemeMode());
+
   // Validate series data
   if (!series || !series.data || !Array.isArray(series.data)) {
     console.error('PieChart: Invalid series data provided. Expected { name: string, data: Array }', series);
@@ -98,15 +110,21 @@ export const PieChart: React.FC<PieChartProps> = ({
       return {
         label: point[0],
         value: point[1],
+        color: chartColors[index % chartColors.length], // Apply theme color
       };
     }
     if (typeof point === 'number') {
       return {
         label: `Item ${index + 1}`,
         value: point,
+        color: chartColors[index % chartColors.length], // Apply theme color
       };
     }
-    return point;
+    // If color is provided in object, use it, otherwise use theme color
+    return {
+      ...point,
+      color: point.color || chartColors[index % chartColors.length],
+    };
   });
 
   // Check if we have any valid data after filtering
@@ -149,6 +167,11 @@ export const PieChart: React.FC<PieChartProps> = ({
         sectorLabelKey: 'label',
         innerRadius,
         outerRadius,
+        // Use fills and strokes arrays for proper color configuration
+        fills: data.map(d => d.color),
+        strokes: data.map(d => d.color),
+        strokeWidth: 1,
+        strokeOpacity: 0.8,
         calloutLabel: {
           enabled: dataLabels,
         },

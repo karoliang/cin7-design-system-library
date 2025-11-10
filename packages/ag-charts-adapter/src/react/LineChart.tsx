@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { getCin7ChartColors } from '../utilities/theme';
 import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
@@ -90,8 +91,19 @@ export const LineChart: React.FC<LineChartProps> = ({
   chartOptions = {},
   ...containerProps
 }) => {
+  // Get theme mode and colors
+  const getThemeMode = (): 'light' | 'dark' => {
+    if (typeof document !== 'undefined') {
+      const mode = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark';
+      return mode || 'light';
+    }
+    return 'light';
+  };
+
+  const chartColors = getCin7ChartColors(getThemeMode());
+
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => {
+  const agSeries = series.map((seriesItem, index) => {
     // Determine data structure and xKey
     let xKey: string = 'x';
     let processedData: any[] = [];
@@ -119,16 +131,23 @@ export const LineChart: React.FC<LineChartProps> = ({
       }));
     }
 
+    const seriesColor = seriesItem.color || chartColors[index % chartColors.length];
+
     return {
       type: 'line',
       xKey,
       yKey: 'y',
       data: processedData,
-      // Remove stroke property - colors are handled through theme
-      // For custom colors, use item styling in chartOptions
+      // Apply stroke property at series level using StrokeOptions
+      stroke: seriesColor,
       strokeWidth: seriesItem.strokeWidth || 2,
+      strokeOpacity: 1,
       marker: {
         enabled: seriesItem.marker !== false ? markers : false,
+        // Apply marker fill and stroke to match line color
+        fill: seriesColor,
+        stroke: seriesColor,
+        strokeWidth: 1,
       },
       stacked: stacking === 'normal' || stacking === 'percent',
       // For percent stacking, set normalizedTo to 100

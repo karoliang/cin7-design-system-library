@@ -105,10 +105,13 @@ export const BarChart: React.FC<BarChartProps> = ({
   // Convert series data to AG Charts format
   const agSeries = series.map((seriesItem, index) => {
     const yKey = stacking ? 'y' : `y_${index}`; // Use same yKey for stacked charts
+    const seriesColor = seriesItem.color || chartColors[index % chartColors.length];
+
     return {
       type: 'bar', // AG Charts v9.2.0 only accepts 'bar' for both orientations
       xKey: 'x',
       yKey: yKey,
+      direction: orientation, // Use 'direction' property for orientation
       data: seriesItem.data.map((point, index) => {
         if (Array.isArray(point)) {
           return { x: point[0], [yKey]: point[1] };
@@ -116,8 +119,11 @@ export const BarChart: React.FC<BarChartProps> = ({
         // Use numerical indices for x-axis when categories are provided
         return { x: index, [yKey]: point };
       }),
-      // Colors are handled through fills/stroke in item styling, not series level
-      // For now, we'll let the theme handle colors automatically
+      // Apply fill and stroke properties at series level using FillOptions and StrokeOptions
+      fill: seriesColor,
+      stroke: seriesColor,
+      fillOpacity: 0.9,
+      strokeWidth: 1,
       label: {
         enabled: dataLabels,
       },

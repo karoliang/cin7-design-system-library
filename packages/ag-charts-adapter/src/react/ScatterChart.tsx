@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { getCin7ChartColors } from '../utilities/theme';
 import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
@@ -88,36 +89,63 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
   chartOptions = {},
   ...containerProps
 }) => {
+  // Get theme mode and colors
+  const getThemeMode = (): 'light' | 'dark' => {
+    if (typeof document !== 'undefined') {
+      const mode = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark';
+      return mode || 'light';
+    }
+    return 'light';
+  };
+
+  const chartColors = getCin7ChartColors(getThemeMode());
+
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => ({
-    type: variant,
-    xKey: 'x',
-    yKey: 'y',
-    sizeKey: variant === 'bubble' ? 'size' : undefined,
-    data: seriesItem.data.map((point) => {
-      if (point.length === 2) {
-        // [x, y] - scatter plot
+  const agSeries = series.map((seriesItem, index) => {
+    const seriesColor = seriesItem.color || chartColors[index % chartColors.length];
+
+    return {
+      type: variant,
+      xKey: 'x',
+      yKey: 'y',
+      sizeKey: variant === 'bubble' ? 'size' : undefined,
+      data: seriesItem.data.map((point) => {
+        if (point.length === 2) {
+          // [x, y] - scatter plot
+          return { x: point[0], y: point[1] };
+        } else if (point.length === 3) {
+          // [x, y, size] - bubble chart
+          return { x: point[0], y: point[1], size: point[2] };
+        }
         return { x: point[0], y: point[1] };
-      } else if (point.length === 3) {
-        // [x, y, size] - bubble chart
-        return { x: point[0], y: point[1], size: point[2] };
-      }
-      return { x: point[0], y: point[1] };
-    }),
-    // Remove fill and stroke properties - colors are handled through theme
-    // For custom colors, use item styling in chartOptions
-    marker: {
-      enabled: seriesItem.marker !== false,
-      size: seriesItem.markerSize || markerSize,
-      strokeWidth: 2,
-    },
-    label: {
-      enabled: dataLabels,
-    },
-    // Use legendItemName instead of name for series naming
-    legendItemName: seriesItem.name,
-    showInLegend: true,
-  }));
+      }),
+      // Apply marker fill and stroke properties at series level
+      marker: {
+        enabled: seriesItem.marker !== false,
+        size: seriesItem.markerSize || markerSize,
+        strokeWidth: 2,
+        // Apply fill and stroke colors to markers
+        fill: seriesColor,
+        stroke: seriesColor,
+        fillOpacity: 0.8,
+        strokeOpacity: 1,
+      },
+      // For bubble charts, also apply fill/stroke at series level
+      ...(variant === 'bubble' && {
+        fill: seriesColor,
+        stroke: seriesColor,
+        fillOpacity: 0.6,
+        strokeOpacity: 1,
+        strokeWidth: 1,
+      }),
+      label: {
+        enabled: dataLabels,
+      },
+      // Use legendItemName instead of name for series naming
+      legendItemName: seriesItem.name,
+      showInLegend: true,
+    };
+  });
 
   
   const options: AgChartOptions = {
