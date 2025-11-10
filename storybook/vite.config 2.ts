@@ -3,29 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      name: 'fix-prop-types',
-      resolveId(id) {
-        if (id === 'prop-types') {
-          return resolve(__dirname, 'node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js');
-        }
-        return null;
-      },
-      load(id) {
-        if (id.includes('prop-types')) {
-          return `
-            // Fix for CommonJS prop-types module
-            const PropTypes = require('prop-types');
-            export default PropTypes;
-            export const { array, bool, func, number, object, string, symbol, node, element, elementType, instanceOf, oneOf, oneOfType, arrayOf, objectOf, shape, exact, checkPropTypes, resetWarningCache } = PropTypes;
-          `;
-        }
-        return null;
-      }
-    }
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       '@cin7/core': resolve(__dirname, '../packages/core/src'),
@@ -39,19 +17,26 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    // CRITICAL FIX: Include core dependencies for optimization
+    // CRITICAL FIX: Explicit module pre-bundling for complex components
     include: [
       'react',
       'react-dom',
       '@shopify/polaris',
       '@shopify/polaris-icons',
       '@shopify/polaris-tokens',
-    ],
-    // CRITICAL FIX: Exclude problematic dependencies from optimization
-    exclude: [
-      'prop-types',
+      // CRITICAL: Add explicit includes for Frame and Breadcrumbs dependencies
+      '@shopify/polaris/build/esm/styles.css',
+      '@shopify/polaris/build/esm/components/Frame/Frame.css',
+      '@shopify/polaris/build/esm/components/Breadcrumbs/Breadcrumbs.css',
+      '@shopify/polaris/build/esm/utilities/i18n',
+      '@shopify/polaris/build/esm/utilities/media-query',
+      '@shopify/polaris/build/esm/utilities/frame',
+      '@shopify/polaris/build/esm/components/Frame',
+      '@shopify/polaris/build/esm/components/Breadcrumbs',
       'react-transition-group',
     ],
+    // CRITICAL FIX: Force inclusion of problematic modules
+    force: true,
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

@@ -1,0 +1,956 @@
+{
+  "timestamp": "2025-11-10T00:14:24.358Z",
+  "totalComponents": 14,
+  "componentsWithErrors": 14,
+  "componentsWithWarnings": 0,
+  "totalErrors": 14,
+  "totalWarnings": 0,
+  "allErrors": [
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:24.982Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:30.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:35.439Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:40.684Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:45.935Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.959Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.199Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.928Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:30.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:35.439Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:40.684Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:45.935Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.959Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:35.439Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:40.684Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:45.935Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:40.684Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:45.935Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:45.935Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:51.188Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:14:56.435Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:01.683Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:06.960Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:12.200Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:17.430Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:22.673Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:27.929Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    },
+    {
+      "type": "runtime_exception",
+      "text": "ReferenceError: require is not defined\n    at http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:3:31",
+      "timestamp": "2025-11-10T00:15:33.192Z",
+      "url": "http://localhost:6007/node_modules/.cache/storybook/ee6bf224cd156d2a19aeb1406fef9897dbfe874b3eae8c467c24b2f62e4ecd1a/sb-vite/deps/storybook_internal_preview_runtime.js?v=69d6472a",
+      "line": 8582,
+      "column": 11,
+      "stack": "anonymous (http://localhost:6007/@fs/Users/karo/Library/Mobile%20Documents/com~apple~CloudDocs/Github/cin7-design-system-library/node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js?v=2d4001cd:2:30)"
+    }
+  ],
+  "allWarnings": []
+}

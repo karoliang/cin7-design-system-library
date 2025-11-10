@@ -1,0 +1,34 @@
+# Build configuration for Cin7 DSL documentation site with integrated Storybook
+# Build cache invalidated: 2025-11-10T07:15:00Z - Force rebuild for Breadcrumbs fix
+[build]
+  base = "polaris/polaris.shopify.com"
+  publish = ".next"
+  command = "bash ../../scripts/netlify-build.sh"
+  # Always build (disable smart build detection to include storybook changes)
+  ignore = "exit 1"  # Return non-zero to never skip builds
+
+[build.environment]
+  NODE_VERSION = "20.10.0"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Deny iframe embedding for all pages by default
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"
+
+# Allow Storybook to use iframes (for component previews)
+# This must come AFTER /* to override the DENY setting
+[[headers]]
+  for = "/storybook/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Robots-Tag = "noai, noimageai"

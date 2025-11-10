@@ -1,0 +1,173 @@
+{
+  "timestamp": "2025-11-10T00:10:36.191Z",
+  "componentResults": [
+    {
+      "name": "Frame - Default",
+      "url": "http://localhost:6007/?path=/docs/layout-frame--docs",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Frame - With Logo",
+      "url": "http://localhost:6007/?path=/story/layout-frame-with-logo",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Frame - With Notifications",
+      "url": "http://localhost:6007/?path=/story/layout-frame-with-notifications",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Frame - Ecommerce Layout",
+      "url": "http://localhost:6007/?path=/story/layout-frame-ecommerce-layout",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Frame - Minimal Layout",
+      "url": "http://localhost:6007/?path=/story/layout-frame-minimal-layout",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Frame - Responsive Behavior",
+      "url": "http://localhost:6007/?path=/story/layout-frame-responsive-behavior",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Default",
+      "url": "http://localhost:6007/?path=/docs/navigation-breadcrumbs--docs",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Short Path",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-short-path",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Long Path",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-long-path",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Product Navigation",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-product-navigation",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Ecommerce Navigation",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-ecommerce-navigation",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Admin Panel",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-admin-panel",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Documentation Site",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-documentation-site",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    },
+    {
+      "name": "Breadcrumbs - Many Items",
+      "url": "http://localhost:6007/?path=/story/navigation-breadcrumbs-many-items",
+      "statusCode": 200,
+      "contentLength": 4849,
+      "foundErrorPatterns": [],
+      "propTypeScriptTags": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "hasContent": true,
+      "title": "@storybook/core - Storybook"
+    }
+  ]
+}

@@ -23,8 +23,11 @@
     "@shopify/polaris": "^13.9.5",
     "@shopify/polaris-icons": "^9.3.1",
     "@shopify/polaris-tokens": "^9.4.2",
+    "chrome-remote-interface": "^0.33.3",
     "highcharts": "^12.4.0",
     "jsdom": "^23.0.0",
+    "playwright": "^1.56.1",
+    "puppeteer-core": "^24.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-syntax-highlighter": "^16.1.0",
@@ -48,10 +51,15 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint-plugin-storybook": "^0.10.1",
-    "puppeteer": "^21.6.1",
+    "puppeteer": "^21.11.0",
     "storybook": "^8.6.14",
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
   },
-  "cacheBust": "EMERGENCY-PRODUCTION-FIX-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-LITERAL"
+  "cacheBust": "EMERGENCY-PRODUCTION-FIX-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-LITERAL",
+  "main": ".eslintrc-code-variants.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
