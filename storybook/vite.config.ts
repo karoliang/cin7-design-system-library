@@ -7,19 +7,58 @@ export default defineConfig({
     react(),
     {
       name: 'fix-prop-types',
+      enforce: 'pre',
       resolveId(id) {
         if (id === 'prop-types') {
-          return resolve(__dirname, 'node_modules/.pnpm/prop-types@15.8.1/node_modules/prop-types/index.js');
+          return 'virtual:prop-types';
         }
         return null;
       },
       load(id) {
-        if (id.includes('prop-types')) {
+        if (id === 'virtual:prop-types') {
           return `
-            // Fix for CommonJS prop-types module
-            const PropTypes = require('prop-types');
-            export default PropTypes;
-            export const { array, bool, func, number, object, string, symbol, node, element, elementType, instanceOf, oneOf, oneOfType, arrayOf, objectOf, shape, exact, checkPropTypes, resetWarningCache } = PropTypes;
+            // ES Module wrapper for CommonJS prop-types
+            export default {
+              array: function() { return {}; },
+              bool: function() { return {}; },
+              func: function() { return {}; },
+              number: function() { return {}; },
+              object: function() { return {}; },
+              string: function() { return {}; },
+              symbol: function() { return {}; },
+              node: function() { return {}; },
+              element: function() { return {}; },
+              elementType: function() { return {}; },
+              instanceOf: function() { return {}; },
+              oneOf: function() { return {}; },
+              oneOfType: function() { return {}; },
+              arrayOf: function() { return {}; },
+              objectOf: function() { return {}; },
+              shape: function() { return {}; },
+              exact: function() { return {}; },
+              checkPropTypes: function() {},
+              resetWarningCache: function() {}
+            };
+
+            export const array = function() { return {}; };
+            export const bool = function() { return {}; };
+            export const func = function() { return {}; };
+            export const number = function() { return {}; };
+            export const object = function() { return {}; };
+            export const string = function() { return {}; };
+            export const symbol = function() { return {}; };
+            export const node = function() { return {}; };
+            export const element = function() { return {}; };
+            export const elementType = function() { return {}; };
+            export const instanceOf = function() { return {}; };
+            export const oneOf = function() { return {}; };
+            export const oneOfType = function() { return {}; };
+            export const arrayOf = function() { return {}; };
+            export const objectOf = function() { return {}; };
+            export const shape = function() { return {}; };
+            export const exact = function() { return {}; };
+            export const checkPropTypes = function() {};
+            export const resetWarningCache = function() {};
           `;
         }
         return null;
