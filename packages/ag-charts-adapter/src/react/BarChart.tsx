@@ -16,8 +16,8 @@ export interface BarChartSeries {
 }
 
 export interface BarChartAxisConfig {
-  /** Axis title */
-  title?: string;
+  /** Axis title - can be string or object with text property */
+  title?: string | { text: string };
   /** Minimum value */
   min?: number;
   /** Maximum value */
@@ -26,6 +26,8 @@ export interface BarChartAxisConfig {
   labelFormat?: string;
   /** Show grid lines */
   gridLines?: boolean;
+  /** Categories for categorical axes */
+  categories?: string[];
 }
 
 export interface BarChartProps extends Omit<ChartContainerProps, 'options'> {
@@ -89,14 +91,16 @@ export const BarChart: React.FC<BarChartProps> = ({
 
   // Convert series data to AG Charts format
   const agSeries = series.map((seriesItem) => ({
-    type: isHorizontal ? 'bar' : 'column',
+    type: 'bar', // AG Charts v9.2.0 only accepts 'bar' for both orientations
     xKey: 'x',
     yKey: 'y',
-    data: seriesItem.data.map((point) => {
+    data: seriesItem.data.map((point, index) => {
       if (Array.isArray(point)) {
         return { x: point[0], y: point[1] };
       }
-      return { x: seriesItem.name, y: point };
+      // Use categories if available, otherwise use index
+      const categoryValue = xAxis.categories?.[index] || seriesItem.name;
+      return { x: categoryValue, y: point };
     }),
     fill: seriesItem.color,
     // @ts-ignore - stacking property exists in AG Charts
@@ -106,6 +110,7 @@ export const BarChart: React.FC<BarChartProps> = ({
     label: {
       enabled: dataLabels,
     },
+    direction: isHorizontal ? 'horizontal' : 'vertical', // Control orientation
   }));
 
   const options: AgChartOptions = {
@@ -124,36 +129,26 @@ export const BarChart: React.FC<BarChartProps> = ({
       {
         type: isHorizontal ? 'number' : 'category',
         position: isHorizontal ? 'bottom' : 'left',
-        title: isHorizontal && yAxis.title ? {
-          text: yAxis.title,
-          enabled: true,
-        } : !isHorizontal && xAxis.title ? {
-          text: xAxis.title,
-          enabled: true,
-        } : undefined,
+        title: isHorizontal ? yAxis.title : xAxis.title,
         gridLine: {
           enabled: isHorizontal ? (yAxis.gridLines !== false) : (xAxis.gridLines !== false),
         },
-          label: {
+        label: {
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
+        category: xAxis.categories || undefined,
       },
       {
         type: isHorizontal ? 'category' : 'number',
         position: isHorizontal ? 'left' : 'bottom',
-        title: isHorizontal && xAxis.title ? {
-          text: xAxis.title,
-          enabled: true,
-        } : !isHorizontal && yAxis.title ? {
-          text: yAxis.title,
-          enabled: true,
-        } : undefined,
+        title: isHorizontal ? xAxis.title : yAxis.title,
         gridLine: {
           enabled: isHorizontal ? (xAxis.gridLines !== false) : (yAxis.gridLines !== false),
         },
-          label: {
+        label: {
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
+        category: isHorizontal ? xAxis.categories : undefined,
       },
     ],
     legend: {

@@ -68,116 +68,6 @@ export function formatDate(
   return new Intl.DateTimeFormat(locale, formats[format]).format(date);
 }
 
-/**
- * Export chart to image
- * Note: Requires Highcharts exporting module to be loaded
- */
-export function exportChartToImage(
-  chart: any,
-  filename: string = 'chart',
-  type: 'image/png' | 'image/jpeg' | 'image/svg+xml' = 'image/png'
-): void {
-  if (chart.exportChart) {
-    chart.exportChart({
-      type,
-      filename,
-    });
-  }
-}
-
-/**
- * Export chart data to CSV
- * Note: Requires Highcharts exporting module to be loaded
- */
-export function exportChartToCSV(chart: any): void {
-  if (chart.downloadCSV) {
-    chart.downloadCSV();
-  }
-}
-
-/**
- * Print chart
- * Note: Requires Highcharts exporting module to be loaded
- */
-export function printChart(chart: any): void {
-  if (chart.print) {
-    chart.print();
-  }
-}
-
-/**
- * Get chart image as data URL
- * Note: Requires Highcharts exporting module to be loaded
- */
-export async function getChartDataURL(
-  chart: any,
-  type: 'image/png' | 'image/jpeg' = 'image/png',
-  scale: number = 2
-): Promise<string | null> {
-  return new Promise((resolve) => {
-    if (chart.exportChartLocal) {
-      chart.exportChartLocal(
-        {
-          type,
-          scale,
-        },
-        {},
-        (dataURL: string) => {
-          resolve(dataURL);
-        }
-      );
-    } else {
-      resolve(null);
-    }
-  });
-}
-
-/**
- * Create common tooltip formatter for currency
- */
-export function createCurrencyTooltipFormatter(
-  currency: string = 'USD',
-  locale: string = 'en-US'
-): Highcharts.TooltipFormatterCallbackFunction {
-  return function (this: Highcharts.Point): string {
-    const point = this;
-    const value = point.y || 0;
-    const formattedValue = formatCurrency(value, currency, locale);
-
-    return `<b>${point.series.name}</b><br/>${this.x}: ${formattedValue}`;
-  };
-}
-
-/**
- * Create common tooltip formatter for percentage
- */
-export function createPercentageTooltipFormatter(
-  decimals: number = 1
-): Highcharts.TooltipFormatterCallbackFunction {
-  return function (this: Highcharts.Point): string {
-    const point = this;
-    const value = point.y || 0;
-    const formattedValue = formatPercentage(value, decimals);
-
-    return `<b>${point.series.name}</b><br/>${this.x}: ${formattedValue}`;
-  };
-}
-
-/**
- * Create accessibility options for charts
- */
-export function createAccessibilityOptions(description: string): Highcharts.AccessibilityOptions {
-  return {
-    enabled: true,
-    description,
-    keyboardNavigation: {
-      enabled: true,
-    },
-    point: {
-      valueSuffix: '',
-    },
-  };
-}
 
 /**
  * Validate chart data
@@ -210,13 +100,13 @@ export function validateChartData(data: any[]): { valid: boolean; errors: string
 }
 
 /**
- * Transform data to Highcharts series format
+ * Transform data to chart series format
  */
 export function transformToSeriesData(
   data: Array<{ x: any; y: number; [key: string]: any }>,
   xKey: string = 'x',
   yKey: string = 'y'
-): Highcharts.PointOptionsObject[] {
+): Array<{ x: any; y: number; [key: string]: any }> {
   return data.map((item) => {
     const { [xKey]: x, [yKey]: y, ...rest } = item;
     return {

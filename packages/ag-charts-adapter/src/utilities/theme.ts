@@ -5,14 +5,7 @@
 
 import type { AgThemeOptions } from 'ag-charts-community';
 
-// Import design tokens with fallback
-let getTokenValue: (key: string) => string;
-try {
-  ({ getTokenValue } = require('@cin7/design-tokens'));
-} catch {
-  // Fallback for when design-tokens is not available during build
-  getTokenValue = (_key: string) => '';
-}
+import { getTokenValue } from '@cin7/design-tokens';
 
 export interface Cin7ChartTheme {
   mode?: 'light' | 'dark';
@@ -73,30 +66,65 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
   const borderColor = getTokenValue('p-color-border') || (mode === 'light' ? '#c4c4c4' : '#424549');
   const borderSubdued = getTokenValue('p-color-border-subdued') || (mode === 'light' ? '#e1e3e3' : '#363a3d');
 
-  // Use minimal theme to avoid AG Charts API compatibility issues
+  // Use AG Charts v9.2.0 compatible theme structure
   const theme: AgThemeOptions = {
-    // Basic theme with minimal configuration
-    overrides: {
-      common: {
-        background: {
-          visible: false, // Disable background to avoid theme issues
+    // Basic palette configuration
+    palette: {
+      colors: colors,
+    },
+    // Text styling
+    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
+    fontSize: 13,
+    // Direct color configuration for chart elements
+    background: {
+      visible: false,
+    },
+    title: {
+      color: textColor,
+      fontSize: 18,
+    },
+    subtitle: {
+      color: textSubdued,
+      fontSize: 14,
+    },
+    legend: {
+      label: {
+        color: textColor,
+        fontSize: 13,
+      },
+    },
+    // Axis styling
+    axes: {
+      number: {
+        label: {
+          color: textColor,
+          fontSize: 12,
         },
         title: {
           color: textColor,
-          fontSize: 18,
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-        },
-        subtitle: {
-          color: textSubdued,
           fontSize: 14,
-          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
         },
-        legend: {
-          label: {
-            color: textColor,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
+        gridline: {
+          stroke: borderSubdued,
+        },
+        line: {
+          stroke: borderColor,
+        },
+      },
+      category: {
+        label: {
+          color: textColor,
+          fontSize: 12,
+        },
+        title: {
+          color: textColor,
+          fontSize: 14,
+        },
+        gridline: {
+          stroke: borderSubdued,
+        },
+        line: {
+          stroke: borderColor,
         },
       },
     },
