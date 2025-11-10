@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface AreaChartSeries {
@@ -22,8 +23,8 @@ export interface AreaChartSeries {
 }
 
 export interface AreaChartAxisConfig {
-  /** Axis title */
-  title?: string;
+  /** Axis title - can be string or object with text property */
+  title?: string | { text: string };
   /** Minimum value */
   min?: number;
   /** Maximum value */
@@ -151,12 +152,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     };
   });
 
-  // Helper function to normalize title to AG Charts v9.3.2 format
-  const normalizeTitle = (title?: string): { text: string; enabled: boolean } | undefined => {
-    if (!title) return undefined;
-    return { text: title, enabled: true };
-  };
-
+  
   const options: AgChartOptions = {
     ...chartOptions,
     title: {
@@ -173,7 +169,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: normalizeTitle(xAxis.title),
+        title: normalizeAxisTitle(xAxis.title),
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -184,7 +180,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: normalizeTitle(yAxis.title),
+        title: normalizeAxisTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

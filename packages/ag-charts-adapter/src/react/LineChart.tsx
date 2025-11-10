@@ -21,8 +21,8 @@ export interface LineChartSeries {
 }
 
 export interface LineChartAxisConfig {
-  /** Axis title */
-  title?: string;
+  /** Axis title - can be string or object with text property */
+  title?: string | { text: string };
   /** Minimum value */
   min?: number;
   /** Maximum value */

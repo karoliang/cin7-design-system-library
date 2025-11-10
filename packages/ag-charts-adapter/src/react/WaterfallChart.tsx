@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { normalizeAxisTitle } from '../utilities/axisHelpers';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface WaterfallDataPoint {
@@ -193,10 +194,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
       {
         type: 'category',
         position: 'bottom',
-        title: xAxis.title ? {
-          text: xAxis.title,
-          enabled: true,
-        } : undefined,
+        title: normalizeAxisTitle(xAxis.title),
         gridLine: {
           enabled: xAxis.gridLines !== false,
         },
@@ -211,10 +209,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: yAxis.title ? {
-          text: yAxis.title,
-          enabled: true,
-        } : undefined,
+        title: normalizeAxisTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

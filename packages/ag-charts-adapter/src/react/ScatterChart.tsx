@@ -21,8 +21,8 @@ export interface ScatterChartSeries {
 }
 
 export interface ScatterChartAxisConfig {
-  /** Axis title */
-  title?: string;
+  /** Axis title - can be string or object with text property */
+  title?: string | { text: string };
   /** Minimum value */
   min?: number;
   /** Maximum value */
@@ -147,7 +147,7 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       {
         type: 'number',
         position: 'left',
-        title: normalizeTitle(yAxis.title),
+        title: normalizeAxisTitle(yAxis.title),
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },

@@ -681,3 +681,20 @@ export const Accessibility: Story = {
     ariaLabel: 'Line chart showing monthly performance from January to May, with values ranging from 100 to 145, showing an upward trend',
   },
 };
+
+// Lowercase variants for codeVariants system compatibility
+export const smoothcurves: Story = {
+  ...SmoothCurves,
+};
+
+export const withmarkers: Story = {
+  ...WithMarkers,
+};
+
+export const multiseries: Story = {
+  ...MultipleSeries,
+};
+
+export const smoothwithmarkers: Story = {
+  ...SmoothWithMarkers,
+};
