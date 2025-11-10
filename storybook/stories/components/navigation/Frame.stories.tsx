@@ -28,7 +28,7 @@ import {
   NotificationIcon,
 } from '@shopify/polaris-icons';
 import React, { useState, useCallback } from 'react';
-import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
+// import { getCodeVariants } from '../../../.storybook/blocks/codeVariants';
 
 // CRITICAL FIX: Frame-specific error boundary for debugging
 class FrameErrorBoundary extends React.Component<
@@ -93,7 +93,7 @@ const meta = {
   component: Frame,
   parameters: {
     layout: 'fullscreen',
-    // TEMPORARILY DISABLED: codeVariants: getCodeVariants('frame', 'default'),
+    // TEMPORARILY DISABLED: // codeVariants: getCodeVariants temporarily disabled,
     docs: {
       description: {
         component: 'Frame provides the main application layout structure with navigation, top bar, and content areas. It\'s the foundation for building complete Shopify-style applications.',
@@ -340,7 +340,7 @@ export const Default: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'default'),
+    // // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
@@ -450,7 +450,7 @@ export const WithLogo: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'withLogo'),
+    // // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
@@ -570,7 +570,7 @@ export const WithNotifications: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'withNotifications'),
+    // // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
@@ -740,7 +740,7 @@ export const EcommerceLayout: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'ecommerceLayout'),
+    // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
@@ -811,7 +811,7 @@ export const MinimalLayout: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'minimalLayout'),
+    // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
@@ -912,7 +912,7 @@ export const ResponsiveBehavior: Story = {
     );
   },
   parameters: {
-    codeVariants: getCodeVariants('frame', 'responsiveBehavior'),
+    // codeVariants: getCodeVariants temporarily disabled,
   },
 
 };
