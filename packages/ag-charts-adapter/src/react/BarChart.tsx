@@ -110,9 +110,8 @@ export const BarChart: React.FC<BarChartProps> = ({
       if (Array.isArray(point)) {
         return { x: point[0], y: point[1] };
       }
-      // Use categories if available, otherwise use index
-      const categoryValue = xAxis.categories?.[index] || seriesItem.name;
-      return { x: categoryValue, y: point };
+      // Use numerical indices for x-axis when categories are provided
+      return { x: index, y: point };
     }),
     fill: seriesItem.color || chartColors[index % chartColors.length],
     label: {
@@ -143,6 +142,12 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
+        // Add category labels for categorical axis
+        ...(isHorizontal ? {} : xAxis.categories ? {
+          category: {
+            array: xAxis.categories,
+          }
+        } : {}),
       },
       {
         type: isHorizontal ? 'category' : 'number',
@@ -154,6 +159,12 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
+        // Add category labels for categorical axis
+        ...(isHorizontal ? xAxis.categories ? {
+          category: {
+            array: xAxis.categories,
+          }
+        } : {}),
       },
     ],
     legend: {
