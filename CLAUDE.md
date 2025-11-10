@@ -371,3 +371,4 @@ See "Next Steps" section at the end of this file for current priorities.
 - Create contribution guidelines
 - Add issue templates
 - Build example showcase
+- always commit and push to github whenever changes, updates, tasks, fixes
