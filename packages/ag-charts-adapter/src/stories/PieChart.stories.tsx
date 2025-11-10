@@ -68,6 +68,141 @@ Pie charts are ideal for showing proportional data and percentages of a whole. T
 export default meta;
 type Story = StoryObj<PieChartProps>;
 
+// Donut Chart Story (lowercase name for Storybook)
+export const donut: Story = {
+  args: {
+    title: 'Donut Chart Example',
+    subtitle: 'Inner radius creates donut effect',
+    series: {
+      name: 'Revenue',
+      data: [
+        ['Product A', 35],
+        ['Product B', 25],
+        ['Product C', 20],
+        ['Product D', 12],
+        ['Product E', 8],
+      ],
+    },
+    innerRadius: 60,
+  },
+};
+
+// Semicircle Pie Chart
+export const semicircle: Story = {
+  args: {
+    title: 'Semicircle Chart',
+    subtitle: 'Half pie chart visualization',
+    series: {
+      name: 'Sales',
+      data: [
+        ['Online', 45],
+        ['Retail', 30],
+        ['Phone', 15],
+        ['Other', 10],
+      ],
+    },
+    innerRadius: 30,
+    outerRadius: 100,
+  },
+};
+
+// Custom Colors Story
+export const withcustomcolors: Story = {
+  args: {
+    title: 'Custom Color Scheme',
+    subtitle: 'Branded colors',
+    series: {
+      name: 'Data',
+      data: [
+        { label: 'Primary', value: 40, color: '#6366f1' },
+        { label: 'Success', value: 25, color: '#10b981' },
+        { label: 'Warning', value: 20, color: '#f59e0b' },
+        { label: 'Danger', value: 15, color: '#ef4444' },
+      ],
+    },
+  },
+};
+
+// Legend Only Story
+export const legendonly: Story = {
+  args: {
+    title: 'Legend Only Chart',
+    subtitle: 'No data labels, only legend',
+    series: {
+      name: 'Categories',
+      data: [
+        ['Category A', 30],
+        ['Category B', 25],
+        ['Category C', 20],
+        ['Category D', 15],
+        ['Category E', 10],
+      ],
+    },
+    dataLabels: false,
+    legend: true,
+  },
+};
+
+// With Percentages Story
+export const withpercentages: Story = {
+  args: {
+    title: 'Percentage Distribution',
+    subtitle: 'Values as percentages',
+    series: {
+      name: 'Distribution',
+      data: [
+        ['Segment A', 35],
+        ['Segment B', 28],
+        ['Segment C', 18],
+        ['Segment D', 12],
+        ['Segment E', 7],
+      ],
+    },
+    dataLabels: true,
+    legend: true,
+  },
+};
+
+// Budget Allocation Story
+export const budgetallocation: Story = {
+  args: {
+    title: 'Department Budget Allocation',
+    subtitle: 'Annual budget distribution',
+    series: {
+      name: 'Budget',
+      data: [
+        ['Engineering', 450000],
+        ['Marketing', 280000],
+        ['Sales', 320000],
+        ['Support', 150000],
+        ['Operations', 200000],
+        ['Admin', 80000],
+      ],
+    },
+    innerRadius: 40,
+    height: 500,
+  },
+};
+
+// Task Completion Story
+export const taskcompletion: Story = {
+  args: {
+    title: 'Task Completion Status',
+    subtitle: 'Project progress overview',
+    series: {
+      name: 'Tasks',
+      data: [
+        ['Completed', 68],
+        ['In Progress', 20],
+        ['Not Started', 8],
+        ['Blocked', 4],
+      ],
+    },
+    dataLabels: true,
+    legend: true,
+  },
+};
+
 // Basic Pie Chart
 export const Default: Story = {
   args: {
