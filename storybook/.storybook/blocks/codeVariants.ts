@@ -47942,93 +47942,185 @@ export default PageActionsExample;`,
 // LineChart Component Examples
 export const lineChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+    react: `import { LineChart } from '@cin7/ag-charts-adapter/react';
 
 function LineChart() {
-  const options = {
-    title: { text: 'Sales Trend' },
-    series: [{ data: [1, 2, 3, 4, 5] }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <LineChart
+      title="Sales Trend"
+      series={[{
+        name: 'Sales',
+        data: [1, 2, 3, 4, 5]
+      }]}
+      height={300}
+    />
+  );
 }`,
-    extjs: `Ext.create('Ext.chart.CartesianChart', {
-  store: { data: [{month: 'Jan', value: 100}] },
-  axes: [{type: 'numeric', position: 'left'}],
-  series: [{type: 'line', yField: 'value'}]
+    extjs: `Ext.create('cin7agchartsline', {
+  title: 'Sales Trend',
+  series: [{
+    name: 'Sales',
+    data: [1, 2, 3, 4, 5]
+  }],
+  height: 300
 });`,
-    vanilla: `Highcharts.chart('container', {
-  title: { text: 'Sales Trend' },
-  series: [{ data: [1, 2, 3, 4, 5] }]
-});`,
-    typescript: `import Highcharts from 'highcharts';
-const options: Highcharts.Options = {
-  title: { text: 'Sales Trend' },
-  series: [{ type: 'line', data: [1, 2, 3, 4, 5] }]
-};
-Highcharts.chart('container', options);`
+    vanilla: `import { LineChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const lineChart = new LineChart({
+  container: 'container',
+  title: 'Sales Trend',
+  series: [{
+    name: 'Sales',
+    data: [1, 2, 3, 4, 5]
+  }],
+  height: 300
+});
+
+lineChart.render();`,
+    typescript: `import { LineChart } from '@cin7/ag-charts-adapter/react';
+
+const LineChartComponent: React.FC = () => {
+  return (
+    <LineChart
+      title="Sales Trend"
+      series={[{
+        name: 'Sales',
+        data: [1, 2, 3, 4, 5]
+      }]}
+      height={300}
+    />
+  );
+};`
   }
 };
 
 // BarChart Component Examples
 export const barChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+    react: `import { BarChart } from '@cin7/ag-charts-adapter/react';
 
 function BarChart() {
-  const options = {
-    chart: { type: 'column' },
-    title: { text: 'Sales by Category' },
-    series: [{ data: [10, 20, 30] }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <BarChart
+      title="Sales by Category"
+      series={[{
+        name: 'Sales',
+        data: [10, 20, 30]
+      }]}
+      xAxis={{ categories: ['A', 'B', 'C'] }}
+      height={300}
+    />
+  );
 }`,
-    extjs: `Ext.create('Ext.chart.CartesianChart', {
-  store: { data: [{category: 'A', value: 100}] },
-  series: [{type: 'bar', yField: 'value'}]
+    extjs: `Ext.create('cin7agchartsbar', {
+  title: 'Sales by Category',
+  series: [{
+    name: 'Sales',
+    data: [10, 20, 30]
+  }],
+  xAxis: { categories: ['A', 'B', 'C'] },
+  height: 300
 });`,
-    vanilla: `Highcharts.chart('container', {
-  chart: { type: 'column' },
-  series: [{ data: [10, 20, 30] }]
-});`,
-    typescript: `import Highcharts from 'highcharts';
-const options: Highcharts.Options = {
-  chart: { type: 'column' },
-  series: [{ type: 'column', data: [10, 20, 30] }]
-};
-Highcharts.chart('container', options);`
+    vanilla: `import { BarChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const barChart = new BarChart({
+  container: 'container',
+  title: 'Sales by Category',
+  series: [{
+    name: 'Sales',
+    data: [10, 20, 30]
+  }],
+  xAxis: { categories: ['A', 'B', 'C'] },
+  height: 300
+});
+
+barChart.render();`,
+    typescript: `import { BarChart } from '@cin7/ag-charts-adapter/react';
+
+const BarChartComponent: React.FC = () => {
+  return (
+    <BarChart
+      title="Sales by Category"
+      series={[{
+        name: 'Sales',
+        data: [10, 20, 30]
+      }]}
+      xAxis={{ categories: ['A', 'B', 'C'] }}
+      height={300}
+    />
+  );
+};`
   }
 };
 
 // PieChart Component Examples
 export const pieChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+    react: `import { PieChart } from '@cin7/ag-charts-adapter/react';
 
 function PieChart() {
-  const options = {
-    chart: { type: 'pie' },
-    title: { text: 'Market Share' },
-    series: [{ data: [['A', 45], ['B', 30], ['C', 25]] }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <PieChart
+      title="Market Share"
+      series={[{
+        name: 'Market Share',
+        data: [
+          { name: 'A', value: 45 },
+          { name: 'B', value: 30 },
+          { name: 'C', value: 25 }
+        ]
+      }]}
+      height={300}
+    />
+  );
 }`,
-    extjs: `Ext.create('Ext.chart.PolarChart', {
-  store: { data: [{name: 'A', value: 45}] },
-  series: [{type: 'pie', angleField: 'value'}]
+    extjs: `Ext.create('cin7agchartspie', {
+  title: 'Market Share',
+  series: [{
+    name: 'Market Share',
+    data: [
+      { name: 'A', value: 45 },
+      { name: 'B', value: 30 },
+      { name: 'C', value: 25 }
+    ]
+  }],
+  height: 300
 });`,
-    vanilla: `Highcharts.chart('container', {
-  chart: { type: 'pie' },
-  series: [{ data: [['A', 45], ['B', 30]] }]
-});`,
-    typescript: `import Highcharts from 'highcharts';
-const options: Highcharts.Options = {
-  chart: { type: 'pie' },
-  series: [{ type: 'pie', data: [['A', 45], ['B', 30]] }]
-};
-Highcharts.chart('container', options);`
+    vanilla: `import { PieChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const pieChart = new PieChart({
+  container: 'container',
+  title: 'Market Share',
+  series: [{
+    name: 'Market Share',
+    data: [
+      { name: 'A', value: 45 },
+      { name: 'B', value: 30 },
+      { name: 'C', value: 25 }
+    ]
+  }],
+  height: 300
+});
+
+pieChart.render();`,
+    typescript: `import { PieChart } from '@cin7/ag-charts-adapter/react';
+
+const PieChartComponent: React.FC = () => {
+  return (
+    <PieChart
+      title="Market Share"
+      series={[{
+        name: 'Market Share',
+        data: [
+          { name: 'A', value: 45 },
+          { name: 'B', value: 30 },
+          { name: 'C', value: 25 }
+        ]
+      }]}
+      height={300}
+    />
+  );
+};`
   }
 };
 
@@ -48053,76 +48145,41 @@ function MonthlyRevenue() {
 }
 
 export default MonthlyRevenue;`,
-    vanilla: `// Vanilla JS with Highcharts
-Highcharts.chart('container', {
-  chart: {
-    type: 'area',
-    height: 400
-  },
-  title: {
-    text: 'Monthly Revenue Trend'
-  },
-  subtitle: {
-    text: '2025'
-  },
-  xAxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  },
-  yAxis: {
-    title: {
-      text: 'Revenue ($K)'
-    }
-  },
+    vanilla: `// Vanilla JS with AG Charts
+import { AreaChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const areaChart = new AreaChart({
+  container: 'container',
+  title: 'Monthly Revenue Trend',
+  subtitle: '2025',
   series: [{
     name: 'Revenue',
     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-  }]
-});`,
-    extjs: `// ExtJS Area Chart
-Ext.create('Ext.chart.CartesianChart', {
-  renderTo: Ext.getBody(),
-  width: 600,
-  height: 400,
-  store: Ext.create('Ext.data.Store', {
-    fields: ['month', 'revenue'],
-    data: [
-      { month: 'Jan', revenue: 29.9 },
-      { month: 'Feb', revenue: 71.5 },
-      { month: 'Mar', revenue: 106.4 },
-      { month: 'Apr', revenue: 129.2 },
-      { month: 'May', revenue: 144.0 },
-      { month: 'Jun', revenue: 176.0 },
-      { month: 'Jul', revenue: 135.6 },
-      { month: 'Aug', revenue: 148.5 },
-      { month: 'Sep', revenue: 216.4 },
-      { month: 'Oct', revenue: 194.1 },
-      { month: 'Nov', revenue: 95.6 },
-      { month: 'Dec', revenue: 54.4 }
-    ]
-  }),
-  axes: [{
-    type: 'numeric',
-    position: 'left',
-    title: {
-      text: 'Revenue ($K)'
-    }
-  }, {
-    type: 'category',
-    position: 'bottom',
-    fields: ['month']
   }],
+  xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] },
+  yAxis: { title: { text: 'Revenue ($K)' } },
+  height: 400
+});
+
+areaChart.render();`,
+    extjs: `// ExtJS Area Chart with AG Charts
+Ext.create('cin7agchartsbase', {
+  title: 'Monthly Revenue Trend',
+  subtitle: '2025',
   series: [{
-    type: 'area',
-    xField: 'month',
-    yField: 'revenue',
-    style: {
-      opacity: 0.7
-    }
-  }]
+    name: 'Revenue',
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+  }],
+  xAxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    title: { text: 'Month' }
+  },
+  yAxis: { title: { text: 'Revenue ($K)' } },
+  height: 400
 });`,
     typescript: `import { AreaChart } from '@cin7/ag-charts-adapter/react';
 import React from 'react';
-import type { SeriesAreaOptions } from 'highcharts';
+import type { AreaChartProps } from '@cin7/ag-charts-adapter/react';
 
 interface ChartDataPoint {
   value: number;
@@ -48140,7 +48197,7 @@ interface MonthlyRevenueProps {
   enableAnimation?: boolean;
 }
 
-type ChartSeries = SeriesAreaOptions[];
+type ChartSeries = AreaChartProps['series'];
 
 const MonthlyRevenue: React.FC<MonthlyRevenueProps> = ({
   rawData,
@@ -48818,21 +48875,27 @@ export default TrafficAnalysis;`,
 // ScatterChart Component Examples
 export const scatterChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+    react: `import { ScatterChart } from '@cin7/ag-charts-adapter/react';
 
 function ScatterChart() {
-  const options = {
-    chart: { type: 'scatter' },
-    title: { text: 'Height vs Weight' },
-    xAxis: { title: { text: 'Height (cm)' } },
-    yAxis: { title: { text: 'Weight (kg)' } },
-    series: [{
-      name: 'Observations',
-      data: [[160, 65], [170, 70], [180, 85], [165, 68], [175, 78]]
-    }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <ScatterChart
+      title="Height vs Weight"
+      series={[{
+        name: 'Observations',
+        data: [
+          { x: 160, y: 65 },
+          { x: 170, y: 70 },
+          { x: 180, y: 85 },
+          { x: 165, y: 68 },
+          { x: 175, y: 78 }
+        ]
+      }]}
+      xAxis={{ title: { text: 'Height (cm)' } }}
+      yAxis={{ title: { text: 'Weight (kg)' } }}
+      height={300}
+    />
+  );
 }`,
     extjs: `Ext.create('Ext.chart.CartesianChart', {
   store: {
@@ -48852,66 +48915,84 @@ function ScatterChart() {
     yField: 'weight'
   }]
 });`,
-    vanilla: `Highcharts.chart('container', {
-  chart: { type: 'scatter' },
-  title: { text: 'Height vs Weight' },
-  xAxis: { title: { text: 'Height (cm)' } },
-  yAxis: { title: { text: 'Weight (kg)' } },
+    vanilla: `import { ScatterChart } from '@cin7/ag-charts-adapter/vanilla';
+
+const scatterChart = new ScatterChart({
+  container: 'container',
+  title: 'Height vs Weight',
   series: [{
     name: 'Observations',
-    data: [[160, 65], [170, 70], [180, 85]]
-  }]
-});`,
-    typescript: `import Highcharts from 'highcharts';
+    data: [
+      { x: 160, y: 65 },
+      { x: 170, y: 70 },
+      { x: 180, y: 85 },
+      { x: 165, y: 68 },
+      { x: 175, y: 78 }
+    ]
+  }],
+  xAxis: { title: { text: 'Height (cm)' } },
+  yAxis: { title: { text: 'Weight (kg)' } },
+  height: 300
+});
+
+scatterChart.render();`,
+    typescript: `import { ScatterChart } from '@cin7/ag-charts-adapter/react';
+import type { ScatterChartProps } from '@cin7/ag-charts-adapter/react';
 
 interface DataPoint {
-  height: number;
-  weight: number;
+  x: number;
+  y: number;
+  category?: string;
 }
 
-const data: DataPoint[] = [
-  { height: 160, weight: 65 },
-  { height: 170, weight: 70 },
-  { height: 180, weight: 85 }
-];
+interface ScatterChartData {
+  name: string;
+  data: DataPoint[];
+}
 
-const options: Highcharts.Options = {
-  chart: { type: 'scatter' },
-  title: { text: 'Height vs Weight' },
-  xAxis: { title: { text: 'Height (cm)' } },
-  yAxis: { title: { text: 'Weight (kg)' } },
-  series: [{
-    type: 'scatter',
+const ScatterChartComponent: React.FC = () => {
+  const data: ScatterChartData = {
     name: 'Observations',
-    data: data.map(d => [d.height, d.weight])
-  }]
-};
+    data: [
+      { x: 160, y: 65 },
+      { x: 170, y: 70 },
+      { x: 180, y: 85 },
+      { x: 165, y: 68 },
+      { x: 175, y: 78 }
+    ]
+  };
 
-Highcharts.chart('container', options);`
+  return (
+    <ScatterChart
+      title="Height vs Weight"
+      series={[data]}
+      xAxis={{ title: { text: 'Height (cm)' } }}
+      yAxis={{ title: { text: 'Weight (kg)' } }}
+      height={300}
+    />
+  );
+};`
   },
   bubble: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import HighchartsMore from 'highcharts/highcharts-more';
-
-HighchartsMore(Highcharts);
+    react: `import { ScatterChart } from '@cin7/ag-charts-adapter/react';
 
 function BubbleChart() {
-  const options = {
-    chart: { type: 'bubble' },
-    title: { text: 'Product Performance' },
-    xAxis: { title: { text: 'Sales Volume' } },
-    yAxis: { title: { text: 'Profit Margin (%)' } },
-    series: [{
-      name: 'Products',
-      data: [
-        { x: 1000, y: 25, z: 50 },
-        { x: 1500, y: 30, z: 75 },
-        { x: 800, y: 20, z: 40 }
-      ]
-    }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <ScatterChart
+      title="Product Performance"
+      series={[{
+        name: 'Products',
+        data: [
+          { x: 1000, y: 25, size: 50 },
+          { x: 1500, y: 30, size: 75 },
+          { x: 800, y: 20, size: 40 }
+        ]
+      }]}
+      xAxis={{ title: { text: 'Sales Volume' } }}
+      yAxis={{ title: { text: 'Profit Margin (%)' } }}
+      height={300}
+    />
+  );
 }`,
     extjs: `Ext.create('Ext.chart.CartesianChart', {
   store: {
@@ -49310,34 +49391,25 @@ Highcharts.chart('container', options);`
 // WaterfallChart Component Examples
 export const waterfallChartExamples: Record<string, CodeVariant> = {
   default: {
-    react: `import Highcharts from 'highcharts';
-import HighchartsMore from 'highcharts/highcharts-more';
-import HighchartsReact from 'highcharts-react-official';
-
-// Initialize waterfall module
-HighchartsMore(Highcharts);
+    react: `import { WaterfallChart } from '@cin7/ag-charts-adapter/react';
 
 function WaterfallChart() {
-  const options = {
-    chart: { type: 'waterfall' },
-    title: { text: 'Financial Analysis' },
-    xAxis: {
-      type: 'category',
-      categories: ['Start', 'Revenue', 'Costs', 'Net']
-    },
-    yAxis: { title: { text: 'Amount ($)' } },
-    series: [{
-      type: 'waterfall',
-      name: 'Cash Flow',
-      data: [
-        { y: 120000, color: '#008FFB' },
-        { y: 50000, color: '#00E396' },
-        { y: -30000, color: '#FF4560' },
-        { y: 140000, isSum: true, color: '#775DD0' }
-      ]
-    }]
-  };
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+  return (
+    <WaterfallChart
+      title="Financial Analysis"
+      series={[{
+        name: 'Cash Flow',
+        data: [
+          { x: 'Start', y: 120000, color: '#008FFB' },
+          { x: 'Revenue', y: 50000, color: '#00E396' },
+          { x: 'Costs', y: -30000, color: '#FF4560' },
+          { x: 'Net', y: 140000, isIntermediateSum: true, color: '#775DD0' }
+        ]
+      }]}
+      yAxis={{ title: { text: 'Amount ($)' } }}
+      height={300}
+    />
+  );
 }`,
     extjs: `Ext.create('Ext.chart.CartesianChart', {
   store: Ext.create('Ext.data.Store', {
