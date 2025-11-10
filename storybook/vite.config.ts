@@ -10,6 +10,65 @@ export default defineConfig({
   plugins: [
     react(),
     {
+      name: 'expose-react-globals',
+      enforce: 'pre',
+      // CRITICAL FIX: Ensure React and ReactDOM are exposed globally for Storybook client API
+      // The issue: Storybook client API requires React to be available on window object
+      // Without this, __STORYBOOK_CLIENT_API__ fails to initialize
+      resolveId(id) {
+        if (id === 'virtual:react-expose') {
+          return id;
+        }
+        return null;
+      },
+      load(id) {
+        if (id === 'virtual:react-expose') {
+          return `
+            // CRITICAL FIX: React Global Exposure for Storybook Client API
+            // Ensures React and ReactDOM are available on window object
+            // Required for __STORYBOOK_CLIENT_API__ initialization
+
+            import React from 'react';
+            import ReactDOM from 'react-dom';
+
+            console.log('🔧 React Global Exposure: Ensuring React is available on window object');
+
+            // Expose React and ReactDOM globally for Storybook client API
+            if (typeof window !== 'undefined') {
+              window.React = React;
+              window.ReactDOM = ReactDOM;
+
+              console.log('✅ React and ReactDOM exposed to window object');
+              console.log('React available:', typeof window.React !== 'undefined');
+              console.log('ReactDOM available:', typeof window.ReactDOM !== 'undefined');
+            }
+
+            export default {};
+          `;
+        }
+        return null;
+      },
+      transformIndexHtml(html) {
+        // Inject the React exposure module early in the HTML
+        return html.replace(
+          '<script type="module" src="/@vite/client"></script>',
+          `
+            <script type="module">
+              import React from 'react';
+              import ReactDOM from 'react-dom';
+
+              if (typeof window !== 'undefined') {
+                window.React = React;
+                window.ReactDOM = ReactDOM;
+                console.log('🔧 Early React exposure: React and ReactDOM available on window');
+              }
+            </script>
+            <script type="module" src="/@vite/client"></script>
+          `
+        );
+      }
+    },
+    {
       name: 'fix-prop-types',
       enforce: 'pre',
       // ENHANCED: Handle both development and production build contexts

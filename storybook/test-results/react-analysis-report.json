@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-11-10T01:55:30.505Z",
+  "components": {
+    "frame": {
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-frame--default&args=&viewMode=story",
+      "status": 200,
+      "analysis": {
+        "hasReact": true,
+        "hasReactDOM": true,
+        "hasStorybookAPI": false,
+        "hasStorybookRoot": true,
+        "hasErrorDisplay": true,
+        "hasPreparingStory": true,
+        "hasViteApp": true,
+        "hasReactRefresh": true,
+        "componentElements": 6,
+        "errorElements": 15,
+        "preparingElements": 14,
+        "scriptTags": 7,
+        "inlineScripts": 7,
+        "errorMessages": [],
+        "warnings": [],
+        "reactInitialization": "error_during_init"
+      }
+    },
+    "breadcrumbs": {
+      "url": "http://localhost:6012/iframe.html?id=components-navigation-breadcrumbs--default&args=&viewMode=story",
+      "status": 200,
+      "analysis": {
+        "hasReact": true,
+        "hasReactDOM": true,
+        "hasStorybookAPI": false,
+        "hasStorybookRoot": true,
+        "hasErrorDisplay": true,
+        "hasPreparingStory": true,
+        "hasViteApp": true,
+        "hasReactRefresh": true,
+        "componentElements": 0,
+        "errorElements": 15,
+        "preparingElements": 14,
+        "scriptTags": 7,
+        "inlineScripts": 7,
+        "errorMessages": [],
+        "warnings": [],
+        "reactInitialization": "error_during_init"
+      }
+    }
+  },
+  "summary": {
+    "totalTests": 2,
+    "successful": 2,
+    "failed": 0,
+    "reactIssues": 2,
+    "networkIssues": 0
+  }
+}
