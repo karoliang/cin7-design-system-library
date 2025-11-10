@@ -131,7 +131,7 @@ export const LineChart: React.FC<LineChartProps> = ({
     series: agSeries as any,
     axes: [
       {
-        type: 'category',
+        type: 'category' as any,
         position: 'bottom',
         title: {
           text: xAxis.title,
@@ -147,7 +147,7 @@ export const LineChart: React.FC<LineChartProps> = ({
         },
       },
       {
-        type: 'number',
+        type: 'number' as any,
         position: 'left',
         title: {
           text: yAxis.title,

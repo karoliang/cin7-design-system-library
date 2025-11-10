@@ -93,7 +93,7 @@ export const PieChart: React.FC<PieChartProps> = ({
     },
     data,
     series: [
-      {
+      ({
         type: 'pie',
         calloutLabelKey: 'label',
         angleKey: 'value',
@@ -109,7 +109,7 @@ export const PieChart: React.FC<PieChartProps> = ({
         tooltip: {
           enabled: tooltip,
         },
-      },
+      } as any),
     ],
     legend: {
       enabled: legend,

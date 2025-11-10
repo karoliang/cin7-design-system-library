@@ -30,11 +30,11 @@ export interface CategoryPoint {
 }
 
 /**
- * Transform array of objects to Highcharts series data
+ * Transform array of objects to chart series data
  */
 export class DataTransformers {
   /**
-   * Transform time series data to Highcharts format
+   * Transform time series data to chart format
    */
   static transformTimeSeries(
     data: TimeSeriesPoint[],
@@ -54,7 +54,7 @@ export class DataTransformers {
   }
 
   /**
-   * Transform category data to Highcharts format
+   * Transform category data to chart format
    */
   static transformCategoryData(
     data: CategoryPoint[],

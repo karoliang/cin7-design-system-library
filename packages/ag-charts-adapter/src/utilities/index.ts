@@ -3,4 +3,4 @@
  */
 
 export * from './theme';
-export * from './helpers';
+// helpers.ts removed - contained Highcharts-specific code that needs AG Charts rewrite

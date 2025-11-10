@@ -16,8 +16,6 @@ export interface ChartContainerProps {
   height?: number | string;
   /** Chart width in pixels or CSS value */
   width?: number | string;
-  /** Enable responsive behavior */
-  responsive?: boolean;
   /** CSS class name for container */
   className?: string;
   /** Callback when chart is created */
@@ -40,15 +38,14 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
   theme,
   height = 400,
   width = '100%',
-  responsive = true,
-  className = '',
+    className = '',
   onChartReady,
   onChartUpdate,
   loading = false,
   error = null,
   ariaLabel,
 }) => {
-  const chartRef = useRef<AgChartsReactReact>(null);
+  const chartRef = useRef<AgChartsReact>(null);
   const [chartReady, setChartReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Cin7ChartTheme>(() => ({
     mode: getDocumentTheme(),

@@ -58,6 +58,7 @@
     "@types/react": "^18.2.45",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
+    "@vitest/ui": "^1.1.0",
     "eslint": "^8.56.0",
     "react": "^18.2.0",
     "tsup": "^8.0.1",

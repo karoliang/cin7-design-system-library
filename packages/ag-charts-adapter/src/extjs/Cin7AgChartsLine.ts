@@ -3,7 +3,7 @@
  * Enterprise-grade line chart with advanced features
  */
 
-import { Cin7AgChartsBase, Cin7AgChartsConfig } from './Cin7AgChartsBase';
+import type { Cin7AgChartsConfig } from './Cin7AgChartsBase';
 
 export interface Cin7AgChartsLineConfig extends Cin7AgChartsConfig {
   /** Series data */

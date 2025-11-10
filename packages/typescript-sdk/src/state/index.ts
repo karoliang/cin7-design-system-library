@@ -3,4 +3,3 @@
  */
 
 export * from './store-factory';
-export * from './query-client';

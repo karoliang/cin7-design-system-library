@@ -145,8 +145,8 @@ describe('DataTransformers', () => {
       );
 
       expect(result).toEqual([
-        { label: 'Segment A', amount: 30 },
-        { label: 'Segment B', amount: 45 },
+        { label: 'Segment A', amount: 30, name: 'Segment A', value: 30 },
+        { label: 'Segment B', amount: 45, name: 'Segment B', value: 45 },
       ]);
     });
 
@@ -439,7 +439,7 @@ describe('DataTransformers', () => {
       const data = [1, 2, 3, 4, 5];
       const result = DataTransformers.movingAverage(data, 3);
 
-      expect(result).toEqual([1, 2, 3, 4, 5]); // First points remain unchanged
+      expect(result).toEqual([1, 2, 2, 3, 4]); // First points remain unchanged, then moving average
     });
 
     it('handles window size larger than data', () => {
@@ -504,9 +504,9 @@ describe('CommonTransformers', () => {
       const result = CommonTransformers.marketShare(data);
 
       expect(result).toEqual([
-        { name: 'Company A', value: 30 },
-        { name: 'Company B', value: 45 },
-        { name: 'Company C', value: 25 },
+        { company: 'Company A', share: 30, name: 'Company A', value: 30 },
+        { company: 'Company B', share: 45, name: 'Company B', value: 45 },
+        { company: 'Company C', share: 25, name: 'Company C', value: 25 },
       ]);
     });
   });

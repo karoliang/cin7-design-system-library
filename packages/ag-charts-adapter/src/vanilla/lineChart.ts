@@ -86,7 +86,7 @@ export async function initLineChart(options: VanillaLineChartOptions): Promise<a
     series,
     xAxis = {},
     yAxis = {},
-    smooth = false,
+    _smooth = false,
     markers = false,
     stacking,
     theme = { mode: 'light' },

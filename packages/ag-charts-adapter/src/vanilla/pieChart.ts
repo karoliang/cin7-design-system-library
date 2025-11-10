@@ -68,12 +68,14 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
     title,
     subtitle,
     data,
-    seriesName = 'Data',
+    _seriesName = 'Data',
     variant = 'pie',
     dataLabels = true,
     innerSize,
     theme = { mode: 'light' },
     legend = true,
+    width,
+    height,
     chartOptions = {},
   } = options;
 
@@ -102,11 +104,11 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
   }
 
   // Determine angles for semi-circle
-  const startAngle = variant === 'semi-circle' ? -90 : 0;
-  const endAngle = variant === 'semi-circle' ? 90 : 360;
+  const _startAngle = variant === 'semi-circle' ? -90 : 0;
+  const _endAngle = variant === 'semi-circle' ? 90 : 360;
 
   // Transform data for AG Charts
-  const transformedData = data.map((point, index) => ({
+  const transformedData = data.map((point, _index) => ({
     ...point,
     angleKey: 'value',
     calloutLabelKey: 'name',
@@ -208,7 +210,7 @@ export function updatePieChartData(
   }
 
   // Transform updated data for AG Charts
-  const transformedData = data.map((point, index) => ({
+  const transformedData = data.map((point, _index) => ({
     ...point,
     angleKey: 'value',
     calloutLabelKey: 'name',

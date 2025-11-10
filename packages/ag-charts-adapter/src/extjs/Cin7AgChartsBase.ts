@@ -73,7 +73,7 @@ export class Cin7AgChartsBase {
           };
 
           // Load AG Charts dynamically
-          this.loadAgCharts().then((AgCharts) => {
+          this.loadAgCharts().then((AgCharts: any) => {
             this.chart = AgCharts.createAgChart(options);
 
             // Handle resize if enabled
@@ -87,7 +87,7 @@ export class Cin7AgChartsBase {
                 }
               });
             }
-          }).catch((error) => {
+          }).catch((error: any) => {
             console.error('Failed to load AG Charts:', error);
             this.showErrorMessage('Failed to load chart library');
           });

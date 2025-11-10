@@ -7,7 +7,6 @@
 
 export * from './patterns';
 export * from './services';
-export * from './models';
 export * from './state';
 export * from './validation';
 

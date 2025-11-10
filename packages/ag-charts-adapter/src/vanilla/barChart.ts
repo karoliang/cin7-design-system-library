@@ -90,6 +90,8 @@ export async function initBarChart(options: VanillaBarChartOptions): Promise<any
     stacking,
     theme = { mode: 'light' },
     legend = true,
+    width,
+    height,
     chartOptions = {},
   } = options;
 
