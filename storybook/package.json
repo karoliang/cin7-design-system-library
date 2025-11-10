@@ -1,6 +1,6 @@
 {
   "name": "@cin7/storybook",
-  "version": "0.1.2-EMERGENCY-PRODUCTION-FIX-1754822400000",
+  "version": "0.1.3-NETLIFY-PLATFORM-FIX-1754826000000",
   "private": true,
   "description": "Interactive component documentation for Cin7 Design System Library",
   "scripts": {
@@ -56,7 +56,7 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.0"
   },
-  "cacheBust": "EMERGENCY-PRODUCTION-FIX-1754822400000-FRAME-BREADCRUMBS-TEMPLATE-LITERAL",
+  "cacheBust": "NETLIFY-PLATFORM-FIX-1754826000000-FRAME-BREADCRUMBS-PRODUCTION-BUILD",
   "main": ".eslintrc-code-variants.js",
   "keywords": [],
   "author": "",

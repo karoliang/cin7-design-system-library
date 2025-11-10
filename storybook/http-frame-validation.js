@@ -7,12 +7,12 @@ const http = require('http');
 const https = require('https');
 
 const FRAME_VARIATIONS = [
-  { id: 'examples-frame--default', name: 'Default', url: 'http://localhost:6006/iframe.html?id=examples-frame--default&args=&viewMode=story' },
-  { id: 'examples-frame--with-logo', name: 'WithLogo', url: 'http://localhost:6006/iframe.html?id=examples-frame--with-logo&args=&viewMode=story' },
-  { id: 'examples-frame--with-notifications', name: 'WithNotifications', url: 'http://localhost:6006/iframe.html?id=examples-frame--with-notifications&args=&viewMode=story' },
-  { id: 'examples-frame--ecommerce-layout', name: 'EcommerceLayout', url: 'http://localhost:6006/iframe.html?id=examples-frame--ecommerce-layout&args=&viewMode=story' },
-  { id: 'examples-frame--minimal-layout', name: 'MinimalLayout', url: 'http://localhost:6006/iframe.html?id=examples-frame--minimal-layout&args=&viewMode=story' },
-  { id: 'examples-frame--responsive-behavior', name: 'ResponsiveBehavior', url: 'http://localhost:6006/iframe.html?id=examples-frame--responsive-behavior&args=&viewMode=story' }
+  { id: 'examples-frame--default', name: 'Default', url: 'http://localhost:6011/iframe.html?id=examples-frame--default&args=&viewMode=story' },
+  { id: 'examples-frame--with-logo', name: 'WithLogo', url: 'http://localhost:6011/iframe.html?id=examples-frame--with-logo&args=&viewMode=story' },
+  { id: 'examples-frame--with-notifications', name: 'WithNotifications', url: 'http://localhost:6011/iframe.html?id=examples-frame--with-notifications&args=&viewMode=story' },
+  { id: 'examples-frame--ecommerce-layout', name: 'EcommerceLayout', url: 'http://localhost:6011/iframe.html?id=examples-frame--ecommerce-layout&args=&viewMode=story' },
+  { id: 'examples-frame--minimal-layout', name: 'MinimalLayout', url: 'http://localhost:6011/iframe.html?id=examples-frame--minimal-layout&args=&viewMode=story' },
+  { id: 'examples-frame--responsive-behavior', name: 'ResponsiveBehavior', url: 'http://localhost:6011/iframe.html?id=examples-frame--responsive-behavior&args=&viewMode=story' }
 ];
 
 function makeRequest(url) {
