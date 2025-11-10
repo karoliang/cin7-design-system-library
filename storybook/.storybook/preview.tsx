@@ -129,13 +129,8 @@ const preview: Preview = {
             },
           }}
         >
-          {/* CRITICAL FIX: Add container for Frame component layout */}
-          <div style={{
-            height: '100vh',
-            width: '100vw',
-            backgroundColor: '#ffffff',
-            overflow: 'hidden'
-          }}>
+          {/* STANDARD: Use minimal wrapper for standard Storybook behavior */}
+          <div style={{ width: '100%' }}>
             <Story />
           </div>
         </AppProvider>
