@@ -96,7 +96,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
 }) => {
   // Convert series data to AG Charts format
   const agSeries = series.map((seriesItem) => ({
-    type: smooth ? 'area' : 'area',
+    type: smooth ? 'area' : 'area', // AG Charts uses 'area' for both, smooth controlled by series options
     xKey: typeof seriesItem.data[0] === 'string' || Array.isArray(seriesItem.data[0]) ? 'x' : undefined,
     yKey: 'y',
     data: seriesItem.data.map((point, index) => {
@@ -112,6 +112,16 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     strokeWidth: seriesItem.strokeWidth || 2,
     fill: seriesItem.color,
     fillOpacity: seriesItem.fillOpacity || fillOpacity,
+    // AG Charts smooth curve configuration
+    smooth: smooth,
+    // Add gradient fills for modern appearance
+    fillGradient: {
+      gradient: 'linear',
+      stops: [
+        { offset: 0, color: seriesItem.color + '40' }, // 40% opacity at top
+        { offset: 1, color: seriesItem.color }, // Full opacity at bottom
+      ],
+    },
     marker: {
       enabled: seriesItem.marker !== false ? markers : false,
       size: 6,

@@ -9,3 +9,7 @@ export * from './PieChart';
 export * from './AreaChart';
 export * from './ScatterChart';
 export * from './WaterfallChart';
+export * from './RangeChart';
+export * from './OHLCChart';
+export * from './HeatmapChart';
+export * from './TreemapChart';

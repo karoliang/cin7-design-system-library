@@ -1,7 +1,9 @@
 /**
- * Vanilla JS utility for creating AG Charts pie/donut charts
+ * Pie/Donut chart implementation for Vanilla JavaScript
+ * Enterprise-grade circular chart visualization with AG Charts integration
  */
 
+import { AgCharts } from 'ag-charts-community';
 import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
 
 export interface VanillaPieChartDataPoint {
@@ -84,22 +86,19 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
     typeof container === 'string' ? document.querySelector(container) : container;
 
   if (!containerEl) {
-    throw new Error(`Container not found: ${container}`);
+    throw new Error('Container element not found');
   }
 
-  // Load AG Charts dynamically if not already loaded
-  const AgCharts = await loadAgCharts();
+  // Load AG Charts dynamically
+  const AgCharts = await import('ag-charts-community').then(m => m.AgCharts);
 
-  // Apply theme
-  const agTheme = getCin7AgChartsTheme(theme);
-
-  // Determine inner size based on variant
-  let calculatedInnerSize = innerSize;
-  if (!calculatedInnerSize) {
-    if (variant === 'donut') {
-      calculatedInnerSize = '50%';
-    } else if (variant === 'semi-circle') {
-      calculatedInnerSize = '40%';
+  // Calculate inner radius for donut charts
+  let calculatedInnerSize = 0;
+  if (variant === 'donut' || variant === 'semi-circle') {
+    if (innerSize) {
+      calculatedInnerSize = innerSize;
+    } else {
+      calculatedInnerSize = variant === 'donut' ? '40%' : '0%';
     }
   }
 
@@ -116,11 +115,13 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
     radiusKey: 'value',
   }));
 
-  // Build chart configuration
-  const config: any = {
-    ...agTheme,
+  // Apply theme
+  const cin7Theme = getCin7AgChartsTheme(theme);
+
+  // Create chart configuration
+  const config = {
     ...chartOptions,
-    container: containerEl as HTMLElement,
+    ...cin7Theme,
     title: {
       text: title,
       enabled: !!title,
@@ -129,36 +130,25 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
       text: subtitle,
       enabled: !!subtitle,
     },
-    series: [{
-      type: 'pie',
-      calls: {
-        titleKey: 'name',
-        ...transformedData,
-      },
-      data: transformedData,
-      angleKey: 'value',
-      calloutLabelKey: 'name',
-      sectorLabelKey: 'name',
-      radiusKey: 'value',
-      showInLegend: legend,
-      calloutLabels: {
-        enabled: dataLabels,
-      },
-      sectorLabels: {
-        enabled: dataLabels,
-        formatter: (params: any) => {
-          const value = params.datum.value;
-          const total = data.reduce((sum, item) => sum + item.value, 0);
-          const percentage = ((value / total) * 100).toFixed(1);
-          return `<b>${params.datum.name}</b>: ${percentage}%`;
+    data: transformedData,
+    series: [
+      {
+        type: 'pie',
+        calloutLabelKey: 'name',
+        angleKey: 'value',
+        sectorLabelKey: 'name',
+        innerRadius: calculatedInnerSize,
+        calloutLabel: {
+          enabled: dataLabels,
+        },
+        sectorLabel: {
+          enabled: dataLabels,
+        },
+        tooltip: {
+          enabled: true,
         },
       },
-      // Inner radius for donut chart
-      innerRadius: calculatedInnerSize === '50%' ? 50 : calculatedInnerSize === '40%' ? 40 : 0,
-      // Semi-circle configuration
-      startAngle: variant === 'semi-circle' ? -90 : 0,
-      endAngle: variant === 'semi-circle' ? 90 : 360,
-    }],
+    ],
     legend: {
       enabled: legend,
     },
@@ -167,50 +157,54 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
   };
 
   // Create and return chart
-  const chart = AgCharts.createAgChart(config);
+  const chart = AgCharts.createAgChart(containerEl, config);
 
-  return chart;
+  // Return update function for dynamic data updates
+  return {
+    chart,
+    updateData: (newData: VanillaPieChartDataPoint[]) => {
+      const transformedNewData = newData.map((point, _index) => ({
+        ...point,
+        angleKey: 'value',
+        calloutLabelKey: 'name',
+        sectorLabelKey: 'name',
+        radiusKey: 'value',
+      }));
+
+      chart.updateOptions({
+        data: transformedNewData,
+      });
+    },
+    updateOptions: (newOptions: Partial<VanillaPieChartOptions>) => {
+      const updatedConfig = { ...config, ...newOptions };
+      chart.updateOptions(updatedConfig);
+    },
+    destroy: () => {
+      chart.destroy();
+    },
+    exportChart: (format: 'png' | 'jpg' | 'svg' = 'png') => {
+      return chart.downloadChart({
+        format,
+        fileName: `pie-chart-${Date.now()}`,
+      });
+    },
+  };
 }
 
 /**
- * Load AG Charts library dynamically
+ * Update existing pie chart with new data
  */
-function loadAgCharts(): Promise<any> {
-  return new Promise((resolve, reject) => {
-    // Check if AG Charts is already loaded
-    if ((window as any).AgCharts) {
-      resolve((window as any).AgCharts);
-      return;
-    }
-
-    // Load AG Charts Community dynamically
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/ag-charts-community@9.2.0/dist/umd/ag-charts-community.js';
-    script.onload = () => {
-      if ((window as any).AgCharts) {
-        resolve((window as any).AgCharts);
-      } else {
-        reject(new Error('AG Charts failed to load properly'));
-      }
-    };
-    script.onerror = () => reject(new Error('Failed to load AG Charts script'));
-    document.head.appendChild(script);
-  });
-}
-
-/**
- * Update pie chart data
- */
-export function updatePieChartData(
+export function updatePieChart(
   chart: any,
-  data: VanillaPieChartDataPoint[]
+  newData: VanillaPieChartDataPoint[],
+  options?: Partial<VanillaPieChartOptions>
 ): void {
   if (!chart || !chart.updateOptions) {
     throw new Error('Invalid chart instance');
   }
 
   // Transform updated data for AG Charts
-  const transformedData = data.map((point, _index) => ({
+  const transformedData = newData.map((point, _index) => ({
     ...point,
     angleKey: 'value',
     calloutLabelKey: 'name',
@@ -218,22 +212,23 @@ export function updatePieChartData(
     radiusKey: 'value',
   }));
 
-  // Update chart with new data
-  chart.updateOptions({
-    series: [{
-      ...chart.options.series[0],
-      data: transformedData,
-    }]
-  });
+  const updateConfig = {
+    data: transformedData,
+    ...(options?.title && { title: { text: options.title, enabled: true } }),
+    ...(options?.subtitle && { subtitle: { text: options.subtitle, enabled: true } }),
+    ...(options?.legend !== undefined && { legend: { enabled: options.legend } }),
+    ...(options?.width && { width: options.width }),
+    ...(options?.height && { height: options.height }),
+  };
+
+  chart.updateOptions(updateConfig);
 }
 
 /**
- * Destroy pie chart
+ * Destroy pie chart and clean up resources
  */
 export function destroyPieChart(chart: any): void {
   if (chart && chart.destroy) {
     chart.destroy();
-  } else if (chart && chart.destroyChart) {
-    chart.destroyChart();
   }
 }
