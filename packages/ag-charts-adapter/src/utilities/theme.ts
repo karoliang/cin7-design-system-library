@@ -52,6 +52,13 @@ export const dataVisualizationColors = {
 };
 
 /**
+ * Get color palette for charts
+ */
+export function getCin7ChartColors(mode: 'light' | 'dark' = 'light'): string[] {
+  return dataVisualizationColors[mode];
+}
+
+/**
  * Get AG Charts theme configuration based on Cin7 design tokens
  */
 export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOptions {
@@ -66,275 +73,27 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
   const borderColor = getTokenValue('p-color-border') || (mode === 'light' ? '#c4c4c4' : '#424549');
   const borderSubdued = getTokenValue('p-color-border-subdued') || (mode === 'light' ? '#e1e3e3' : '#363a3d');
 
+  // Use minimal theme to avoid AG Charts API compatibility issues
   const theme: AgThemeOptions = {
-    baseTheme: mode === 'dark' ? 'ag-default-dark' : 'ag-default',
-    palette: {
-      fills: colors,
-      strokes: colors,
-    },
+    // Basic theme with minimal configuration
     overrides: {
       common: {
         background: {
-          visible: true,
-          fill: bgSurface,
-        },
-        padding: {
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
+          visible: false, // Disable background to avoid theme issues
         },
         title: {
-          enabled: true,
           color: textColor,
           fontSize: 18,
-          fontWeight: '600',
           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
         },
         subtitle: {
-          enabled: true,
           color: textSubdued,
           fontSize: 14,
           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
         },
         legend: {
-          enabled: true,
-          position: 'right',
-          spacing: 20,
-          item: {
-            padding: {
-              top: 4,
-              right: 8,
-              bottom: 4,
-              left: 8,
-            },
-            label: {
-              color: textColor,
-              fontSize: 13,
-              fontWeight: '400',
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-            },
-            marker: {
-              size: 12,
-              shape: 'square',
-              strokeWidth: 2,
-            },
-          },
-        },
-      },
-      cartesian: {
-        axes: {
-          category: {
-            line: {
-              color: borderColor,
-              width: 1,
-            },
-            tick: {
-              color: borderColor,
-              width: 1,
-              size: 6,
-            },
-            label: {
-              color: textSubdued,
-              fontSize: 12,
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-            },
-            gridStyle: {
-              colors: [borderSubdued],
-              lineDash: [0],
-              strokeWidth: 0,
-            },
-          },
-          number: {
-            line: {
-              color: borderColor,
-              width: 1,
-            },
-            tick: {
-              color: borderColor,
-              width: 1,
-              size: 6,
-            },
-            label: {
-              color: textSubdued,
-              fontSize: 12,
-              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-            },
-            gridStyle: {
-              colors: [borderSubdued],
-              lineDash: [0],
-              strokeWidth: 1,
-            },
-          },
-        },
-      },
-      line: {
-        series: {
-          strokeWidth: 2,
-          marker: {
-            enabled: false,
-            size: 6,
-            strokeWidth: 2,
-            fill: bgSurface,
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-        },
-      },
-      area: {
-        series: {
-          fill: {
-            opacity: 0.1,
-          },
-          strokeWidth: 2,
-          marker: {
-            enabled: false,
-            size: 6,
-            strokeWidth: 2,
-            fill: bgSurface,
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-        },
-      },
-      bar: {
-        series: {
-          strokeWidth: 0,
-          cornerRadius: 4,
           label: {
-            enabled: false,
             color: textColor,
-            fontSize: 12,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-        },
-      },
-      column: {
-        series: {
-          strokeWidth: 0,
-          cornerRadius: 4,
-          label: {
-            enabled: false,
-            color: textColor,
-            fontSize: 12,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-        },
-      },
-      pie: {
-        series: {
-          strokeWidth: 2,
-          calloutLabel: {
-            enabled: true,
-            color: textColor,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-          sectorLabel: {
-            enabled: false,
-            color: textColor,
-            fontSize: 12,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
-            fontSize: 13,
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-          title: {
-            enabled: true,
-            color: textColor,
-            fontSize: 16,
-            fontWeight: '600',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-          },
-        },
-      },
-      scatter: {
-        series: {
-          marker: {
-            size: 8,
-            strokeWidth: 2,
-            fill: bgSurface,
-          },
-          highlightStyle: {
-            item: {
-              strokeWidth: 2,
-              fill: bgSurface,
-            },
-          },
-          tooltip: {
-            enabled: true,
-            color: textColor,
-            backgroundColor: bgBase,
-            borderColor: borderColor,
-            borderWidth: 1,
             fontSize: 13,
             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
           },
