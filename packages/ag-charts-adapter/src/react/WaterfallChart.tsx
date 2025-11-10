@@ -145,8 +145,6 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
     xKey: 'x',
     yKey: 'y',
     data: transformWaterfallData(seriesItem.data),
-    fill: seriesItem.stroke || colors.up,
-    stroke: seriesItem.stroke || colors.up,
     strokeWidth: 1,
     cornerRadius: 2,
     label: {
@@ -174,6 +172,9 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
         };
       },
     },
+    // Series name for legend - use legendItemName for v9.3.2 compatibility
+    legendItemName: seriesItem.name,
+    showInLegend: true,
   }));
 
   const options: AgChartOptions = {
@@ -205,6 +206,7 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
             return datum?.categoryKey || params.value;
           },
         },
+        // Category axis configuration - categories are inferred from data x values
       },
       {
         type: 'number',
@@ -216,13 +218,16 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
         gridLine: {
           enabled: yAxis.gridLines !== false,
         },
-          label: {
+        label: {
           formatter: (params: any) => {
             const value = params.value;
             const sign = value >= 0 ? '+' : '';
             return `${sign}${value.toLocaleString()}`;
           },
         },
+        // Set min/max if provided
+        ...(yAxis.min !== undefined && { min: yAxis.min }),
+        ...(yAxis.max !== undefined && { max: yAxis.max }),
       },
     ],
     legend: {
