@@ -110,10 +110,10 @@ export const BarChart: React.FC<BarChartProps> = ({
       yKey: yKey,
       data: seriesItem.data.map((point, index) => {
         if (Array.isArray(point)) {
-          return { x: point[0], y: point[1] };
+          return { x: point[0], [yKey]: point[1] };
         }
         // Use numerical indices for x-axis when categories are provided
-        return { x: index, y: point };
+        return { x: index, [yKey]: point };
       }),
       fill: seriesItem.color || chartColors[index % chartColors.length],
       stroke: seriesItem.color || chartColors[index % chartColors.length],
@@ -123,10 +123,13 @@ export const BarChart: React.FC<BarChartProps> = ({
       // Configure stacking
       ...(stacking && {
         stacked: true,
-        groupBy: stacking === 'percent' ? 'x' : undefined,
+        // Use stackGroup for percent stacking instead of groupBy
+        ...(stacking === 'percent' && { stackGroup: 'percent' }),
+        // For percent stacking, set normalizedTo to 100
+        ...(stacking === 'percent' && { normalizedTo: 100 }),
       }),
-      // Series name for legend
-      name: seriesItem.name,
+      // Series name for legend - use legendItemName instead of name
+      legendItemName: seriesItem.name,
       showInLegend: true,
     };
   });
@@ -154,10 +157,8 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
-        // Add category labels for categorical axis
-        ...(isHorizontal ? {} : (xAxis.categories ? {
-          category: xAxis.categories,
-        } : {})),
+        // Category axis configuration - remove invalid category property
+        // Categories are automatically inferred from data x values
       },
       {
         type: isHorizontal ? 'category' : 'number',
@@ -169,10 +170,8 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
-        // Add category labels for categorical axis
-        ...(isHorizontal ? (xAxis.categories ? {
-          category: xAxis.categories,
-        } : {}) : {}),
+        // Category axis configuration - remove invalid category property
+        // Categories are automatically inferred from data x values
       },
     ],
     legend: {
