@@ -115,14 +115,9 @@ export const BarChart: React.FC<BarChartProps> = ({
       return { x: categoryValue, y: point };
     }),
     fill: seriesItem.color || chartColors[index % chartColors.length],
-    // @ts-ignore - stacking property exists in AG Charts
-    stacked: stacking === 'normal' || stacking === 'percent',
-    // @ts-ignore - grouping property exists in AG Charts
-    grouped: grouping,
     label: {
       enabled: dataLabels,
-    },
-    direction: isHorizontal ? 'horizontal' : 'vertical', // Control orientation
+    }
   }));
 
   const options: AgChartOptions = {

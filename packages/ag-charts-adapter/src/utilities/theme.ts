@@ -97,7 +97,7 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
           color: textColor,
           fontSize: 14,
         },
-        gridline: {
+        gridLine: {
           stroke: borderSubdued,
         },
         line: {
@@ -113,7 +113,7 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
           color: textColor,
           fontSize: 14,
         },
-        gridline: {
+        gridLine: {
           stroke: borderSubdued,
         },
         line: {

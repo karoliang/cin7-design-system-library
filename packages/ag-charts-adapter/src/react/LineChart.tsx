@@ -103,11 +103,11 @@ export const LineChart: React.FC<LineChartProps> = ({
         y: point[1],
       }));
     } else if (typeof seriesItem.data[0] === 'string') {
-      // Data is categories, need to map to indices
-      xKey = 'category';
+      // Data is categories, need to map to indices with actual y values
+      xKey = 'x';
       processedData = seriesItem.data.map((point, index) => ({
-        category: point,
-        y: 0, // This should be updated with actual y values
+        x: point,
+        y: 0, // This case shouldn't happen - LineChart should receive y values
       }));
     } else {
       // Data is just y values with implicit x indices
