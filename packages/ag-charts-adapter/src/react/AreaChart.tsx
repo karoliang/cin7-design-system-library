@@ -128,9 +128,9 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       xKey,
       yKey: 'y',
       data: processedData,
-      stroke: seriesItem.color,
+      // Remove stroke and fill properties - colors are handled through theme
+      // For custom colors, use item styling in chartOptions
       strokeWidth: seriesItem.strokeWidth || 2,
-      fill: seriesItem.color,
       fillOpacity: seriesItem.fillOpacity || fillOpacity,
       // Note: AG Charts doesn't support 'smooth' property directly
       // Use line interpolation instead if needed in chartOptions
@@ -144,6 +144,9 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       label: {
         enabled: dataLabels,
       },
+      // Use legendItemName instead of name for series naming
+      legendItemName: seriesItem.name,
+      showInLegend: true,
     };
   });
 

@@ -100,8 +100,8 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       }
       return { x: point[0], y: point[1] };
     }),
-    fill: seriesItem.color,
-    stroke: seriesItem.color,
+    // Remove fill and stroke properties - colors are handled through theme
+    // For custom colors, use item styling in chartOptions
     marker: {
       enabled: seriesItem.marker !== false,
       size: seriesItem.markerSize || markerSize,
@@ -110,6 +110,9 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
     label: {
       enabled: dataLabels,
     },
+    // Use legendItemName instead of name for series naming
+    legendItemName: seriesItem.name,
+    showInLegend: true,
   }));
 
   const options: AgChartOptions = {

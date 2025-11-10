@@ -123,7 +123,8 @@ export const LineChart: React.FC<LineChartProps> = ({
       xKey,
       yKey: 'y',
       data: processedData,
-      stroke: seriesItem.color,
+      // Remove stroke property - colors are handled through theme
+      // For custom colors, use item styling in chartOptions
       strokeWidth: seriesItem.strokeWidth || 2,
       marker: {
         enabled: seriesItem.marker !== false ? markers : false,
@@ -132,6 +133,9 @@ export const LineChart: React.FC<LineChartProps> = ({
       label: {
         enabled: dataLabels,
       },
+      // Use legendItemName instead of name for series naming
+      legendItemName: seriesItem.name,
+      showInLegend: true,
     };
   });
 

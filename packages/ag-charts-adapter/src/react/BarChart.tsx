@@ -115,8 +115,8 @@ export const BarChart: React.FC<BarChartProps> = ({
         // Use numerical indices for x-axis when categories are provided
         return { x: index, [yKey]: point };
       }),
-      fill: seriesItem.color || chartColors[index % chartColors.length],
-      stroke: seriesItem.color || chartColors[index % chartColors.length],
+      // Colors are handled through fills/stroke in item styling, not series level
+      // For now, we'll let the theme handle colors automatically
       label: {
         enabled: dataLabels,
       },

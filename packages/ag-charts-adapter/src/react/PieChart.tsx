@@ -109,6 +109,9 @@ export const PieChart: React.FC<PieChartProps> = ({
         tooltip: {
           enabled: tooltip,
         },
+        // Use legendItemName for series naming
+        legendItemName: series.name,
+        showInLegend: true,
       } as any),
     ],
     legend: {
