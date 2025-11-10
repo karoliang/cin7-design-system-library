@@ -68,13 +68,6 @@ export function getCin7AgChartsTheme(config: Cin7ChartTheme = {}): AgThemeOption
 
   // Use AG Charts v9.2.0 compatible theme structure
   const theme: AgThemeOptions = {
-    // Basic palette configuration
-    palette: {
-      colors: colors,
-    },
-    // Text styling
-    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-    fontSize: 13,
     // Direct color configuration for chart elements
     background: {
       visible: false,

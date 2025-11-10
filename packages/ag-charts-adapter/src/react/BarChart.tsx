@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import { getCin7ChartColors } from '../utilities/theme';
 import type { AgChartOptions } from 'ag-charts-community';
 
 export interface BarChartSeries {
@@ -89,8 +90,19 @@ export const BarChart: React.FC<BarChartProps> = ({
 }) => {
   const isHorizontal = orientation === 'horizontal';
 
+  // Get theme mode and colors
+  const getThemeMode = (): 'light' | 'dark' => {
+    if (typeof document !== 'undefined') {
+      const mode = document.documentElement.getAttribute('data-cin7-theme') as 'light' | 'dark';
+      return mode || 'light';
+    }
+    return 'light';
+  };
+
+  const chartColors = getCin7ChartColors(getThemeMode());
+
   // Convert series data to AG Charts format
-  const agSeries = series.map((seriesItem) => ({
+  const agSeries = series.map((seriesItem, index) => ({
     type: 'bar', // AG Charts v9.2.0 only accepts 'bar' for both orientations
     xKey: 'x',
     yKey: 'y',
@@ -102,7 +114,7 @@ export const BarChart: React.FC<BarChartProps> = ({
       const categoryValue = xAxis.categories?.[index] || seriesItem.name;
       return { x: categoryValue, y: point };
     }),
-    fill: seriesItem.color,
+    fill: seriesItem.color || chartColors[index % chartColors.length],
     // @ts-ignore - stacking property exists in AG Charts
     stacked: stacking === 'normal' || stacking === 'percent',
     // @ts-ignore - grouping property exists in AG Charts
@@ -136,7 +148,6 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? yAxis.labelFormat : xAxis.labelFormat,
         },
-        category: xAxis.categories || undefined,
       },
       {
         type: isHorizontal ? 'category' : 'number',
@@ -148,7 +159,6 @@ export const BarChart: React.FC<BarChartProps> = ({
         label: {
           format: isHorizontal ? xAxis.labelFormat : yAxis.labelFormat,
         },
-        category: isHorizontal ? xAxis.categories : undefined,
       },
     ],
     legend: {
