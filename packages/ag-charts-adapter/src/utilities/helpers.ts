@@ -1,8 +1,6 @@
 /**
- * Helper utilities for Highcharts integration
+ * Helper utilities for AG Charts integration
  */
-
-import * as Highcharts from 'highcharts';
 
 /**
  * Format number with locale-aware formatting

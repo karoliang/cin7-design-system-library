@@ -1,7 +1,7 @@
 /**
- * @cin7/highcharts-adapter - Highcharts integration for Cin7 DSL
+ * @cin7/ag-charts-adapter - AG Charts integration for Cin7 DSL
  *
- * Multi-language support for Highcharts with Cin7 design tokens integration
+ * Multi-language support for AG Charts with Cin7 design tokens integration
  *
  * @packageDocumentation
  */
@@ -23,21 +23,29 @@ export * from './typescript';
 
 // Package metadata
 export const version = '0.1.0';
-export const name = '@cin7/highcharts-adapter';
+export const name = '@cin7/ag-charts-adapter';
 
 /**
- * Initialize all Highcharts components for the current environment
+ * Initialize all AG Charts components for the current environment
  */
-export function initializeHighcharts(): void {
+export function initializeAgCharts(): void {
   // Apply global theme if in browser
   if (typeof window !== 'undefined') {
-    const { applyGlobalHighchartsTheme } = require('./utilities/theme');
-    applyGlobalHighchartsTheme({ mode: 'light' });
+    const { applyGlobalAgChartsTheme } = require('./utilities/theme');
+    applyGlobalAgChartsTheme({ mode: 'light' });
 
     // Register ExtJS components if ExtJS is available
     if ((window as any).Ext) {
-      const { registerAllHighchartsComponents } = require('./extjs');
-      registerAllHighchartsComponents();
+      const { registerAllChartComponents } = require('./extjs');
+      registerAllChartComponents();
     }
   }
+}
+
+/**
+ * Legacy alias for backward compatibility
+ * @deprecated Use initializeAgCharts instead
+ */
+export function initializeHighcharts(): void {
+  initializeAgCharts();
 }

@@ -1,5 +1,5 @@
 /**
- * React components for Highcharts integration
+ * React components for AG Charts integration
  */
 
 export * from './ChartContainer';

@@ -1,9 +1,19 @@
 /**
- * Vanilla JS utility for creating Highcharts pie/donut charts
+ * Vanilla JS utility for creating AG Charts pie/donut charts
  */
 
-import * as Highcharts from 'highcharts';
-import { getCin7HighchartsTheme, Cin7ChartTheme } from '../utilities/theme';
+import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
+
+export interface VanillaPieChartDataPoint {
+  /** Category name */
+  name: string;
+  /** Value */
+  value: number;
+  /** Custom color */
+  color?: string;
+  /** Additional properties */
+  [key: string]: any;
+}
 
 export interface VanillaPieChartOptions {
   /** Container element or selector */
@@ -13,7 +23,7 @@ export interface VanillaPieChartOptions {
   /** Chart subtitle */
   subtitle?: string;
   /** Pie chart data */
-  data: Highcharts.PointOptionsObject[];
+  data: VanillaPieChartDataPoint[];
   /** Series name */
   seriesName?: string;
   /** Chart variant */
@@ -26,8 +36,11 @@ export interface VanillaPieChartOptions {
   theme?: Cin7ChartTheme;
   /** Enable legend */
   legend?: boolean;
-  /** Additional Highcharts options */
-  chartOptions?: Highcharts.Options;
+  /** Chart dimensions */
+  width?: number;
+  height?: number;
+  /** Additional AG Charts options */
+  chartOptions?: any;
 }
 
 /**
@@ -35,21 +48,21 @@ export interface VanillaPieChartOptions {
  *
  * @example
  * ```javascript
- * import { initPieChart } from '@cin7/highcharts-adapter/vanilla';
+ * import { initPieChart } from '@cin7/ag-charts-adapter/vanilla';
  *
- * const chart = initPieChart({
+ * const chart = await initPieChart({
  *   container: '#my-chart',
  *   title: 'Market Share',
  *   variant: 'donut',
  *   data: [
- *     { name: 'Product A', y: 45 },
- *     { name: 'Product B', y: 30 },
- *     { name: 'Product C', y: 25 }
+ *     { name: 'Product A', value: 45 },
+ *     { name: 'Product B', value: 30 },
+ *     { name: 'Product C', value: 25 }
  *   ]
  * });
  * ```
  */
-export function initPieChart(options: VanillaPieChartOptions): Highcharts.Chart {
+export async function initPieChart(options: VanillaPieChartOptions): Promise<any> {
   const {
     container,
     title,
@@ -72,8 +85,11 @@ export function initPieChart(options: VanillaPieChartOptions): Highcharts.Chart 
     throw new Error(`Container not found: ${container}`);
   }
 
+  // Load AG Charts dynamically if not already loaded
+  const AgCharts = await loadAgCharts();
+
   // Apply theme
-  const baseTheme = getCin7HighchartsTheme(theme);
+  const agTheme = getCin7AgChartsTheme(theme);
 
   // Determine inner size based on variant
   let calculatedInnerSize = innerSize;
@@ -89,74 +105,133 @@ export function initPieChart(options: VanillaPieChartOptions): Highcharts.Chart 
   const startAngle = variant === 'semi-circle' ? -90 : 0;
   const endAngle = variant === 'semi-circle' ? 90 : 360;
 
+  // Transform data for AG Charts
+  const transformedData = data.map((point, index) => ({
+    ...point,
+    angleKey: 'value',
+    calloutLabelKey: 'name',
+    sectorLabelKey: 'name',
+    radiusKey: 'value',
+  }));
+
   // Build chart configuration
-  const config: Highcharts.Options = {
-    ...baseTheme,
+  const config: any = {
+    ...agTheme,
     ...chartOptions,
-    chart: {
-      ...baseTheme.chart,
-      type: 'pie',
-      renderTo: containerEl as HTMLElement,
-      ...chartOptions.chart,
-    },
+    container: containerEl as HTMLElement,
     title: {
-      ...baseTheme.title,
       text: title,
-      ...chartOptions.title,
+      enabled: !!title,
     },
     subtitle: {
-      ...baseTheme.subtitle,
       text: subtitle,
-      ...chartOptions.subtitle,
+      enabled: !!subtitle,
     },
+    series: [{
+      type: 'pie',
+      calls: {
+        titleKey: 'name',
+        ...transformedData,
+      },
+      data: transformedData,
+      angleKey: 'value',
+      calloutLabelKey: 'name',
+      sectorLabelKey: 'name',
+      radiusKey: 'value',
+      showInLegend: legend,
+      calloutLabels: {
+        enabled: dataLabels,
+      },
+      sectorLabels: {
+        enabled: dataLabels,
+        formatter: (params: any) => {
+          const value = params.datum.value;
+          const total = data.reduce((sum, item) => sum + item.value, 0);
+          const percentage = ((value / total) * 100).toFixed(1);
+          return `<b>${params.datum.name}</b>: ${percentage}%`;
+        },
+      },
+      // Inner radius for donut chart
+      innerRadius: calculatedInnerSize === '50%' ? 50 : calculatedInnerSize === '40%' ? 40 : 0,
+      // Semi-circle configuration
+      startAngle: variant === 'semi-circle' ? -90 : 0,
+      endAngle: variant === 'semi-circle' ? 90 : 360,
+    }],
     legend: {
-      ...baseTheme.legend,
       enabled: legend,
     },
-    plotOptions: {
-      ...baseTheme.plotOptions,
-      pie: {
-        ...baseTheme.plotOptions?.pie,
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: dataLabels,
-          format: '<b>{point.name}</b>: {point.percentage:.1f}%',
-        },
-        showInLegend: legend,
-        innerSize: calculatedInnerSize,
-        startAngle,
-        endAngle,
-      },
-    },
-    series: [
-      {
-        type: 'pie',
-        name: seriesName,
-        data,
-      },
-    ],
+    ...(width && { width }),
+    ...(height && { height }),
   };
 
   // Create and return chart
-  return Highcharts.chart(containerEl as HTMLElement, config);
+  const chart = AgCharts.createAgChart(config);
+
+  return chart;
+}
+
+/**
+ * Load AG Charts library dynamically
+ */
+function loadAgCharts(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    // Check if AG Charts is already loaded
+    if ((window as any).AgCharts) {
+      resolve((window as any).AgCharts);
+      return;
+    }
+
+    // Load AG Charts Community dynamically
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/ag-charts-community@9.2.0/dist/umd/ag-charts-community.js';
+    script.onload = () => {
+      if ((window as any).AgCharts) {
+        resolve((window as any).AgCharts);
+      } else {
+        reject(new Error('AG Charts failed to load properly'));
+      }
+    };
+    script.onerror = () => reject(new Error('Failed to load AG Charts script'));
+    document.head.appendChild(script);
+  });
 }
 
 /**
  * Update pie chart data
  */
 export function updatePieChartData(
-  chart: Highcharts.Chart,
-  data: Highcharts.PointOptionsObject[]
+  chart: any,
+  data: VanillaPieChartDataPoint[]
 ): void {
-  if (chart.series[0]) {
-    chart.series[0].setData(data, true);
+  if (!chart || !chart.updateOptions) {
+    throw new Error('Invalid chart instance');
   }
+
+  // Transform updated data for AG Charts
+  const transformedData = data.map((point, index) => ({
+    ...point,
+    angleKey: 'value',
+    calloutLabelKey: 'name',
+    sectorLabelKey: 'name',
+    radiusKey: 'value',
+  }));
+
+  // Update chart with new data
+  chart.updateOptions({
+    series: [{
+      ...chart.options.series[0],
+      data: transformedData,
+    }]
+  });
 }
 
 /**
  * Destroy pie chart
  */
-export function destroyPieChart(chart: Highcharts.Chart): void {
-  chart.destroy();
+export function destroyPieChart(chart: any): void {
+  if (chart && chart.destroy) {
+    chart.destroy();
+  } else if (chart && chart.destroyChart) {
+    chart.destroyChart();
+  }
 }

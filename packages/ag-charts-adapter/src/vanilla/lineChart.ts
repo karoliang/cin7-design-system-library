@@ -1,9 +1,21 @@
 /**
- * Vanilla JS utility for creating Highcharts line charts
+ * Vanilla JS utility for creating AG Charts line charts
  */
 
-import * as Highcharts from 'highcharts';
-import { getCin7HighchartsTheme, Cin7ChartTheme } from '../utilities/theme';
+import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
+
+export interface VanillaLineChartSeries {
+  /** Series name */
+  name: string;
+  /** Data points */
+  data: (number | [string, number] | [number, number])[];
+  /** Stroke color */
+  color?: string;
+  /** Stroke width */
+  strokeWidth?: number;
+  /** Enable markers */
+  marker?: boolean;
+}
 
 export interface VanillaLineChartOptions {
   /** Container element or selector */
@@ -13,11 +25,22 @@ export interface VanillaLineChartOptions {
   /** Chart subtitle */
   subtitle?: string;
   /** Series data */
-  series: Highcharts.SeriesLineOptions[];
+  series: VanillaLineChartSeries[];
   /** X-axis configuration */
-  xAxis?: Highcharts.XAxisOptions;
+  xAxis?: {
+    title?: string;
+    categories?: string[];
+    type?: 'category' | 'number';
+    min?: number;
+    max?: number;
+  };
   /** Y-axis configuration */
-  yAxis?: Highcharts.YAxisOptions;
+  yAxis?: {
+    title?: string;
+    min?: number;
+    max?: number;
+    labelFormat?: string;
+  };
   /** Enable smooth curves */
   smooth?: boolean;
   /** Enable markers */
@@ -28,8 +51,11 @@ export interface VanillaLineChartOptions {
   theme?: Cin7ChartTheme;
   /** Enable legend */
   legend?: boolean;
-  /** Additional Highcharts options */
-  chartOptions?: Highcharts.Options;
+  /** Chart dimensions */
+  width?: number;
+  height?: number;
+  /** Additional AG Charts options */
+  chartOptions?: any;
 }
 
 /**
@@ -37,7 +63,7 @@ export interface VanillaLineChartOptions {
  *
  * @example
  * ```javascript
- * import { initLineChart } from '@cin7/highcharts-adapter/vanilla';
+ * import { initLineChart } from '@cin7/ag-charts-adapter/vanilla';
  *
  * const chart = initLineChart({
  *   container: '#my-chart',
@@ -52,7 +78,7 @@ export interface VanillaLineChartOptions {
  * });
  * ```
  */
-export function initLineChart(options: VanillaLineChartOptions): Highcharts.Chart {
+export async function initLineChart(options: VanillaLineChartOptions): Promise<any> {
   const {
     container,
     title,
@@ -65,6 +91,8 @@ export function initLineChart(options: VanillaLineChartOptions): Highcharts.Char
     stacking,
     theme = { mode: 'light' },
     legend = true,
+    width,
+    height,
     chartOptions = {},
   } = options;
 
@@ -76,80 +104,189 @@ export function initLineChart(options: VanillaLineChartOptions): Highcharts.Char
     throw new Error(`Container not found: ${container}`);
   }
 
+  // Load AG Charts dynamically if not already loaded
+  const AgCharts = await loadAgCharts();
+
   // Apply theme
-  const baseTheme = getCin7HighchartsTheme(theme);
-  const chartType = smooth ? 'spline' : 'line';
+  const agTheme = getCin7AgChartsTheme(theme);
+
+  // Transform series data for AG Charts
+  const agSeries = series.map((seriesItem) => ({
+    type: 'line',
+    xKey: seriesItem.data.some(point => Array.isArray(point) && typeof point[0] === 'string') ? 'x' : undefined,
+    yKey: 'y',
+    data: seriesItem.data.map((point, index) => {
+      if (Array.isArray(point)) {
+        return { x: point[0], y: point[1] };
+      }
+      if (typeof point === 'string') {
+        return { x: index, y: 0 }; // This shouldn't happen with proper data
+      }
+      return { x: index, y: point };
+    }),
+    stroke: seriesItem.color,
+    strokeWidth: seriesItem.strokeWidth || 2,
+    marker: {
+      enabled: seriesItem.marker !== false ? markers : false,
+      size: 6,
+      strokeWidth: 2,
+    },
+    // @ts-ignore - stacking property exists in AG Charts
+    stacked: stacking === 'normal' || stacking === 'percent',
+    // @ts-ignore - stacking as percent
+    groupBy: stacking === 'percent' ? 'y' : undefined,
+    label: {
+      enabled: false, // Data labels handled separately if needed
+    },
+  }));
+
+  // Build axes configuration
+  const axes = [];
+
+  // X-axis configuration
+  if (xAxis.categories || xAxis.type === 'category') {
+    axes.push({
+      type: 'category',
+      position: 'bottom',
+      title: {
+        text: xAxis.title,
+        enabled: !!xAxis.title,
+      },
+      category: xAxis.categories,
+      min: xAxis.min,
+      max: xAxis.max,
+    });
+  } else {
+    axes.push({
+      type: 'number',
+      position: 'bottom',
+      title: {
+        text: xAxis.title,
+        enabled: !!xAxis.title,
+      },
+      min: xAxis.min,
+      max: xAxis.max,
+    });
+  }
+
+  // Y-axis configuration
+  axes.push({
+    type: 'number',
+    position: 'left',
+    title: {
+      text: yAxis.title,
+      enabled: !!yAxis.title,
+    },
+    min: yAxis.min,
+    max: yAxis.max,
+    label: {
+      format: yAxis.labelFormat,
+    },
+  });
 
   // Build chart configuration
-  const config: Highcharts.Options = {
-    ...baseTheme,
+  const config = {
+    ...agTheme,
     ...chartOptions,
-    chart: {
-      ...baseTheme.chart,
-      type: chartType,
-      renderTo: containerEl as HTMLElement,
-      ...chartOptions.chart,
-    },
+    container: containerEl as HTMLElement,
     title: {
-      ...baseTheme.title,
       text: title,
-      ...chartOptions.title,
+      enabled: !!title,
     },
     subtitle: {
-      ...baseTheme.subtitle,
       text: subtitle,
-      ...chartOptions.subtitle,
+      enabled: !!subtitle,
     },
-    xAxis: {
-      ...baseTheme.xAxis,
-      ...xAxis,
-    },
-    yAxis: {
-      ...baseTheme.yAxis,
-      ...yAxis,
-    },
+    series: agSeries,
+    axes,
     legend: {
-      ...baseTheme.legend,
       enabled: legend,
     },
-    plotOptions: {
-      ...baseTheme.plotOptions,
-      series: {
-        ...baseTheme.plotOptions?.series,
-        marker: {
-          enabled: markers,
-        },
-        stacking,
+    width,
+    height,
+    // Performance optimizations
+    animation: true,
+    interaction: {
+      crosshair: {
+        enabled: true,
       },
     },
-    series: series as Highcharts.SeriesOptionsType[],
   };
 
   // Create and return chart
-  return Highcharts.chart(containerEl as HTMLElement, config);
+  const chart = AgCharts.createAgChart(config);
+
+  return chart;
+}
+
+/**
+ * Load AG Charts library dynamically
+ */
+function loadAgCharts(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    // Check if AG Charts is already loaded
+    if ((window as any).AgCharts) {
+      resolve((window as any).AgCharts);
+      return;
+    }
+
+    // Load AG Charts Community dynamically
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/ag-charts-community@9.2.0/dist/umd/ag-charts-community.js';
+    script.onload = () => {
+      if ((window as any).AgCharts) {
+        resolve((window as any).AgCharts);
+      } else {
+        reject(new Error('AG Charts failed to load properly'));
+      }
+    };
+    script.onerror = () => reject(new Error('Failed to load AG Charts script'));
+    document.head.appendChild(script);
+  });
 }
 
 /**
  * Update line chart data
  */
 export function updateLineChartData(
-  chart: Highcharts.Chart,
-  seriesData: Array<{ name?: string; data: number[] | Highcharts.PointOptionsObject[] }>
+  chart: any,
+  seriesData: VanillaLineChartSeries[]
 ): void {
-  seriesData.forEach((data, index) => {
-    if (chart.series[index]) {
-      chart.series[index].setData(data.data, false);
-      if (data.name) {
-        chart.series[index].update({ type: chart.series[index].type, name: data.name } as Highcharts.SeriesOptionsType, false);
+  if (!chart || !chart.updateOptions) {
+    throw new Error('Invalid chart instance');
+  }
+
+  // Transform updated series data
+  const agSeries = seriesData.map((seriesItem) => ({
+    type: 'line',
+    xKey: seriesItem.data.some(point => Array.isArray(point) && typeof point[0] === 'string') ? 'x' : undefined,
+    yKey: 'y',
+    data: seriesItem.data.map((point, index) => {
+      if (Array.isArray(point)) {
+        return { x: point[0], y: point[1] };
       }
-    }
-  });
-  chart.redraw();
+      return { x: index, y: point };
+    }),
+    stroke: seriesItem.color,
+    strokeWidth: seriesItem.strokeWidth || 2,
+    marker: {
+      enabled: seriesItem.marker !== false,
+      size: 6,
+      strokeWidth: 2,
+    },
+  }));
+
+  // Update chart with new data
+  chart.updateOptions({ series: agSeries });
 }
 
 /**
  * Destroy line chart
  */
-export function destroyLineChart(chart: Highcharts.Chart): void {
-  chart.destroy();
+export function destroyLineChart(chart: any): void {
+  if (chart && chart.destroy) {
+    chart.destroy();
+  } else if (chart && chart.destroyChart) {
+    chart.destroyChart();
+  }
 }

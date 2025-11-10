@@ -22,7 +22,7 @@
       "@cin7/typescript-sdk": ["../packages/typescript-sdk/src"],
       "@cin7/polaris-adapter": ["../packages/polaris-adapter/src"],
       "@cin7/extjs-adapters": ["../packages/extjs-adapters/src"],
-      "@cin7/highcharts-adapter": ["../packages/highcharts-adapter/src"],
+      "@cin7/ag-charts-adapter": ["../packages/ag-charts-adapter/src"],
       "@cin7/cli": ["../packages/cli/src"]
     }
   },

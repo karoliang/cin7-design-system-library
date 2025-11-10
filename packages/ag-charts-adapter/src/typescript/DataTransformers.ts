@@ -2,7 +2,7 @@
  * Data transformation utilities for converting business data to chart formats
  */
 
-import * as Highcharts from 'highcharts';
+import type { AgData } from 'ag-charts-community';
 
 /**
  * Generic data point interface
@@ -76,10 +76,10 @@ export class DataTransformers {
     data: DataPoint[],
     nameKey: string = 'name',
     valueKey: string = 'value'
-  ): Highcharts.PointOptionsObject[] {
+  ): Array<{ name: string; value: number; [key: string]: any }> {
     return data.map((point) => ({
       name: point[nameKey],
-      y: point[valueKey],
+      value: point[valueKey],
       ...point,
     }));
   }
@@ -323,7 +323,7 @@ export const CommonTransformers = {
    */
   marketShare(
     data: Array<{ company: string; share: number }>
-  ): Highcharts.PointOptionsObject[] {
+  ): Array<{ name: string; value: number; [key: string]: any }> {
     return DataTransformers.transformPieData(data, 'company', 'share');
   },
 };

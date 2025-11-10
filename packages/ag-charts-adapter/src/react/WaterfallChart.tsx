@@ -1,11 +1,33 @@
 /**
  * WaterfallChart - Waterfall chart component with Cin7 theming
+ * Custom AG Charts implementation since waterfall charts aren't natively supported
  */
 
 import React from 'react';
-import * as Highcharts from 'highcharts';
-import 'highcharts/highcharts-more';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import type { AgChartOptions } from 'ag-charts-community';
+
+export interface WaterfallDataPoint {
+  /** Category name */
+  name: string;
+  /** Value (positive or negative) */
+  y: number;
+  /** Whether this is a sum/total point */
+  isSum?: boolean;
+  /** Whether this is an intermediate sum */
+  isIntermediateSum?: boolean;
+  /** Custom label */
+  label?: string;
+}
+
+export interface WaterfallChartSeries {
+  /** Series name */
+  name: string;
+  /** Data points for the waterfall */
+  data: WaterfallDataPoint[];
+  /** Stroke color override */
+  stroke?: string;
+}
 
 export interface WaterfallChartProps extends Omit<ChartContainerProps, 'options'> {
   /** Chart title */
@@ -13,11 +35,21 @@ export interface WaterfallChartProps extends Omit<ChartContainerProps, 'options'
   /** Chart subtitle */
   subtitle?: string;
   /** Series data */
-  series: Highcharts.SeriesWaterfallOptions[];
+  series: WaterfallChartSeries[];
   /** X-axis configuration */
-  xAxis?: Highcharts.XAxisOptions;
+  xAxis?: {
+    title?: string;
+    labelFormat?: string;
+    gridLines?: boolean;
+  };
   /** Y-axis configuration */
-  yAxis?: Highcharts.YAxisOptions;
+  yAxis?: {
+    title?: string;
+    labelFormat?: string;
+    gridLines?: boolean;
+    min?: number;
+    max?: number;
+  };
   /** Enable data labels */
   dataLabels?: boolean;
   /** Colors for up, down, and sum points */
@@ -25,17 +57,19 @@ export interface WaterfallChartProps extends Omit<ChartContainerProps, 'options'
     up?: string;
     down?: string;
     sum?: string;
+    intermediate?: string;
   };
   /** Enable legend */
   legend?: boolean;
   /** Enable tooltip */
-  tooltip?: boolean | Highcharts.TooltipOptions;
-  /** Additional Highcharts options */
-  chartOptions?: Highcharts.Options;
+  tooltip?: boolean;
+  /** Additional AG Charts options */
+  chartOptions?: Partial<AgChartOptions>;
 }
 
 /**
  * Waterfall chart component for showing cumulative effects of sequential values
+ * Custom AG Charts implementation with column-based visualization
  *
  * @example
  * ```tsx
@@ -64,80 +98,164 @@ export const WaterfallChart: React.FC<WaterfallChartProps> = ({
     up: '#90ed7d',
     down: '#f45b5b',
     sum: '#7cb5ec',
+    intermediate: '#ffa726',
   },
   legend = false,
   tooltip = true,
   chartOptions = {},
   ...containerProps
 }) => {
-  const options: Highcharts.Options = {
-    ...chartOptions,
-    chart: {
-      type: 'waterfall',
-      ...chartOptions.chart,
+  // Transform waterfall data for AG Charts column visualization
+  const transformWaterfallData = (data: WaterfallDataPoint[]) => {
+    const transformedData: any[] = [];
+    let cumulative = 0;
+
+    data.forEach((point, index) => {
+      let yValue = point.y;
+      let color = point.y >= 0 ? colors.up : colors.down;
+
+      if (point.isSum || point.isIntermediateSum) {
+        color = point.isIntermediateSum ? colors.intermediate : colors.sum;
+      }
+
+      // Calculate cumulative value for intermediate sums
+      if (!point.isSum) {
+        cumulative += point.y;
+      } else {
+        yValue = cumulative;
+      }
+
+      transformedData.push({
+        x: index,
+        y: yValue,
+        label: point.label || point.name,
+        color,
+        isSum: point.isSum,
+        isIntermediateSum: point.isIntermediateSum,
+        categoryKey: point.name,
+      });
+    });
+
+    return transformedData;
+  };
+
+  // Transform all series
+  const agSeries = series.map((seriesItem) => ({
+    type: 'column' as const,
+    xKey: 'x',
+    yKey: 'y',
+    data: transformWaterfallData(seriesItem.data),
+    fill: seriesItem.stroke || colors.up,
+    stroke: seriesItem.stroke || colors.up,
+    strokeWidth: 1,
+    cornerRadius: 2,
+    label: {
+      enabled: dataLabels,
+      color: '#333333',
+      formatter: (params: any) => {
+        const value = params.datum.y;
+        const sign = value >= 0 ? '+' : '';
+        return `${sign}${value.toLocaleString()}`;
+      },
+      style: {
+        fontWeight: 'bold',
+        fontSize: 12,
+      },
     },
+    // Custom tooltip for waterfall
+    tooltip: {
+      enabled: tooltip,
+      renderer: (params: any) => {
+        const datum = params.datum;
+        const sign = datum.y >= 0 ? '+' : '';
+        return {
+          title: datum.categoryKey,
+          content: `Value: ${sign}${datum.y.toLocaleString()}`,
+        };
+      },
+    },
+  }));
+
+  const options: AgChartOptions = {
+    ...chartOptions,
     title: {
       text: title,
-      ...chartOptions.title,
+      enabled: !!title,
     },
     subtitle: {
       text: subtitle,
-      ...chartOptions.subtitle,
+      enabled: !!subtitle,
     },
-    xAxis: {
-      type: 'category',
-      ...xAxis,
-      ...chartOptions.xAxis,
-    },
-    yAxis: {
-      ...yAxis,
-      ...chartOptions.yAxis,
-    },
-    legend: {
-      enabled: legend,
-      ...chartOptions.legend,
-    },
-    tooltip:
-      tooltip === false
-        ? { enabled: false }
-        : typeof tooltip === 'object'
-        ? tooltip
-        : {
-            pointFormat: '<b>{point.y:,.0f}</b>',
-            ...chartOptions.tooltip,
-          },
-    plotOptions: {
-      waterfall: {
-        dataLabels: {
-          enabled: dataLabels,
-          formatter: function () {
-            return Highcharts.numberFormat(this.y as number, 0, '.', ',');
-          },
-          style: {
-            fontWeight: 'bold',
+    data: [],
+    series: agSeries,
+    axes: [
+      {
+        type: 'category',
+        position: 'bottom',
+        title: {
+          text: xAxis.title,
+          enabled: !!xAxis.title,
+        },
+        gridLine: {
+          enabled: xAxis.gridLines !== false,
+        },
+        label: {
+          formatter: (params: any) => {
+            const datum = params.datum;
+            return datum?.categoryKey || params.value;
           },
         },
-        upColor: colors.up,
-        color: colors.down,
-        borderColor: '#333',
-        lineColor: '#333',
       },
-      ...chartOptions.plotOptions,
+      {
+        type: 'number',
+        position: 'left',
+        title: {
+          text: yAxis.title,
+          enabled: !!yAxis.title,
+        },
+        gridLine: {
+          enabled: yAxis.gridLines !== false,
+        },
+        min: yAxis.min,
+        max: yAxis.max,
+        label: {
+          formatter: (params: any) => {
+            const value = params.value;
+            const sign = value >= 0 ? '+' : '';
+            return `${sign}${value.toLocaleString()}`;
+          },
+        },
+      },
+    ],
+    legend: {
+      enabled: legend,
     },
-    series: series.map((s) => ({
-      ...s,
-      type: 'waterfall',
-      // Set color for sum/intermediate sum points
-      data: (s.data as any[])?.map((point) => {
-        if (typeof point === 'object' && (point.isSum || point.isIntermediateSum)) {
-          return {
-            ...point,
-            color: colors.sum,
-          };
-        }
-        return point;
-      }),
-    })) as Highcharts.SeriesOptionsType[],
+    // Custom styling for waterfall appearance
+    overrides: {
+      column: {
+        series: {
+          strokeWidth: 1,
+          cornerRadius: 2,
+          label: {
+            enabled: dataLabels,
+            color: '#333333',
+            formatter: ({ datum }: any) => {
+              const sign = datum.y >= 0 ? '+' : '';
+              return `${sign}${datum.y.toLocaleString()}`;
+            },
+          },
+          highlightStyle: {
+            item: {
+              strokeWidth: 2,
+              fill: 'rgba(0, 0, 0, 0.1)',
+            },
+          },
+          tooltip: {
+            enabled: tooltip,
+          },
+        },
+      },
+    },
   };
 
   return <ChartContainer options={options} {...containerProps} ariaLabel={title || 'Waterfall chart'} />;

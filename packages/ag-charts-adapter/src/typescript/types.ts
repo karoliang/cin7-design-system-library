@@ -2,7 +2,7 @@
  * TypeScript types for chart data models
  */
 
-import * as Highcharts from 'highcharts';
+import type { AgData } from 'ag-charts-community';
 
 /**
  * Chart type enum
@@ -66,7 +66,7 @@ export interface ChartDataSource<T = any> {
   /** Fetch data from source */
   fetch(): Promise<T[]>;
   /** Transform data to chart format */
-  transform(data: T[]): Highcharts.SeriesOptionsType[];
+  transform(data: T[]): any[];
   /** Refresh interval in milliseconds */
   refreshInterval?: number;
 }

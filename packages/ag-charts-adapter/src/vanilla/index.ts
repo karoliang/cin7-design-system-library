@@ -1,5 +1,5 @@
 /**
- * Vanilla JavaScript utilities for Highcharts integration
+ * Vanilla JavaScript utilities for AG Charts integration
  */
 
 export * from './lineChart';

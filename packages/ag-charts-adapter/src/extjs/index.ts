@@ -1,23 +1,27 @@
 /**
- * ExtJS adapters for Highcharts integration
+ * ExtJS adapters for AG Charts integration
+ * Custom enterprise implementation with advanced features
  */
 
-export * from './Cin7HighchartsBase';
-export * from './Cin7HighchartsLine';
-export * from './Cin7HighchartsBar';
-export * from './Cin7HighchartsPie';
+// AG Charts components
+export * from './Cin7AgChartsBase';
+export * from './Cin7AgChartsLine';
 
 /**
- * Register all Highcharts ExtJS components
+ * Register all AG Charts ExtJS components
  */
-export function registerAllHighchartsComponents(): void {
-  const { Cin7HighchartsBase } = require('./Cin7HighchartsBase');
-  const { Cin7HighchartsLine } = require('./Cin7HighchartsLine');
-  const { Cin7HighchartsBar } = require('./Cin7HighchartsBar');
-  const { Cin7HighchartsPie } = require('./Cin7HighchartsPie');
+export function registerAllChartComponents(): void {
+  const { Cin7AgChartsBase } = require('./Cin7AgChartsBase');
+  const { Cin7AgChartsLine } = require('./Cin7AgChartsLine');
 
-  Cin7HighchartsBase.register();
-  Cin7HighchartsLine.register();
-  Cin7HighchartsBar.register();
-  Cin7HighchartsPie.register();
+  Cin7AgChartsBase.register();
+  Cin7AgChartsLine.register();
+}
+
+/**
+ * Legacy alias for backward compatibility
+ * @deprecated Use registerAllChartComponents instead
+ */
+export function registerAllAgChartsComponents(): void {
+  registerAllChartComponents();
 }

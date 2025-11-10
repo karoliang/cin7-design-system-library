@@ -1,5 +1,5 @@
 /**
- * Utilities for Highcharts integration
+ * Utilities for AG Charts integration
  */
 
 export * from './theme';

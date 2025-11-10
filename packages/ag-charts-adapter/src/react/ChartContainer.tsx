@@ -3,7 +3,7 @@
  */
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { AgCharts } from 'ag-charts-react';
+import { AgChartsReact } from 'ag-charts-react';
 import type { AgChartOptions, AgChartInstance } from 'ag-charts-community';
 import { getCin7AgChartsTheme, Cin7ChartTheme, getDocumentTheme, watchDocumentTheme } from '../utilities/theme';
 
@@ -48,7 +48,7 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
   error = null,
   ariaLabel,
 }) => {
-  const chartRef = useRef<AgCharts>(null);
+  const chartRef = useRef<AgChartsReactReact>(null);
   const [chartReady, setChartReady] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<Cin7ChartTheme>(() => ({
     mode: getDocumentTheme(),
@@ -151,7 +151,7 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
       role="img"
       aria-label={ariaLabel || 'Data visualization chart'}
     >
-      <AgCharts
+      <AgChartsReact
         ref={chartRef}
         options={getThemedOptions()}
         onChartReady={handleChartReady}

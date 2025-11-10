@@ -3,8 +3,34 @@
  */
 
 import React from 'react';
-import * as Highcharts from 'highcharts';
 import { ChartContainer, ChartContainerProps } from './ChartContainer';
+import type { AgChartOptions } from 'ag-charts-community';
+
+export interface ScatterChartSeries {
+  /** Series name */
+  name: string;
+  /** Data points as [x, y] pairs or [x, y, size] for bubbles */
+  data: Array<[number, number] | [number, number, number]>;
+  /** Point color */
+  color?: string;
+  /** Marker size */
+  markerSize?: number;
+  /** Enable markers */
+  marker?: boolean;
+}
+
+export interface ScatterChartAxisConfig {
+  /** Axis title */
+  title?: string;
+  /** Minimum value */
+  min?: number;
+  /** Maximum value */
+  max?: number;
+  /** Label format */
+  labelFormat?: string;
+  /** Show grid lines */
+  gridLines?: boolean;
+}
 
 export interface ScatterChartProps extends Omit<ChartContainerProps, 'options'> {
   /** Chart title */
@@ -12,11 +38,11 @@ export interface ScatterChartProps extends Omit<ChartContainerProps, 'options'> 
   /** Chart subtitle */
   subtitle?: string;
   /** Series data */
-  series: (Highcharts.SeriesScatterOptions | Highcharts.SeriesBubbleOptions)[];
+  series: ScatterChartSeries[];
   /** X-axis configuration */
-  xAxis?: Highcharts.XAxisOptions;
+  xAxis?: ScatterChartAxisConfig;
   /** Y-axis configuration */
-  yAxis?: Highcharts.YAxisOptions;
+  yAxis?: ScatterChartAxisConfig;
   /** Enable data labels */
   dataLabels?: boolean;
   /** Chart variant - scatter or bubble */
@@ -24,11 +50,11 @@ export interface ScatterChartProps extends Omit<ChartContainerProps, 'options'> 
   /** Enable legend */
   legend?: boolean;
   /** Enable tooltip */
-  tooltip?: boolean | Highcharts.TooltipOptions;
-  /** Marker size */
+  tooltip?: boolean;
+  /** Default marker size */
   markerSize?: number;
-  /** Additional Highcharts options */
-  chartOptions?: Highcharts.Options;
+  /** Additional AG Charts options */
+  chartOptions?: Partial<AgChartOptions>;
 }
 
 /**
@@ -57,64 +83,84 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
   variant = 'scatter',
   legend = true,
   tooltip = true,
-  markerSize,
+  markerSize = 6,
   chartOptions = {},
   ...containerProps
 }) => {
-  const options: Highcharts.Options = {
-    ...chartOptions,
-    chart: {
-      type: variant,
-      ...chartOptions.chart,
+  // Convert series data to AG Charts format
+  const agSeries = series.map((seriesItem) => ({
+    type: variant,
+    data: seriesItem.data.map((point) => {
+      if (point.length === 2) {
+        // [x, y] - scatter plot
+        return { x: point[0], y: point[1] };
+      } else if (point.length === 3) {
+        // [x, y, size] - bubble chart
+        return { x: point[0], y: point[1], size: point[2] };
+      }
+      return { x: point[0], y: point[1] };
+    }),
+    fill: seriesItem.color,
+    stroke: seriesItem.color,
+    marker: {
+      enabled: seriesItem.marker !== false,
+      size: seriesItem.markerSize || markerSize,
+      strokeWidth: 2,
     },
+    label: {
+      enabled: dataLabels,
+    },
+  }));
+
+  const options: AgChartOptions = {
+    ...chartOptions,
     title: {
       text: title,
-      ...chartOptions.title,
+      enabled: !!title,
     },
     subtitle: {
       text: subtitle,
-      ...chartOptions.subtitle,
+      enabled: !!subtitle,
     },
-    xAxis: {
-      ...xAxis,
-      ...chartOptions.xAxis,
-    },
-    yAxis: {
-      ...yAxis,
-      ...chartOptions.yAxis,
-    },
+    data: [],
+    series: agSeries as any,
+    axes: [
+      {
+        type: 'number',
+        position: 'bottom',
+        title: {
+          text: xAxis.title,
+          enabled: !!xAxis.title,
+        },
+        gridLine: {
+          enabled: xAxis.gridLines !== false,
+        },
+        min: xAxis.min,
+        max: xAxis.max,
+        label: {
+          format: xAxis.labelFormat,
+        },
+      },
+      {
+        type: 'number',
+        position: 'left',
+        title: {
+          text: yAxis.title,
+          enabled: !!yAxis.title,
+        },
+        gridLine: {
+          enabled: yAxis.gridLines !== false,
+        },
+        min: yAxis.min,
+        max: yAxis.max,
+        label: {
+          format: yAxis.labelFormat,
+        },
+      },
+    ],
     legend: {
       enabled: legend,
-      ...chartOptions.legend,
     },
-    tooltip:
-      tooltip === false
-        ? { enabled: false }
-        : typeof tooltip === 'object'
-        ? tooltip
-        : {
-            shared: false,
-            ...chartOptions.tooltip,
-          },
-    plotOptions: {
-      scatter: {
-        dataLabels: {
-          enabled: dataLabels,
-        },
-        marker: {
-          radius: markerSize || 5,
-        },
-      },
-      bubble: {
-        dataLabels: {
-          enabled: dataLabels,
-        },
-        minSize: 8,
-        maxSize: 40,
-      },
-      ...chartOptions.plotOptions,
-    },
-    series: series as Highcharts.SeriesOptionsType[],
   };
 
   return <ChartContainer options={options} {...containerProps} ariaLabel={title || 'Scatter chart'} />;

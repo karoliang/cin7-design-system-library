@@ -1,14 +1,14 @@
 /**
  * Type-safe chart configuration builder for business logic layer
+ * @deprecated This is a legacy Highcharts builder. Use AG Charts components instead.
  */
-
-import * as Highcharts from 'highcharts';
 
 /**
- * Type-safe builder for Highcharts line chart configuration
+ * Type-safe builder for AG Charts line chart configuration
+ * @deprecated This is a legacy Highcharts builder. Use AG Charts components instead.
  */
 export class LineChartBuilder {
-  private config: Highcharts.Options = {
+  private config: any = {
     chart: { type: 'line' },
     series: [],
   };
