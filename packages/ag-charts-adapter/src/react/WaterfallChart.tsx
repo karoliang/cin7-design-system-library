@@ -39,13 +39,13 @@ export interface WaterfallChartProps extends Omit<ChartContainerProps, 'options'
   series: WaterfallChartSeries[];
   /** X-axis configuration */
   xAxis?: {
-    title?: string;
+    title?: string | { text: string };
     labelFormat?: string;
     gridLines?: boolean;
   };
   /** Y-axis configuration */
   yAxis?: {
-    title?: string;
+    title?: string | { text: string };
     labelFormat?: string;
     gridLines?: boolean;
     min?: number;
