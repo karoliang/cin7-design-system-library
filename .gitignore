@@ -1,8 +1,14 @@
+# ==================================================
+# COMPREHENSIVE CACHE & BUILD EXCLUSION SYSTEM
+# ==================================================
+
 # Dependencies
 node_modules/
+**/node_modules/
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+.pnpm-store/
 
 # Environment variables
 .env
@@ -11,38 +17,210 @@ yarn.lock
 .env.development.local
 .env.test.local
 
-# Build outputs
+# Build outputs & Artifacts
 dist/
 build/
-.next/
 out/
+.next/
+storybook-static/
+coverage/
+.nyc_output/
+.turbo/
 
-# IDE
+# ==================================================
+# COMPREHENSIVE CACHE EXCLUSIONS
+# ==================================================
+
+# General Cache Directories
+.cache/
+.temp/
+.tmp/
+.cache-*!
+.temp-*!
+.tmp-*!
+
+# Build Tool Caches
+.vite/
+.webpack/
+.rollup.cache/
+.parcel-cache/
+.eslintcache
+.prettiercache
+.stylelintcache
+
+# TypeScript & Compilation Caches
+*.tsbuildinfo
+*.tsbuildinfo.*
+.rts2_cache_cjs/
+.rts2_cache_esm/
+.rts2_cache_umd/
+
+# Package Manager Caches
+.npm/
+.yarn/
+.pnpm-cache/
+.pnpm-store/
+
+# Testing Caches
+.jest/
+.c8/
+.nyc/
+.coverage/
+test-results/
+playwright-report/
+test-results/
+
+# Storybook Cache & Build Artifacts
+storybook-static/
+**/storybook-static/
+storybook.out/
+storybook-build/
+node_modules/.storybook/
+.cache/storybook/
+.temp/storybook/
+
+# Polaris Specific Build Outputs
+polaris/polaris-react/.out/
+polaris/polaris-react/dist/
+polaris/polaris-icons/dist/
+polaris/polaris-tokens/dist/
+polaris/polaris.shopify.com/.next/
+polaris/polaris.shopify.com/out/
+polaris/polaris.shopify.com/public/storybook/
+
+# IDE & Editor Files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/*.code-snippets
 
-# OS
+# OS Files
 .DS_Store
 Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
-# Logs
+# Logs & Debug Files
 logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+*.log.*
+storybook.log*
+*storybook.log
 
-# Misc
+# Runtime & Process Files
+*.pid
+*.seed
+*.pid.lock
+.pnpm-debug.log*
+
+# Temporary & Backup Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+~*
+.~*
+
+# Cache File Patterns
+*.cache
+*.cache.json
+*.cache.tmp
+.cache-db/
+.cache-loader/
+
+# Dotfiles & Hidden Cache
 .cache/
 .temp/
 .tmp/
+.lock-wscript
+.npmrc
+.yarn-integrity
+
+# ==================================================
+# SECURITY & CONFIGURATION
+# ==================================================
+
 # Local Netlify folder
 .netlify
 
-*storybook.log
-storybook-static
-polaris/polaris.shopify.com/public/storybook
+# Local Environment Files
+.envrc
+.env.*.local
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Deployment & CI/CD
+.vercel/
+.serverless/
+.firebase/
+
+# ==================================================
+# DEVELOPMENT TEMPORARY FILES
+# ==================================================
+
+# Hot Module Reloading
+.hmr-update/
+.hot-update.*
+
+# Development Server Files
+.dev-server/
+webpack-dev-server/
+
+# Benchmarking
+.benchmark/
+.benchmarks/
+
+# Documentation Build
+docs/.vitepress/dist
+docs/.docusaurus
+
+# ==================================================
+# UTILITIES & TOOLS
+# ==================================================
+
+# Linter & Formatter Caches
+.eslintcache
+.prettiercache
+.stylelintcache
+.emacs*
+.projectile
+.vim/
+tags
+
+# Package Testing
+.nyc_output
+.coverage/
+.coverage/
+junit.xml
+test-results/
+
+# Backup Files (comprehensive)
+*.backup
+*.bak
+*.old
+*.orig
+*.rej
+.~*
+*~
+
+# Lock files for different package managers
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+npm-shrinkwrap.json

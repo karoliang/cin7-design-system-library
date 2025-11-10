@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { configureViteCache } from '../config/cache-config.js';
 
 // PRODUCTION BUILD FIX: Enhanced PropTypes resolution for Netlify build pipeline
 // The issue: Local dev uses direct Vite dev server, Netlify uses complex multi-step build
 // This ensures PropTypes compatibility across both build environments
 
-export default defineConfig({
+// Apply cache configuration to the entire build
+const baseConfig = {
   plugins: [
     react(),
     {
@@ -231,4 +233,7 @@ export default defineConfig({
       allow: ['..'],
     },
   },
-});
+};
+
+// Apply cache configuration and export
+export default defineConfig(configureViteCache(baseConfig));

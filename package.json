@@ -17,7 +17,13 @@
     "check:variations": "npx tsc scripts/collect-component-variations.ts --outDir temp && node temp/collect-component-variations.js --check && rm -rf temp",
     "check:variations:js": "node scripts/collect-component-variations.js --check",
     "auto-commit": "node scripts/auto-commit.js",
-    "git:sync": "git add -A && git commit -m \"auto: sync changes $(date '+%Y-%m-%d %H:%M:%S')\" && git push origin main"
+    "git:sync": "git add -A && git commit -m \"auto: sync changes $(date '+%Y-%m-%d %H:%M:%S')\" && git push origin main",
+    "clean:cache": "node scripts/clean-caches.js git",
+    "clean:cache:all": "node scripts/clean-caches.js all",
+    "clean:cache:deployment": "node scripts/clean-caches.js deployment",
+    "clean:cache:dry-run": "node scripts/clean-caches.js --dry-run",
+    "clean:all": "npm run clean:cache:all && npm run clean:cache:deployment",
+    "setup:hooks": "node scripts/setup-hooks.js"
   },
   "engines": {
     "node": ">=20.10.0",
