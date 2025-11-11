@@ -108,27 +108,32 @@ export const LineChart: React.FC<LineChartProps> = ({
     let xKey: string = 'x';
     let processedData: any[] = [];
 
-    if (Array.isArray(seriesItem.data[0])) {
+    // Filter out invalid data points and process the valid ones
+    const validData = seriesItem.data.filter(point => point !== null && point !== undefined);
+
+    if (validData.length === 0) {
+      processedData = [];
+    } else if (Array.isArray(validData[0])) {
       // Data is in format [x, y] pairs
       xKey = 'x';
-      processedData = seriesItem.data.map((point) => ({
+      processedData = validData.map((point) => ({
         x: point[0],
         y: point[1],
-      }));
-    } else if (typeof seriesItem.data[0] === 'string') {
+      })).filter(point => point.x !== null && point.x !== undefined && point.y !== null && point.y !== undefined);
+    } else if (typeof validData[0] === 'string') {
       // Data is categories, need to map to indices with actual y values
       xKey = 'x';
-      processedData = seriesItem.data.map((point, index) => ({
+      processedData = validData.map((point, index) => ({
         x: point,
         y: 0, // This case shouldn't happen - LineChart should receive y values
       }));
     } else {
       // Data is just y values with implicit x indices
       xKey = 'x';
-      processedData = seriesItem.data.map((point, index) => ({
+      processedData = validData.map((point, index) => ({
         x: index,
         y: point,
-      }));
+      })).filter(point => point.y !== null && point.y !== undefined);
     }
 
     const seriesColor = seriesItem.color || chartColors[index % chartColors.length];

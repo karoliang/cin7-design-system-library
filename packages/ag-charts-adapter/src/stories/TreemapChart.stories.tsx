@@ -442,7 +442,7 @@ export const WebsiteTrafficSources: Story = {
             ],
           },
         ],
-        colorScheme: 'warm',
+        colorScheme: 'oranges',
         dataLabels: true,
         labelFormat: '{name}: {value}',
       },

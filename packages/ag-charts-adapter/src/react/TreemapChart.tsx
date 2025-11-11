@@ -184,11 +184,16 @@ export const TreemapChart: React.FC<TreemapChartProps> = ({
         fontWeight: 'bold',
         formatter: (params: any) => {
           const node = params.datum;
+          if (!node || !node.name) return '';
+
+          const totalValue = seriesItem.data.reduce((sum, n) => sum + (n.value || 0), 0);
+          const percentage = totalValue > 0 ? ((node.value || 0) / totalValue * 100).toFixed(1) : '0';
+
           const label = seriesItem.labelFormat ?
             seriesItem.labelFormat
-              .replace('{name}', node.name)
-              .replace('{value}', node.value.toString())
-              .replace('{percentage}', ((node.value / seriesItem.data.reduce((sum, n) => sum + n.value, 0)) * 100).toFixed(1) + '%') :
+              .replace('{name}', node.name || '')
+              .replace('{value}', (node.value || 0).toString())
+              .replace('{percentage}', percentage + '%') :
             `${node.name}`;
 
           return label;
@@ -198,14 +203,17 @@ export const TreemapChart: React.FC<TreemapChartProps> = ({
         enabled: true,
         renderer: (params: any) => {
           const node = params.datum;
-          const totalValue = seriesItem.data.reduce((sum, n) => sum + n.value, 0);
-          const percentage = ((node.value / totalValue) * 100).toFixed(2);
+          if (!node || !node.name) return '';
+
+          const totalValue = seriesItem.data.reduce((sum, n) => sum + (n.value || 0), 0);
+          const value = node.value || 0;
+          const percentage = totalValue > 0 ? ((value / totalValue) * 100).toFixed(2) : '0';
 
           let tooltipContent = `
             <div style="padding: 8px;">
               <strong>${seriesItem.name}</strong><br/>
               ${node.name}<br/>
-              Value: ${node.value.toLocaleString()}<br/>
+              Value: ${value.toLocaleString()}<br/>
               Percentage: ${percentage}%
           `;
 

@@ -109,34 +109,29 @@ export const ScatterChart: React.FC<ScatterChartProps> = ({
       xKey: 'x',
       yKey: 'y',
       sizeKey: variant === 'bubble' ? 'size' : undefined,
-      data: seriesItem.data.map((point) => {
-        if (point.length === 2) {
-          // [x, y] - scatter plot
+      data: seriesItem.data
+        .filter(point => point !== null && point !== undefined && Array.isArray(point) && point.length >= 2)
+        .map((point) => {
+          if (point.length === 2) {
+            // [x, y] - scatter plot
+            return { x: point[0], y: point[1] };
+          } else if (point.length === 3) {
+            // [x, y, size] - bubble chart
+            return { x: point[0], y: point[1], size: point[2] };
+          }
           return { x: point[0], y: point[1] };
-        } else if (point.length === 3) {
-          // [x, y, size] - bubble chart
-          return { x: point[0], y: point[1], size: point[2] };
-        }
-        return { x: point[0], y: point[1] };
-      }),
-      // Apply marker fill and stroke properties at series level
+        }),
+      // Apply marker properties
       marker: {
         enabled: seriesItem.marker !== false,
         size: seriesItem.markerSize || markerSize,
         strokeWidth: 2,
-        // Apply fill and stroke colors to markers
         fill: seriesColor,
         stroke: seriesColor,
-        fillOpacity: 0.8,
-        strokeOpacity: 1,
       },
-      // For bubble charts, also apply fill/stroke at series level
+      // For bubble charts, apply size property correctly
       ...(variant === 'bubble' && {
-        fill: seriesColor,
-        stroke: seriesColor,
-        fillOpacity: 0.6,
-        strokeOpacity: 1,
-        strokeWidth: 1,
+        sizeKey: 'size',
       }),
       label: {
         enabled: dataLabels,
