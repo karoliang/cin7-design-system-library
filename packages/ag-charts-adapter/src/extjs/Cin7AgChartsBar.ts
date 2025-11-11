@@ -4,12 +4,13 @@
  */
 
 import { Cin7AgChartsBase, Cin7AgChartsConfig } from './Cin7AgChartsBase';
+import type { SeriesData } from '../types/ag-charts';
 
 export interface Cin7AgChartsBarConfig extends Cin7AgChartsConfig {
   /** Series data */
   series?: Array<{
     name: string;
-    data: (number | [string, number] | [number, number])[];
+    data: SeriesData;
     color?: string;
     strokeWidth?: number;
     markers?: boolean;
@@ -45,17 +46,26 @@ export interface Cin7AgChartsBarConfig extends Cin7AgChartsConfig {
 export class Cin7AgChartsBar extends Cin7AgChartsBase {
   static xtype = 'cin7agchartsbar';
 
+  // ExtJS compatibility methods
+  callParent?(args?: IArguments): void;
+  on?(event: string, handler: Function): void;
+
   /**
    * Register the component in ExtJS
    */
-  static initComponent() {
-    super.initComponent.call(this);
+  static initComponent(this: any): void {
+    // Call parent initComponent if available
+    if (Cin7AgChartsBase.initComponent) {
+      Cin7AgChartsBase.initComponent.call(this);
+    }
+    // Initialize bar chart specific logic
+    this.initializeChart();
   }
 
   /**
    * Initialize the AG Charts bar chart
    */
-  initializeChart() {
+  initializeChart(): void {
     const config = this.getBarChartConfig();
     this.createChart(config);
   }
@@ -73,18 +83,17 @@ export class Cin7AgChartsBar extends Cin7AgChartsBase {
       orientation = 'vertical',
       dataLabels = false,
       stacking,
-      theme = { mode: 'light' },
       legend = true,
       grid = true,
       chartOptions = {},
     } = this.initialConfig;
 
     // Transform series data to AG Charts format
-    const agSeries = series.map((seriesItem) => ({
+    const agSeries = series.map((seriesItem: any) => ({
       type: 'bar', // AG Charts v9.2.0 only accepts 'bar' series type
       xKey: typeof seriesItem.data[0] === 'string' || Array.isArray(seriesItem.data[0]) ? 'x' : undefined,
       yKey: 'y',
-      data: seriesItem.data.map((point, index) => {
+      data: seriesItem.data.map((point: any, index: number) => {
         if (Array.isArray(point)) {
           return { x: point[0], y: point[1] };
         }
@@ -235,7 +244,7 @@ export class Cin7AgChartsBar extends Cin7AgChartsBase {
       if (newSeries[index]) {
         return {
           ...series,
-          data: newSeries[index].data.map((point, idx: number) => {
+          data: newSeries[index].data.map((point: any, idx: number) => {
             if (Array.isArray(point)) {
               return { x: point[0], y: point[1] };
             }

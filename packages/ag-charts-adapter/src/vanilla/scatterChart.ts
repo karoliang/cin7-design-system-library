@@ -5,6 +5,7 @@
 
 import { AgCharts } from 'ag-charts-community';
 import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
+import type { AgChartsStatic } from '../types/ag-charts';
 
 export interface VanillaScatterChartDataPoint {
   /** X-axis value */
@@ -95,10 +96,10 @@ export async function initScatterChart(options: VanillaScatterChartOptions): Pro
   }
 
   // Load AG Charts dynamically
-  const AgCharts = await import('ag-charts-community').then(m => m.AgCharts);
+  const AgCharts = await import('ag-charts-community').then(m => m.AgCharts) as AgChartsStatic;
 
   // Group data by category if provided
-  const categoryGroups = data.reduce((groups, point) => {
+  const categoryGroups = data.reduce((groups: Record<string, VanillaScatterChartDataPoint[]>, point: VanillaScatterChartDataPoint) => {
     const category = point.category || seriesName;
     if (!groups[category]) {
       groups[category] = [];
@@ -111,7 +112,7 @@ export async function initScatterChart(options: VanillaScatterChartOptions): Pro
   const series = Object.entries(categoryGroups).map(([category, categoryData]) => ({
     type: 'scatter',
     name: category,
-    data: categoryData.map(point => ({
+    data: categoryData.map((point: VanillaScatterChartDataPoint) => ({
       ...point,
       size: point.size || (variant === 'bubble' ? 5 : undefined),
     })),
@@ -138,12 +139,14 @@ export async function initScatterChart(options: VanillaScatterChartOptions): Pro
 
   // Calculate and add trend line if requested
   if (trendLine && data.length > 1) {
-    const { xValues, yValues, slope, intercept, correlationCoefficient } = calculateLinearRegression(data);
+    const { slope, intercept } = calculateLinearRegression(data);
 
-    const trendLineData = xValues.map(x => ({
-      x,
-      y: slope * x + intercept,
-    }));
+    const xMin = Math.min(...data.map(d => d.x));
+    const xMax = Math.max(...data.map(d => d.x));
+    const trendLineData = [
+      { x: xMin, y: slope * xMin + intercept },
+      { x: xMax, y: slope * xMax + intercept },
+    ];
 
     series.push({
       type: 'line',
@@ -151,9 +154,9 @@ export async function initScatterChart(options: VanillaScatterChartOptions): Pro
       data: trendLineData,
       stroke: '#666666',
       strokeWidth: 2,
-      strokeDasharray: [5, 5],
       marker: {
-        enabled: false,
+        size: 0, // Hide markers for trend line
+        strokeWidth: 0,
       },
       tooltip: {
         enabled: true,
@@ -214,7 +217,7 @@ export async function initScatterChart(options: VanillaScatterChartOptions): Pro
   };
 
   // Create and return chart
-  const chart = AgCharts.createAgChart(containerEl, config);
+  const chart = AgCharts.createAgChart({ ...config, container: containerEl });
 
   // Return update function for dynamic data updates
   return {

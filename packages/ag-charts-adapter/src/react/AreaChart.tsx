@@ -116,14 +116,14 @@ export const AreaChart: React.FC<AreaChartProps> = ({
     if (Array.isArray(seriesItem.data[0])) {
       // Data is in format [x, y] pairs
       xKey = 'x';
-      processedData = seriesItem.data.map((point) => ({
-        x: point[0],
-        y: point[1],
+      processedData = seriesItem.data.map((point: any) => ({
+        x: (point as any[])[0],
+        y: (point as any[])[1],
       }));
     } else if (typeof seriesItem.data[0] === 'string') {
       // Data is categories, need to map to indices
       xKey = 'category';
-      processedData = seriesItem.data.map((point, index) => ({
+      processedData = seriesItem.data.map((point, _index) => ({
         category: point,
         y: 0, // This should be updated with actual y values
       }));

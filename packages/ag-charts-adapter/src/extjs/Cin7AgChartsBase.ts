@@ -4,8 +4,9 @@
  */
 
 import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
+import type { ExtJSComponent, ExtJSComponentConfig, AgChartInstance, AgChartsStatic } from '../types/ag-charts';
 
-export interface Cin7AgChartsConfig {
+export interface Cin7AgChartsConfig extends ExtJSComponentConfig {
   /** AG Charts configuration options */
   chartOptions?: any;
   /** Theme configuration */
@@ -25,6 +26,61 @@ export interface Cin7AgChartsConfig {
  */
 export class Cin7AgChartsBase {
   static xtype = 'cin7agcharts';
+
+  // Instance properties for ExtJS compatibility
+  chart?: AgChartInstance;
+  initialConfig: ExtJSComponentConfig = {};
+  id: string = '';
+
+  // Static methods for ExtJS compatibility
+  static initComponent(this: ExtJSComponent): void {
+    // Default implementation - can be overridden by subclasses
+    if (this.callParent) {
+      this.callParent(arguments as any);
+    }
+  }
+
+  // Instance methods for ExtJS compatibility
+  createChart(config: any): void {
+    // Load AG Charts and create chart instance
+    this.loadAgCharts().then((AgCharts: AgChartsStatic) => {
+      const container = document.getElementById(`${this.id}-chart-container`);
+      if (container) {
+        const theme = getCin7AgChartsTheme(this.initialConfig.theme || { mode: 'light' });
+        const options = {
+          ...theme,
+          ...config,
+          container: container,
+        };
+        this.chart = AgCharts.createAgChart(options);
+      }
+    }).catch((error: any) => {
+      console.error('Failed to create chart:', error);
+    });
+  }
+
+  loadAgCharts(): Promise<AgChartsStatic> {
+    return new Promise((resolve, reject) => {
+      // Check if AG Charts is already loaded
+      if ((window as any).AgCharts) {
+        resolve((window as any).AgCharts);
+        return;
+      }
+
+      // Load AG Charts Community dynamically
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/ag-charts-community@9.2.0/dist/umd/ag-charts-community.js';
+      script.onload = () => {
+        if ((window as any).AgCharts) {
+          resolve((window as any).AgCharts);
+        } else {
+          reject(new Error('AG Charts failed to load properly'));
+        }
+      };
+      script.onerror = () => reject(new Error('Failed to load AG Charts script'));
+      document.head.appendChild(script);
+    });
+  }
 
   /**
    * Register the component in ExtJS

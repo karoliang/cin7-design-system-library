@@ -34,17 +34,26 @@ export interface Cin7AgChartsPieConfig extends Cin7AgChartsConfig {
 export class Cin7AgChartsPie extends Cin7AgChartsBase {
   static xtype = 'cin7agchartspie';
 
+  // ExtJS compatibility methods
+  callParent?(args?: IArguments): void;
+  on?(event: string, handler: Function): void;
+
   /**
    * Register the component in ExtJS
    */
-  static initComponent() {
-    super.initComponent.call(this);
+  static initComponent(this: any): void {
+    // Call parent initComponent if available
+    if (Cin7AgChartsBase.initComponent) {
+      Cin7AgChartsBase.initComponent.call(this);
+    }
+    // Initialize pie chart specific logic
+    this.initializeChart();
   }
 
   /**
    * Initialize the AG Charts pie chart
    */
-  initializeChart() {
+  initializeChart(): void {
     const config = this.getPieChartConfig();
     this.createChart(config);
   }
@@ -60,12 +69,13 @@ export class Cin7AgChartsPie extends Cin7AgChartsBase {
       variant = 'pie',
       dataLabels = true,
       innerSize,
-      startAngle = 0,
-      endAngle = 360,
       legend = true,
-      theme = { mode: 'light' },
       chartOptions = {},
     } = this.initialConfig;
+
+    // Note: angles would be used for semi-circle charts in future implementations
+    // const _startAngle = variant === 'semi-circle' ? -90 : 0;
+    // const _endAngle = variant === 'semi-circle' ? 90 : 360;
 
     // Calculate inner radius for donut charts
     let calculatedInnerSize = 0;
@@ -74,7 +84,7 @@ export class Cin7AgChartsPie extends Cin7AgChartsBase {
     }
 
     // Transform data for AG Charts
-    const transformedData = data.map((point) => ({
+    const transformedData = data.map((point: any) => ({
       ...point,
       angleKey: 'value',
       calloutLabelKey: 'name',
@@ -220,9 +230,9 @@ export class Cin7AgChartsPie extends Cin7AgChartsBase {
     }
 
     const data = this.initialConfig.data;
-    const total = data.reduce((sum, point) => sum + point.value, 0);
-    const maxValue = Math.max(...data.map(point => point.value));
-    const minValue = Math.min(...data.map(point => point.value));
+    const total = data.reduce((sum: number, point: any) => sum + point.value, 0);
+    const maxValue = Math.max(...data.map((point: any) => point.value));
+    const minValue = Math.min(...data.map((point: any) => point.value));
     const average = total / data.length;
 
     return {
@@ -249,7 +259,7 @@ export class Cin7AgChartsPie extends Cin7AgChartsBase {
   /**
    * Highlight specific segment
    */
-  highlightSegment(name: string, highlight: boolean = true) {
+  highlightSegment(_name: string, highlight: boolean = true) {
     if (!this.chart || !this.chart.updateOptions) {
       console.warn('Chart not initialized');
       return;

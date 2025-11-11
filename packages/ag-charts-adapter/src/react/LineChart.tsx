@@ -116,9 +116,9 @@ export const LineChart: React.FC<LineChartProps> = ({
     } else if (Array.isArray(validData[0])) {
       // Data is in format [x, y] pairs
       xKey = 'x';
-      processedData = validData.map((point) => ({
-        x: point[0],
-        y: point[1],
+      processedData = validData.map((point: any) => ({
+        x: (point as any[])[0],
+        y: (point as any[])[1],
       })).filter(point => point.x !== null && point.x !== undefined && point.y !== null && point.y !== undefined);
     } else if (typeof validData[0] === 'string') {
       // Data is categories, need to map to indices with actual y values

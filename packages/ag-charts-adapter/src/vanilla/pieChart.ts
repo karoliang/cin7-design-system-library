@@ -5,6 +5,7 @@
 
 import { AgCharts } from 'ag-charts-community';
 import { getCin7AgChartsTheme, Cin7ChartTheme } from '../utilities/theme';
+import type { AgChartOptions, AgChartInstance, AgChartsStatic } from '../types/ag-charts';
 
 export interface VanillaPieChartDataPoint {
   /** Category name */
@@ -70,7 +71,6 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
     title,
     subtitle,
     data,
-    _seriesName = 'Data',
     variant = 'pie',
     dataLabels = true,
     innerSize,
@@ -90,24 +90,20 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
   }
 
   // Load AG Charts dynamically
-  const AgCharts = await import('ag-charts-community').then(m => m.AgCharts);
+  const AgCharts = await import('ag-charts-community').then(m => m.AgCharts) as AgChartsStatic;
 
-  // Calculate inner radius for donut charts
-  let calculatedInnerSize = 0;
+  // Calculate inner radius for donut charts - ensure proper type conversion
+  let calculatedInnerSize: number | string = 0;
   if (variant === 'donut' || variant === 'semi-circle') {
-    if (innerSize) {
-      calculatedInnerSize = innerSize;
+    if (innerSize !== undefined) {
+      calculatedInnerSize = typeof innerSize === 'string' ? innerSize : Number(innerSize);
     } else {
       calculatedInnerSize = variant === 'donut' ? '40%' : '0%';
     }
   }
 
-  // Determine angles for semi-circle
-  const _startAngle = variant === 'semi-circle' ? -90 : 0;
-  const _endAngle = variant === 'semi-circle' ? 90 : 360;
-
   // Transform data for AG Charts
-  const transformedData = data.map((point, _index) => ({
+  const transformedData = data.map((point: VanillaPieChartDataPoint, index: number) => ({
     ...point,
     angleKey: 'value',
     calloutLabelKey: 'name',
@@ -157,13 +153,13 @@ export async function initPieChart(options: VanillaPieChartOptions): Promise<any
   };
 
   // Create and return chart
-  const chart = AgCharts.createAgChart(containerEl, config);
+  const chart = AgCharts.createAgChart({ ...config, container: containerEl });
 
   // Return update function for dynamic data updates
   return {
     chart,
     updateData: (newData: VanillaPieChartDataPoint[]) => {
-      const transformedNewData = newData.map((point, _index) => ({
+      const transformedNewData = newData.map((point: VanillaPieChartDataPoint, index: number) => ({
         ...point,
         angleKey: 'value',
         calloutLabelKey: 'name',

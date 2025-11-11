@@ -3,9 +3,17 @@
  * Maps Polaris/Cin7 design tokens to AG Charts theme configuration
  */
 
-import type { AgThemeOptions } from 'ag-charts-community';
+import type { AgThemeOptions } from '../types/ag-charts';
 
-import { getTokenValue } from '@cin7/design-tokens';
+// Design tokens import with fallback
+let getTokenValue: (token: string) => string | undefined;
+try {
+  const designTokens = require('@cin7/design-tokens');
+  getTokenValue = designTokens.getTokenValue || (() => undefined);
+} catch (error) {
+  console.warn('Design tokens not available, using fallback values');
+  getTokenValue = () => undefined;
+}
 
 export interface Cin7ChartTheme {
   mode?: 'light' | 'dark';

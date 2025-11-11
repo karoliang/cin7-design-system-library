@@ -144,8 +144,6 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
   // Process heatmap data for AG Charts
   const agSeries = series.map((seriesItem) => {
     const scheme = colorSchemes[seriesItem.colorScheme || 'blues'];
-    const borderWidth = seriesItem.borderWidth || 1;
-    const borderColor = seriesItem.borderColor || '#ffffff';
 
     // Find min and max values for color scaling
     const values = seriesItem.data.map(point => point.value);
@@ -182,8 +180,8 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
       value: point.value,
       color: point.color || getColorForValue(point.value),
       label: point.label || (seriesItem.labelFormat ?
-        seriesItem.labelFormat.replace('{value}', point.toString()) :
-        value.toString()),
+        seriesItem.labelFormat.replace('{value}', point.value.toString()) :
+        point.value.toString()),
     }));
 
     return {
@@ -234,7 +232,7 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
     series: agSeries,
     axes: [
       {
-        type: 'category',
+        type: 'category' as any,
         position: 'bottom',
         title: normalizeAxisTitle(xAxis.title) || {
           text: 'X Axis',
@@ -249,7 +247,7 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
         },
       },
       {
-        type: 'category',
+        type: 'category' as any,
         position: 'left',
         title: normalizeAxisTitle(yAxis.title) || {
           text: 'Y Axis',
@@ -267,9 +265,6 @@ export const HeatmapChart: React.FC<HeatmapChartProps> = ({
     legend: {
       enabled: legend,
       position: legendPosition,
-      gradient: {
-        enabled: true,
-      },
     },
   };
 
